@@ -1,0 +1,33 @@
+@font-face {
+  font-family: 'ZenIcon';
+  src:  url('fonts/ZenIcon.eot?iv4h9a');
+  src:  url('fonts/ZenIcon.eot?iv4h9a#iefix') format('embedded-opentype'),
+    url('fonts/ZenIcon.ttf?iv4h9a') format('truetype'),
+    url('fonts/ZenIcon.woff?iv4h9a') format('woff'),
+    url('fonts/ZenIcon.svg?iv4h9a#ZenIcon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'ZenIcon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-close:before {
+  content: "\e900";
+}
+.icon-min:before {
+  content: "\e901";
+}
+

@@ -1,0 +1,29 @@
+
+NodeJS 编译说明
+不能使用vcbuild.bat直接编译，
+1.需要生成解决方案，
+2.再设置字符集UNICODE，
+3.编译exe,复制exe备用
+4.重新编译为dll，复制dll. node.lib 供解放方案使用
+
+Cef NodeJS插件说明
+图形模式
+一般正式执行时使用图形模式或调用插件C++代码
+程序配置 {"useNode":ture,"nodeProcess":true/false,"debugNode":false}
+1. 图形模式下的NodeJs代码不能被调试
+2. 图形模式下不能向使用console类（不能向控制台输出消息），否则nodejs进程会异常退出，可以通过重写console类解决
+3. 可以在主进程中单独开线程执行cef插件，方便C++调试
+
+控制台模式
+开发时使用控制台模式
+调试和不调试两种情况需要编译不同的NodeJS 插件并使用，否则不能正常使用
+一. 执行（不调试）
+	直接使用VS解决方案中的项目编译由node.dll调用
+	程序配置 {"useNode":ture,"nodeProcess":true,"debugNode":false}
+二、调试
+	x-cef 插件编译
+	1. node-gyp configure 生成项目;
+	2. 修改项目属性 开启异常（属性配置-> C++-> 代码生成-> 启用C++异常）， 开启RTTI（属性配置-> C++-> 语言-> 启用运行时类型信息）
+	3. node-gyp build 编译
+	4. 由node.exe 调用（node.exe）
+	程序配置 {"useNode":ture,"nodeProcess":true,"debugNode":true}

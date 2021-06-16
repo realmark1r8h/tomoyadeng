@@ -1,0 +1,149 @@
+<!-- saved from url=(0046)http://www.jq22.com/demo/jQueryQQ201703132147/ -->
+<html>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>chat</title>
+    <link href="./css/style.css" rel="stylesheet" type="text/css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/nicescroll.js"></script>
+
+    <style type="text/css">
+      /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+      
+       ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+        /*background-color: rgb(252,242,229);*/
+        background: none;
+      }
+      /*定义滚动条轨道 内阴影+圆角*/
+      
+       ::-webkit-scrollbar-track {
+        /*-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);*/
+        /*border-radius: 5px;*/
+        /*background-color: rgb(252,242,229);*/
+        background: none;
+      }
+      /*定义滑块 内阴影+圆角*/
+      
+       ::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        background-color: #888;
+      }
+      
+      html,
+      body {
+        background: none;
+        overflow: hidden;
+      }
+      
+      .qq-chat {
+        /*width: 440px;
+        height: 510px;*/
+        /*margin: 0 0 -255px -220px;*/
+        background: #fbeede url(images/box-bg.jpg) right top no-repeat;
+        box-shadow: 0 0 5px #666;
+        border-radius: 5px;
+        overflow: hidden;
+        display: block;
+        -webkit-transition: all 0.5s;
+        box-sizing: border-box; 
+        position: absolute;
+        top: 0;
+        bottom:0;
+      }
+      
+      .qq-chat-txt {
+        overflow: auto;
+        overflow-x: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="qq-chat" style="display: block;">
+      <div class="qq-chat-win no-drag ">
+        <ul>
+          <li class="she "></li>
+          <li class="min "></li>
+          <li class="max "></li>
+          <li class="close "></li>
+        </ul>
+      </div>
+      <div class="qq-chat-top drag">
+        <div class="qq-chat-tops ">
+          <div class="qq-chat-t-head "><img src="./images/02.jpg "></div>
+          <div class="qq-chat-t-name ">尛伊_6th空白</div>
+          <div class="qq-chat-t-shuo ">站在别人的雨季，淋湿自己空弹一出戏.....</div>
+        </div>
+        <div class="qq-chat-menu no-drag">
+          <ul>
+            <li><span><img src="./images/icon-01.png "></span></li>
+            <li><span><img src="./images/icon-02.png "></span></li>
+            <li><span><img src="./images/icon-03.png "></span><i></i></li>
+            <li><span><img src="./images/icon-04.png "></span><i></i></li>
+            <li><span><img src="./images/icon-05.png "></span><i></i></li>
+            <li><span><img src="./images/icon-06.png "></span></li>
+            <li><span><img src="./images/icon-07.png "></span><i></i></li>
+          </ul>
+        </div>
+      </div>
+      <div class="qq-chat-bot ">
+        <div class="qq-chat-txt ">
+          <ul>
+            <li>
+              <div class="qq-chat-you blue "><span>尛伊_6th空白</span><i>16:29</i></div>
+              <div id="qq-chat-text" class="qq-chat-ner ">后天上午十点钟有漫展哦~我有门票你去么[图片]</div>
+            </li>
+          </ul>
+        </div>
+        <div class="qq-chat-text ">
+          <ul>
+            <li><span><img src="./images/menu-01.png "></span></li>
+            <li><span><img src="./images/menu-02.png "></span></li>
+            <li><span><img src="./images/menu-03.png "></span></li>
+            <li><span><img src="./images/menu-04.png "></span></li>
+            <li><span><img src="./images/menu-05.png "></span><i></i></li>
+            <li><span><img src="./images/menu-06.png "></span></li>
+            <li><span><img src="./images/menu-07.png "></span><i></i></li>
+            <li><span><img src="./images/menu-08.png "></span></li>
+            <li><span><img src="./images/menu-09.png "></span><i></i></li>
+            <li class="fr " style="margin-right:5px; "><span><img src="./images/menu-10.png "></span>
+              <p>消息记录</p><i></i></li>
+          </ul>
+          <textarea id="qq-chat-text "></textarea>
+          <div class="qq-chat-but ">
+            <span class="fasong ">发送(S)</span>
+            <span class="close-chat ">关闭(C)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript ">
+    $(function() {
+      var BrowserWindow = include('BrowserWindow');
+      var win = BrowserWindow.currentWindow;
+      $('.min').click(function() {
+        win.minimize();
+      });
+      $('.max').click(function() {
+        win.maximize();
+      });
+      $('.close').click(function() {
+        win.close();
+      })
+
+    })
+
+    function foo(id) {
+      return document.getElementById(id);
+    }
+  </script>
+
+</html>

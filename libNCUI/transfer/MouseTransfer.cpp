@@ -1,0 +1,261 @@
+#include "stdafx.h"
+#include "transfer/MouseTransfer.h"
+
+
+namespace amo {
+
+    MouseTransfer::MouseTransfer()
+        : ClassTransfer("mouse") {
+        pt = { 0 };
+        ::GetCursorPos(&pt);
+    }
+    
+    Any MouseTransfer::leftClick(IPCMessage::SmartType msg) {
+        return click(msg);
+    }
+    
+    Any MouseTransfer::leftDown(IPCMessage::SmartType msg) {
+        return  SendMouseEvent(msg, MOUSEEVENTF_LEFTDOWN);
+    }
+    
+    Any MouseTransfer::leftUp(IPCMessage::SmartType msg) {
+        return  SendMouseEvent(msg, MOUSEEVENTF_LEFTUP);
+    }
+    
+    Any MouseTransfer::leftDoubleClick(IPCMessage::SmartType msg) {
+        click(msg);
+        click(msg);
+        return Undefined();
+    }
+    
+    Any MouseTransfer::rightClick(IPCMessage::SmartType msg) {
+        return SendMouseEvent(msg, MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP);
+    }
+    
+    Any MouseTransfer::rightDown(IPCMessage::SmartType msg) {
+        return SendMouseEvent(msg, MOUSEEVENTF_RIGHTDOWN);
+    }
+    
+    Any MouseTransfer::rightUp(IPCMessage::SmartType msg) {
+        return SendMouseEvent(msg, MOUSEEVENTF_RIGHTUP);
+    }
+    
+    Any MouseTransfer::middleClick(IPCMessage::SmartType msg) {
+        return SendMouseEvent(msg, MOUSEEVENTF_MIDDLEDOWN | MOUSEEVENTF_MIDDLEUP);
+    }
+    
+    Any MouseTransfer::moveTo(IPCMessage::SmartType msg) {
+        return setCursorPos(msg);
+    }
+    
+    Any MouseTransfer::moveR(IPCMessage::SmartType msg) {
+    
+        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        int x = 0;
+        int y = 0;
+        
+        if (args->GetValue(0).type() == AnyValueType<amo::json>::value) {
+            amo::json json = args->GetJson(0);
+            x = json.getInt("x");
+            y = json.getInt("y");
+            
+        } else  if (args->GetValue(0).type() == AnyValueType<int>::value
+                    && args->GetValue(1).type() == AnyValueType<int>::value) {
+            x = args->GetInt(0);
+            y = args->GetInt(1);
+        } else {
+            return Undefined();
+        }
+        
+        POINT pt = { 0 };
+        ::GetCursorPos(&pt);
+        pt.x += x;
+        pt.y += y;
+        ::SetCursorPos(pt.x, pt.y);
+        
+        return Undefined();
+    }
+    
+    Any MouseTransfer::mouseWheel(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        int nDelta = args->GetInt(0);
+        return SendMouseEvent(msg, MOUSEEVENTF_WHEEL, nDelta);
+    }
+    
+    Any MouseTransfer::saveMousePos(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        
+        if (args->getArgsSize() == 0) {
+            ::GetCursorPos(&pt);
+        } else {
+        
+            int x = 0;
+            int y = 0;
+            
+            if (args->GetValue(0).type() == AnyValueType<amo::json>::value) {
+                amo::json json = args->GetJson(0);
+                x = json.getInt("x");
+                y = json.getInt("y");
+                
+            } else if (args->GetValue(0).type() == AnyValueType<int>::value
+                       && args->GetValue(1).type() == AnyValueType<int>::value) {
+                x = args->GetInt(0);
+                y = args->GetInt(1);
+            }
+            
+            pt.x = x;
+            pt.y = y;
+        }
+        
+        return Undefined();
+    }
+    
+    Any MouseTransfer::restoreMousePos(IPCMessage::SmartType msg) {
+        msg->GetArgumentList()->SetValue(0, (int)pt.x);
+        msg->GetArgumentList()->SetValue(1, (int)pt.y);
+        return moveTo(msg);
+    }
+    
+    Any MouseTransfer::lockMouse(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
+    Any MouseTransfer::unlockMouse(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
+    Any MouseTransfer::waitClick(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
+    Any MouseTransfer::getLastClick(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
+    Any MouseTransfer::getCursorPos(IPCMessage::SmartType msg) {
+        POINT pt = { 0 };
+        ::GetCursorPos(&pt);
+        amo::json json;
+        json.put("x", (int)pt.x);
+        json.put("y", (int)pt.y);
+        return json;
+        
+    }
+    
+    Any MouseTransfer::setCursorPos(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        int x = 0;
+        int y = 0;
+        
+        if (args->GetValue(0).type() == AnyValueType<amo::json>::value) {
+            amo::json json = args->GetJson(0);
+            x = json.getInt("x");
+            y = json.getInt("y");
+            
+        } else  if (args->GetValue(0).type() == AnyValueType<int>::value
+                    && args->GetValue(1).type() == AnyValueType<int>::value) {
+            x = args->GetInt(0);
+            y = args->GetInt(1);
+        } else {
+            return Undefined();
+        }
+        
+        ::SetCursorPos(x, y);
+        return Undefined();
+    }
+    
+    Any MouseTransfer::screenToClient(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::string strID = args->GetString(0);
+        int x = args->GetInt(1);
+        int y = args->GetInt(2);
+        auto manager = BrowserWindowManager::getInstance();
+        std::shared_ptr<LocalWindow> pWindow = manager->findWindow(strID);
+        amo::json json;
+        
+        if (!pWindow) {
+            return Undefined();
+        }
+        
+        POINT pt = { x, y };
+        ::ScreenToClient(pWindow->GetHWND(), &pt);
+        json.put("x", (int)pt.x);
+        json.put("y", (int)pt.y);
+        return json;
+    }
+    
+    Any MouseTransfer::clientToScreen(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::string strID = args->GetString(0);
+        int x = args->GetInt(1);
+        int y = args->GetInt(2);
+        auto manager = BrowserWindowManager::getInstance();
+        std::shared_ptr<LocalWindow> pWindow = manager->findWindow(strID);
+        amo::json json;
+        
+        if (!pWindow) {
+            return Undefined();
+        }
+        
+        POINT pt = { x, y };
+        ::ClientToScreen(pWindow->GetHWND(), &pt);
+        json.put("x", (int)pt.x);
+        json.put("y", (int)pt.y);
+        return json;
+    }
+    
+    Any MouseTransfer::click(IPCMessage::SmartType msg) {
+        return  SendMouseEvent(msg, MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP);
+    }
+    
+    Any MouseTransfer::hideCursor(IPCMessage::SmartType msg) {
+        ::ShowCursor(FALSE);
+        return Undefined();
+    }
+    
+    Any MouseTransfer::showCursor(IPCMessage::SmartType msg) {
+        ::ShowCursor(TRUE);
+        return Undefined();
+    }
+    
+    Any MouseTransfer::SendMouseEvent(IPCMessage::SmartType msg, uint32_t dwFlags, int mouseData) {
+        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        
+        int x = args->GetInt(0);
+        int y = args->GetInt(1);
+        
+        POINT pt = { 0 };
+        ::GetCursorPos(&pt);
+        
+        if (!args->IsValid(0)) {
+            x = pt.x;
+        }
+        
+        if (!args->IsValid(1)) {
+            y = pt.y;
+        }
+        
+        if (mouseData != 0) {
+            x = pt.x;
+            y = pt.y;
+        }
+        
+        INPUT input;
+        input.type = INPUT_MOUSE;
+        input.mi.mouseData = mouseData;
+        input.mi.dx = static_cast<long>(65535.0
+                                        / (GetSystemMetrics(SM_CXSCREEN) - 1) * x);
+        input.mi.dy = static_cast<long>(65535.0
+                                        / (GetSystemMetrics(SM_CYSCREEN) - 1) * y);
+                                        
+                                        
+                                        
+        input.mi.dwFlags = MOUSEEVENTF_ABSOLUTE
+                           | MOUSEEVENTF_MOVE
+                           | dwFlags;
+        input.mi.time = 0; // 不设置为0的话显示器会黑屏
+        SendInput(1, &input, sizeof(INPUT));
+        return Undefined();
+    }
+    
+}

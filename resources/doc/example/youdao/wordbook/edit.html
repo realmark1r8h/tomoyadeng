@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+<meta name="format-detection" content="telephone=no">
+<title>编辑</title>
+<link rel="stylesheet" type="text/css" href="../iconfont.css"/>
+<link rel="stylesheet" type="text/css" href="edit.css"/>
+
+</head>
+<body disable-quci>
+<div id="doc">
+    <div id="main">
+      <div class="wb-alert wb-word-opt">
+        <ul>
+        <li>
+          <a href="javascript:;" class="btn-remove btn" @click="removeFromWordbook">从单词本中删除</a>
+        </li>
+        <li class="category">
+            <label>分类：<div class="sort-select ellipsis" pannel="#js_category_add"><span>未分类</span><span class="icon icon-down"></span></div></label>
+            <div class="pannel-add hide" id="js_category_add" v-event:close="onPannelClose" v-nicescroll>
+              <ul class="wb-sub-nav">
+                <li><a href="javascript:;" class="add" @click="toggleAdd">创建分类</a></li>
+                <li v-show="isAdd" class="add"><category-add @success="onCategoryAdded" @cancel="onCategoryCancel"></category-add></li>
+                <li v-for="item in category" class="item"><a href="javascript:;" pannel-close class="cat ellipsis" @click="selectSort(item.name)" :selectName="item.name"></a></li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <label>单词：<input type="text" v-model="editword" class="g-input-text" readonly="readonly"></label>
+          </li>
+          <li>
+            <label>音标：<input type="text" v-model="phonetic" class="g-input-text" maxlength="63"></label>
+          </li>
+          <li>
+            <label>解析：<textarea type="textarea" v-model="trans" class="g-textarea"></textarea></label>
+          </li>
+        </ul>
+        <div class="add-revise">
+          <label><input type="checkbox" :checked="setting.wordbook.addReview" class="g-checkbox all-select" name="revise">加入复习计划</label>
+        </div>
+        <div class="wb-btn clear-fix">
+            <a href="javascript:;" class="g-btn-normal btn cancel" @click="closeWin">取消</a>
+            <a href="javascript:;" class="g-btn-red btn confirm" @click="editComfirm">确定</a>
+        </div>
+
+      </div>
+    </div>
+</div>
+<script src="../weblibs.js"></script>
+
+<script src="edit.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+不能使用vcbuild.bat直接编译，
+1.需要生成解决方案，
+2.再设置字符集UNICODE，
+3.编译exe,复制exe备用
+4.重新编译为dll，复制dll. node.lib 供解放方案使用

@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{34B0C0AE-49AB-40E3-9240-64C12AB63421}</ProjectGuid>
+    <RootNamespace>amo</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140_xp</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(SolutionDir)\Microsoft.Cpp.Common.user.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(SolutionDir)\Microsoft.Cpp.Common.user.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <ExecutablePath>$(ExecutablePath);$(MSBuildProjectDirectory)\.\bin\;$(MSBuildProjectDirectory)\.\bin\</ExecutablePath>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)\amo;$(SolutionDir)\amo\amo;$(SolutionDir)\include;D:\SDK\boost_1_59_0;$(SolutionDir);$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="amo\amo.hpp" />
+    <ClInclude Include="amo\any.hpp" />
+    <ClInclude Include="amo\array.hpp" />
+    <ClInclude Include="amo\ascii.hpp" />
+    <ClInclude Include="amo\atomic.hpp" />
+    <ClInclude Include="amo\base64.hpp" />
+    <ClInclude Include="amo\bimap.hpp" />
+    <ClInclude Include="amo\byte_buffer.hpp" />
+    <ClInclude Include="amo\byte_order.hpp" />
+    <ClInclude Include="amo\chrono.hpp" />
+    <ClInclude Include="amo\circular_buffer.hpp" />
+    <ClInclude Include="amo\codecvt.hpp" />
+    <ClInclude Include="amo\config.hpp" />
+    <ClInclude Include="amo\date.hpp" />
+    <ClInclude Include="amo\dynamic_bitset.hpp" />
+    <ClInclude Include="amo\exchanger.hpp" />
+    <ClInclude Include="amo\file_mapping.hpp" />
+    <ClInclude Include="amo\foreach.hpp" />
+    <ClInclude Include="amo\future.hpp" />
+    <ClInclude Include="amo\hash.hpp" />
+    <ClInclude Include="amo\lexical_cast.hpp" />
+    <ClInclude Include="amo\limits.hpp" />
+    <ClInclude Include="amo\format.hpp" />
+    <ClInclude Include="amo\delegate.hpp" />
+    <ClInclude Include="amo\functional.hpp" />
+    <ClInclude Include="amo\json.hpp" />
+    <ClInclude Include="amo\launch.hpp" />
+    <ClInclude Include="amo\loader.hpp" />
+    <ClInclude Include="amo\logger.hpp" />
+    <ClInclude Include="amo\looper_executor.hpp" />
+    <ClInclude Include="amo\md5.hpp" />
+    <ClInclude Include="amo\memory.hpp" />
+    <ClInclude Include="amo\network.hpp" />
+    <ClInclude Include="amo\nil.hpp" />
+    <ClInclude Include="amo\noncopyable.hpp" />
+    <ClInclude Include="amo\object.hpp" />
+    <ClInclude Include="amo\optional.hpp" />
+    <ClInclude Include="amo\path.hpp" />
+    <ClInclude Include="amo\pipe.hpp" />
+    <ClInclude Include="amo\platforms.hpp" />
+    <ClInclude Include="amo\program_options.hpp" />
+    <ClInclude Include="amo\random.hpp" />
+    <ClInclude Include="amo\ratio.hpp" />
+    <ClInclude Include="amo\regex.hpp" />
+    <ClInclude Include="amo\rtc\json\other_json.hpp" />
+    <ClInclude Include="amo\rtc\p2p_connection.hpp" />
+    <ClInclude Include="amo\rtc\p2p_connection_listener.hpp" />
+    <ClInclude Include="amo\rtc\rtc.hpp" />
+    <ClInclude Include="amo\rtc\util\label_generator.hpp" />
+    <ClInclude Include="amo\rtc\webrtc\object_release_ptr.hpp" />
+    <ClInclude Include="amo\rtc\webrtc\thread_manager.hpp" />
+    <ClInclude Include="amo\rtc\webrtc_engine_listener.hpp" />
+    <ClInclude Include="amo\signals2.hpp" />
+    <ClInclude Include="amo\sigsolt.hpp" />
+    <ClInclude Include="amo\singleton.hpp" />
+    <ClInclude Include="amo\smart_memory_pool.hpp" />
+    <ClInclude Include="amo\smart_ptr.hpp" />
+    <ClInclude Include="amo\stdint.hpp" />
+    <ClInclude Include="amo\string.hpp" />
+    <ClInclude Include="amo\stringify.hpp" />
+    <ClInclude Include="amo\string\iconv.hpp" />
+    <ClInclude Include="amo\string\string_convertor.hpp" />
+    <ClInclude Include="amo\string_builder.hpp" />
+    <ClInclude Include="amo\system.hpp" />
+    <ClInclude Include="amo\system_error.hpp" />
+    <ClInclude Include="amo\template_macro.hpp" />
+    <ClInclude Include="amo\text.hpp" />
+    <ClInclude Include="amo\thread.hpp" />
+    <ClInclude Include="amo\thread_pool.hpp" />
+    <ClInclude Include="amo\time.hpp" />
+    <ClInclude Include="amo\timer.hpp" />
+    <ClInclude Include="amo\tribool.hpp" />
+    <ClInclude Include="amo\tuple.hpp" />
+    <ClInclude Include="amo\type_traits.hpp" />
+    <ClInclude Include="amo\uid.hpp" />
+    <ClInclude Include="amo\unordered_map.hpp" />
+    <ClInclude Include="amo\unordered_set.hpp" />
+    <ClInclude Include="amo\utility.hpp" />
+    <ClInclude Include="amo\utility\string.hpp" />
+    <ClInclude Include="amo\uuid.hpp" />
+    <ClInclude Include="amo\variant.hpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

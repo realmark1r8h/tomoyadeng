@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../dist/css/zui.css"/>
+    <script src="../../assets/jquery.js" type="text/javascript" charset="utf-8"></script>
+ 		<script src="../../dist/js/zui.js" type="text/javascript" charset="utf-8"></script>
+ 
+    <style type="text/css">
+        html,body{
+            background: none;
+            border: none;
+            margin: 0;
+            width: 280px;
+            height: 565px;
+            overflow: hidden;
+            
+        }
+      .flip-container {
+        -webkit-perspective: 500;
+        -moz-perspective: 500;
+        -ms-perspective: 500;
+        perspective: 500;
+        -ms-transform: perspective(500px);
+        -moz-transform: perspective(500px);
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        display: inline-block;
+        /*border: 1px solid #aaa;*/
+        position: relative;
+        margin-bottom: 65px;
+        margin-top: 65px;
+      }
+      /*由于内层绝对定位导致高度缺少，这里显式设置了宽高*/
+      
+      .flip-container,
+      .front,
+      .back {
+        width: 280px;
+        height: 435px;
+      }
+      
+      .flip-container:hover .front {
+        -webkit-transform: rotateY(180deg);
+        -moz-transform: rotateY(180deg);
+        -o-transform: rotateY(180deg);
+        -ms-transform: rotateY(180deg);
+        transform: rotateY(180deg);
+      }
+      
+      .flip-container:hover .back {
+        -webkit-transform: rotateY(0deg);
+        -moz-transform: rotateY(0deg);
+        -o-transform: rotateY(0deg);
+        -ms-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+        z-index: 3;
+        /* 降级处理不支持CSS3的浏览器，只是简单的将back上升盖住front */
+      }
+      
+      .front,
+      .back {
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transition: 0.6s;
+        -moz-transition: 0.6s;
+        -o-transition: 0.6s;
+        -ms-transition: 0.6s;
+        transition: 0.6s;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        border-radius: 5px;
+      }
+      
+      .front {
+        background: red;
+        z-index: 2;
+        border-radius: 5px;
+      }
+      
+      .back {
+        background: green; 
+        -webkit-transform: rotateY(-180deg);
+        -moz-transform: rotateY(-180deg);
+        -o-transform: rotateY(-180deg);
+        -ms-transform: rotateY(-180deg);
+        transform: rotateY(-180deg);
+      }
+      
+      .player {
+        width: 280px;
+        height: 435px;
+        border-radius: 5px;
+        margin: 0 auto;
+      
+        /*border: #111111 1px solid;*/
+      }
+      
+      .row {
+        margin: 0;
+      }
+      
+      .background {
+        width: 280px;
+        height: 280px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        background: url(img/Gramatik.jpg) no-repeat center;
+      }
+      
+      .context {
+        width: 280px;
+        height: 155px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        /*background: #000080;*/
+      }
+      
+      .track {
+        height: 22px;
+        margin-top: 23px;
+        color: #55656c;
+        margin-bottom: 0px !important;
+      }
+      
+      .album {
+        height: 15px;
+        color: #adb5b8;
+        margin: 0 !important;
+      }
+      
+      .controls {
+        height: 32px;
+        margin-top: 21px;
+        color: #adb5b8;
+      }
+      
+      .controls p .icon {
+        font-size: 20px;
+        line-height: 20px;
+      }
+      
+      .login-menu {
+        width: 90px;
+        height: 30px;
+        top: 0;
+        right: 0;
+        float: right;
+        border-top-right-radius: 5px;
+        /*position: absolute;*/
+      }
+      
+      .login-menu span {
+        float: left;
+        width: 30px;
+        height: 30px;
+        background-image: url(img/wins.png);
+      }
+      
+      .login-menu span:hover {
+        background-color: #3a95de;
+      }
+      
+      .login-menu span:nth-child(1) {
+        background-position: left center;
+      }
+      
+      .login-menu span:nth-child(2) {
+        background-position: -30px center;
+      }
+      
+      .login-menu span:nth-child(3) {
+        background-position: -90px center;
+      }
+      
+      .login-menu span:nth-child(3):hover {
+        background-color: #ea4848;
+        border-top-right-radius: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="flip-container">
+      <div class="front">
+        <div class="player">
+          <div class="row background">
+            <div class="login-menu  ">
+              <span class="setting"></span>
+              <span class="min"></span>
+              <span class="login-close"></span>
+            </div>
+          </div>
+          <div id="context">
+
+            <div class="row ">
+              <h3 class="text-center track">Virtual Insight</h3>
+              <h3 class="text-center album" style="line-height: 15px;">Water 4 The Soul by Gramatik</h3>
+
+            </div>
+            <div class="row controls">
+              <div class="col-xs-2">
+
+              </div>
+              <div class="col-xs-2">
+                <p class="text-center"> <i class="icon icon-step-backward"></i></p>
+              </div>
+              <div class="col-xs-4">
+                <p class="text-center"> <i class="icon icon-play"></i></p>
+              </div>
+              <div class="col-xs-2">
+                <p class="text-center"> <i class="icon icon-step-forward"></i></p>
+              </div>
+              <div class="col-xs-2">
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="back">
+        <div class="player">
+          <div class="row background">
+            <div class="login-menu  ">
+              <span class="setting"></span>
+              <span class="min"></span>
+              <span class="login-close"></span>
+            </div>
+          </div>
+          <div id="context">
+
+            <div class="row ">
+              <h3 class="text-center track">Virtual Insight</h3>
+              <h3 class="text-center album" style="line-height: 15px;">Water 4 The Soul by Gramatik</h3>
+
+            </div>
+            <div class="row controls">
+              <div class="col-xs-2">
+
+              </div>
+              <div class="col-xs-2">
+                <p class="text-center"> <i class="icon icon-step-backward"></i></p>
+              </div>
+              <div class="col-xs-4">
+                <p class="text-center"> <i class="icon icon-play"></i></p>
+              </div>
+              <div class="col-xs-2">
+                <p class="text-center"> <i class="icon icon-step-forward"></i></p>
+              </div>
+              <div class="col-xs-2">
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+  <script type="text/javascript">
+    $(function() {
+      $('span, p').addClass('no-drag');
+      $('div').addClass('drag');
+      include('BrowserWindow');
+      var win = BrowserWindow.currentWindow;
+      $('.settings').click(function() {
+
+      });
+      $('.min').click(function() {
+        win.minimize();
+      });
+      $('.login-close').click(function() {
+        win.close();
+      });
+      
+    });
+  </script>
+
+</html>

@@ -1,0 +1,460 @@
+// Created by amoylel on 06/12/2017.
+// Copyright (c) 2017 amoylel All rights reserved.
+
+#ifndef AMO_TRANSFER_HPP__
+#define AMO_TRANSFER_HPP__
+#include <string>
+#include <map>
+
+#include <amo/json.hpp>
+#include <amo/stdint.hpp>
+
+#include "ipc/Any.hpp"
+#include "ipc/IPCMessage.hpp"
+#include "transfer/FunctionWrapper.hpp"
+
+
+
+// JS函数注册宏 开始
+#define AMO_CEF_MESSAGE_TRANSFER_BEGIN(ClassName, BaseClassName)\
+	virtual void RegisterFunction(){\
+		typedef ClassName ClassType;\
+		typedef BaseClassName BaseClassType;\
+
+// JS函数注册 同名函数
+#define AMO_CEF_MESSAGE_TRANSFER_FUNC(Func, nExecType)\
+		RegisterTransfer(#Func,\
+						std::bind(&ClassType::Func, \
+								  this, \
+								  std::placeholders::_1), \
+						nExecType);
+
+#define AMO_CEF_MESSAGE_TRANSFER_ATTR(Func)\
+		RegisterAttribute(#Func, Func);
+
+#define AMO_CEF_MESSAGE_TRANSFER_ATTR2(Func, VALUE)\
+		RegisterAttribute(#Func, VALUE);
+
+// JS函数注册宏 结束
+#define AMO_CEF_MESSAGE_TRANSFER_END()\
+		BaseClassType::RegisterFunction();\
+	}
+
+namespace amo {
+
+    /*!
+     * @class	Transfer
+     *
+     * @brief	JS调用C++时消息遍历基类.
+     * 			所有的JS对C++的调用都由此类派生
+     */
+    class Transfer : public std::enable_shared_from_this<Transfer> {
+    public:
+        /*!
+         * @typedef	std::function<bool(const std::string&,
+         * 			IPCMessage::SmartType, amo::IPCResult&)> BerforeResultFunc
+         *
+         * @brief	回传执行结果前的回调函数
+         */
+        typedef std::function<bool(const std::string&,
+                                   IPCMessage::SmartType,
+                                   amo::IPCResult&)> BerforeResultFunc;
+                                   
+    public:
+        /*!
+         * @fn	template<typename T> std::shared_ptr<T> Transfer::getDerivedClass()
+         *
+         * @brief	获取当前对象的智能指针.
+         *
+         * @tparam	T	派生类类型.
+         *
+         * @return	派生类的智能指针.
+         */
+        template<typename T>
+        std::shared_ptr<T> getDerivedClass() {
+            return std::dynamic_pointer_cast<T>(shared_from_this());
+        }
+    public:
+    
+        /*!
+         * @fn	Transfer::Transfer()
+         *
+         * @brief	Default constructor 主要用作类实例的创建类
+         * 			（通过这个Transfer创建类对象）.
+         */
+        Transfer() {
+            transferName("Transfer");
+            m_oFuncMgr.name(transferName());
+            setWorkOnRenderer(false);
+            //m_bWorkOnRenderer = false;
+            setObjectID(amo::uid::generate_uid());
+            m_oFuncMgr.setObjectID(getObjectID());
+            setFuncRegistered(false);
+            
+        }
+        /*!
+         * @fn	Transfer::Transfer(const std::string& strName)
+         *
+         * @brief	Constructor.
+         *
+         * @param	strName	 Transfer 名称.
+         */
+        Transfer(const std::string& strName) {
+            transferName(strName);
+            m_oFuncMgr.name(strName);
+            m_bWorkOnRenderer = false;
+            setObjectID(amo::uid::generate_uid());
+            m_oFuncMgr.setObjectID(getObjectID());
+            setFuncRegistered(false);
+        }
+        
+        ~Transfer() {
+        
+        }
+        
+        /*!
+         * @fn	void Transfer::setObjectID(int64_t nID)
+         *
+         * @brief	设置Transfer ID.
+         *
+         * @param	nID	Transfer ID.
+         */
+        void setObjectID(int64_t nID) {
+            m_nObjectID = nID;
+        }
+        
+        /*!
+         * @fn	int64_t Transfer::getObjectID() const
+         *
+         * @brief	获取Transfer ID.
+         *
+         * @return	返回Transfer ID.
+         */
+        int64_t getObjectID() const {
+            return m_nObjectID;
+        }
+        
+        /*!
+         * @fn	void Transfer::setWorkOnRenderer(bool bWorkOnRenderer = true)
+         *
+         * @brief	设置当前Transfer是否工作在渲染进程(渲染线程)上.
+         *
+         * @param	bWorkOnRenderer	(Optional) true to work on renderer.
+         */
+        void setWorkOnRenderer(bool bWorkOnRenderer = true) {
+            m_bWorkOnRenderer = bWorkOnRenderer;
+        }
+        /*!
+         * @fn	bool Transfer::isWorkOnRenderer() const
+         *
+         * @brief	判断当前Transfer是否工作在渲染进程(渲染线程)上.
+         *
+         * @return	true if work on renderer, false if not.
+         */
+        bool isWorkOnRenderer() const {
+            return m_bWorkOnRenderer;
+        }
+        
+        /*!
+         * @fn	const std::string& Transfer::transferName() const
+         *
+         * @brief	获取Transfer 名称 类和类的实例对象名称相同..
+         *
+         * @return	返回Transfer 名称.
+         */
+        const std::string& transferName() const {
+            return m_strName;
+        }
+        /*!
+         * @fn	void Transfer::transferName(const std::string& strName)
+         *
+         * @brief	设置Transfer 名称 类和类的实例对象名称相同.
+         *
+         * @param	strName	The Transfer name.
+         */
+        void transferName(const std::string& strName) {
+            m_strName = strName;
+        }
+        
+        /*!
+         * @fn	virtual TransferType Transfer::transferType()
+         *
+         * @brief	Transfer 类型 包括类/对象.
+         *
+         * @return	返回 TransferType.
+         */
+        virtual TransferType transferType() {
+            return TransferUnknown;
+        }
+        
+        /*!
+         * @fn	TransferFuncType Transfer::functionType(const std::string& funcName)
+         *
+         * @brief	获取函数类型普通/静态/构造.
+         *
+         * @param	funcName	函数名.
+         *
+         * @return	函数类型 TransferFuncType.
+         */
+        TransferFuncType functionType(const std::string& funcName) {
+            return getFuncMgr().functionType(funcName);
+        }
+        
+        /*!
+         * @fn	TransferExecType Transfer::execType(const std::string& funcName)
+         *
+         * @brief	获取函数的调用方式 普通/同步/异步.
+         *
+         * @param	funcName	函数名.
+         *
+         * @return	函数调用方式 TransferExecType.
+         */
+        TransferExecType execType(const std::string& funcName) {
+            return getFuncMgr().execType(funcName);
+        }
+        
+        
+        /*!
+         * @fn	virtual void Transfer::RegisterFunction()
+         *
+         * @brief	注册JS函数 设置注册状态为true.
+         */
+        virtual void RegisterFunction() {
+            setFuncRegistered(true);
+        }
+        
+        /*!
+         * @fn	virtual bool Transfer::RegisterTransfer(const std::string& name,
+         * 		FunctionWrapper::TransferFunc fn, int nType = 0)
+         *
+         * @brief	Registers the transfer.
+         *
+         * @param	name 	JS函数名.
+         * @param	fn   	JS函数所对应的C++函数.
+         * @param	nType	函数类型及执行方式.
+         *
+         * @return	true if it succeeds, false if it fails.
+         */
+        virtual bool RegisterTransfer(const std::string& name,
+                                      FunctionWrapper::TransferFunc fn,
+                                      int nType = 0) {
+            return getFuncMgr().toMap().insert(
+                       std::make_pair(name,
+                                      FunctionWrapper(name, fn, nType))).second;
+        }
+        
+        /*!
+         * @fn	void Transfer::addModule(const std::string& strName)
+         *
+         * @brief	添加需要调用的JS模块，模块存在于渲染进程中，
+         * 			做为当前Transfer的子模块调用.
+         *
+         * @param	strName	The name.
+         */
+        void addModule(const std::string& strName) {
+            getFuncMgr().addModule(strName);
+        }
+        
+        
+        void addDepends(const std::string& strName) {
+            getFuncMgr().addDepends(strName);
+        }
+        
+        
+        void RegisterAttribute(const std::string& strName, Any val) {
+            getFuncMgr().addAttribute(strName, val);
+        }
+        
+        
+        /*!
+         * @fn	void Transfer::setBeforeResultCallback(BerforeResultFunc fn)
+         *
+         * @brief	设置JS调用C++的结果回调处理函数.
+         *
+         * @param	fn	回调函数.
+         */
+        void setBeforeResultCallback(BerforeResultFunc fn) {
+            m_fnResultCallback = fn;
+        }
+        
+        /*!
+         * @fn	BerforeResultFunc Transfer::getBeforeResultCallback()
+         *
+         * @brief	获取调用结果回调处理函数，如果回调函数有效，将优先处理结果.
+         *
+         * @return	回调处理函数.
+         */
+        BerforeResultFunc getBeforeResultCallback() {
+            return m_fnResultCallback;
+        }
+        
+        /*!
+         * @fn	amo::FunctionWrapperMgr& Transfer::getFuncMgr()
+         *
+         * @brief	获取可以用JS访问的函数列表.
+         *
+         * @return	函数列表.
+         */
+        amo::FunctionWrapperMgr& getFuncMgr() {
+            return m_oFuncMgr;
+        }
+        
+        /*!
+         * @fn	virtual Any Transfer::OnMessageTransfer(IPCMessage::SmartType message)
+         *
+         * @brief	执行JS函数对应的C++函数.
+         *
+         * @param	进程消息.
+         *
+         * @return	Any.
+         */
+        virtual Any OnMessageTransfer(IPCMessage::SmartType msg) {
+        
+            // 函数调用方式
+            std::string strExecName = msg->getMessageName();
+            
+            std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+            int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
+            int nFrameID = args->GetInt(IPCArgsPosInfo::FrameID);
+            // 对应的C++函数名， 没有汉字
+            std::string strFuncName = args->GetString(IPCArgsPosInfo::FuncName);
+            // 查找当前Transfer是否存在所给函数
+            auto iter = getFuncMgr().toMap().find(strFuncName);
+            
+            amo::IPCResult result;
+            result.setID(args->GetInt(IPCArgsPosInfo::MessageID));
+            
+            //JS普通调用C++, 这种执行方式不向调用者返回结果
+            if (strExecName == MSG_NATIVE_EXECUTE) {
+                if (iter == getFuncMgr().toMap().end()) {
+                    return Nothing();
+                }
+                
+                // 调用所注册的C++函数
+                Any ret = iter->second(msg);
+                result.SetResult(ret);
+                
+                // 向调用者返回结果前先处理该结果
+                if (m_fnResultCallback
+                        && m_fnResultCallback(MSG_NATIVE_EXECUTE,
+                                              msg,
+                                              result)) {
+                    //如果当前结果已被处理，那么不返回当前结果
+                    return Nothing();
+                }
+                
+                return ret;
+            }
+            //JS同步调用C++，此消息需要通过管道向页面返回结果
+            else if (strExecName == MSG_NATIVE_SYNC_EXECUTE)	{
+                //
+                if (iter != getFuncMgr().toMap().end()) {
+                    Any  ret = iter->second(msg);
+                    result.SetResult(ret);
+                    
+                    if (m_fnResultCallback
+                            && m_fnResultCallback(MSG_NATIVE_SYNC_EXECUTE,
+                                                  msg,
+                                                  result)) {
+                        //如果当前结果已被处理，那么不返回当前结果
+                        return Nothing();
+                    }
+                    
+                    return ret;
+                } else {
+                    // 没有找到相关函数，但是还是需要返回一个值给调用者，以免死锁
+                    Any  ret = Undefined();
+                    result.SetResult(ret);
+                    
+                    if (m_fnResultCallback
+                            && m_fnResultCallback(MSG_NATIVE_SYNC_EXECUTE,
+                                                  msg,
+                                                  result)) {
+                        return Nothing();
+                    }
+                    
+                    return ret;
+                }
+            }
+            //JS异步调用C++，此消息需要通过JS向页面返回结果
+            else if (strExecName == MSG_NATIVE_ASYNC_EXECUTE) {
+                if (iter != getFuncMgr().toMap().end()) {
+                    Any  ret = iter->second(msg);
+                    result.SetResult(ret);
+                    
+                    if (m_fnResultCallback
+                            && m_fnResultCallback(MSG_NATIVE_ASYNC_EXECUTE,
+                                                  msg,
+                                                  result)) {
+                        return Nothing();
+                    }
+                    
+                    return ret;
+                } else {
+                    Any  ret = Undefined();
+                    result.SetResult(ret);
+                    
+                    if (m_fnResultCallback
+                            && m_fnResultCallback(MSG_NATIVE_ASYNC_EXECUTE,
+                                                  msg,
+                                                  result)) {
+                        return Nothing();
+                    }
+                    
+                    return ret;
+                }
+            }
+            
+            return Nothing();
+        }
+        
+        /*!
+         * @fn	bool Transfer::isFuncRegistered() const
+         *
+         * @brief	查询Transfer注册状态.
+         *
+         * @return	true/false 已注册/未注册.
+         */
+        bool isFuncRegistered() const {
+            return m_bIsRegistered;
+        }
+        
+        /*!
+         * @fn	void Transfer::setFuncRegistered(bool val)
+         *
+         * @brief	设置Transfer注册状态.
+         *
+         * @param	true/false 注册/未注册.
+         */
+        void setFuncRegistered(bool val) {
+            m_bIsRegistered = val;
+        }
+        
+    protected:
+    
+        /*! @brief	JS调用C++回调处理函数集合. */
+        std::map < std::string, FunctionWrapper > m_mpJsFunction;
+        
+        /*! @brief	Transfer名称. */
+        std::string m_strName;
+        
+        /*! @brief	结果返回前的回调函数，如果该函数返回true那么将不会再向调用都返回执行结果. */
+        BerforeResultFunc m_fnResultCallback;
+        
+        /*! @brief	JS调用C++回调处理函数集合. */
+        FunctionWrapperMgr m_oFuncMgr;
+        
+        /*! @brief	是否运行在Renderer线程上. */
+        bool m_bWorkOnRenderer;
+        
+        /*! @brief	当前Transfer ID. */
+        int64_t m_nObjectID;
+        
+        /*! @brief	判断当前类是否已经注册. */
+        bool m_bIsRegistered;
+    };
+    
+}
+
+
+#endif // AMO_TRANSFER_HPP__

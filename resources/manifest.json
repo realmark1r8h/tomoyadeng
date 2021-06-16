@@ -1,0 +1,11 @@
+{
+	"appSettings": {
+		"useNode": true,
+		"main": "main.js",
+		"nodeProcess": false,
+		"single_process": true
+	},
+	"browserWindowSettings":{
+		"url": "http://127.0.0.1:8020/index.html"
+	}
+}

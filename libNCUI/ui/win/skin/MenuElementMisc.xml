@@ -1,0 +1,12 @@
+<VerticalLayout>
+	<HorizontalLayout>
+	<Control />
+	
+	<VerticalLayout width="16">
+	<Control />
+	<Control width="16" height="15" bkimage="{bkimage}"/>
+	<Control />
+	</VerticalLayout>
+	</HorizontalLayout>
+	<Label height="1" bkcolor="{separatorColor}"/>
+</VerticalLayout>
