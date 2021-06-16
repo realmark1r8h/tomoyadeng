@@ -1,5 +1,5 @@
 # NCUI
-基于Duilib+CEF++NodeJs的类似electron的桌面UI框架，适用于Windows XP 及以上系统，具有以下特性：
+基于Duilib+CEF++NodeJs的类似electron的桌面UI框架，适用于Windows XP 及以上系统，整体框架已完成，还有一些功能未实现，BUG未修改，C++用户已经可以修改使用，具有以下特性：
 
 *   **单进程模式**： 可以选择程序以单进程还是多进程方式执行。
 *   **离屏渲染**： 通过离屏渲染实现窗口透明。
