@@ -99,6 +99,8 @@ namespace amo {
         Any removeBrowserWindowSettings(IPCMessage::SmartType msg);
         Any getBrowserWindowSettings(IPCMessage::SmartType msg);
         
+        virtual Any isMainWindow(IPCMessage::SmartType msg);
+        
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(BrowserWindowTransfer, ClassTransfer)
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(test1, TransferExecNormal)
@@ -205,6 +207,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setIcon, TransferExecNormal)
         
         
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(isMainWindow, TransferExecSync)
         
         AMO_CEF_MESSAGE_TRANSFER_END()
         

@@ -272,6 +272,15 @@ namespace amo {
     
     
     
+    std::shared_ptr<amo::BrowserWindowSettings> BrowserWindow::getBrowserSettings() const {
+        return m_pBrowserSettings;
+    }
+    
+    
+    Any BrowserWindow::isMainWindow(IPCMessage::SmartType msg) {
+        return m_pBrowserSettings->main;
+    }
+    
     std::vector<HWND> BrowserWindow::getParents(HWND hWnd) {
         std::vector<HWND> vec;
         

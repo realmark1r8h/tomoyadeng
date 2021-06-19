@@ -26,6 +26,12 @@ namespace amo {
         CEF_REQUIRE_UI_THREAD();														//UI
         
         std::shared_ptr<BrowserWindow> window(new BrowserWindow(info));
+        
+        // 如果当前窗口是一个主窗口，那么清除之前的主窗口
+        if (info->main) {
+            clearMainWindow();
+        }
+        
         return createLocalWindow(window);
         
     }
@@ -180,6 +186,37 @@ namespace amo {
         }
         
         return std::shared_ptr<LocalWindow>();
+        
+    }
+    
+    std::shared_ptr<amo::LocalWindow> BrowserWindowCreator::getMainWindow() {
+        auto vec = AllBrowserWindow();
+        
+        for (auto& p : vec) {
+            std::shared_ptr<BrowserWindow> pWindow;
+            pWindow = amo::dynamic_pointer_cast<BrowserWindow>(p);
+            
+            if (pWindow->getBrowserSettings()->main) {
+                return p;
+            }
+        }
+        
+        return std::shared_ptr<LocalWindow>();
+    }
+    
+    void BrowserWindowCreator::clearMainWindow() {
+        auto vec = AllBrowserWindow();
+        
+        for (auto& p : vec) {
+            std::shared_ptr<BrowserWindow> pWindow;
+            pWindow = amo::dynamic_pointer_cast<BrowserWindow>(p);
+            
+            if (pWindow->getBrowserSettings()->main) {
+                amo::json json;
+                json.put("main", false);
+                pWindow->getBrowserSettings()->UpdateArgsSettings(json);
+            }
+        }
         
     }
     
@@ -350,6 +387,11 @@ namespace amo {
             pLocalWindow = getFocusedWindow();
         }
         
+        // 不存在，使用主窗口
+        if (!pLocalWindow) {
+            pLocalWindow = getMainWindow();
+        }
+        
         // 使用第一个浏览器窗口
         if (!pLocalWindow) {
             pLocalWindow = getFirstWindow();
@@ -383,6 +425,10 @@ namespace amo {
         }
         
         return std::shared_ptr<LocalWindow>();
+    }
+    
+    std::shared_ptr<amo::LocalWindow> BrowserWindowManager::getMainWindow() {
+        return m_pWindowCreator->getMainWindow();
     }
     
     void BrowserWindowManager::init() {

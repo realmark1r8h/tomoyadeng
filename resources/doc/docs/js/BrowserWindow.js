@@ -115,7 +115,7 @@ function foo3(val) {
     initApi('MN', 'toggleFullScreen', '', '全屏/退出全屏');
     initApi('MN', 'toggleVisible', '', '显示/隐藏');
     initApi('MN', 'setIcon', '', '设置窗口图标');
-
+	initApi('MN', 'isMainWindow', 'Boolean', '判断当前窗口是否为主窗口');
     // initSettings
     // NativeWindow Settings
     initSettings('id', 'String', '窗口ID, 默认"0"');
@@ -151,7 +151,8 @@ function foo3(val) {
     initSettings('url', 'String', '浏览窗口打开页面地址, 默认"chrome://version"');
     initSettings('offscreen', 'Boolean', '是否使用离屏渲染, 默认false');
     initSettings('transparent', 'Boolean', '是否透明窗口,offscreen为true时，此参数有效， 默认false');
-
+	initSettings('main', 'Boolean', '是否为主窗口，主窗口只能有一个，如果当前窗口为主窗口，那和之前的主窗口属性将被取消');
+	
     // Event
     initEvent('create', '', '窗口创建时触发');
     initEvent('closed', '', '窗口关闭后');

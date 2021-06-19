@@ -39,6 +39,8 @@ namespace amo {
         std::shared_ptr<LocalWindow> FindWindow(const std::string& strID);
         std::shared_ptr<LocalWindow> FindWindow(HWND hWnd);
         std::shared_ptr<LocalWindow> getFirstWindow();
+        std::shared_ptr<LocalWindow> getMainWindow();
+        void clearMainWindow();
         
         std::vector<std::shared_ptr<LocalWindow>> AllBrowserWindow();
         void OnWindowClosed(LayeredWindow* window);
@@ -49,7 +51,8 @@ namespace amo {
         
         IMPLEMENT_REFCOUNTING(BrowserWindowCreator);
     public:
-        std::list<std::shared_ptr<LocalWindow> > m_WindowMap;											// 浏览器窗口集合
+        /*! @brief	浏览器窗口集合. */
+        std::list<std::shared_ptr<LocalWindow> > m_WindowMap;
     };
     
     class BrowserWindowManager : public amo::singleton<BrowserWindowManager>
@@ -91,14 +94,18 @@ namespace amo {
         
         std::vector<std::shared_ptr<LocalWindow>> AllWindows();
         std::shared_ptr<LocalWindow> getFocusedWindow();
+        std::shared_ptr<LocalWindow> getMainWindow();
+        
         void init();
         
         bool PreTranslateMessage(CefEventHandle os_event);
         
         
     private:
-        int m_BrowserCount;																				//!< 浏览器计数
-        CefRefPtr<BrowserWindowCreator> m_pWindowCreator;										//!< 弹出窗口创建类
+        /*! @brief	浏览器计数. */
+        int m_BrowserCount;
+        /*! @brief	弹出窗口创建类. */
+        CefRefPtr<BrowserWindowCreator> m_pWindowCreator;
         
     };
 }

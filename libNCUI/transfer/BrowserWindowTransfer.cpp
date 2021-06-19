@@ -155,6 +155,11 @@ namespace amo {
     }
     
     
+    Any BrowserWindowTransfer::isMainWindow(IPCMessage::SmartType msg) {
+        // 由BrowserWindow重载实现
+        return Undefined();
+    }
+    
     Any BrowserWindowTransfer::currentWindow(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
         int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);

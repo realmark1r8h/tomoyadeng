@@ -68,11 +68,13 @@ namespace amo {
         virtual Any getBrowser(IPCMessage::SmartType msg) override;
         virtual Any showDevTools(IPCMessage::SmartType msg) override;
         virtual Any closeDevTools(IPCMessage::SmartType msg) override;
-        
+        virtual Any isMainWindow(IPCMessage::SmartType msg) override;
         
         virtual std::shared_ptr<BrowserWindow> toBrowserWindow() override;
         
         
+    public:
+        std::shared_ptr<amo::BrowserWindowSettings> getBrowserSettings() const;
         
         
     protected:
@@ -98,6 +100,7 @@ namespace amo {
     private:
         /*! @brief	The browser settings. */
         std::shared_ptr<BrowserWindowSettings> m_pBrowserSettings;
+        
     };
 }
 

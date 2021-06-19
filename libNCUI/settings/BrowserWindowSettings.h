@@ -37,8 +37,9 @@ namespace amo {
         virtual void AfterUpdateArgsSettings() override;
         
     public:
-    
-    
+        /*! @brief	当前窗口是否为主窗口，主窗口只能有一个，如果设置为主窗口将取消之前的主窗口设定. */
+        bool main;
+        
     };
 }
 

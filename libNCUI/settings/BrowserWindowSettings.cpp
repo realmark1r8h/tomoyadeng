@@ -46,11 +46,13 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(url, "chrome://version");
         DEFAULT_ARGS_SETTINGS(offscreen, false);
         DEFAULT_ARGS_SETTINGS(transparent, false);
+        DEFAULT_ARGS_SETTINGS(main, false);
     }
     
     
     void BrowserWindowSettings::AfterUpdateArgsSettings() {
         NativeWindowSettings::AfterUpdateArgsSettings();
+        BOOL_ARGS_SETTING(main);
     }
     
     
