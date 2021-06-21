@@ -72,6 +72,10 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(flashFrame, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(topmost, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(isTopmost, TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(setHasShadow, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(hasShadow, TransferExecSync)
+        
+        
         AMO_CEF_MESSAGE_TRANSFER_FUNC(toggleFullScreen, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(toggleVisible, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(showModal, TransferExecNormal)

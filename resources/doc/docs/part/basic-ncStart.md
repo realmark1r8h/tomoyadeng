@@ -30,3 +30,16 @@ manifest支持AppSettings和BrowserWindowSettings两个类 ，详细情况可参
 ```html
 
 ```
+
+## 导入模块
+*  使用include导入单个模块，返回所导入的模块
+*  使用includes导入多个模块
+*  无论include还是includes都会把导入的模块添加到全局变量中
+*  如果内置模块不存在，将会导入renderer_modules文件夹下模块，如果还是不存在会导入browser_modules文件夹下模块
+
+```html
+// 导入单模块
+var BrowserWindow = include('BrowserWindow');
+// 导入多个模块
+includes('BrowserWindow', 'app');
+```

@@ -1,5 +1,5 @@
 ﻿# 鼠标
-  mouse为全局对象，页面通过include('mouse')加载使用;  Node自己包含
+  mouse为全局对象，页面通过include('mouse')加载使用;
      程序会启动时创建一个隐藏的托盘图标
   <link rel="stylesheet" type="text/css" href="docs/css/common.css" />
   <script src="docs/js/string.js" type="text/javascript" charset="utf-8"></script>

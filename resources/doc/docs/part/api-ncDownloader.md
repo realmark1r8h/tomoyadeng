@@ -1,5 +1,5 @@
-﻿# 对话框
-Downloader为全局对象，页面通过include('Downloader')加载使用;  Node自己包含
+﻿# 下载
+Downloader为全局对象，页面通过include('Downloader')加载使用;
   
 文件下载类
   

@@ -1,6 +1,6 @@
 ﻿# BrowserWindow
 
-BrowserWindow为全局对象，页面通过include('BrowserWindow')加载使用;  Node自己包含
+BrowserWindow为全局对象，页面通过include('BrowserWindow')加载使用; 
 
 
   <link rel="stylesheet" type="text/css" href="docs/css/common.css" />
