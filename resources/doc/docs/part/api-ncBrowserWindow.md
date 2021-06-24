@@ -9,18 +9,18 @@ BrowserWindow为全局对象，页面通过include('BrowserWindow')加载使用;
   <script src="docs/js/BrowserWindow.js" type="text/javascript" charset="utf-8"></script>
   
 ## 接口说明
-<ul><li class="param">函数接口:</li></ul>
+*    函数接口:
 
 <table id="method" class="table" >
      
 </table>
  
-<ul><li class="param">new BorwserWindow(options) BrowserWindowSettings 参数说明:</li></ul>
+*    new BorwserWindow(options) BrowserWindowSettings 参数说明:
 
 <table id="settings" class="table">
 </table>
 
-<ul><li class="param">事件说明:</li></ul>
+*    事件说明:
 
 <table id="event" class="table" >
      
@@ -88,7 +88,7 @@ var transparentWindow = new BrowserWindow({
 
 ## 无边框窗口
 
-无边框窗口没有标题栏，无法通过标题栏移动窗口，可以给html元素添加class="drag"给窗口增加移动功能
+无边框窗口没有标题栏，无法通过标题栏移动窗口，可以给html元素添加class="drag"给窗口增加移动功能, "drag" 可以通过AppSettings自定义
 
 ```html
 
@@ -172,9 +172,6 @@ app.setConfig({
 }); 
 ```
 
-<div id="text" class="example code" contenteditable="true">
-  <h3 id="output">移动鼠标到托盘上试试</h3>
-</div>
 
 ## 窗口函数
  

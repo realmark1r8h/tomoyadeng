@@ -89,6 +89,10 @@ namespace amo {
     }
     
     Any FrameTransfer::GetSource(IPCMessage::SmartType msg) {
+        /* CefString str;
+         CefRefPtr<CefStringVisitor> visitor;
+         m_pFrame->GetSource(str);
+         return str.ToString();*/
         return Undefined();
     }
     

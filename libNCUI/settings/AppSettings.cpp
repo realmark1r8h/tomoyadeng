@@ -37,7 +37,7 @@ namespace amo {
         
         
         DEFAULT_ARGS_SETTINGS(log_severity, LOGSEVERITY_VERBOSE);				//!< 日志等级
-        //DEFAULT_ARGS_SETTINGS(log_severity, LOGSEVERITY_DISABLE);				//!< 关闭, 日志太多
+        DEFAULT_ARGS_SETTINGS(log_severity, LOGSEVERITY_DISABLE);				//!< 关闭, 日志太多
         //release_dcheck_enabled , true);										//!< 开启release check, 没什么用
         
         //CefString(&javascript_flags) , "js-flags");							//!< 不知道怎么填

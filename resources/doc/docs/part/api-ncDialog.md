@@ -10,13 +10,13 @@ js自带的弹出框 会阻塞UI线程，UI线程与Render线程同步交互时�
   <script src="docs/js/dialog.js" type="text/javascript" charset="utf-8"></script>
   
 ## 接口说明
-<ul><li class="param">函数接口:</li></ul>
+*    函数接口:
 
 <table id="method" class="table" >
 </table>
  
  
-<ul><li class="param">对话框模式:</li></ul>
+*    对话框模式:
 
 <table id="settings" class="table">
 </table>

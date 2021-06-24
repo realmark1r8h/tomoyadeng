@@ -24,7 +24,6 @@
 		createEventTable($('#eventSettings'), eventArr);
 		includes('globalShortcut', 'BrowserWindow', 'dialog');
 		console.dir(globalShortcut);
-	alert(44);
 		var win = BrowserWindow.currentWindow;
 
 		$('#registerShortcut').on('click', function() {
@@ -59,8 +58,6 @@
 		});
 
 		globalShortcut.unique('hotkeydown', function(target) {
-			console.dir('322323');
-			console.dir(target);
 			dialog.alert(JSON.stringify(target));
 		});
 

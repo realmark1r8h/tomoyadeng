@@ -8,13 +8,13 @@
   <script src="docs/js/shell.js" type="text/javascript" charset="utf-8"></script>
   
 ## 接口说明
-<ul><li class="param">函数接口:</li></ul>
+*    函数接口:
 
 <table id="method" class="table" >
 </table>
  
  
-<ul><li class="param">对话框模式:</li></ul>
+*    对话框模式:
 
 <table id="settings" class="table">
 </table>

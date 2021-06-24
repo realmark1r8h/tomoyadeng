@@ -62,6 +62,7 @@ namespace amo {
         
         /*! @brief	托盘消息回调函数. */
         std::function<LRESULT(INT, WPARAM, LPARAM)> m_fnTrayMessageCallback;
+        /*! @brief	The clip message callback. */
         std::function<LRESULT(HWND, INT, WPARAM, LPARAM)> m_fnClipMessageCallback;
         
         

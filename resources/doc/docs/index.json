@@ -168,9 +168,9 @@
 						{
 							"name": "接口说明"
 						}, {
-							"name": "文件对话框"
+							"name": "操作说明"
 						}, {
-							"name": "弹出框"
+							"name": "事件监听"
 						}
 					],
 					"filter": "globalShortcut globalShortcut"

@@ -6,17 +6,17 @@
   <script src="docs/js/menu.js" type="text/javascript" charset="utf-8"></script>
   
 ## 接口说明
-<ul><li class="param">函数接口:</li></ul>
+*    函数接口:
 
 <table id="method" class="table" >
 </table>
  
-<ul><li class="param">new Menu(options) MenuSettings 参数说明:</li></ul>
+*    new Menu(options) MenuSettings 参数说明:
 
 <table id="settings" class="table">
 </table>
   
-<ul><li class="param">MenuItem 参数说明:</li></ul>
+*    MenuItem 参数说明:
 
 <table id="menuItemSettings" class="table">
 </table>

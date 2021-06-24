@@ -19,7 +19,7 @@
     initEvent('pause', '', '暂停下载时触发');
     initEvent('cancel', '', '取消下载时触发');
     initEvent('canceled', '', '取消下载完成后时触发');
-    initEvent('update', '', '下载数据更新时触发');
+    initEvent('update', 'Object, 下载状态', '下载数据更新时触发');
     initEvent('complete', '', '下载完成时触发');
 
     $(function() {

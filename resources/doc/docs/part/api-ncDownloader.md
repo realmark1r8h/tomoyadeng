@@ -9,18 +9,18 @@ Downloader为全局对象，页面通过include('Downloader')加载使用;
   <script src="docs/js/downloader.js" type="text/javascript" charset="utf-8"></script>
   
 ## 接口说明
-<ul><li class="param">函数接口:</li></ul>
+*    函数接口:
 
 <table id="method" class="table" >
 </table>
  
  
-<ul><li class="param">new Downloader(options)参数:</li></ul>
+*    new Downloader(options)参数:
 
 <table id="settings" class="table">
 </table>
   
-<ul><li class="param">可监听的事件:</li></ul>
+*    可监听的事件:
 
 <table id="event" class="table">
 </table>

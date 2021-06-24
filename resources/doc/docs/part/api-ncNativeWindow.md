@@ -6,17 +6,17 @@
   <script src="docs/js/NativeWindow.js" type="text/javascript" charset="utf-8"></script>
   
 ## 接口说明
-<ul><li class="param">函数接口:</li></ul>
+*    函数接口:
 
 <table id="method" class="table" >
 </table> 
 
-<ul><li class="param">new NativeWindow(options) NativeWindowSettings 参数说明:</li></ul>
+*    new NativeWindow(options) NativeWindowSettings 参数说明:
 
 <table id="settings" class="table">
 </table>
 
-<ul><li class="param">事件说明:</li></ul>
+*    事件说明:
 
 <table id="event" class="table" >
      
