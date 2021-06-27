@@ -3,7 +3,6 @@
 	settingsArr = [];
 	eventArr = [];
 
- 
 	initApi('MS', 'getName', 'String', '获取窗口名称');
 	initApi('MN', 'setName', '', '设置窗口名称', 'name, String, BrowserWindow 名称');
 
@@ -53,15 +52,14 @@
 	initApi('MN', 'flashFrame', '', '闪烁窗口');
 	initApi('MN', 'topmost', '', '置顶窗口， 同setAlwaysOnTop');
 	initApi('MS', 'isTopmost', '', '判断窗口是否置顶，同isAlwaysOnTop');
- 
+
 	initApi('MN', 'setHasShadow', '', '设置是否显示窗口阴影', 'hasShadow, Boolean, 是否显示');
 	initApi('MS', 'hasShadow', 'Boolean', '判断是否显示窗口阴影');
- 
 
 	initApi('MN', 'toggleFullScreen', '', '全屏/退出全屏');
 	initApi('MN', 'toggleVisible', '', '显示/隐藏');
 	initApi('MN', 'setIcon', '', '设置窗口图标');
- 
+
 	// initSettings
 	// NativeWindow Settings
 	initSettings('id', 'String', '窗口ID, 默认"0"');
@@ -92,6 +90,7 @@
 	initSettings('fullscreen', 'Boolean', '是否创建窗口时始其全屏，默认false');
 	initSettings('alwaysOnTop', 'Boolean', '是否置顶窗口，默认false');
 	initSettings('hasShadow', 'Boolean', '是否显示窗口阴影，默认true');
+	initSettings('esc', 'Boolean', '按下ESC时是否关闭窗口，默认false');
 
 	// Event
 	initEvent('create', '', '窗口创建时触发');

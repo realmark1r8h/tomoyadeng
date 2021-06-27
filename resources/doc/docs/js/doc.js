@@ -14766,6 +14766,7 @@ require('./polyfill-done.js');
         // check storage
         storageEnable = $.zui.store && $.zui.store.enable;
 
+
         // Setup ajax
         $.ajaxSetup({
             cache: false
@@ -14774,7 +14775,7 @@ require('./polyfill-done.js');
         // Load index.json
         loadData(INDEX_JSON, function(data, type) {
             var firstLoad = !sectionsShowed;
-
+	
             displaySection(data);
 
             if(firstLoad) {
@@ -14797,7 +14798,7 @@ require('./polyfill-done.js');
 
             $('.doc-version').text(data.version);
         });
-
+		
         // Bind events
         var oldActivePreivewId;
         var cancelClickInPage;

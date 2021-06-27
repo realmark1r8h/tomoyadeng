@@ -54,6 +54,8 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(windowColor, 0xffffffffu);
         DEFAULT_ARGS_SETTINGS(hasShadow, true);
         DEFAULT_ARGS_SETTINGS(focusable, true);
+        DEFAULT_ARGS_SETTINGS(esc, false);
+        
     }
     
     
@@ -98,6 +100,8 @@ namespace amo {
         UINT_ARGS_SETTING(windowColor);
         BOOL_ARGS_SETTING(hasShadow);
         BOOL_ARGS_SETTING(focusable);
+        
+        BOOL_ARGS_SETTING(esc);
         return ;
     }
     

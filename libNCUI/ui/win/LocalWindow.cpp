@@ -180,6 +180,23 @@ namespace amo {
         return LayeredWindow::HandleCustomMessage(uMsg, wParam, lParam, bHandled);
     }
     
+    LRESULT LocalWindow::OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+        switch (wParam) {
+        case VK_ESCAPE:
+            if (m_pNativeSettings->esc) {
+                ::PostMessage(m_hWnd, WM_CLOSE, NULL, NULL);
+                return TRUE;
+            }
+            
+            break;
+            
+        default:
+            break;
+        }
+        
+        return LayeredWindow::OnKeyDown(uMsg, wParam, lParam, bHandled);
+    }
+    
     void LocalWindow::Notify(TNotifyUI& msg) {
     
     
@@ -460,6 +477,8 @@ namespace amo {
         runner.reset(new UIMessageBroadcaster(nID));
         runner->Broadcast(msg);
     }
+    
+    
     
 }
 

@@ -43,7 +43,11 @@ namespace amo {
         } else {
             ptr.reset(new amo::loader(path));
             m_oMap[path] = ptr;
-            ptr->load();
+            bool bOk = ptr->load();
+            
+            if (!bOk) {
+                ptr.reset();
+            }
         }
         
         return ptr;

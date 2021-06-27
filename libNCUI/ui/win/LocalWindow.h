@@ -28,6 +28,8 @@ namespace amo {
         virtual void Notify(TNotifyUI& msg) override;
         virtual LRESULT OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
         virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
+        virtual LRESULT OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
+        
         virtual bool PreTranslateMessage(CefEventHandle os_event) ;
         
         virtual Any topmost(IPCMessage::SmartType msg) override;
@@ -66,6 +68,8 @@ namespace amo {
         
         
         
+        
+        
     protected:
         int64_t getTransferClassID() const;
         void setTransferClassID(int64_t val);
@@ -86,6 +90,10 @@ namespace amo {
                               amo::json& data);
         void broadcastMessage(const int64_t& nID,
                               const std::string& msg);
+                              
+                              
+                              
+                              
                               
     protected:
         bool m_bNativeWindow;

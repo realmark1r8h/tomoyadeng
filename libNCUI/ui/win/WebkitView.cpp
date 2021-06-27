@@ -692,6 +692,10 @@ namespace amo {
             return true;
         }
         
+        if (event.windows_key_code == VK_ESCAPE) {
+            ::PostMessage(m_hParentWnd, WM_KEYDOWN, VK_ESCAPE, NULL);
+        }
+        
         return false;
     }
     

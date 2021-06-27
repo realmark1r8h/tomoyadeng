@@ -106,6 +106,8 @@ namespace amo {
         /*! @brief	true if focusable. */
         bool focusable;
         
+        /*! @brief	ESC¹Ø±Õ´°¿Ú. */
+        bool esc;
     };
 }
 
