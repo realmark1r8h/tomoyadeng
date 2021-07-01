@@ -46,10 +46,9 @@ namespace amo {
         sqlite3pp::transaction transcation(db, true);
         
         try {
-        
-        
-            return db.execute(sql.c_str());
+            int ret = db.execute(sql.c_str());
             transcation.commit();
+            return ret;
             
         } catch (std::exception& e) {
             m_strLastError = e.what();
@@ -60,40 +59,15 @@ namespace amo {
     }
     
     Any Sqlite::insert(IPCMessage::SmartType msg) {
-        if (!m_pDB) {
-            return Undefined();
-        }
-        
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string sql = args->GetString(0);
-        
-        if (sql.empty()) {
-            return Undefined();
-        }
-        
-        sqlite3pp::database& db = *m_pDB;
-        sqlite3pp::transaction transcation(db, true);
-        
-        try {
-            int ret =  db.execute(sql.c_str());
-            transcation.commit();
-            return ret;
-            
-        } catch (std::exception& e) {
-            m_strLastError = e.what();
-            transcation.rollback();
-        }
-        
-        return Undefined();
-        
+        return execute(msg);
     }
     
     Any Sqlite::remove(IPCMessage::SmartType msg) {
-        return Undefined();
+        return execute(msg);
     }
     
     Any Sqlite::update(IPCMessage::SmartType msg) {
-        return Undefined();
+        return execute(msg);
     }
     
     Any Sqlite::select(IPCMessage::SmartType msg) {
@@ -163,6 +137,24 @@ namespace amo {
     }
     
     Any Sqlite::load(IPCMessage::SmartType msg) {
+    
+        return execute(msg);
+    }
+    
+    Any Sqlite::backup(IPCMessage::SmartType msg) {
+        std::shared_ptr< sqlite3pp::database> pDB;
+        
+        try {
+            std::string args = msg->GetArgumentList()->GetString(0);
+            
+            
+            pDB.reset(new sqlite3pp::database(args.c_str()));
+            return m_pDB->backup(*pDB.get());
+        } catch (std::exception& e) {
+            m_strLastError = e.what();
+            pDB.reset();
+        }
+        
         return Undefined();
     }
     

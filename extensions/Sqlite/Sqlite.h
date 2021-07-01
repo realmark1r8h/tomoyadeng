@@ -16,6 +16,7 @@ namespace amo {
         virtual Any update(IPCMessage::SmartType msg) override;
         virtual Any select(IPCMessage::SmartType msg) override;
         virtual Any load(IPCMessage::SmartType msg) override;
+        virtual Any backup(IPCMessage::SmartType msg) override;
         
     private:
         /*! @brief	当前数据库连接是否有效. */
