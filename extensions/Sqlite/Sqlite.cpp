@@ -45,8 +45,14 @@ namespace amo {
         sqlite3pp::database& db = *m_pDB;
         sqlite3pp::transaction transcation(db, true);
         
+		sqlite3pp::command cmd(
+			db, sql.c_str());
+		 
+		int cc = cmd.execute();
+
         try {
             int ret = db.execute(sql.c_str());
+			ret = db.changes();
             transcation.commit();
             return ret;
             
@@ -93,12 +99,37 @@ namespace amo {
                 std::vector<std::string> keys;
                 std::vector<std::string> types;
                 
+				//int c = qry.column_count();
+				//int d = qry.step(); 
+				 
+
+				bool bQueryData = true;
                 // 获取类型名称、字段名
                 for (int i = 0; i < qry.column_count(); ++i) {
-                    keys.push_back(qry.column_name(i));
-                    types.push_back(qry.column_decltype(i));
+					const char* columnName = qry.column_name(i);
+					if (columnName != NULL) {
+						keys.push_back(columnName);
+					}
+					else {
+						bQueryData = false;
+						break;
+					}
+                 
+					const char* columnType = qry.column_decltype(i);
+					if (columnType != NULL) {
+						types.push_back(qry.column_decltype(i));
+					}
+					else {
+						bQueryData = false;
+						types.push_back("INTEGER");
+						break;
+					}
                 }
                 
+				if (!bQueryData) {
+					//return Undefined();
+				}
+
                 // 获取数据
                 amo::json jsonArr;
                 jsonArr.set_array();
@@ -110,17 +141,35 @@ namespace amo {
                     
                     for (int j = 0; j < qry.column_count(); ++j) {
                     
-                        if (types.at(j) == "INTEGER") {
+						if (types.at(j) == "Boolean") {
+							json.put(keys.at(j), (*iter).get<int>(j) != 0);
+						} else if (types.at(j) == "INTEGER"
+							|| types.at(j) == "SMALLINT"
+							|| types.at(j) == "DECIMAL") {
                             json.put(keys.at(j), (*iter).get<int>(j));
-                        } else if (types.at(j) == "TEXT") {
+                        } else if (types.at(j) == "TEXT" 
+							|| types.at(j) == "VARCHAR"
+							|| types.at(j) == "CHAR"
+							|| types.at(j) == "GRAPHIC"
+							|| types.at(j) == "VARGRAPHIC") {
                             json.put(keys.at(j), (*iter).get<std::string>(j));
-                        } else if (types.at(j) == "REAL") {
+                        } else if (types.at(j) == "REAL"
+							|| types.at(j) == "FLOAT"
+							|| types.at(j) == "DOUBLE") {
                             json.put(keys.at(j), (*iter).get<double>(j));
                         } else if (types.at(j) == "BLOB") {
                         
-                        }
-                        
-                        
+						} else if (types.at(j) == "DATE") {
+							json.put(keys.at(j), (*iter).get<std::string>(j));
+						} else if (types.at(j) == "TIME") {
+							json.put(keys.at(j), (*iter).get<std::string>(j));
+						} else if (types.at(j) == "DATETIME") {
+							json.put(keys.at(j), (*iter).get<std::string>(j));
+						}
+						else if (types.at(j) == "TIMESTAMP") {
+							json.put(keys.at(j), (*iter).get<std::string>(j));
+						}
+                         
                     }
                     
                     jsonArr.push_back(json);

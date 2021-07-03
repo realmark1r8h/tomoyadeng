@@ -91,6 +91,8 @@
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="Sqlite.h" />
     <ClInclude Include="SqliteTransfer.h" />
+    <ClInclude Include="src\sqlite3pp.h" />
+    <ClInclude Include="src\sqlite3ppext.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -105,6 +107,14 @@
     </ClCompile>
     <ClCompile Include="Sqlite.cpp" />
     <ClCompile Include="SqliteTransfer.cpp" />
+    <ClCompile Include="src\sqlite3pp.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\sqlite3ppext.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

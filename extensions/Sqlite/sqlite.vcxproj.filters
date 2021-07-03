@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="sqlite3pp">
+      <UniqueIdentifier>{38daeac1-3e5f-4f80-b471-00c448eb0c22}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -33,6 +36,12 @@
     <ClInclude Include="Sqlite.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\sqlite3pp.h">
+      <Filter>sqlite3pp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sqlite3ppext.h">
+      <Filter>sqlite3pp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -46,6 +55,12 @@
     </ClCompile>
     <ClCompile Include="SqliteTransfer.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sqlite3pp.cpp">
+      <Filter>sqlite3pp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sqlite3ppext.cpp">
+      <Filter>sqlite3pp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

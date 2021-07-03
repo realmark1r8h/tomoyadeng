@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "headeronly_src/sqlite3pp.h"
+#include "src/sqlite3pp.h"
 #include "SqliteTransfer.h"
 
 namespace amo {
