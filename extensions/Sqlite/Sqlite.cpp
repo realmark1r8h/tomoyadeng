@@ -110,17 +110,30 @@ namespace amo {
                     
                     for (int j = 0; j < qry.column_count(); ++j) {
                     
-                        if (types.at(j) == "INTEGER") {
+                        if (types.at(j) == "INTEGER"
+							|| types.at(j) == "SMALLINT"
+							|| types.at(j) == "DECIMAL") {
                             json.put(keys.at(j), (*iter).get<int>(j));
-                        } else if (types.at(j) == "TEXT") {
+                        } else if (types.at(j) == "TEXT" 
+							|| types.at(j) == "VARCHAR"
+							|| types.at(j) == "CHAR"
+							|| types.at(j) == "GRAPHIC"
+							|| types.at(j) == "VARGRAPHIC") {
                             json.put(keys.at(j), (*iter).get<std::string>(j));
-                        } else if (types.at(j) == "REAL") {
+                        } else if (types.at(j) == "REAL"
+							|| types.at(j) == "FLOAT"
+							|| types.at(j) == "DOUBLE") {
                             json.put(keys.at(j), (*iter).get<double>(j));
                         } else if (types.at(j) == "BLOB") {
                         
-                        }
-                        
-                        
+						} else if (types.at(j) == "DATE") {
+							json.put(keys.at(j), (*iter).get<std::string>(j));
+						} else if (types.at(j) == "TIME") {
+							json.put(keys.at(j), (*iter).get<std::string>(j));
+						} else if (types.at(j) == "TIMESTAMP") {
+							json.put(keys.at(j), (*iter).get<std::string>(j));
+						}
+                         
                     }
                     
                     jsonArr.push_back(json);
