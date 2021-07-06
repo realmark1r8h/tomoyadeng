@@ -153,6 +153,8 @@ namespace amo {
         //command_line->AppendSwitch("--allow-running-insecure-content");
         // 此参数解决多窗口问题
         command_line->AppendSwitch("enable-gpu");
+        // 允许调用摄像头
+        command_line->AppendSwitch("enable-media-stream");
         //command_line->AppendSwitch("ppapi-out-of-process");
         command_line->AppendSwitch("process-per-site");
         // 使用npapi flash 插件 部分网页会导致程序无响应死掉 百度音乐

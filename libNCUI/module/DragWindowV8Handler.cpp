@@ -168,7 +168,9 @@ namespace amo {
             }
         }
         
-        strRegex = dragClassName + "\\b|" + noDragClassName + "\\b";
+        strRegex =  dragClassName + "\\b|" + noDragClassName + "\\b";
+        
+        
         
         CefRefPtr<CefBrowser> browser;
         browser = CefV8Context::GetCurrentContext()->GetBrowser();
