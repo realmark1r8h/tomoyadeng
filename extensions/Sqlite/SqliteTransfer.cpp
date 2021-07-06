@@ -50,6 +50,10 @@ namespace amo {
         return Undefined();
     }
     
+    Any SqliteTransfer::query(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
     Any SqliteTransfer::OnCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
         std::string strPath = args->GetString(0);
