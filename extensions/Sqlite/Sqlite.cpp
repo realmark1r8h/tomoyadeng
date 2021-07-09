@@ -140,7 +140,6 @@ namespace amo {
                     amo::json json;
                     
                     for (int j = 0; j < qry.column_count(); ++j) {
-                    
 						if (types.at(j) == "Boolean") {
 							json.put(keys.at(j), (*iter).get<int>(j) != 0);
 						} else if (types.at(j) == "INTEGER"
