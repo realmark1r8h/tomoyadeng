@@ -140,11 +140,11 @@ namespace amo {
                     amo::json json;
                     
                     for (int j = 0; j < qry.column_count(); ++j) {
-                        if (types.at(j) == "Boolean") {
-                            json.put(keys.at(j), (*iter).get<int>(j) != 0);
-                        } else if (types.at(j) == "INTEGER"
-                                   || types.at(j) == "SMALLINT"
-                                   || types.at(j) == "DECIMAL") {
+						if (types.at(j) == "Boolean") {
+							json.put(keys.at(j), (*iter).get<int>(j) != 0);
+						} else if (types.at(j) == "INTEGER"
+							|| types.at(j) == "SMALLINT"
+							|| types.at(j) == "DECIMAL") {
                             json.put(keys.at(j), (*iter).get<int>(j));
                         } else if (types.at(j) == "TEXT"
                                    || types.at(j) == "VARCHAR"
@@ -158,16 +158,17 @@ namespace amo {
                             json.put(keys.at(j), (*iter).get<double>(j));
                         } else if (types.at(j) == "BLOB") {
                         
-                        } else if (types.at(j) == "DATE") {
-                            json.put(keys.at(j), (*iter).get<std::string>(j));
-                        } else if (types.at(j) == "TIME") {
-                            json.put(keys.at(j), (*iter).get<std::string>(j));
-                        } else if (types.at(j) == "DATETIME") {
-                            json.put(keys.at(j), (*iter).get<std::string>(j));
-                        } else if (types.at(j) == "TIMESTAMP") {
-                            json.put(keys.at(j), (*iter).get<std::string>(j));
-                        }
-                        
+						} else if (types.at(j) == "DATE") {
+							json.put(keys.at(j), (*iter).get<std::string>(j));
+						} else if (types.at(j) == "TIME") {
+							json.put(keys.at(j), (*iter).get<std::string>(j));
+						} else if (types.at(j) == "DATETIME") {
+							json.put(keys.at(j), (*iter).get<std::string>(j));
+						}
+						else if (types.at(j) == "TIMESTAMP") {
+							json.put(keys.at(j), (*iter).get<std::string>(j));
+						}
+                         
                     }
                     
                     jsonArr.push_back(json);
