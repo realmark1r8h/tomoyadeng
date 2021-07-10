@@ -62,10 +62,6 @@ namespace amo {
         //clipboard.writeText("sdfsdfs");
         clipboard.getClipboardFiles();
         
-        /* std::shared_ptr<amo::loader> pLoader(new amo::loader());
-         pLoader->load("E:\\amoylel-Out\\Binary.UD32\\Sqlite.dll");
-         int n = 3;*/
-        
     }
     
     void foo(std::string ss, Any val) {
