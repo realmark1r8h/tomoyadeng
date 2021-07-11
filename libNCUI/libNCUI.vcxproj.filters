@@ -417,6 +417,16 @@
     <ClCompile Include="ui\win\tray\TrayBase.cpp">
       <Filter>ui\win\tray</Filter>
     </ClCompile>
+    <ClCompile Include="ui\win\SplashWindow.cpp">
+      <Filter>ui\win</Filter>
+    </ClCompile>
+    <ClCompile Include="transfer\SplashTransfer.cpp">
+      <Filter>transfer</Filter>
+    </ClCompile>
+    <ClCompile Include="settings\SplashWindowSettings.cpp" />
+    <ClCompile Include="ui\win\PictureView.cpp">
+      <Filter>ui\win</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context\AppContext.h">
@@ -853,6 +863,18 @@
     </ClInclude>
     <ClInclude Include="ui\win\tray\TrayBase.h">
       <Filter>ui\win\tray</Filter>
+    </ClInclude>
+    <ClInclude Include="transfer\SplashTransfer.h">
+      <Filter>transfer</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\SplashWindow.h">
+      <Filter>ui\win</Filter>
+    </ClInclude>
+    <ClInclude Include="settings\SplashWindowSettings.h">
+      <Filter>settings</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\PictureView.h">
+      <Filter>ui\win</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

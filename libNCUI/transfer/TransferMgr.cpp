@@ -32,6 +32,7 @@
 #include "transfer/KeyboardTransfer.h"
 #include "transfer/MouseTransfer.h"
 #include "transfer/DesktopTransfer.h"
+#include "transfer/SplashTransfer.h"
 
 namespace amo {
 
@@ -98,6 +99,8 @@ namespace amo {
                     ClassTransfer::getUniqueTransfer<KeyboardTransfer>());
         AddTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<MouseTransfer>());
+        AddTransfer(nBrowserID,
+                    ClassTransfer::getUniqueTransfer<SplashTransfer>());
     }
     
     void RendererTransferMgr::ReturnSyncResult(int nBrowserID,

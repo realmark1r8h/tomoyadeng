@@ -87,6 +87,8 @@
 						}, {
 							"name": "设置配置信息"
 						}, {
+							"name": "全局数据"
+						}, {
 							"name": "获取绝对路径"
 						}, {
 							"name": "URL映射"
@@ -278,6 +280,21 @@
 					],
 					"filter": "shell shell"
 				}, {
+					"id": "ncSplash",
+					"name": "splash",
+					"icon": "icon-star",
+					"desc": "splash",
+					"topics": [
+						{
+							"name": "接口说明"
+						}, {
+							"name": "显示启动窗口"
+						}, {
+							"name": "隐藏启动窗口"
+						}
+					],
+					"filter": "shell shell"
+				},{
 					"id": "ncSystem",
 					"name": "system",
 					"icon": "icon-star",

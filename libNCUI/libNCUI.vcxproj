@@ -167,6 +167,7 @@
     <ClCompile Include="settings\MenuWindowSettings.cpp" />
     <ClCompile Include="settings\NativeWindowSettings.cpp" />
     <ClCompile Include="settings\RequestSettings.cpp" />
+    <ClCompile Include="settings\SplashWindowSettings.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -191,6 +192,7 @@
     <ClCompile Include="transfer\NetTransfer.cpp" />
     <ClCompile Include="transfer\RequestTransfer.cpp" />
     <ClCompile Include="transfer\ShellTransfer.cpp" />
+    <ClCompile Include="transfer\SplashTransfer.cpp" />
     <ClCompile Include="transfer\SystemInfo.cpp" />
     <ClCompile Include="transfer\SystemTransfer.cpp" />
     <ClCompile Include="transfer\TransferMgr.cpp" />
@@ -215,8 +217,10 @@
     <ClCompile Include="ui\win\NativeWindowProxy.cpp" />
     <ClCompile Include="ui\win\OffscreenDragdrop.cpp" />
     <ClCompile Include="ui\win\OffScreenRenderView.cpp" />
+    <ClCompile Include="ui\win\PictureView.cpp" />
     <ClCompile Include="ui\win\RenderView.cpp" />
     <ClCompile Include="ui\win\SharedMemory.cpp" />
+    <ClCompile Include="ui\win\SplashWindow.cpp" />
     <ClCompile Include="ui\win\tray\NotifyWindow.cpp" />
     <ClCompile Include="ui\win\tray\Tray.cpp" />
     <ClCompile Include="ui\win\tray\TrayBase.cpp" />
@@ -310,6 +314,7 @@
     <ClInclude Include="settings\MenuWindowSettings.h" />
     <ClInclude Include="settings\NativeWindowSettings.h" />
     <ClInclude Include="settings\RequestSettings.h" />
+    <ClInclude Include="settings\SplashWindowSettings.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="transfer\AppTransfer.h" />
@@ -334,6 +339,7 @@
     <ClInclude Include="transfer\NetTransfer.h" />
     <ClInclude Include="transfer\RequestTransfer.h" />
     <ClInclude Include="transfer\ShellTransfer.h" />
+    <ClInclude Include="transfer\SplashTransfer.h" />
     <ClInclude Include="transfer\SystemInfo.h" />
     <ClInclude Include="transfer\SystemTransfer.h" />
     <ClInclude Include="transfer\Transfer.hpp" />
@@ -363,8 +369,10 @@
     <ClInclude Include="ui\win\OffscreenDragdrop.h" />
     <ClInclude Include="ui\win\OffscreenDragdropEvents.h" />
     <ClInclude Include="ui\win\OffScreenRenderView.h" />
+    <ClInclude Include="ui\win\PictureView.h" />
     <ClInclude Include="ui\win\RenderView.h" />
     <ClInclude Include="ui\win\SharedMemory.h" />
+    <ClInclude Include="ui\win\SplashWindow.h" />
     <ClInclude Include="ui\win\tray\NotifyWindow.h" />
     <ClInclude Include="ui\win\tray\Tray.h" />
     <ClInclude Include="ui\win\tray\TrayBase.h" />

@@ -5,6 +5,7 @@
 namespace amo {
     void ViewRenderer::InsertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) {
         m_pBitmap = image;
+        
         PaintStatusImage(GetManager()->GetPaintDC());
     }
     

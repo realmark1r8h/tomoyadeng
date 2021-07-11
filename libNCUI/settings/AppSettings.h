@@ -46,8 +46,13 @@ namespace amo {
         std::string getSpecialFolder(int nType);
     public:
     
+    
+    
         /*! @brief	是否允许外部配置文件. manifest.json 里面的内容Ansi编码， 不能用Utf8 */
         bool manifest;
+        
+        /*! @brief	是否显示启动画面. */
+        bool showSplash;
         
         /*! @brief	是否使用NODEJS. */
         bool useNode;
@@ -108,7 +113,6 @@ namespace amo {
         std::string desktop;
         /*! @brief	用户文档目录的路径. */
         std::string documents;
-        
         
         
         

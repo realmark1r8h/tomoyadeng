@@ -12,6 +12,8 @@ namespace amo {
     //Ò³ÃæäÖÈ¾¿Ø¼þ
     class ViewRenderer : public CControlUI {
     public:
+    
+    public:
         ViewRenderer();
         virtual ~ViewRenderer();
         LPCTSTR GetClass() const override;
@@ -20,6 +22,7 @@ namespace amo {
         virtual void InsertBitmap(std::shared_ptr<Gdiplus::Bitmap> image);
     protected:
         std::shared_ptr<Gdiplus::Bitmap> m_pBitmap;
+        
     };
     
     class LayerViewRender : public ViewRenderer {

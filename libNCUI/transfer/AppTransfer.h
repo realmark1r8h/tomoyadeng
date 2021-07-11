@@ -41,6 +41,12 @@ namespace amo {
         Any makeSingleInstance(IPCMessage::SmartType msg);
         Any releaseSingleInstance(IPCMessage::SmartType msg);
         
+        Any data(IPCMessage::SmartType msg);
+        Any setGlobal(IPCMessage::SmartType msg);
+        Any getGlobal(IPCMessage::SmartType msg);
+        
+        
+        
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(AppTransfer, ClassTransfer)
         
         
@@ -58,6 +64,9 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(quit, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(exit, TransferFuncStatic)
         
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(data, TransferFuncProperty | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(setGlobal, TransferFuncStatic)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getGlobal, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         
@@ -68,6 +77,9 @@ namespace amo {
         
         std::list<std::pair<std::string, std::string > > m_oUrlToNativeMap;
         CefRefPtr<CefRunFileDialogCallback> m_pRunFileDialogCallback;
+        
+        /*! @brief	全局数据. */
+        amo::json m_global;
     };
 }
 

@@ -110,9 +110,12 @@ public:
         StringLoader strLoader(hInstance);
         bChildProcess = false;
         bNodeDebug = false;
+        bShowSplash = false;
         
         strAppSettings = strLoader.load(108);
         strBrowserSettings = strLoader.load(110);
+        strSplashSettings = strLoader.load(111);
+        
         bool bManifest = (strAppSettings.find("\"manifest\":true") != -1);
         
         
@@ -142,7 +145,9 @@ public:
         
         if (m_bManifest && manifestJson.is_valid() && !manifestJson.empty()) {
             amo::json appSettingsJson = manifestJson.get_child("appSettings");
-            amo::json browserWindowSettingsJson = manifestJson.get_child("browserWindowSettings");;
+            amo::json browserWindowSettingsJson = manifestJson.get_child("browserWindowSettings");
+            
+            amo::json splashWindowSettingsJson = manifestJson.get_child("splashWindowSettings");
             
             if (appSettingsJson.is_valid()) {
                 amo::json json(strAppSettings);
@@ -166,6 +171,17 @@ public:
                 strBrowserSettings = json.to_string();
             }
             
+            if (splashWindowSettingsJson.is_valid()) {
+                amo::json json(strSplashSettings);
+                
+                if (!json.is_valid()) {
+                    json = amo::json();
+                }
+                
+                json.join(splashWindowSettingsJson);
+                strSplashSettings = json.to_string();
+            }
+            
         }
         
         
@@ -174,10 +190,14 @@ public:
         amo::string strBrowser(strBrowserSettings, false);
         strBrowserSettings = strBrowser.replace(" ", "");
         
+        amo::string strSplash(strSplashSettings, false);
+        strSplashSettings = strSplash.replace(" ", "");
+        
         
         bUseNode = (strAppSettings.find("\"useNode\":true") != -1);
         bNodeProcess = (strAppSettings.find("\"useNodeProcess\":true") != -1);
         bNodeDebug = (strAppSettings.find("\"debugNode\":true") != -1);
+        bShowSplash = (strAppSettings.find("\"showSplash\":true") != -1);
         
         if (bUseNode) {
             m_strJsFile = amo::json(strAppSettings).getString("main");
@@ -284,9 +304,11 @@ public:
     bool bChildProcess;		//进程类型
     std::string strAppSettings;	//程序设置
     std::string strBrowserSettings; //窗口设置
+    std::string strSplashSettings; //窗口设置
     bool bUseNode;	// 是否使用NodeJS
     bool bNodeProcess;// 是否在单独的进程中运行nodejs
     bool bNodeDebug; // 是否调用NodeJS
+    bool bShowSplash; // 是否显示Splash
     std::string strSharedMemoryName;		//共享内存名
     HINSTANCE hInstance;
     std::shared_ptr<managed_shared_memory> segment;
@@ -306,14 +328,23 @@ void runCefInCefProcess() {
     amo::path p(amo::path::getExeDir());
     p.append("libNCUI.dll");
     loader.load(p.c_str());
-    typedef bool(*fnUpdateConfig)(const std::string&);
-    fnUpdateConfig fnUpdateAppSettings = (fnUpdateConfig)loader.load_symbol("UpdateAppSettings");
+    typedef bool(*FuncUpdateConfig)(const std::string&);
+    
+    // app
+    FuncUpdateConfig fnUpdateAppSettings = (FuncUpdateConfig)loader.load_symbol("UpdateAppSettings");
     std::string strAppArgs = amo::string(args->strAppSettings, false).to_utf8();
     fnUpdateAppSettings(strAppArgs);
-    fnUpdateConfig fnUpdateArgsSettings = (fnUpdateConfig)loader.load_symbol("UpdateArgsSettings");
     
+    // BrowserWindow
+    FuncUpdateConfig fnUpdateBrowserSettings = (FuncUpdateConfig)loader.load_symbol("UpdateBrowserSettings");
     std::string strBrowserArgs = amo::string(args->strBrowserSettings, false).to_utf8();
-    fnUpdateArgsSettings(strBrowserArgs);
+    fnUpdateBrowserSettings(strBrowserArgs);
+    
+    // SplashWindow
+    FuncUpdateConfig fnUpdateSplashSettings = (FuncUpdateConfig)loader.load_symbol("UpdateSplashSettings");
+    std::string strSplashArgs = amo::string(args->strSplashSettings, false).to_utf8();
+    fnUpdateSplashSettings(strSplashArgs);
+    
     fnSetMessageQueue setMessageQueue = (fnSetMessageQueue)loader.load_symbol("setMessageQueue");
     setMessageQueue(args->strMessageQueue);
     

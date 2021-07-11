@@ -63,7 +63,8 @@ extern "C" {
     NCUI_EXPORT void NativeMessageAdapter(std::function<bool(IPCMessage::SmartType)> cb);
     NCUI_EXPORT void test1(IPCMessage::SmartType msg);
     NCUI_EXPORT void UpdateAppSettings(const std::string& str);
-    NCUI_EXPORT void UpdateArgsSettings(const std::string& str);
+    NCUI_EXPORT void UpdateBrowserSettings(const std::string& str);
+    NCUI_EXPORT void UpdateSplashSettings(const std::string& str);
     NCUI_EXPORT void setMessageQueue(const std::string& strName);
     
     NCUI_EXPORT int run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow);

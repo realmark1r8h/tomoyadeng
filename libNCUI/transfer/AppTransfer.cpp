@@ -198,6 +198,60 @@ namespace amo {
         return Undefined();
     }
     
+    Any AppTransfer::data(IPCMessage::SmartType msg) {
+        return m_global;
+    }
+    
+    Any AppTransfer::setGlobal(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        
+        Any& val = args->GetValue(0);
+        
+        if (val.type() == AnyValueType<amo::json>::value) {
+            amo::json json = val;
+            m_global.join(json);
+            
+        }
+        
+        return Undefined();
+    }
+    
+    Any AppTransfer::getGlobal(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        
+        Any& val = args->GetValue(0);
+        auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
+        
+        if (val.type() == AnyValueType<Nil>::value) {
+            // 返回所有设置
+            return m_global;
+            
+        } else  if (val.type() == AnyValueType<std::string>::value) {
+            std::string strKey = args->GetString(0);
+            auto& json = m_global;
+            
+            if (json.is_bool(strKey)) {
+                return json.getBool(strKey);
+            } else if (json.is_int(strKey)) {
+                return json.getInt(strKey);
+            } else if (json.is_string(strKey)) {
+                return json.getString(strKey);
+            } else if (json.is_double(strKey)) {
+                return json.get<double>(strKey);
+            } else if (json.is_uint(strKey)) {
+                return (int)json.getUint(strKey);
+            } else if (json.is_object(strKey)) {
+                return json.getJson(strKey);
+            } else {
+                return Undefined();
+            }
+            
+            // 返回单项设置
+        }
+        
+        return Undefined();
+    }
+    
     Any AppTransfer::getConfig(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
         
@@ -222,8 +276,10 @@ namespace amo {
                 return json.get<double>(strKey);
             } else if (json.is_uint(strKey)) {
                 return (int)json.getUint(strKey);
+            } else if (json.is_object(strKey)) {
+                return json.getJson(strKey);
             } else {
-                return json.getString(strKey);
+                return Undefined();
             }
             
             // 返回单项设置

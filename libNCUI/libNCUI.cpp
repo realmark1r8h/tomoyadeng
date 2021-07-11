@@ -19,7 +19,7 @@
 #include "ui/win/RenderView.h"
 #include "handler/RenderHandler.h"
 #include "ui/win/RenderView.h"
-
+#include "settings/SplashWindowSettings.h"
 #include "include/cef_parser.h"
 
 
@@ -133,10 +133,12 @@ NCUI_EXPORT void UpdateAppSettings(const std::string& str) {
     amo::AppContext::getInstance()->getDefaultAppSettings()->UpdateArgsSettings(str);
 }
 
-NCUI_EXPORT void UpdateArgsSettings(const std::string& str) {
+NCUI_EXPORT void UpdateBrowserSettings(const std::string& str) {
     amo::AppContext::getInstance()->getDefaultBrowserSettings()->UpdateArgsSettings(str);
 }
-
+NCUI_EXPORT void UpdateSplashSettings(const std::string& str) {
+    amo::AppContext::getInstance()->getDefaultSplashSettings()->UpdateArgsSettings(str);
+}
 NCUI_EXPORT int Run(HINSTANCE hInstance) {
     CefEnableHighDPISupport();
     CefMainArgs main_args(hInstance);

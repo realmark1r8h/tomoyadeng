@@ -60,6 +60,7 @@ namespace amo {
         
         
         DEFAULT_ARGS_SETTINGS(manifest, true);
+        DEFAULT_ARGS_SETTINGS(showSplash, false);
         DEFAULT_ARGS_SETTINGS(useNode, false);
         DEFAULT_ARGS_SETTINGS(useNodeProcess, false);
         DEFAULT_ARGS_SETTINGS(debugNode, false);
@@ -169,7 +170,7 @@ namespace amo {
         UpdateCefAppSettings();
         
         BOOL_ARGS_SETTING(manifest);
-        
+        BOOL_ARGS_SETTING(showSplash);
         BOOL_ARGS_SETTING(useNode);
         BOOL_ARGS_SETTING(useNodeProcess);
         BOOL_ARGS_SETTING(debugNode);

@@ -231,6 +231,31 @@ app.setConfig({
 </div>
 
 
+## 全局数据
+
+```html
+include('app');
+// 使用app的global属性获取全局数据
+val val = app.global;
+// 使用getGlobal获取全局数据
+var val = app.getGlobal();
+// 使用getGlobal获取特定数据
+var val =app.getGlobal('key');
+```
+ 
+ <div class="row">
+     <div class="col-xs-3">
+        <button class ="btn btn-outline-primary btn-block" id="setGlobal">设置全局数据</button>
+    </div>
+    <div class="col-xs-3">
+        <button class ="btn btn-outline-primary btn-block" id="getGlobal">获取全局数据</button>
+    </div>
+    <div class="col-xs-3">
+        <button class ="btn btn-outline-primary btn-block" id="global2">使用属性获取全局数据</button>
+    </div>
+</div>
+
+
 ## 获取绝对路径
 ```html
 include('app');

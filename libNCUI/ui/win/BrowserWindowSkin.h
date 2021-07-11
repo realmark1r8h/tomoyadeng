@@ -15,6 +15,8 @@ extern const char skinMenuElementMisc[];
 
 extern const char skinNotifyWindow[];
 
+extern const char skinSplashWindow[];
+
 extern const char skinNCUI[];
 
 

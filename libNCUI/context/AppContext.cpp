@@ -19,6 +19,9 @@
 #include <amo/loader.hpp>
 #include "transfer/ClassTransfer.hpp"
 #include "transfer/AppTransfer.h"
+#include "../ui/win/SplashWindow.h"
+#include "../settings/SplashWindowSettings.h"
+#include "../transfer/SplashTransfer.h"
 
 namespace {
 
@@ -205,6 +208,16 @@ namespace amo {
         return m_pBrowserSettings;
     }
     
+    std::shared_ptr<SplashWindowSettings> AppContext::getDefaultSplashSettings() {
+        if (m_pSplashSettings) {
+            return m_pSplashSettings;
+        }
+        
+        m_pSplashSettings.reset(new SplashWindowSettings());
+        return m_pSplashSettings;
+    }
+    
+    
     int AppContext::executeProcess(CefMainArgs& main_args) {
         //
         if (!amo::log::initialize()) {
@@ -278,6 +291,21 @@ namespace amo {
         auto manager = BrowserWindowManager::getInstance();
         manager->init();
         
+        if (getDefaultAppSettings()->showSplash) {
+            ClassTransfer::getUniqueTransfer<SplashTransfer>()->create(getDefaultSplashSettings());
+        }
+        
+        
+        
+        //SplashWindow* window = new SplashWindow(m_pSplashSettings);
+        //window->Create(NULL,
+        //               _T(""),
+        //               UI_WNDSTYLE_FRAME,
+        //               WS_EX_TOOLWINDOW,
+        //               960, 650, 0, 0);
+        //// bug,
+        //window->ShowWindow(true);
+        //window->CenterWindow();
         
         //getDefaultAppSettings()->useNode = false;
         if (!getDefaultAppSettings()->useNode) {

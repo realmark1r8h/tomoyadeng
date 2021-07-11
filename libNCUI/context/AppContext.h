@@ -29,6 +29,7 @@ enum ProcessType {
 };
 
 namespace amo {
+    class SplashWindowSettings;
     class BrowserWindowManager;
     /*!
      * @class	AppContext
@@ -54,7 +55,7 @@ namespace amo {
         std::shared_ptr<NodeMessageHandler> getNodeMessageHandler();
         std::shared_ptr<AppSettings>  getDefaultAppSettings();
         std::shared_ptr<BrowserWindowSettings> getDefaultBrowserSettings();
-        
+        std::shared_ptr<SplashWindowSettings> getDefaultSplashSettings();
         std::shared_ptr<BrowserWindowManager> getBrowserWindowManager();
         ProcessType getProcessType();
         
@@ -73,6 +74,7 @@ namespace amo {
         CefRefPtr<CefCommandLine>   m_pCommandLine;													//!< 命令行参数
         std::shared_ptr<AppSettings> m_pAppSettings;												//!< 浏览器全局设置
         std::shared_ptr<BrowserWindowSettings> m_pBrowserSettings;										//!< 系统配置
+        std::shared_ptr<SplashWindowSettings> m_pSplashSettings;										//!< 系统配置
         std::shared_ptr<DummyClientHandler> m_pClientHandler;										//!< 浏览器事件回调句柄ClientHandler;
         std::shared_ptr<NodeMessageHandler> m_pNodeMessageHandler;									//!< 与NodeJs交互Handler
         std::shared_ptr<amo::timer> m_timer;

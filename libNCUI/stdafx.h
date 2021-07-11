@@ -165,6 +165,7 @@ using namespace DuiLib;
 #include "ui/win/NativeWindow.h"
 #include "ui/win/OffScreenRenderView.h"
 #include "ui/win/ViewRenderer.h"
+#include "ui/win/PictureView.h"
 #include "ui/win/RenderView.h"
 #include "ui/win/LayeredWindow.h"
 #include "ui/win/OffscreenDragdrop.h"
