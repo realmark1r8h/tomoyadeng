@@ -58,9 +58,7 @@ namespace amo {
         amo::string file(m_pSplashSettings->image, true);
         m_pPictureView->setPicture(file.to_wide());
         
-        
     }
-    
     
     
     void SplashWindow::showPictureView() {
@@ -71,14 +69,9 @@ namespace amo {
         
     }
     
-    void SplashWindow::setPicture(const std::string& filePath) {
-        amo::string file(filePath, true);
-        m_pPictureView->setPicture(file.to_wide());
-    }
-    
-    
     void SplashWindow::OnFinalMessage(HWND hWnd) {
         NativeWindow::OnFinalMessage(hWnd);
+        // É¾³ý
         delete this;
     }
     

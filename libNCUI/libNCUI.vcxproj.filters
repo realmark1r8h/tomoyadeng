@@ -423,9 +423,11 @@
     <ClCompile Include="transfer\SplashTransfer.cpp">
       <Filter>transfer</Filter>
     </ClCompile>
-    <ClCompile Include="settings\SplashWindowSettings.cpp" />
     <ClCompile Include="ui\win\PictureView.cpp">
       <Filter>ui\win</Filter>
+    </ClCompile>
+    <ClCompile Include="settings\SplashWindowSettings.cpp">
+      <Filter>settings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -126,6 +126,8 @@ function foo3(val) {
 	initSettings('titleBar', 'Boolean', '是否显示标题栏, 默认false');
 	initSettings('sizebox', 'String', '可拖动改变窗口大小的边框范围, 默认"2,2,2,2"');
 	initSettings('roundcorner', 'Integer', '窗口圆角,默认0');
+	initSettings('modal', 'Boolean', '当前窗口是否为模态窗口，如果是那么在当前窗口之后所创建的窗口都是模态窗口，不管有没有指定modal=true。这里的模态窗口并非真正的模态窗口，只是阻止了鼠标消息向上层窗口传递。默认false ');
+	
 	initSettings('show', 'Boolean', '是否显示窗口， 默认true');
 	initSettings('center', 'Boolean', '是否居中窗口，默认true');
 	initSettings('adjustPos', 'Boolean', '创建窗口时是否调整窗口位置，默认true');

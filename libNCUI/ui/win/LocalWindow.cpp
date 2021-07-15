@@ -361,9 +361,12 @@ namespace amo {
     }
     
     Any LocalWindow::showModal(IPCMessage::SmartType msg) {
-        if (getNativeSettings()->modal) {
-            ShowModal();
-        }
+        /* if (getNativeSettings()->modal) {
+             ShowModal();
+         }*/
+        /* runOnUIThread([&]() {
+          ShowModal();
+         });*/
         
         return Undefined();
     }

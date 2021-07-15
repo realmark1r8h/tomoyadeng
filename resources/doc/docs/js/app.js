@@ -21,6 +21,7 @@
 
 	initSettings('single_process', 'Boolean', '是否在单进程中使用CEF, 默认true');
 	initSettings('locale', 'String', 'CEF语言环境, 默认中文"zh-CN"');
+	initSettings('showSplash', 'Boolean', '是否打开启动窗口, 默认false');
 	initSettings('useNode', 'Boolean', '是否使用NodeJS, 默认false');
 	initSettings('useNodeProcess', 'Boolean', '是否在单独的进程中使用NodeJS, 默认false');
 	initSettings('debugNode', 'Boolean', '是否允许调试NodeJs, 默认false, 如果需要调试NodeJs需要在控制台模式下进行');

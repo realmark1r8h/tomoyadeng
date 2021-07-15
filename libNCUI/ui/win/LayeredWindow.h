@@ -84,6 +84,8 @@ namespace amo {
         void SetClosedCallback(ClosedCbType fn);
         
         
+        bool PtInWindow();
+        bool PtInWindow(POINT& pt);
     protected:
     
         virtual void drawWindow();

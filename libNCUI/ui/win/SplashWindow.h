@@ -23,7 +23,6 @@ namespace amo {
         
         
         void showPictureView();
-        void setPicture(const std::string& filePath);
         
         
         virtual void OnFinalMessage(HWND hWnd) override;

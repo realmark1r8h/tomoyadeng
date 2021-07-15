@@ -350,6 +350,18 @@ namespace amo {
         m_fnClosedCallback = fn;
     }
     
+    bool LayeredWindow::PtInWindow() {
+        POINT pt = { 0 };
+        ::GetCursorPos(&pt);
+        return PtInWindow(pt);
+    }
+    
+    bool LayeredWindow::PtInWindow(POINT& pt) {
+        RECT rect = { 0 };
+        ::GetWindowRect(m_hWnd, &rect);
+        return ::PtInRect(&rect, pt) != FALSE;
+    }
+    
     void LayeredWindow::InitWindow() {
     
         ::GetWindowPlacement(*this, &m_wpNormalScreen);

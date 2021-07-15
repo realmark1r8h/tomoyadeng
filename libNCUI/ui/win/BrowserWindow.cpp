@@ -399,7 +399,9 @@ namespace amo {
         //if (hWnd == NULL) {
         //    return false;
         //}
-        
+        //if (os_event->message == WM_LBUTTONDOWN) {
+        //    int c = 3;
+        //}
         
         POINT point;
         ::GetCursorPos(&point);
@@ -485,20 +487,14 @@ namespace amo {
                 return true;
                 
             default:
+            
+            
                 break;
             }
             
             return false;
         } else if (os_event->message == WM_RBUTTONUP) {
             return false;
-            
-            /*		{
-            			MenuWindow* pMenu = new MenuWindow(m_hWnd);
-            			POINT point;
-            			::GetCursorPos(&point);
-            			point.x += 150;
-            			pMenu->Init(NULL, point);
-            		}*/
         }
         
         return false;
@@ -506,6 +502,14 @@ namespace amo {
     
     LRESULT BrowserWindow::OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
     
+    
+    
+        if (!PtInWindow()) {
+        
+            return HTCLIENT;
+        }
+        
+        
         if (!m_pBrowserSettings->moveable) {
             return HTCLIENT;
         }

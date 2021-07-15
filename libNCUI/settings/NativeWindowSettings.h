@@ -47,7 +47,7 @@ namespace amo {
         /*! @brief	The roundcorner. */
         int roundcorner;
         
-        /*! @brief	true to modal. */
+        /*! @brief	当前窗口是否为模态窗口，如果是那么在当前窗口之后所创建的窗口都是模态窗口，不管有没有指定modal=true. */
         bool modal;
         /*! @brief	true to show, false to hide. */
         bool show;

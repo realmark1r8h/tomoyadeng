@@ -58,6 +58,22 @@ namespace amo {
         
         if (pParent) {
             wnd = pParent->GetHWND();
+            
+            
+            
+        }
+        
+        if (!m_WindowMap.empty()) {
+            // 如果最后一个窗口是一个模态窗口，那么当前窗口也必须是一个静态窗口
+            // 这样处理简单一点
+            auto pWindow = *m_WindowMap.rbegin();
+            
+            if (pWindow->getNativeSettings()->modal) {
+                amo::json json;
+                json.put("modal", true);
+                info->UpdateArgsSettings(json);
+            }
+            
         }
         
         amo::string title(info->title, true);
@@ -124,11 +140,35 @@ namespace amo {
     }
     
     bool BrowserWindowCreator::PreTranslateMessage(CefEventHandle os_event) {
-        for (auto& p : m_WindowMap) {
+    
+        for (auto iter = m_WindowMap.rbegin() ; iter != m_WindowMap.rend(); ++iter) {
+            auto p = *iter;
+            
             if (p->PreTranslateMessage(os_event)) {
                 return true;
             }
+            
+            
+            if (p->getNativeSettings()->modal) {
+                if (!p->PtInWindow()) {
+                    ::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_ARROW)));
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
+        
+        /* for (auto& p : m_WindowMap) {
+        	 if (p->PreTranslateMessage(os_event)) {
+        
+        		 return true;
+        	 }
+        
+        	 if (p->getNativeSettings()->modal) {
+        		 return true;
+        	 }
+         }*/
         
         return false;
     }

@@ -68,6 +68,7 @@ namespace amo {
         
         void create(std::shared_ptr<SplashWindowSettings> pSettings);
     protected:
+        /*! @brief	The splash window. */
         SplashWindow* m_pSplashWindow;
         
         /*! @brief	Splashœ‘ æ∂® ±∆˜. */
