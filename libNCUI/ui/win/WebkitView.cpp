@@ -159,6 +159,9 @@ namespace amo {
         
         auto manager = BrowserTransferMgr::getInstance();
         manager->RemoveTransfer(browser->GetIdentifier(), transferName());
+        
+        
+        BrowserTransferMgr::getInstance()->RemoveTransfer(browser->GetIdentifier());
         PostMessage(::GetParent(m_hBrowserWnd), WM_CLOSE, 255, 0);
         return;
     }
@@ -195,7 +198,8 @@ namespace amo {
             m_bIsClosing = true;
         }
         
-        BrowserTransferMgr::getInstance()->RemoveTransfer(m_pBrowser->GetIdentifier());
+        // 可能应该放到BeforeClose函数里，这里暂时还没发现问题，留意js unload函数
+        // BrowserTransferMgr::getInstance()->RemoveTransfer(browser->GetIdentifier());
         
         
         return false;

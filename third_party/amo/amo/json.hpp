@@ -346,7 +346,19 @@ namespace amo {
         
         int get_impl(int) {
             if (doc.IsNumber()) {
-                return (int)doc.GetInt();
+                if (doc.IsDouble()) {
+                    return (int)doc.GetDouble();
+                } else if (doc.IsFloat()) {
+                    return (int)doc.GetFloat();
+                } else if (doc.IsInt()) {
+                    return (int)doc.GetInt();
+                } else if (doc.IsInt64()) {
+                    return (int)doc.GetInt64();
+                } else if (doc.IsUint()) {
+                    return (int)doc.GetUint();
+                } else if (doc.IsUint64()) {
+                    return (int)doc.GetUint64();
+                }
             }
             
             return int();
@@ -354,7 +366,19 @@ namespace amo {
         
         uint32_t get_impl(uint32_t) {
             if (doc.IsNumber()) {
-                return (uint32_t)doc.GetUint();
+                if (doc.IsDouble()) {
+                    return (uint32_t)doc.GetDouble();
+                } else if (doc.IsFloat()) {
+                    return (uint32_t)doc.GetFloat();
+                } else if (doc.IsInt()) {
+                    return (uint32_t)doc.GetInt();
+                } else if (doc.IsInt64()) {
+                    return (uint32_t)doc.GetInt64();
+                } else if (doc.IsUint()) {
+                    return (uint32_t)doc.GetUint();
+                } else if (doc.IsUint64()) {
+                    return (uint32_t)doc.GetUint64();
+                }
             }
             
             return int();

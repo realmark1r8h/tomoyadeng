@@ -214,7 +214,7 @@ namespace amo {
         
         template<typename ... Args>
         Any SyncBroadcast(Args... args) {
-            return Broadcast(args ...);
+            //return Broadcast(args ...);
             
             std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter());
             runner->createIPCMessage("emitEventAllFrame",

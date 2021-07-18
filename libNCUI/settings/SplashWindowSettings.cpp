@@ -21,12 +21,14 @@ namespace amo {
         
         DEFAULT_ARGS_SETTINGS(image, "");
         DEFAULT_ARGS_SETTINGS(duration, 0);
+        DEFAULT_ARGS_SETTINGS(fadeout, 1000);
     }
     
     void SplashWindowSettings::AfterUpdateArgsSettings() {
         NativeWindowSettings::AfterUpdateArgsSettings();
         STRING_ARGS_SETTING(image);
         INT_ARGS_SETTING(duration);
+        INT_ARGS_SETTING(fadeout);
     }
     
     

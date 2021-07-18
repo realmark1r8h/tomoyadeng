@@ -12,7 +12,7 @@ namespace amo {
 
     SplashWindow::SplashWindow(std::shared_ptr<SplashWindowSettings> pSplashSettings)
         : NativeWindow(pSplashSettings) {
-        m_pSplashSettings = pSplashSettings;
+        setSplashSettings(pSplashSettings);
     }
     
     DuiLib::CDuiString SplashWindow::GetSkinFolder() {
@@ -21,7 +21,7 @@ namespace amo {
     
     DuiLib::CDuiString SplashWindow::GetSkinFile() {
         return amo::string(skinSplashWindow).format(
-                   m_pSplashSettings->settings).to_unicode().c_str();
+                   getSplashSettings()->settings).to_unicode().c_str();
     }
     
     LPCTSTR SplashWindow::GetWindowClassName(void) const {
@@ -55,7 +55,7 @@ namespace amo {
                              m_PaintManager.FindControl(_T("pictureView")));
         ASSERT(m_pPictureView);
         m_pPictureView->SetVisible(false);
-        amo::string file(m_pSplashSettings->image, true);
+        amo::string file(getSplashSettings()->image, true);
         m_pPictureView->setPicture(file.to_wide());
         
     }
@@ -73,6 +73,14 @@ namespace amo {
         NativeWindow::OnFinalMessage(hWnd);
         // É¾³ý
         delete this;
+    }
+    
+    std::shared_ptr<amo::SplashWindowSettings> SplashWindow::getSplashSettings() const {
+        return m_pSplashSettings;
+    }
+    
+    void SplashWindow::setSplashSettings(std::shared_ptr<amo::SplashWindowSettings> val) {
+        m_pSplashSettings = val;
     }
     
 }

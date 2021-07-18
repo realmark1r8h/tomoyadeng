@@ -11,39 +11,81 @@ namespace amo {
                                         UINT uMsg,
                                         UINT_PTR idEvent,
                                         DWORD dwTime) {
+                                        
         ClassTransfer::getUniqueTransfer<SplashTransfer>()->hide(
             IPCMessage::Empty());
     }
     
+    VOID CALLBACK CloseSplashWindowTimerProc(HWND hwnd,
+            UINT uMsg,
+            UINT_PTR idEvent,
+            DWORD dwTime) {
+        ClassTransfer::getUniqueTransfer<SplashTransfer>()->fadeout();
+    }
+    
     SplashTransfer::SplashTransfer()
         : ClassTransfer("splash") {
-        
         m_splashTimer = 0;
         m_pSplashWindow = NULL;
+        m_nDelay = 0;
+        m_nfadeTimes = 0;
     }
     
     SplashTransfer::~SplashTransfer() {
         closeSplash();
     }
     
-    void SplashTransfer::closeSplash() {
-        if (m_pSplashWindow != NULL) {
+    void SplashTransfer::closeSplash(int nDelay) {
+        if (m_pSplashWindow == NULL) {
+            return;
+        }
+        
+        if (nDelay <= 0) {
             if (m_splashTimer != 0) {
                 ::KillTimer(m_pSplashWindow->GetHWND(), m_splashTimer);
-                
+                m_splashTimer = 0;
             }
             
-            m_splashTimer = 0;
+            m_nfadeTimes = 0;
+            m_nDelay = 0;
             ::PostMessage(m_pSplashWindow->GetHWND(), WM_CLOSE, NULL, NULL);
             m_pSplashWindow = NULL;
             
+        } else {
+        
+            if (m_nDelay == 0 && m_nfadeTimes == 0) {
+                if (m_splashTimer != 0) {
+                    ::KillTimer(m_pSplashWindow->GetHWND(), m_splashTimer);
+                    m_splashTimer = 0;
+                }
+                
+                m_nDelay = nDelay;
+                m_nfadeTimes = 16;
+                fadeout();
+            }
         }
+        
+    }
+    
+    void SplashTransfer::fadeout() {
+        --m_nfadeTimes;
+        
+        if (m_nfadeTimes == 0) {
+            m_nDelay = 0;
+            closeSplash(0);
+        } else {
+            m_pSplashWindow->setTransparent(m_nfadeTimes * 16);
+            m_splashTimer = ::SetTimer(m_pSplashWindow->GetHWND(),
+                                       0x00000502,
+                                       m_nDelay / 16,
+                                       (TIMERPROC)CloseSplashWindowTimerProc);
+        }
+        
     }
     
     Any SplashTransfer::show(IPCMessage::SmartType msg) {
     
         closeSplash();
-        
         std::shared_ptr<SplashWindowSettings> pSettings(new SplashWindowSettings());
         Any& val = msg->GetArgumentList()->GetValue(0);
         
@@ -51,17 +93,20 @@ namespace amo {
             amo::json json = val;
             pSettings->UpdateArgsSettings(json);
             create(pSettings);
-            
-            
-            
         }
         
         return Undefined();
     }
     
     Any SplashTransfer::hide(IPCMessage::SmartType msg) {
-    
-        closeSplash();
+        Any& val = msg->GetArgumentList()->GetValue(0);
+        
+        if (val.type() == AnyValueType<int>::value) {
+            closeSplash(msg->GetArgumentList()->GetInt(0));
+        } else if (m_pSplashWindow != NULL) {
+            closeSplash(m_pSplashWindow->getSplashSettings()->fadeout);
+        }
+        
         return Undefined();
     }
     
@@ -86,10 +131,10 @@ namespace amo {
         }
         
         if (pSettings->duration > 0) {
-            ::SetTimer(m_pSplashWindow->GetHWND(),
-                       0x00000501,
-                       pSettings->duration,
-                       (TIMERPROC)SplashWindowTimerProc);
+            m_splashTimer =::SetTimer(m_pSplashWindow->GetHWND(),
+                                      0x00000501,
+                                      pSettings->duration,
+                                      (TIMERPROC)SplashWindowTimerProc);
         }
     }
     

@@ -11,8 +11,10 @@
 
 <table id="method" class="table" >
 </table>
- 
- 
+
+*    show 参数说明:
+ <table id="settings" class="table" >
+</table>
  
 ## 显示启动窗口
 
@@ -40,12 +42,19 @@ splash.show({
 ## 隐藏启动窗口
 
 ```html
-// 关闭启动画面
+// 使用默认关闭时间
 splash.hide(); 
+// 自定义关闭时间
+splash.hide(5000);
+// 直接关闭
+splash.hide(0); 
 ```
 
 <div class="row">
     <div class="col-xs-3">
       <button class="btn btn-outline-primary btn-block"  id="hide">关闭</button>
+    </div>
+    <div class="col-xs-3">
+      <button class="btn btn-outline-primary btn-block"  id="hideWithDelay">关闭（3秒动画）</button>
     </div>
 </div>

@@ -19,7 +19,9 @@ namespace amo {
         SplashTransfer();
         ~SplashTransfer();
         
-        void closeSplash();
+        void closeSplash(int nDelay = 0);
+        
+        void fadeout();
         /*!
          * @fn	Any SplashTransfer::show(IPCMessage::SmartType msg);
          *
@@ -71,8 +73,14 @@ namespace amo {
         /*! @brief	The splash window. */
         SplashWindow* m_pSplashWindow;
         
-        /*! @brief	Splash显示定时器. */
+        /*! @brief	Splash关闭定时器. */
         UINT_PTR m_splashTimer;
+        
+        /*! @brief	关闭窗口的动画时间. */
+        int m_nDelay;
+        
+        /*! @brief	当前淡化窗口剩余次数. */
+        int m_nfadeTimes;
     };
 }
 

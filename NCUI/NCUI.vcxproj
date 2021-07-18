@@ -104,7 +104,6 @@
     <ResourceCompile Include="NCUI.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="bitmap1.bmp" />
     <Image Include="NCUI.ico" />
     <Image Include="small.ico" />
   </ItemGroup>

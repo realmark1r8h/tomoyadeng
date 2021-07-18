@@ -43,23 +43,30 @@ namespace amo {
         CWPRETSTRUCT* pp = (CWPRETSTRUCT*)lParam;
         MSG* msg = (MSG*)lParam;
         
-        switch (msg->message) {
-        case WM_LBUTTONDOWN:
-        case WM_RBUTTONDOWN:
-        case WM_MOUSEMOVE:
-        case WM_LBUTTONUP:
-        case WM_RBUTTONUP:
-        case WM_LBUTTONDBLCLK: {
+        // 处理鼠标消息
+        if (msg->message >= WM_MOUSEFIRST && msg->message <= WM_MOUSELAST) {
             if (BrowserWindowManager::getInstance()->PreTranslateMessage(msg)) {
                 return TRUE;		// 表示已经处理过该消息，中断消息循环
             }
-            
-            break;
         }
         
-        default:
-            break;
-        }
+        //switch (msg->message) {
+        //case WM_LBUTTONDOWN:
+        //case WM_RBUTTONDOWN:
+        //case WM_MOUSEMOVE:
+        //case WM_LBUTTONUP:
+        //case WM_RBUTTONUP:
+        //case WM_LBUTTONDBLCLK: {
+        //    if (BrowserWindowManager::getInstance()->PreTranslateMessage(msg)) {
+        //        return TRUE;		// 表示已经处理过该消息，中断消息循环
+        //    }
+        //
+        //    break;
+        //}
+        //
+        //default:
+        //    break;
+        //}
         
         return CallNextHookEx(g_hHook, nCode, wParam, lParam);
     }

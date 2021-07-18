@@ -27,8 +27,12 @@ namespace amo {
         
         virtual void OnFinalMessage(HWND hWnd) override;
         
+        std::shared_ptr<amo::SplashWindowSettings> getSplashSettings() const;
+        void setSplashSettings(std::shared_ptr<amo::SplashWindowSettings> val);
+        
     private:
         std::shared_ptr<SplashWindowSettings> m_pSplashSettings;
+        
         PictureView* m_pPictureView;
     };
 }

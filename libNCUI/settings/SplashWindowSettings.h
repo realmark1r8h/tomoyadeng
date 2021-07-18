@@ -29,6 +29,9 @@ namespace amo {
         /*! @brief	显示时间， ms如果为0，表示不自动关闭. */
         int duration;
         
+        /*! @brief	关闭动画持续时间. */
+        int fadeout;
+        
     };
 }
 
