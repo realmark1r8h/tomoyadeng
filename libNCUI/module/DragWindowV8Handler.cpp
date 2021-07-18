@@ -57,26 +57,42 @@ namespace amo {
         //
         //}
         
-        // тыеп╤о className
-        CefRefPtr<CefV8Value> className = target->GetValue("className");
-        std::string strClassList = className->GetStringValue().ToString();
-        $log(amo::cdevel << strClassList << amo::endl;);
-        std::regex reg(strRegex);
-        std::smatch m;
-        std::vector<std::string> class_list;
+        //// тыеп╤о className
+        //CefRefPtr<CefV8Value> className = target->GetValue("className");
+        //std::string strClassList = className->GetStringValue().ToString();
+        //
+        //$log(amo::cdevel << strClassList << amo::endl;);
+        //std::regex reg(strRegex);
+        //std::smatch m;
+        //std::vector<std::string> class_list;
+        //
+        //while (std::regex_search(strClassList, m, reg)) {
+        //    for (auto x = m.begin(); x != m.end(); x++) {
+        //        $log(amo::cdevel << x->str() << amo::endl;);
+        //
+        //        if (x->str() == noDragClassName) {
+        //            return SendDragableToBrowserProcess(false);
+        //        } else if (x->str() == dragClassName) {
+        //            return SendDragableToBrowserProcess(true);
+        //        }
+        //    }
+        //
+        //    strClassList = m.suffix().str();
+        //}
         
-        while (std::regex_search(strClassList, m, reg)) {
-            for (auto x = m.begin(); x != m.end(); x++) {
-                $log(amo::cdevel << x->str() << amo::endl;);
-                
-                if (x->str() == noDragClassName) {
+        {
+            CefRefPtr<CefV8Value> className = target->GetValue("className");
+            amo::string strClassList(className->GetStringValue().ToString(), true);
+            $log(amo::cdevel << strClassList.to_ansi() << amo::endl;);
+            std::vector<amo::string> vec = strClassList.split(" ");
+            
+            for (auto& str : vec) {
+                if (str == noDragClassName) {
                     return SendDragableToBrowserProcess(false);
-                } else if (x->str() == dragClassName) {
+                } else if (str == dragClassName) {
                     return SendDragableToBrowserProcess(true);
                 }
             }
-            
-            strClassList = m.suffix().str();
         }
         
         CefRefPtr<CefV8Value> parent = target->GetValue("parentNode");
@@ -97,42 +113,6 @@ namespace amo {
         
         
         CefRefPtr<CefV8Value> target = args.at(0)->GetValue("target");
-        /* std::vector<CefString> vec;
-         target->GetKeys(vec);
-        
-         for (auto& p : vec) {
-         $log(amo::cdevel << p.ToString() << amo::endl;);
-        
-         if (p.ToString() == "getComputedStyle") {
-         int c = 2;
-         }
-        
-        
-         }
-        
-         $log(amo::cdevel << "_____________________________________________" << amo::endl;);
-        
-         {
-         CefRefPtr<CefV8Value> target2 = target->GetValue("style");
-         std::vector<CefString> vec;
-         target2->GetKeys(vec);
-        
-         for (auto& p : vec) {
-         $log(amo::cdevel << p.ToString() << amo::endl;);
-        
-         if (p.ToString() == "getComputedStyle") {
-         int c = 2;
-         }
-        
-        
-         }
-        
-         CefRefPtr<CefV8Value> target3 = target2->GetValue("webkitAppRegion");
-         std::string sb = TypeConvertor().V8ValueType(target3);
-         std::string sb3 = target3->GetStringValue().ToString();
-         int cc = 33;
-         }*/
-        
         onmouseover(target, args, retval, except);
     }
     
