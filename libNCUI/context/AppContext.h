@@ -67,6 +67,7 @@ namespace amo {
         void runNodeThread();
         
         void onUpdateAppSettings(BasicSettings* settings);
+        
     private:
         static HHOOK g_hHook;																		//!< 消息钩子
         int m_nProcessExitCode;																		//!< 子进程退出代码

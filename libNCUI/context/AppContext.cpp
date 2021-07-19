@@ -50,24 +50,6 @@ namespace amo {
             }
         }
         
-        //switch (msg->message) {
-        //case WM_LBUTTONDOWN:
-        //case WM_RBUTTONDOWN:
-        //case WM_MOUSEMOVE:
-        //case WM_LBUTTONUP:
-        //case WM_RBUTTONUP:
-        //case WM_LBUTTONDBLCLK: {
-        //    if (BrowserWindowManager::getInstance()->PreTranslateMessage(msg)) {
-        //        return TRUE;		// 表示已经处理过该消息，中断消息循环
-        //    }
-        //
-        //    break;
-        //}
-        //
-        //default:
-        //    break;
-        //}
-        
         return CallNextHookEx(g_hHook, nCode, wParam, lParam);
     }
     
@@ -131,6 +113,32 @@ namespace amo {
         if (getProcessType() == BrowserProcess) {
             amo::string strSkin(m_pAppSettings->skinDir, true);
             CPaintManagerUI::SetResourcePath(strSkin.to_unicode().c_str());
+            
+            
+            
+            
+            auto appSettings = getDefaultAppSettings()->settings;
+            auto pAppTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
+            
+            if (appSettings.contains_key("urlMappings")) {
+                amo::json mappings = appSettings.get_child("urlMappings");
+                
+                if (mappings.is_array()) {
+                    std::vector<amo::json> vec = mappings.to_array();
+                    
+                    for (auto& p : vec) {
+                        if (p.contains_key("url") && p.contains_key("path")) {
+                            std::string url = p.getString("url");
+                            std::string path = p.getString("path");
+                            IPCMessage::SmartType msg(new IPCMessage());
+                            msg->GetArgumentList()->SetValue(0, url);
+                            msg->GetArgumentList()->SetValue(1, path);
+                            pAppTransfer->addUrlMapping(msg);
+                            
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -276,12 +284,6 @@ namespace amo {
         }
         
         void* sandbox_info = NULL;
-        //#if defined(CEF_USE_SANDBOX)
-        //	CefScopedSandboxInfo scoped_sandbox;
-        //	sandbox_info = scoped_sandbox.sandbox_info();
-        //#endif
-        
-        // Specify CEF global settings here.
         CefSettings settings = *getDefaultAppSettings();
         
 #if !defined(CEF_USE_SANDBOX)
@@ -299,22 +301,10 @@ namespace amo {
         manager->init();
         
         if (getDefaultAppSettings()->showSplash) {
-            ClassTransfer::getUniqueTransfer<SplashTransfer>()->create(getDefaultSplashSettings());
+            auto transfer = ClassTransfer::getUniqueTransfer<SplashTransfer>();
+            transfer->create(getDefaultSplashSettings());
         }
         
-        
-        
-        //SplashWindow* window = new SplashWindow(m_pSplashSettings);
-        //window->Create(NULL,
-        //               _T(""),
-        //               UI_WNDSTYLE_FRAME,
-        //               WS_EX_TOOLWINDOW,
-        //               960, 650, 0, 0);
-        //// bug,
-        //window->ShowWindow(true);
-        //window->CenterWindow();
-        
-        //getDefaultAppSettings()->useNode = false;
         if (!getDefaultAppSettings()->useNode) {
             manager->createBrowserWindow(getDefaultBrowserSettings());	//通过窗口管理类创建主窗口并显示
         } else {
