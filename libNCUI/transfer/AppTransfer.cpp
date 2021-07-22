@@ -22,8 +22,8 @@ namespace amo {
     
     void AppTransfer::initUrlMapping(amo::json& json) {
     
-        if (json.contains_key("urlMapping")) {
-            amo::json child = json.getJson("urlMapping");
+        if (json.contains_key("urlMappings")) {
+            amo::json child = json.getJson("urlMappings");
             
             if (child.is_valid() && child.is_array()) {
                 std::vector<amo::json> arr = child.to_array();

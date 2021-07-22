@@ -19,9 +19,9 @@
 #include <amo/loader.hpp>
 #include "transfer/ClassTransfer.hpp"
 #include "transfer/AppTransfer.h"
-#include "../ui/win/SplashWindow.h"
-#include "../settings/SplashWindowSettings.h"
-#include "../transfer/SplashTransfer.h"
+#include "ui/win/SplashWindow.h"
+#include "settings/SplashWindowSettings.h"
+#include "transfer/SplashTransfer.h"
 
 namespace {
 
@@ -38,7 +38,9 @@ namespace amo {
 
     HHOOK AppContext::g_hHook = NULL;
     
-    LRESULT CALLBACK AppContext::mouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
+    LRESULT CALLBACK AppContext::mouseProc(int nCode,
+                                           WPARAM wParam,
+                                           LPARAM lParam) {
         MOUSEHOOKSTRUCT* pMs = (MOUSEHOOKSTRUCT*)lParam;
         CWPRETSTRUCT* pp = (CWPRETSTRUCT*)lParam;
         MSG* msg = (MSG*)lParam;
@@ -56,14 +58,19 @@ namespace amo {
     void AppContext::startNodeThread() {
     
         if (getDefaultAppSettings()->useNode) {
+            // 允许向Node发送消息
             getNodeMessageHandler()->enableNodeJS();
             
+            // 如果不是在单独的进程中运行Node,那么创建一个线程来运行它
             if (!getDefaultAppSettings()->useNodeProcess) {
-                pNodeThread.reset(new std::thread(std::bind(&AppContext::runNodeThread, this)));
-                
+                pNodeThread.reset(new std::thread(
+                                      std::bind(&AppContext::runNodeThread,
+                                                this)));
+                                                
             }
             
-            getNodeMessageHandler()->startReadMessage();  //开始接收NodeJS消息
+            //开始接收NodeJS消息
+            getNodeMessageHandler()->startReadMessage();
         }
     }
     
@@ -74,8 +81,9 @@ namespace amo {
         
         amo::string exeDir = amo::path::getExeDir();
         
+        // NodeJS 文件
         amo::string mainJs(getDefaultAppSettings()->main, true);
-        // Convert argv to to UTF8
+        
         char** argv = new char*[argc + 1];
         
         for (int i = 0; i < argc; i++) {
@@ -91,9 +99,9 @@ namespace amo {
                 strcpy(argv[i], mainJs.to_ansi().c_str());
             }
             
+            //
             if (i == 2) {
-                strcpy(argv[i], "--debug-brk=5858"); //-i
-                
+                strcpy(argv[i], "--debug-brk=5858");
             }
         }
         
@@ -102,21 +110,24 @@ namespace amo {
         amo::path p(amo::path::getExeDir());
         p.append("node_runner.dll");
         amo::loader loader;
-        bool bOk2 = loader.load(p.c_str());
+        bool bOk = loader.load(p.c_str());
         
-        //return;
+        if (!bOk) {
+            return;
+        }
+        
         loader.exec<int>("Start", argc, argv);
         
     }
     
     void AppContext::onUpdateAppSettings(BasicSettings* settings) {
+        // 只处理主进程的参数设置
         if (getProcessType() == BrowserProcess) {
+            // 设置Duilib皮肤目录
             amo::string strSkin(m_pAppSettings->skinDir, true);
             CPaintManagerUI::SetResourcePath(strSkin.to_unicode().c_str());
             
-            
-            
-            
+            // 更新URL映射
             auto appSettings = getDefaultAppSettings()->settings;
             auto pAppTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
             
@@ -148,12 +159,16 @@ namespace amo {
     
     ProcessType AppContext::getProcessType() {
         if (!m_pCommandLine->HasSwitch(kProcessType)) {
-            return BrowserProcess;    //没有设置进程类型，那么为主进程
+            //没有设置进程类型，那么为主进程
+            return BrowserProcess;
         }
         
-        const std::string& process_type = m_pCommandLine->GetSwitchValue(kProcessType);	//通过kProcessType获取进程类型
-        
+        //通过kProcessType获取进程类型
+        const std::string& process_type = m_pCommandLine->GetSwitchValue(
+                                              kProcessType);
+                                              
         if (process_type == kRendererProcess) {
+            // 渲染进程
             return RendererProcess;
         }
         
@@ -190,24 +205,20 @@ namespace amo {
     AppContext::AppContext() {
     
         initCommandLine(0, NULL);
+        
         m_pClientApp = new ClientApp();
         m_pAppSettings.reset(new AppSettings());
         m_pClientHandler = DummyClientHandler::getInstance();
         m_pNodeMessageHandler.reset(new NodeMessageHandler());
         
-        ClassTransfer::getUniqueTransfer<AppTransfer>()->initUrlMapping(
-            m_pAppSettings->settings);
-            
+        
         m_nProcessExitCode = -1;
-        m_timer.reset(new amo::timer());
+        
         m_pAppSettings->setUpdateArgsCallback(
             std::bind(&AppContext::onUpdateAppSettings,
                       this,
                       std::placeholders::_1));
     }
-    
-    
-    
     
     AppContext::~AppContext() {
         $log(amo::cdevel << func_orient << amo::endl;);
@@ -234,7 +245,9 @@ namespace amo {
     
     
     int AppContext::executeProcess(CefMainArgs& main_args) {
-        //
+    
+        //   spdlog 不支持XP, 如果在XP下使用需要禁用log
+        
         if (!amo::log::initialize()) {
             return -1;
         }
@@ -243,13 +256,14 @@ namespace amo {
         /*  auto sink2 = std::make_shared<spdlog::sinks::daily_file_sink_mt>("logfile", "txt", 23, 59);
           sink2->set_level(amo::log::level::trace);*/
         /* auto sink3 = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                          "logfile", SPDLOG_FILENAME_T("txt"), 1048576 * 5, 3);*/
+        				"logfile", SPDLOG_FILENAME_T("txt"), 1048576 * 5, 3);*/
         
         amo::log::add_sink(sink1);
         //amo::log::add_sink(sink2);
         //amo::log::add_sink(sink3);
         amo::log::set_level(amo::log::level::trace);
         amo::log::set_pattern("[%Y-%m-%d %H:%M:%S][%l] %v");
+        
         $log(amo::cinfo << "日志初始化成功" << amo::endl;);
         void* sandbox_info = NULL;
 #if defined(CEF_USE_SANDBOX)
@@ -258,11 +272,12 @@ namespace amo {
 #endif
         
         
-        int exit_code = CefExecuteProcess(main_args, getClientApp().get(), sandbox_info);
-        
+        int exit_code = CefExecuteProcess(main_args,
+                                          getClientApp().get(),
+                                          sandbox_info);
+                                          
         if (BrowserProcess == getProcessType()) {
             m_nProcessExitCode = exit_code;
-            //startNodeThread();
         }
         
         return exit_code;
@@ -295,30 +310,37 @@ namespace amo {
         
         settings.multi_threaded_message_loop = false;
         CefInitialize(main_args, settings, getClientApp().get(), sandbox_info);
-        amo::ClientApp::RegisterCustomSchemeFactory("local", "file", new amo::LocalSchemeHandlerFactory());
+        
+        // 注册自定义协议
+        amo::ClientApp::RegisterCustomSchemeFactory("local",
+                "file",
+                new amo::LocalSchemeHandlerFactory());
+        // 开启消息钩子
         startHook();
         auto manager = BrowserWindowManager::getInstance();
         manager->init();
         
+        // 开启启动画面
         if (getDefaultAppSettings()->showSplash) {
             auto transfer = ClassTransfer::getUniqueTransfer<SplashTransfer>();
             transfer->create(getDefaultSplashSettings());
         }
         
+        
         if (!getDefaultAppSettings()->useNode) {
-            manager->createBrowserWindow(getDefaultBrowserSettings());	//通过窗口管理类创建主窗口并显示
+            //通过窗口管理类创建主窗口并显示
+            manager->createBrowserWindow(getDefaultBrowserSettings());
         } else {
+            // 运行Node
             startNodeThread();
         }
         
-        /* std::stringstream stream;
-         stream << m_timer->elapsed();
-        
-         MessageBoxA(NULL, stream.str().c_str(), "", MB_OK);*/
-        
+        // 开始消息循环
         CefRunMessageLoop();
+        // 关闭钩子
         stopHook();
         
+        // 停止监听Node消息
         if (getNodeMessageHandler()) {
             getNodeMessageHandler()->stopNodeProcess();
         }
@@ -333,7 +355,10 @@ namespace amo {
             return true;
         }
         
-        g_hHook = SetWindowsHookEx(WH_MSGFILTER, mouseProc, 0, GetCurrentThreadId());
+        g_hHook = SetWindowsHookEx(WH_MSGFILTER,
+                                   mouseProc,
+                                   0,
+                                   GetCurrentThreadId());
         return (g_hHook != NULL);
     }
     
@@ -359,7 +384,5 @@ namespace amo {
     std::shared_ptr<BrowserWindowManager> AppContext::getBrowserWindowManager() {
         return BrowserWindowManager::getInstance();
     }
-    
-    
     
 }
