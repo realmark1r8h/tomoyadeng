@@ -21,9 +21,9 @@ namespace amo {
     amo::Any IPCNodeV8Handler::asyncExecuteResult(IPCMessage::SmartType msg) {
     
         /*amo::TypeConvertor convertor;
-        CefRefPtr<CefV8Value> retval = convertor.ParseResult(msg->GetArgumentList()->GetValue(0));
+        CefRefPtr<CefV8Value> retval = convertor.ParseResult(msg->getArgumentList()->GetValue(0));
         
-        int id = msg->GetArgumentList()->GetInt(IPCArgsPosInfo::AsyncCallback);
+        int id = msg->getArgumentList()->GetInt(IPCArgsPosInfo::AsyncCallback);
         AsyncFunctionWrapper& item = AsyncFunctionManager<PID_RENDERER>::get_instance()->Get(id);
         if (item.m_pFrame == NULL || item.m_pFunction == NULL) return amo::NonReturn();
         CefV8ValueList args;
@@ -53,7 +53,7 @@ namespace amo {
     
     amo::Any IPCNodeV8Handler::runJSFunction(IPCMessage::SmartType anyMessage) {
     
-        /*std::shared_ptr<amo::AnyArgsList> args = anyMessage->GetArgumentList();
+        /*std::shared_ptr<amo::AnyArgsList> args = anyMessage->getArgumentList();
         int nFrameId = args->GetInt(IPCArgsPosInfo::FrameID);
         std::string jsFunctionName = args->GetString(IPCArgsPosInfo::JsFunctionName);
         std::stringstream stream;
@@ -82,7 +82,7 @@ namespace amo {
     }
     
     amo::Any IPCNodeV8Handler::runJsFragment(IPCMessage::SmartType anyMessage) {
-        /*std::shared_ptr<amo::AnyArgsList> args = anyMessage->GetArgumentList();
+        /*std::shared_ptr<amo::AnyArgsList> args = anyMessage->getArgumentList();
         int nFrameId = args->GetInt(IPCArgsPosInfo::FrameID);
         CefRefPtr<CefFrame> pFrame = m_pBrowser->GetFrame(nFrameId);
         if (!pFrame) return amo::Undefined();
@@ -100,11 +100,11 @@ namespace amo {
     }
     
     amo::Any IPCNodeV8Handler::triggerEvent(IPCMessage::SmartType msg) {
-        std::shared_ptr<amo::AnyArgsList> args = msg->GetArgumentList();
-        int32_t nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
-        int nFrameId = args->GetInt(IPCArgsPosInfo::FrameID);
+        std::shared_ptr<amo::AnyArgsList> args = msg->getArgumentList();
+        int32_t nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+        int nFrameId = args->getInt(IPCArgsPosInfo::FrameID);
         
-        int64_t nObjectID = args->GetInt64(IPCArgsPosInfo::EventObjectID);
+        int64_t nObjectID = args->getInt64(IPCArgsPosInfo::EventObjectID);
         NodeV8Handler*  pValue = NodeTypeConvertor::getClassObject(nObjectID);
         
         if (pValue == NULL) {

@@ -25,8 +25,8 @@ namespace amo {
     }
     
     Any ControlTransfer::setValue(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        amo::string strValue(args->GetString(0), true);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        amo::string strValue(args->getString(0), true);
         
         if (m_pControl) {
             m_pControl->SetText(strValue.to_unicode().c_str());

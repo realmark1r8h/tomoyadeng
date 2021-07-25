@@ -17,13 +17,13 @@ namespace amo {
     }
     
     Any NativeWindowProxy::setName(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        getNativeSettings()->name = args->GetString(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        getNativeSettings()->name = args->getString(0);
         return Undefined();
     }
     
     Any NativeWindowProxy::destroy(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         // 255 强制关闭窗口
         ::PostMessage(getNativeHWND(args), WM_CLOSE, 255, 0);
         return Undefined();
@@ -31,20 +31,20 @@ namespace amo {
     
     
     Any NativeWindowProxy::close(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         ::PostMessage(getNativeHWND(args), WM_CLOSE, 0, 0);
         return Undefined();
     }
     
     Any NativeWindowProxy::focus(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         ::SetFocus(getNativeHWND(args));
         return Undefined();
     }
     
     
     Any NativeWindowProxy::isFocused(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         HWND hWnd = getNativeHWND(args);
         HWND hFocusWnd = ::GetFocus();
         
@@ -61,7 +61,7 @@ namespace amo {
     }
     
     Any NativeWindowProxy::show(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         bool bOk = (::ShowWindow(getNativeHWND(args), SW_SHOW) != FALSE);
         ::SetFocus(getNativeHWND(args));
         ::SwitchToThisWindow(getNativeHWND(args), TRUE);
@@ -69,28 +69,28 @@ namespace amo {
     }
     
     Any NativeWindowProxy::showInactive(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         return ::ShowWindow(getNativeHWND(args), SW_SHOWNOACTIVATE) != FALSE;
     }
     
     Any NativeWindowProxy::hide(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         return ::ShowWindow(getNativeHWND(args), SW_HIDE) != FALSE;
     }
     
     Any NativeWindowProxy::isVisible(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         return ::IsWindowVisible(getNativeHWND(args)) != FALSE;
     }
     
     Any NativeWindowProxy::maximize(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         ::PostMessage(getNativeHWND(args), WM_SYSCOMMAND, SC_MAXIMIZE, 0);
         return Undefined();
     }
     
     Any NativeWindowProxy::unmaximize(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
         if (isMaximized(msg)) {
             ::PostMessage(getNativeHWND(args), WM_SYSCOMMAND, SC_RESTORE, 0);
@@ -100,24 +100,24 @@ namespace amo {
     }
     
     Any NativeWindowProxy::isMaximized(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         return ::IsZoomed(getNativeHWND(args)) != FALSE;
     }
     
     Any NativeWindowProxy::minimize(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         ::PostMessage(getNativeHWND(args), WM_SYSCOMMAND, SC_MINIMIZE, 0);
         return Undefined();
     }
     
     Any NativeWindowProxy::restore(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         ::PostMessage(getNativeHWND(args), WM_SYSCOMMAND, SC_RESTORE, 0);
         return Undefined();
     }
     
     Any NativeWindowProxy::isMinimized(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         return ::IsIconic(getNativeHWND(args)) != FALSE;
     }
     
@@ -132,8 +132,8 @@ namespace amo {
     }
     
     Any NativeWindowProxy::setBounds(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        amo::json json(args->GetString(0));
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        amo::json json(args->getString(0));
         int x = json.getInt("x");
         int y = json.getInt("y");
         int width = json.getInt("width");
@@ -143,7 +143,7 @@ namespace amo {
     }
     
     Any NativeWindowProxy::getBounds(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         RECT rect = { 0 };
         ::GetWindowRect(getNativeHWND(args), &rect);
         amo::json json;
@@ -155,20 +155,20 @@ namespace amo {
     }
     
     Any NativeWindowProxy::setSize(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         RECT rect = { 0 };
         ::GetWindowRect(getNativeHWND(args), &rect);
         
         int x = rect.left;
         int y = rect.top;
-        int width = args->GetInt(0);
-        int height = args->GetInt(1);
+        int width = args->getInt(0);
+        int height = args->getInt(1);
         ::MoveWindow(getNativeHWND(args), x, y, width, height, TRUE);
         return Undefined();
     }
     
     Any NativeWindowProxy::getSize(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         RECT rect = { 0 };
         ::GetWindowRect(getNativeHWND(args), &rect);
         amo::json json;
@@ -208,8 +208,8 @@ namespace amo {
     }
     
     Any NativeWindowProxy::setMovable(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        bool moveable = args->GetBool(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        bool moveable = args->getBool(0);
         getNativeSettings()->moveable = moveable;
         return Undefined();
     }
@@ -219,8 +219,8 @@ namespace amo {
     }
     
     Any NativeWindowProxy::setMinimizable(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        bool minimizable = args->GetBool(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        bool minimizable = args->getBool(0);
         getNativeSettings()->minimizable = minimizable;
         return Undefined();
     }
@@ -230,8 +230,8 @@ namespace amo {
     }
     
     Any NativeWindowProxy::setMaximizable(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        bool maximizable = args->GetBool(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        bool maximizable = args->getBool(0);
         getNativeSettings()->maximizable = maximizable;
         return Undefined();
     }
@@ -241,8 +241,8 @@ namespace amo {
     }
     
     Any NativeWindowProxy::setFullScreenable(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        bool fullscreenable = args->GetBool(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        bool fullscreenable = args->getBool(0);
         getNativeSettings()->fullscreenable = fullscreenable;
         return Undefined();
     }
@@ -252,8 +252,8 @@ namespace amo {
     }
     
     Any NativeWindowProxy::setClosable(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        bool closable = args->GetBool(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        bool closable = args->getBool(0);
         getNativeSettings()->closable = closable;
         return Undefined();
     }
@@ -276,9 +276,9 @@ namespace amo {
     }
     
     Any NativeWindowProxy::setPosition(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int x = args->GetInt(0);
-        int y = args->GetInt(1);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int x = args->getInt(0);
+        int y = args->getInt(1);
         RECT rect = { 0 };
         ::GetWindowRect(getNativeHWND(args), &rect);
         ::MoveWindow(getNativeHWND(args),
@@ -295,14 +295,14 @@ namespace amo {
     }
     
     Any NativeWindowProxy::setTitle(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        amo::string str(args->GetString(0), true);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        amo::string str(args->getString(0), true);
         BOOL bOk = ::SetWindowTextA(getNativeHWND(args), str.c_str());
         return bOk != FALSE;
     }
     
     Any NativeWindowProxy::getTitle(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         char str[256] = { 0 };
         ::GetWindowTextA(getNativeHWND(args), str, 256);
         return amo::string(str).to_utf8();
@@ -310,8 +310,8 @@ namespace amo {
     
     Any NativeWindowProxy::flashFrame(IPCMessage::SmartType msg) {
         // 由LocalWindow类重载
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        bool bFlahFrame = args->GetBool(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        bool bFlahFrame = args->getBool(0);
         
         if (bFlahFrame) {
             FLASHWINFO fw;
@@ -371,8 +371,8 @@ namespace amo {
     }
     
     Any NativeWindowProxy::setIcon(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        amo::string strPath(args->GetString(0), true);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        amo::string strPath(args->getString(0), true);
         HICON m_hIcon = (HICON)LoadImage(NULL,
                                          strPath.to_unicode().c_str(),
                                          IMAGE_ICON,

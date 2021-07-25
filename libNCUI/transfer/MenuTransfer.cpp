@@ -12,16 +12,16 @@ namespace amo {
     }
     
     Any MenuTransfer::OnCreateClass(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
         std::shared_ptr<MenuWindowSettings> pSettings(new MenuWindowSettings());
-        pSettings->UpdateArgsSettings(args->GetString(0));
+        pSettings->UpdateArgsSettings(args->getString(0));
         std::string ss = pSettings->GetArgsSettings();
         std::shared_ptr<ContextMenuWindow> menu(new ContextMenuWindow(pSettings));
         int64_t id = menu->getObjectID();
         int64_t id2 = getObjectID();
-        menu->setFrameID(args->GetInt64(IPCArgsPosInfo::FrameID));
-        menu->setBrowserID(args->GetInt(IPCArgsPosInfo::BrowserID));
+        menu->setFrameID(args->getInt64(IPCArgsPosInfo::FrameID));
+        menu->setBrowserID(args->getInt(IPCArgsPosInfo::BrowserID));
         POINT point;
         ::GetCursorPos(&point);
         menu->Init(NULL, point);
@@ -34,7 +34,7 @@ namespace amo {
     }
     
     Any MenuTransfer::close(IPCMessage::SmartType msg) {
-        int64_t id = msg->GetArgumentList()->GetInt64(IPCArgsPosInfo::TransferID);
+        int64_t id = msg->getArgumentList()->getInt64(IPCArgsPosInfo::TransferID);
         auto pTransfer = FindTransfer(id);
         
         if (!pTransfer) {

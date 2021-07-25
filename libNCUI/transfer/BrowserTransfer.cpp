@@ -65,13 +65,13 @@ namespace amo {
     }
     
     Any BrowserTransfer::IsSame(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
-        if (args->IsValid(0)) {
+        if (args->isValid(0)) {
             return false;
         }
         
-        amo::json json = args->GetJson(0);
+        amo::json json = args->getJson(0);
         
         if (!json.is_valid()) {
             return false;
@@ -115,10 +115,10 @@ namespace amo {
     }
     
     Any BrowserTransfer::GetFrame(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        Any& val = args->GetValue(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        Any& val = args->getValue(0);
         
-        if (!args->IsValid(0)) {
+        if (!args->isValid(0)) {
             return Undefined();
         }
         
@@ -173,9 +173,9 @@ namespace amo {
     }
     
     Any BrowserTransfer::currentFrame(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int64_t nFrameID = args->GetInt64(IPCArgsPosInfo::FrameID);
-        int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int64_t nFrameID = args->getInt64(IPCArgsPosInfo::FrameID);
+        int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
         CefRefPtr<CefFrame> pFrame = m_pBrowser->GetFrame(nFrameID);
         
         if (!pFrame) {

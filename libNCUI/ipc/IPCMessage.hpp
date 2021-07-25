@@ -30,11 +30,11 @@ namespace amo {
     /*! @brief	直接调用C++或JS. */
     static const std::string MSG_NATIVE_EXECUTE		 = "NativeExecute";
     /*! @brief	同步调用C++或JS. */
-    static const std::string MSG_NATIVE_SYNC_EXECUTE = "NativeSyncExecute";
+    static const std::string MSG_NATIVE_SYNC_EXECUTE = "NativesyncExecute";
     /*! @brief	异步调用C++或JS. */
-    static const std::string MSG_NATIVE_ASYNC_EXECUTE = "NativeAsyncExecute";
+    static const std::string MSG_NATIVE_ASYNC_EXECUTE = "NativeasyncExecute";
     /*! @brief	通知对方处理同步数据. */
-    static const std::string MSG_PROCESS_SYNC_EXECUTE = "ProcessSyncExecute";
+    static const std::string MSG_PROCESS_SYNC_EXECUTE = "ProcesssyncExecute";
     /*! @brief	焦点发生改变时触发. */
     static const std::string MSG_FOCUSED_NODE_CHANGED = "FocusedNodeChanged";
     

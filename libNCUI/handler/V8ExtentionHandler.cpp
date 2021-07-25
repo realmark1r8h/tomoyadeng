@@ -403,8 +403,8 @@ namespace amo {
           pClassHandler = fromClass(module, context->GetBrowser());*/
         
         std::shared_ptr<RenderMessageEmitter> runner(new RenderMessageEmitter(pFrame));
-        runner->SetValue(IPCArgsPosInfo::TransferName, "ipcMain");
-        Any ret = runner->SyncExecute("onInclude", module);
+        runner->setValue(IPCArgsPosInfo::TransferName, "ipcMain");
+        Any ret = runner->syncExecute("onInclude", module);
         
         if (!ret.isValid()) {
             return NULL;

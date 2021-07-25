@@ -21,25 +21,25 @@ namespace amo {
         return std::string(*utf8_value);
     }
     
-    void NodeMessageEmitter::OnMakeProcessMessage(IPCMessage::SmartType msg, void* param) {
+    void NodeMessageEmitter::onMakeProcessMessage(IPCMessage::SmartType msg, void* param) {
         const Nan::FunctionCallbackInfo<v8::Value>& args = *reinterpret_cast<const Nan::FunctionCallbackInfo<v8::Value>*>(param);
         
-        std::shared_ptr<amo::AnyArgsList> list = msg->GetArgumentList();
+        std::shared_ptr<amo::AnyArgsList> list = msg->getArgumentList();
         
         for (int i = 0; i < args.Length(); ++i) {
             amo::Any val = amo::Nil();
             
             if (args[i]->IsBoolean()) {
                 val = args[i]->BooleanValue();
-                list->SetValue(i, val);
+                list->setValue(i, val);
             }
             
             if (args[i]->IsInt32()) {
                 val = args[i]->Int32Value();
-                list->SetValue(i, val);
+                list->setValue(i, val);
             } else if (args[i]->IsString()) {
                 val = ObjectToString(args[i]);
-                list->SetValue(i, val);
+                list->setValue(i, val);
             } else if (args[i]->IsObject()) {
                 v8::Isolate* isolate = args.GetIsolate();
                 v8::Handle<v8::String> src = v8::String::NewFromUtf8(isolate, "(function(){return function(obj){return JSON.stringify(obj);};})();");
@@ -56,24 +56,24 @@ namespace amo {
                 
                 v8::Local<v8::Value> val2 = callback->Call(isolate->GetCurrentContext()->Global(), 1, argv);
                 val = ObjectToString(val2);
-                list->SetValue(i, val);
+                list->setValue(i, val);
             } else {
-                list->SetValue(i, val);
+                list->setValue(i, val);
             }
         }
     }
     
-    bool NodeMessageEmitter::Exchange(int nPipeID, IPCMessage::SmartType msg) {
+    bool NodeMessageEmitter::exchange(int nPipeID, IPCMessage::SmartType msg) {
         return NodeProcessExchangerManager::get_instance()->Exchange(nPipeID, msg);
     }
     
     
-    amo::Any NodeMessageEmitter::WaitResult(int nPipeID, int nMessageID) {
+    amo::Any NodeMessageEmitter::waitResult(int nPipeID, int nMessageID) {
         amo::Any ret = NodeProcessExchangerManager::get_instance()->WaitResult<amo::Any>(nPipeID, nMessageID);
         return ret;
     }
     
-    bool NodeMessageEmitter::SendMessage(IPCMessage::SmartType anyMessage) {
+    bool NodeMessageEmitter::sendMessage(IPCMessage::SmartType anyMessage) {
         return NodeProcessHandler::SendMessageToUI(anyMessage);
         /*if (m_loader) return *m_loader->exec<bool, IPCMessage::SmartType>("SendMessageToUI", anyMessage);
         return false;*/

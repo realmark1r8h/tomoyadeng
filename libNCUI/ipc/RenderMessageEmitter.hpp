@@ -49,7 +49,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        virtual bool Exchange(int nPipeID,
+        virtual bool exchange(int nPipeID,
                               IPCMessage::SmartType msg) override {
             return RendererProcessExchangerManager::getInstance()->Exchange(nPipeID, msg);
         }
@@ -65,7 +65,7 @@ namespace amo {
          * @return	Any.
          */
         
-        virtual Any WaitResult(int nPipeID, int nMessageID) {
+        virtual Any waitResult(int nPipeID, int nMessageID) {
             return RendererProcessExchangerManager::getInstance()->WaitResult<Any>(nPipeID, nMessageID);
         }
         
@@ -82,10 +82,10 @@ namespace amo {
          */
         
         template<typename ... Args>
-        Any Transfer(std::string name, Args... args) {
+        Any transfer(std::string name, Args... args) {
             msg->setMessageName(MSG_NATIVE_ASYNC_EXECUTE);
-            MakeProcessMessage(msg, args...);
-            AfterMakeProcessMessage(msg, name);
+            makeProcessMessage(msg, args...);
+            afterMakeProcessMessage(msg, name);
             int nBrowserID = m_pFrame->GetBrowser()->GetIdentifier();
             return RendererTransferMgr::getInstance()->OnMessageTransfer(msg);
         }
@@ -99,10 +99,10 @@ namespace amo {
          * @param [in,out]	param	If non-null, the parameter.
          */
         
-        virtual void OnMakeProcessMessage(IPCMessage::SmartType msg,
+        virtual void onMakeProcessMessage(IPCMessage::SmartType msg,
                                           void* param) override {
             const CefV8ValueList* arguments = reinterpret_cast<const CefV8ValueList*>(param);
-            std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+            std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             int nIndex = 0;
             
             for (size_t i = 0; i < arguments->size(); ++i) {
@@ -116,37 +116,37 @@ namespace amo {
                     auto manager = MGR::getInstance();
                     int nKey = manager->RegisterCallabackFunction(m_pFrame,
                                pValue);
-                    args->SetValue(IPCArgsPosInfo::AsyncCallback, nKey);
+                    args->setValue(IPCArgsPosInfo::AsyncCallback, nKey);
                 } else {
                     TypeConvertor convertor;
-                    args->SetValue(nIndex++, convertor.toAny(pValue));
+                    args->setValue(nIndex++, convertor.toAny(pValue));
                 }
                 
                 //if (pValue->IsBool()) {
-                //    args->SetValue(nIndex++, pValue->GetBoolValue());
+                //    args->setValue(nIndex++, pValue->GetBoolValue());
                 //} else if (pValue->IsInt()) {
-                //    args->SetValue(nIndex++, pValue->GetIntValue());
+                //    args->setValue(nIndex++, pValue->GetIntValue());
                 //} else if (pValue->IsDouble()) {
-                //    args->SetValue(nIndex++, pValue->GetDoubleValue());
+                //    args->setValue(nIndex++, pValue->GetDoubleValue());
                 //} else if (pValue->IsString()) {
-                //    args->SetValue(nIndex++, pValue->GetStringValue().ToString());
+                //    args->setValue(nIndex++, pValue->GetStringValue().ToString());
                 //} else if (pValue->IsNull()) {
-                //    args->SetValue(nIndex++, amo::Nil());
+                //    args->setValue(nIndex++, amo::Nil());
                 //} else if (pValue->IsUndefined()) {
-                //    args->SetValue(nIndex++, Undefined());
+                //    args->setValue(nIndex++, Undefined());
                 //} else if (pValue->IsFunction()) {
                 //    // 如果是函数，那么解析为一个回调函数
                 //    using MGR = AsyncFunctionManager < PID_RENDERER > ;
                 //    auto manager = MGR::getInstance();
                 //    int nKey = manager->RegisterCallabackFunction(m_pFrame,
                 //               pValue);
-                //    args->SetValue(IPCArgsPosInfo::AsyncCallback, nKey);
+                //    args->setValue(IPCArgsPosInfo::AsyncCallback, nKey);
                 //} else if (pValue->IsObject()) {
                 //    // 将Object转换为JSON字符串
                 //    TypeConvertor convertor;
                 //    convertor.toAny(pValue);
                 //    std::string ss = convertor.ObjectToJson(pValue).to_string();
-                //    args->SetValue(nIndex++, ss);
+                //    args->setValue(nIndex++, ss);
                 //}
             }
         }
@@ -161,9 +161,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        virtual bool SendMessage(IPCMessage::SmartType msg) override {
+        virtual bool sendMessage(IPCMessage::SmartType msg) override {
             CefRefPtr<CefProcessMessage> message;
-            message = CefProcessMessage::Create(msg->GetName());
+            message = CefProcessMessage::Create(msg->getName());
             message->GetArgumentList()->SetString(0, msg->toJson().to_string());
             
             return m_pFrame->GetBrowser()->SendProcessMessage(PID_BROWSER,
@@ -179,9 +179,9 @@ namespace amo {
          * @param	name	The name.
          */
         
-        virtual void AfterMakeProcessMessage(IPCMessage::SmartType msg,
+        virtual void afterMakeProcessMessage(IPCMessage::SmartType msg,
                                              const std::string& name) override {
-            return MessageLauncher::AfterMakeProcessMessage(msg, name);
+            return MessageLauncher::afterMakeProcessMessage(msg, name);
         }
         
     protected:

@@ -98,16 +98,16 @@ namespace amo {
          * @return	Any.
          */
         Any OnMessageTransfer(IPCMessage::SmartType msg) {
-            std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-            int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
-            std::string messageName = msg->GetName();
+            std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+            int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+            std::string messageName = msg->getName();
             
             // 只处理这三种消息
             if (messageName == MSG_NATIVE_EXECUTE
                     || messageName == MSG_NATIVE_SYNC_EXECUTE
                     || messageName == MSG_NATIVE_ASYNC_EXECUTE) {
                 std::string funcName;
-                funcName = args->GetString(IPCArgsPosInfo::TransferName);
+                funcName = args->getString(IPCArgsPosInfo::TransferName);
                 
                 for (auto& p : m_oTransferMap) {
                     if (p.second->transferName() == funcName) {
@@ -296,8 +296,8 @@ namespace amo {
          * @return	Any.
          */
         Any OnMessageTransfer(IPCMessage::SmartType msg) {
-            std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-            int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
+            std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+            int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
             Any ret =  GetTransferMap(nBrowserID).OnMessageTransfer(msg);
             
             amo::string strMessageName = msg->getMessageName();
@@ -317,9 +317,9 @@ namespace amo {
             }
             
             amo::IPCResult result;
-            result.setID(args->GetInt(IPCArgsPosInfo::MessageID));
-            result.SetResult(ret);
-            int nFrameID = args->GetInt(IPCArgsPosInfo::FrameID);
+            result.setID(args->getInt(IPCArgsPosInfo::MessageID));
+            result.setResult(ret);
+            int nFrameID = args->getInt(IPCArgsPosInfo::FrameID);
             
             if (strMessageName == MSG_NATIVE_EXECUTE) {
                 // 普通调用不需要返回结果
@@ -330,7 +330,7 @@ namespace amo {
                 // 通过发送IPCMessage向页面异步返回结果
                 ReturnAsyncResult(nBrowserID,
                                   ret,
-                                  args->GetInt(IPCArgsPosInfo::AsyncCallback),
+                                  args->getInt(IPCArgsPosInfo::AsyncCallback),
                                   nFrameID);
             }
             

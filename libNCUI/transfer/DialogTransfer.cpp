@@ -14,10 +14,10 @@ namespace amo {
     }
     
     Any DialogTransfer::runFileDialog(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
-        int64_t nFrameID = args->GetInt64(IPCArgsPosInfo::FrameID);
-        int nCallbackID = args->GetInt(IPCArgsPosInfo::AsyncCallback);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+        int64_t nFrameID = args->getInt64(IPCArgsPosInfo::FrameID);
+        int nCallbackID = args->getInt(IPCArgsPosInfo::AsyncCallback);
         // 如果所给FrameID小于0，查找当前所获得焦点的窗口
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<LocalWindow> pLocalWindow
@@ -42,7 +42,7 @@ namespace amo {
             return vecRetval;
         }
         
-        amo::json json = args->GetJson(0);
+        amo::json json = args->getJson(0);
         
         if (!json.is_valid()) {
             return false;
@@ -80,9 +80,9 @@ namespace amo {
     
     
     Any DialogTransfer::alert(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        amo::string strMsg(args->GetString(0), true);
-        int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        amo::string strMsg(args->getString(0), true);
+        int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
         
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<BrowserWindow> pWindow;
@@ -105,9 +105,9 @@ namespace amo {
     }
     
     Any DialogTransfer::confirm(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        amo::string strMsg(args->GetString(0), true);
-        int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        amo::string strMsg(args->getString(0), true);
+        int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<BrowserWindow> pWindow;
         
@@ -129,11 +129,11 @@ namespace amo {
     }
     
     Any DialogTransfer::prompt(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        amo::string strMsg(args->GetString(0), true);
-        amo::string strPrompt(args->GetString(1), true);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        amo::string strMsg(args->getString(0), true);
+        amo::string strPrompt(args->getString(1), true);
         CDuiString strPromptText = strPrompt.to_unicode().c_str();
-        int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
+        int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<BrowserWindow> pWindow;
         

@@ -175,9 +175,9 @@ namespace amo {
          * @return	Any.
          */
         virtual Any OnMessageTransfer(IPCMessage::SmartType message) override {
-            std::shared_ptr<AnyArgsList> args = message->GetArgumentList();
-            int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
-            int64_t nID = args->GetInt64(IPCArgsPosInfo::TransferID);
+            std::shared_ptr<AnyArgsList> args = message->getArgumentList();
+            int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+            int64_t nID = args->getInt64(IPCArgsPosInfo::TransferID);
             // ≤È’“Transfer
             std::shared_ptr<ClassTransfer> transfer = FindTransfer(nID);
             

@@ -18,9 +18,9 @@ namespace amo {
             return 0;
         }
         
-        std::string strKey = msg->GetArgumentList()->GetString(0);
+        std::string strKey = msg->getArgumentList()->getString(0);
         
-        if (msg->GetArgumentList()->GetValue(0).type() == AnyValueType<amo::json>::value) {
+        if (msg->getArgumentList()->getValue(0).type() == AnyValueType<amo::json>::value) {
             std::shared_ptr<GlobalShortcutSettings> pSettings;
             pSettings.reset(new GlobalShortcutSettings());
             pSettings->UpdateArgsSettings(strKey);
@@ -41,12 +41,12 @@ namespace amo {
             return false;
         }
         
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
-        if (args->GetValue(0).type() == AnyValueType<int32_t>::value) {
-            return pNotifyWindow->isRegistered(args->GetInt(0));
-        } else if (args->GetValue(0).type() == AnyValueType<std::string>::value) {
-            return pNotifyWindow->isRegistered(args->GetString(0));
+        if (args->getValue(0).type() == AnyValueType<int32_t>::value) {
+            return pNotifyWindow->isRegistered(args->getInt(0));
+        } else if (args->getValue(0).type() == AnyValueType<std::string>::value) {
+            return pNotifyWindow->isRegistered(args->getString(0));
         }
         
         return false;
@@ -59,12 +59,12 @@ namespace amo {
             return Undefined();
         }
         
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
-        if (args->GetValue(0).type() == AnyValueType<int32_t>::value) {
-            pNotifyWindow->unregisterHotKey(args->GetInt(0));
-        } else if (args->GetValue(0).type() == AnyValueType<std::string>::value) {
-            pNotifyWindow->unregisterHotKey(args->GetString(0));
+        if (args->getValue(0).type() == AnyValueType<int32_t>::value) {
+            pNotifyWindow->unregisterHotKey(args->getInt(0));
+        } else if (args->getValue(0).type() == AnyValueType<std::string>::value) {
+            pNotifyWindow->unregisterHotKey(args->getString(0));
         }
         
         return Undefined();

@@ -35,25 +35,25 @@ namespace amo {
     
     
     Any BrowserWindowTransfer::test4(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int nFrameID = args->GetInt(IPCArgsPosInfo::FrameID);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int nFrameID = args->getInt(IPCArgsPosInfo::FrameID);
         CefRefPtr<CefFrame> pFrame = BrowserManager<PID_BROWSER>::GetFrameByID(nFrameID);
         std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(pFrame));
-        runner->SetValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-        runner->SetValue(IPCArgsPosInfo::JsFuncName, "foo1");
-        runner->Execute("runJSFunction", "foo1");
+        runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+        runner->setValue(IPCArgsPosInfo::JsFuncName, "foo1");
+        runner->execute("runJSFunction", "foo1");
         return "foo1";
         
     }
     
     Any BrowserWindowTransfer::test5(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int nFrameID = args->GetInt(IPCArgsPosInfo::FrameID);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int nFrameID = args->getInt(IPCArgsPosInfo::FrameID);
         CefRefPtr<CefFrame> pFrame = BrowserManager<PID_BROWSER>::GetFrameByID(nFrameID);
         std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(pFrame));
-        runner->SetValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-        runner->SetValue(IPCArgsPosInfo::JsFuncName, "foo2");
-        Any any = runner->SyncExecute("runJSFunction", "foo2");
+        runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+        runner->setValue(IPCArgsPosInfo::JsFuncName, "foo2");
+        Any any = runner->syncExecute("runJSFunction", "foo2");
         return any;
     }
     
@@ -62,24 +62,24 @@ namespace amo {
     }
     
     Any BrowserWindowTransfer::test6(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int nFrameID = args->GetInt(IPCArgsPosInfo::FrameID);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int nFrameID = args->getInt(IPCArgsPosInfo::FrameID);
         CefRefPtr<CefFrame> pFrame = BrowserManager<PID_BROWSER>::GetFrameByID(nFrameID);
         std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(pFrame));
-        runner->SetValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-        runner->SetValue(IPCArgsPosInfo::JsFuncName, "foo3");
+        runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+        runner->setValue(IPCArgsPosInfo::JsFuncName, "foo3");
         //int id = AsyncCallbackFunctionManager::getInstance()->Add(fooo);
-        runner->SetValue(IPCArgsPosInfo::AsyncCallback, 33133);
-        runner->AsyncExecute("runJSFunction", "foo3");
+        runner->setValue(IPCArgsPosInfo::AsyncCallback, 33133);
+        runner->asyncExecute("runJSFunction", "foo3");
         return "foo3";
     }
     
     Any BrowserWindowTransfer::OnCreateClass(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
         std::shared_ptr<BrowserWindowSettings> pBrowserSettings;
         pBrowserSettings.reset(new BrowserWindowSettings());
-        pBrowserSettings->UpdateArgsSettings(args->GetString(0));
+        pBrowserSettings->UpdateArgsSettings(args->getString(0));
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<BrowserWindow> window;
         window = manager->createBrowserWindow(pBrowserSettings)->toBrowserWindow();
@@ -92,9 +92,9 @@ namespace amo {
     
         // 先移除现有的设置
         removeBrowserWindowSettings(msg);
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string url = args->GetString(0);
-        amo::json settings = args->GetJson(1);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string url = args->getString(0);
+        amo::json settings = args->getJson(1);
         
         if (url.empty() || !settings.is_valid()) {
             return false;
@@ -111,8 +111,8 @@ namespace amo {
     }
     
     Any BrowserWindowTransfer::removeBrowserWindowSettings(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string url = args->GetString(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string url = args->getString(0);
         
         if (url.empty()) {
             return false;
@@ -129,8 +129,8 @@ namespace amo {
     
     
     Any BrowserWindowTransfer::getBrowserWindowSettings(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string url = args->GetString(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string url = args->getString(0);
         
         if (url.empty()) {
             return std::string();
@@ -161,8 +161,8 @@ namespace amo {
     }
     
     Any BrowserWindowTransfer::currentWindow(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
         auto manager = BrowserWindowManager::getInstance();
         std::vector<std::shared_ptr<LocalWindow> > vec;
         vec = manager->AllWindows();
@@ -231,13 +231,13 @@ namespace amo {
     }
     
     Any BrowserWindowTransfer::fromWebContents(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         return Undefined();
     }
     
     Any BrowserWindowTransfer::fromId(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int64_t nID = args->GetInt64(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int64_t nID = args->getInt64(0);
         auto pTransfer = ClassTransfer::FindTransfer(nID);
         
         if (!pTransfer) {
@@ -250,8 +250,8 @@ namespace amo {
     
     
     Any BrowserWindowTransfer::fromName(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string strName = args->GetString(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string strName = args->getString(0);
         auto manager = BrowserWindowManager::getInstance();
         std::vector<std::shared_ptr<LocalWindow> > vec;
         vec = manager->AllWindows();

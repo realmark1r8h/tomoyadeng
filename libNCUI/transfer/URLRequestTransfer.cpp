@@ -49,7 +49,7 @@ namespace amo {
     
     void URLRequestTransfer::OnRequestComplete(CefRefPtr<CefURLRequest> request) {
         std::shared_ptr<UIMessageEmitter> emitter = getMessageEmitter();
-        emitter->Execute("triggerEvent", "complete");
+        emitter->execute("triggerEvent", "complete");
         
     }
     
@@ -57,7 +57,7 @@ namespace amo {
             int64 current,
             int64 total) {
         std::shared_ptr<UIMessageEmitter> emitter = getMessageEmitter();
-        emitter->Execute("triggerEvent", "progress", current, total);
+        emitter->execute("triggerEvent", "progress", current, total);
         
     }
     
@@ -65,7 +65,7 @@ namespace amo {
             int64 current,
             int64 total) {
         std::shared_ptr<UIMessageEmitter> emitter = getMessageEmitter();
-        emitter->Execute("triggerEvent", "progress", current, total);
+        emitter->execute("triggerEvent", "progress", current, total);
         
         
     }
@@ -75,7 +75,7 @@ namespace amo {
                                             size_t data_length) {
         std::string str(static_cast<const char*>(data), data_length);
         std::shared_ptr<UIMessageEmitter> emitter = getMessageEmitter();
-        emitter->Execute("triggerEvent", "data", str);
+        emitter->execute("triggerEvent", "data", str);
     }
     
     bool URLRequestTransfer::OnGetAuthCredentials(bool isProxy,
@@ -97,8 +97,8 @@ namespace amo {
     
     std::shared_ptr<amo::UIMessageEmitter> URLRequestTransfer::getMessageEmitter() {
         std::shared_ptr<UIMessageEmitter> emitter(new UIMessageEmitter(m_pFrame));
-        emitter->SetValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-        emitter->SetValue(IPCArgsPosInfo::EventObjectID, getObjectID());
+        emitter->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+        emitter->setValue(IPCArgsPosInfo::EventObjectID, getObjectID());
         return emitter;
     }
     
@@ -112,15 +112,15 @@ namespace amo {
     
     Any URLRequestTransfer::OnCreateClass(IPCMessage::SmartType msg) {
     
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        amo::json json = args->GetJson(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        amo::json json = args->getJson(0);
         
         std::shared_ptr<RequestSettings> pSettings;
         pSettings.reset(new RequestSettings());
         pSettings->UpdateArgsSettings(json);
         
         CefRefPtr<CefFrame> pFrame = BrowserManager<PID_BROWSER>::GetFrameByID(
-                                         args->GetInt(IPCArgsPosInfo::FrameID));
+                                         args->getInt(IPCArgsPosInfo::FrameID));
                                          
         auto rMgr = TransferMappingMgr<RequestTransfer>::getInstance();
         auto rcMgr = TransferMappingMgr<URLRequestClientTransfer>::getInstance();

@@ -58,7 +58,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        virtual bool Exchange(int nPipeID, IPCMessage::SmartType msg) = 0;
+        virtual bool exchange(int nPipeID, IPCMessage::SmartType msg) = 0;
         
         /*!
          * @fn	virtual Any MessageLauncher::WaitResult(int nPipeID, int nMessageID) = 0;
@@ -71,7 +71,7 @@ namespace amo {
          * @return	Any.
          */
         
-        virtual Any WaitResult(int nPipeID, int nMessageID) = 0;
+        virtual Any waitResult(int nPipeID, int nMessageID) = 0;
         
         /*!
          * @fn	virtual bool MessageLauncher::SendMessage(IPCMessage::SmartType msg) = 0;
@@ -83,10 +83,10 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        virtual bool SendMessage(IPCMessage::SmartType msg) = 0;
+        virtual bool sendMessage(IPCMessage::SmartType msg) = 0;
         
         /*!
-         * @fn	virtual void MessageLauncher::OnMakeProcessMessage(IPCMessage::SmartType msg, void* args)
+         * @fn	virtual void MessageLauncher::onMakeProcessMessage(IPCMessage::SmartType msg, void* args)
          *
          * @brief	Executes the make process message action.
          *
@@ -94,7 +94,7 @@ namespace amo {
          * @param [in,out]	args	If non-null, the arguments.
          */
         
-        virtual void OnMakeProcessMessage(IPCMessage::SmartType msg, void* args) { }
+        virtual void onMakeProcessMessage(IPCMessage::SmartType msg, void* args) { }
         
         /*!
          * @fn	virtual void MessageLauncher::AfterMakeProcessMessage(IPCMessage::SmartType msg, const std::string& name)
@@ -105,12 +105,12 @@ namespace amo {
          * @param	name	The name.
          */
         
-        virtual void AfterMakeProcessMessage(IPCMessage::SmartType msg,
+        virtual void afterMakeProcessMessage(IPCMessage::SmartType msg,
                                              const std::string& name) {
-            msg->GetArgumentList()->SetValue(IPCArgsPosInfo::BrowserID, m_nPipeID);
-            msg->GetArgumentList()->SetValue(IPCArgsPosInfo::FrameID, m_nFrameID);
-            msg->GetArgumentList()->SetValue(IPCArgsPosInfo::FuncName, name);
-            msg->GetArgumentList()->SetValue(IPCArgsPosInfo::MessageID, msg->getID());
+            msg->getArgumentList()->setValue(IPCArgsPosInfo::BrowserID, m_nPipeID);
+            msg->getArgumentList()->setValue(IPCArgsPosInfo::FrameID, m_nFrameID);
+            msg->getArgumentList()->setValue(IPCArgsPosInfo::FuncName, name);
+            msg->getArgumentList()->setValue(IPCArgsPosInfo::MessageID, msg->getID());
         }
         
         /*!
@@ -129,8 +129,8 @@ namespace amo {
                               const std::string& execType,
                               Args... args) {
             msg->setMessageName(execType);
-            MakeProcessMessage(msg, args...);
-            AfterMakeProcessMessage(msg, name);
+            makeProcessMessage(msg, args...);
+            afterMakeProcessMessage(msg, name);
         }
         
         /*!
@@ -150,11 +150,11 @@ namespace amo {
             //*msg = IPCMessage::fromJson(ipcMessage->toJson());
             //*msg = *ipcMessage;
             msg->setMessageName(execType);
-            msg->GetArgumentList()->SetValue(IPCArgsPosInfo::FuncName, name);
+            msg->getArgumentList()->setValue(IPCArgsPosInfo::FuncName, name);
         }
         
         /*!
-         * @fn	template<typename ... Args> void MessageLauncher::AsyncExecute(std::string name, Args... args)
+         * @fn	template<typename ... Args> void MessageLauncher::asyncExecute(std::string name, Args... args)
          *
          * @brief	Asynchronous execute.
          *
@@ -164,35 +164,35 @@ namespace amo {
          */
         
         template<typename ... Args>
-        void AsyncExecute(std::string name, Args... args) {
+        void asyncExecute(std::string name, Args... args) {
             createIPCMessage<Args ...>(name, MSG_NATIVE_ASYNC_EXECUTE, args...);
-            SendMessage(msg);
+            sendMessage(msg);
         }
         
         /*!
-         * @fn	void MessageLauncher::AsyncExecute(IPCMessage::SmartType msg)
+         * @fn	void MessageLauncher::asyncExecute(IPCMessage::SmartType msg)
          *
          * @brief	Asynchronous execute.
          *
          * @param	msg	The message.
          */
         
-        void AsyncExecute(IPCMessage::SmartType msg) {
-            SendMessage(msg);
+        void asyncExecute(IPCMessage::SmartType msg) {
+            sendMessage(msg);
         }
         
         /*!
-         * @fn	void MessageLauncher::AsyncExecute()
+         * @fn	void MessageLauncher::asyncExecute()
          *
          * @brief	Asynchronous execute.
          */
         
-        void AsyncExecute() {
-            AsyncExecute(msg);
+        void asyncExecute() {
+            asyncExecute(msg);
         }
         
         /*!
-         * @fn	template<typename ... Args> Any MessageLauncher::SyncExecute(std::string name, Args... args)
+         * @fn	template<typename ... Args> Any MessageLauncher::syncExecute(std::string name, Args... args)
          *
          * @brief	Synchronises the execute.
          *
@@ -204,11 +204,11 @@ namespace amo {
          */
         
         template<typename ... Args>
-        Any SyncExecute(std::string name, Args... args) {
+        Any syncExecute(std::string name, Args... args) {
         
             createIPCMessage<Args ...>(name, MSG_NATIVE_SYNC_EXECUTE, args...);
             
-            bool  bOk =  Exchange(m_nPipeID, msg);	// 往管道中写入数据
+            bool  bOk =  exchange(m_nPipeID, msg);	// 往管道中写入数据
             
             if (!bOk) {
                 return Undefined();
@@ -216,13 +216,13 @@ namespace amo {
             
             IPCMessage::SmartType notifyMsg(new amo::IPCMessage());	// 通知对方处理数据
             notifyMsg->setMessageName(MSG_PROCESS_SYNC_EXECUTE);
-            SendMessage(notifyMsg);
+            sendMessage(notifyMsg);
             
-            return WaitResult(m_nPipeID, msg->getID());
+            return waitResult(m_nPipeID, msg->getID());
         }
         
         /*!
-         * @fn	Any MessageLauncher::SyncExecute(IPCMessage::SmartType msg)
+         * @fn	Any MessageLauncher::syncExecute(IPCMessage::SmartType msg)
          *
          * @brief	Synchronises the execute described by msg.
          *
@@ -231,8 +231,8 @@ namespace amo {
          * @return	Any.
          */
         
-        Any SyncExecute(IPCMessage::SmartType msg) {
-            bool bOk = Exchange(m_nPipeID, msg);	// 往管道中写入数据
+        Any syncExecute(IPCMessage::SmartType msg) {
+            bool bOk = exchange(m_nPipeID, msg);	// 往管道中写入数据
             
             if (!bOk) {
                 return Undefined();
@@ -241,21 +241,21 @@ namespace amo {
             IPCMessage::SmartType notifyMsg(new amo::IPCMessage());	// 通知对方处理数据
             notifyMsg->setMessageName(MSG_PROCESS_SYNC_EXECUTE);
             notifyMsg->setID(msg->getID());
-            notifyMsg->GetArgumentList()->SetValue(IPCArgsPosInfo::MessageID, msg->getID());
-            SendMessage(notifyMsg);
-            return WaitResult(m_nPipeID, msg->getID());
+            notifyMsg->getArgumentList()->setValue(IPCArgsPosInfo::MessageID, msg->getID());
+            sendMessage(notifyMsg);
+            return waitResult(m_nPipeID, msg->getID());
         }
         
         /*!
-         * @fn	Any MessageLauncher::SyncExecute()
+         * @fn	Any MessageLauncher::syncExecute()
          *
          * @brief	Synchronises the execute.
          *
          * @return	Any.
          */
         
-        Any SyncExecute() {
-            return SyncExecute(msg);
+        Any syncExecute() {
+            return syncExecute(msg);
         }
         
         /*!
@@ -269,9 +269,9 @@ namespace amo {
          */
         
         template<typename ... Args>
-        void Execute(std::string name, Args... args) {
+        void execute(std::string name, Args... args) {
             createIPCMessage<Args ...>(name, MSG_NATIVE_EXECUTE, args...);
-            SendMessage(msg);
+            sendMessage(msg);
         }
         
         /*!
@@ -282,8 +282,8 @@ namespace amo {
          * @param	msg	The message.
          */
         
-        void Execute(IPCMessage::SmartType msg) {
-            SendMessage(msg);
+        void execute(IPCMessage::SmartType msg) {
+            sendMessage(msg);
         }
         
         /*!
@@ -292,8 +292,8 @@ namespace amo {
          * @brief	Executes this object.
          */
         
-        void Execute() {
-            return Execute(msg);
+        void execute() {
+            return execute(msg);
         }
         
         /*!
@@ -304,9 +304,9 @@ namespace amo {
          * @param	msg	The message.
          */
         
-        void MakeProcessMessage(IPCMessage::SmartType msg) {
-            int nSize = getArgsSize(msg->GetArgumentList());
-            msg->GetArgumentList()->SetValue(IPCArgsPosInfo::ArgsLength, nSize);
+        void makeProcessMessage(IPCMessage::SmartType msg) {
+            int nSize = getArgsSize(msg->getArgumentList());
+            msg->getArgumentList()->setValue(IPCArgsPosInfo::ArgsLength, nSize);
         }
         
         /*!
@@ -321,11 +321,11 @@ namespace amo {
          * @param	args	Variable arguments providing the arguments.
          */
         
-        template<typename T, typename ...Args> void MakeProcessMessage(
+        template<typename T, typename ...Args> void makeProcessMessage(
             IPCMessage::SmartType msg, const T& t, Args ... args) {
             typedef std::conditional<AnyValueType<T>::value
             == AnyValueType<amo::Unknown>::value, InvalidAny, ValidAny>::type Type;
-            MakeProcessMessageImpl(msg, Type(), t, args...);
+            makeProcessMessageImpl(msg, Type(), t, args...);
         }
         
         /*!
@@ -341,11 +341,11 @@ namespace amo {
          * @param	args	Variable arguments providing the arguments.
          */
         
-        template<typename T, typename ...Args> void MakeProcessMessageImpl(
+        template<typename T, typename ...Args> void makeProcessMessageImpl(
             IPCMessage::SmartType msg, ValidAny any,  const T& t, Args ... args) {
-            int nIndex = getArgsSize(msg->GetArgumentList());
-            msg->GetArgumentList()->SetValue(nIndex, t);
-            return MakeProcessMessage(msg, args...);
+            int nIndex = getArgsSize(msg->getArgumentList());
+            msg->getArgumentList()->setValue(nIndex, t);
+            return makeProcessMessage(msg, args...);
         }
         
         /*!
@@ -361,9 +361,9 @@ namespace amo {
          * @param	args	Variable arguments providing the arguments.
          */
         
-        template<typename T, typename ...Args> void MakeProcessMessageImpl(
+        template<typename T, typename ...Args> void makeProcessMessageImpl(
             IPCMessage::SmartType msg, InvalidAny any, const T& t, Args ... args) {
-            OnMakeProcessMessage(msg, (void*)&t);
+            onMakeProcessMessage(msg, (void*)&t);
         }
         
         /*!
@@ -389,7 +389,7 @@ namespace amo {
         }
         
         /*!
-         * @fn	void MessageLauncher::SetValue(const int& nIndex, const Any& val)
+         * @fn	void MessageLauncher::setValue(const int& nIndex, const Any& val)
          *
          * @brief	Sets a value.
          *
@@ -397,8 +397,8 @@ namespace amo {
          * @param	val   	The value.
          */
         
-        void SetValue(const int& nIndex, const Any& val) {
-            msg->GetArgumentList()->SetValue(nIndex, val);
+        void setValue(const int& nIndex, const Any& val) {
+            msg->getArgumentList()->setValue(nIndex, val);
         }
         
         /*!
@@ -409,8 +409,8 @@ namespace amo {
          * @param	nIndex	The index.
          */
         
-        void ClearValue(const int& nIndex) {
-            msg->GetArgumentList()->ClearValue(nIndex);
+        void clearValue(const int& nIndex) {
+            msg->getArgumentList()->clearValue(nIndex);
         }
         
         /*!
@@ -422,8 +422,8 @@ namespace amo {
          * @param	nEnd  	The end.
          */
         
-        void ClearValue(const int& nBegin, const int& nEnd) {
-            msg->GetArgumentList()->ClearValue(nBegin, nEnd);
+        void clearValue(const int& nBegin, const int& nEnd) {
+            msg->getArgumentList()->clearValue(nBegin, nEnd);
         }
         
         /*!

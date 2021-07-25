@@ -12,7 +12,7 @@ namespace amo {
     }
     
     Any KeyboardTransfer::sayString(IPCMessage::SmartType msg) {
-        amo::string str(msg->GetArgumentList()->GetString(0), true);
+        amo::string str(msg->getArgumentList()->getString(0), true);
         SendKeys(str);
         return Undefined();
     }
@@ -116,12 +116,12 @@ namespace amo {
     }
     
     std::vector<char> KeyboardTransfer::getKeys(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        amo::string str(msg->GetArgumentList()->GetString(0), true);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        amo::string str(msg->getArgumentList()->getString(0), true);
         std::vector<char> vec;
         
         for (int i = 0; i < args->getArgsSize(); ++i) {
-            Any& val = args->GetValue(i);
+            Any& val = args->getValue(i);
             
             if (val.type() == AnyValueType<int>::value) {
                 vec.push_back(val.As<int>() & 0xff);

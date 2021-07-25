@@ -313,16 +313,16 @@ namespace amo {
             // 函数调用方式
             std::string strExecName = msg->getMessageName();
             
-            std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-            int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
-            int nFrameID = args->GetInt(IPCArgsPosInfo::FrameID);
+            std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+            int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+            int nFrameID = args->getInt(IPCArgsPosInfo::FrameID);
             // 对应的C++函数名， 没有汉字
-            std::string strFuncName = args->GetString(IPCArgsPosInfo::FuncName);
+            std::string strFuncName = args->getString(IPCArgsPosInfo::FuncName);
             // 查找当前Transfer是否存在所给函数
             auto iter = getFuncMgr().toMap().find(strFuncName);
             
             amo::IPCResult result;
-            result.setID(args->GetInt(IPCArgsPosInfo::MessageID));
+            result.setID(args->getInt(IPCArgsPosInfo::MessageID));
             
             //JS普通调用C++, 这种执行方式不向调用者返回结果
             if (strExecName == MSG_NATIVE_EXECUTE) {
@@ -332,7 +332,7 @@ namespace amo {
                 
                 // 调用所注册的C++函数
                 Any ret = iter->second(msg);
-                result.SetResult(ret);
+                result.setResult(ret);
                 
                 // 向调用者返回结果前先处理该结果
                 if (m_fnResultCallback
@@ -350,7 +350,7 @@ namespace amo {
                 //
                 if (iter != getFuncMgr().toMap().end()) {
                     Any  ret = iter->second(msg);
-                    result.SetResult(ret);
+                    result.setResult(ret);
                     
                     if (m_fnResultCallback
                             && m_fnResultCallback(MSG_NATIVE_SYNC_EXECUTE,
@@ -364,7 +364,7 @@ namespace amo {
                 } else {
                     // 没有找到相关函数，但是还是需要返回一个值给调用者，以免死锁
                     Any  ret = Undefined();
-                    result.SetResult(ret);
+                    result.setResult(ret);
                     
                     if (m_fnResultCallback
                             && m_fnResultCallback(MSG_NATIVE_SYNC_EXECUTE,
@@ -380,7 +380,7 @@ namespace amo {
             else if (strExecName == MSG_NATIVE_ASYNC_EXECUTE) {
                 if (iter != getFuncMgr().toMap().end()) {
                     Any  ret = iter->second(msg);
-                    result.SetResult(ret);
+                    result.setResult(ret);
                     
                     if (m_fnResultCallback
                             && m_fnResultCallback(MSG_NATIVE_ASYNC_EXECUTE,
@@ -392,7 +392,7 @@ namespace amo {
                     return ret;
                 } else {
                     Any  ret = Undefined();
-                    result.SetResult(ret);
+                    result.setResult(ret);
                     
                     if (m_fnResultCallback
                             && m_fnResultCallback(MSG_NATIVE_ASYNC_EXECUTE,

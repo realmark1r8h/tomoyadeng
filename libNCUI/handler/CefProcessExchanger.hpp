@@ -27,7 +27,7 @@ namespace amo {
         IPCMessage::SmartType msg) {
         std::string name = msg->getMessageName();
         CefRefPtr<CefProcessMessage> message = CefProcessMessage::Create(name);
-        message->GetArgumentList()->SetString(0, AnyToString(*msg));
+        message->GetArgumentList()->SetString(0, anyToString(*msg));
         return message;
     }
     
@@ -47,7 +47,7 @@ namespace amo {
         std::string name = message->GetName();
         IPCMessage::SmartType anyMessaage(new amo::IPCMessage());
         std::string str = message->GetArgumentList()->GetString(0).ToString();
-        *anyMessaage = amo::StringToAny<amo::IPCMessage>(str);
+        *anyMessaage = amo::stringToAny<amo::IPCMessage>(str);
         return anyMessaage;
     }
 }

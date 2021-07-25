@@ -14,33 +14,33 @@ namespace amo {
     }
     
     Any FrameTransfer::injectSrcipt(IPCMessage::SmartType msg) {
-        std::string jsFile = msg->GetArgumentList()->GetString(0);
+        std::string jsFile = msg->getArgumentList()->getString(0);
         
         if (jsFile.empty()) {
             return false;
         }
         
         std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(m_pFrame));
-        runner->SetValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-        runner->SetValue(IPCArgsPosInfo::TransferID, 0);
-        runner->SetValue(IPCArgsPosInfo::JsFuncName, "loadScript");
-        runner->Execute("runJSFunction", jsFile);
+        runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+        runner->setValue(IPCArgsPosInfo::TransferID, 0);
+        runner->setValue(IPCArgsPosInfo::JsFuncName, "loadScript");
+        runner->execute("runJSFunction", jsFile);
         return true;
     }
     
     
     Any FrameTransfer::injectCSS(IPCMessage::SmartType msg) {
-        std::string cssFile = msg->GetArgumentList()->GetString(0);
+        std::string cssFile = msg->getArgumentList()->getString(0);
         
         if (cssFile.empty()) {
             return false;
         }
         
         std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(m_pFrame));
-        runner->SetValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-        runner->SetValue(IPCArgsPosInfo::TransferID, 0);
-        runner->SetValue(IPCArgsPosInfo::JsFuncName, "loadCSS");
-        runner->Execute("runJSFunction", cssFile);
+        runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+        runner->setValue(IPCArgsPosInfo::TransferID, 0);
+        runner->setValue(IPCArgsPosInfo::JsFuncName, "loadCSS");
+        runner->execute("runJSFunction", cssFile);
         return true;
     }
     
@@ -105,14 +105,14 @@ namespace amo {
     }
     
     Any FrameTransfer::LoadURL(IPCMessage::SmartType msg) {
-        std::string url = msg->GetArgumentList()->GetString(0);
+        std::string url = msg->getArgumentList()->getString(0);
         m_pFrame->LoadURL(url);
         return Undefined();
     }
     
     Any FrameTransfer::LoadString(IPCMessage::SmartType msg) {
-        std::string strValue = msg->GetArgumentList()->GetString(0);
-        std::string url = msg->GetArgumentList()->GetString(1);
+        std::string strValue = msg->getArgumentList()->getString(0);
+        std::string url = msg->getArgumentList()->getString(1);
         
         if (url.empty()) {
             url = m_pFrame->GetURL().ToString();

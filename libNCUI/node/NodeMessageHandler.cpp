@@ -74,11 +74,11 @@ namespace amo {
             
             std::shared_ptr<amo::pipe<amo::pipe_type::client> > m_pRenderPipeClient;			//消息管道主进程客户端
             std::shared_ptr<ProcessExchanger> m_pBrowserProcessExchanger(new ProcessExchanger());			//消息管道数据交换类
-            std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+            std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             int id = -9999;
-            std::string strPipeClientName = RendererPipePrefix + (std::string)args->GetString(0);
+            std::string strPipeClientName = RendererPipePrefix + (std::string)args->getString(0);
             $log(amo::cdevel << func_orient << "连接管道：" << strPipeClientName << amo::endl;);
-            std::string strPipeServerName = BrowserPipePrefix + (std::string)args->GetString(0);
+            std::string strPipeServerName = BrowserPipePrefix + (std::string)args->getString(0);
             m_pRenderPipeClient.reset(new amo::pipe<amo::pipe_type::client>(strPipeClientName));
             m_pBrowserPipeServer.reset(new amo::pipe<amo::pipe_type::server>(strPipeServerName, DefaultPipeSize));
             bool bOK = m_pRenderPipeClient->connect();
@@ -101,12 +101,12 @@ namespace amo {
             BrowserProcessExchangerManager::getInstance()->TryProcessMessage(m_nBrowserID);
         }
         
-        std::string strMessageName = msg->GetName();
+        std::string strMessageName = msg->getName();
         
         if (strMessageName == MSG_NATIVE_EXECUTE
                 || strMessageName == MSG_NATIVE_SYNC_EXECUTE
                 || strMessageName == MSG_NATIVE_ASYNC_EXECUTE)	{									//JS调用C++，此消息不向页面返回结果
-            CefString handlerName = msg->GetArgumentList()->GetString(IPCArgsPosInfo::CustomArgs);
+            CefString handlerName = msg->getArgumentList()->getString(IPCArgsPosInfo::CustomArgs);
             
             if (!handlerName.empty()) {
                 BrowserTransferMgr::getInstance()->OnMessageTransfer(msg);
@@ -132,7 +132,7 @@ namespace amo {
         $log(amo::cdevel << func_orient << msg->toJson().to_string() << amo::endl;);
         
         try {
-            if (msg->GetArgumentList()->GetString(IPCArgsPosInfo::FuncName) == "quit") {
+            if (msg->getArgumentList()->getString(IPCArgsPosInfo::FuncName) == "quit") {
                 //MessageBoxA(NULL, msg->GetName().c_str(), "setMessageQueue123", MB_OK);
             }
             
@@ -154,7 +154,7 @@ namespace amo {
     
     bool NodeMessageHandler::OnBeforeResultCallback(const std::string& message_name,
             IPCMessage::SmartType msg, amo::IPCResult& ret) {
-        if (msg->GetArgumentList()->GetInt(IPCArgsPosInfo::BrowserID) != m_nBrowserID) {
+        if (msg->getArgumentList()->getInt(IPCArgsPosInfo::BrowserID) != m_nBrowserID) {
             return false;
         }
         
@@ -162,10 +162,10 @@ namespace amo {
             BrowserProcessExchangerManager::getInstance()->Exchange(m_nBrowserID, ret);
             return true;
         } else if (message_name == MSG_NATIVE_ASYNC_EXECUTE) {
-            int nCallbackID = msg->GetArgumentList()->GetInt(IPCArgsPosInfo::AsyncCallback);
+            int nCallbackID = msg->getArgumentList()->getInt(IPCArgsPosInfo::AsyncCallback);
             IPCMessage::SmartType ipcMessage(new amo::IPCMessage());
             ipcMessage->setMessageName("ASYNC_EXECUTE_CALLBACK");
-            ipcMessage->GetArgumentList()->SetValue(0, ret);
+            ipcMessage->getArgumentList()->setValue(0, ret);
             SendMessageToNode(ipcMessage);
             return true;
         }
@@ -289,7 +289,7 @@ namespace amo {
         stopReadMessage();
         
         if (getNodeRunner()) {
-            getNodeRunner()->Execute("quit");
+            getNodeRunner()->execute("quit");
         }
         
         closeMessageQueue();

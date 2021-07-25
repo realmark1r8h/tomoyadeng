@@ -32,9 +32,9 @@ namespace amo {
                     std::string url = p.getString("url");
                     std::string path = p.getString("path");
                     IPCMessage::SmartType msg(new IPCMessage());
-                    msg->GetArgumentList()->SetValue(0,
+                    msg->getArgumentList()->setValue(0,
                                                      amo::string(url, false).to_utf8());
-                    msg->GetArgumentList()->SetValue(1,
+                    msg->getArgumentList()->setValue(1,
                                                      amo::string(path, false).to_utf8());
                     addUrlMapping(msg);
                 }
@@ -55,9 +55,9 @@ namespace amo {
     
     Any AppTransfer::urlToNativePath(IPCMessage::SmartType msg) {
         std::unique_lock<std::recursive_mutex> lock(m_mutex);
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string url = args->GetString(0);
-        bool bNeedExsit = args->GetBool(1); // 是否要求文件存在
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string url = args->getString(0);
+        bool bNeedExsit = args->getBool(1); // 是否要求文件存在
         
         if (url.empty()) {
             return std::string();
@@ -105,9 +105,9 @@ namespace amo {
     Any AppTransfer::addUrlMapping(IPCMessage::SmartType msg) {
         std::unique_lock<std::recursive_mutex> lock(m_mutex);
         removeUrlMapping(msg);
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string url = args->GetString(0);
-        std::string nativeFile = args->GetString(1);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string url = args->getString(0);
+        std::string nativeFile = args->getString(1);
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         nativeFile = appSettings->ToAbsolutePath(nativeFile);
         
@@ -127,8 +127,8 @@ namespace amo {
     
     Any AppTransfer::removeUrlMapping(IPCMessage::SmartType msg) {
         std::unique_lock<std::recursive_mutex> lock(m_mutex);
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string url = args->GetString(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string url = args->getString(0);
         
         if (url.empty()) {
             return false;
@@ -144,8 +144,8 @@ namespace amo {
     }
     
     Any AppTransfer::setDragClassName(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string dragClassName = args->GetString(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string dragClassName = args->getString(0);
         
         if (dragClassName.empty()) {
             return false;
@@ -167,8 +167,8 @@ namespace amo {
     
     
     Any AppTransfer::setNoDragClassName(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string noDragClassName = args->GetString(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string noDragClassName = args->getString(0);
         
         if (noDragClassName.empty()) {
             return Undefined();
@@ -203,9 +203,9 @@ namespace amo {
     }
     
     Any AppTransfer::setGlobal(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
-        Any& val = args->GetValue(0);
+        Any& val = args->getValue(0);
         
         if (val.type() == AnyValueType<amo::json>::value) {
             amo::json json = val;
@@ -217,9 +217,9 @@ namespace amo {
     }
     
     Any AppTransfer::getGlobal(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
-        Any& val = args->GetValue(0);
+        Any& val = args->getValue(0);
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         
         if (val.type() == AnyValueType<Nil>::value) {
@@ -227,7 +227,7 @@ namespace amo {
             return m_global;
             
         } else  if (val.type() == AnyValueType<std::string>::value) {
-            std::string strKey = args->GetString(0);
+            std::string strKey = args->getString(0);
             auto& json = m_global;
             
             if (json.is_bool(strKey)) {
@@ -253,9 +253,9 @@ namespace amo {
     }
     
     Any AppTransfer::getConfig(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
-        Any& val = args->GetValue(0);
+        Any& val = args->getValue(0);
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         
         if (val.type() == AnyValueType<Nil>::value) {
@@ -263,7 +263,7 @@ namespace amo {
             return appSettings->settings;
             
         } else  if (val.type() == AnyValueType<std::string>::value) {
-            std::string strKey = args->GetString(0);
+            std::string strKey = args->getString(0);
             auto& json = appSettings->settings;
             
             if (json.is_bool(strKey)) {
@@ -289,14 +289,14 @@ namespace amo {
     }
     
     Any AppTransfer::setConfig(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
-        Any& val = args->GetValue(0);
+        Any& val = args->getValue(0);
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         
         if (val.type() == AnyValueType<amo::json>::value) {
             // 更新AppSettings
-            std::string strConfig = args->GetString(0);
+            std::string strConfig = args->getString(0);
             appSettings->UpdateArgsSettings(strConfig);
             return Undefined();
         }
@@ -305,15 +305,15 @@ namespace amo {
     }
     
     Any AppTransfer::toAbsolutePath(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
-        Any& val = args->GetValue(0);
+        Any& val = args->getValue(0);
         
         if (val.type() != AnyValueType<std::string>::value) {
             return std::string();
         }
         
-        std::string strPath = args->GetString(0);
+        std::string strPath = args->getString(0);
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         return appSettings->ToAbsolutePath(strPath);
         

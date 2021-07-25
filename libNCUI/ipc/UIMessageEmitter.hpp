@@ -69,7 +69,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        virtual bool Exchange(int nPipeID, IPCMessage::SmartType msg) override {
+        virtual bool exchange(int nPipeID, IPCMessage::SmartType msg) override {
             auto manager = BrowserProcessExchangerManager::getInstance();
             return manager->Exchange(nPipeID, msg);
         }
@@ -85,7 +85,7 @@ namespace amo {
          * @return	Any.
          */
         
-        virtual Any WaitResult(int nPipeID, int nMessageID) {
+        virtual Any waitResult(int nPipeID, int nMessageID) {
             auto manager = BrowserProcessExchangerManager::getInstance();
             return manager->WaitResult<Any>(nPipeID, nMessageID);
         }
@@ -103,10 +103,10 @@ namespace amo {
          */
         
         template<typename ... Args>
-        Any Transfer(std::string name, Args... args) {
+        Any transfer(std::string name, Args... args) {
             msg->setMessageName(MSG_NATIVE_ASYNC_EXECUTE);
-            MakeProcessMessage(msg, args...);
-            AfterMakeProcessMessage(msg, name);
+            makeProcessMessage(msg, args...);
+            afterMakeProcessMessage(msg, name);
             int nBrowserID = m_pFrame->GetBrowser()->GetIdentifier();
             return BrowserTransferMgr::getInstance()->OnMessageTransfer(msg);
         }
@@ -121,7 +121,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        virtual bool SendMessage(IPCMessage::SmartType msg) override {
+        virtual bool sendMessage(IPCMessage::SmartType msg) override {
             if (!m_pFrame) {
                 typedef std::function<bool(IPCMessage::SmartType)> NodeSender;
                 NodeSender& fn = getNodeMessageSender();
@@ -134,7 +134,7 @@ namespace amo {
             }
             
             CefRefPtr<CefProcessMessage> ipcMessage
-                = CefProcessMessage::Create(msg->GetName());
+                = CefProcessMessage::Create(msg->getName());
                 
             ipcMessage->GetArgumentList()->SetString(0,
                     msg->toJson().to_string());
@@ -174,9 +174,9 @@ namespace amo {
                 m_nPipeID = m_pFrame->GetBrowser()->GetIdentifier();
             }
             
-            std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-            args->SetValue(IPCArgsPosInfo::BrowserID, m_nPipeID);
-            args->SetValue(IPCArgsPosInfo::FrameID, m_nFrameID);
+            std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+            args->setValue(IPCArgsPosInfo::BrowserID, m_nPipeID);
+            args->setValue(IPCArgsPosInfo::FrameID, m_nFrameID);
         }
     protected:
         /*! @brief	“≥√ÊFrame÷∏’Î. */

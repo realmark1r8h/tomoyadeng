@@ -221,7 +221,7 @@ namespace amo {
     }
     
     Any LocalWindow::topmost(IPCMessage::SmartType msg) {
-        setTopmost(msg->GetArgumentList()->GetBool(0));
+        setTopmost(msg->getArgumentList()->getBool(0));
         return Undefined();
     }
     
@@ -235,7 +235,7 @@ namespace amo {
     
     
     Any LocalWindow::setFullScreen(IPCMessage::SmartType msg) {
-        bool bFull = msg->GetArgumentList()->GetBool(0);
+        bool bFull = msg->getArgumentList()->getBool(0);
         
         if (bFull && !m_pNativeSettings->fullscreenable) {
             // ½ûÖ¹È«ÆÁ
@@ -251,9 +251,9 @@ namespace amo {
     }
     
     Any LocalWindow::setMinimumSize(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int width = args->GetInt(0);
-        int height = args->GetInt(1);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int width = args->getInt(0);
+        int height = args->getInt(1);
         m_PaintManager.SetMinInfo(width, height);
         RECT rect = { 0 };
         ::GetWindowRect(m_hWnd, &rect);
@@ -276,9 +276,9 @@ namespace amo {
     }
     
     Any LocalWindow::setMaximumSize(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int width = args->GetInt(0);
-        int height = args->GetInt(1);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int width = args->getInt(0);
+        int height = args->getInt(1);
         m_PaintManager.SetMaxInfo(width, height);
         RECT rect = { 0 };
         ::GetWindowRect(m_hWnd, &rect);
@@ -300,8 +300,8 @@ namespace amo {
     }
     
     Any LocalWindow::setResizable(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        bool resizeable = args->GetBool(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        bool resizeable = args->getBool(0);
         m_pNativeSettings->resizeable = resizeable;
         
         if (!resizeable) {
@@ -324,8 +324,8 @@ namespace amo {
     
     
     Any LocalWindow::setHasShadow(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        bool hasShadow = args->GetBool(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        bool hasShadow = args->getBool(0);
         m_pNativeSettings->hasShadow = hasShadow;
         m_Shadow.Show(m_pNativeSettings->hasShadow);
         return Undefined();

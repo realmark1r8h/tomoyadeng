@@ -142,8 +142,8 @@ namespace amo {
                             std::string url = p.getString("url");
                             std::string path = p.getString("path");
                             IPCMessage::SmartType msg(new IPCMessage());
-                            msg->GetArgumentList()->SetValue(0, url);
-                            msg->GetArgumentList()->SetValue(1, path);
+                            msg->getArgumentList()->setValue(0, url);
+                            msg->getArgumentList()->setValue(1, path);
                             pAppTransfer->addUrlMapping(msg);
                             
                         }

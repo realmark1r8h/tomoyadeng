@@ -33,8 +33,8 @@ namespace amo {
     
     Any DownloaderTransfer::OnCreateClass(IPCMessage::SmartType msg) {
     
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        amo::json json = args->GetJson(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        amo::json json = args->getJson(0);
         std::shared_ptr<DownloaderSettings> pSettings;
         pSettings.reset(new DownloaderSettings());
         pSettings->UpdateArgsSettings(json);
@@ -48,8 +48,8 @@ namespace amo {
         
         std::shared_ptr<DownloaderTransfer> pTransfer;
         pTransfer = ClassTransfer::createTransfer<DownloaderTransfer>(pSettings);
-        int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
-        int64_t nFrameID = args->GetInt64(IPCArgsPosInfo::FrameID);
+        int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+        int64_t nFrameID = args->getInt64(IPCArgsPosInfo::FrameID);
         CefRefPtr<CefBrowser> pBrowser;
         pBrowser = ClientHandler::GetBrowserByID(nBrowserID);
         CefRefPtr<CefFrame> pFrame;
@@ -84,7 +84,7 @@ namespace amo {
         }
         
         m_nCommand = DL_RESUME;
-        getMessageEmitter()->Execute("triggerEvent", "resume");
+        getMessageEmitter()->execute("triggerEvent", "resume");
         return Undefined();
     }
     
@@ -95,7 +95,7 @@ namespace amo {
         
         m_nCommand = DL_PAUSE;
         
-        getMessageEmitter()->Execute("triggerEvent", "pause");
+        getMessageEmitter()->execute("triggerEvent", "pause");
         return Undefined();
     }
     
@@ -106,7 +106,7 @@ namespace amo {
         
         m_nCommand = DL_CANCEL;
         
-        getMessageEmitter()->Execute("triggerEvent", "cancel");
+        getMessageEmitter()->execute("triggerEvent", "cancel");
         return Undefined();
     }
     
@@ -166,8 +166,8 @@ namespace amo {
     
     std::shared_ptr<amo::UIMessageEmitter> DownloaderTransfer::getMessageEmitter() {
         std::shared_ptr<UIMessageEmitter> emitter(new UIMessageEmitter(m_pFrame));
-        emitter->SetValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-        emitter->SetValue(IPCArgsPosInfo::EventObjectID, getObjectID());
+        emitter->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+        emitter->setValue(IPCArgsPosInfo::EventObjectID, getObjectID());
         return emitter;
     }
     
@@ -196,7 +196,7 @@ namespace amo {
             
             callback->Continue(m_pDownloaderSettings->file, false);
             amo::json json = downloadItemToJson(download_item);
-            getMessageEmitter()->Execute("triggerEvent", "start", json);
+            getMessageEmitter()->execute("triggerEvent", "start", json);
             
             // 如果文件已经存在 ，，那么怎么办，自动生命名，覆盖？
             return true;
@@ -264,16 +264,16 @@ namespace amo {
             }*/
             
             if (download_item->IsComplete()) {
-                getMessageEmitter()->Execute("triggerEvent", "complete", json);
+                getMessageEmitter()->execute("triggerEvent", "complete", json);
                 auto transfer = ClassTransfer::getUniqueTransfer<DownloaderTransfer>();
                 transfer->removeDownloader(m_pDownloaderSettings->url);
             } else if (download_item->IsCanceled()) {
-                getMessageEmitter()->Execute("triggerEvent", "canceled", json);
+                getMessageEmitter()->execute("triggerEvent", "canceled", json);
                 auto transfer = ClassTransfer::getUniqueTransfer<DownloaderTransfer>();
                 transfer->removeDownloader(m_pDownloaderSettings->url);
                 callback->Cancel();
             } else {
-                getMessageEmitter()->Execute("triggerEvent", "update", json);
+                getMessageEmitter()->execute("triggerEvent", "update", json);
             }
             
             return true;

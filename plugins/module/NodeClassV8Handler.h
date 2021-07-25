@@ -299,11 +299,11 @@ namespace amo {
                 if (object == NULL) {
                     object = new NodeClassV8Handler(getClassObject()->getName());
                     std::shared_ptr<NodeMessageEmitter> launcher = getNativeRunner();
-                    launcher->SetValue(IPCArgsPosInfo::TransferName, getClassObject()->getName());
-                    launcher->SetValue(IPCArgsPosInfo::TransferID, getClassObject()->getID());
+                    launcher->setValue(IPCArgsPosInfo::TransferName, getClassObject()->getName());
+                    launcher->setValue(IPCArgsPosInfo::TransferID, getClassObject()->getID());
                     
-                    amo::Any out = launcher->SyncExecute<const Nan::FunctionCallbackInfo<Value>&>(getClassObject()->getName(), args);
-                    amo::json json = amo::StringToAny<amo::json>(out.value());
+                    amo::Any out = launcher->syncExecute<const Nan::FunctionCallbackInfo<Value>&>(getClassObject()->getName(), args);
+                    amo::json json = amo::stringToAny<amo::json>(out.value());
                     int64_t nID = json.get<int64_t>("id");
                     object->setID(nID);
                     NodeTypeConvertor::addClassObject(nID, object); // №ЬАн
@@ -367,13 +367,13 @@ namespace amo {
             std::vector<FunctionWrapper> vec = iter->second.toVector();
             
             std::shared_ptr<NodeMessageEmitter> launcher = getNativeRunner();
-            launcher->SetValue(IPCArgsPosInfo::TransferName, getName());
-            launcher->SetValue(IPCArgsPosInfo::TransferID, getID());
+            launcher->setValue(IPCArgsPosInfo::TransferName, getName());
+            launcher->setValue(IPCArgsPosInfo::TransferID, getID());
             
             for (auto& p : vec) {
                 if (name == p.m_strName) {
                     if (p.execType() == TransferExecSync) {
-                        amo::Any  any = launcher->SyncExecute(name);
+                        amo::Any  any = launcher->syncExecute(name);
                         NodeTypeConvertor convertor(this->getName());
                         info.GetReturnValue().Set(convertor.toV8Value(any));
                         return true;
@@ -400,29 +400,29 @@ namespace amo {
             std::vector<FunctionWrapper> vec = iter->second.toVector();
             
             std::shared_ptr<NodeMessageEmitter> launcher = getNativeRunner();
-            launcher->SetValue(IPCArgsPosInfo::TransferName, getName());
-            launcher->SetValue(IPCArgsPosInfo::TransferID, getID());
+            launcher->setValue(IPCArgsPosInfo::TransferName, getName());
+            launcher->setValue(IPCArgsPosInfo::TransferID, getID());
             
             for (auto& p : vec) {
                 if (name == p.m_strName) {
                 
                     if (p.functionType() == TransferFuncConstructor) {
-                        amo::Any  any = launcher->SyncExecute<const Nan::FunctionCallbackInfo<Value>&>(name, args);
+                        amo::Any  any = launcher->syncExecute<const Nan::FunctionCallbackInfo<Value>&>(name, args);
                         NodeTypeConvertor convertor(this->getName());
                         args.GetReturnValue().Set(convertor.toV8Value(any));
                         return true;
                     }
                     
                     if (p.execType() == TransferExecSync) {
-                        amo::Any  any = launcher->SyncExecute<const Nan::FunctionCallbackInfo<Value>&>(name, args);
+                        amo::Any  any = launcher->syncExecute<const Nan::FunctionCallbackInfo<Value>&>(name, args);
                         NodeTypeConvertor convertor(this->getName());
                         args.GetReturnValue().Set(convertor.toV8Value(any));
                         return true;
                     } else if (p.execType() == TransferExecAsync) {
-                        launcher->AsyncExecute<const Nan::FunctionCallbackInfo<Value>&>(name, args);
+                        launcher->asyncExecute<const Nan::FunctionCallbackInfo<Value>&>(name, args);
                         return true;
                     } else {
-                        launcher->Execute<const Nan::FunctionCallbackInfo<Value>&>(name, args);
+                        launcher->execute<const Nan::FunctionCallbackInfo<Value>&>(name, args);
                         return true;
                     }
                 }
@@ -474,13 +474,13 @@ namespace amo {
             
             Nan::TryCatch try_catch;
             
-            std::shared_ptr<AnyArgsList> args = anyMessage->GetArgumentList();
+            std::shared_ptr<AnyArgsList> args = anyMessage->getArgumentList();
             
             if (args->getArgsSize() < 1) {
                 return Undefined();
             }
             
-            std::string name = args->GetString(0);
+            std::string name = args->getString(0);
             
             auto iter = m_callbackFunctionMap.find(name);
             
@@ -493,7 +493,7 @@ namespace amo {
             std::vector<Local<Value> > argv;
             
             for (int i = 1; i < args->getArgsSize(); ++i) {
-                Any&  any = args->GetValue(i);
+                Any&  any = args->getValue(i);
                 
                 NodeTypeConvertor convertor;
                 argv.push_back(convertor.toV8Value(any));

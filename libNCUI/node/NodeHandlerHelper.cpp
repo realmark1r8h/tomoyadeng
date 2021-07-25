@@ -13,8 +13,8 @@ namespace amo {
     
     /*  std::shared_ptr<UIMessageEmitter> NodeHandlerHelper::getNodeRunner() {
           std::shared_ptr<UIMessageEmitter> pNodeRunner(new UIMessageEmitter());
-          pNodeRunner->SetValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-          pNodeRunner->SetValue(IPCArgsPosInfo::EventObjectID, getObjectID());
+          pNodeRunner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+          pNodeRunner->setValue(IPCArgsPosInfo::EventObjectID, getObjectID());
           return pNodeRunner;
       }*/
     

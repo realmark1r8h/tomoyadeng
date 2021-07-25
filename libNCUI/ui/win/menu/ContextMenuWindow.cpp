@@ -64,8 +64,8 @@ namespace amo {
           }*/
         
         std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(pFrame));
-        runner->SetValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-        runner->SetValue(IPCArgsPosInfo::EventObjectID, getObjectID());
+        runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+        runner->setValue(IPCArgsPosInfo::EventObjectID, getObjectID());
         
         if (param.wParam == 3) {
         
@@ -89,14 +89,14 @@ namespace amo {
             json.put("text", text.to_utf8());
             json.put("action", action.to_utf8());
             
-            runner->Execute<std::string, amo::json>("triggerEvent",
+            runner->execute<std::string, amo::json>("triggerEvent",
                                                     "select",
                                                     json);
                                                     
         } else if ((param.wParam == 4) && !m_bClosed && param.hWnd == m_hWnd) {
         
             m_bClosed = true;
-            runner->Execute<std::string>("triggerEvent", "close");
+            runner->execute<std::string>("triggerEvent", "close");
         }
         
         return result;

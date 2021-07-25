@@ -50,19 +50,19 @@ namespace amo {
     
     Any MouseTransfer::moveR(IPCMessage::SmartType msg) {
     
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         int x = 0;
         int y = 0;
         
-        if (args->GetValue(0).type() == AnyValueType<amo::json>::value) {
-            amo::json json = args->GetJson(0);
+        if (args->getValue(0).type() == AnyValueType<amo::json>::value) {
+            amo::json json = args->getJson(0);
             x = json.getInt("x");
             y = json.getInt("y");
             
-        } else  if (args->GetValue(0).type() == AnyValueType<int>::value
-                    && args->GetValue(1).type() == AnyValueType<int>::value) {
-            x = args->GetInt(0);
-            y = args->GetInt(1);
+        } else  if (args->getValue(0).type() == AnyValueType<int>::value
+                    && args->getValue(1).type() == AnyValueType<int>::value) {
+            x = args->getInt(0);
+            y = args->getInt(1);
         } else {
             return Undefined();
         }
@@ -77,13 +77,13 @@ namespace amo {
     }
     
     Any MouseTransfer::mouseWheel(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int nDelta = args->GetInt(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int nDelta = args->getInt(0);
         return SendMouseEvent(msg, MOUSEEVENTF_WHEEL, nDelta);
     }
     
     Any MouseTransfer::saveMousePos(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
         if (args->getArgsSize() == 0) {
             ::GetCursorPos(&pt);
@@ -92,15 +92,15 @@ namespace amo {
             int x = 0;
             int y = 0;
             
-            if (args->GetValue(0).type() == AnyValueType<amo::json>::value) {
-                amo::json json = args->GetJson(0);
+            if (args->getValue(0).type() == AnyValueType<amo::json>::value) {
+                amo::json json = args->getJson(0);
                 x = json.getInt("x");
                 y = json.getInt("y");
                 
-            } else if (args->GetValue(0).type() == AnyValueType<int>::value
-                       && args->GetValue(1).type() == AnyValueType<int>::value) {
-                x = args->GetInt(0);
-                y = args->GetInt(1);
+            } else if (args->getValue(0).type() == AnyValueType<int>::value
+                       && args->getValue(1).type() == AnyValueType<int>::value) {
+                x = args->getInt(0);
+                y = args->getInt(1);
             }
             
             pt.x = x;
@@ -111,8 +111,8 @@ namespace amo {
     }
     
     Any MouseTransfer::restoreMousePos(IPCMessage::SmartType msg) {
-        msg->GetArgumentList()->SetValue(0, (int)pt.x);
-        msg->GetArgumentList()->SetValue(1, (int)pt.y);
+        msg->getArgumentList()->setValue(0, (int)pt.x);
+        msg->getArgumentList()->setValue(1, (int)pt.y);
         return moveTo(msg);
     }
     
@@ -143,19 +143,19 @@ namespace amo {
     }
     
     Any MouseTransfer::setCursorPos(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         int x = 0;
         int y = 0;
         
-        if (args->GetValue(0).type() == AnyValueType<amo::json>::value) {
-            amo::json json = args->GetJson(0);
+        if (args->getValue(0).type() == AnyValueType<amo::json>::value) {
+            amo::json json = args->getJson(0);
             x = json.getInt("x");
             y = json.getInt("y");
             
-        } else  if (args->GetValue(0).type() == AnyValueType<int>::value
-                    && args->GetValue(1).type() == AnyValueType<int>::value) {
-            x = args->GetInt(0);
-            y = args->GetInt(1);
+        } else  if (args->getValue(0).type() == AnyValueType<int>::value
+                    && args->getValue(1).type() == AnyValueType<int>::value) {
+            x = args->getInt(0);
+            y = args->getInt(1);
         } else {
             return Undefined();
         }
@@ -165,10 +165,10 @@ namespace amo {
     }
     
     Any MouseTransfer::screenToClient(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string strID = args->GetString(0);
-        int x = args->GetInt(1);
-        int y = args->GetInt(2);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string strID = args->getString(0);
+        int x = args->getInt(1);
+        int y = args->getInt(2);
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<LocalWindow> pWindow = manager->findWindow(strID);
         amo::json json;
@@ -185,10 +185,10 @@ namespace amo {
     }
     
     Any MouseTransfer::clientToScreen(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string strID = args->GetString(0);
-        int x = args->GetInt(1);
-        int y = args->GetInt(2);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string strID = args->getString(0);
+        int x = args->getInt(1);
+        int y = args->getInt(2);
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<LocalWindow> pWindow = manager->findWindow(strID);
         amo::json json;
@@ -219,19 +219,19 @@ namespace amo {
     }
     
     Any MouseTransfer::SendMouseEvent(IPCMessage::SmartType msg, uint32_t dwFlags, int mouseData) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
-        int x = args->GetInt(0);
-        int y = args->GetInt(1);
+        int x = args->getInt(0);
+        int y = args->getInt(1);
         
         POINT pt = { 0 };
         ::GetCursorPos(&pt);
         
-        if (!args->IsValid(0)) {
+        if (!args->isValid(0)) {
             x = pt.x;
         }
         
-        if (!args->IsValid(1)) {
+        if (!args->isValid(1)) {
             y = pt.y;
         }
         

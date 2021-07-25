@@ -50,9 +50,9 @@ namespace amo {
         CefRefPtr<CefBrowser> pBrowser;
         pBrowser = BrowserManager<PID_BROWSER>::GetBrowserByID(nBrowserID);
         runner.reset(new UIMessageEmitter(pBrowser->GetFrame(frame_id)));
-        runner->SetValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-        runner->SetValue(IPCArgsPosInfo::AsyncCallback, id);
-        runner->Execute("asyncExecuteResult", ret);
+        runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+        runner->setValue(IPCArgsPosInfo::AsyncCallback, id);
+        runner->execute("asyncExecuteResult", ret);
     }
     
     void BrowserTransferMgr::registerClass(int nBrowserID) {
@@ -117,9 +117,9 @@ namespace amo {
         using MGR = amo::BrowserManager < PID_RENDERER >;
         CefRefPtr<CefBrowser> pBrowser = MGR::GetBrowserByID(nBrowserID);
         runner.reset(new RenderMessageEmitter(pBrowser->GetFrame(frame_id)));
-        runner->SetValue(IPCArgsPosInfo::TransferName, "ipcMain");
-        runner->SetValue(IPCArgsPosInfo::AsyncCallback, id);
-        runner->Execute("asyncExecuteResult", ret);
+        runner->setValue(IPCArgsPosInfo::TransferName, "ipcMain");
+        runner->setValue(IPCArgsPosInfo::AsyncCallback, id);
+        runner->execute("asyncExecuteResult", ret);
     }
     
 }

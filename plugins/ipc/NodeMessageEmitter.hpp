@@ -26,13 +26,13 @@ namespace amo {
         
         std::string ObjectToString(v8::Local<v8::Value> value);
         
-        virtual void OnMakeProcessMessage(IPCMessage::SmartType msg, void* param) override;
+        virtual void onMakeProcessMessage(IPCMessage::SmartType msg, void* param) override;
         
-        virtual bool Exchange(int nPipeID, IPCMessage::SmartType msg) override;
+        virtual bool exchange(int nPipeID, IPCMessage::SmartType msg) override;
         
-        virtual amo::Any WaitResult(int nPipeID, int nMessageID);
+        virtual amo::Any waitResult(int nPipeID, int nMessageID);
         
-        virtual bool SendMessage(IPCMessage::SmartType anyMessage) override;
+        virtual bool sendMessage(IPCMessage::SmartType anyMessage) override;
         
     protected:
     };

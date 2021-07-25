@@ -169,7 +169,7 @@ namespace amo {
         
         IPCMessage::SmartType anyMessage(new amo::IPCMessage());
         anyMessage->setMessageName(MSG_CREATE_PIPE_CLIENT);
-        anyMessage->GetArgumentList()->SetValue(0, (amo::Any)str.str());
+        anyMessage->getArgumentList()->setValue(0, (amo::Any)str.str());
         
         std::shared_ptr<amo::pipe<amo::pipe_type::server> >  m_pRenderPipeServer(new amo::pipe<amo::pipe_type::server>(strPipeServerName, DefaultPipeSize));
         std::shared_ptr<amo::pipe<amo::pipe_type::client> >  m_pBrowserPipeClient(new amo::pipe<amo::pipe_type::client>(strPipeClientName));
@@ -274,7 +274,7 @@ namespace amo {
             std::shared_ptr<IPCMessage> anyMessage(new IPCMessage());
             *anyMessage = IPCMessage::fromJson(json);
             
-            if (anyMessage->GetArgumentList()->GetString(IPCArgsPosInfo::FuncName) == "quit") {
+            if (anyMessage->getArgumentList()->getString(IPCArgsPosInfo::FuncName) == "quit") {
                 uv_idle_stop(handle);
                 closeMessageQueue();
                 return;

@@ -186,15 +186,15 @@ RCEDIT_API bool registerTransfer(int nBrowserID, std::function<void(int, std::sh
 amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
 
     m_pUpdater.reset(new amo::ResourceUpdater());
-    std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+    std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
     
     if (args->getArgsSize() < 3) {
         return Undefined();
     }
     
-    amo::string strConfigFile = amo::string(args->GetString(0), true);
-    amo::string strConfigAppSettings = amo::string(args->GetString(1), true);
-    amo::string strConfigBrowserSettinggs = amo::string(args->GetString(2), true);
+    amo::string strConfigFile = amo::string(args->getString(0), true);
+    amo::string strConfigAppSettings = amo::string(args->getString(1), true);
+    amo::string strConfigBrowserSettinggs = amo::string(args->getString(2), true);
     
     
     amo::string strConfig = strConfigFile;
@@ -272,13 +272,13 @@ amo::RceditTransfer::~RceditTransfer() {
 }
 
 amo::Any amo::RceditTransfer::loadDiskSettings(IPCMessage::SmartType msg) {
-    std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+    std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
     
     if (args->getArgsSize() == 0) {
         return Undefined();
     }
     
-    amo::string strPath(args->GetString(0), true);
+    amo::string strPath(args->getString(0), true);
     amo::path p(strPath);
     
     if (p.file_exists()) {

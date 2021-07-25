@@ -282,7 +282,7 @@ inline void* nauv_key_get(nauv_key_t* key) {
 }
 
 inline void nauv_key_set(nauv_key_t* key, void* value) {
-  if (TlsSetValue(key->tls_index, value) == FALSE)
+  if (TlssetValue(key->tls_index, value) == FALSE)
     abort();
 }
 

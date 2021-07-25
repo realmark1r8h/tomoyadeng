@@ -787,9 +787,9 @@ namespace amo {
         }
         
         std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(pFrame));
-        runner->SetValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-        runner->SetValue(IPCArgsPosInfo::JsFuncName, "getActiveElementInfo");
-        Any result = runner->SyncExecute("runJSFunction");
+        runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+        runner->setValue(IPCArgsPosInfo::JsFuncName, "getActiveElementInfo");
+        Any result = runner->syncExecute("runJSFunction");
         amo::json json = result;
         SetFocusFrame(pFrame);
         SetActiveElementInfo(json);
@@ -799,14 +799,14 @@ namespace amo {
         std::vector<int64_t> identifiers;
         m_pBrowser->GetFrameIdentifiers(identifiers);
         
-        if (!msg->GetArgumentList()->GetBool(0)) {
+        if (!msg->getArgumentList()->getBool(0)) {
             amo::json json;
             SetFocusFrame(NULL);
             SetActiveElementInfo(json);
             return;
         }
         
-        int nFrameID = msg->GetArgumentList()->GetInt(IPCArgsPosInfo::FrameID);
+        int nFrameID = msg->getArgumentList()->getInt(IPCArgsPosInfo::FrameID);
         CefRefPtr<CefFrame> pFrame = m_pBrowser->GetFrame(nFrameID);
         getActiveElementInfo(pFrame);
     }

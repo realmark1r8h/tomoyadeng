@@ -147,8 +147,8 @@ namespace amo {
         std::vector<int64_t> identifiers;
         frame->GetBrowser()->GetFrameIdentifiers(identifiers);
         std::shared_ptr<RenderMessageEmitter> runner(new RenderMessageEmitter(frame));
-        runner->SetValue(IPCArgsPosInfo::TransferName, "ipcMain");
-        runner->Execute(MSG_FOCUSED_NODE_CHANGED, isEditable);
+        runner->setValue(IPCArgsPosInfo::TransferName, "ipcMain");
+        runner->execute(MSG_FOCUSED_NODE_CHANGED, isEditable);
     }
     
     void RenderProcessHandler::OnUncaughtException(CefRefPtr<CefBrowser> browser,
@@ -216,12 +216,12 @@ namespace amo {
         /* IPCMessage::SmartType ipcMessage(new IPCMessage());
          ipcMessage->setMessageName(MSG_NATIVE_EXECUTE);
          std::shared_ptr<AnyArgsList>& args = ipcMessage->GetArgumentList();
-         args->SetValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-         args->SetValue(IPCArgsPosInfo::JsFuncName, "include(\"BrowserWindow\").currentWindow.dragable");
-         args->SetValue(IPCArgsPosInfo::FrameID, frame_id);
-         args->SetValue(IPCArgsPosInfo::BrowserID, nBrowserID);
-         args->SetValue(IPCArgsPosInfo::ArgsLength, 0);
-         args->SetValue(IPCArgsPosInfo::FuncName, "runJSFunction");
+         args->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+         args->setValue(IPCArgsPosInfo::JsFuncName, "include(\"BrowserWindow\").currentWindow.dragable");
+         args->setValue(IPCArgsPosInfo::FrameID, frame_id);
+         args->setValue(IPCArgsPosInfo::BrowserID, nBrowserID);
+         args->setValue(IPCArgsPosInfo::ArgsLength, 0);
+         args->setValue(IPCArgsPosInfo::FuncName, "runJSFunction");
         
          amo::RendererTransferMgr::getInstance()->OnMessageTransfer(ipcMessage);*/
         
@@ -413,11 +413,11 @@ namespace amo {
             if (!pBrowser) {
                 std::shared_ptr<RenderMessageEmitter> runner;
                 runner.reset(new RenderMessageEmitter(browser->GetMainFrame()));
-                runner->SetValue(IPCArgsPosInfo::TransferName, "ipcMain");
+                runner->setValue(IPCArgsPosInfo::TransferName, "ipcMain");
                 
                 //MessageBoxA(NULL, __FUNCTION__, __FUNCTION__, MB_OK);
                 //MessageBoxA(NULL, str.str().c_str(), __FUNCTION__, MB_OK);
-                runner->Execute("createPipeClient", str.str(), browser->GetIdentifier());
+                runner->execute("createPipeClient", str.str(), browser->GetIdentifier());
                 
                 // 如果是当前进程的第一个Browser,，那么直接创建管道
                 createPipe(browser->GetIdentifier(), pExchanger);
@@ -426,7 +426,7 @@ namespace amo {
             } else {
                 std::shared_ptr<RenderMessageEmitter> runner;
                 runner.reset(new RenderMessageEmitter(pBrowser->GetMainFrame()));
-                runner->SetValue(IPCArgsPosInfo::TransferName, "ipcMain");
+                runner->setValue(IPCArgsPosInfo::TransferName, "ipcMain");
                 // 在单独的线程中连接管道
                 // 不知什么原因，std::async不能创建线程
                 /*    std::async(std::launch::async,
@@ -442,7 +442,7 @@ namespace amo {
                                          
                                          
                                          
-                Any ret =  runner->SyncExecute("createPipeClient",
+                Any ret =  runner->syncExecute("createPipeClient",
                                                str.str(),
                                                browser->GetIdentifier());
                 th.join();

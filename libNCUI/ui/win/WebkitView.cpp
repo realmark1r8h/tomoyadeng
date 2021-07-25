@@ -259,10 +259,10 @@ namespace amo {
         // RenderProcess OnContextCreated 不能正确触发，导致窗口不能拖动，
         // 这里再调用一次
         std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(frame));
-        runner->SetValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-        runner->SetValue(IPCArgsPosInfo::TransferID, 0);
-        runner->SetValue(IPCArgsPosInfo::JsFuncName, "include(\"BrowserWindow\").currentWindow.dragable");
-        runner->Execute("runJSFunction",
+        runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+        runner->setValue(IPCArgsPosInfo::TransferID, 0);
+        runner->setValue(IPCArgsPosInfo::JsFuncName, "include(\"BrowserWindow\").currentWindow.dragable");
+        runner->execute("runJSFunction",
                         appSettings->dragClassName,
                         appSettings->noDragClassName);
         // 给页面一个鼠标移动的消息，触发mouseover事件
@@ -346,11 +346,11 @@ namespace amo {
     
     Any WebkitView::asyncExecuteResult(IPCMessage::SmartType msg) {
     
-        int id = msg->GetArgumentList()->GetInt(IPCArgsPosInfo::AsyncCallback);
+        int id = msg->getArgumentList()->getInt(IPCArgsPosInfo::AsyncCallback);
         auto item = AsyncFunctionManager<PID_BROWSER>::getInstance()->Get(id);
         
         if (item) {
-            item(msg->GetArgumentList()->GetValue(0));
+            item(msg->getArgumentList()->getValue(0));
         }
         
         using MGR = AsyncFunctionManager < PID_BROWSER > ;
@@ -388,8 +388,8 @@ namespace amo {
     }
     
     Any WebkitView::onInclude(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string strClass = args->GetString(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string strClass = args->getString(0);
         // 从磁盘中加载与所给模块同名dll
         std::shared_ptr<amo::loader> pLoader;
         pLoader = DllManager<PID_BROWSER>::getInstance()->load(strClass);
@@ -399,7 +399,7 @@ namespace amo {
         }
         
         // 外部模块必须提供registerTransfer函数
-        int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
+        int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
         auto options = pLoader->exec<bool, int,
              std::function<void(int, std::shared_ptr<ClassTransfer>) >> (
                  "registerTransfer",
@@ -449,15 +449,15 @@ namespace amo {
         std::shared_ptr<amo::pipe<amo::pipe_type::server> > pBrowserPipeServer;			//消息管道主进程服务端
         std::shared_ptr<amo::pipe<amo::pipe_type::client> > pRenderPipeClient;			//消息管道主进程客户端
         
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string strPipeClientName = RendererPipePrefix + (std::string)args->GetString(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string strPipeClientName = RendererPipePrefix + (std::string)args->getString(0);
         $log(amo::cdevel << func_orient << "连接管道：" << strPipeClientName << amo::endl;);
-        std::string strPipeServerName = BrowserPipePrefix + (std::string)args->GetString(0);
+        std::string strPipeServerName = BrowserPipePrefix + (std::string)args->getString(0);
         pRenderPipeClient.reset(new amo::pipe<amo::pipe_type::client>(strPipeClientName));
         pBrowserPipeServer.reset(new amo::pipe<amo::pipe_type::server>(strPipeServerName, DefaultPipeSize));
         bool bOK = pRenderPipeClient->connect();
         
-        int nBrowserID = args->GetInt(1);
+        int nBrowserID = args->getInt(1);
         
         $log(amo::cdevel << func_orient << "管道连接" << (bOK ? "成功" : "失败") << amo::endl;);
         
@@ -476,7 +476,7 @@ namespace amo {
         
         auto manager = BrowserTransferMgr::getInstance();
         amo::json arr = manager->GetTransferMap(nBrowserID).toJson();
-        int nPipeID = args->GetInt(IPCArgsPosInfo::BrowserID);
+        int nPipeID = args->getInt(IPCArgsPosInfo::BrowserID);
         
         if (nPipeID == nBrowserID) {
             ClientHandler::RegisterBrowser(info.pBrowser);
@@ -489,9 +489,9 @@ namespace amo {
     }
     
     Any WebkitView::OnMessageTransfer(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         // 还要处理调试窗口
-        /*  int nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
+        /*  int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
         
           if (m_nBrowserID != nBrowserID) {
               return false;
@@ -659,8 +659,8 @@ namespace amo {
         std::string url = request->GetURL();
         
         
-        msg->GetArgumentList()->SetValue(0, url);
-        msg->GetArgumentList()->SetValue(1, true);
+        msg->getArgumentList()->setValue(0, url);
+        msg->getArgumentList()->setValue(1, true);
         Any ret = pTransfer->urlToNativePath(msg);
         std::string file = ret.As<std::string>();
         

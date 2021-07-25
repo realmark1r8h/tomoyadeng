@@ -25,7 +25,7 @@ namespace amo {
         CefRefPtr<CefFrame> pFrame = pContext->GetFrame();
         IPCMessage::SmartType msg(new IPCMessage());
         msg->setMessageName(MSG_NATIVE_SYNC_EXECUTE);
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
         auto manager = amo::DllManager<PID_RENDERER>::getInstance();
         std::string funcName = name.ToString();
@@ -56,16 +56,16 @@ namespace amo {
                 
                 if (funcID && funcID->IsString()) {
                     std::string ss = funcID->GetStringValue();
-                    args->SetValue(i, ss);
+                    args->setValue(i, ss);
                 }
             }
         }
         
-        args->SetValue(IPCArgsPosInfo::ArgsLength, (int)arguments.size());
-        args->SetValue(IPCArgsPosInfo::DllName, m_dllName.ToString());	// dll name
-        args->SetValue(IPCArgsPosInfo::DllFuncName, funcName); // function name
-        args->SetValue(IPCArgsPosInfo::DllRetalType, funcArgs.m_strRetal);// 返回值类型
-        args->SetValue(IPCArgsPosInfo::FrameID, (int)pFrame->GetIdentifier());
+        args->setValue(IPCArgsPosInfo::ArgsLength, (int)arguments.size());
+        args->setValue(IPCArgsPosInfo::DllName, m_dllName.ToString());	// dll name
+        args->setValue(IPCArgsPosInfo::DllFuncName, funcName); // function name
+        args->setValue(IPCArgsPosInfo::DllRetalType, funcArgs.m_strRetal);// 返回值类型
+        args->setValue(IPCArgsPosInfo::FrameID, (int)pFrame->GetIdentifier());
         return msg;
     }
     

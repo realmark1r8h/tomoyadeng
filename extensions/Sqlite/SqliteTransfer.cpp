@@ -55,8 +55,8 @@ namespace amo {
     }
     
     Any SqliteTransfer::OnCreateClass(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string strPath = args->GetString(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string strPath = args->getString(0);
         std::shared_ptr<Sqlite> pDB(new Sqlite(strPath));
         
         pDB->RegisterFunction();

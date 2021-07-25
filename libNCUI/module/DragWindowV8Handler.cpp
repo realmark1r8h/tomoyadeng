@@ -13,13 +13,13 @@ namespace amo {
     void  DragWindowV8Handler::SendDragableToBrowserProcess(bool bEnabled) {
         CefRefPtr<CefV8Context> pContext = CefV8Context::GetCurrentContext();
         amo::RenderMessageEmitter runner(pContext->GetFrame());
-        runner.SetValue(IPCArgsPosInfo::TransferName, getHandlerName());
-        runner.SetValue(IPCArgsPosInfo::TransferID, getID());
+        runner.setValue(IPCArgsPosInfo::TransferName, getHandlerName());
+        runner.setValue(IPCArgsPosInfo::TransferID, getID());
         
         if (bEnabled) {
-            runner.Execute("enableDrag");
+            runner.execute("enableDrag");
         } else {
-            runner.Execute("disableDrag");
+            runner.execute("disableDrag");
         }
     }
     

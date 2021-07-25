@@ -231,8 +231,8 @@ namespace amo {
     
     
     Any BrowserWindow::loadURL(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string hasShadow = args->GetString(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string hasShadow = args->getString(0);
         m_pWebkit->GetBrowser()->GetMainFrame()->LoadURL(hasShadow);
         return Undefined();
     }

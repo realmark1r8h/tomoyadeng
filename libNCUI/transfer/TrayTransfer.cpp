@@ -32,20 +32,20 @@ namespace amo {
     }
     
     Any TrayTransfer::setIcon(IPCMessage::SmartType msg) {
-        amo::string strPath(msg->GetArgumentList()->GetString(0), true);
+        amo::string strPath(msg->getArgumentList()->getString(0), true);
         m_pTray->setTrayIcon(strPath);
         return Undefined();
     }
     
     Any TrayTransfer::setTooltip(IPCMessage::SmartType msg) {
-        amo::string str(msg->GetArgumentList()->GetString(0), true);
+        amo::string str(msg->getArgumentList()->getString(0), true);
         m_pTray->setToolTip(str.to_ansi());
         return Undefined();
     }
     
     
     Any TrayTransfer::blink(IPCMessage::SmartType msg) {
-        bool bBlink = msg->GetArgumentList()->GetBool(0);
+        bool bBlink = msg->getArgumentList()->getBool(0);
         m_pTray->Blink(bBlink);
         return Undefined();
     }

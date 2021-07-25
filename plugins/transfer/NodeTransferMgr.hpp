@@ -19,9 +19,9 @@ namespace amo {
         
         virtual void ReturnAsyncResult(int nBrowserID, amo::Any& ret, int id, int frame_id) {
             std::shared_ptr<NodeMessageEmitter> runner(new NodeMessageEmitter(-9999, -1));
-            runner->SetValue(IPCArgsPosInfo::TransferName, "ipcMain");
-            runner->SetValue(IPCArgsPosInfo::AsyncCallback, id);
-            runner->Execute("asyncExecuteResult", ret);
+            runner->setValue(IPCArgsPosInfo::TransferName, "ipcMain");
+            runner->setValue(IPCArgsPosInfo::AsyncCallback, id);
+            runner->execute("asyncExecuteResult", ret);
             return;
         }
         

@@ -31,7 +31,7 @@ namespace amo {
         class AnyArgsWrapper {
         public:
             AnyArgsWrapper(std::shared_ptr<AnyArgsList> args) : m_args(args) {
-                nCurrentPos = args->GetInt(IPCArgsPosInfo::ArgsLength);
+                nCurrentPos = args->getInt(IPCArgsPosInfo::ArgsLength);
             }
             
             const int& size() const {
@@ -43,7 +43,7 @@ namespace amo {
             
             TypeItem& back() {
                 auto manager = TypeMapManager::getInstance();
-                return manager->get(m_args->GetString(nCurrentPos - 1));
+                return manager->get(m_args->getString(nCurrentPos - 1));
             }
             
         public:
@@ -68,8 +68,8 @@ namespace amo {
         R runDllFuncImpl(Args... args) {
             try {
                 auto manager = DllManager<PID_RENDERER>::getInstance();
-                amo::string dllName(m_args->GetString(IPCArgsPosInfo::DllName), true);
-                amo::string funcName(m_args->GetString(IPCArgsPosInfo::DllFuncName), true);
+                amo::string dllName(m_args->getString(IPCArgsPosInfo::DllName), true);
+                amo::string funcName(m_args->getString(IPCArgsPosInfo::DllFuncName), true);
                 std::shared_ptr<amo::loader> pLoader = manager->get(dllName);
                 
                 if (!pLoader) {

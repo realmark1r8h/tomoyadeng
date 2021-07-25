@@ -168,7 +168,7 @@ namespace amo {
                 }
                 
                 /*! @brief	序列化消息. */
-                std::string msg = AnyToString(t);
+                std::string msg = anyToString(t);
                 /*! @brief	获取消息长度. */
                 std::vector<int8_t> msg_length = IntToBytes(msg.size());
                 /*! @brief	写入数据类型. */
@@ -202,7 +202,7 @@ namespace amo {
                 return true;
             } while (false);
             
-            $log(amo::cdevel << func_orient << "数据写入失败:: " << AnyToString(t) << amo::endl;);
+            $log(amo::cdevel << func_orient << "数据写入失败:: " << anyToString(t) << amo::endl;);
             return false;
         }
         
@@ -302,7 +302,7 @@ namespace amo {
                 }
                 
                 /*! @brief	序列化消息. */
-                std::string msg = AnyToString(*t);
+                std::string msg = anyToString(*t);
                 /*! @brief	获取消息长度. */
                 std::vector<int8_t> msg_length = IntToBytes(msg.size());
                 /*! @brief	写入消息长度. */
@@ -770,7 +770,7 @@ namespace amo {
                     RemoveCache(id, message_id);
                     amo::IPCResult result = any;
                     $log(amo::cdevel << __FUNCTION__ << ", " <<  result.getID() << amo::endl;);
-                    return result.GetResult();
+                    return result.getResult();
                 }
                 
                 for (auto& p : m_mpBrowserExchanger) {
@@ -786,7 +786,7 @@ namespace amo {
                             
                             if (result.getID() == message_id) {
                                 $log(amo::cdevel << __FUNCTION__ << ", " << result.getID() << amo::endl;);
-                                return result.GetResult();
+                                return result.getResult();
                             }
                             
                             InsertCache(p.first, result.getID(), ret);

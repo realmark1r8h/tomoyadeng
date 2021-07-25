@@ -27,9 +27,9 @@ namespace amo {
     Any IPCRendererV8Handler::asyncExecuteResult(IPCMessage::SmartType msg) {
     
     
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
-        int id = args->GetInt(IPCArgsPosInfo::AsyncCallback);
+        int id = args->getInt(IPCArgsPosInfo::AsyncCallback);
         auto mgr = AsyncFunctionManager<PID_RENDERER>::getInstance();
         AsyncFunctionWrapper& item = mgr->Get(id);
         
@@ -39,7 +39,7 @@ namespace amo {
         
         amo::TypeConvertor convertor(item.m_pFrame);
         
-        CefRefPtr<CefV8Value> retval = convertor.toV8Value(args->GetValue(0));
+        CefRefPtr<CefV8Value> retval = convertor.toV8Value(args->getValue(0));
         
         
         CefV8ValueList arguments;
@@ -63,10 +63,10 @@ namespace amo {
     
     Any IPCRendererV8Handler::runJSFunction(IPCMessage::SmartType msg) {
     
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int nFrameId = args->GetInt(IPCArgsPosInfo::FrameID);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int nFrameId = args->getInt(IPCArgsPosInfo::FrameID);
         std::string jsFunctionName;
-        jsFunctionName = args->GetString(IPCArgsPosInfo::JsFuncName);
+        jsFunctionName = args->getString(IPCArgsPosInfo::JsFuncName);
         std::stringstream stream;
         stream << "(function(){return " << jsFunctionName << ";})()";
         
@@ -102,8 +102,8 @@ namespace amo {
     }
     
     Any IPCRendererV8Handler::runJsFragment(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int nFrameId = args->GetInt(IPCArgsPosInfo::FrameID);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int nFrameId = args->getInt(IPCArgsPosInfo::FrameID);
         CefRefPtr<CefFrame> pFrame = m_pBrowser->GetFrame(nFrameId);
         
         if (!pFrame) {
@@ -113,7 +113,7 @@ namespace amo {
         CefRefPtr<CefV8Value> retal;
         CefRefPtr<CefV8Exception> exp;
         
-        std::string js = amo::string(args->GetString(0), true).to_utf8();
+        std::string js = amo::string(args->getString(0), true).to_utf8();
         
         bool bOk = pFrame->GetV8Context()->Eval(js, retal, exp);
         
@@ -125,13 +125,13 @@ namespace amo {
     }
     
     Any IPCRendererV8Handler::triggerEvent(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int32_t nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
-        int nFrameId = args->GetInt(IPCArgsPosInfo::FrameID);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int32_t nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+        int nFrameId = args->getInt(IPCArgsPosInfo::FrameID);
         using MGR = BrowserManager < PID_RENDERER > ;
         CefRefPtr<CefBrowser> pBrowser = MGR::GetBrowserByID(nBrowserID);
         CefRefPtr<CefFrame> pFrame = pBrowser->GetFrame(nFrameId);
-        int64_t nObjectID = args->GetInt64(IPCArgsPosInfo::EventObjectID);
+        int64_t nObjectID = args->getInt64(IPCArgsPosInfo::EventObjectID);
         CefRefPtr<CefV8Value> pValue;
         pValue = TypeConvertor::getClassObject(nFrameId, nObjectID);
         
@@ -162,9 +162,9 @@ namespace amo {
     }
     
     Any IPCRendererV8Handler::triggerEventAllFrame(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int32_t nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
-        int nFrameId = args->GetInt(IPCArgsPosInfo::FrameID);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int32_t nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+        int nFrameId = args->getInt(IPCArgsPosInfo::FrameID);
         using MGR = BrowserManager < PID_RENDERER > ;
         CefRefPtr<CefBrowser> pBrowser = MGR::GetBrowserByID(nBrowserID);
         
@@ -172,7 +172,7 @@ namespace amo {
         std::vector<int64_t> vec;
         pBrowser->GetFrameIdentifiers(vec);
         
-        int64_t nObjectID = args->GetInt64(IPCArgsPosInfo::EventObjectID);
+        int64_t nObjectID = args->getInt64(IPCArgsPosInfo::EventObjectID);
         // 获取所有ObjectID相同的对象
         std::vector<std::pair<int64_t, CefRefPtr<CefV8Value> > > values;
         values = TypeConvertor::getClassObject(vec, nObjectID);
@@ -249,9 +249,9 @@ namespace amo {
     }
     
     Any IPCRendererV8Handler::emitEventAllFrame(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int32_t nBrowserID = args->GetInt(IPCArgsPosInfo::BrowserID);
-        int nFrameId = args->GetInt(IPCArgsPosInfo::FrameID);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int32_t nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+        int nFrameId = args->getInt(IPCArgsPosInfo::FrameID);
         using MGR = BrowserManager < PID_RENDERER > ;
         CefRefPtr<CefBrowser> pBrowser = MGR::GetBrowserByID(nBrowserID);
         
@@ -259,7 +259,7 @@ namespace amo {
         std::vector<int64_t> vec;
         pBrowser->GetFrameIdentifiers(vec);
         
-        int64_t nObjectID = args->GetInt64(IPCArgsPosInfo::EventObjectID);
+        int64_t nObjectID = args->getInt64(IPCArgsPosInfo::EventObjectID);
         // 获取所有ObjectID相同的对象
         std::vector<std::pair<int64_t, CefRefPtr<CefV8Value> > > values;
         values = TypeConvertor::getClassObject(vec, nObjectID);

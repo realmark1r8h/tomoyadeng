@@ -27,19 +27,19 @@ namespace amo {
     }
     
     Any BrowserHostTransfer::CloseBrowser(IPCMessage::SmartType msg) {
-        bool bForce = msg->GetArgumentList()->GetBool(0);
+        bool bForce = msg->getArgumentList()->getBool(0);
         m_pBrowserHost->CloseBrowser(bForce);
         return Undefined();
     }
     
     Any BrowserHostTransfer::SetFocus(IPCMessage::SmartType msg) {
-        bool bFocus = msg->GetArgumentList()->GetBool(0);
+        bool bFocus = msg->getArgumentList()->getBool(0);
         m_pBrowserHost->SetFocus(bFocus);
         return Undefined();
     }
     
     Any BrowserHostTransfer::SetWindowVisibility(IPCMessage::SmartType msg) {
-        bool bVal = msg->GetArgumentList()->GetBool(0);
+        bool bVal = msg->getArgumentList()->getBool(0);
         m_pBrowserHost->SetWindowlessFrameRate(bVal);
         return Undefined();
     }
@@ -66,7 +66,7 @@ namespace amo {
     }
     
     Any BrowserHostTransfer::SetZoomLevel(IPCMessage::SmartType msg) {
-        double fVal = msg->GetArgumentList()->GetBool(0);
+        double fVal = msg->getArgumentList()->getBool(0);
         m_pBrowserHost->SetZoomLevel(fVal);
         return Undefined();
     }
@@ -76,7 +76,7 @@ namespace amo {
     }
     
     Any BrowserHostTransfer::StartDownload(IPCMessage::SmartType msg) {
-        std::string strUrl = msg->GetArgumentList()->GetString(0);
+        std::string strUrl = msg->getArgumentList()->getString(0);
         m_pBrowserHost->StartDownload(strUrl);
         return Undefined();
     }
@@ -141,9 +141,9 @@ namespace amo {
     }
     
     Any BrowserHostTransfer::SendMouseClickEvent(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        int x = args->GetInt(0);
-        int y = args->GetInt(1);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int x = args->getInt(0);
+        int y = args->getInt(1);
         CefMouseEvent mouse_event;
         mouse_event.x = (int)x;
         mouse_event.y = (int)y;

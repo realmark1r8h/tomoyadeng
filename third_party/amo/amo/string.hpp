@@ -1277,7 +1277,7 @@ namespace amo
 				std::regex e(key.to_ansi());
 				key = key.replace("\\{", "");
 				key = key.replace("\\}", "");
-				ss = std::regex_replace(ss, e, jsonValueToString(json, key.to_ansi()));
+				ss = std::regex_replace(ss, e, jsonvalueToString(json, key.to_ansi()));
 			}
 			return amo::string(ss);
 		}
@@ -1353,7 +1353,7 @@ namespace amo
 		} 
 
 
-		std::string jsonValueToString(amo::json& json, const std::string& key){
+		std::string jsonvalueToString(amo::json& json, const std::string& key){
 			if (!json.contains_key(key)) return "";
 
 			if (json.is_null(key)) {

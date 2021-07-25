@@ -14,7 +14,7 @@ namespace amo {
     }
     
     Any EventTransfer::setReturnValue(IPCMessage::SmartType msg) {
-        retval = msg->GetArgumentList()->GetValue(0);
+        retval = msg->getArgumentList()->getValue(0);
         return Undefined();
     }
     
@@ -35,11 +35,11 @@ namespace amo {
             return Undefined();
         }
         
-        std::shared_ptr<AnyArgsList> args = m_pMsg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = m_pMsg->getArgumentList();
         std::vector<Any> vec;
         
         for (int i = 1; i < args->getArgsSize(); ++i) {
-            vec.push_back(args->GetValue(i));
+            vec.push_back(args->getValue(i));
         }
         
         return vec;

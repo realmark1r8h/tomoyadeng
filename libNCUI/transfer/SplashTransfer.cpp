@@ -87,7 +87,7 @@ namespace amo {
     
         closeSplash();
         std::shared_ptr<SplashWindowSettings> pSettings(new SplashWindowSettings());
-        Any& val = msg->GetArgumentList()->GetValue(0);
+        Any& val = msg->getArgumentList()->getValue(0);
         
         if (val.type() == AnyValueType<amo::json>::value) {
             amo::json json = val;
@@ -99,10 +99,10 @@ namespace amo {
     }
     
     Any SplashTransfer::hide(IPCMessage::SmartType msg) {
-        Any& val = msg->GetArgumentList()->GetValue(0);
+        Any& val = msg->getArgumentList()->getValue(0);
         
         if (val.type() == AnyValueType<int>::value) {
-            closeSplash(msg->GetArgumentList()->GetInt(0));
+            closeSplash(msg->getArgumentList()->getInt(0));
         } else if (m_pSplashWindow != NULL) {
             closeSplash(m_pSplashWindow->getSplashSettings()->fadeout);
         }

@@ -8,13 +8,13 @@ namespace amo {
 #ifdef AMO_RUN_DLL
 
     DllRunner::DllRunner(IPCMessage::SmartType msg)
-        : m_args(msg->GetArgumentList())
+        : m_args(msg->getArgumentList())
         , m_nErrorCode(DllNoError) {
         
     }
     
     Any DllRunner::run() {
-        std::string retType(m_args->GetString(IPCArgsPosInfo::DllRetalType));
+        std::string retType(m_args->getString(IPCArgsPosInfo::DllRetalType));
         JS_TYPE nType = TypeMapManager::getInstance()->stringToJsType(retType);
         Any any = Undefined();
         

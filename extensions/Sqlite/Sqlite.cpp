@@ -38,8 +38,8 @@ namespace amo {
             return Undefined();
         }
         
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string sql = args->GetString(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string sql = args->getString(0);
         
         if (sql.empty()) {
             return Undefined();
@@ -84,8 +84,8 @@ namespace amo {
             return Undefined();
         }
         
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string sql = args->GetString(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string sql = args->getString(0);
         
         if (sql.empty()) {
             return Undefined();
@@ -140,11 +140,11 @@ namespace amo {
                     amo::json json;
                     
                     for (int j = 0; j < qry.column_count(); ++j) {
-						if (types.at(j) == "Boolean") {
-							json.put(keys.at(j), (*iter).get<int>(j) != 0);
-						} else if (types.at(j) == "INTEGER"
-							|| types.at(j) == "SMALLINT"
-							|| types.at(j) == "DECIMAL") {
+                        if (types.at(j) == "Boolean") {
+                            json.put(keys.at(j), (*iter).get<int>(j) != 0);
+                        } else if (types.at(j) == "INTEGER"
+                                   || types.at(j) == "SMALLINT"
+                                   || types.at(j) == "DECIMAL") {
                             json.put(keys.at(j), (*iter).get<int>(j));
                         } else if (types.at(j) == "TEXT"
                                    || types.at(j) == "VARCHAR"
@@ -158,17 +158,16 @@ namespace amo {
                             json.put(keys.at(j), (*iter).get<double>(j));
                         } else if (types.at(j) == "BLOB") {
                         
-						} else if (types.at(j) == "DATE") {
-							json.put(keys.at(j), (*iter).get<std::string>(j));
-						} else if (types.at(j) == "TIME") {
-							json.put(keys.at(j), (*iter).get<std::string>(j));
-						} else if (types.at(j) == "DATETIME") {
-							json.put(keys.at(j), (*iter).get<std::string>(j));
-						}
-						else if (types.at(j) == "TIMESTAMP") {
-							json.put(keys.at(j), (*iter).get<std::string>(j));
-						}
-                         
+                        } else if (types.at(j) == "DATE") {
+                            json.put(keys.at(j), (*iter).get<std::string>(j));
+                        } else if (types.at(j) == "TIME") {
+                            json.put(keys.at(j), (*iter).get<std::string>(j));
+                        } else if (types.at(j) == "DATETIME") {
+                            json.put(keys.at(j), (*iter).get<std::string>(j));
+                        } else if (types.at(j) == "TIMESTAMP") {
+                            json.put(keys.at(j), (*iter).get<std::string>(j));
+                        }
+                        
                     }
                     
                     jsonArr.push_back(json);
@@ -193,7 +192,7 @@ namespace amo {
         std::shared_ptr< sqlite3pp::database> pDB;
         
         try {
-            std::string args = msg->GetArgumentList()->GetString(0);
+            std::string args = msg->getArgumentList()->getString(0);
             
             
             pDB.reset(new sqlite3pp::database(args.c_str()));
@@ -214,12 +213,12 @@ namespace amo {
         
         amo::json queryJson;
         bool bNeedPagging = false;
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
         // 如果第三个参数是一个JSON,那么认为是分页信息
-        if (args->GetValue(2).type() == AnyValueType<amo::json>::value) {
+        if (args->getValue(2).type() == AnyValueType<amo::json>::value) {
             bNeedPagging = true;
-            queryJson = args->GetJson(2);
+            queryJson = args->getJson(2);
             queryJson = getPaggingInfo(queryJson);
         }
         
@@ -340,10 +339,10 @@ namespace amo {
             return "";
         }
         
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        std::string sql = args->GetString(0);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string sql = args->getString(0);
         
-        if (args->IsValid(1)) {
+        if (args->isValid(1)) {
             sql = formatArgs(msg);
         }
         
@@ -353,12 +352,12 @@ namespace amo {
     }
     
     std::string Sqlite::formatArgs(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        Any val = args->GetValue(1);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        Any val = args->getValue(1);
         
         
         if (val.type() == AnyValueType<amo::json>::value) {
-            amo::string sql(args->GetString(0), true);
+            amo::string sql(args->getString(0), true);
             amo::json json = val;
             return sql.format(json).to_utf8();
         } else if (val.type() == AnyValueType<std::vector<Any> >::value) {
@@ -369,7 +368,7 @@ namespace amo {
                 fmtArgsList.push_back(vec[i].value());
             }
             
-            std::string sql = args->GetString(0);
+            std::string sql = args->getString(0);
             
             
             switch (fmtArgsList.size()) {
@@ -469,7 +468,7 @@ namespace amo {
         }
         
         // 返回原始SQL
-        return args->GetString(0);
+        return args->getString(0);
     }
     
     std::string Sqlite::formatPagging(amo::json& json) {

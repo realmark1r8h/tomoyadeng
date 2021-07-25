@@ -12,15 +12,15 @@ namespace amo {
     }
     
     Any ShellTransfer::exec(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        amo::string strOperation(args->GetString(0), true);
-        amo::string strFileName(args->GetString(1), true);
-        amo::string strParam(args->GetString(2), true);
-        amo::string stsrDir(args->GetString(3), true);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        amo::string strOperation(args->getString(0), true);
+        amo::string strFileName(args->getString(1), true);
+        amo::string strParam(args->getString(2), true);
+        amo::string stsrDir(args->getString(3), true);
         int nShowCmd = SW_SHOWNORMAL;
         
-        if (args->IsValid(4)) {
-            nShowCmd = args->GetInt(4);
+        if (args->isValid(4)) {
+            nShowCmd = args->getInt(4);
         }
         
         return (int)::ShellExecuteA(NULL,
@@ -33,10 +33,10 @@ namespace amo {
     
     
     Any ShellTransfer::open(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->GetArgumentList();
-        amo::string strFileName(args->GetString(0), true);
-        amo::string strParam(args->GetString(1), true);
-        amo::string stsrDir(args->GetString(3), true);
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        amo::string strFileName(args->getString(0), true);
+        amo::string strParam(args->getString(1), true);
+        amo::string stsrDir(args->getString(3), true);
         return (int)::ShellExecuteA(NULL,
                                     "open",
                                     strFileName.c_str(),
@@ -46,7 +46,7 @@ namespace amo {
     }
     
     Any ShellTransfer::print(IPCMessage::SmartType msg) {
-        amo::string str(msg->GetArgumentList()->GetString(0), true);
+        amo::string str(msg->getArgumentList()->getString(0), true);
         return (int)::ShellExecuteA(NULL,
                                     "print",
                                     str.c_str(),
@@ -56,7 +56,7 @@ namespace amo {
     }
     
     Any ShellTransfer::showItemInFolder(IPCMessage::SmartType msg) {
-        amo::string str(msg->GetArgumentList()->GetString(0), true);
+        amo::string str(msg->getArgumentList()->getString(0), true);
         amo::string strParam("/e, /select, ");
         strParam += str;
         return (int)::ShellExecuteA(NULL,

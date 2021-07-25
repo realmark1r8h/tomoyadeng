@@ -328,7 +328,7 @@ namespace amo {
         std::shared_ptr<BrowserWindowSettings> pBrowserSettings;
         pBrowserSettings.reset(new BrowserWindowSettings());
         IPCMessage::SmartType msg(new IPCMessage());
-        msg->GetArgumentList()->SetValue(0, target_url.ToString());
+        msg->getArgumentList()->setValue(0, target_url.ToString());
         auto pTransfer = ClassTransfer::getUniqueTransfer<BrowserWindowTransfer>();
         amo::json defaultSettings = pTransfer->getBrowserWindowSettings(msg);
         pBrowserSettings->UpdateArgsSettings(defaultSettings.to_string());

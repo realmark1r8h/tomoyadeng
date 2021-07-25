@@ -481,7 +481,7 @@ namespace amo {
         std::shared_ptr<AnyArgsList> args,
         int index) {
         
-        Any& any = args->GetValue(index);
+        Any& any = args->getValue(index);
         return toV8Value(any);
         
     }

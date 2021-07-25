@@ -122,34 +122,34 @@ namespace amo {
         if (iter != m_oFuncMgr.toMap().end()) {
             auto& p = iter->second;
             RenderMessageEmitter runner(pContext->GetFrame());
-            runner.SetValue(IPCArgsPosInfo::TransferID, getID());
-            runner.SetValue(IPCArgsPosInfo::TransferName, getHandlerName());
+            runner.setValue(IPCArgsPosInfo::TransferID, getID());
+            runner.setValue(IPCArgsPosInfo::TransferName, getHandlerName());
             TypeConvertor convertor;
             convertor.setRendererObject(isRendererClass());
             
             if (isRendererClass()) {
                 // 如果是在渲染进程中执行，直接Transfer
-                Any  any = runner.Transfer(name, arguments);
+                Any  any = runner.transfer(name, arguments);
                 retval = convertor.toV8Value(any);
                 return true;
             }
             // 判断是否为构造函数, 这里可能没用了
             else if (p.functionType() == TransferFuncConstructor) {
-                Any  any = runner.SyncExecute(name, arguments);
+                Any  any = runner.syncExecute(name, arguments);
                 retval = convertor.toV8Value(any);
                 return true;
             }
             
             // 调用C++的方式
             if (p.execType() == TransferExecSync) {
-                Any  any = runner.SyncExecute(name, arguments);
+                Any  any = runner.syncExecute(name, arguments);
                 retval = convertor.toV8Value(any);
                 return true;
             } else if (p.execType() == TransferExecAsync) {
-                runner.AsyncExecute(name, arguments);
+                runner.asyncExecute(name, arguments);
                 return true;
             } else {
-                runner.Execute(name, arguments);
+                runner.execute(name, arguments);
                 return true;
             }
         }
