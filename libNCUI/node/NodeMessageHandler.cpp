@@ -87,18 +87,18 @@ namespace amo {
             
             bOK = m_pBrowserPipeServer->connect();
             $log(amo::cdevel << func_orient << "主进程管道服务连接" << (bOK ? "成功" : "失败") << amo::endl;);
-            m_pBrowserProcessExchanger->SetPipeClient(m_pRenderPipeClient);
-            m_pBrowserProcessExchanger->SetPipeServer(m_pBrowserPipeServer);
+            m_pBrowserProcessExchanger->setPipeClient(m_pRenderPipeClient);
+            m_pBrowserProcessExchanger->setPipeServer(m_pBrowserPipeServer);
             m_pBrowserProcessExchanger->setBrowserID(id);
             m_pBrowserProcessExchanger->setProcessSyncMessageCallback(std::bind(&NodeMessageHandler::ProcessSyncMessage, this, std::placeholders::_1, std::placeholders::_2));
-            BrowserProcessExchangerManager::getInstance()->AddExchanger(m_nBrowserID, m_pBrowserProcessExchanger);
+            BrowserProcessExchangerManager::getInstance()->addExchanger(m_nBrowserID, m_pBrowserProcessExchanger);
             
             auto manager = amo::BrowserTransferMgr::getInstance();
             amo::json arr = manager->GetTransferMap(m_nBrowserID).toJson();
-            BrowserProcessExchangerManager::getInstance()->Exchange(m_nBrowserID, arr);
+            BrowserProcessExchangerManager::getInstance()->exchange(m_nBrowserID, arr);
             
         } else if (message_name == MSG_PROCESS_SYNC_EXECUTE) {
-            BrowserProcessExchangerManager::getInstance()->TryProcessMessage(m_nBrowserID);
+            BrowserProcessExchangerManager::getInstance()->tryProcessMessage(m_nBrowserID);
         }
         
         std::string strMessageName = msg->getName();
@@ -159,7 +159,7 @@ namespace amo {
         }
         
         if (message_name == MSG_NATIVE_SYNC_EXECUTE) {
-            BrowserProcessExchangerManager::getInstance()->Exchange(m_nBrowserID, ret);
+            BrowserProcessExchangerManager::getInstance()->exchange(m_nBrowserID, ret);
             return true;
         } else if (message_name == MSG_NATIVE_ASYNC_EXECUTE) {
             int nCallbackID = msg->getArgumentList()->getInt(IPCArgsPosInfo::AsyncCallback);

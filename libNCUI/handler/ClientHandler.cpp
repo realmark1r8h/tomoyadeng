@@ -117,7 +117,7 @@ namespace amo {
         }
         
         if (message_name == MSG_PROCESS_SYNC_EXECUTE) {
-            BrowserProcessExchangerManager::getInstance()->TryProcessMessage(browser->GetIdentifier());
+            BrowserProcessExchangerManager::getInstance()->tryProcessMessage(browser->GetIdentifier());
         } else if (message_name == MSG_IPC_READY) {
             RegisterBrowser(browser); //ÃÌº”‰Ø¿¿∆˜µΩπ‹¿Ì∆˜÷–
         }
@@ -281,7 +281,7 @@ namespace amo {
         }
         
         std::shared_ptr<ProcessExchanger> pBrowserProcessExchanger(new ProcessExchanger());
-        BrowserProcessExchangerManager::getInstance()->AddExchanger(browser->GetIdentifier(),
+        BrowserProcessExchangerManager::getInstance()->addExchanger(browser->GetIdentifier(),
                 pBrowserProcessExchanger);
     }
     
@@ -294,7 +294,7 @@ namespace amo {
     void ClientHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
         RemoveBrowserByID(browser->GetIdentifier()); // “∆≥˝‰Ø¿¿∆˜
         RemoveBrowserFromTempByID(browser->GetIdentifier());
-        BrowserProcessExchangerManager::getInstance()->RemoveExchanger(browser->GetIdentifier());
+        BrowserProcessExchangerManager::getInstance()->removeExchanger(browser->GetIdentifier());
     }
     
     bool ClientHandler::ProcessSyncMessage(int nID, IPCMessage::SmartType msg) {

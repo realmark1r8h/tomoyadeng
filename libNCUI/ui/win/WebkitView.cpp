@@ -347,14 +347,14 @@ namespace amo {
     Any WebkitView::asyncExecuteResult(IPCMessage::SmartType msg) {
     
         int id = msg->getArgumentList()->getInt(IPCArgsPosInfo::AsyncCallback);
-        auto item = AsyncFunctionManager<PID_BROWSER>::getInstance()->Get(id);
+        auto item = AsyncFunctionManager<PID_BROWSER>::getInstance()->get(id);
         
         if (item) {
             item(msg->getArgumentList()->getValue(0));
         }
         
         using MGR = AsyncFunctionManager < PID_BROWSER > ;
-        MGR::getInstance()->UnRegisterCallbackFunction(id);
+        MGR::getInstance()->unRegisterCallbackFunction(id);
         return Undefined();
     }
     
@@ -464,10 +464,10 @@ namespace amo {
         bOK = pBrowserPipeServer->connect();
         $log(amo::cdevel << func_orient << "主进程管道服务连接" << (bOK ? "成功" : "失败") << amo::endl;);
         std::shared_ptr<ProcessExchanger> pBrowserProcessExchanger;					//消息管道数据交换类
-        pBrowserProcessExchanger = BrowserProcessExchangerManager::getInstance()->FindExchanger(nBrowserID);
+        pBrowserProcessExchanger = BrowserProcessExchangerManager::getInstance()->findExchanger(nBrowserID);
         assert(pBrowserProcessExchanger);
-        pBrowserProcessExchanger->SetPipeClient(pRenderPipeClient);
-        pBrowserProcessExchanger->SetPipeServer(pBrowserPipeServer);
+        pBrowserProcessExchanger->setPipeClient(pRenderPipeClient);
+        pBrowserProcessExchanger->setPipeServer(pBrowserPipeServer);
         pBrowserProcessExchanger->setBrowserID(nBrowserID);
         
         BrowserTempInfo info = ClientHandler::GetBrowserInfoFromTempByID(nBrowserID);
@@ -481,7 +481,7 @@ namespace amo {
         if (nPipeID == nBrowserID) {
             ClientHandler::RegisterBrowser(info.pBrowser);
             // 两个ID相同，那么说明是渲染进程的第一个Browser,没有同步调用
-            BrowserProcessExchangerManager::getInstance()->Exchange(nPipeID, arr);
+            BrowserProcessExchangerManager::getInstance()->exchange(nPipeID, arr);
             return Undefined();
         } else {
             return arr;

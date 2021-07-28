@@ -13,7 +13,7 @@ namespace amo {
         virtual void ReturnSyncResult(int nBrowserID, amo::IPCResult& ret) {
             // TODO: 返回同步消息
             auto mgr = NodeProcessExchangerManager::getInstance();
-            mgr->Exchange(nBrowserID, ret);
+            mgr->exchange(nBrowserID, ret);
             return;
         }
         

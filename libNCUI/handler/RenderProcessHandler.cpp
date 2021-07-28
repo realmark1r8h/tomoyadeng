@@ -108,7 +108,7 @@ namespace amo {
             $log(amo::cdevel << func_orient << MSG_ENABLE_BACK_FORWORD << m_bEnableBackForword << amo::endl;);
             return true;
         } else if (strMessageName == MSG_PROCESS_SYNC_EXECUTE) {
-            RendererProcessExchangerManager::getInstance()->TryProcessMessage(browser->GetIdentifier());
+            RendererProcessExchangerManager::getInstance()->tryProcessMessage(browser->GetIdentifier());
         }
         
         
@@ -275,7 +275,7 @@ namespace amo {
         }
         
         RemoveBrowserByID(browser->GetIdentifier());
-        RendererProcessExchangerManager::getInstance()->RemoveExchanger(browser->GetIdentifier());
+        RendererProcessExchangerManager::getInstance()->removeExchanger(browser->GetIdentifier());
         
         V8ExtentionHandler* pHander = dynamic_cast<V8ExtentionHandler*>(m_pV8ExtensionHander.get());
         
@@ -308,10 +308,10 @@ namespace amo {
         $log(amo::cdevel << func_orient << ", ¿ªÊ¼" << amo::endl;);
         int nBrowserID = browser->GetIdentifier();
         auto exchangerMgr = RendererProcessExchangerManager::getInstance();
-        exchangerMgr->AddExchanger(nBrowserID, pExchanger);
+        exchangerMgr->addExchanger(nBrowserID, pExchanger);
         
         if (!ret.isValid()) {
-            ret = exchangerMgr->Exchange <Any>(nBrowserID);
+            ret = exchangerMgr->exchange <Any>(nBrowserID);
         }
         
         $log(amo::cdevel << func_orient << "×¢²á£º" << browser->GetIdentifier() << amo::endl;);
@@ -372,7 +372,7 @@ namespace amo {
         
         auto manager = RendererProcessExchangerManager::getInstance();
         std::shared_ptr<ProcessExchanger> pExchanger;
-        pExchanger = manager->FindExchanger(nBrowserID);
+        pExchanger = manager->findExchanger(nBrowserID);
         
         if (!pExchanger) {
         
@@ -398,8 +398,8 @@ namespace amo {
             //bool bOk = m_pBrowserPipeClient->connect();
             
             pExchanger.reset(new ProcessExchanger());
-            pExchanger->SetPipeServer(m_pRenderPipeServer);
-            pExchanger->SetPipeClient(m_pBrowserPipeClient);
+            pExchanger->setPipeServer(m_pRenderPipeServer);
+            pExchanger->setPipeClient(m_pBrowserPipeClient);
             pExchanger->setProcessSyncMessageCallback(
                 std::bind(&RenderProcessHandler::ProcessSyncMessage, this,
                           std::placeholders::_1, std::placeholders::_2));

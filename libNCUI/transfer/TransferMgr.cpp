@@ -39,7 +39,7 @@ namespace amo {
     void BrowserTransferMgr::ReturnSyncResult(int nBrowserID,
             amo::IPCResult& ret) {
         auto manager = BrowserProcessExchangerManager::getInstance();
-        manager->Exchange(nBrowserID, ret);
+        manager->exchange(nBrowserID, ret);
     }
     
     void BrowserTransferMgr::ReturnAsyncResult(int nBrowserID,
@@ -106,7 +106,7 @@ namespace amo {
     void RendererTransferMgr::ReturnSyncResult(int nBrowserID,
             amo::IPCResult& ret) {
         auto mgr = RendererProcessExchangerManager::getInstance();
-        mgr->Exchange(nBrowserID, ret);
+        mgr->exchange(nBrowserID, ret);
     }
     
     void RendererTransferMgr::ReturnAsyncResult(int nBrowserID,

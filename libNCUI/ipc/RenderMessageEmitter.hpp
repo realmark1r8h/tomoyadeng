@@ -51,7 +51,7 @@ namespace amo {
         
         virtual bool exchange(int nPipeID,
                               IPCMessage::SmartType msg) override {
-            return RendererProcessExchangerManager::getInstance()->Exchange(nPipeID, msg);
+            return RendererProcessExchangerManager::getInstance()->exchange(nPipeID, msg);
         }
         
         /*!
@@ -66,7 +66,7 @@ namespace amo {
          */
         
         virtual Any waitResult(int nPipeID, int nMessageID) {
-            return RendererProcessExchangerManager::getInstance()->WaitResult<Any>(nPipeID, nMessageID);
+            return RendererProcessExchangerManager::getInstance()->waitResult<Any>(nPipeID, nMessageID);
         }
         
         /*!
@@ -114,7 +114,7 @@ namespace amo {
                     // 如果是函数，那么解析为一个回调函数
                     using MGR = AsyncFunctionManager < PID_RENDERER > ;
                     auto manager = MGR::getInstance();
-                    int nKey = manager->RegisterCallabackFunction(m_pFrame,
+                    int nKey = manager->registerCallabackFunction(m_pFrame,
                                pValue);
                     args->setValue(IPCArgsPosInfo::AsyncCallback, nKey);
                 } else {

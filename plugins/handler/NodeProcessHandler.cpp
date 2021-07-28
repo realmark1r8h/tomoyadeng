@@ -189,17 +189,17 @@ namespace amo {
         
         
         amo::shared_ptr<ProcessExchanger> pRendererProcessExchanger(new ProcessExchanger());
-        pRendererProcessExchanger->SetPipeServer(m_pRenderPipeServer);
-        pRendererProcessExchanger->SetPipeClient(m_pBrowserPipeClient);
+        pRendererProcessExchanger->setPipeServer(m_pRenderPipeServer);
+        pRendererProcessExchanger->setPipeClient(m_pBrowserPipeClient);
         pRendererProcessExchanger->setProcessSyncMessageCallback(
             std::bind(&NodeProcessHandler::ProcessSyncMessage,
                       std::placeholders::_1,
                       std::placeholders::_2));
                       
         pRendererProcessExchanger->setBrowserID(m_nPipeID);
-        NodeProcessExchangerManager::get_instance()->AddExchanger(m_nPipeID, pRendererProcessExchanger);
+        NodeProcessExchangerManager::get_instance()->addExchanger(m_nPipeID, pRendererProcessExchanger);
         
-        amo::Any ret = NodeProcessExchangerManager::get_instance()->Exchange <amo::Any>(m_nPipeID);
+        amo::Any ret = NodeProcessExchangerManager::get_instance()->exchange <amo::Any>(m_nPipeID);
         $log(amo::cdevel << ret.value() << amo::endl);
         
         amo::json jsonArr(ret.value());
@@ -328,7 +328,7 @@ namespace amo {
         $log(amo::cdevel << func_orient << anyMessage->toJson().to_string() << amo::endl);
         
         if (strMessageName == MSG_PROCESS_SYNC_EXECUTE) {
-            NodeProcessExchangerManager::get_instance()->TryProcessMessage(m_nPipeID);
+            NodeProcessExchangerManager::get_instance()->tryProcessMessage(m_nPipeID);
         }
         
         if (strMessageName == MSG_NATIVE_EXECUTE

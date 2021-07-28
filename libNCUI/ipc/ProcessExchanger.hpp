@@ -22,7 +22,7 @@
 #include "ipc/IPCMessage.hpp"
 
 namespace {
-    static std::vector<int8_t> IntToBytes(int n) {
+    static std::vector<int8_t> intToBytes(int n) {
         std::vector<int8_t> b(4, 0);
         
         for (int i = 0; i < 4; i++) {
@@ -32,12 +32,12 @@ namespace {
         return b;
     }
     
-    static int BytesToInt(int8_t* b) {
+    static int bytesToInt(int8_t* b) {
         int mask = 0x000000ff;
         return ((b[0] & mask) << 24) + ((b[1] & mask) << 16) + ((b[2] & mask) << 8) + (b[3] & mask);
     }
     
-    static int BytesToInt(std::vector<int8_t>& b) {
+    static int bytesToInt(std::vector<int8_t>& b) {
         int mask = 0x000000ff;
         return ((b[0] & mask) << 24) + ((b[1] & mask) << 16) + ((b[2] & mask) << 8) + (b[3] & mask);
     }
@@ -54,7 +54,7 @@ namespace amo {
         }
         
         /*!
-         * @fn	template<typename R> R ProcessExchanger::Exchange();
+         * @fn	template<typename R> R ProcessExchanger::exchange();
          *
          * @brief	从管道中读取指定类型数据.
          *
@@ -64,19 +64,19 @@ namespace amo {
          */
         
         template<typename R>
-        R Exchange();
+        R exchange();
         
         /*!
-         * @fn	template<> Any ProcessExchanger::Exchange<Any>()
+         * @fn	template<> Any ProcessExchanger::exchange<Any>()
          *
-         * @brief	从管道中读取任意类型数据  Exchange Any 特化版本.
+         * @brief	从管道中读取任意类型数据  exchange Any 特化版本.
          *
          * @tparam	Any	Type of any.
          *
          * @return	Any.
          */
         
-        template<> Any Exchange<Any>() {
+        template<> Any exchange<Any>() {
             std::unique_lock<std::recursive_mutex> lock(m_mutexServer);
             
             do {
@@ -84,12 +84,12 @@ namespace amo {
                     break;
                 }
                 
-                if (!ReadHeader()) {
+                if (!readHeader()) {
                     break;
                 }
                 
-                char value_type = ReadValueType();
-                int length = GetMessageLength();
+                char value_type = readValueType();
+                int length = getMessageLength();
                 
                 if (length == 0) {
                     break;
@@ -99,7 +99,7 @@ namespace amo {
                 memset(msg.data(), 0, msg.size());
                 m_pPipeServer->read(msg.data(), length);
                 
-                if (!ReadTail()) {
+                if (!readTail()) {
                     break;
                 }
                 
@@ -139,7 +139,7 @@ namespace amo {
         }
         
         /*!
-         * @fn	template<typename T> bool ProcessExchanger::Exchange(const T& t)
+         * @fn	template<typename T> bool ProcessExchanger::exchange(const T& t)
          *
          * @brief	向管道中写入数据.
          *
@@ -150,7 +150,7 @@ namespace amo {
          */
         
         template<typename T>
-        bool Exchange(const T& t) {
+        bool exchange(const T& t) {
             std::unique_lock<std::recursive_mutex> lock(m_mutexClient);
             
             do {
@@ -170,7 +170,7 @@ namespace amo {
                 /*! @brief	序列化消息. */
                 std::string msg = anyToString(t);
                 /*! @brief	获取消息长度. */
-                std::vector<int8_t> msg_length = IntToBytes(msg.size());
+                std::vector<int8_t> msg_length = intToBytes(msg.size());
                 /*! @brief	写入数据类型. */
                 nCount = m_pPipeClient->write(&AnyValueType<T>::value, 1);
                 
@@ -207,7 +207,7 @@ namespace amo {
         }
         
         /*!
-         * @fn	template<> bool ProcessExchanger::Exchange<Any>(const Any& t)
+         * @fn	template<> bool ProcessExchanger::exchange<Any>(const Any& t)
          *
          * @brief	Exchanges the given t.
          *
@@ -217,7 +217,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        template<> bool Exchange<Any>(const Any& t) {
+        template<> bool exchange<Any>(const Any& t) {
             std::unique_lock<std::recursive_mutex> lock(m_mutexClient);
             
             do {
@@ -236,7 +236,7 @@ namespace amo {
                 /*! @brief	序列化消息. */
                 const std::string& msg = t.value();
                 /*! @brief	获取消息长度. */
-                std::vector<int8_t> msg_length = IntToBytes(msg.size());
+                std::vector<int8_t> msg_length = intToBytes(msg.size());
                 /*! @brief	写入数据类型. */
                 nCount = m_pPipeClient->write(&t.type(), 1);
                 
@@ -272,7 +272,7 @@ namespace amo {
             return false;
         }
         
-        template<> bool Exchange<IPCMessage::SmartType >(
+        template<> bool exchange<IPCMessage::SmartType >(
             const IPCMessage::SmartType&  t) {
             std::unique_lock<std::recursive_mutex> lock(m_mutexClient);
             
@@ -304,7 +304,7 @@ namespace amo {
                 /*! @brief	序列化消息. */
                 std::string msg = anyToString(*t);
                 /*! @brief	获取消息长度. */
-                std::vector<int8_t> msg_length = IntToBytes(msg.size());
+                std::vector<int8_t> msg_length = intToBytes(msg.size());
                 /*! @brief	写入消息长度. */
                 nCount = m_pPipeClient->write(msg_length.data(), 4);
                 
@@ -344,7 +344,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool ReadHeader() {
+        bool readHeader() {
             char head = '\0';
             m_pPipeServer->read(&head, 1);
             
@@ -363,7 +363,7 @@ namespace amo {
          * @return	The value type.
          */
         
-        char ReadValueType() {
+        char readValueType() {
             char type = '\0';
             m_pPipeServer->read(&type, 1);
             return type;
@@ -377,7 +377,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool ReadTail() {
+        bool readTail() {
             char tail = '\0';
             m_pPipeServer->read(&tail, 1);
             
@@ -388,10 +388,10 @@ namespace amo {
             return true;
         }
         
-        int GetValueID() {
+        int getValueID() {
             std::vector<int8_t> length(4, 0);
             m_pPipeServer->read(length.data(), 4);
-            return BytesToInt(length);
+            return bytesToInt(length);
         }
         
         /*!
@@ -402,10 +402,10 @@ namespace amo {
          * @return	The message length.
          */
         
-        int GetMessageLength() {
+        int getMessageLength() {
             std::vector<int8_t> length(4, 0);
             m_pPipeServer->read(length.data(), 4);
-            return BytesToInt(length);
+            return bytesToInt(length);
         }
         
         /*!
@@ -417,7 +417,7 @@ namespace amo {
          * @param	ptr	The pointer.
          */
         
-        void SetPipeServer(std::shared_ptr<amo::pipe<amo::pipe_type::server> > ptr) {
+        void setPipeServer(std::shared_ptr<amo::pipe<amo::pipe_type::server> > ptr) {
             m_pPipeServer = ptr;
         }
         
@@ -430,7 +430,7 @@ namespace amo {
          * @param	ptr	The pointer.
          */
         
-        void SetPipeClient(std::shared_ptr<amo::pipe<amo::pipe_type::client> > ptr) {
+        void setPipeClient(std::shared_ptr<amo::pipe<amo::pipe_type::client> > ptr) {
             m_pPipeClient = ptr;
         }
         
@@ -509,11 +509,11 @@ namespace amo {
         }
         
         //template<typename R>
-        //R WaitResult();
+        //R waitResult();
         //
         //
         //// 通过管道消息 创建进程消息
-        //template<> Any WaitResult() {
+        //template<> Any waitResult() {
         //    // 没有函数调过好像
         //    while (true) {
         //        Any any = TryGetResult<Any>();
@@ -528,9 +528,9 @@ namespace amo {
         //}
         
         template<typename R>
-        R TryGetResult();
+        R tryGetResult();
         
-        template<> Any TryGetResult() {
+        template<> Any tryGetResult() {
             if (!isReady()) {
                 return amo::Nothing();
             }
@@ -539,7 +539,7 @@ namespace amo {
                 return amo::Nothing();
             }
             
-            Any any = Exchange<Any>();
+            Any any = exchange<Any>();
             
             if (any.type() == AnyValueType<IPCMessage>::value) {
                 IPCMessage::SmartType msg(new IPCMessage());
@@ -552,7 +552,7 @@ namespace amo {
             }
         }
         
-        Any TryProcessMessage() {
+        Any tryProcessMessage() {
             $log(amo::cdevel << func_orient << amo::endl;);
             
             if (!isReady()) {
@@ -564,7 +564,7 @@ namespace amo {
                 return Nothing();
             }
             
-            Any any = Exchange<Any>();
+            Any any = exchange<Any>();
             
             if (any.type() == AnyValueType<amo::IPCMessage>::value) {
                 // 如果是一个进程消息，说明对方也在执行同步调用，那么执行这个调用
@@ -582,7 +582,7 @@ namespace amo {
                 throw std::runtime_error("处理到不应该出现的消息，只能收到ProcessMessage类");
             }
             
-            $log(amo::cdevel << func_orient << "TryProcessMessage 失败::: " << any.value() << amo::endl;);
+            $log(amo::cdevel << func_orient << "tryProcessMessage 失败::: " << any.value() << amo::endl;);
             return Nothing();
         }
     protected:
@@ -607,7 +607,7 @@ namespace amo {
         int m_nN;
         
         /*!
-         * @fn	template<typename R> R ProcessExchangerManager::Exchange(int id)
+         * @fn	template<typename R> R ProcessExchangerManager::exchange(int id)
          *
          * @brief	读取管道数据.
          *
@@ -618,20 +618,20 @@ namespace amo {
          */
         
         template<typename R>
-        R Exchange(int id) {
+        R exchange(int id) {
             auto iter = m_mpBrowserExchanger.find(id);
             
             if (iter == m_mpBrowserExchanger.end() || !iter->second) {
                 return R();
             }
             
-            R ret = iter->second->Exchange<R>();
+            R ret = iter->second->exchange<R>();
             $log(amo::cdevel << "管道：：" << m_nN << ", "  << ret << amo::endl;);
             return ret;
         }
         
         /*!
-         * @fn	template<> Any ProcessExchangerManager::Exchange(int id)
+         * @fn	template<> Any ProcessExchangerManager::exchange(int id)
          *
          * @brief	读取管道数据.
          *
@@ -641,14 +641,14 @@ namespace amo {
          */
         
         template<>
-        Any Exchange(int id) {
+        Any exchange(int id) {
             auto iter = m_mpBrowserExchanger.find(id);
             
             if (iter == m_mpBrowserExchanger.end() || !iter->second) {
                 return Nothing();
             }
             
-            Any ret = iter->second->Exchange<Any>();
+            Any ret = iter->second->exchange<Any>();
             $log(amo::cdevel << "管道：：" << m_nN << ", " << ret.value() << amo::endl;);
             return ret;
         }
@@ -664,7 +664,7 @@ namespace amo {
         }
         
         /*!
-         * @fn	template<typename T> bool ProcessExchangerManager::Exchange(int id, const T& t)
+         * @fn	template<typename T> bool ProcessExchangerManager::exchange(int id, const T& t)
          *
          * @brief	写入管道数据.
          *
@@ -676,7 +676,7 @@ namespace amo {
          */
         
         template<typename T>
-        bool Exchange(int id, const T& t) {
+        bool exchange(int id, const T& t) {
             auto iter = m_mpBrowserExchanger.find(id);
             
             if (iter == m_mpBrowserExchanger.end() || !iter->second) {
@@ -684,11 +684,11 @@ namespace amo {
                 return false;
             }
             
-            return iter->second->Exchange(t);
+            return iter->second->exchange(t);
         }
         
         /*!
-         * @fn	void ProcessExchangerManager::AddExchanger(int id, std::shared_ptr<T> ptr)
+         * @fn	void ProcessExchangerManager::addExchanger(int id, std::shared_ptr<T> ptr)
          *
          * @brief	添加数据交换管道到管理器中.
          *
@@ -696,7 +696,7 @@ namespace amo {
          * @param	ptr	The pointer.
          */
         
-        void AddExchanger(int id, std::shared_ptr<T> ptr) {
+        void addExchanger(int id, std::shared_ptr<T> ptr) {
             std::unique_lock<std::mutex> lock(m_mutex);
             m_mpBrowserExchanger.insert(std::pair<int, std::shared_ptr<T> >(id, ptr));
         }
@@ -709,13 +709,13 @@ namespace amo {
          * @param	id	The identifier.
          */
         
-        void RemoveExchanger(int id) {
+        void removeExchanger(int id) {
             std::unique_lock<std::mutex> lock(m_mutex);
             m_mpBrowserExchanger.erase(id);
         }
         
         /*!
-         * @fn	std::shared_ptr<T> ProcessExchangerManager::FindExchanger(int id)
+         * @fn	std::shared_ptr<T> ProcessExchangerManager::findExchanger(int id)
          *
          * @brief	Searches for the first exchanger.
          *
@@ -724,7 +724,7 @@ namespace amo {
          * @return	The found exchanger.
          */
         
-        std::shared_ptr<T> FindExchanger(int id) {
+        std::shared_ptr<T> findExchanger(int id) {
             auto iter = m_mpBrowserExchanger.find(id);
             
             if (iter == m_mpBrowserExchanger.end()) {
@@ -735,10 +735,10 @@ namespace amo {
         }
         
         template<typename R>
-        R WaitResult(int id, int message_id);
+        R waitResult(int id, int message_id);
         
         /*!
-         * @fn	template<> Any ProcessExchangerManager::WaitResult(int id, int message_id)
+         * @fn	template<> Any ProcessExchangerManager::waitResult(int id, int message_id)
          *
          * @brief	Wait result.
          *
@@ -749,7 +749,7 @@ namespace amo {
          */
         
         template<>
-        Any WaitResult(int id, int message_id) {
+        Any waitResult(int id, int message_id) {
             // 先看管道是否存在
             if (m_mpBrowserExchanger.find(id) == m_mpBrowserExchanger.end()) {
                 return Undefined();
@@ -764,10 +764,10 @@ namespace amo {
                     $log(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " << message_id << amo::endl;);
                 }
                 
-                Any any = FindCache(id, message_id);
+                Any any = findCache(id, message_id);
                 
                 if (any.type() == AnyValueType<amo::IPCResult>::value) {
-                    RemoveCache(id, message_id);
+                    removeCache(id, message_id);
                     amo::IPCResult result = any;
                     $log(amo::cdevel << __FUNCTION__ << ", " <<  result.getID() << amo::endl;);
                     return result.getResult();
@@ -777,7 +777,7 @@ namespace amo {
                 
                 
                     if (p.first == id) {
-                        Any ret = p.second->TryGetResult<Any>();
+                        Any ret = p.second->tryGetResult<Any>();
                         
                         if (ret.type() == AnyValueType<amo::Nothing>::value) {
                             std::this_thread::sleep_for(std::chrono::microseconds(10));
@@ -789,15 +789,15 @@ namespace amo {
                                 return result.getResult();
                             }
                             
-                            InsertCache(p.first, result.getID(), ret);
+                            insertCache(p.first, result.getID(), ret);
                         } else {
                             // 不应该出现
                             $log(amo::cdevel << func_orient << amo::endl;);
                         }
                     } else {
-                        TryProcessMessage(p.first);
+                        tryProcessMessage(p.first);
                         //// 处理同步消息
-                        //Any ret = p.second->TryProcessMessage();
+                        //Any ret = p.second->tryProcessMessage();
                         //
                         //if (ret.type() == AnyValueType<amo::IPCResult>::value) {
                         //    amo::IPCResult result = ret;
@@ -827,7 +827,7 @@ namespace amo {
          * @param [in,out]	ret	The ret.
          */
         
-        void InsertCache(int browserID, int messageID, Any& ret) {
+        void insertCache(int browserID, int messageID, Any& ret) {
             $log(amo::cdevel << func_orient << ret.value() << amo::endl;);
             auto iter = m_oResultCache.find(browserID);
             
@@ -853,7 +853,7 @@ namespace amo {
          * @return	The found cache.
          */
         
-        Any FindCache(int browserID, int messageID) {
+        Any findCache(int browserID, int messageID) {
             auto iter = m_oResultCache.find(browserID);
             
             if (iter == m_oResultCache.end()) {
@@ -879,7 +879,7 @@ namespace amo {
          * @param	messageID	Identifier for the message.
          */
         
-        void RemoveCache(int browserID, int messageID) {
+        void removeCache(int browserID, int messageID) {
             auto iter = m_oResultCache.find(browserID);
             
             if (iter == m_oResultCache.end()) {
@@ -890,7 +890,7 @@ namespace amo {
         }
         
         /*!
-         * @fn	Any ProcessExchangerManager::TryProcessMessage(int id)
+         * @fn	Any ProcessExchangerManager::tryProcessMessage(int id)
          *
          * @brief	尝试处理一次对方进程的消息.
          *
@@ -899,25 +899,25 @@ namespace amo {
          * @return	Any.
          */
         
-        Any TryProcessMessage(int id) {
+        Any tryProcessMessage(int id) {
         
-            std::shared_ptr<T> ptr = FindExchanger(id);
+            std::shared_ptr<T> ptr = findExchanger(id);
             
             if (!ptr) {
                 $log(amo::cdevel << func_orient << "Nothing" << amo::endl;);
                 return Nothing();
             }
             
-            Any ret = ptr->TryProcessMessage();
+            Any ret = ptr->tryProcessMessage();
             
             if (ret.type() == AnyValueType<IPCResult>::value) {
                 IPCResult result = ret;
                 
-                InsertCache(id, result.getID(), ret);
+                insertCache(id, result.getID(), ret);
                 
                 $log(amo::cdevel << func_orient << "处理到其他结果" << amo::endl;);
                 // 一直处理，直到管道中没有消息为止
-                TryProcessMessage(id);
+                tryProcessMessage(id);
             } else if (ret.type() != AnyValueType<Nothing>::value) {
                 assert(false);
             }

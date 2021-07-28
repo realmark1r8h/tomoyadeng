@@ -71,11 +71,11 @@ namespace amo {
         
         virtual bool exchange(int nPipeID, IPCMessage::SmartType msg) override {
             auto manager = BrowserProcessExchangerManager::getInstance();
-            return manager->Exchange(nPipeID, msg);
+            return manager->exchange(nPipeID, msg);
         }
         
         /*!
-         * @fn	virtual Any UIMessageEmitter::WaitResult(int nPipeID, int nMessageID)
+         * @fn	virtual Any UIMessageEmitter::waitResult(int nPipeID, int nMessageID)
          *
          * @brief	Wait result.
          *
@@ -87,7 +87,7 @@ namespace amo {
         
         virtual Any waitResult(int nPipeID, int nMessageID) {
             auto manager = BrowserProcessExchangerManager::getInstance();
-            return manager->WaitResult<Any>(nPipeID, nMessageID);
+            return manager->waitResult<Any>(nPipeID, nMessageID);
         }
         
         /*!

@@ -64,12 +64,12 @@ namespace amo {
     }
     
     bool NodeMessageEmitter::exchange(int nPipeID, IPCMessage::SmartType msg) {
-        return NodeProcessExchangerManager::get_instance()->Exchange(nPipeID, msg);
+        return NodeProcessExchangerManager::get_instance()->exchange(nPipeID, msg);
     }
     
     
     amo::Any NodeMessageEmitter::waitResult(int nPipeID, int nMessageID) {
-        amo::Any ret = NodeProcessExchangerManager::get_instance()->WaitResult<amo::Any>(nPipeID, nMessageID);
+        amo::Any ret = NodeProcessExchangerManager::get_instance()->waitResult<amo::Any>(nPipeID, nMessageID);
         return ret;
     }
     

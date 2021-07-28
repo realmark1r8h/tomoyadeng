@@ -31,7 +31,7 @@ namespace amo {
         
         int id = args->getInt(IPCArgsPosInfo::AsyncCallback);
         auto mgr = AsyncFunctionManager<PID_RENDERER>::getInstance();
-        AsyncFunctionWrapper& item = mgr->Get(id);
+        AsyncFunctionWrapper& item = mgr->get(id);
         
         if (item.m_pFrame == NULL || item.m_pFunction == NULL) {
             return amo::NonReturn();
@@ -53,7 +53,7 @@ namespace amo {
                 item.m_pFunction,
                 arguments);
                 
-        mgr->UnRegisterCallbackFunction(id);
+        mgr->unRegisterCallbackFunction(id);
         return amo::NonReturn();
     }
     

@@ -41,18 +41,18 @@ namespace amo {
             m_nIndex = 0;
         }
         
-        int RegisterCallabackFunction(CefRefPtr<CefFrame> pFrame,
+        int registerCallabackFunction(CefRefPtr<CefFrame> pFrame,
                                       CefRefPtr<CefV8Value> ptr) {
             ++m_nIndex;
             m_cbMap[m_nIndex] = AsyncFunctionWrapper(pFrame, ptr);
             return m_nIndex;
         }
         
-        void UnRegisterCallbackFunction(const int& nKey) {
+        void unRegisterCallbackFunction(const int& nKey) {
             m_cbMap.erase(nKey);
         }
         
-        AsyncFunctionWrapper& Get(const int& nKey) {
+        AsyncFunctionWrapper& get(const int& nKey) {
             auto iter = m_cbMap.find(nKey);
             
             if (iter == m_cbMap.end()) {
@@ -74,13 +74,13 @@ namespace amo {
     public:
         typedef std::function<void(Any&)> FuncType;
     public:
-        int RegisterCallabackFunction(FuncType fn) {
+        int registerCallabackFunction(FuncType fn) {
             int id = ++nId;
             m_oCallbackMap[id] = fn;
             return id;
         }
         
-        FuncType Get(int nID) {
+        FuncType get(int nID) {
             auto iter = m_oCallbackMap.find(nID);
             
             if (iter == m_oCallbackMap.end()) {
@@ -90,7 +90,7 @@ namespace amo {
             return iter->second;
         }
         
-        void UnRegisterCallbackFunction(int nID) {
+        void unRegisterCallbackFunction(int nID) {
             m_oCallbackMap.erase(nID);
         }
     private:
