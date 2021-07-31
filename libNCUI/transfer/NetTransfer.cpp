@@ -13,13 +13,13 @@ namespace amo {
     
     Any NetTransfer::download(IPCMessage::SmartType msg) {
         auto pTransfer = ClassTransfer::getUniqueTransfer<DownloaderTransfer>();
-        return pTransfer->OnCreateClass(msg);
+        return pTransfer->onCreateClass(msg);
         
     }
     
     Any NetTransfer::request(IPCMessage::SmartType msg) {
         auto pTransfer = ClassTransfer::getUniqueTransfer<URLRequestTransfer>();
-        return pTransfer->OnCreateClass(msg);
+        return pTransfer->onCreateClass(msg);
     }
     
 }

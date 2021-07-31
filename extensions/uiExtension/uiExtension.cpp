@@ -22,7 +22,7 @@ namespace amo {
 UIEXTENSION_API bool registerTransfer(int nBrowserID,
                                       std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fn) {
     std::shared_ptr<amo::ClassTransfer> pTransfer(new amo::UIExtensionTransfer());
-    pTransfer->RegisterFunction();
+    pTransfer->registerFunction();
     
     if (fn) {
         fn(nBrowserID, pTransfer);

@@ -39,8 +39,8 @@ namespace amo {
         template<typename T, typename ... Args>
         static std::shared_ptr<T> createTransfer(Args ... args) {
             std::shared_ptr<T> pTransfer(new T(args ...));
-            pTransfer->RegisterFunction();
-            AddTransfer(pTransfer);
+            pTransfer->registerFunction();
+            addTransfer(pTransfer);
             return pTransfer;
         }
         
@@ -63,8 +63,8 @@ namespace amo {
                 return pTransfer;
             }
             
-            pTransfer->RegisterFunction();
-            AddTransfer(pTransfer);
+            pTransfer->registerFunction();
+            addTransfer(pTransfer);
             return pTransfer;
         }
         
@@ -73,7 +73,7 @@ namespace amo {
         // 静态函数
         
         /*!
-         * @fn	static std::shared_ptr<ClassTransfer> ClassTransfer::FindTransfer(const int64_t& nID)
+         * @fn	static std::shared_ptr<ClassTransfer> ClassTransfer::findTransfer(const int64_t& nID)
          *
          * @brief	通过ID查找 Transfer
          *
@@ -81,7 +81,7 @@ namespace amo {
          *
          * @return	Transfer.
          */
-        static std::shared_ptr<ClassTransfer> FindTransfer(const int64_t& nID) {
+        static std::shared_ptr<ClassTransfer> findTransfer(const int64_t& nID) {
             auto iter = getTransferMap().find(nID);
             
             if (iter == getTransferMap().end()) {
@@ -92,24 +92,24 @@ namespace amo {
         }
         
         /*!
-         * @fn	static void ClassTransfer::AddTransfer(std::shared_ptr<ClassTransfer> transfer)
+         * @fn	static void ClassTransfer::addTransfer(std::shared_ptr<ClassTransfer> transfer)
          *
          * @brief	添加一个Transfer到管理器中.
          *
          * @param	transfer	The transfer.
          */
-        static void AddTransfer(std::shared_ptr<ClassTransfer> transfer) {
+        static void addTransfer(std::shared_ptr<ClassTransfer> transfer) {
             getTransferMap()[transfer->getObjectID()] = transfer;
         }
         
         /*!
-         * @fn	static void ClassTransfer::RemoveTransfer(const int64_t& nID)
+         * @fn	static void ClassTransfer::removeTransfer(const int64_t& nID)
          *
          * @brief	通过ID移除一个管理器中的Transfer.
          *
          * @param	nID	The identifier.
          */
-        static void RemoveTransfer(const int64_t& nID) {
+        static void removeTransfer(const int64_t& nID) {
             getTransferMap().erase(nID);
         }
         
@@ -138,21 +138,21 @@ namespace amo {
         }
         
         /*!
-         * @fn	virtual void ClassTransfer::RegisterFunction()
+         * @fn	virtual void ClassTransfer::registerFunction()
          *
          * @brief	注册JS函数.
          */
-        virtual void RegisterFunction() {
+        virtual void registerFunction() {
             //注册对象创建函数，这个函数与Transfer名称相同
-            RegisterTransfer(transferName(),
-                             std::bind(&ClassTransfer::OnCreateClass, this,
+            registerTransfer(transferName(),
+                             std::bind(&ClassTransfer::onCreateClass, this,
                                        std::placeholders::_1),
                              TransferExecSync | TransferFuncConstructor);
-            return Transfer::RegisterFunction();
+            return Transfer::registerFunction();
         }
         
         /*!
-         * @fn	virtual Any ClassTransfer::OnCreateClass(IPCMessage::SmartType msg)
+         * @fn	virtual Any ClassTransfer::onCreateClass(IPCMessage::SmartType msg)
          *
          * @brief	继承 此函数 创建类对象.
          *
@@ -160,12 +160,12 @@ namespace amo {
          *
          * @return	Any.
          */
-        virtual Any OnCreateClass(IPCMessage::SmartType msg) {
+        virtual Any onCreateClass(IPCMessage::SmartType msg) {
             return Undefined();
         }
         
         /*!
-         * @fn	virtual Any ClassTransfer::OnMessageTransfer(
+         * @fn	virtual Any ClassTransfer::onMessageTransfer(
          * 		IPCMessage::SmartType message) override
          *
          * @brief	执行消息.
@@ -174,20 +174,20 @@ namespace amo {
          *
          * @return	Any.
          */
-        virtual Any OnMessageTransfer(IPCMessage::SmartType message) override {
+        virtual Any onMessageTransfer(IPCMessage::SmartType message) override {
             std::shared_ptr<AnyArgsList> args = message->getArgumentList();
             int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
             int64_t nID = args->getInt64(IPCArgsPosInfo::TransferID);
             // 查找Transfer
-            std::shared_ptr<ClassTransfer> transfer = FindTransfer(nID);
+            std::shared_ptr<ClassTransfer> transfer = findTransfer(nID);
             
             // 如果Transfer不存在或者Transfer == this 执行
             if (!transfer || transfer == getDerivedClass<ClassTransfer>()) {
-                return Transfer::OnMessageTransfer(message);
+                return Transfer::onMessageTransfer(message);
             }
             
             //调用transfer的OmMessaggeTransfer
-            return transfer->OnMessageTransfer(message);
+            return transfer->onMessageTransfer(message);
         }
         
     };

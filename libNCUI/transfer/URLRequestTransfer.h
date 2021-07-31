@@ -24,7 +24,7 @@ namespace amo {
         URLRequestTransfer();
         URLRequestTransfer(CefRefPtr<CefURLRequest> pURLRequest);
         
-        virtual Any OnCreateClass(IPCMessage::SmartType msg) override;
+        virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
         Any GetRequest(IPCMessage::SmartType msg);
         Any GetClient(IPCMessage::SmartType msg);

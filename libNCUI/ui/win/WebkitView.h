@@ -79,7 +79,7 @@ namespace amo {
                              int width, int height) override;
                              
     public:
-        virtual Any OnMessageTransfer(IPCMessage::SmartType msg) override;
+        virtual Any onMessageTransfer(IPCMessage::SmartType msg) override;
         bool IsClosing() const {
             return m_bIsClosing;
         }

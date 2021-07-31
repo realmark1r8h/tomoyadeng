@@ -209,9 +209,9 @@ namespace amo {
     }
     
     void V8ExtentionHandler::OnBrowserDestory(int nBrowserID) {
-        RendererTransferMgr::getInstance()->RemoveTransfer(nBrowserID);
+        RendererTransferMgr::getInstance()->removeTransfer(nBrowserID);
         
-        if (RendererTransferMgr::getInstance()->IsEmpty()) {
+        if (RendererTransferMgr::getInstance()->isEmpty()) {
             m_oClassTransferMap.clear();
         }
     }
@@ -228,7 +228,7 @@ namespace amo {
         m_oClassTransferMap.insert(std::make_pair(pTransfer->transferName(),
                                    pTransfer));
         // 注册外部模块到程序中
-        RendererTransferMgr::getInstance()->AddTransfer(nBrowserID, pTransfer);
+        RendererTransferMgr::getInstance()->addTransfer(nBrowserID, pTransfer);
     }
     
     bool V8ExtentionHandler::loadExternalTransfer(const std::string& strClass,
@@ -276,8 +276,8 @@ namespace amo {
             
             int nBrowserID = browser->GetIdentifier();
             auto mananger = RendererTransferMgr::getInstance();
-            TransferMap& transferMap = mananger->GetTransferMap(nBrowserID);
-            Transfer* pTransfer = transferMap.FindTransfer(strClass);
+            TransferMap& transferMap = mananger->getTransferMap(nBrowserID);
+            Transfer* pTransfer = transferMap.findTransfer(strClass);
             FunctionWrapperMgr& mgr = pTransfer->getFuncMgr();
             mgr.setRendererClass(true);
             mgr.setBuiltIn(false);
@@ -314,7 +314,7 @@ namespace amo {
                 }
                 
                 int nBrowserID = browser->GetIdentifier();
-                RendererTransferMgr::getInstance()->AddTransfer(nBrowserID,
+                RendererTransferMgr::getInstance()->addTransfer(nBrowserID,
                         iter->second);
             }
             

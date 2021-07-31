@@ -29,7 +29,7 @@ namespace amo {
         Any test5(IPCMessage::SmartType msg);
         Any test6(IPCMessage::SmartType msg);
         
-        virtual Any OnCreateClass(IPCMessage::SmartType msg) override;
+        virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
         // ¾²Ì¬º¯Êý
         

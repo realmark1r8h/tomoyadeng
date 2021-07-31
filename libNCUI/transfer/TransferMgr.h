@@ -28,42 +28,42 @@ namespace amo {
     public:
     
         /*!
-         * @fn	void TransferMap::AddTransfer(Transfer* pTransfer)
+         * @fn	void TransferMap::addTransfer(Transfer* pTransfer)
          *
          * @brief	添加Transfer.
          *
          * @param 	pTransfer	If non-null, the transfer.
          */
-        void AddTransfer(Transfer* pTransfer) {
+        void addTransfer(Transfer* pTransfer) {
             m_oTransferMap[pTransfer->transferName()] = pTransfer;
         }
         
         /*!
-         * @fn	void TransferMap::AddTransfer(std::shared_ptr<Transfer> pTransfer)
+         * @fn	void TransferMap::addTransfer(std::shared_ptr<Transfer> pTransfer)
          *
          * @brief	添加Transfer.
          *
          * @param	pTransfer	The transfer.
          */
-        void AddTransfer(std::shared_ptr<Transfer> pTransfer) {
+        void addTransfer(std::shared_ptr<Transfer> pTransfer) {
             m_oSmartMap.insert(std::make_pair(pTransfer->transferName(),
                                               pTransfer));
             m_oTransferMap[pTransfer->transferName()] = pTransfer.get();
         }
         
         /*!
-         * @fn	void TransferMap::RemoveTransfer(const std::string& strName)
+         * @fn	void TransferMap::removeTransfer(const std::string& strName)
          *
          * @brief	通过名称移除Transfer.
          *
          * @param	strName	Transfer名.
          */
-        void RemoveTransfer(const std::string& strName) {
+        void removeTransfer(const std::string& strName) {
             m_oTransferMap.erase(strName);
             m_oSmartMap.erase(strName);
         }
         
-        void RemoveTransfer() {
+        void removeTransfer() {
             m_oTransferMap.clear();
             m_oSmartMap.clear();
         }
@@ -78,7 +78,7 @@ namespace amo {
          *
          * @return	null if it fails, else a pointer to a Transfer.
          */
-        Transfer* FindTransfer(const std::string& strName) {
+        Transfer* findTransfer(const std::string& strName) {
             auto iter = m_oTransferMap.find(strName);
             
             if (iter == m_oTransferMap.end()) {
@@ -89,7 +89,7 @@ namespace amo {
         }
         
         /*!
-         * @fn	Any TransferMap::OnMessageTransfer(IPCMessage::SmartType msg)
+         * @fn	Any TransferMap::onMessageTransfer(IPCMessage::SmartType msg)
          *
          * @brief	遍历Transfer并找到对应的函数执行.
          *
@@ -97,7 +97,7 @@ namespace amo {
          *
          * @return	Any.
          */
-        Any OnMessageTransfer(IPCMessage::SmartType msg) {
+        Any onMessageTransfer(IPCMessage::SmartType msg) {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
             std::string messageName = msg->getName();
@@ -111,7 +111,7 @@ namespace amo {
                 
                 for (auto& p : m_oTransferMap) {
                     if (p.second->transferName() == funcName) {
-                        Any ret = p.second->OnMessageTransfer(msg);
+                        Any ret = p.second->onMessageTransfer(msg);
                         
                         if (ret.isValid()) {
                             // 如果返回值有效，直接返回结果
@@ -171,7 +171,7 @@ namespace amo {
     public:
     
         /*!
-         * @fn	void TransferMgr::AddTransfer(int nBrowserID,
+         * @fn	void TransferMgr::addTransfer(int nBrowserID,
          * 		Transfer* pTransfer)
          *
          * @brief	添加一个Transfer到指定的TransferMap.
@@ -179,12 +179,12 @@ namespace amo {
          * @param	nBrowserID		 	Identifier for the browser.
          * @param 	pTransfer	If non-null, the transfer.
          */
-        void AddTransfer(int nBrowserID, Transfer* pTransfer) {
-            GetTransferMap(nBrowserID).AddTransfer(pTransfer);
+        void addTransfer(int nBrowserID, Transfer* pTransfer) {
+            getTransferMap(nBrowserID).addTransfer(pTransfer);
         }
         
         /*!
-         * @fn	void TransferMgr::AddTransfer(int nBrowserID,
+         * @fn	void TransferMgr::addTransfer(int nBrowserID,
          * 		 std::shared_ptr<Transfer> pTransfer)
          *
          * @brief	添加一个Transfer到指定的TransferMap.
@@ -192,12 +192,12 @@ namespace amo {
          * @param	nBrowserID	Identifier for the browser.
          * @param	pTransfer 	The transfer.
          */
-        void AddTransfer(int nBrowserID, std::shared_ptr<Transfer> pTransfer) {
-            GetTransferMap(nBrowserID).AddTransfer(pTransfer);
+        void addTransfer(int nBrowserID, std::shared_ptr<Transfer> pTransfer) {
+            getTransferMap(nBrowserID).addTransfer(pTransfer);
         }
         
         /*!
-         * @fn	void TransferMgr::RemoveTransfer(int nBrowserID,
+         * @fn	void TransferMgr::removeTransfer(int nBrowserID,
          * 		const std::string& strName)
          *
          * @brief	Removes the transfer.
@@ -205,21 +205,21 @@ namespace amo {
          * @param	nBrowserID	Identifier for the browser.
          * @param	strName   	The name.
          */
-        void RemoveTransfer(int nBrowserID, const std::string& strName) {
-            GetTransferMap(nBrowserID).RemoveTransfer(strName);
+        void removeTransfer(int nBrowserID, const std::string& strName) {
+            getTransferMap(nBrowserID).removeTransfer(strName);
         }
         
-        void RemoveTransfer(int nBrowserID) {
-            GetTransferMap(nBrowserID).RemoveTransfer();
+        void removeTransfer(int nBrowserID) {
+            getTransferMap(nBrowserID).removeTransfer();
             m_oTransferMap.erase(nBrowserID);
         }
         
-        bool IsEmpty() const {
+        bool isEmpty() const {
             return m_oTransferMap.empty();
         }
         
         /*!
-         * @fn	TransferMap& TransferMgr::GetTransferMap(int nBrowserID)
+         * @fn	TransferMap& TransferMgr::getTransferMap(int nBrowserID)
          *
          * @brief	获取指定ID的TransferMap.
          *
@@ -227,7 +227,7 @@ namespace amo {
          *
          * @return	The transfer map.
          */
-        TransferMap& GetTransferMap(int nBrowserID) {
+        TransferMap& getTransferMap(int nBrowserID) {
             auto iter = m_oTransferMap.find(nBrowserID);
             
             if (iter != m_oTransferMap.end()) {
@@ -240,7 +240,7 @@ namespace amo {
         }
         
         /*!
-         * @fn	virtual void TransferMgr::ReturnSyncResult(int nBrowserID, amo::IPCResult& ret)
+         * @fn	virtual void TransferMgr::returnSyncResult(int nBrowserID, amo::IPCResult& ret)
          *
          * @brief	返回同步调用结果.
          *
@@ -249,12 +249,12 @@ namespace amo {
          * @param	nBrowserID 	Identifier for the browser.
          * @param 	ret	The ret.
          */
-        virtual void ReturnSyncResult(int nBrowserID, amo::IPCResult& ret) {
+        virtual void returnSyncResult(int nBrowserID, amo::IPCResult& ret) {
             throw std::runtime_error("无法返回同步消息");
         }
         
         /*!
-         * @fn	virtual void TransferMgr::ReturnAsyncResult(int nBrowserID,
+         * @fn	virtual void TransferMgr::returnAsyncResult(int nBrowserID,
          * 		 Any& ret,
          * 		  int id,
          * 		  int frame_id)
@@ -268,7 +268,7 @@ namespace amo {
          * @param	id		   	IPCMessage ID.
          * @param	frame_id   	Frame ID.
          */
-        virtual void ReturnAsyncResult(int nBrowserID,
+        virtual void returnAsyncResult(int nBrowserID,
                                        Any& ret,
                                        int id,
                                        int frame_id) {
@@ -287,7 +287,7 @@ namespace amo {
         }
         
         /*!
-         * @fn	Any TransferMgr::OnMessageTransfer(IPCMessage::SmartType msg)
+         * @fn	Any TransferMgr::onMessageTransfer(IPCMessage::SmartType msg)
          *
          * @brief	遍历Transfer执行消息处理.
          *
@@ -295,10 +295,10 @@ namespace amo {
          *
          * @return	Any.
          */
-        Any OnMessageTransfer(IPCMessage::SmartType msg) {
+        Any onMessageTransfer(IPCMessage::SmartType msg) {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
-            Any ret =  GetTransferMap(nBrowserID).OnMessageTransfer(msg);
+            Any ret =  getTransferMap(nBrowserID).onMessageTransfer(msg);
             
             amo::string strMessageName = msg->getMessageName();
             
@@ -325,10 +325,10 @@ namespace amo {
                 // 普通调用不需要返回结果
             } else if (strMessageName == MSG_NATIVE_SYNC_EXECUTE)	{
                 // 通过管道向页面同步返回结果
-                ReturnSyncResult(nBrowserID, result);
+                returnSyncResult(nBrowserID, result);
             } else if (strMessageName == MSG_NATIVE_ASYNC_EXECUTE) {
                 // 通过发送IPCMessage向页面异步返回结果
-                ReturnAsyncResult(nBrowserID,
+                returnAsyncResult(nBrowserID,
                                   ret,
                                   args->getInt(IPCArgsPosInfo::AsyncCallback),
                                   nFrameID);
@@ -351,10 +351,10 @@ namespace amo {
         : public TransferMgr
         , public amo::singleton < BrowserTransferMgr > {
     public:
-        virtual void ReturnSyncResult(int nBrowserID,
+        virtual void returnSyncResult(int nBrowserID,
                                       amo::IPCResult& ret) override;
                                       
-        virtual void ReturnAsyncResult(int nBrowserID,
+        virtual void returnAsyncResult(int nBrowserID,
                                        Any& ret,
                                        int id,
                                        int frame_id) override;
@@ -372,10 +372,10 @@ namespace amo {
         : public TransferMgr
         , public amo::singleton < RendererTransferMgr > {
     public:
-        virtual void ReturnSyncResult(int nBrowserID,
+        virtual void returnSyncResult(int nBrowserID,
                                       amo::IPCResult& ret) override;
                                       
-        virtual void ReturnAsyncResult(int nBrowserID,
+        virtual void returnAsyncResult(int nBrowserID,
                                        Any& ret,
                                        int id,
                                        int frame_id) override;

@@ -43,25 +43,25 @@ namespace amo {
     
     void NodeLifeSpanHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
     
-        m_pHelper->getBroadcaster()->Broadcast("AfterCreated",
+        m_pHelper->getBroadcaster()->broadcast("AfterCreated",
                                                m_pHelper->getJson(browser));
                                                
     }
     
     bool NodeLifeSpanHandler::RunModal(CefRefPtr<CefBrowser> browser) {
-        Any ret = m_pHelper->getBroadcaster()->SyncBroadcast("RunModal",
+        Any ret = m_pHelper->getBroadcaster()->syncBroadcast("RunModal",
                   m_pHelper->getJson(browser));
         return ret;
     }
     
     bool NodeLifeSpanHandler::DoClose(CefRefPtr<CefBrowser> browser) {
-        Any ret  = m_pHelper->getBroadcaster()->SyncBroadcast("DoClose",
+        Any ret  = m_pHelper->getBroadcaster()->syncBroadcast("DoClose",
                    m_pHelper->getJson(browser));
         return ret;
     }
     
     void NodeLifeSpanHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
-        m_pHelper->getBroadcaster()->Broadcast("BeforeClose",
+        m_pHelper->getBroadcaster()->broadcast("BeforeClose",
                                                m_pHelper->getJson(browser));
         return;
     }

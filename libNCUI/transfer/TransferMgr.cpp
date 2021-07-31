@@ -36,13 +36,13 @@
 
 namespace amo {
 
-    void BrowserTransferMgr::ReturnSyncResult(int nBrowserID,
+    void BrowserTransferMgr::returnSyncResult(int nBrowserID,
             amo::IPCResult& ret) {
         auto manager = BrowserProcessExchangerManager::getInstance();
         manager->exchange(nBrowserID, ret);
     }
     
-    void BrowserTransferMgr::ReturnAsyncResult(int nBrowserID,
+    void BrowserTransferMgr::returnAsyncResult(int nBrowserID,
             Any& ret,
             int id,
             int frame_id) {
@@ -57,59 +57,59 @@ namespace amo {
     
     void BrowserTransferMgr::registerClass(int nBrowserID) {
         // 添加所有类添加到管理器中
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<BrowserWindowTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<AppTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<TrayTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<MenuTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<NativeWindowTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<GlobalShortcutTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<ShellTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<BrowserTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<BrowserHostTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<FrameTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<URLRequestTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<EventTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<ControlTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<IPCTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<DialogTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<DownloaderTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<NetTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<SystemTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<DesktopTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<KeyboardTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<MouseTransfer>());
-        AddTransfer(nBrowserID,
+        addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<SplashTransfer>());
     }
     
-    void RendererTransferMgr::ReturnSyncResult(int nBrowserID,
+    void RendererTransferMgr::returnSyncResult(int nBrowserID,
             amo::IPCResult& ret) {
         auto mgr = RendererProcessExchangerManager::getInstance();
         mgr->exchange(nBrowserID, ret);
     }
     
-    void RendererTransferMgr::ReturnAsyncResult(int nBrowserID,
+    void RendererTransferMgr::returnAsyncResult(int nBrowserID,
             Any& ret,
             int id,
             int frame_id) {

@@ -13,7 +13,7 @@ namespace amo {
     void NodeDisplayHandler::OnAddressChange(CefRefPtr<CefBrowser> browser,
             CefRefPtr<CefFrame> frame,
             const CefString& url) {
-        m_pHelper->getBroadcaster()->Broadcast("AddressChange",
+        m_pHelper->getBroadcaster()->broadcast("AddressChange",
                                                m_pHelper->getJson(browser),
                                                m_pHelper->getJson(frame),
                                                url.ToString());
@@ -22,7 +22,7 @@ namespace amo {
     
     void NodeDisplayHandler::OnTitleChange(CefRefPtr<CefBrowser> browser,
                                            const CefString& title) {
-        m_pHelper->getBroadcaster()->Broadcast("TitleChange",
+        m_pHelper->getBroadcaster()->broadcast("TitleChange",
                                                m_pHelper->getJson(browser),
                                                title.ToString());
         return;
@@ -30,7 +30,7 @@ namespace amo {
     
     bool NodeDisplayHandler::OnTooltip(CefRefPtr<CefBrowser> browser,
                                        CefString& text) {
-        m_pHelper->getBroadcaster()->Broadcast("Tooltip",
+        m_pHelper->getBroadcaster()->broadcast("Tooltip",
                                                m_pHelper->getJson(browser),
                                                text.ToString());
         return false;
@@ -38,7 +38,7 @@ namespace amo {
     
     void NodeDisplayHandler::OnStatusMessage(CefRefPtr<CefBrowser> browser,
             const CefString& value) {
-        m_pHelper->getBroadcaster()->Broadcast("StatusMessage",
+        m_pHelper->getBroadcaster()->broadcast("StatusMessage",
                                                m_pHelper->getJson(browser),
                                                value.ToString());
         return;
@@ -48,7 +48,7 @@ namespace amo {
             const CefString& message,
             const CefString& source,
             int line) {
-        m_pHelper->getBroadcaster()->Broadcast("ConsoleMessage",
+        m_pHelper->getBroadcaster()->broadcast("ConsoleMessage",
                                                m_pHelper->getJson(browser),
                                                source.ToString(),
                                                source.ToString(),

@@ -17,27 +17,27 @@
 
 // JS函数注册宏 开始
 #define AMO_CEF_MESSAGE_TRANSFER_BEGIN(ClassName, BaseClassName)\
-	virtual void RegisterFunction(){\
+	virtual void registerFunction(){\
 		typedef ClassName ClassType;\
 		typedef BaseClassName BaseClassType;\
 
 // JS函数注册 同名函数
 #define AMO_CEF_MESSAGE_TRANSFER_FUNC(Func, nExecType)\
-		RegisterTransfer(#Func,\
+		registerTransfer(#Func,\
 						std::bind(&ClassType::Func, \
 								  this, \
 								  std::placeholders::_1), \
 						nExecType);
 
 #define AMO_CEF_MESSAGE_TRANSFER_ATTR(Func)\
-		RegisterAttribute(#Func, Func);
+		registerAttribute(#Func, Func);
 
 #define AMO_CEF_MESSAGE_TRANSFER_ATTR2(Func, VALUE)\
-		RegisterAttribute(#Func, VALUE);
+		registerAttribute(#Func, VALUE);
 
 // JS函数注册宏 结束
 #define AMO_CEF_MESSAGE_TRANSFER_END()\
-		BaseClassType::RegisterFunction();\
+		BaseClassType::registerFunction();\
 	}
 
 namespace amo {
@@ -215,16 +215,16 @@ namespace amo {
         
         
         /*!
-         * @fn	virtual void Transfer::RegisterFunction()
+         * @fn	virtual void Transfer::registerFunction()
          *
          * @brief	注册JS函数 设置注册状态为true.
          */
-        virtual void RegisterFunction() {
+        virtual void registerFunction() {
             setFuncRegistered(true);
         }
         
         /*!
-         * @fn	virtual bool Transfer::RegisterTransfer(const std::string& name,
+         * @fn	virtual bool Transfer::registerTransfer(const std::string& name,
          * 		FunctionWrapper::TransferFunc fn, int nType = 0)
          *
          * @brief	Registers the transfer.
@@ -235,7 +235,7 @@ namespace amo {
          *
          * @return	true if it succeeds, false if it fails.
          */
-        virtual bool RegisterTransfer(const std::string& name,
+        virtual bool registerTransfer(const std::string& name,
                                       FunctionWrapper::TransferFunc fn,
                                       int nType = 0) {
             return getFuncMgr().toMap().insert(
@@ -261,7 +261,7 @@ namespace amo {
         }
         
         
-        void RegisterAttribute(const std::string& strName, Any val) {
+        void registerAttribute(const std::string& strName, Any val) {
             getFuncMgr().addAttribute(strName, val);
         }
         
@@ -300,7 +300,7 @@ namespace amo {
         }
         
         /*!
-         * @fn	virtual Any Transfer::OnMessageTransfer(IPCMessage::SmartType message)
+         * @fn	virtual Any Transfer::onMessageTransfer(IPCMessage::SmartType message)
          *
          * @brief	执行JS函数对应的C++函数.
          *
@@ -308,7 +308,7 @@ namespace amo {
          *
          * @return	Any.
          */
-        virtual Any OnMessageTransfer(IPCMessage::SmartType msg) {
+        virtual Any onMessageTransfer(IPCMessage::SmartType msg) {
         
             // 函数调用方式
             std::string strExecName = msg->getMessageName();

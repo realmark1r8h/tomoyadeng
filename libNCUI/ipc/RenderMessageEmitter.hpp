@@ -4,11 +4,6 @@
 #ifndef AMO_RENDERMESSAGEEMITTER_HPP__
 #define AMO_RENDERMESSAGEEMITTER_HPP__
 
-
-
-
-
-
 #include "handler/CefProcessExchanger.hpp"
 #include "ipc/Any.hpp"
 #include "ipc/MessageLauncher.hpp"
@@ -87,7 +82,7 @@ namespace amo {
             makeProcessMessage(msg, args...);
             afterMakeProcessMessage(msg, name);
             int nBrowserID = m_pFrame->GetBrowser()->GetIdentifier();
-            return RendererTransferMgr::getInstance()->OnMessageTransfer(msg);
+            return RendererTransferMgr::getInstance()->onMessageTransfer(msg);
         }
         
         /*!

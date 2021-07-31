@@ -101,7 +101,7 @@ namespace amo {
         
         Any isStopPropagation(IPCMessage::SmartType msg);
         
-        virtual Any OnCreateClass(IPCMessage::SmartType msg) override;
+        virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(EventTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getReturnValue, TransferExecSync)

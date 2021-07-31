@@ -110,7 +110,7 @@ namespace amo {
         m_pRequestSettings = val;
     }
     
-    Any URLRequestTransfer::OnCreateClass(IPCMessage::SmartType msg) {
+    Any URLRequestTransfer::onCreateClass(IPCMessage::SmartType msg) {
     
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         amo::json json = args->getJson(0);

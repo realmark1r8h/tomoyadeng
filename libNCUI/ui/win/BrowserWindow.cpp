@@ -82,7 +82,7 @@ namespace amo {
         hIcon = ExtractIconA(m_PaintManager.GetInstance(), amo::path::getFullExeName().c_str(), 0); //获取图标，第二个参数为要获取第几个图标
         ::SendMessage(m_hWnd, WM_SETICON, (WPARAM)false, (LPARAM)hIcon);
         // 添加到Transfer管理,如果不是用JS创建的，则没有添加进
-        AddTransfer(getDerivedClass<ClassTransfer>());
+        addTransfer(getDerivedClass<ClassTransfer>());
         test();
         
         foo("ddd", 3);
@@ -148,7 +148,7 @@ namespace amo {
         
         
         
-        this->RegisterFunction();
+        this->registerFunction();
         
         
         //::SwitchToThisWindow(m_hWnd, TRUE); //激活指定窗口，无论是否最小化。
@@ -343,10 +343,10 @@ namespace amo {
         }
         
         m_pBrowser = NULL;
-        RemoveTransfer(this->getObjectID());
+        removeTransfer(this->getObjectID());
         m_pBrowserTransfer.reset();
         auto manager = amo::BrowserTransferMgr::getInstance();
-        manager->RemoveTransfer(browser->GetIdentifier(), transferName());
+        manager->removeTransfer(browser->GetIdentifier(), transferName());
         return ;
     }
     

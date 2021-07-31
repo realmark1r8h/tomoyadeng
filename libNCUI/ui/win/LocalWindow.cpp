@@ -35,13 +35,13 @@ namespace amo {
         m_oTransferedSet.clear();
         
         std::shared_ptr<ClassTransfer> pTransfer;
-        pTransfer = ClassTransfer::FindTransfer(getTransferObjectID());
+        pTransfer = ClassTransfer::findTransfer(getTransferObjectID());
         std::shared_ptr<UIMessageBroadcaster> runner;
         runner.reset(new UIMessageBroadcaster(getTransferClassID()));
         
         if (pTransfer) {
         
-            runner->SyncBroadcast("closed",
+            runner->syncBroadcast("closed",
                                   pTransfer->getFuncMgr().toSimplifiedJson());
         }
         
@@ -82,24 +82,24 @@ namespace amo {
         
         if (::IsZoomed(*this) != bZoomed && ::IsIconic(*this) == FALSE) {
             if (bZoomed == TRUE) {
-                runner->Broadcast("restore");
+                runner->broadcast("restore");
             } else {
-                runner->Broadcast("maximize");
+                runner->broadcast("maximize");
             }
         } else {
             switch (wParam) {
             case SC_SIZE:
-                runner->Broadcast("resize");
+                runner->broadcast("resize");
                 break;
                 
             case SC_MOVE:
-                runner->Broadcast("move");
+                runner->broadcast("move");
                 break;
                 
             case SC_MINIMIZE:
             case 0xf022:
                 break;
-                runner->Broadcast("minimize");
+                runner->broadcast("minimize");
                 
             case SC_CLOSE:
                 break;
@@ -125,7 +125,7 @@ namespace amo {
         case WM_WINDOW_CREATED: {
     
             std::shared_ptr<ClassTransfer> pTransfer;
-            pTransfer = ClassTransfer::FindTransfer(m_nTransferObjectID);
+            pTransfer = ClassTransfer::findTransfer(m_nTransferObjectID);
             
             if (pTransfer) {
                 syncBroadcastMessage(getTransferClassID(),
@@ -434,7 +434,7 @@ namespace amo {
         
         std::shared_ptr<UIMessageBroadcaster> runner;
         runner.reset(new UIMessageBroadcaster(nID));
-        runner->SyncBroadcast(msg, data);
+        runner->syncBroadcast(msg, data);
     }
     
     void LocalWindow::syncBroadcastMessage(const int64_t& nID,
@@ -451,7 +451,7 @@ namespace amo {
         //return;
         std::shared_ptr<UIMessageBroadcaster> runner;
         runner.reset(new UIMessageBroadcaster(nID));
-        runner->SyncBroadcast(msg);
+        runner->syncBroadcast(msg);
     }
     
     void LocalWindow::broadcastMessage(const int64_t& nID,
@@ -461,7 +461,7 @@ namespace amo {
         
         std::shared_ptr<UIMessageBroadcaster> runner;
         runner.reset(new UIMessageBroadcaster(nID));
-        runner->Broadcast(msg, data);
+        runner->broadcast(msg, data);
     }
     
     void LocalWindow::broadcastMessage(const int64_t& nID,
@@ -478,7 +478,7 @@ namespace amo {
         //return;
         std::shared_ptr<UIMessageBroadcaster> runner;
         runner.reset(new UIMessageBroadcaster(nID));
-        runner->Broadcast(msg);
+        runner->broadcast(msg);
     }
     
     

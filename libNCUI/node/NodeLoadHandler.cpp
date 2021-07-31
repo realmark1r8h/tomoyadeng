@@ -14,7 +14,7 @@ namespace amo {
             bool isLoading,
             bool canGoBack,
             bool canGoForward) {
-        m_pHelper->getBroadcaster()->Broadcast("LoadingStateChange",
+        m_pHelper->getBroadcaster()->broadcast("LoadingStateChange",
                                                m_pHelper->getJson(browser),
                                                isLoading,
                                                canGoBack,
@@ -24,7 +24,7 @@ namespace amo {
     
     void NodeLoadHandler::OnLoadStart(CefRefPtr<CefBrowser> browser,
                                       CefRefPtr<CefFrame> frame) {
-        m_pHelper->getBroadcaster()->Broadcast("LoadStart",
+        m_pHelper->getBroadcaster()->broadcast("LoadStart",
                                                m_pHelper->getJson(browser),
                                                m_pHelper->getJson(frame));
     }
@@ -32,7 +32,7 @@ namespace amo {
     void NodeLoadHandler::OnLoadEnd(CefRefPtr<CefBrowser> browser,
                                     CefRefPtr<CefFrame> frame,
                                     int httpStatusCode) {
-        m_pHelper->getBroadcaster()->Broadcast("LoadEnd",
+        m_pHelper->getBroadcaster()->broadcast("LoadEnd",
                                                m_pHelper->getJson(browser),
                                                m_pHelper->getJson(frame),
                                                httpStatusCode);
@@ -44,7 +44,7 @@ namespace amo {
                                       CefLoadHandler::ErrorCode errorCode,
                                       const CefString& errorText,
                                       const CefString& failedUrl) {
-        m_pHelper->getBroadcaster()->Broadcast("LoadError",
+        m_pHelper->getBroadcaster()->broadcast("LoadError",
                                                m_pHelper->getJson(browser),
                                                m_pHelper->getJson(frame),
                                                (int)errorCode,

@@ -31,7 +31,7 @@ namespace amo {
         
     }
     
-    Any DownloaderTransfer::OnCreateClass(IPCMessage::SmartType msg) {
+    Any DownloaderTransfer::onCreateClass(IPCMessage::SmartType msg) {
     
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         amo::json json = args->getJson(0);
@@ -158,7 +158,7 @@ namespace amo {
             return;
         }
         
-        RemoveTransfer(iter->second->getObjectID());
+        removeTransfer(iter->second->getObjectID());
         m_oDownloaderMap.erase(url);
         
         return;

@@ -17,7 +17,7 @@ namespace amo {
     
         MenuTransfer();
         
-        virtual Any OnCreateClass(IPCMessage::SmartType msg) override;
+        virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         virtual Any close(IPCMessage::SmartType msg);
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(MenuTransfer, ClassTransfer)

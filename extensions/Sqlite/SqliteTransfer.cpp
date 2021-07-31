@@ -6,7 +6,7 @@
 SQLITE_API2 bool registerTransfer(int nBrowserID,
                                   std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fn) {
     std::shared_ptr<amo::ClassTransfer> pTransfer(new amo::SqliteTransfer());
-    pTransfer->RegisterFunction();
+    pTransfer->registerFunction();
     
     if (fn) {
         fn(nBrowserID, pTransfer);
@@ -54,13 +54,13 @@ namespace amo {
         return Undefined();
     }
     
-    Any SqliteTransfer::OnCreateClass(IPCMessage::SmartType msg) {
+    Any SqliteTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string strPath = args->getString(0);
         std::shared_ptr<Sqlite> pDB(new Sqlite(strPath));
         
-        pDB->RegisterFunction();
-        AddTransfer(pDB);
+        pDB->registerFunction();
+        addTransfer(pDB);
         return  pDB->getFuncMgr().toSimplifiedJson();
     }
     

@@ -289,7 +289,7 @@ namespace amo {
             std::shared_ptr<UIMessageBroadcaster> broadcaster;
             int64_t nObjectID = ClassTransfer::getUniqueTransfer<AppTransfer>()->getObjectID();
             broadcaster.reset(new UIMessageBroadcaster(nObjectID));
-            broadcaster->SyncBroadcast("window-all-closed");
+            broadcaster->syncBroadcast("window-all-closed");
             Tray::getInstance()->Destory();
             Tray::getInstance()->Close();
             

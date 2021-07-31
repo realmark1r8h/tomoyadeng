@@ -35,7 +35,7 @@ namespace amo {
         return Undefined();
     }
     
-    Any ControlTransfer::OnCreateClass(IPCMessage::SmartType msg) {
+    Any ControlTransfer::onCreateClass(IPCMessage::SmartType msg) {
         return Undefined();
     }
     

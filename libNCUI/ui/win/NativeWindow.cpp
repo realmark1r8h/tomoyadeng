@@ -53,7 +53,7 @@ namespace amo {
     
     void NativeWindow::OnFinalMessage(HWND hWnd) {
         LocalWindow::OnFinalMessage(hWnd);
-        RemoveTransfer(this->getObjectID());
+        removeTransfer(this->getObjectID());
     }
     
     int64_t NativeWindow::getFrameID() const {

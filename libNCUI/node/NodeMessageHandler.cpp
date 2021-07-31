@@ -94,7 +94,7 @@ namespace amo {
             BrowserProcessExchangerManager::getInstance()->addExchanger(m_nBrowserID, m_pBrowserProcessExchanger);
             
             auto manager = amo::BrowserTransferMgr::getInstance();
-            amo::json arr = manager->GetTransferMap(m_nBrowserID).toJson();
+            amo::json arr = manager->getTransferMap(m_nBrowserID).toJson();
             BrowserProcessExchangerManager::getInstance()->exchange(m_nBrowserID, arr);
             
         } else if (message_name == MSG_PROCESS_SYNC_EXECUTE) {
@@ -109,9 +109,9 @@ namespace amo {
             CefString handlerName = msg->getArgumentList()->getString(IPCArgsPosInfo::CustomArgs);
             
             if (!handlerName.empty()) {
-                BrowserTransferMgr::getInstance()->OnMessageTransfer(msg);
+                BrowserTransferMgr::getInstance()->onMessageTransfer(msg);
                 /*for (auto & p : m_oMessageTransferSet) {
-                	if (p->transferName() == handlerName.ToString() && p->OnMessageTransfer(anyMessage).isValid()){
+                	if (p->transferName() == handlerName.ToString() && p->onMessageTransfer(anyMessage).isValid()){
                 	return;
                 	}
                 	}*/
@@ -181,7 +181,7 @@ namespace amo {
     
     bool NodeMessageHandler::getFunctionWrappers(
         std::unordered_map<std::string, amo::FunctionWrapperMgr>& mp) {
-        auto map = BrowserTransferMgr::getInstance()->GetTransferMap(m_nBrowserID).transferMap();
+        auto map = BrowserTransferMgr::getInstance()->getTransferMap(m_nBrowserID).transferMap();
         
         for (auto& p : map) {
             mp[p.second->transferName()] = p.second->getFuncMgr();

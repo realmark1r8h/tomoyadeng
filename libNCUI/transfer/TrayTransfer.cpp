@@ -18,7 +18,7 @@ namespace amo {
         int64_t nObjectID = this->getObjectID();
         std::shared_ptr<UIMessageBroadcaster> runner;
         runner.reset(new UIMessageBroadcaster(nObjectID));
-        runner->SyncBroadcast(event);
+        runner->syncBroadcast(event);
     }
     
     Any TrayTransfer::show(IPCMessage::SmartType msg) {

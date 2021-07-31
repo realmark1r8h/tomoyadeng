@@ -74,7 +74,7 @@ namespace amo {
         return "foo3";
     }
     
-    Any BrowserWindowTransfer::OnCreateClass(IPCMessage::SmartType msg) {
+    Any BrowserWindowTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
         std::shared_ptr<BrowserWindowSettings> pBrowserSettings;
@@ -238,7 +238,7 @@ namespace amo {
     Any BrowserWindowTransfer::fromId(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         int64_t nID = args->getInt64(0);
-        auto pTransfer = ClassTransfer::FindTransfer(nID);
+        auto pTransfer = ClassTransfer::findTransfer(nID);
         
         if (!pTransfer) {
             return Undefined();
@@ -398,14 +398,14 @@ namespace amo {
     Any BrowserWindowTransfer::exec(IPCMessage::SmartType msg) {
         std::shared_ptr<UIMessageBroadcaster> runner;
         runner.reset(new UIMessageBroadcaster(getObjectID()));
-        runner->SyncBroadcast(msg);
+        runner->syncBroadcast(msg);
         return Undefined();
     }
     
     Any BrowserWindowTransfer::sync(IPCMessage::SmartType msg) {
         std::shared_ptr<UIMessageBroadcaster> runner;
         runner.reset(new UIMessageBroadcaster(getObjectID()));
-        Any ret = runner->SyncBroadcast(msg);
+        Any ret = runner->syncBroadcast(msg);
         return ret;
     }
     
@@ -413,7 +413,7 @@ namespace amo {
     Any BrowserWindowTransfer::async(IPCMessage::SmartType msg) {
         std::shared_ptr<UIMessageBroadcaster> runner;
         runner.reset(new UIMessageBroadcaster(getObjectID()));
-        Any ret = runner->SyncBroadcast(msg);
+        Any ret = runner->syncBroadcast(msg);
         return ret;
     }
     

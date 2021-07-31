@@ -43,7 +43,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(query, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
-        virtual Any OnCreateClass(IPCMessage::SmartType msg) override;
+        virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
     };
 }

@@ -10,14 +10,14 @@
 namespace amo {
     class NodeTransferMgr : public TransferMgr, public amo::singleton < NodeTransferMgr > {
     public:
-        virtual void ReturnSyncResult(int nBrowserID, amo::IPCResult& ret) {
+        virtual void returnSyncResult(int nBrowserID, amo::IPCResult& ret) {
             // TODO: 返回同步消息
             auto mgr = NodeProcessExchangerManager::getInstance();
             mgr->exchange(nBrowserID, ret);
             return;
         }
         
-        virtual void ReturnAsyncResult(int nBrowserID, amo::Any& ret, int id, int frame_id) {
+        virtual void returnAsyncResult(int nBrowserID, amo::Any& ret, int id, int frame_id) {
             std::shared_ptr<NodeMessageEmitter> runner(new NodeMessageEmitter(-9999, -1));
             runner->setValue(IPCArgsPosInfo::TransferName, "ipcMain");
             runner->setValue(IPCArgsPosInfo::AsyncCallback, id);

@@ -11,7 +11,7 @@ namespace amo {
         addModule("EventEmitter");
     }
     
-    Any MenuTransfer::OnCreateClass(IPCMessage::SmartType msg) {
+    Any MenuTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
         std::shared_ptr<MenuWindowSettings> pSettings(new MenuWindowSettings());
@@ -25,7 +25,7 @@ namespace amo {
         POINT point;
         ::GetCursorPos(&point);
         menu->Init(NULL, point);
-        AddTransfer(menu);
+        addTransfer(menu);
         menu->SetClosedCallback(std::bind(&MenuTransfer::onMenuClosed,
                                           this,
                                           std::placeholders::_1));
@@ -35,7 +35,7 @@ namespace amo {
     
     Any MenuTransfer::close(IPCMessage::SmartType msg) {
         int64_t id = msg->getArgumentList()->getInt64(IPCArgsPosInfo::TransferID);
-        auto pTransfer = FindTransfer(id);
+        auto pTransfer = findTransfer(id);
         
         if (!pTransfer) {
             return Undefined();
@@ -59,7 +59,7 @@ namespace amo {
             return;
         }
         
-        RemoveTransfer(pTransfer->getObjectID());
+        removeTransfer(pTransfer->getObjectID());
     }
     
 }

@@ -4,9 +4,6 @@
 #ifndef AMO_UIMESSAGEBROADCASTER_HPP__
 #define AMO_UIMESSAGEBROADCASTER_HPP__
 
-
-
-
 #include "UIMessageEmitter.hpp"
 #include "handler/BrowserManager.hpp"
 #include <utility>
@@ -37,7 +34,7 @@ namespace amo {
         
         
         //template<typename ... Args>
-        //void Broadcast(Args... args) {
+        //void broadcast(Args... args) {
         //    std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter());
         //
         //    runner->createIPCMessage("triggerEventAllFrame",
@@ -69,7 +66,7 @@ namespace amo {
         
         
         //template<typename ... Args>
-        //Any SyncBroadcast(Args... args) {
+        //Any syncBroadcast(Args... args) {
         //    std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter());
         //    runner->createIPCMessage("triggerEventAllFrame",
         //                             MSG_NATIVE_SYNC_EXECUTE,
@@ -127,7 +124,7 @@ namespace amo {
         //}
         
         /*!
-         * @fn	template<typename ... Args> Any UIMessageBroadcaster::Broadcast(Args... args)
+         * @fn	template<typename ... Args> Any UIMessageBroadcaster::broadcast(Args... args)
          *
          * @brief	Broadcasts the given arguments.
          *
@@ -138,9 +135,9 @@ namespace amo {
          */
         
         template<typename ... Args>
-        Any Broadcast(Args... args) {
+        Any broadcast(Args... args) {
         
-            //return SyncBroadcast(args ...);
+            //return syncBroadcast(args ...);
             
             std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter());
             runner->createIPCMessage("emitEventAllFrame",
@@ -151,7 +148,7 @@ namespace amo {
             runner->setValue(IPCArgsPosInfo::TransferID, 0);
             
             std::shared_ptr<ClassTransfer> pTarget;
-            pTarget = ClassTransfer::FindTransfer(m_nObjectID);
+            pTarget = ClassTransfer::findTransfer(m_nObjectID);
             std::shared_ptr<EventTransfer> pEventTransfer;
             pEventTransfer = ClassTransfer::createTransfer<EventTransfer>();
             pEventTransfer->setTarget(pTarget);
@@ -213,8 +210,8 @@ namespace amo {
         
         
         template<typename ... Args>
-        Any SyncBroadcast(Args... args) {
-            //return Broadcast(args ...);
+        Any syncBroadcast(Args... args) {
+            //return broadcast(args ...);
             
             std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter());
             runner->createIPCMessage("emitEventAllFrame",
@@ -225,7 +222,7 @@ namespace amo {
             runner->setValue(IPCArgsPosInfo::TransferID, 0);
             
             std::shared_ptr<ClassTransfer> pTarget;
-            pTarget = ClassTransfer::FindTransfer(m_nObjectID);
+            pTarget = ClassTransfer::findTransfer(m_nObjectID);
             std::shared_ptr<EventTransfer> pEventTransfer;
             pEventTransfer = ClassTransfer::createTransfer<EventTransfer>();
             pEventTransfer->setTarget(pTarget);

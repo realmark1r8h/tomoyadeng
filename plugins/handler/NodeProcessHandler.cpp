@@ -119,7 +119,7 @@ namespace amo {
         std::shared_ptr<IPCNodeV8Handler> pTransfer = ClassTransfer::createTransfer<IPCNodeV8Handler>();
         
         
-        NodeTransferMgr::getInstance()->AddTransfer(m_nPipeID, pTransfer);
+        NodeTransferMgr::getInstance()->addTransfer(m_nPipeID, pTransfer);
         
         DWORD id = GetCurrentProcessId();
         std::stringstream stream;
@@ -335,7 +335,7 @@ namespace amo {
                 || strMessageName == MSG_NATIVE_SYNC_EXECUTE
                 || strMessageName == MSG_NATIVE_ASYNC_EXECUTE) {				//JS调用C++，此消息不向页面返回结果
                 
-            NodeTransferMgr::getInstance()->OnMessageTransfer(anyMessage);
+            NodeTransferMgr::getInstance()->onMessageTransfer(anyMessage);
         }
         
         return;

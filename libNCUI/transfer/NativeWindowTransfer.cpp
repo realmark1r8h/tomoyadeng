@@ -12,7 +12,7 @@ namespace amo {
         addModule("EventEmitter");
     }
     
-    Any NativeWindowTransfer::OnCreateClass(IPCMessage::SmartType msg) {
+    Any NativeWindowTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         amo::string str(args->getString(0));
         
@@ -25,8 +25,8 @@ namespace amo {
         window->setFrameID(args->getInt64(IPCArgsPosInfo::FrameID));
         window->setBrowserID(args->getInt(IPCArgsPosInfo::BrowserID));
         
-        window->RegisterFunction();
-        AddTransfer(window);
+        window->registerFunction();
+        addTransfer(window);
         return  window->getFuncMgr().toSimplifiedJson();
     }
     

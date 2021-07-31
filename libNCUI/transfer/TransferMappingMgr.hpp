@@ -125,7 +125,7 @@ namespace amo {
                 return;
             }
             
-            ClassTransfer::RemoveTransfer(iter->second->getObjectID());
+            ClassTransfer::removeTransfer(iter->second->getObjectID());
             m_oTransferMap.erase(iter);
         }
         /*!
@@ -138,7 +138,7 @@ namespace amo {
         void removeMapping(transfer_type pTransfer) {
             for (auto& p : m_oTransferMap) {
                 if (p.second == pTransfer) {
-                    ClassTransfer::RemoveTransfer(p.second->getObjectID());
+                    ClassTransfer::removeTransfer(p.second->getObjectID());
                     m_oTransferMap.erase(p.first);
                     return;
                 }

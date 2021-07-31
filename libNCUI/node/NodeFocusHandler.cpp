@@ -10,7 +10,7 @@ namespace amo {
     }
     
     void NodeFocusHandler::OnTakeFocus(CefRefPtr<CefBrowser> browser, bool next) {
-        m_pHelper->getBroadcaster()->Broadcast("TakeFocus",
+        m_pHelper->getBroadcaster()->broadcast("TakeFocus",
                                                m_pHelper->getJson(browser),
                                                next);
         return;
@@ -18,14 +18,14 @@ namespace amo {
     
     bool NodeFocusHandler::OnSetFocus(CefRefPtr<CefBrowser> browser,
                                       CefFocusHandler::FocusSource source) {
-        m_pHelper->getBroadcaster()->Broadcast("SetFocus",
+        m_pHelper->getBroadcaster()->broadcast("SetFocus",
                                                m_pHelper->getJson(browser),
                                                (int)source);
         return false;
     }
     
     void NodeFocusHandler::OnGotFocus(CefRefPtr<CefBrowser> browser) {
-        m_pHelper->getBroadcaster()->Broadcast("GotFocus",
+        m_pHelper->getBroadcaster()->broadcast("GotFocus",
                                                m_pHelper->getJson(browser));
         return;
     }

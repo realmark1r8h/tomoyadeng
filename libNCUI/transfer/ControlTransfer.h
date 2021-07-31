@@ -26,7 +26,7 @@ namespace amo {
         Any getValue(IPCMessage::SmartType msg);
         Any setValue(IPCMessage::SmartType msg);
         
-        virtual Any OnCreateClass(IPCMessage::SmartType msg) override;
+        virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(ControlTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getValue, TransferExecSync)

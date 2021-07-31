@@ -50,7 +50,7 @@ namespace amo {
         }
         
         LayeredWindow::OnFinalMessage(hWnd);
-        RemoveTransfer(this->getObjectID());
+        removeTransfer(this->getObjectID());
     }
     
     BOOL ContextMenuWindow::Receive(ContextMenuParam param) {

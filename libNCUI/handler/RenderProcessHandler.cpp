@@ -100,7 +100,7 @@ namespace amo {
             int nBrowserID = browser->GetIdentifier();
             IPCMessage::SmartType  msg = amo::createAnyProcessMessage(message);
             
-            if (RendererTransferMgr::getInstance()->OnMessageTransfer(msg).isValid()) {
+            if (RendererTransferMgr::getInstance()->onMessageTransfer(msg).isValid()) {
                 return true;
             }
         } else if (strMessageName == MSG_ENABLE_BACK_FORWORD) {
@@ -223,7 +223,7 @@ namespace amo {
          args->setValue(IPCArgsPosInfo::ArgsLength, 0);
          args->setValue(IPCArgsPosInfo::FuncName, "runJSFunction");
         
-         amo::RendererTransferMgr::getInstance()->OnMessageTransfer(ipcMessage);*/
+         amo::RendererTransferMgr::getInstance()->onMessageTransfer(ipcMessage);*/
         
     }
     
@@ -346,10 +346,10 @@ namespace amo {
         
         
         std::shared_ptr<IPCRendererV8Handler> pTransfer(new IPCRendererV8Handler());
-        pTransfer->RegisterFunction();
+        pTransfer->registerFunction();
         pTransfer->setBrowser(browser);
         pTransfer->setWorkOnRenderer(true);
-        amo::RendererTransferMgr::getInstance()->AddTransfer(browser->GetIdentifier(), pTransfer);
+        amo::RendererTransferMgr::getInstance()->addTransfer(browser->GetIdentifier(), pTransfer);
         CefRefPtr<CefProcessMessage> msg = CefProcessMessage::Create(MSG_IPC_READY);
         browser->SendProcessMessage(PID_BROWSER, msg);
         //bool bOk  = (bool)exchangerMgr->Exchange <Any>(nBrowserID);

@@ -108,7 +108,7 @@ namespace amo {
             makeProcessMessage(msg, args...);
             afterMakeProcessMessage(msg, name);
             int nBrowserID = m_pFrame->GetBrowser()->GetIdentifier();
-            return BrowserTransferMgr::getInstance()->OnMessageTransfer(msg);
+            return BrowserTransferMgr::getInstance()->onMessageTransfer(msg);
         }
         
         /*!

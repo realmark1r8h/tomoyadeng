@@ -109,7 +109,7 @@ namespace amo {
         int64_t nObjectID = ClassTransfer::getUniqueTransfer<GlobalShortcutTransfer>()->getObjectID();
         std::shared_ptr<UIMessageBroadcaster> runner(new UIMessageBroadcaster(nObjectID));
         
-        runner->SyncBroadcast("hotkeydown", nKey, iter->second->settings);
+        runner->syncBroadcast("hotkeydown", nKey, iter->second->settings);
         
         return TRUE;
     }

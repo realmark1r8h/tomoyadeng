@@ -30,7 +30,7 @@ namespace amo {
             }
             
             Any ret = m_vecFilePaths;
-            BrowserTransferMgr::getInstance()->ReturnAsyncResult(m_nBrowserID,
+            BrowserTransferMgr::getInstance()->returnAsyncResult(m_nBrowserID,
                     ret,
                     m_nCallbackID,
                     m_nFrameID);
@@ -43,7 +43,7 @@ namespace amo {
             }
             
             Any ret = m_vecFilePaths;
-            BrowserTransferMgr::getInstance()->ReturnAsyncResult(m_nBrowserID,
+            BrowserTransferMgr::getInstance()->returnAsyncResult(m_nBrowserID,
                     ret,
                     m_nCallbackID,
                     m_nFrameID);

@@ -102,7 +102,7 @@ namespace amo {
         m_pClientHandler->RegisterDialogHandlerDelegate(this);
         m_pClientHandler->RegisterRenderHandlerDelegate(this);
         m_pClientHandler->RegisterKeyboardHandlerDelegate(this);
-        this->RegisterFunction();
+        this->registerFunction();
         
         if (m_pBrowserSettings->offscreen) {   //离屏
             OffScreenRenderView* window = NULL;
@@ -153,15 +153,15 @@ namespace amo {
         
         if (m_nBrowserID != browser->GetIdentifier()) {
             auto manager = BrowserTransferMgr::getInstance();
-            manager->RemoveTransfer(browser->GetIdentifier(), transferName());
+            manager->removeTransfer(browser->GetIdentifier(), transferName());
             return;
         }
         
         auto manager = BrowserTransferMgr::getInstance();
-        manager->RemoveTransfer(browser->GetIdentifier(), transferName());
+        manager->removeTransfer(browser->GetIdentifier(), transferName());
         
         
-        BrowserTransferMgr::getInstance()->RemoveTransfer(browser->GetIdentifier());
+        BrowserTransferMgr::getInstance()->removeTransfer(browser->GetIdentifier());
         PostMessage(::GetParent(m_hBrowserWnd), WM_CLOSE, 255, 0);
         return;
     }
@@ -178,19 +178,19 @@ namespace amo {
         for (auto& p : vec) {
             CefRefPtr<CefFrame> pFrame = browser->GetFrame(p);
             auto pTransfer = frameMgr->toTransfer(pFrame);
-            ClassTransfer::RemoveTransfer(pTransfer->getObjectID());
+            ClassTransfer::removeTransfer(pTransfer->getObjectID());
             frameMgr->removeMapping(pFrame);
         }
         
         {
             auto pTransfer = browserMgr->toTransfer(browser);
-            ClassTransfer::RemoveTransfer(pTransfer->getObjectID());
+            ClassTransfer::removeTransfer(pTransfer->getObjectID());
             browserMgr->removeMapping(browser);
         }
         
         {
             auto pTransfer = hostMgr->toTransfer(browser->GetHost());
-            ClassTransfer::RemoveTransfer(pTransfer->getObjectID());
+            ClassTransfer::removeTransfer(pTransfer->getObjectID());
             hostMgr->removeMapping(browser->GetHost());
         }
         
@@ -199,7 +199,7 @@ namespace amo {
         }
         
         // 可能应该放到BeforeClose函数里，这里暂时还没发现问题，留意js unload函数
-        // BrowserTransferMgr::getInstance()->RemoveTransfer(browser->GetIdentifier());
+        // BrowserTransferMgr::getInstance()->removeTransfer(browser->GetIdentifier());
         
         
         return false;
@@ -212,7 +212,7 @@ namespace amo {
             //m_pDevBrowser = browser;
             
             auto manager = BrowserTransferMgr::getInstance();
-            manager->AddTransfer(browser->GetIdentifier(), this);
+            manager->addTransfer(browser->GetIdentifier(), this);
             return;
         }
         
@@ -243,7 +243,7 @@ namespace amo {
                       0,
                       (LPARAM)(MAKELPARAM(rect.right, rect.bottom)));
         auto manager = BrowserTransferMgr::getInstance();
-        manager->AddTransfer(browser->GetIdentifier(), this);
+        manager->addTransfer(browser->GetIdentifier(), this);
         return;
     }
     
@@ -336,7 +336,7 @@ namespace amo {
             IPCMessage::SmartType ipcMessage = createAnyProcessMessage(message);
             auto manager = BrowserTransferMgr::getInstance();
             
-            if (manager->OnMessageTransfer(ipcMessage).isValid()) {
+            if (manager->onMessageTransfer(ipcMessage).isValid()) {
                 return true;
             }
         }
@@ -361,7 +361,7 @@ namespace amo {
     void WebkitView::registerExternalTransfer(int nBrowserID,
             std::shared_ptr<ClassTransfer> pTransfer) {
         // 注册外部模块到程序中
-        BrowserTransferMgr::getInstance()->AddTransfer(nBrowserID, pTransfer);
+        BrowserTransferMgr::getInstance()->addTransfer(nBrowserID, pTransfer);
     }
     
     void WebkitView::showDevTools() {
@@ -434,8 +434,8 @@ namespace amo {
             
         } else {
             auto mananger = BrowserTransferMgr::getInstance();
-            TransferMap& transferMap = mananger->GetTransferMap(nBrowserID);
-            Transfer* pTransfer = transferMap.FindTransfer(strClass);
+            TransferMap& transferMap = mananger->getTransferMap(nBrowserID);
+            Transfer* pTransfer = transferMap.findTransfer(strClass);
             FunctionWrapperMgr& mgr = pTransfer->getFuncMgr();
             return mgr.toJson();
         }
@@ -475,7 +475,7 @@ namespace amo {
         pBrowserProcessExchanger->setProcessSyncMessageCallback(info.m_fnExec);
         
         auto manager = BrowserTransferMgr::getInstance();
-        amo::json arr = manager->GetTransferMap(nBrowserID).toJson();
+        amo::json arr = manager->getTransferMap(nBrowserID).toJson();
         int nPipeID = args->getInt(IPCArgsPosInfo::BrowserID);
         
         if (nPipeID == nBrowserID) {
@@ -488,7 +488,7 @@ namespace amo {
         }
     }
     
-    Any WebkitView::OnMessageTransfer(IPCMessage::SmartType msg) {
+    Any WebkitView::onMessageTransfer(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         // 还要处理调试窗口
         /*  int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
@@ -497,7 +497,7 @@ namespace amo {
               return false;
           }*/
         
-        return Transfer::OnMessageTransfer(msg);
+        return Transfer::onMessageTransfer(msg);
     }
     
     void WebkitView::OnBeforeContextMenu(CefRefPtr<CefBrowser> browser,

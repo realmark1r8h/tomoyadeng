@@ -56,7 +56,7 @@ namespace amo {
         DownloaderTransfer(std::shared_ptr<DownloaderSettings> pSettings);
         
         /*!
-         * @fn	virtual Any DownloaderTransfer::OnCreateClass(IPCMessage::SmartType msg) override;
+         * @fn	virtual Any DownloaderTransfer::onCreateClass(IPCMessage::SmartType msg) override;
          *
          * @brief	Executes the create class action.
          *
@@ -65,7 +65,7 @@ namespace amo {
          * @return	Any.
          */
         
-        virtual Any OnCreateClass(IPCMessage::SmartType msg) override;
+        virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
         /*!
          * @fn	Any DownloaderTransfer::start(IPCMessage::SmartType msg);

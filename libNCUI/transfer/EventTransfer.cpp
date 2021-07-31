@@ -54,7 +54,7 @@ namespace amo {
         return m_bStopPropagation;
     }
     
-    Any EventTransfer::OnCreateClass(IPCMessage::SmartType msg) {
+    Any EventTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<EventTransfer> pTransfer;
         pTransfer = ClassTransfer::createTransfer<EventTransfer>();
         return pTransfer->getFuncMgr().toSimplifiedJson();

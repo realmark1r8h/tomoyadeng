@@ -20,7 +20,7 @@ namespace amo {
     
         NativeWindowTransfer();
         
-        virtual Any OnCreateClass(IPCMessage::SmartType msg) override;
+        virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
         
         

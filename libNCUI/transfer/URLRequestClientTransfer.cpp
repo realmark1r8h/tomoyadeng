@@ -17,7 +17,7 @@ namespace amo {
         
     }
     
-    Any URLRequestClientTransfer::OnCreateClass(IPCMessage::SmartType msg) {
+    Any URLRequestClientTransfer::onCreateClass(IPCMessage::SmartType msg) {
     
         CefRefPtr<URLRequestClient> pClient = new URLRequestClient();
         using MGR = TransferMappingMgr < URLRequestClientTransfer > ;
