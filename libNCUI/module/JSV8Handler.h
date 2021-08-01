@@ -38,7 +38,7 @@
 	}
 // 向Object中添加函数
 #define AMO_CEF_MAP_OBJECT_FUNCTION(Func)\
-	 this->AddFunction(#Func, std::bind(&ClassType::Func,\
+	 this->addFunction(#Func, std::bind(&ClassType::Func,\
 										this,\
 										std::placeholders::_1,\
 										std::placeholders::_2,\
@@ -206,14 +206,14 @@ namespace amo {
                              CefString& exception) OVERRIDE;
                              
         /*!
-         * @fn	void JsV8Handler::AddFunction(const std::string& key, FuncType fn)
+         * @fn	void JsV8Handler::addFunction(const std::string& key, FuncType fn)
          *
          * @brief	注册JS函数.
          *
          * @param	key	The key.
          * @param	fn 	The function.
          */
-        void AddFunction(const std::string& key, FuncType fn);
+        void addFunction(const std::string& key, FuncType fn);
         
         /*!
          * @fn	std::vector<std::string> JsV8Handler::getAllKeys()

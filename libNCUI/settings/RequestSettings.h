@@ -19,8 +19,8 @@ namespace amo {
          * @brief	Init default request settings.
          */
         
-        void InitDefaultRequestSettings();
-        virtual void AfterUpdateArgsSettings() override;
+        void initDefaultRequestSettings();
+        virtual void afterUpdateArgsSettings() override;
         
     public:
         /*! @brief	type. */

@@ -18,7 +18,7 @@ namespace amo {
         
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<NativeWindowSettings> pSettings(new NativeWindowSettings());
-        pSettings->UpdateArgsSettings(str);
+        pSettings->updateArgsSettings(str);
         std::shared_ptr<NativeWindow> window;
         window = manager->createNativeWindow(pSettings)->toNativeWindow();
         

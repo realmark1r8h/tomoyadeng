@@ -37,7 +37,7 @@ namespace amo {
         amo::json json = args->getJson(0);
         std::shared_ptr<DownloaderSettings> pSettings;
         pSettings.reset(new DownloaderSettings());
-        pSettings->UpdateArgsSettings(json);
+        pSettings->updateArgsSettings(json);
         
         auto iter = m_oDownloaderMap.find(pSettings->url);
         

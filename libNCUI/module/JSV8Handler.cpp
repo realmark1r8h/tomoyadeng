@@ -71,7 +71,7 @@ namespace amo {
         return true;
     }
     
-    void JsV8Handler::AddFunction(const std::string& key, FuncType fn) {
+    void JsV8Handler::addFunction(const std::string& key, FuncType fn) {
         m_oFuncMap[key] = fn;
     }
     

@@ -15,15 +15,15 @@ namespace amo {
         AppSettings();
         
         
-        bool UpdateCefAppSettings();
+        bool updateCefAppSettings();
         
-        virtual void AfterUpdateArgsSettings();
+        virtual void afterUpdateArgsSettings();
         
     private:
-        void InitDefaultCefSettings();
-        void InitDefaultAppSettings();
+        void initDefaultCefSettings();
+        void initDefaultAppSettings();
         
-        amo::string GetCachePath();
+        amo::string getCachePath();
         
         /*!
          * @fn	amo::string AppSettings::getUserHomeDir();

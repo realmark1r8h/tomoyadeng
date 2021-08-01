@@ -22,8 +22,8 @@ namespace amo {
          * @brief	Init default native settings.
          */
         
-        void InitDefaultNativeSettings();
-        virtual void AfterUpdateArgsSettings() override;
+        void initDefaultNativeSettings();
+        virtual void afterUpdateArgsSettings() override;
         
     public:
     

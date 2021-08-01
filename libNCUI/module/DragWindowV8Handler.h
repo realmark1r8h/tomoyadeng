@@ -60,14 +60,14 @@ namespace amo {
                       CefString& except);
                       
         /*!
-         * @fn	void DragWindowV8Handler::SendDragableToBrowserProcess(bool bEnabled);
+         * @fn	void DragWindowV8Handler::sendDragableToBrowserProcess(bool bEnabled);
          *
          * @brief	向UI发送当前点是否可以移动窗口.
          *
          * @param	bEnabled	true to enable, false to disable.
          */
         
-        void SendDragableToBrowserProcess(bool bEnabled);
+        void sendDragableToBrowserProcess(bool bEnabled);
         
         /*!
          * @fn	void DragWindowV8Handler::mouseover(

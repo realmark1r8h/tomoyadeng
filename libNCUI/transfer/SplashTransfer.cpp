@@ -91,7 +91,7 @@ namespace amo {
         
         if (val.type() == AnyValueType<amo::json>::value) {
             amo::json json = val;
-            pSettings->UpdateArgsSettings(json);
+            pSettings->updateArgsSettings(json);
             create(pSettings);
         }
         

@@ -611,7 +611,7 @@ namespace amo {
             
         }
         
-        pSettings->UpdateArgsSettings(json.to_string());
+        pSettings->updateArgsSettings(json.to_string());
         return pSettings;
     }
     

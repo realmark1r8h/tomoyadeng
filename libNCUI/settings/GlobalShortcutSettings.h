@@ -22,9 +22,9 @@ namespace amo {
          * @brief	Init default shortcut settings.
          */
         
-        void InitDefaultShortcutSettings();
+        void initDefaultShortcutSettings();
         
-        virtual void AfterUpdateArgsSettings() override;
+        virtual void afterUpdateArgsSettings() override;
         
         /*!
          * @fn	bool GlobalShortcutSettings::isSameGlobalShortcut(std::shared_ptr<GlobalShortcutSettings> pOther);

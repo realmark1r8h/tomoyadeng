@@ -86,7 +86,7 @@ public:
     
     
     virtual bool UpdateJson(const std::string& str) override {
-        return GetContext()->getDefaultBrowserSettings()->UpdateArgsSettings(str);
+        return GetContext()->getDefaultBrowserSettings()->updateArgsSettings(str);
     }
     
 };
@@ -130,14 +130,14 @@ NCUI_EXPORT void test1(IPCMessage::SmartType msg) {
 }
 
 NCUI_EXPORT void UpdateAppSettings(const std::string& str) {
-    amo::AppContext::getInstance()->getDefaultAppSettings()->UpdateArgsSettings(str);
+    amo::AppContext::getInstance()->getDefaultAppSettings()->updateArgsSettings(str);
 }
 
 NCUI_EXPORT void UpdateBrowserSettings(const std::string& str) {
-    amo::AppContext::getInstance()->getDefaultBrowserSettings()->UpdateArgsSettings(str);
+    amo::AppContext::getInstance()->getDefaultBrowserSettings()->updateArgsSettings(str);
 }
 NCUI_EXPORT void UpdateSplashSettings(const std::string& str) {
-    amo::AppContext::getInstance()->getDefaultSplashSettings()->UpdateArgsSettings(str);
+    amo::AppContext::getInstance()->getDefaultSplashSettings()->updateArgsSettings(str);
 }
 NCUI_EXPORT int Run(HINSTANCE hInstance) {
     CefEnableHighDPISupport();

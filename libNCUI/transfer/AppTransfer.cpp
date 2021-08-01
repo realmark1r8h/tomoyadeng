@@ -109,7 +109,7 @@ namespace amo {
         std::string url = args->getString(0);
         std::string nativeFile = args->getString(1);
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
-        nativeFile = appSettings->ToAbsolutePath(nativeFile);
+        nativeFile = appSettings->toAbsolutePath(nativeFile);
         
         if (url.empty() || nativeFile.empty()) {
             return false;
@@ -160,7 +160,7 @@ namespace amo {
         
         amo::json json;
         json.put("dragClassName", dragClassName);
-        appSettings->UpdateArgsSettings(json.to_string());
+        appSettings->updateArgsSettings(json.to_string());
         return true;
     }
     
@@ -183,7 +183,7 @@ namespace amo {
         
         amo::json json;
         json.put("noDragClassName", noDragClassName);
-        appSettings->UpdateArgsSettings(json.to_string());
+        appSettings->updateArgsSettings(json.to_string());
         return true;
     }
     
@@ -297,7 +297,7 @@ namespace amo {
         if (val.type() == AnyValueType<amo::json>::value) {
             // ¸üÐÂAppSettings
             std::string strConfig = args->getString(0);
-            appSettings->UpdateArgsSettings(strConfig);
+            appSettings->updateArgsSettings(strConfig);
             return Undefined();
         }
         
@@ -315,7 +315,7 @@ namespace amo {
         
         std::string strPath = args->getString(0);
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
-        return appSettings->ToAbsolutePath(strPath);
+        return appSettings->toAbsolutePath(strPath);
         
     }
     

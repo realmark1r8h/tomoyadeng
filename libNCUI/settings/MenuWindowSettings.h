@@ -17,9 +17,9 @@ namespace amo {
          * @brief	Init default menu settings.
          */
         
-        void InitDefaultMenuSettings();
+        void initDefaultMenuSettings();
         
-        virtual void AfterUpdateArgsSettings() override;
+        virtual void afterUpdateArgsSettings() override;
         
     public:
         /*! @brief	Height of the line. */

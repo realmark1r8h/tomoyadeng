@@ -4,10 +4,10 @@
 namespace amo {
 
     MenuWindowSettings::MenuWindowSettings() {
-        InitDefaultMenuSettings();
+        initDefaultMenuSettings();
     }
     
-    void MenuWindowSettings::InitDefaultMenuSettings() {
+    void MenuWindowSettings::initDefaultMenuSettings() {
         DEFAULT_ARGS_SETTINGS(lineHeight, 32);
         DEFAULT_ARGS_SETTINGS(center, false);
         DEFAULT_ARGS_SETTINGS(adjustPos, false);
@@ -15,11 +15,11 @@ namespace amo {
         
     }
     
-    void MenuWindowSettings::AfterUpdateArgsSettings() {
+    void MenuWindowSettings::afterUpdateArgsSettings() {
         INT_ARGS_SETTING(lineHeight);
         UINT_ARGS_SETTING(windowColor);
         STRING_ARGS_SETTING(separatorColor);
-        return NativeWindowSettings::AfterUpdateArgsSettings();
+        return NativeWindowSettings::afterUpdateArgsSettings();
     }
     
 }

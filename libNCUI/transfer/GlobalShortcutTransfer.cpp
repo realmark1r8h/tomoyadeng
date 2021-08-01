@@ -23,7 +23,7 @@ namespace amo {
         if (msg->getArgumentList()->getValue(0).type() == AnyValueType<amo::json>::value) {
             std::shared_ptr<GlobalShortcutSettings> pSettings;
             pSettings.reset(new GlobalShortcutSettings());
-            pSettings->UpdateArgsSettings(strKey);
+            pSettings->updateArgsSettings(strKey);
             
             return pNotifyWindow->registerHotKey(pSettings);
         } else {

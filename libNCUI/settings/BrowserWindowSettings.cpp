@@ -6,14 +6,14 @@
 
 namespace amo {
     BrowserWindowSettings::BrowserWindowSettings() {
-        InitDefaultCefBrowserSettings();
-        InitDefaultBrowserSettings();
+        initDefaultCefBrowserSettings();
+        initDefaultBrowserSettings();
     }
     
     BrowserWindowSettings::~BrowserWindowSettings() {
     }
     
-    void BrowserWindowSettings::InitDefaultCefBrowserSettings() {
+    void BrowserWindowSettings::initDefaultCefBrowserSettings() {
         CefString(&this->default_encoding) = amo::string("ISO-8859-1").to_utf8();
         plugins = STATE_ENABLED;
         remote_fonts = STATE_DEFAULT;
@@ -42,7 +42,7 @@ namespace amo {
         background_color = 0xffffffff;
     }
     
-    void BrowserWindowSettings::InitDefaultBrowserSettings() {
+    void BrowserWindowSettings::initDefaultBrowserSettings() {
         DEFAULT_ARGS_SETTINGS(url, "chrome://version");
         DEFAULT_ARGS_SETTINGS(offscreen, false);
         DEFAULT_ARGS_SETTINGS(transparent, false);
@@ -50,8 +50,8 @@ namespace amo {
     }
     
     
-    void BrowserWindowSettings::AfterUpdateArgsSettings() {
-        NativeWindowSettings::AfterUpdateArgsSettings();
+    void BrowserWindowSettings::afterUpdateArgsSettings() {
+        NativeWindowSettings::afterUpdateArgsSettings();
         BOOL_ARGS_SETTING(main);
     }
     

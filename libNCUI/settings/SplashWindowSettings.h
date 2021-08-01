@@ -18,9 +18,9 @@ namespace amo {
         * @brief	Init default browser settings.
         */
         
-        void InitDefaultSplashSettings();
+        void initDefaultSplashSettings();
         
-        virtual void AfterUpdateArgsSettings() override;
+        virtual void afterUpdateArgsSettings() override;
         
     public:
         /*! @brief	Æô¶¯´°¿ÚÏÔÊ¾Í¼Æ¬. */

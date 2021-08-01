@@ -14,13 +14,13 @@ namespace amo {
         DownloaderSettings();
         
         /*!
-         * @fn	void DownloaderSettings::InitDefaultDownloaderSettings();
+         * @fn	void DownloaderSettings::initDefaultDownloaderSettings();
          *
          * @brief	Init default downloader settings.
          */
         
-        void InitDefaultDownloaderSettings();
-        virtual void AfterUpdateArgsSettings() override;
+        void initDefaultDownloaderSettings();
+        virtual void afterUpdateArgsSettings() override;
         
     public:
         /*! @brief	下载文件的url. */

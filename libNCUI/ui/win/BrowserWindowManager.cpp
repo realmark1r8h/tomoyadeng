@@ -71,7 +71,7 @@ namespace amo {
             if (pWindow->getNativeSettings()->modal) {
                 amo::json json;
                 json.put("modal", true);
-                info->UpdateArgsSettings(json);
+                info->updateArgsSettings(json);
             }
             
         }
@@ -254,7 +254,7 @@ namespace amo {
             if (pWindow->getBrowserSettings()->main) {
                 amo::json json;
                 json.put("main", false);
-                pWindow->getBrowserSettings()->UpdateArgsSettings(json);
+                pWindow->getBrowserSettings()->updateArgsSettings(json);
             }
         }
         
@@ -331,7 +331,7 @@ namespace amo {
         msg->getArgumentList()->setValue(0, target_url.ToString());
         auto pTransfer = ClassTransfer::getUniqueTransfer<BrowserWindowTransfer>();
         amo::json defaultSettings = pTransfer->getBrowserWindowSettings(msg);
-        pBrowserSettings->UpdateArgsSettings(defaultSettings.to_string());
+        pBrowserSettings->updateArgsSettings(defaultSettings.to_string());
         pBrowserSettings->url = (target_url.ToString());
         
         

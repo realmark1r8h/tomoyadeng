@@ -4,10 +4,10 @@
 namespace amo {
 
     GlobalShortcutSettings::GlobalShortcutSettings() {
-        InitDefaultShortcutSettings();
+        initDefaultShortcutSettings();
     }
     
-    void GlobalShortcutSettings::InitDefaultShortcutSettings() {
+    void GlobalShortcutSettings::initDefaultShortcutSettings() {
     
         DEFAULT_ARGS_SETTINGS(ctrl, false);
         DEFAULT_ARGS_SETTINGS(win, false);
@@ -19,7 +19,7 @@ namespace amo {
     
     
     
-    void GlobalShortcutSettings::AfterUpdateArgsSettings() {
+    void GlobalShortcutSettings::afterUpdateArgsSettings() {
         BOOL_ARGS_SETTING(ctrl);
         BOOL_ARGS_SETTING(win);
         BOOL_ARGS_SETTING(alt);

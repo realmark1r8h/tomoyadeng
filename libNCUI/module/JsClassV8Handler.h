@@ -79,7 +79,7 @@ namespace amo {
         }
         
         /*!
-         * @fn	void JsClassObjectV8Accessor::SetGetSetCallback(
+         * @fn	void JsClassObjectV8Accessor::setGetSetCallback(
          * 		std::function < bool(const CefString&,
          * 		 CefRefPtr<CefV8Value>,
          * 		 const CefV8ValueList&,
@@ -91,7 +91,7 @@ namespace amo {
          * @param	fn	The function.
          */
         
-        void SetGetSetCallback(
+        void setGetSetCallback(
             std::function < bool(const CefString&,
                                  CefRefPtr<CefV8Value>,
                                  const CefV8ValueList&,

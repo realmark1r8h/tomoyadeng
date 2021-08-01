@@ -9,7 +9,7 @@
 // tr
 #define AMO_CEF_MAP_OBJECT_FUNCTION2CPP(Func)\
 	{\
-		this->AddFunction(#Func, std::bind(&ClassType::Func,\
+		this->addFunction(#Func, std::bind(&ClassType::Func,\
 											this,\
 											std::placeholders::_1,\
 											std::placeholders::_2,\

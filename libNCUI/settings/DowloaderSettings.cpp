@@ -4,10 +4,10 @@
 namespace amo {
 
     DownloaderSettings::DownloaderSettings() {
-        InitDefaultDownloaderSettings();
+        initDefaultDownloaderSettings();
     }
     
-    void DownloaderSettings::InitDefaultDownloaderSettings() {
+    void DownloaderSettings::initDefaultDownloaderSettings() {
         DEFAULT_ARGS_SETTINGS(file, "");
         DEFAULT_ARGS_SETTINGS(url, "");
         DEFAULT_ARGS_SETTINGS(autoDownload, true);
@@ -15,7 +15,7 @@ namespace amo {
         
     }
     
-    void DownloaderSettings::AfterUpdateArgsSettings() {
+    void DownloaderSettings::afterUpdateArgsSettings() {
         STRING_ARGS_SETTING(file);
         STRING_ARGS_SETTING(url);
         

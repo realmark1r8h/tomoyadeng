@@ -117,7 +117,7 @@ namespace amo {
         
         std::shared_ptr<RequestSettings> pSettings;
         pSettings.reset(new RequestSettings());
-        pSettings->UpdateArgsSettings(json);
+        pSettings->updateArgsSettings(json);
         
         CefRefPtr<CefFrame> pFrame = BrowserManager<PID_BROWSER>::GetFrameByID(
                                          args->getInt(IPCArgsPosInfo::FrameID));

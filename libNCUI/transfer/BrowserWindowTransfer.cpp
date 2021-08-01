@@ -79,7 +79,7 @@ namespace amo {
         
         std::shared_ptr<BrowserWindowSettings> pBrowserSettings;
         pBrowserSettings.reset(new BrowserWindowSettings());
-        pBrowserSettings->UpdateArgsSettings(args->getString(0));
+        pBrowserSettings->updateArgsSettings(args->getString(0));
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<BrowserWindow> window;
         window = manager->createBrowserWindow(pBrowserSettings)->toBrowserWindow();

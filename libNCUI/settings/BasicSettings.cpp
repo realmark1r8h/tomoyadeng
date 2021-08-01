@@ -7,22 +7,22 @@ namespace amo {
     
     }
     
-    bool BasicSettings::UpdateArgsSettings(const std::string& json_string) {
+    bool BasicSettings::updateArgsSettings(const std::string& json_string) {
         amo::json json1(json_string);
-        return UpdateArgsSettings(json1);
+        return updateArgsSettings(json1);
         /*
         if (!json1.is_valid()) {
         return false;
         }
         
         m_json.join(json1);
-        AfterUpdateArgsSettings();
+        afterUpdateArgsSettings();
         amo::json json2 = m_json;
         m_json.join(json2);
         return true;*/
     }
     
-    bool BasicSettings::UpdateArgsSettings(amo::json& config) {
+    bool BasicSettings::updateArgsSettings(amo::json& config) {
         if (!config.is_valid()) {
             return false;
         }
@@ -33,7 +33,7 @@ namespace amo {
             settings.join(config);
         }
         
-        AfterUpdateArgsSettings();
+        afterUpdateArgsSettings();
         
         if (m_fnUpdateArgsCallback) {
             m_fnUpdateArgsCallback(this);
@@ -46,15 +46,15 @@ namespace amo {
         return true;
     }
     
-    void BasicSettings::AfterUpdateArgsSettings() {
+    void BasicSettings::afterUpdateArgsSettings() {
         return ;
     }
     
-    std::string BasicSettings::GetArgsSettings() const {
+    std::string BasicSettings::getArgsSettings() const {
         return settings.to_string();
     }
     
-    std::string BasicSettings::ToAbsolutePath(const std::string& str) {
+    std::string BasicSettings::toAbsolutePath(const std::string& str) {
         amo::string strClassList(str, true);
         
         std::regex reg("^%\\w+%");
@@ -80,7 +80,7 @@ namespace amo {
                 amo::path p(amo::string(ss, true));
                 
                 p.append(subStr);
-                return ToAbsolutePath(amo::string(p.c_str(), false).to_utf8());
+                return toAbsolutePath(amo::string(p.c_str(), false).to_utf8());
             }
         }
         

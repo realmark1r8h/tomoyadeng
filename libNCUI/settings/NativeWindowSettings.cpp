@@ -6,10 +6,10 @@
 namespace amo {
 
     NativeWindowSettings::NativeWindowSettings() {
-        InitDefaultNativeSettings();
+        initDefaultNativeSettings();
     }
     
-    void NativeWindowSettings::InitDefaultNativeSettings() {
+    void NativeWindowSettings::initDefaultNativeSettings() {
         DEFAULT_ARGS_SETTINGS(id, "0");
         DEFAULT_ARGS_SETTINGS(name, "Chromium Embedded Framework (CEF)");
         DEFAULT_ARGS_SETTINGS(parent, "0");
@@ -59,7 +59,7 @@ namespace amo {
     }
     
     
-    void NativeWindowSettings::AfterUpdateArgsSettings() {
+    void NativeWindowSettings::afterUpdateArgsSettings() {
         STRING_ARGS_SETTING(id);
         STRING_ARGS_SETTING(name);
         STRING_ARGS_SETTING(parent);

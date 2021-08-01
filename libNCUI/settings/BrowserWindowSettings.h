@@ -24,7 +24,7 @@ namespace amo {
          * @brief	Init default cef browser settings.
          */
         
-        void InitDefaultCefBrowserSettings();  // 浏览器默认参数
+        void initDefaultCefBrowserSettings();  // 浏览器默认参数
         
         /*!
          * @fn	void BrowserWindowSettings::InitDefaultBrowserSettings();
@@ -32,9 +32,9 @@ namespace amo {
          * @brief	Init default browser settings.
          */
         
-        void InitDefaultBrowserSettings();
+        void initDefaultBrowserSettings();
         
-        virtual void AfterUpdateArgsSettings() override;
+        virtual void afterUpdateArgsSettings() override;
         
     public:
         /*! @brief	当前窗口是否为主窗口，主窗口只能有一个，如果设置为主窗口将取消之前的主窗口设定. */

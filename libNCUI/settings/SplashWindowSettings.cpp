@@ -4,7 +4,7 @@
 namespace amo {
 
     SplashWindowSettings::SplashWindowSettings() {
-        InitDefaultSplashSettings();
+        initDefaultSplashSettings();
     }
     
     SplashWindowSettings::~SplashWindowSettings() {
@@ -12,7 +12,7 @@ namespace amo {
     }
     
     
-    void SplashWindowSettings::InitDefaultSplashSettings() {
+    void SplashWindowSettings::initDefaultSplashSettings() {
     
         DEFAULT_ARGS_SETTINGS(alwaysOnTop, true);
         DEFAULT_ARGS_SETTINGS(hasShadow, false);
@@ -24,8 +24,8 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(fadeout, 1000);
     }
     
-    void SplashWindowSettings::AfterUpdateArgsSettings() {
-        NativeWindowSettings::AfterUpdateArgsSettings();
+    void SplashWindowSettings::afterUpdateArgsSettings() {
+        NativeWindowSettings::afterUpdateArgsSettings();
         STRING_ARGS_SETTING(image);
         INT_ARGS_SETTING(duration);
         INT_ARGS_SETTING(fadeout);

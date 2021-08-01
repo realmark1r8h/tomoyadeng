@@ -10,12 +10,12 @@ namespace amo {
 
 
     AppSettings::AppSettings() {
-        InitDefaultCefSettings();
-        InitDefaultAppSettings();
+        initDefaultCefSettings();
+        initDefaultAppSettings();
         std::string str = settings.to_string();
     }
     
-    void AppSettings::InitDefaultCefSettings() {
+    void AppSettings::initDefaultCefSettings() {
         amo::string strAppPath = amo::path::getExeDir();						//!< 获取当前可执行文件目录
         std::string strLogFile = (strAppPath + L"\\CefBrowser.log").to_utf8();	//!< 日志文件
         std::string strExeFullName = amo::path::getFullExeName().to_utf8();		//!< 完整路径的程序名
@@ -27,7 +27,7 @@ namespace amo {
         CEFSTRING_DEFAULT_ARGS_SETTINGS(browser_subprocess_path, strExeFullName);	//!< 子进程路径文件，默认与当前程序文件相同
         DEFAULT_ARGS_SETTINGS(multi_threaded_message_loop, false);				//!< 禁止多线程消息循环，会出问题
         DEFAULT_ARGS_SETTINGS(command_line_args_disabled, false);				//!< 允许命令行参数
-        CEFSTRING_DEFAULT_ARGS_SETTINGS(cache_path, GetCachePath().to_utf8());	//!< 默认缓存路径
+        CEFSTRING_DEFAULT_ARGS_SETTINGS(cache_path, getCachePath().to_utf8());	//!< 默认缓存路径
         DEFAULT_ARGS_SETTINGS(persist_session_cookies, true);
         
         //CefString(&user_agent) , "chrome://version");							//!< 使用默认
@@ -52,7 +52,7 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(background_color, 0x00ffffff);					//!< 页面未加载前背景色
     }
     
-    void AppSettings::InitDefaultAppSettings() {
+    void AppSettings::initDefaultAppSettings() {
     
         amo::path p(amo::path::getExeName());
         p.remove_extension();
@@ -96,7 +96,7 @@ namespace amo {
         
     }
     
-    amo::string AppSettings::GetCachePath() {
+    amo::string AppSettings::getCachePath() {
         TCHAR path[MAX_PATH];// 缓存目录
         ZeroMemory(path, MAX_PATH);
         SHGetSpecialFolderPath(NULL, path, CSIDL_LOCAL_APPDATA, FALSE);
@@ -133,7 +133,7 @@ namespace amo {
         return amo::string(path, false).to_utf8();
     }
     
-    bool AppSettings::UpdateCefAppSettings() {
+    bool AppSettings::updateCefAppSettings() {
         BOOL_ARGS_SETTING(single_process);										//!< 禁止当进程模式 ，该版本使用单进程模式无法渲染页
         BOOL_ARGS_SETTING(no_sandbox);											//!< 沙箱
         CEFSTRING_ARGS_SETTING(browser_subprocess_path);						//!< 子进程路径
@@ -166,8 +166,8 @@ namespace amo {
     
     
     
-    void AppSettings::AfterUpdateArgsSettings() {
-        UpdateCefAppSettings();
+    void AppSettings::afterUpdateArgsSettings() {
+        updateCefAppSettings();
         
         BOOL_ARGS_SETTING(manifest);
         BOOL_ARGS_SETTING(showSplash);
@@ -198,7 +198,7 @@ namespace amo {
         
         ::SetCurrentDirectoryA(amo::string(workDir, true).to_ansi().c_str());
         
-        return BasicSettings::AfterUpdateArgsSettings();
+        return BasicSettings::afterUpdateArgsSettings();
     }
     
 }

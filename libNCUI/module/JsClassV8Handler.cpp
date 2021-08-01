@@ -17,7 +17,7 @@ namespace amo {
         setRendererClass(false); // 默认在UI线程上执行
         
         m_pAccessor = new JsClassObjectV8Accessor();
-        m_pAccessor->SetGetSetCallback(std::bind(&JsClassV8Handler::Execute,
+        m_pAccessor->setGetSetCallback(std::bind(&JsClassV8Handler::Execute,
                                        this,
                                        std::placeholders::_1,
                                        std::placeholders::_2,

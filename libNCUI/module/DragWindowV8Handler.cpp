@@ -10,7 +10,7 @@
 
 namespace amo {
 
-    void  DragWindowV8Handler::SendDragableToBrowserProcess(bool bEnabled) {
+    void  DragWindowV8Handler::sendDragableToBrowserProcess(bool bEnabled) {
         CefRefPtr<CefV8Context> pContext = CefV8Context::GetCurrentContext();
         amo::RenderMessageEmitter runner(pContext->GetFrame());
         runner.setValue(IPCArgsPosInfo::TransferName, getHandlerName());
@@ -31,7 +31,7 @@ namespace amo {
                                           CefString& except) {
         // 递归
         if (target->IsUndefined() || target->IsNull() || !target->IsObject()) {
-            return SendDragableToBrowserProcess(false);
+            return sendDragableToBrowserProcess(false);
         }
         
         
@@ -47,9 +47,9 @@ namespace amo {
         //        // 搞不定 取不到值
         //        if (!str.empty()) {
         //            if (str == "no-drag") {
-        //                return SendDragableToBrowserProcess(false);
+        //                return sendDragableToBrowserProcess(false);
         //            } else if (str == "drag") {
-        //                return SendDragableToBrowserProcess(true);
+        //                return sendDragableToBrowserProcess(true);
         //            }
         //        }
         //
@@ -71,9 +71,9 @@ namespace amo {
         //        $log(amo::cdevel << x->str() << amo::endl;);
         //
         //        if (x->str() == noDragClassName) {
-        //            return SendDragableToBrowserProcess(false);
+        //            return sendDragableToBrowserProcess(false);
         //        } else if (x->str() == dragClassName) {
-        //            return SendDragableToBrowserProcess(true);
+        //            return sendDragableToBrowserProcess(true);
         //        }
         //    }
         //
@@ -88,9 +88,9 @@ namespace amo {
             
             for (auto& str : vec) {
                 if (str == noDragClassName) {
-                    return SendDragableToBrowserProcess(false);
+                    return sendDragableToBrowserProcess(false);
                 } else if (str == dragClassName) {
-                    return SendDragableToBrowserProcess(true);
+                    return sendDragableToBrowserProcess(true);
                 }
             }
         }

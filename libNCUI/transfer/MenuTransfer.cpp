@@ -15,8 +15,8 @@ namespace amo {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
         std::shared_ptr<MenuWindowSettings> pSettings(new MenuWindowSettings());
-        pSettings->UpdateArgsSettings(args->getString(0));
-        std::string ss = pSettings->GetArgsSettings();
+        pSettings->updateArgsSettings(args->getString(0));
+        std::string ss = pSettings->getArgsSettings();
         std::shared_ptr<ContextMenuWindow> menu(new ContextMenuWindow(pSettings));
         int64_t id = menu->getObjectID();
         int64_t id2 = getObjectID();

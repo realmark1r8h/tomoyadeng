@@ -16,7 +16,7 @@
 #define INT_ARGS_SETTING(val) val = settings.getInt(#val, val);
 #define INT64_ARGS_SETTING(val) val = settings.getInt64(#val, val);
 #define UINT_ARGS_SETTING(val) val = settings.getUint(#val, val);
-#define STRING_ARGS_SETTING(val) val = ToAbsolutePath(settings.getString(#val, val));
+#define STRING_ARGS_SETTING(val) val = toAbsolutePath(settings.getString(#val, val));
 #define JSON_ARGS_SETTING(val) val = settings.getJson(#val, val);
 
 namespace amo {
@@ -25,7 +25,7 @@ namespace amo {
         BasicSettings();
         
         /*!
-         * @fn	bool BasicSettings::UpdateArgsSettings(amo::json& config);
+         * @fn	bool BasicSettings::updateArgsSettings(amo::json& config);
          *
          * @brief	Updates the arguments settings described by config.
          *
@@ -34,10 +34,10 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool UpdateArgsSettings(amo::json& config);
+        bool updateArgsSettings(amo::json& config);
         
         /*!
-         * @fn	bool BasicSettings::UpdateArgsSettings(const std::string& json_string);
+         * @fn	bool BasicSettings::updateArgsSettings(const std::string& json_string);
          *
          * @brief	Updates the arguments settings described by json_string.
          *
@@ -46,28 +46,28 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool UpdateArgsSettings(const std::string& json_string);
+        bool updateArgsSettings(const std::string& json_string);
         
         /*!
-         * @fn	virtual void BasicSettings::AfterUpdateArgsSettings();
+         * @fn	virtual void BasicSettings::afterUpdateArgsSettings();
          *
          * @brief	After update arguments settings.
          */
         
-        virtual void AfterUpdateArgsSettings();
+        virtual void afterUpdateArgsSettings();
         
         /*!
-         * @fn	std::string BasicSettings::GetArgsSettings() const;
+         * @fn	std::string BasicSettings::getArgsSettings() const;
          *
          * @brief	Gets arguments settings.
          *
          * @return	The arguments settings.
          */
         
-        std::string GetArgsSettings() const;
+        std::string getArgsSettings() const;
         
         /*!
-         * @fn	std::string BasicSettings::ToAbsolutePath(const std::string& str);
+         * @fn	std::string BasicSettings::toAbsolutePath(const std::string& str);
          *
          * @brief	Converts a str to an absolute path.
          *
@@ -76,7 +76,7 @@ namespace amo {
          * @return	str as a std::string.
          */
         
-        std::string ToAbsolutePath(const std::string& str);
+        std::string toAbsolutePath(const std::string& str);
         
         /*!
          * @fn	std::function<void(BasicSettings*)> getUpdateArgsCallback() const;
