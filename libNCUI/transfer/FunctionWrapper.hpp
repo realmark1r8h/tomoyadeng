@@ -359,6 +359,8 @@ namespace amo {
         std::vector<std::string> m_vecModules;
         std::vector<std::string> m_vecDepends;
         std::vector<Any> m_vecAttributes;
+        
+        
         std::unordered_map < std::string, FunctionWrapper > m_mpJsFunc;								//JS调用C++回调处理函数集合
         std::string m_strName;
         bool m_bRendererClass;

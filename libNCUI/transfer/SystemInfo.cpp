@@ -3,7 +3,7 @@
 
 namespace amo {
 
-    BOOL SystemInfo::SafeGetNativeSystem(LPSYSTEM_INFO lpSystemInfo) {
+    BOOL SystemInfo::safeGetNativeSystem(LPSYSTEM_INFO lpSystemInfo) {
         BOOL bSucceed = FALSE;
         
         if (NULL == lpSystemInfo) {
@@ -33,14 +33,14 @@ namespace amo {
         return bSucceed;
     }
     
-    amo::json SystemInfo::GetSystemResource() {
+    amo::json SystemInfo::getSystemResource() {
         amo::json json;
         SYSTEM_INFO systemInfo;
         
         std::string systembit, systemName;
         
         
-        SafeGetNativeSystem(&systemInfo);
+        safeGetNativeSystem(&systemInfo);
         m_nProcessorCount = systemInfo.dwNumberOfProcessors;
         
         if (systemInfo.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64 ||
@@ -54,13 +54,13 @@ namespace amo {
         
         
         MEMORYSTATUSEX statex;
-        statex = GetTotalMemoryStatus();
+        statex = getTotalMemoryStatus();
         
         
         
-        json.put("version", GetOSName());
+        json.put("version", getOSName());
         json.put("osbit", systembit);
-        json.put("cpuusage", GetTotalCpuStatus());
+        json.put("cpuusage", getTotalCpuStatus());
         json.put("memoryusagepercent", (UINT)statex.dwMemoryLoad);
         json.put("totalphys", statex.ullTotalPhys / 1024);
         json.put("availphys", statex.ullAvailPhys / 1024);
@@ -71,7 +71,7 @@ namespace amo {
         return json;
     }
     
-    UINT SystemInfo::GetTotalCpuStatus() {
+    UINT SystemInfo::getTotalCpuStatus() {
         HANDLE hEvent;
         BOOL res;
         
@@ -100,19 +100,19 @@ namespace amo {
         WaitForSingleObject(hEvent, 20);
         res = GetSystemTimes(&idelTime, &kernelTime, &userTime);
         
-        idle = CompareFileTime(preidleTime, idelTime);
-        kernel = CompareFileTime(prekernelTime, kernelTime);
-        user = CompareFileTime(preuserTime, userTime);
+        idle = compareFileTime(preidleTime, idelTime);
+        kernel = compareFileTime(prekernelTime, kernelTime);
+        user = compareFileTime(preuserTime, userTime);
         
         cpu = (UINT)((kernel + user - idle) * 100 / (kernel + user));
         
         return cpu;
     }
     
-    std::string SystemInfo::GetOSName() {
+    std::string SystemInfo::getOSName() {
         std::string osname;
         SYSTEM_INFO info;
-        SafeGetNativeSystem(&info);
+        safeGetNativeSystem(&info);
         OSVERSIONINFOEX os;
         os.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
         
@@ -238,7 +238,7 @@ namespace amo {
         return osname;
     }
     
-    std::string SystemInfo::GetOSVerMark() {
+    std::string SystemInfo::getOSVerMark() {
         std::string vmark;
         OSVERSIONINFOEX os;
         os.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
@@ -316,7 +316,7 @@ namespace amo {
         return vmark;
     }
     
-    MEMORYSTATUSEX SystemInfo::GetTotalMemoryStatus() {
+    MEMORYSTATUSEX SystemInfo::getTotalMemoryStatus() {
         MEMORYSTATUSEX statex;
         
         statex.dwLength = sizeof(statex);
@@ -326,7 +326,7 @@ namespace amo {
         return statex;
     }
     
-    int64_t SystemInfo::CompareFileTime(FILETIME time1, FILETIME time2) {
+    int64_t SystemInfo::compareFileTime(FILETIME time1, FILETIME time2) {
         int64_t a = time1.dwHighDateTime << 32 | time1.dwLowDateTime;
         int64_t b = time2.dwHighDateTime << 32 | time2.dwLowDateTime;
         

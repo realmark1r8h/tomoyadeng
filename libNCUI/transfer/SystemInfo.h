@@ -12,18 +12,18 @@
 namespace amo {
     class SystemInfo {
     public:
-        BOOL SafeGetNativeSystem(LPSYSTEM_INFO lpSystemInfo);
+        BOOL safeGetNativeSystem(LPSYSTEM_INFO lpSystemInfo);
         
         
-        amo::json GetSystemResource();
+        amo::json getSystemResource();
         
         
-        UINT GetTotalCpuStatus();
-        std::string GetOSName();
-        std::string GetOSVerMark();
-        MEMORYSTATUSEX GetTotalMemoryStatus();
+        UINT getTotalCpuStatus();
+        std::string getOSName();
+        std::string getOSVerMark();
+        MEMORYSTATUSEX getTotalMemoryStatus();
         
-        int64_t CompareFileTime(FILETIME time1, FILETIME time2);
+        int64_t compareFileTime(FILETIME time1, FILETIME time2);
     private:
         int m_nProcessorCount;
         

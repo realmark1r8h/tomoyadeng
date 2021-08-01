@@ -16,7 +16,7 @@ namespace amo {
     }
     
     Any SystemTransfer::info(IPCMessage::SmartType msg) {
-        return SystemInfo().GetSystemResource();;
+        return SystemInfo().getSystemResource();;
     }
     
     Any SystemTransfer::screen(IPCMessage::SmartType msg) {
