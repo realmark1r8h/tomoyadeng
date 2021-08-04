@@ -182,7 +182,7 @@ namespace amo {
         	int nCount = pPostData->GetElementCount();*/
         bool bHandled = false;
         
-        amo::string strUrl = Util::GetUrlFromUtf8(request->GetURL());
+        amo::string strUrl = util::getUrlFromUtf8(request->GetURL());
         
         int nIndex = strUrl.find("local://file/localfile/");
         

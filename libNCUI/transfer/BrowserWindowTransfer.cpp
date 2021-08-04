@@ -100,7 +100,7 @@ namespace amo {
             return false;
         }
         
-        url = Util::GetUrlFromUtf8(url);
+        url = util::getUrlFromUtf8(url);
         
         m_oBrowserWindowSettings.push_back(std::make_pair(url, settings));
         m_oBrowserWindowSettings.sort([&](std::pair<std::string, amo::json> &a,
@@ -118,7 +118,7 @@ namespace amo {
             return false;
         }
         
-        url = Util::GetUrlFromUtf8(url);
+        url = util::getUrlFromUtf8(url);
         m_oBrowserWindowSettings.remove_if([&](std::pair<std::string, amo::json>& p) {
             return p.first == url;
         });
@@ -137,7 +137,7 @@ namespace amo {
         }
         
         
-        url = Util::GetUrlFromUtf8(url);
+        url = util::getUrlFromUtf8(url);
         amo::string strUrl(url, true);
         
         for (auto& p : m_oBrowserWindowSettings) {

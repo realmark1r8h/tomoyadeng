@@ -25,7 +25,7 @@ namespace amo {
         m_pHelper->setObjectID(nObjectID);
     }
     
-    void CefCallbackHandler::RegisterHandlerDelegate(CefRefPtr<amo::ClientHandler> pClientHandler) {
+    void CefCallbackHandler::registerHandlerDelegate(CefRefPtr<amo::ClientHandler> pClientHandler) {
         pClientHandler->RegisterContextMenuHandlerDelegate(this, 0);
         pClientHandler->RegisterDialogHandlerDelegate(this, 0);
         pClientHandler->RegisterDisplayHandlerDelegate(this, 0);
@@ -42,7 +42,7 @@ namespace amo {
         
     }
     
-    void CefCallbackHandler::UnregisterHandlerDegate(CefRefPtr<ClientHandler> pClientHandler) {
+    void CefCallbackHandler::unregisterHandlerDegate(CefRefPtr<ClientHandler> pClientHandler) {
         pClientHandler->UnregisterContextMenuHandlerDelegate(this);
         pClientHandler->UnregisterDialogHandlerDelegate(this);
         pClientHandler->UnregisterDisplayHandlerDelegate(this);

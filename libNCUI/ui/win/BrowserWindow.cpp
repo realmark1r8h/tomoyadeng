@@ -141,7 +141,7 @@ namespace amo {
         }
         
         
-        m_pCefCallbackHandler->RegisterHandlerDelegate(m_pWebkit->GetClientHandler());
+        m_pCefCallbackHandler->registerHandlerDelegate(m_pWebkit->GetClientHandler());
         
         m_pBrowserLayout->Add(m_pWebkit);//将浏览器控件加入到窗口中
         
@@ -593,7 +593,7 @@ namespace amo {
             pHandler->UnregisterRenderHandlerDelegate(this);
             pHandler->UnregisterLifeSpanHandlerDelegate(this);
             
-            m_pCefCallbackHandler->UnregisterHandlerDegate(
+            m_pCefCallbackHandler->unregisterHandlerDegate(
                 m_pWebkit->GetClientHandler());
                 
             /*   if (m_pBrowserLayout) {

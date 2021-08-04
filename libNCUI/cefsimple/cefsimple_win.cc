@@ -24,10 +24,10 @@
 
 
 // Entry point function for all processes.
-NCUI_EXPORT int   run(HINSTANCE hInstance,
-                      HINSTANCE hPrevInstance,
-                      LPTSTR    lpCmdLine,
-                      int       nCmdShow) {
+NCUI_EXPORT int   runSample(HINSTANCE hInstance,
+                            HINSTANCE hPrevInstance,
+                            LPTSTR    lpCmdLine,
+                            int       nCmdShow) {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
     //amo::AppContext::getInstance();

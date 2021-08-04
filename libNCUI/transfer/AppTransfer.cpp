@@ -64,7 +64,7 @@ namespace amo {
         }
         
         
-        url = Util::GetUrlFromUtf8(url);
+        url = util::getUrlFromUtf8(url);
         
         
         for (auto& p : m_oUrlToNativeMap) {
@@ -115,7 +115,7 @@ namespace amo {
             return false;
         }
         
-        url = Util::GetUrlFromUtf8(url);
+        url = util::getUrlFromUtf8(url);
         
         m_oUrlToNativeMap.push_back(std::make_pair(url, nativeFile));
         m_oUrlToNativeMap.sort([&](std::pair<std::string, std::string> &a,
@@ -134,7 +134,7 @@ namespace amo {
             return false;
         }
         
-        url = Util::GetUrlFromUtf8(url);
+        url = util::getUrlFromUtf8(url);
         
         m_oUrlToNativeMap.remove_if([&](std::pair<std::string, std::string>& p) {
             return p.first == url;

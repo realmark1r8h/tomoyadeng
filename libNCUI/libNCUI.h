@@ -39,35 +39,79 @@ using namespace amo;
 namespace amo {
     class AppContext;
 }
-class CefNode {
-public:
-    static std::string ClassName() {
-        return "CefNode";
-    }
-    virtual bool UpdateJson(const std::string& str) = 0;
-    virtual int Run(HINSTANCE hInstance) = 0;
-    virtual std::shared_ptr<amo::AppContext> GetContext() = 0;
-};
+
 using amo::IPCMessage;
 using amo::Any;
-extern "C" NCUI_EXPORT CefNode* CreateCefNode();
-extern "C" NCUI_EXPORT BrowserWindowSettings* CreateArgsConfig();
-//extern "C" NCUI_EXPORT void CreateBrowserWindow(const std::string& message_name, AnyArgsList& in, Any* out);
 
-extern "C" NCUI_EXPORT void Foo2(Any&);
 
 extern "C" {
-    NCUI_EXPORT int Run(HINSTANCE hInstance);
-    NCUI_EXPORT bool getFunctionWrappers(std::unordered_map<std::string, amo::FunctionWrapperMgr >& mp);
-    NCUI_EXPORT bool SendMessageToUI(IPCMessage::SmartType msg);
-    NCUI_EXPORT void NativeMessageAdapter(std::function<bool(IPCMessage::SmartType)> cb);
-    NCUI_EXPORT void test1(IPCMessage::SmartType msg);
-    NCUI_EXPORT void UpdateAppSettings(const std::string& str);
-    NCUI_EXPORT void UpdateBrowserSettings(const std::string& str);
-    NCUI_EXPORT void UpdateSplashSettings(const std::string& str);
+
+    /*!
+     * @fn	NCUI_EXPORT int run(HINSTANCE hInstance);
+     *
+     * @brief	运行App.
+     *
+     * @param	hInstance	The instance.
+     *
+     * @return	An int.
+     */
+    
+    NCUI_EXPORT int run(HINSTANCE hInstance);
+    
+    /*!
+     * @fn	NCUI_EXPORT void updateAppSettings(const std::string& str);
+     *
+     * @brief	设置App参数.
+     *
+     * @param	str	The string.
+     */
+    
+    NCUI_EXPORT void updateAppSettings(const std::string& str);
+    
+    /*!
+     * @fn	NCUI_EXPORT void updateBrowserSettings(const std::string& str);
+     *
+     * @brief	设置默认BrowserWindow参数.
+     *
+     * @param	str	The string.
+     */
+    
+    NCUI_EXPORT void updateBrowserSettings(const std::string& str);
+    
+    /*!
+     * @fn	NCUI_EXPORT void updateSplashSettings(const std::string& str);
+     *
+     * @brief	设置默认Splash参数.
+     *
+     * @param	str	The string.
+     */
+    
+    NCUI_EXPORT void updateSplashSettings(const std::string& str);
+    
+    /*!
+     * @fn	NCUI_EXPORT void setMessageQueue(const std::string& strName);
+     *
+     * @brief	设置与Node交互的消息队列名.
+     *
+     * @param	strName	The name.
+     */
+    
     NCUI_EXPORT void setMessageQueue(const std::string& strName);
     
-    NCUI_EXPORT int run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow);
+    /*!
+     * @fn	NCUI_EXPORT int runSample(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow);
+     *
+     * @brief	CefSimple 测试.
+     *
+     * @param	hInstance	 	The instance.
+     * @param	hPrevInstance	The previous instance.
+     * @param	lpCmdLine	 	The command line.
+     * @param	nCmdShow	 	The command show.
+     *
+     * @return	An int.
+     */
+    
+    NCUI_EXPORT int runSample(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow);
 }
 
 

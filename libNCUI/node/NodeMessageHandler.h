@@ -48,19 +48,19 @@ namespace amo {
         // 允许向NodeJS发送消息
         void enableNodeJS();
         
-        bool ProcessSyncMessage(int nID, IPCMessage::SmartType msg);
+        bool processSyncMessage(int nID, IPCMessage::SmartType msg);
         
         // 设置C++调用JS函数
-        void NativeMessageAdapter(std::function<bool(IPCMessage::SmartType)> cb);
+        void nativeMessageAdapter(std::function<bool(IPCMessage::SmartType)> cb);
         
         // JS调用C++
-        void OnNodeMessageRecv(IPCMessage::SmartType msg);
+        void onNodeMessageRecv(IPCMessage::SmartType msg);
         
-        bool SendMessageToUI(IPCMessage::SmartType msg);
+        bool sendMessageToUI(IPCMessage::SmartType msg);
         
-        bool SendMessageToNode(IPCMessage::SmartType msg);
+        bool sendMessageToNode(IPCMessage::SmartType msg);
         
-        bool OnBeforeResultCallback(const std::string& message_name,
+        bool onBeforeResultCallback(const std::string& message_name,
                                     IPCMessage::SmartType msg,
                                     amo::IPCResult& ret);
                                     

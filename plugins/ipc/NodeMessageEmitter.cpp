@@ -75,8 +75,6 @@ namespace amo {
     
     bool NodeMessageEmitter::sendMessage(IPCMessage::SmartType anyMessage) {
         return NodeProcessHandler::SendMessageToUI(anyMessage);
-        /*if (m_loader) return *m_loader->exec<bool, IPCMessage::SmartType>("SendMessageToUI", anyMessage);
-        return false;*/
     }
     
 }

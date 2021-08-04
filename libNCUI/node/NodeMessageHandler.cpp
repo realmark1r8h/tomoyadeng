@@ -22,7 +22,7 @@ namespace amo {
         m_pBrowserTransfer = ClassTransfer::getUniqueTransfer<BrowserWindowTransfer>();
         
         m_pBrowserTransfer->setBeforeResultCallback(
-            std::bind(&NodeMessageHandler::OnBeforeResultCallback, this,
+            std::bind(&NodeMessageHandler::onBeforeResultCallback, this,
                       std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
                       
         BrowserTransferMgr::getInstance()->registerClass(m_nBrowserID);
@@ -39,23 +39,23 @@ namespace amo {
     
     void NodeMessageHandler::enableNodeJS() {
         UIMessageEmitter::getNodeMessageSender()
-            = std::bind(&NodeMessageHandler::SendMessageToNode,
+            = std::bind(&NodeMessageHandler::sendMessageToNode,
                         this,
                         std::placeholders::_1);
     }
     
-    bool NodeMessageHandler::ProcessSyncMessage(int nID,
+    bool NodeMessageHandler::processSyncMessage(int nID,
             IPCMessage::SmartType msg) {
         if (nID != m_nBrowserID) {
             return false;
         }
         
         //CefRefPtr<CefProcessMessage> message = amo::createCefProcessMessage(anyMessage);
-        OnNodeMessageRecv(msg);
+        onNodeMessageRecv(msg);
         return true;
     }
     
-    void NodeMessageHandler::NativeMessageAdapter(
+    void NodeMessageHandler::nativeMessageAdapter(
         std::function<bool(IPCMessage::SmartType)> cb) {
         m_fnSendMessageToNode = cb;
         UIMessageEmitter::getNodeMessageSender() = cb;
@@ -63,7 +63,7 @@ namespace amo {
         getNodeRunner().reset(new UIMessageEmitter());
     }
     
-    void NodeMessageHandler::OnNodeMessageRecv(IPCMessage::SmartType msg) {
+    void NodeMessageHandler::onNodeMessageRecv(IPCMessage::SmartType msg) {
     
         $log(amo::cdevel << __FUNCTION__ << msg->toJson().to_string() << amo::endl;);
         //CefRefPtr<CefProcessMessage> message = amo::createCefProcessMessage(anyMessage);
@@ -90,7 +90,7 @@ namespace amo {
             m_pBrowserProcessExchanger->setPipeClient(m_pRenderPipeClient);
             m_pBrowserProcessExchanger->setPipeServer(m_pBrowserPipeServer);
             m_pBrowserProcessExchanger->setBrowserID(id);
-            m_pBrowserProcessExchanger->setProcessSyncMessageCallback(std::bind(&NodeMessageHandler::ProcessSyncMessage, this, std::placeholders::_1, std::placeholders::_2));
+            m_pBrowserProcessExchanger->setProcessSyncMessageCallback(std::bind(&NodeMessageHandler::processSyncMessage, this, std::placeholders::_1, std::placeholders::_2));
             BrowserProcessExchangerManager::getInstance()->addExchanger(m_nBrowserID, m_pBrowserProcessExchanger);
             
             auto manager = amo::BrowserTransferMgr::getInstance();
@@ -120,13 +120,13 @@ namespace amo {
         
     }
     
-    bool NodeMessageHandler::SendMessageToUI(IPCMessage::SmartType msg) {
-        CefPostTask(TID_UI, NewCefRunnableMethod(this, &NodeMessageHandler::OnNodeMessageRecv, msg));
+    bool NodeMessageHandler::sendMessageToUI(IPCMessage::SmartType msg) {
+        CefPostTask(TID_UI, NewCefRunnableMethod(this, &NodeMessageHandler::onNodeMessageRecv, msg));
         return true;
     }
     
     
-    bool NodeMessageHandler::SendMessageToNode(IPCMessage::SmartType msg) {
+    bool NodeMessageHandler::sendMessageToNode(IPCMessage::SmartType msg) {
         /*if (!m_fnSendMessageToNode) return false;
         return m_fnSendMessageToNode(msg);*/
         $log(amo::cdevel << func_orient << msg->toJson().to_string() << amo::endl;);
@@ -152,7 +152,7 @@ namespace amo {
         return true;
     }
     
-    bool NodeMessageHandler::OnBeforeResultCallback(const std::string& message_name,
+    bool NodeMessageHandler::onBeforeResultCallback(const std::string& message_name,
             IPCMessage::SmartType msg, amo::IPCResult& ret) {
         if (msg->getArgumentList()->getInt(IPCArgsPosInfo::BrowserID) != m_nBrowserID) {
             return false;
@@ -166,7 +166,7 @@ namespace amo {
             IPCMessage::SmartType ipcMessage(new amo::IPCMessage());
             ipcMessage->setMessageName("ASYNC_EXECUTE_CALLBACK");
             ipcMessage->getArgumentList()->setValue(0, ret);
-            SendMessageToNode(ipcMessage);
+            sendMessageToNode(ipcMessage);
             return true;
         }
         
@@ -216,7 +216,7 @@ namespace amo {
             IPCMessage::SmartType ipcMessage(new IPCMessage());
             *ipcMessage = IPCMessage::fromJson(json);
             
-            OnNodeMessageRecv(ipcMessage);
+            onNodeMessageRecv(ipcMessage);
             //MessageBoxA(NULL, anyMessage->GetName().c_str(), "Error", MB_OK);
         }
         
@@ -281,7 +281,7 @@ namespace amo {
     
         /*ProcessMessage::SmartType anyMessage(new ProcessMessage());
         anyMessage->setMessageName("quit");
-        SendMessageToNode(anyMessage);*/
+        sendMessageToNode(anyMessage);*/
         
         //getNodeRunner()->Execute("quit");
         //MessageBoxA(NULL, "stopNodeProcess", "setMessageQueue", MB_OK);

@@ -50,8 +50,8 @@ namespace amo {
     public:
         CefCallbackHandler(int64_t nObjectID);
         
-        void RegisterHandlerDelegate(CefRefPtr<ClientHandler> pClientHandler);
-        void UnregisterHandlerDegate(CefRefPtr<ClientHandler> pClientHandler);
+        void registerHandlerDelegate(CefRefPtr<ClientHandler> pClientHandler);
+        void unregisterHandlerDegate(CefRefPtr<ClientHandler> pClientHandler);
         
         
     protected:

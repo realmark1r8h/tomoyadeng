@@ -62,89 +62,21 @@
 
 using namespace amo;
 
-class  CefNodeImpl : public CefNode {
-public:
-    CefNodeImpl(void) {
-    
-    }
-    
-    virtual int Run(HINSTANCE hInstance) {
-        CefEnableHighDPISupport();
-        CefMainArgs main_args(hInstance);
-        amo::AppContext::getInstance()->startNodeThread();
-        amo::AppContext::getInstance()->initialize(hInstance);
-        amo::AppContext::getInstance()->executeProcess(main_args);
-        amo::AppContext::getInstance()->run(main_args);
-        
-        return 0;
-        
-    }
-    
-    virtual  std::shared_ptr<amo::AppContext> GetContext() {
-        return amo::AppContext::getInstance();
-    }
-    
-    
-    virtual bool UpdateJson(const std::string& str) override {
-        return GetContext()->getDefaultBrowserSettings()->updateArgsSettings(str);
-    }
-    
-};
 
-NCUI_EXPORT CefNode* CreateCefNode() {
-    return new CefNodeImpl();
-}
-
-NCUI_EXPORT BrowserWindowSettings* CreateArgsConfig() {
-    return amo::AppContext::getInstance()->getDefaultBrowserSettings().get();
-}
-
-
-
-NCUI_EXPORT void NativeMessageAdapter(std::function<bool(IPCMessage::SmartType)> cb) {
-    amo::AppContext::getInstance()->getNodeMessageHandler()->NativeMessageAdapter(cb);
-}
-
-NCUI_EXPORT void Foo2(Any&) {
-    //return Undefined();
-}
-
-NCUI_EXPORT bool getFunctionWrappers(std::unordered_map<std::string, amo::FunctionWrapperMgr >& mp) {
-    return amo::AppContext::getInstance()->getNodeMessageHandler()->getFunctionWrappers(mp);
-}
-
-//NCUI_EXPORT void Exec(const std::string& message_name, ProcessMessage::SmartType in)
-//{
-//	amo::CefContext::getInstance()->GetNodeClientHandler()->OnNodeMessageRecv(message_name, in);
-//}
-
-NCUI_EXPORT bool SendMessageToUI(IPCMessage::SmartType msg) {
-    return amo::AppContext::getInstance()->getNodeMessageHandler()->SendMessageToUI(msg);
-}
-
-NCUI_EXPORT void test1(IPCMessage::SmartType msg) {
-    int i = 3;
-    ++i;
-    return;
-    
-}
-
-NCUI_EXPORT void UpdateAppSettings(const std::string& str) {
+NCUI_EXPORT void updateAppSettings(const std::string& str) {
     amo::AppContext::getInstance()->getDefaultAppSettings()->updateArgsSettings(str);
 }
 
-NCUI_EXPORT void UpdateBrowserSettings(const std::string& str) {
+NCUI_EXPORT void updateBrowserSettings(const std::string& str) {
     amo::AppContext::getInstance()->getDefaultBrowserSettings()->updateArgsSettings(str);
 }
-NCUI_EXPORT void UpdateSplashSettings(const std::string& str) {
+NCUI_EXPORT void updateSplashSettings(const std::string& str) {
     amo::AppContext::getInstance()->getDefaultSplashSettings()->updateArgsSettings(str);
 }
-NCUI_EXPORT int Run(HINSTANCE hInstance) {
+NCUI_EXPORT int run(HINSTANCE hInstance) {
     CefEnableHighDPISupport();
     CefMainArgs main_args(hInstance);
-    
     amo::AppContext::getInstance()->initialize(hInstance);
-    //amo::AppContext::getInstance()->startNodeThread();
     amo::AppContext::getInstance()->executeProcess(main_args);
     amo::AppContext::getInstance()->run(main_args);
     

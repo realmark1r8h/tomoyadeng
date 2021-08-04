@@ -331,17 +331,17 @@ void runCefInCefProcess() {
     typedef bool(*FuncUpdateConfig)(const std::string&);
     
     // app
-    FuncUpdateConfig fnUpdateAppSettings = (FuncUpdateConfig)loader.load_symbol("UpdateAppSettings");
+    FuncUpdateConfig fnUpdateAppSettings = (FuncUpdateConfig)loader.load_symbol("updateAppSettings");
     std::string strAppArgs = amo::string(args->strAppSettings, false).to_utf8();
     fnUpdateAppSettings(strAppArgs);
     
     // BrowserWindow
-    FuncUpdateConfig fnUpdateBrowserSettings = (FuncUpdateConfig)loader.load_symbol("UpdateBrowserSettings");
+    FuncUpdateConfig fnUpdateBrowserSettings = (FuncUpdateConfig)loader.load_symbol("updateBrowserSettings");
     std::string strBrowserArgs = amo::string(args->strBrowserSettings, false).to_utf8();
     fnUpdateBrowserSettings(strBrowserArgs);
     
     // SplashWindow
-    FuncUpdateConfig fnUpdateSplashSettings = (FuncUpdateConfig)loader.load_symbol("UpdateSplashSettings");
+    FuncUpdateConfig fnUpdateSplashSettings = (FuncUpdateConfig)loader.load_symbol("updateSplashSettings");
     std::string strSplashArgs = amo::string(args->strSplashSettings, false).to_utf8();
     fnUpdateSplashSettings(strSplashArgs);
     
@@ -349,7 +349,7 @@ void runCefInCefProcess() {
     setMessageQueue(args->strMessageQueue);
     
     typedef int(*fnRun)(HINSTANCE);
-    fnRun run = (fnRun)loader.load_symbol("Run");
+    fnRun run = (fnRun)loader.load_symbol("run");
     run(args->hInstance);
     args->closeMessageQueue();
     loader.unload();

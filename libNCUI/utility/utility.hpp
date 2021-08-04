@@ -12,9 +12,9 @@
 
 namespace amo {
 
-    class Util {
+    class util {
     public:
-        static amo::string GetUrlFromUtf8(const std::string& url) {
+        static amo::string getUrlFromUtf8(const std::string& url) {
             std::string ss = url;
             std::string sd;
             
