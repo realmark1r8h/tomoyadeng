@@ -6,29 +6,29 @@ namespace amo {
 
 
 
-    ImeSharedMemory::~ImeSharedMemory() {
-        DecInstanceCount();
+    SharedMemory::~SharedMemory() {
+        decInstanceCount();
     }
     
-    ImeSharedMemory::ImeSharedMemory() : amo::file_mapping("ImeInstanceCount") {
+    SharedMemory::SharedMemory() : amo::file_mapping("ImeInstanceCount") {
         init_file_mapping();
-        IncInstanceCount();
+        incInstanceCount();
     }
     
-    char ImeSharedMemory::GetInstanceCount() {
+    char SharedMemory::getInstanceCount() {
         char count;
         read(&count, 1, 0);
         return count;
     }
     
-    void ImeSharedMemory::IncInstanceCount() {
-        char count = GetInstanceCount();
+    void SharedMemory::incInstanceCount() {
+        char count = getInstanceCount();
         ++count;
         write(&count, 1, 0);
     }
     
-    void ImeSharedMemory::DecInstanceCount() {
-        char count = GetInstanceCount();
+    void SharedMemory::decInstanceCount() {
+        char count = getInstanceCount();
         --count;
         write(&count, 1, 0);
     }

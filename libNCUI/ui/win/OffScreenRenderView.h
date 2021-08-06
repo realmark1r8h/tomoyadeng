@@ -162,10 +162,10 @@ namespace amo {
            void DisableGL();
            void Render();*/
         
-        virtual void OnFocusedNodeChanged(IPCMessage::SmartType msg);
+        virtual void onFocusedNodeChanged(IPCMessage::SmartType msg);
         void getActiveElementInfo(CefRefPtr<CefFrame> pFrame);
-        virtual void UpdateCaretPos(std::shared_ptr<Gdiplus::Bitmap>image) override;
-        virtual void InsertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) override;
+        virtual void updateCaretPos(std::shared_ptr<Gdiplus::Bitmap>image) override;
+        virtual void insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) override;
         
     public:
     
@@ -188,13 +188,13 @@ namespace amo {
                                       CefRenderHandler::DragOperation operation) override;
         virtual bool OnTooltip(CefRefPtr<CefBrowser> browser, CefString& text) override;
         
-        void SetFocusFrame(CefRefPtr<CefFrame> ptr);
-        void SetActiveElementInfo(amo::json& vec);
+        void setFocusFrame(CefRefPtr<CefFrame> ptr);
+        void setActiveElementInfo(amo::json& vec);
         
-        int LogicalToDevice(int value, float device_scale_factor);
-        CefRect LogicalToDevice(const CefRect& value, float device_scale_factor);
-        int DeviceToLogical(int value, float device_scale_factor);
-        void DeviceToLogical(CefMouseEvent& value, float device_scale_factor);
+        int logicalToDevice(int value, float device_scale_factor);
+        CefRect logicalToDevice(const CefRect& value, float device_scale_factor);
+        int deviceToLogical(int value, float device_scale_factor);
+        void deviceToLogical(CefMouseEvent& value, float device_scale_factor);
         
         
 #if defined(CEF_USE_ATL)

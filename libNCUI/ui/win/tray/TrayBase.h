@@ -38,28 +38,28 @@ namespace amo {
         virtual ~TrayBase();
         
         static UINT CALLBACK TrackMousePt(PVOID pvClass);
-        void OnMouseMove();
-        bool IsMouseHover();
+        void onMouseMove();
+        bool isMouseHover();
         
     protected:
         /*!
-         * @fn	virtual void TrayBase::OnMouseEnter() = 0;
+         * @fn	virtual void TrayBase::onMouseEnter() = 0;
          *
          * @brief	触发鼠标进入事件.
          */
-        virtual void OnMouseEnter() = 0;
+        virtual void onMouseEnter() = 0;
         /*!
-         * @fn	virtual void TrayBase::OnMouseHover() = 0;
+         * @fn	virtual void TrayBase::onMouseHover() = 0;
          *
          * @brief	触发鼠标悬停事件.
          */
-        virtual void OnMouseHover() = 0;
+        virtual void onMouseHover() = 0;
         /*!
-         * @fn	virtual void TrayBase::OnMouseLeave() = 0;
+         * @fn	virtual void TrayBase::onMouseLeave() = 0;
          *
          * @brief	触发鼠标离开事件.
          */
-        virtual void OnMouseLeave() = 0;
+        virtual void onMouseLeave() = 0;
     };
 }
 

@@ -56,14 +56,14 @@ namespace amo {
                         && ptMouse.y == pTrayPos->m_ptMouse.y
                         && pTrayPos->m_MouseEnterTimer.elapsed() > 300) {
                     pTrayPos->m_bMouseHover = true;
-                    pTrayPos->OnMouseHover();
+                    pTrayPos->onMouseHover();
                 }
                 
                 if (ptMouse.x != pTrayPos->m_ptMouse.x
                         || ptMouse.y != pTrayPos->m_ptMouse.y) {
                     pTrayPos->m_bTrackMouse = FALSE;
                     pTrayPos->m_bMouseHover = false;
-                    pTrayPos->OnMouseLeave();
+                    pTrayPos->onMouseLeave();
                 }
             }
         }
@@ -71,12 +71,12 @@ namespace amo {
         return 0;
     }
     
-    void TrayBase::OnMouseMove() {
+    void TrayBase::onMouseMove() {
         EnterCriticalSection(&m_cs);
         GetCursorPos(&m_ptMouse);
         
         if (m_bTrackMouse == FALSE) {
-            OnMouseEnter();
+            onMouseEnter();
             m_bTrackMouse = TRUE;
             m_MouseEnterTimer.restart();
         }
@@ -84,7 +84,7 @@ namespace amo {
         LeaveCriticalSection(&m_cs);
     }
     
-    bool TrayBase::IsMouseHover() {
+    bool TrayBase::isMouseHover() {
         return m_bTrackMouse;
     }
     

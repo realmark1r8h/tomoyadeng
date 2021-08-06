@@ -22,15 +22,15 @@ namespace amo {
         ~Tray();
         void createNotifyWindow();
         
-        void Create();
+        void create();
         
-        void Destory();
+        void destory();
         
-        void Close();
+        void close();
         
-        void Blink(bool bBlink = true);
+        void blink(bool bBlink = true);
         
-        void UpdateIcon(HICON icon);
+        void updateIcon(HICON icon);
         
         
         LRESULT OnImeMonitor(UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -173,9 +173,9 @@ namespace amo {
     
     
     protected:
-        virtual void OnMouseEnter() override;
-        virtual void OnMouseHover() override;
-        virtual void OnMouseLeave() override;
+        virtual void onMouseEnter() override;
+        virtual void onMouseHover() override;
+        virtual void onMouseLeave() override;
         
     };
     

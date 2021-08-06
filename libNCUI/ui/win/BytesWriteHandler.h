@@ -21,15 +21,15 @@ public:
     int Flush() OVERRIDE;
     bool MayBlock() OVERRIDE{ return false; }
     
-    void* GetData() {
+    void* getData() {
         return data_;
     }
-    int64 GetDataSize() {
+    int64 getDataSize() {
         return offset_;
     }
     
 private:
-    size_t Grow(size_t size);
+    size_t grow(size_t size);
     
     size_t grow_;
     void* data_;

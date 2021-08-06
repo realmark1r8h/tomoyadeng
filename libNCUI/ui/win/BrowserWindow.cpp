@@ -123,8 +123,8 @@ namespace amo {
             m_pWebkit = new WebkitView(m_pBrowserSettings);
         }
         
-        m_pWebkit->GetClientHandler()->RegisterRenderHandlerDelegate(this);
-        m_pWebkit->GetClientHandler()->RegisterLifeSpanHandlerDelegate(this);
+        m_pWebkit->getClientHandler()->RegisterRenderHandlerDelegate(this);
+        m_pWebkit->getClientHandler()->RegisterLifeSpanHandlerDelegate(this);
         
         m_pWebkit->SetBkColor(m_pBrowserSettings->windowColor);
         
@@ -141,7 +141,7 @@ namespace amo {
         }
         
         
-        m_pCefCallbackHandler->registerHandlerDelegate(m_pWebkit->GetClientHandler());
+        m_pCefCallbackHandler->registerHandlerDelegate(m_pWebkit->getClientHandler());
         
         m_pBrowserLayout->Add(m_pWebkit);//将浏览器控件加入到窗口中
         
@@ -177,9 +177,9 @@ namespace amo {
         
         //如果浏览器控件状态，且没有被关闭，那么先关闭浏览器
         if ((m_pWebkit != NULL)
-                && m_pWebkit->GetBrowser()
-                && !m_pWebkit->IsClosing()) {
-            CefRefPtr<CefBrowserHost> pHost = m_pWebkit->GetBrowser()->GetHost();
+                && m_pWebkit->getBrowser()
+                && !m_pWebkit->isClosing()) {
+            CefRefPtr<CefBrowserHost> pHost = m_pWebkit->getBrowser()->GetHost();
             pHost->CloseBrowser(wParam == 255 ? true : false);
             bHandled = TRUE;
             return 0;
@@ -233,12 +233,12 @@ namespace amo {
     Any BrowserWindow::loadURL(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string hasShadow = args->getString(0);
-        m_pWebkit->GetBrowser()->GetMainFrame()->LoadURL(hasShadow);
+        m_pWebkit->getBrowser()->GetMainFrame()->LoadURL(hasShadow);
         return Undefined();
     }
     
     Any BrowserWindow::reload(IPCMessage::SmartType msg) {
-        m_pWebkit->GetBrowser()->Reload();
+        m_pWebkit->getBrowser()->Reload();
         return Undefined();
     }
     
@@ -356,9 +356,9 @@ namespace amo {
         
     }
     
-    bool BrowserWindow::PreTranslateMessage(CefEventHandle os_event) {
+    bool BrowserWindow::preTranslateMessage(CefEventHandle os_event) {
     
-        if (m_pWebkit == NULL || m_pWebkit->GetBrowser().get() == NULL) {
+        if (m_pWebkit == NULL || m_pWebkit->getBrowser().get() == NULL) {
             return false;
         }
         
@@ -381,7 +381,7 @@ namespace amo {
         }
         
         //while (hWnd != NULL) {
-        //    if (hWnd == m_pWebkit->GetBrowser()->GetHost()->GetWindowHandle()
+        //    if (hWnd == m_pWebkit->getBrowser()->GetHost()->GetWindowHandle()
         //            || hWnd == m_pWebkit->GetNativeWindow()
         //            || hWnd == m_hWnd) {
         //        break;
@@ -504,7 +504,7 @@ namespace amo {
     
     
     
-        if (!PtInWindow()) {
+        if (!ptInWindow()) {
         
             return HTCLIENT;
         }
@@ -577,24 +577,24 @@ namespace amo {
     }
     
     int BrowserWindow::GetIdentifier() {
-        return m_pWebkit->GetBrowser()->GetIdentifier();
+        return m_pWebkit->getBrowser()->GetIdentifier();
     }
     
     LRESULT BrowserWindow::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
     
         if (m_pWebkit != NULL && isLayered()) {
-            m_pWebkit->InsertBitmap(std::shared_ptr<Gdiplus::Bitmap>());
+            m_pWebkit->insertBitmap(std::shared_ptr<Gdiplus::Bitmap>());
         }
         
         if (m_pWebkit) {
         
             CefRefPtr<amo::ClientHandler> pHandler = NULL;
-            pHandler = m_pWebkit->GetClientHandler();
+            pHandler = m_pWebkit->getClientHandler();
             pHandler->UnregisterRenderHandlerDelegate(this);
             pHandler->UnregisterLifeSpanHandlerDelegate(this);
             
             m_pCefCallbackHandler->unregisterHandlerDegate(
-                m_pWebkit->GetClientHandler());
+                m_pWebkit->getClientHandler());
                 
             /*   if (m_pBrowserLayout) {
                    m_pBrowserLayout->Remove(m_pWebkit);

@@ -31,7 +31,7 @@ size_t BytesWriteHandler::Write(const void* ptr, size_t size, size_t n) {
     size_t rv;
     
     if (offset_ + static_cast<int64>(size * n) >= datasize_ &&
-            Grow(size * n) == 0) {
+            grow(size * n) == 0) {
         rv = 0;
     } else {
         memcpy(reinterpret_cast<char*>(data_) + offset_, ptr, size * n);
@@ -90,7 +90,7 @@ int BytesWriteHandler::Flush() {
     return 0;
 }
 
-size_t BytesWriteHandler::Grow(size_t size) {
+size_t BytesWriteHandler::grow(size_t size) {
     base::AutoLock lock_scope(lock_);
     size_t rv;
     size_t s = (size > grow_ ? size : grow_);

@@ -107,12 +107,12 @@ namespace amo {
         if (m_pBrowserSettings->offscreen) {   //离屏
             OffScreenRenderView* window = NULL;
             window = new OffScreenRenderView(m_pBrowserSettings);
-            window->SetClientHandler(m_pClientHandler);								//事件ClientHandler
+            window->setClientHandler(m_pClientHandler);								//事件ClientHandler
             m_pRenderWnd = window;
         } else { //非离屏
         
             RenderView* window = (new RenderView(m_pBrowserSettings));
-            window->SetClientHandler(m_pClientHandler);
+            window->setClientHandler(m_pClientHandler);
             m_pRenderWnd = window;
         }
         
@@ -140,7 +140,7 @@ namespace amo {
                        NULL);
     }
     
-    void WebkitView::LoadURL(const std::string& url) {
+    void WebkitView::loadURL(const std::string& url) {
         CEF_REQUIRE_UI_THREAD();
         // 不能直接LoadURL不知为什么
         CefRefPtr<CefRequest> request(CefRequest::Create());
@@ -637,13 +637,13 @@ namespace amo {
         
         if (status == TS_PROCESS_CRASHED) {
             MessageWindow::Show(m_hBrowserWnd, _T("页面崩溃了。。"));
-            LoadURL("http://www.baidu.com");
+            loadURL("http://www.baidu.com");
         }
         
         return;
     }
     
-    CefRefPtr<CefBrowser> WebkitView::GetBrowser() {
+    CefRefPtr<CefBrowser> WebkitView::getBrowser() {
         return m_pBrowser;
     }
     
@@ -703,7 +703,7 @@ namespace amo {
         return false;
     }
     
-    CefRefPtr<amo::ClientHandler> WebkitView::GetClientHandler() {
+    CefRefPtr<amo::ClientHandler> WebkitView::getClientHandler() {
         return m_pClientHandler;
     }
     
@@ -711,8 +711,8 @@ namespace amo {
         return m_hBrowserWnd;
     }
     
-    Any WebkitView::FocusedNodeChanged(IPCMessage::SmartType msg) {
-        m_pRenderWnd->OnFocusedNodeChanged(msg);
+    Any WebkitView::focusedNodeChanged(IPCMessage::SmartType msg) {
+        m_pRenderWnd->onFocusedNodeChanged(msg);
         return Undefined();
     }
     
@@ -734,12 +734,12 @@ namespace amo {
                                         width * 4,
                                         PixelFormat32bppARGB,
                                         (BYTE*)buffer));
-        m_pRenderWnd->UpdateCaretPos(image);
+        m_pRenderWnd->updateCaretPos(image);
         
         if (m_pBrowserSettings->transparent) {
-            InsertBitmap(image);
+            insertBitmap(image);
         } else {
-            m_pRenderWnd->InsertBitmap(image);
+            m_pRenderWnd->insertBitmap(image);
         }
         
     }

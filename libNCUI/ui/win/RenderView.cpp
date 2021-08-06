@@ -146,11 +146,11 @@ namespace amo {
         return TRUE;
     }
     
-    void RenderView::SetClientHandler(CefRefPtr<amo::ClientHandler> handler) {
+    void RenderView::setClientHandler(CefRefPtr<amo::ClientHandler> handler) {
         m_pClientHandler = handler;
     }
     
-    CefRefPtr<CefBrowser> RenderView::GetBrowser() {
+    CefRefPtr<CefBrowser> RenderView::getBrowser() {
         return m_pBrowser;
     }
     
@@ -174,16 +174,16 @@ namespace amo {
     }
     
     
-    void RenderView::OnFocusedNodeChanged(IPCMessage::SmartType msg) {
+    void RenderView::onFocusedNodeChanged(IPCMessage::SmartType msg) {
         return;
     }
     
     
-    void RenderView::UpdateCaretPos(std::shared_ptr<Gdiplus::Bitmap> image) {
+    void RenderView::updateCaretPos(std::shared_ptr<Gdiplus::Bitmap> image) {
         return;
     }
     
-    void RenderView::InsertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) {
+    void RenderView::insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) {
         return;
     }
     

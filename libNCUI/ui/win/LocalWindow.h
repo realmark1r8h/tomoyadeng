@@ -30,7 +30,7 @@ namespace amo {
         virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
         virtual LRESULT OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
         
-        virtual bool PreTranslateMessage(CefEventHandle os_event) ;
+        virtual bool preTranslateMessage(CefEventHandle os_event) ;
         
         virtual Any topmost(IPCMessage::SmartType msg) override;
         virtual Any isTopmost(IPCMessage::SmartType msg) override;
@@ -56,7 +56,7 @@ namespace amo {
         virtual std::shared_ptr<NativeWindowSettings> getNativeSettings() override;
         
         
-        bool IsFocusedWindow();
+        bool isFocusedWindow();
         
         
         bool isNativeWindow() const;

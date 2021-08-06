@@ -21,7 +21,7 @@ namespace amo {
     BrowserWindowCreator::BrowserWindowCreator() {
     }
     
-    std::shared_ptr<LocalWindow> BrowserWindowCreator::CreateBrowserWindow(
+    std::shared_ptr<LocalWindow> BrowserWindowCreator::createBrowserWindow(
         std::shared_ptr<BrowserWindowSettings> info) {
         CEF_REQUIRE_UI_THREAD();														//UI
         
@@ -40,7 +40,7 @@ namespace amo {
         std::shared_ptr<LocalWindow> window) {
         std::shared_ptr<NativeWindowSettings> info;
         info = window->getNativeSettings();
-        window->SetClosedCallback(std::bind(&BrowserWindowCreator::OnWindowClosed,
+        window->setClosedCallback(std::bind(&BrowserWindowCreator::onWindowClosed,
                                             this,
                                             std::placeholders::_1));
                                             
@@ -89,7 +89,7 @@ namespace amo {
         return window;
     }
     
-    std::shared_ptr<LocalWindow> BrowserWindowCreator::CreateNativeWindow(
+    std::shared_ptr<LocalWindow> BrowserWindowCreator::createNativeWindow(
         std::shared_ptr<NativeWindowSettings> info) {
         CEF_REQUIRE_UI_THREAD();														//UI
         
@@ -97,14 +97,14 @@ namespace amo {
         return createLocalWindow(window);
     }
     
-    void BrowserWindowCreator::CloseAllWindow(bool bFroce) {
+    void BrowserWindowCreator::coseAllWindow(bool bFroce) {
         for (auto& p : m_WindowMap) {
             p->Close(bFroce ? 255 : 0);
         }
         
     }
     
-    void BrowserWindowCreator::OnWindowClosed(LayeredWindow* window) {
+    void BrowserWindowCreator::onWindowClosed(LayeredWindow* window) {
     
         if (window == NULL) {
             return;
@@ -133,24 +133,24 @@ namespace amo {
     
     
     
-    void BrowserWindowCreator::ShowAllWindow(bool bVisibed /*= true*/) {
+    void BrowserWindowCreator::showAllWindow(bool bVisibed /*= true*/) {
         for (auto& p : m_WindowMap) {
             p->ShowWindow(bVisibed);
         }
     }
     
-    bool BrowserWindowCreator::PreTranslateMessage(CefEventHandle os_event) {
+    bool BrowserWindowCreator::preTranslateMessage(CefEventHandle os_event) {
     
         for (auto iter = m_WindowMap.rbegin() ; iter != m_WindowMap.rend(); ++iter) {
             auto p = *iter;
             
-            if (p->PreTranslateMessage(os_event)) {
+            if (p->preTranslateMessage(os_event)) {
                 return true;
             }
             
             
             if (p->getNativeSettings()->modal) {
-                if (!p->PtInWindow()) {
+                if (!p->ptInWindow()) {
                     ::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_ARROW)));
                     return true;
                 } else {
@@ -160,7 +160,7 @@ namespace amo {
         }
         
         /* for (auto& p : m_WindowMap) {
-        	 if (p->PreTranslateMessage(os_event)) {
+        	 if (p->preTranslateMessage(os_event)) {
         
         		 return true;
         	 }
@@ -174,7 +174,7 @@ namespace amo {
     }
     
     std::shared_ptr<LocalWindow>
-    BrowserWindowCreator::FindWindow(int32_t nID) {
+    BrowserWindowCreator::findWindow(int32_t nID) {
     
         for (auto& p : m_WindowMap) {
             if (p->isNativeWindow()) {
@@ -183,7 +183,7 @@ namespace amo {
             
             std::shared_ptr<BrowserWindow> pWindow = p->toBrowserWindow();
             
-            if (pWindow->GetWebkitView()->GetBrowser()->GetIdentifier() == nID) {
+            if (pWindow->GetWebkitView()->getBrowser()->GetIdentifier() == nID) {
                 return p;
             }
             
@@ -193,7 +193,7 @@ namespace amo {
     }
     
     std::shared_ptr<LocalWindow>
-    BrowserWindowCreator::FindWindow(HWND hWnd) {
+    BrowserWindowCreator::findWindow(HWND hWnd) {
         for (auto& p : m_WindowMap) {
             if (p->GetHWND() == hWnd) {
                 return p;
@@ -203,7 +203,7 @@ namespace amo {
         return NULL;
     }
     
-    std::shared_ptr<LocalWindow> BrowserWindowCreator::FindWindow(
+    std::shared_ptr<LocalWindow> BrowserWindowCreator::findWindow(
         const std::string& strID) {
         
         for (auto& p : m_WindowMap) {
@@ -230,7 +230,7 @@ namespace amo {
     }
     
     std::shared_ptr<amo::LocalWindow> BrowserWindowCreator::getMainWindow() {
-        auto vec = AllBrowserWindow();
+        auto vec = allBrowserWindow();
         
         for (auto& p : vec) {
             std::shared_ptr<BrowserWindow> pWindow;
@@ -245,7 +245,7 @@ namespace amo {
     }
     
     void BrowserWindowCreator::clearMainWindow() {
-        auto vec = AllBrowserWindow();
+        auto vec = allBrowserWindow();
         
         for (auto& p : vec) {
             std::shared_ptr<BrowserWindow> pWindow;
@@ -261,7 +261,7 @@ namespace amo {
     }
     
     std::vector<std::shared_ptr<LocalWindow> >
-    BrowserWindowCreator::AllBrowserWindow() {
+    BrowserWindowCreator::allBrowserWindow() {
         std::vector<std::shared_ptr<LocalWindow>> vec;
         std::copy(m_WindowMap.begin(),
                   m_WindowMap.end(),
@@ -290,17 +290,17 @@ namespace amo {
             int64_t nObjectID = ClassTransfer::getUniqueTransfer<AppTransfer>()->getObjectID();
             broadcaster.reset(new UIMessageBroadcaster(nObjectID));
             broadcaster->syncBroadcast("window-all-closed");
-            Tray::getInstance()->Destory();
-            Tray::getInstance()->Close();
+            Tray::getInstance()->destory();
+            Tray::getInstance()->close();
             
             CefQuitMessageLoop();	// 退出程序
         }
     }
     
     
-    bool BrowserWindowManager::PreTranslateMessage(CefEventHandle os_event) {
+    bool BrowserWindowManager::preTranslateMessage(CefEventHandle os_event) {
         CEF_REQUIRE_UI_THREAD();
-        return m_pWindowCreator->PreTranslateMessage(os_event);
+        return m_pWindowCreator->preTranslateMessage(os_event);
     }
     
     
@@ -339,7 +339,7 @@ namespace amo {
         
         // 在UI线程上创建窗口
         CefPostTask(TID_UI, NewCefRunnableMethod(m_pWindowCreator.get(),
-                    &BrowserWindowCreator::CreateBrowserWindow,
+                    &BrowserWindowCreator::createBrowserWindow,
                     pBrowserSettings));
         return true;
     }
@@ -349,21 +349,21 @@ namespace amo {
         
         if (m_BrowserCount == 0
                 && m_pWindowCreator
-                && m_pWindowCreator->AllBrowserWindow().size() == 0) {
+                && m_pWindowCreator->allBrowserWindow().size() == 0) {
             // 如果没有创建窗口，直接退出程序
-            Tray::getInstance()->Destory();
+            Tray::getInstance()->destory();
             CefQuitMessageLoop();
         }
         
         if (m_pWindowCreator) {
-            m_pWindowCreator->CloseAllWindow(bFroce);
+            m_pWindowCreator->coseAllWindow(bFroce);
         }
         
     }
     
     void BrowserWindowManager::showAllWindow(bool bVisibed /*= true*/) {
         if (m_pWindowCreator) {
-            m_pWindowCreator->ShowAllWindow(bVisibed);
+            m_pWindowCreator->showAllWindow(bVisibed);
         }
     }
     
@@ -371,12 +371,12 @@ namespace amo {
         std::shared_ptr<BrowserWindowSettings> info) {
         if (!CefCurrentlyOn(TID_UI)) {
             CefPostTask(TID_UI, NewCefRunnableMethod(m_pWindowCreator.get(),
-                        &BrowserWindowCreator::CreateBrowserWindow, info));
+                        &BrowserWindowCreator::createBrowserWindow, info));
             return NULL;
         }
         
         CEF_REQUIRE_UI_THREAD();
-        return m_pWindowCreator->CreateBrowserWindow(info);
+        return m_pWindowCreator->createBrowserWindow(info);
     }
     
     
@@ -384,30 +384,30 @@ namespace amo {
         std::shared_ptr<NativeWindowSettings> info) {
         if (!CefCurrentlyOn(TID_UI)) {
             CefPostTask(TID_UI, NewCefRunnableMethod(m_pWindowCreator.get(),
-                        &BrowserWindowCreator::CreateNativeWindow, info));
+                        &BrowserWindowCreator::createNativeWindow, info));
             return NULL;
         }
         
         CEF_REQUIRE_UI_THREAD();
-        return m_pWindowCreator->CreateNativeWindow(info);
+        return m_pWindowCreator->createNativeWindow(info);
     }
     
     std::shared_ptr<LocalWindow>
     BrowserWindowManager::findWindow(int32_t nID) {
         CEF_REQUIRE_UI_THREAD();
-        return (m_pWindowCreator->FindWindow(nID));
+        return (m_pWindowCreator->findWindow(nID));
     }
     
     std::shared_ptr<LocalWindow>
     BrowserWindowManager::findWindow(HWND hWnd) {
         CEF_REQUIRE_UI_THREAD();
-        return m_pWindowCreator->FindWindow(hWnd);
+        return m_pWindowCreator->findWindow(hWnd);
     }
     
     std::shared_ptr<LocalWindow> BrowserWindowManager::findWindow(
         const std::string & strID) {
         CEF_REQUIRE_UI_THREAD();
-        return m_pWindowCreator->FindWindow(strID);
+        return m_pWindowCreator->findWindow(strID);
     }
     
     std::shared_ptr<LocalWindow> BrowserWindowManager::getFirstWindow() {
@@ -445,7 +445,7 @@ namespace amo {
     BrowserWindowManager::AllWindows() {
         CEF_REQUIRE_UI_THREAD();
         std::vector<std::shared_ptr<LocalWindow> > vec;
-        auto windows = m_pWindowCreator->AllBrowserWindow();
+        auto windows = m_pWindowCreator->allBrowserWindow();
         std::copy(windows.begin(), windows.end(), std::back_inserter(vec));
         return vec;
         
@@ -459,7 +459,7 @@ namespace amo {
         vec = AllWindows();
         
         for (auto& p : vec) {
-            if (p->IsFocusedWindow()) {
+            if (p->isFocusedWindow()) {
                 return p;
             }
         }
@@ -472,7 +472,7 @@ namespace amo {
     }
     
     void BrowserWindowManager::init() {
-        Tray::getInstance()->Create();
+        Tray::getInstance()->create();
     }
     
 }

@@ -36,7 +36,7 @@ namespace amo {
         }
         
         CefRefPtr<CefBrowser> pBrowser
-            = pBrowserWindow->GetWebkitView()->GetBrowser();
+            = pBrowserWindow->GetWebkitView()->getBrowser();
             
         if (!pBrowser) {
             return vecRetval;

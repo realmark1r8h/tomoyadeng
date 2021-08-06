@@ -354,8 +354,8 @@ namespace amo {
         return FALSE;
     }
     
-    void OffScreenRenderView::InsertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) {
-        m_pGdiRender->InsertBitmap(image);
+    void OffScreenRenderView::insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) {
+        m_pGdiRender->insertBitmap(image);
     }
     
     void OffScreenRenderView::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
@@ -541,7 +541,7 @@ namespace amo {
 #endif
         
         if (m_pGdiRender != NULL) {
-            m_pGdiRender->InsertBitmap(std::shared_ptr<Gdiplus::Bitmap>());
+            m_pGdiRender->insertBitmap(std::shared_ptr<Gdiplus::Bitmap>());
         }
         
         if (m_pClientHandler) {
@@ -569,45 +569,45 @@ namespace amo {
     
     
     
-    void OffScreenRenderView::SetFocusFrame(CefRefPtr<CefFrame> ptr) {
+    void OffScreenRenderView::setFocusFrame(CefRefPtr<CefFrame> ptr) {
         m_pFocusFrame = ptr;
     }
     
-    void OffScreenRenderView::SetActiveElementInfo(amo::json& vec) {
+    void OffScreenRenderView::setActiveElementInfo(amo::json& vec) {
         m_oActiveElementInfo = ActiveElementInfo(vec);
         
         if (m_oActiveElementInfo.empty()) {
             //当前节点不是输入框， 关闭输入法窗口
             //imm32_manager_->CancelIME();
-            imm32_manager_->CleanupComposition();
-            imm32_manager_->DisableIME();
+            imm32_manager_->cleanupComposition();
+            imm32_manager_->disableIME();
             return;
         } else {
-            imm32_manager_->EnableIME();	// 开启输入法
+            imm32_manager_->enableIME();	// 开启输入法
         }
     }
     
-    CefRect OffScreenRenderView::LogicalToDevice(const CefRect& value,
+    CefRect OffScreenRenderView::logicalToDevice(const CefRect& value,
             float device_scale_factor) {
-        return CefRect(LogicalToDevice(value.x, device_scale_factor),
-                       LogicalToDevice(value.y, device_scale_factor),
-                       LogicalToDevice(value.width, device_scale_factor),
-                       LogicalToDevice(value.height, device_scale_factor));
+        return CefRect(logicalToDevice(value.x, device_scale_factor),
+                       logicalToDevice(value.y, device_scale_factor),
+                       logicalToDevice(value.width, device_scale_factor),
+                       logicalToDevice(value.height, device_scale_factor));
     }
     
-    int OffScreenRenderView::LogicalToDevice(int value,
+    int OffScreenRenderView::logicalToDevice(int value,
             float device_scale_factor) {
         float scaled_val = static_cast<float>(value) * device_scale_factor;
         return static_cast<int>(std::floor(scaled_val));
     }
     
-    void OffScreenRenderView::DeviceToLogical(CefMouseEvent& value,
+    void OffScreenRenderView::deviceToLogical(CefMouseEvent& value,
             float device_scale_factor) {
-        value.x = DeviceToLogical(value.x, device_scale_factor);
-        value.y = DeviceToLogical(value.y, device_scale_factor);
+        value.x = deviceToLogical(value.x, device_scale_factor);
+        value.y = deviceToLogical(value.y, device_scale_factor);
     }
     
-    int OffScreenRenderView::DeviceToLogical(int value,
+    int OffScreenRenderView::deviceToLogical(int value,
             float device_scale_factor) {
         float scaled_val = static_cast<float>(value) / device_scale_factor;
         return static_cast<int>(std::floor(scaled_val));
@@ -650,9 +650,9 @@ namespace amo {
         GetCursorPos(&pt);
         ::ScreenToClient(m_hWnd, &pt);
         
-        browser->GetHost()->DragSourceEndedAt(DeviceToLogical(pt.x,
+        browser->GetHost()->DragSourceEndedAt(deviceToLogical(pt.x,
                                               device_scale_factor_),
-                                              DeviceToLogical(pt.y,
+                                              deviceToLogical(pt.y,
                                                       device_scale_factor_),
                                               result);
         browser->GetHost()->DragSourceSystemDragEnded();
@@ -745,7 +745,7 @@ namespace amo {
         CefRefPtr<CefDragData> drag_data, CefMouseEvent ev,
         CefBrowserHost::DragOperationsMask effect) {
         if (browser_) {
-            DeviceToLogical(ev, device_scale_factor_);
+            deviceToLogical(ev, device_scale_factor_);
             browser_->GetHost()->DragTargetDragEnter(drag_data, ev, effect);
             browser_->GetHost()->DragTargetDragOver(ev, effect);
         }
@@ -756,7 +756,7 @@ namespace amo {
     CefBrowserHost::DragOperationsMask OffScreenRenderView::OnDragOver(CefMouseEvent ev,
             CefBrowserHost::DragOperationsMask effect) {
         if (browser_) {
-            DeviceToLogical(ev, device_scale_factor_);
+            deviceToLogical(ev, device_scale_factor_);
             browser_->GetHost()->DragTargetDragOver(ev, effect);
         }
         
@@ -772,7 +772,7 @@ namespace amo {
     CefBrowserHost::DragOperationsMask OffScreenRenderView::OnDrop(CefMouseEvent ev,
             CefBrowserHost::DragOperationsMask effect) {
         if (browser_) {
-            DeviceToLogical(ev, device_scale_factor_);
+            deviceToLogical(ev, device_scale_factor_);
             browser_->GetHost()->DragTargetDragOver(ev, effect);
             browser_->GetHost()->DragTargetDrop(ev);
         }
@@ -791,18 +791,18 @@ namespace amo {
         runner->setValue(IPCArgsPosInfo::JsFuncName, "getActiveElementInfo");
         Any result = runner->syncExecute("runJSFunction");
         amo::json json = result;
-        SetFocusFrame(pFrame);
-        SetActiveElementInfo(json);
+        setFocusFrame(pFrame);
+        setActiveElementInfo(json);
     }
     
-    void OffScreenRenderView::OnFocusedNodeChanged(IPCMessage::SmartType msg) {
+    void OffScreenRenderView::onFocusedNodeChanged(IPCMessage::SmartType msg) {
         std::vector<int64_t> identifiers;
         m_pBrowser->GetFrameIdentifiers(identifiers);
         
         if (!msg->getArgumentList()->getBool(0)) {
             amo::json json;
-            SetFocusFrame(NULL);
-            SetActiveElementInfo(json);
+            setFocusFrame(NULL);
+            setActiveElementInfo(json);
             return;
         }
         
@@ -811,7 +811,7 @@ namespace amo {
         getActiveElementInfo(pFrame);
     }
     
-    void OffScreenRenderView::UpdateCaretPos(std::shared_ptr<Gdiplus::Bitmap> image) {
+    void OffScreenRenderView::updateCaretPos(std::shared_ptr<Gdiplus::Bitmap> image) {
         amo::timer t1;
         
         if (m_oActiveElementInfo.empty()) {
@@ -902,7 +902,7 @@ namespace amo {
         }
         
         image->UnlockBits(&bmpData);
-        imm32_manager_->UpdateImeWindow(m_point);
+        imm32_manager_->updateImeWindow(m_point);
         $log(amo::cdevel << "查找用时t1：" << t1.elapsed() << amo::endl;);
     }
     

@@ -54,40 +54,40 @@ namespace amo {
                                      LPARAM lParam,
                                      BOOL& bHandled) override;
         /*!
-         * @fn	void MessageWindow::SetType(UINT uType);
+         * @fn	void MessageWindow::setType(UINT uType);
          *
          * @brief	设置消息框类型.
          *
          * @param	uType	The type.
          */
-        void SetType(UINT uType);
+        void setType(UINT uType);
         
         /*!
-         * @fn	void MessageWindow::SetText(CDuiString msg);
+         * @fn	void MessageWindow::setText(CDuiString msg);
          *
          * @brief	设置显示文本.
          *
          * @param	msg	The message.
          */
-        void SetText(CDuiString msg);
+        void setText(CDuiString msg);
         
         /*!
-         * @fn	void MessageWindow::SetPrompt(CDuiString* prompt);
+         * @fn	void MessageWindow::setPrompt(CDuiString* prompt);
          *
          * @brief	设置编辑框文本.
          *
          * @param 	prompt	If non-null, the prompt.
          */
-        void SetPrompt(CDuiString* prompt);
+        void setPrompt(CDuiString* prompt);
         
         /*!
-         * @fn	void MessageWindow::SetCaption(CDuiString caption);
+         * @fn	void MessageWindow::setCaption(CDuiString caption);
          *
          * @brief	设置标题栏文本.
          *
          * @param	caption	The caption.
          */
-        void SetCaption(CDuiString caption);
+        void setCaption(CDuiString caption);
         
         /*!
          * @fn	void MessageWindow::SetIcon(UINT uIcon);
@@ -96,7 +96,7 @@ namespace amo {
          *
          * @param	uIcon	The icon.
          */
-        void SetIcon(UINT uIcon);
+        void SetIcon(UINT uIcon) ;
         
     protected:
     

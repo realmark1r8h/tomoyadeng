@@ -17,17 +17,17 @@ namespace amo {
         
         virtual ~IMM32Manager();
         
-        void DestroyImeWindow();
-        void CleanupComposition();
-        void ResetComposition();
-        amo::string GetResult(LPARAM lparam);
-        bool GetComposition(LPARAM lparam);
-        void EnableIME();
-        void DisableIME();
-        void CancelIME();
-        void UpdateImeWindow(POINT pt);
-        void CompleteComposition(HIMC imm_context);
-        amo::string GetString(HIMC imm_context, WPARAM lparam);
+        void destroyImeWindow();
+        void cleanupComposition();
+        void resetComposition();
+        amo::string getResult(LPARAM lparam);
+        bool getComposition(LPARAM lparam);
+        void enableIME();
+        void disableIME();
+        void cancelIME();
+        void updateImeWindow(POINT pt);
+        void completeComposition(HIMC imm_context);
+        amo::string getString(HIMC imm_context, WPARAM lparam);
     private:
         HWND window_handle;
     };

@@ -47,7 +47,7 @@ namespace amo {
         
         // 处理鼠标消息
         if (msg->message >= WM_MOUSEFIRST && msg->message <= WM_MOUSELAST) {
-            if (BrowserWindowManager::getInstance()->PreTranslateMessage(msg)) {
+            if (BrowserWindowManager::getInstance()->preTranslateMessage(msg)) {
                 return TRUE;		// 表示已经处理过该消息，中断消息循环
             }
         }

@@ -129,7 +129,7 @@ namespace amo {
             return;
         }
         
-        m_pBrowser = pWindow->toBrowserWindow()->GetWebkitView()->GetBrowser();
+        m_pBrowser = pWindow->toBrowserWindow()->GetWebkitView()->getBrowser();
         m_pBrowser->GetHost()->StartDownload(m_pDownloaderSettings->url);
         
         return;

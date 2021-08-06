@@ -9,7 +9,7 @@ namespace amo {
     
     
     
-    DuiLib::CDuiRect PictureView::GetDisplayRect(const CDuiRect& windowRect, const CDuiRect& textureRect) {
+    DuiLib::CDuiRect PictureView::getDisplayRect(const CDuiRect& windowRect, const CDuiRect& textureRect) {
         if (!m_pBitmap) {
             return GetPos();
         }
@@ -84,7 +84,7 @@ namespace amo {
             RECT srcRect = GetPos();
             CDuiRect windowRect(0, 0, srcRect.right - srcRect.left, srcRect.bottom - srcRect.top);
             CDuiRect imageRect(0, 0, m_pBitmap->GetWidth(), m_pBitmap->GetHeight());
-            CDuiRect drawRect = GetDisplayRect(windowRect, imageRect);
+            CDuiRect drawRect = getDisplayRect(windowRect, imageRect);
             
             int nSrcWidth = srcRect.right - srcRect.left;
             int nSrcHeight = srcRect.bottom - srcRect.top;

@@ -216,7 +216,7 @@ namespace amo {
         return WindowImplBase::Notify(msg);
     }
     
-    bool LocalWindow::PreTranslateMessage(CefEventHandle os_event) {
+    bool LocalWindow::preTranslateMessage(CefEventHandle os_event) {
         return false;
     }
     
@@ -371,7 +371,7 @@ namespace amo {
         return Undefined();
     }
     
-    bool LocalWindow::IsFocusedWindow() {
+    bool LocalWindow::isFocusedWindow() {
         HWND hWnd = m_hWnd;
         HWND hFocusWnd = ::GetFocus();
         

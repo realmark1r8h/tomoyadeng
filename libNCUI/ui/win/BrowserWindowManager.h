@@ -24,10 +24,10 @@ namespace amo {
     class BrowserWindowCreator : public CefBase {
     public:
         BrowserWindowCreator();
-        std::shared_ptr<LocalWindow> CreateBrowserWindow(
+        std::shared_ptr<LocalWindow> createBrowserWindow(
             std::shared_ptr<BrowserWindowSettings> info);
             
-        std::shared_ptr<LocalWindow> CreateNativeWindow(
+        std::shared_ptr<LocalWindow> createNativeWindow(
             std::shared_ptr<NativeWindowSettings> info);
             
         std::shared_ptr<LocalWindow> createLocalWindow(
@@ -35,19 +35,19 @@ namespace amo {
             
             
             
-        std::shared_ptr<LocalWindow> FindWindow(int32_t nID);
-        std::shared_ptr<LocalWindow> FindWindow(const std::string& strID);
-        std::shared_ptr<LocalWindow> FindWindow(HWND hWnd);
+        std::shared_ptr<LocalWindow> findWindow(int32_t nID);
+        std::shared_ptr<LocalWindow> findWindow(const std::string& strID);
+        std::shared_ptr<LocalWindow> findWindow(HWND hWnd);
         std::shared_ptr<LocalWindow> getFirstWindow();
         std::shared_ptr<LocalWindow> getMainWindow();
         void clearMainWindow();
         
-        std::vector<std::shared_ptr<LocalWindow>> AllBrowserWindow();
-        void OnWindowClosed(LayeredWindow* window);
-        void CloseAllWindow(bool bFroce = false);
-        void ShowAllWindow(bool bVisibed = true);
+        std::vector<std::shared_ptr<LocalWindow>> allBrowserWindow();
+        void onWindowClosed(LayeredWindow* window);
+        void coseAllWindow(bool bFroce = false);
+        void showAllWindow(bool bVisibed = true);
         
-        bool PreTranslateMessage(CefEventHandle os_event);
+        bool preTranslateMessage(CefEventHandle os_event);
         
         IMPLEMENT_REFCOUNTING(BrowserWindowCreator);
     public:
@@ -74,8 +74,8 @@ namespace amo {
                                    CefBrowserSettings& settings,
                                    bool* no_javascript_access) override;
                                    
-        void OnAfterCreated(CefRefPtr<CefBrowser> browser);
-        void OnBeforeClose(CefRefPtr<CefBrowser> browser);
+        void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
+        void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;
         
         
         std::shared_ptr<LocalWindow> createBrowserWindow(
@@ -98,7 +98,7 @@ namespace amo {
         
         void init();
         
-        bool PreTranslateMessage(CefEventHandle os_event);
+        bool preTranslateMessage(CefEventHandle os_event);
         
         
     private:

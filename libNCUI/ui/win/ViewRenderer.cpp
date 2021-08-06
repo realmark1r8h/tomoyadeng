@@ -3,7 +3,7 @@
 #include "ui/win/ViewRenderer.h"
 
 namespace amo {
-    void ViewRenderer::InsertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) {
+    void ViewRenderer::insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) {
         m_pBitmap = image;
         
         PaintStatusImage(GetManager()->GetPaintDC());
@@ -64,7 +64,7 @@ namespace amo {
     
     }
     
-    void LayerViewRender::InsertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) {
+    void LayerViewRender::insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) {
         m_pBitmap = image;
         Invalidate();
     }

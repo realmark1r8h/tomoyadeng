@@ -42,9 +42,9 @@ namespace amo {
         }
         
         msgBox->Create(pMainWnd, lpCaption, UI_WNDSTYLE_DIALOG, WS_EX_WINDOWEDGE);
-        msgBox->SetCaption(lpCaption);
-        msgBox->SetType(uType);
-        msgBox->SetText(lpText);
+        msgBox->setCaption(lpCaption);
+        msgBox->setType(uType);
+        msgBox->setText(lpText);
         msgBox->SetIcon(uIcon);
         msgBox->CenterWindow();
         msgBox->setTopmost(true);
@@ -64,10 +64,10 @@ namespace amo {
         pSettings->hasShadow = true;
         MessageWindow* msgBox = new MessageWindow(pSettings);
         msgBox->Create(pMainWnd, lpCaption, UI_WNDSTYLE_DIALOG, WS_EX_WINDOWEDGE);
-        msgBox->SetCaption(lpCaption);
-        msgBox->SetType(uType);
-        msgBox->SetPrompt(lpdefaultPrompt);
-        msgBox->SetText(lpText);
+        msgBox->setCaption(lpCaption);
+        msgBox->setType(uType);
+        msgBox->setPrompt(lpdefaultPrompt);
+        msgBox->setText(lpText);
         msgBox->SetIcon(uIcon);
         msgBox->CenterWindow();
         msgBox->setTopmost(true);
@@ -222,7 +222,7 @@ namespace amo {
     
     
     
-    void MessageWindow::SetType(UINT uType) {
+    void MessageWindow::setType(UINT uType) {
         if (uType == MB_OK) {
             if (m_pButtonCancel != NULL) {
                 m_pButtonCancel->SetVisible(false);
@@ -235,7 +235,7 @@ namespace amo {
         }
     }
     
-    void MessageWindow::SetText(CDuiString msg) {
+    void MessageWindow::setText(CDuiString msg) {
         auto& pm = m_PaintManager;
         CLabelUI* pTextControl = static_cast<CLabelUI*>(pm.FindControl(_T("text")));
         CContainerUI* pTextLayout
@@ -260,7 +260,7 @@ namespace amo {
         }
     }
     
-    void MessageWindow::SetCaption(CDuiString caption) {
+    void MessageWindow::setCaption(CDuiString caption) {
         LPCTSTR lpCaption = caption.GetData();
         CLabelUI* pCaptionControl
             = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("caption")));
@@ -299,7 +299,7 @@ namespace amo {
         }
     }
     
-    void MessageWindow::SetPrompt(CDuiString* prompt) {
+    void MessageWindow::setPrompt(CDuiString* prompt) {
         m_pStrPrompt = prompt;
         
         if (m_pEditPrompt != NULL && m_pStrPrompt != NULL) {

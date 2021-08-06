@@ -43,7 +43,7 @@ namespace amo {
             return false;
         }
         
-        CefRefPtr<CefBrowser> pBrowser = pWindow->GetWebkitView()->GetBrowser();
+        CefRefPtr<CefBrowser> pBrowser = pWindow->GetWebkitView()->getBrowser();
         
         if (!pBrowser) {
             return false;

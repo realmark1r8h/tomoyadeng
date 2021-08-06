@@ -50,7 +50,7 @@ namespace amo {
         virtual LRESULT OnNcLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnNcLButtonDbClick(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         
-        virtual bool PreTranslateMessage(CefEventHandle os_event) override;
+        virtual bool preTranslateMessage(CefEventHandle os_event) override;
         
         //LifeSpanHandlerDelegate
         virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;

@@ -19,7 +19,7 @@ namespace amo {
         LPCTSTR GetClass() const override;
         virtual void PaintStatusImage(HDC hDC) override;
         
-        virtual void InsertBitmap(std::shared_ptr<Gdiplus::Bitmap> image);
+        virtual void insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image);
     protected:
         std::shared_ptr<Gdiplus::Bitmap> m_pBitmap;
         
@@ -28,7 +28,7 @@ namespace amo {
     class LayerViewRender : public ViewRenderer {
     public:
         virtual ~LayerViewRender();
-        virtual void InsertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) override;
+        virtual void insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) override;
     };
     
 }

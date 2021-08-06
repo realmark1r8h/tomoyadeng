@@ -63,9 +63,9 @@ namespace amo {
         void	SetPos(RECT rect, bool bNeedInvalidate = true) override;
         virtual HWND GetNativeWindow() const override;
         
-        void LoadURL(const std::string& url);
-        CefRefPtr<amo::ClientHandler> GetClientHandler();
-        CefRefPtr<CefBrowser> GetBrowser();
+        void loadURL(const std::string& url);
+        CefRefPtr<amo::ClientHandler> getClientHandler();
+        CefRefPtr<CefBrowser> getBrowser();
         
         
         
@@ -80,7 +80,7 @@ namespace amo {
                              
     public:
         virtual Any onMessageTransfer(IPCMessage::SmartType msg) override;
-        bool IsClosing() const {
+        bool isClosing() const {
             return m_bIsClosing;
         }
         
@@ -145,7 +145,7 @@ namespace amo {
                            CefEventHandle os_event,
                            bool* is_keyboard_shortcut) override;
     public:
-        Any FocusedNodeChanged(IPCMessage::SmartType msg);
+        Any focusedNodeChanged(IPCMessage::SmartType msg);
         Any asyncExecuteResult(IPCMessage::SmartType msg);
         
         void registerExternalTransfer(int nBrowserID, std::shared_ptr<ClassTransfer> pTransfer);
@@ -156,7 +156,7 @@ namespace amo {
         Any createPipeClient(IPCMessage::SmartType msg);
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(WebkitView, ClassTransfer)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(FocusedNodeChanged, 0)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(focusedNodeChanged, 0)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(asyncExecuteResult, 0)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(onInclude, 0)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(createPipeClient, 0)

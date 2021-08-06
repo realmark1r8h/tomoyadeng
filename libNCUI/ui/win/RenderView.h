@@ -36,11 +36,11 @@ namespace amo {
         virtual LRESULT OnDestroy(UINT, WPARAM, LPARAM, BOOL& bHandled) override;
         virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
         
-        void SetClientHandler(CefRefPtr<amo::ClientHandler> handler);
-        CefRefPtr<CefBrowser> GetBrowser();
-        virtual void OnFocusedNodeChanged(IPCMessage::SmartType msg);
-        virtual void UpdateCaretPos(std::shared_ptr<Gdiplus::Bitmap> image);
-        virtual void InsertBitmap(std::shared_ptr<Gdiplus::Bitmap> image);
+        void setClientHandler(CefRefPtr<amo::ClientHandler> handler);
+        CefRefPtr<CefBrowser> getBrowser();
+        virtual void onFocusedNodeChanged(IPCMessage::SmartType msg);
+        virtual void updateCaretPos(std::shared_ptr<Gdiplus::Bitmap> image);
+        virtual void insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image);
         
         
         

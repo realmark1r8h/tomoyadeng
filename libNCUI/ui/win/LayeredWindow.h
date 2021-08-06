@@ -4,11 +4,6 @@
 #ifndef AMO_LAYEREDWINDOW_H__
 #define AMO_LAYEREDWINDOW_H__
 
-
-
-
-
-
 #include <windef.h>
 #include <winuser.h>
 #include <commdlg.h>
@@ -42,7 +37,7 @@ namespace amo {
         
         virtual void InitWindow() override;
         virtual void OnFinalMessage(HWND hWnd) override;
-        virtual LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
+        virtual LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) override;
         virtual LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
         virtual LRESULT OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnHotKey(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
@@ -51,7 +46,7 @@ namespace amo {
         virtual LRESULT OnGetMinMaxInfo(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
         virtual LRESULT ResponseDefaultKeyEvent(WPARAM wParam) override;
         
-        void NeedUpdate();
+        void needUpdate();
         
         void setLayered(bool bLayered);
         bool isLayered() const;
@@ -81,17 +76,17 @@ namespace amo {
         std::function<bool(int32_t, amo::json)> getHotKeyEventCallback() const;
         void setHotKeyEventCallback(std::function<bool(int32_t, amo::json)> val);
         
-        void SetClosedCallback(ClosedCbType fn);
+        void setClosedCallback(ClosedCbType fn);
         
         
-        bool PtInWindow();
-        bool PtInWindow(POINT& pt);
+        bool ptInWindow();
+        bool ptInWindow(POINT& pt);
     protected:
     
         virtual void drawWindow();
         virtual void onUIThreadEvent(uint32_t umsg);
         uint32_t getMessageID();
-        bool IsDragable(CControlUI* pControl);
+        bool isDragable(CControlUI* pControl);
     protected:
     
         /*! @brief	BLENDFUNCTION. */

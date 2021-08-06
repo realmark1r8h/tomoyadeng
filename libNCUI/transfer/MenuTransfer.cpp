@@ -26,7 +26,7 @@ namespace amo {
         ::GetCursorPos(&point);
         menu->Init(NULL, point);
         addTransfer(menu);
-        menu->SetClosedCallback(std::bind(&MenuTransfer::onMenuClosed,
+        menu->setClosedCallback(std::bind(&MenuTransfer::onMenuClosed,
                                           this,
                                           std::placeholders::_1));
                                           

@@ -21,7 +21,7 @@ namespace amo {
         
     protected:
     
-        CDuiRect GetDisplayRect(const CDuiRect& windowRect, const CDuiRect& textureRect);
+        CDuiRect getDisplayRect(const CDuiRect& windowRect, const CDuiRect& textureRect);
     protected:
         std::shared_ptr<Gdiplus::Bitmap> m_pBitmap;
         Gdiplus::RectF m_dstRect;

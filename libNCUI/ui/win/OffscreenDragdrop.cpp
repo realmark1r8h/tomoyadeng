@@ -284,14 +284,14 @@ namespace {
             CefRefPtr<CefStreamWriter> writer =
                 CefStreamWriter::CreateForHandler(handler.get());
             drag_data->GetFileContents(writer);
-            DCHECK_EQ(handler->GetDataSize(), static_cast<int64>(bufferSize));
+            DCHECK_EQ(handler->getDataSize(), static_cast<int64>(bufferSize));
             CefString fileName = drag_data->GetFileName();
             GetStorageForFileDescriptor(&stgmeds[curr_index], fileName.ToWString());
             fmtetc.cfFormat = (const WORD)file_desc_format;
             fmtetcs[curr_index] = fmtetc;
             curr_index++;
-            GetStorageForBytes(&stgmeds[curr_index], handler->GetData(),
-                               (size_t)handler->GetDataSize());
+            GetStorageForBytes(&stgmeds[curr_index], handler->getData(),
+                               (size_t)handler->getDataSize());
             fmtetc.cfFormat = (const WORD)file_contents_format;
             fmtetcs[curr_index] = fmtetc;
             curr_index++;

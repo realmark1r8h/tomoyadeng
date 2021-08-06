@@ -183,7 +183,7 @@ namespace amo {
         
         CControlUI* pControl = static_cast<CControlUI*>(m_PaintManager.FindControl(pt));
         
-        if (IsDragable(pControl)) {
+        if (isDragable(pControl)) {
             return HTCAPTION;
         } else {
             return HTCLIENT;
@@ -281,7 +281,7 @@ namespace amo {
     
     void LayeredWindow::setLayered(bool bLayered) {
         if (m_bLayered != bLayered && m_hWnd != NULL) {
-            NeedUpdate();
+            needUpdate();
         }
         
         m_bLayered = bLayered;
@@ -329,7 +329,7 @@ namespace amo {
     }
     
     
-    bool LayeredWindow::IsDragable(CControlUI* pControl) {
+    bool LayeredWindow::isDragable(CControlUI* pControl) {
         if (!pControl) {
             return false;
         }
@@ -341,22 +341,22 @@ namespace amo {
         } else if (attr == _T("no-drag") ||  attr == _T("false")) {
             return false;
         } else {
-            return IsDragable(pControl->GetParent());
+            return isDragable(pControl->GetParent());
         }
         
     }
     
-    void LayeredWindow::SetClosedCallback(ClosedCbType fn) {
+    void LayeredWindow::setClosedCallback(ClosedCbType fn) {
         m_fnClosedCallback = fn;
     }
     
-    bool LayeredWindow::PtInWindow() {
+    bool LayeredWindow::ptInWindow() {
         POINT pt = { 0 };
         ::GetCursorPos(&pt);
-        return PtInWindow(pt);
+        return ptInWindow(pt);
     }
     
-    bool LayeredWindow::PtInWindow(POINT& pt) {
+    bool LayeredWindow::ptInWindow(POINT& pt) {
         RECT rect = { 0 };
         ::GetWindowRect(m_hWnd, &rect);
         return ::PtInRect(&rect, pt) != FALSE;
@@ -450,10 +450,10 @@ namespace amo {
     
     void LayeredWindow::setTransparent(uint8_t val) {
         m_Blend.SourceConstantAlpha = val;
-        NeedUpdate();
+        needUpdate();
     }
     
-    void LayeredWindow::NeedUpdate() {
+    void LayeredWindow::needUpdate() {
         // ÖØ»æ´°¿Ú
         m_PaintManager.NeedUpdate();
         m_PaintManager.Invalidate();

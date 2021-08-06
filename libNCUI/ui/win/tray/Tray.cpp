@@ -56,7 +56,7 @@ namespace amo {
         }
     }
     
-    void Tray::Create() {
+    void Tray::create() {
     
         createNotifyWindow();
         HICON hIcon = NULL;
@@ -130,7 +130,7 @@ namespace amo {
             break;
             
         case WM_MOUSEMOVE:
-            OnMouseMove();
+            onMouseMove();
             //triggerEvent("mousemove");
             break;
             
@@ -161,7 +161,7 @@ namespace amo {
         m_fnEventCallback(event);
     }
     
-    void Tray::OnMouseEnter() {
+    void Tray::onMouseEnter() {
         if (m_pNotifyWindow == NULL) {
             return;
         }
@@ -173,7 +173,7 @@ namespace amo {
         return;
     }
     
-    void Tray::OnMouseHover() {
+    void Tray::onMouseHover() {
         if (m_pNotifyWindow == NULL) {
             return;
         }
@@ -185,7 +185,7 @@ namespace amo {
         return;
     }
     
-    void Tray::OnMouseLeave() {
+    void Tray::onMouseLeave() {
         if (m_pNotifyWindow == NULL) {
             return;
         }
@@ -209,7 +209,7 @@ namespace amo {
                                      0,
                                      0,
                                      LR_LOADFROMFILE));
-        UpdateIcon(m_hTrayIcon);
+        updateIcon(m_hTrayIcon);
     }
     
     void Tray::setTrayIcon(HICON val) {
@@ -241,10 +241,10 @@ namespace amo {
             icon = NULL;
         }
         
-        Tray::getInstance()->UpdateIcon(icon);
+        Tray::getInstance()->updateIcon(icon);
     }
     
-    void Tray::Blink(bool bBlink) {
+    void Tray::blink(bool bBlink) {
         if (!::IsWindow(m_hMessageWnd)) {
             return;
         }
@@ -265,7 +265,7 @@ namespace amo {
         if (!bBlink) {
             ::KillTimer(m_pNotifyWindow->GetHWND(), m_flashTimer);
             m_flashTimer = 0;
-            UpdateIcon(m_hTrayIcon);
+            updateIcon(m_hTrayIcon);
             triggerEvent("stopBlink");
         } else {
             if (m_flashTimer == 0) {
@@ -279,7 +279,7 @@ namespace amo {
     }
     
     
-    void Tray::UpdateIcon(HICON icon) {
+    void Tray::updateIcon(HICON icon) {
         m_notifyCondata.hIcon = icon;
         Shell_NotifyIconA(NIM_MODIFY, &m_notifyCondata);
     }
@@ -301,13 +301,13 @@ namespace amo {
         
     }
     
-    void Tray::Destory() {
+    void Tray::destory() {
         ::KillTimer(m_hMessageWnd, m_flashTimer);
         Shell_NotifyIconA(NIM_DELETE, &m_notifyCondata);
         
     }
     
-    void Tray::Close() {
+    void Tray::close() {
         if (m_pNotifyWindow == NULL) {
             return;
         }

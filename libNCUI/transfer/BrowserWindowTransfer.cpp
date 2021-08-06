@@ -175,7 +175,7 @@ namespace amo {
             }
             
             std::shared_ptr<BrowserWindow> pWindow = p->toBrowserWindow();
-            pBrowser = pWindow->GetWebkitView()->GetBrowser();
+            pBrowser = pWindow->GetWebkitView()->getBrowser();
             
             if (pBrowser->GetIdentifier() == nBrowserID) {
                 return pWindow->getFuncMgr().toSimplifiedJson();
@@ -220,7 +220,7 @@ namespace amo {
             
             std::shared_ptr<BrowserWindow> pWindow = p->toBrowserWindow();
             
-            if (!pWindow || !pWindow->IsFocusedWindow()) {
+            if (!pWindow || !pWindow->isFocusedWindow()) {
                 continue;
             }
             

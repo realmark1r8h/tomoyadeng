@@ -14,30 +14,30 @@ namespace amo {
     IMM32Manager::~IMM32Manager() {
     }
     
-    void IMM32Manager::DestroyImeWindow() {
+    void IMM32Manager::destroyImeWindow() {
         ::DestroyCaret();
     }
     
-    void IMM32Manager::CleanupComposition() {
+    void IMM32Manager::cleanupComposition() {
         HIMC imm_context = ::ImmGetContext(window_handle);
         
         if (imm_context)  {
             ::ImmNotifyIME(imm_context, NI_COMPOSITIONSTR, CPS_COMPLETE, 0);
             ::ImmReleaseContext(window_handle, imm_context);
-            ResetComposition();
+            resetComposition();
         }
     }
     
-    void IMM32Manager::ResetComposition() {
+    void IMM32Manager::resetComposition() {
         return;
     }
     
-    void IMM32Manager::CompleteComposition(HIMC imm_context) {
+    void IMM32Manager::completeComposition(HIMC imm_context) {
         ::ImmNotifyIME(imm_context, NI_COMPOSITIONSTR, CPS_COMPLETE, 0);
-        ResetComposition();
+        resetComposition();
     }
     
-    amo::string IMM32Manager::GetString(HIMC imm_context, WPARAM lparam) {
+    amo::string IMM32Manager::getString(HIMC imm_context, WPARAM lparam) {
         if (!(lparam & GCS_RESULTSTR)) {
             return L"";
         }
@@ -64,24 +64,24 @@ namespace amo {
         
     }
     
-    amo::string IMM32Manager::GetResult(LPARAM lparam) {
+    amo::string IMM32Manager::getResult(LPARAM lparam) {
         amo::string ret;
         HIMC imm_context = ::ImmGetContext(window_handle);
         
         if (imm_context) {
-            ret = GetString(imm_context, lparam);
+            ret = getString(imm_context, lparam);
             ::ImmReleaseContext(window_handle, imm_context);
         }
         
         return ret;
     }
     
-    void IMM32Manager::DisableIME() {
-        CleanupComposition();
+    void IMM32Manager::disableIME() {
+        cleanupComposition();
         ::ImmAssociateContextEx(window_handle, NULL, 0);
     }
     
-    void IMM32Manager::CancelIME() {
+    void IMM32Manager::cancelIME() {
         HIMC imm_context = ::ImmGetContext(window_handle);
         
         if (imm_context) {
@@ -89,15 +89,15 @@ namespace amo {
             ::ImmReleaseContext(window_handle, imm_context);
         }
         
-        ResetComposition();
+        resetComposition();
         
     }
     
-    void IMM32Manager::EnableIME() {
+    void IMM32Manager::enableIME() {
         ::ImmAssociateContextEx(window_handle, NULL, IACE_DEFAULT);
     }
     
-    void IMM32Manager::UpdateImeWindow(POINT pt) {
+    void IMM32Manager::updateImeWindow(POINT pt) {
         HIMC imm_context = ImmGetContext(window_handle);
         
         if (!imm_context) {

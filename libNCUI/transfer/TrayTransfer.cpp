@@ -46,7 +46,7 @@ namespace amo {
     
     Any TrayTransfer::blink(IPCMessage::SmartType msg) {
         bool bBlink = msg->getArgumentList()->getBool(0);
-        m_pTray->Blink(bBlink);
+        m_pTray->blink(bBlink);
         return Undefined();
     }
     

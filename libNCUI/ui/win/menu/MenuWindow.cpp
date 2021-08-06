@@ -107,7 +107,7 @@ namespace amo {
         
         // 关闭菜单窗口的输入法
         m_pIMM32.reset(new IMM32Manager(m_hWnd));
-        m_pIMM32->DisableIME();
+        m_pIMM32->disableIME();
         
     }
     

@@ -14,49 +14,40 @@
 namespace amo {
 
 
-    class ImeSharedMemory : public amo::file_mapping
-        , public amo::singleton < ImeSharedMemory > {
+    class SharedMemory : public amo::file_mapping
+        , public amo::singleton < SharedMemory > {
     public:
-        ImeSharedMemory();
+        SharedMemory();
         
-        ~ImeSharedMemory();
+        ~SharedMemory();
         
-        //------------------------------------------------------------------------------
-        // 方法:    ImeSharedMemory::GetInstanceCount
-        // 功能:    获取实例数
-        // 访问:    public
-        // 返回:    char
-        // 参数:
-        //
-        // 说明:
-        //
-        //------------------------------------------------------------------------------
-        char GetInstanceCount();
+        /*!
+         * @fn	char SharedMemory::getInstanceCount();
+         *
+         * @brief	获取实例数.
+         *
+         * @return	The instance count.
+         */
+        
+        char getInstanceCount();
         
     protected:
-        //------------------------------------------------------------------------------
-        // 方法:    ImeSharedMemory::IncInstanceCount
-        // 功能:    实例自加1
-        // 访问:    protected
-        // 返回:    void
-        // 参数:
-        //
-        // 说明:
-        //
-        //------------------------------------------------------------------------------
-        void IncInstanceCount();
+    
+        /*!
+         * @fn	void SharedMemory::incInstanceCount();
+         *
+         * @brief	实例自加1.
+         */
         
-        //------------------------------------------------------------------------------
-        // 方法:    ImeSharedMemory::DecInstanceCount
-        // 功能:    实例自减1
-        // 访问:    protected
-        // 返回:    void
-        // 参数:
-        //
-        // 说明:
-        //
-        //------------------------------------------------------------------------------
-        void DecInstanceCount();
+        void incInstanceCount();
+        
+        /*!
+         * @fn	void SharedMemory::decInstanceCount();
+         *
+         * @brief	实例自减.
+         */
+        
+        void decInstanceCount();
     private:
     
     };
