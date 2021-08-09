@@ -30,7 +30,7 @@ namespace amo {
         amo::Any getDefaultFileSettings(IPCMessage::SmartType msg);
         amo::Any getDefaultAppSettings(IPCMessage::SmartType msg);
         amo::Any getDefaultBrowserSettings(IPCMessage::SmartType msg);
-        
+        amo::Any getDefaultSplashSettings(IPCMessage::SmartType msg);
         amo::Any commit(IPCMessage::SmartType msg);
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(RceditTransfer, ClassTransfer)
@@ -38,6 +38,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getDefaultFileSettings, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getDefaultAppSettings, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getDefaultBrowserSettings, TransferFuncStatic)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getDefaultSplashSettings, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(commit, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_END()
         

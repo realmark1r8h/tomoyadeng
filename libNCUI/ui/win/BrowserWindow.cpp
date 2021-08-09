@@ -76,21 +76,15 @@ namespace amo {
     }
     void BrowserWindow::InitWindow() {
     
-    
-    
-        HICON hIcon = NULL;
-        hIcon = ExtractIconA(m_PaintManager.GetInstance(), amo::path::getFullExeName().c_str(), 0); //获取图标，第二个参数为要获取第几个图标
+        //获取图标，第二个参数为要获取第几个图标
+        HICON hIcon = ExtractIconA(m_PaintManager.GetInstance(), amo::path::getFullExeName().c_str(), 0);
         ::SendMessage(m_hWnd, WM_SETICON, (WPARAM)false, (LPARAM)hIcon);
         // 添加到Transfer管理,如果不是用JS创建的，则没有添加进
         addTransfer(getDerivedClass<ClassTransfer>());
-        test();
-        
-        foo("ddd", 3);
-        foo("ccc", "sddd");
-        
         
         LocalWindow::InitWindow();
         
+        // 使用skin图标
         /*    const TImageInfo* data = m_PaintManager.GetImageEx(_T("logo.ico"), NULL, 0);
         	HICON m_hIcon = (HICON)LoadImage(NULL, _T("skin\\logo.ico"), IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
         	::SendMessage(m_hWnd, WM_SETICON, (WPARAM)false, (LPARAM)m_hIcon);*/
@@ -102,7 +96,7 @@ namespace amo {
         if (m_pBrowserSettings->titleBar) {
             m_pTitleBar->SetVisible(true);
             RECT rcCaption = { 0, 0, 0, 33 };
-            m_PaintManager.SetCaptionRect(rcCaption);//设置可拖拽区域， 弹出窗口为30
+            m_PaintManager.SetCaptionRect(rcCaption);
         } else {
             m_pTitleBar->SetVisible(false);
         }
@@ -142,22 +136,8 @@ namespace amo {
         
         
         m_pCefCallbackHandler->registerHandlerDelegate(m_pWebkit->getClientHandler());
-        
         m_pBrowserLayout->Add(m_pWebkit);//将浏览器控件加入到窗口中
-        
-        
-        
-        
         this->registerFunction();
-        
-        
-        //::SwitchToThisWindow(m_hWnd, TRUE); //激活指定窗口，无论是否最小化。
-        
-        
-        
-        
-        
-        
     }
     
     void BrowserWindow::OnFinalMessage(HWND hWnd) {
@@ -267,20 +247,16 @@ namespace amo {
         return std::dynamic_pointer_cast<BrowserWindow>(shared_from_this());
     }
     
-    
+    Any BrowserWindow::isMainWindow(IPCMessage::SmartType msg) {
+        return m_pBrowserSettings->main;
+    }
     
     std::shared_ptr<amo::BrowserWindowSettings> BrowserWindow::getBrowserSettings() const {
         return m_pBrowserSettings;
     }
     
-    
-    Any BrowserWindow::isMainWindow(IPCMessage::SmartType msg) {
-        return m_pBrowserSettings->main;
-    }
-    
     std::vector<HWND> BrowserWindow::getParents(HWND hWnd) {
         std::vector<HWND> vec;
-        
         
         while (hWnd != NULL) {
             vec.push_back(hWnd);
@@ -576,7 +552,7 @@ namespace amo {
         return LocalWindow::OnNcHitTest(uMsg, wParam, lParam, bHandled);
     }
     
-    int BrowserWindow::GetIdentifier() {
+    int BrowserWindow::GetIdentifier() const {
         return m_pWebkit->getBrowser()->GetIdentifier();
     }
     

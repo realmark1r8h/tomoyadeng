@@ -327,8 +327,8 @@ namespace amo {
     }
     
     int64_t SystemInfo::compareFileTime(FILETIME time1, FILETIME time2) {
-        int64_t a = time1.dwHighDateTime << 32 | time1.dwLowDateTime;
-        int64_t b = time2.dwHighDateTime << 32 | time2.dwLowDateTime;
+        int64_t a = (int64_t)time1.dwHighDateTime << 32 | time1.dwLowDateTime;
+        int64_t b = (int64_t)time2.dwHighDateTime << 32 | time2.dwLowDateTime;
         
         return (b - a);
     }

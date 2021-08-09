@@ -188,14 +188,14 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
     m_pUpdater.reset(new amo::ResourceUpdater());
     std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
     
-    if (args->getArgsSize() < 3) {
+    if (args->getArgsSize() < 4) {
         return Undefined();
     }
     
     amo::string strConfigFile = amo::string(args->getString(0), true);
     amo::string strConfigAppSettings = amo::string(args->getString(1), true);
     amo::string strConfigBrowserSettinggs = amo::string(args->getString(2), true);
-    
+    amo::string strConfigSplashSettinggs = amo::string(args->getString(3), true);
     
     amo::string strConfig = strConfigFile;
     amo::json oConfig(strConfig.str());
@@ -247,11 +247,14 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
     }
     
     // 设置启动信息 AppSettings
-    m_pUpdater->ChangeString(IDS_BROWSER_SETTINGS,
+    m_pUpdater->ChangeString(IDS_APP_SETTINGS,
                              strConfigAppSettings.to_unicode().c_str());
     // 界面信息 BrowserSettings
     m_pUpdater->ChangeString(IDS_BROWSER_SETTINGS,
                              strConfigBrowserSettinggs.to_unicode().c_str());
+    // 启动画面 SplashSettings
+    m_pUpdater->ChangeString(IDS_SPLASH_SETTINGS,
+                             strConfigSplashSettinggs.to_unicode().c_str());
     m_pUpdater->Commit();
     
     return Undefined();
@@ -353,6 +356,23 @@ amo::Any amo::RceditTransfer::getDefaultBrowserSettings(IPCMessage::SmartType ms
         
         if (browserWindowJson.is_valid()) {
             json.join(browserWindowJson);
+        }
+    }
+    
+    return amo::string(json.to_string(), false).to_utf8();
+}
+
+amo::Any amo::RceditTransfer::getDefaultSplashSettings(IPCMessage::SmartType msg) {
+    HINSTANCE hInst = ::GetModuleHandle(NULL);
+    StringLoader strLoader(hInst);
+    std::string strsplashSettings = strLoader.load(IDS_SPLASH_SETTINGS);
+    amo::json json(strsplashSettings);
+    
+    if (json.is_valid()) {
+        amo::json splashWindowJson = m_oSettings.get_child("splashWindowSettings");
+        
+        if (splashWindowJson.is_valid()) {
+            json.join(splashWindowJson);
         }
     }
     

@@ -11,11 +11,6 @@ namespace amo {
         Sqlite(const std::string& args);
         
         virtual Any execute(IPCMessage::SmartType msg) override;
-        virtual Any insert(IPCMessage::SmartType msg) override;
-        virtual Any remove(IPCMessage::SmartType msg) override;
-        virtual Any update(IPCMessage::SmartType msg) override;
-        virtual Any select(IPCMessage::SmartType msg) override;
-        virtual Any load(IPCMessage::SmartType msg) override;
         virtual Any backup(IPCMessage::SmartType msg) override;
         virtual Any query(IPCMessage::SmartType msg) override;
         

@@ -22,20 +22,32 @@ db = new Sqlite('E:/amoylel/test.db');
     </div>
 </div>
 
-## 插入数据
+## 执行SQL
 
 ```html
 // 插入数据
 var str = new Date().toString();
-var val = db.insert('insert into abc (a, b, c) values(\"' + str + '\", 1, 33.22);');
+var val = db.execute(`insert into abc (a, b, c) values('{0}', {1}, {2});`, [str, 1, 33.22]);
 if(val == 1) {
 		alert('插入成功');
 }
+// 删除数据
+var val = db.execute(`DELETE FROM abc where b='{0}'`,[1]);
+alert('删除' + val + '条数据');
+// 更新数据
+var val = db.execute(`UPDATE abc SET a='{0}' where b = {1}`, [new Date().toString(), 2]);
+alert('更新' + val + '条数据');
 ```
 
 <div class="row">
     <div class="col-xs-3">
         <button class ="btn btn-outline-primary btn-block" id="insert">插入数据</button>
+    </div>
+    <div class="col-xs-3">
+        <button class ="btn btn-outline-primary btn-block" id="remove">删除数据</button>
+    </div>
+     <div class="col-xs-3">
+        <button class ="btn btn-outline-primary btn-block" id="update">更新数据</button>
     </div>
 </div>
 
@@ -43,45 +55,27 @@ if(val == 1) {
 
 ```html
 // 查询数据
-var val = db.select('select * from abc');
+var val = db.query('select * from abc where b={0}', [1], {rows:2, page:1});
 console.dir(val);
 ```
 
 <div class="row">
     <div class="col-xs-3">
-        <button class ="btn btn-outline-primary btn-block" id="select">查询数据</button>
+        <button class ="btn btn-outline-primary btn-block" id="query">查询数据</button>
     </div>
 </div>
-
-## 删除数据
-
-```html
-// 查询数据
-var val = db.select('select * from abc');
-console.dir(val);
-```
-
-<div class="row">
-    <div class="col-xs-3">
-        <button class ="btn btn-outline-primary btn-block" id="select">查询数据</button>
-    </div>
-</div>
-
-## 更新数据
-
-```html
-// 查询数据
-var val = db.select('select * from abc');
-console.dir(val);
-```
-
-<div class="row">
-    <div class="col-xs-3">
-        <button class ="btn btn-outline-primary btn-block" id="select">查询数据</button>
-    </div>
-</div>
-
-
-## 关闭数据库
  
+
+
+## 备份数据库
  
+ ```html
+// 备份数据库
+var val = db.backup('test2.db'); 
+```
+
+<div class="row">
+    <div class="col-xs-3">
+        <button class ="btn btn-outline-primary btn-block" id="backup">备份数据库</button>
+    </div>
+</div>

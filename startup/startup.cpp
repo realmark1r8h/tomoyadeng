@@ -116,6 +116,7 @@ public:
         strBrowserSettings = strLoader.load(110);
         strSplashSettings = strLoader.load(111);
         
+        
         bool bManifest = (strAppSettings.find("\"manifest\":true") != -1);
         
         

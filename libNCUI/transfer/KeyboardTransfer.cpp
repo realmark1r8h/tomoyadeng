@@ -103,9 +103,7 @@ namespace amo {
     }
     
     void KeyboardTransfer::SendKeys(const amo::string& msg) {
-        short vk;
-        BOOL shift;
-        
+    
         USES_CONVERSION;
         std::wstring data = msg.to_unicode();
         int len = data.size();

@@ -417,13 +417,19 @@
 						{
 							"name": "接口说明"
 						}, {
-							"name": "Shell操作"
+							"name": "打开数据库"
+						}, {
+							"name": "执行SQL"
+						}, {
+							"name": "查询数据"
+						}, {
+							"name": "备份数据库"
 						}
 					],
 					"filter": "sqlite sqlite"
 				}
 			],
-			"filter": "jschajian jscj"
+			"filter": "sqlite db"
 		}
 	}
 }

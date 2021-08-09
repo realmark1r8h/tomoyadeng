@@ -25,7 +25,6 @@ namespace amo {
     public:
         NodeHandlerHelper();
         
-        //std::shared_ptr<UIMessageEmitter> getNodeRunner();
         std::shared_ptr<UIMessageBroadcaster> getBroadcaster();
         void setObjectID(int64_t nID);
         int64_t getObjectID() const;

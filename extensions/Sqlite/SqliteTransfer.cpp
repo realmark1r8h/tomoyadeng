@@ -26,26 +26,6 @@ namespace amo {
         return Undefined();
     }
     
-    Any SqliteTransfer::insert(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
-    
-    Any SqliteTransfer::remove(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
-    
-    Any SqliteTransfer::update(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
-    
-    Any SqliteTransfer::select(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
-    
-    Any SqliteTransfer::load(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
-    
     Any SqliteTransfer::backup(IPCMessage::SmartType msg) {
         return Undefined();
     }

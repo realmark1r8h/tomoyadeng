@@ -3,6 +3,10 @@
 #include "settings/NativeWindowSettings.h"
 
 
+#pragma warning(disable:4800)
+
+
+
 #define CEFSTRING_DEFAULT_ARGS_SETTINGS(name, val) CefString(&this->##name) = val; settings.put(#name, val);
 #define CEFSTRING_ARGS_SETTING(val) CefString(&this->##val) = settings.getString(#val, CefString(&this->##val).ToString());
 
@@ -17,9 +21,9 @@ namespace amo {
     
     void AppSettings::initDefaultCefSettings() {
         amo::string strAppPath = amo::path::getExeDir();						//!< 获取当前可执行文件目录
-        std::string strLogFile = (strAppPath + L"\\CefBrowser.log").to_utf8();	//!< 日志文件
+        std::string strLogFile = (strAppPath + L"\\cef.log").to_utf8();			//!< 日志文件
         std::string strExeFullName = amo::path::getFullExeName().to_utf8();		//!< 完整路径的程序名
-        std::string strResourcesPath = (strAppPath + "").to_utf8();  //!< 资源目录
+        std::string strResourcesPath = (strAppPath + "").to_utf8();				//!< 资源目录
         std::string strLocalesPath = (strAppPath + "\\locales").to_utf8();		//!< Local目录
         
         DEFAULT_ARGS_SETTINGS(single_process, true);							//!< 禁止当进程模式 ，该版本使用单进程模式无法渲染页
@@ -134,6 +138,7 @@ namespace amo {
     }
     
     bool AppSettings::updateCefAppSettings() {
+    
         BOOL_ARGS_SETTING(single_process);										//!< 禁止当进程模式 ，该版本使用单进程模式无法渲染页
         BOOL_ARGS_SETTING(no_sandbox);											//!< 沙箱
         CEFSTRING_ARGS_SETTING(browser_subprocess_path);						//!< 子进程路径

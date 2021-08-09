@@ -590,8 +590,8 @@ namespace amo {
          * @return	true if directory, false if not.
          */
         bool is_directory() const {
-            bool  bOk = ::PathIsDirectoryA(m_path);
-            return bOk;
+            /*   bool  bOk = ::PathIsDirectoryA(m_path);
+               return bOk;*/
             return ::PathIsDirectoryA(m_path) != FALSE;
         }
         /*!
@@ -762,7 +762,7 @@ namespace amo {
                 return to.create_directory();
             }
             
-            return (bool)::CopyFileA(m_path, to.c_str(), FALSE);
+            return ::CopyFileA(m_path, to.c_str(), FALSE) != FALSE;
         }
         
         static amo::string getExeDir() {
