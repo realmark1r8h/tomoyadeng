@@ -239,7 +239,7 @@ namespace amo {
          * 			必须等待通道建好，否则会造成死锁，无法退出Node进程.
          */
         
-        void needQuitWithNode();
+        bool needQuitWithNode();
         
         /*!
          * @fn	void AppContext::needQuitWithOutNode();

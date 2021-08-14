@@ -93,11 +93,15 @@ namespace amo {
             m_pBrowserProcessExchanger->setProcessSyncMessageCallback(std::bind(&NodeMessageHandler::processSyncMessage, this, std::placeholders::_1, std::placeholders::_2));
             BrowserProcessExchangerManager::getInstance()->addExchanger(m_nBrowserID, m_pBrowserProcessExchanger);
             
-            auto manager = amo::BrowserTransferMgr::getInstance();
-            amo::json arr = manager->getTransferMap(m_nBrowserID).toJson();
-            BrowserProcessExchangerManager::getInstance()->exchange(m_nBrowserID, arr);
             
-            CefPostTask(TID_UI, NewCefRunnableMethod(this, &NodeMessageHandler::needQuit));
+            
+            if (needQuit()) {
+                BrowserProcessExchangerManager::getInstance()->exchange(m_nBrowserID, false);
+            } else {
+                auto manager = amo::BrowserTransferMgr::getInstance();
+                amo::json arr = manager->getTransferMap(m_nBrowserID).toJson();
+                BrowserProcessExchangerManager::getInstance()->exchange(m_nBrowserID, arr);
+            }
             
         } else if (message_name == MSG_PROCESS_SYNC_EXECUTE) {
             BrowserProcessExchangerManager::getInstance()->tryProcessMessage(m_nBrowserID);
@@ -300,18 +304,19 @@ namespace amo {
         closeMessageQueue();
     }
     
-    void NodeMessageHandler::needQuit() {
+    bool NodeMessageHandler::needQuit() {
         if (m_fnAfterCreatePipe) {
-        
-            m_fnAfterCreatePipe();
+            return m_fnAfterCreatePipe();
         }
+        
+        return false;
     }
     
-    std::function<void()> NodeMessageHandler::getAfterCreatePipe() const {
+    std::function<bool()> NodeMessageHandler::getAfterCreatePipe() const {
         return m_fnAfterCreatePipe;
     }
     
-    void NodeMessageHandler::setAfterCreatePipe(std::function<void()> val) {
+    void NodeMessageHandler::setAfterCreatePipe(std::function<bool()> val) {
         m_fnAfterCreatePipe = val;
     }
     

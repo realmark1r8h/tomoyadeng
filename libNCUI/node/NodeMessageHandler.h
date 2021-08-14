@@ -85,11 +85,11 @@ namespace amo {
         void stopNodeProcess();
         
         
-        void needQuit();
+        bool needQuit();
         
-        std::function<void()> getAfterCreatePipe() const;
+        std::function<bool()> getAfterCreatePipe() const;
         
-        void setAfterCreatePipe(std::function<void()> val);
+        void setAfterCreatePipe(std::function<bool()> val);
         
         AMO_CEF_IMPL_NO_REFCOUNTING(NodeMessageHandler)
         
@@ -117,7 +117,7 @@ namespace amo {
         std::shared_ptr<message_queue> m_pMessageQueueWriter;
         std::string m_strMessageQueueName;
         
-        std::function<void()> m_fnAfterCreatePipe;
+        std::function<bool()> m_fnAfterCreatePipe;
         
         
         

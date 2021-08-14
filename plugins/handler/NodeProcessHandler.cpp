@@ -201,6 +201,12 @@ namespace amo {
         NodeProcessExchangerManager::get_instance()->addExchanger(m_nPipeID, pRendererProcessExchanger);
         
         amo::Any ret = NodeProcessExchangerManager::get_instance()->exchange <amo::Any>(m_nPipeID);
+        
+        if (ret.type() == amo::AnyValueType<bool>::value) {
+        
+            return;
+        }
+        
         $log(amo::cdevel << ret.value() << amo::endl);
         
         amo::json jsonArr(ret.value());
@@ -277,7 +283,7 @@ namespace amo {
             *anyMessage = IPCMessage::fromJson(json);
             
             if (anyMessage->getArgumentList()->getString(IPCArgsPosInfo::FuncName) == "quit") {
-                MessageBox(NULL, _T("quit"), _T(""), MB_OK);
+                //MessageBox(NULL, _T("quit"), _T(""), MB_OK);
                 uv_idle_stop(handle);
                 closeMessageQueue();
                 return;

@@ -163,7 +163,7 @@ namespace amo {
         }
     }
     
-    void AppContext::needQuitWithNode() {
+    bool AppContext::needQuitWithNode() {
         //MessageBox(NULL, _T("3311"), _T(""), MB_OK);
         auto pAppSettings = getDefaultAppSettings();
         auto manager = BrowserWindowManager::getInstance();
@@ -173,9 +173,13 @@ namespace amo {
             // 单例模式下只允许一个实例
             if (pAppSettings->useNode) {
                 manager->closeAllWindow(true);
+                return true;
             }
             
+            return false;
         }
+        
+        return false;
     }
     
     void AppContext::needQuitWithOutNode() {
