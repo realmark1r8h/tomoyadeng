@@ -177,10 +177,11 @@ namespace amo {
         SendMessageToUI(anyMessage);
         
         $log(amo::cdevel << func_orient << "创建管道服务端：" << strPipeServerName << amo::endl);
-        
+        /* MessageBoxA(NULL, "3333", "223", MB_OK);*/
         //等待管道建立
         bool rec = m_pRenderPipeServer->connect();
         bool bOk = m_pBrowserPipeClient->connect();
+        
         
         if (!rec || !bOk) {
             $log(amo::cdevel << "管道连接失败" << amo::endl);
@@ -212,6 +213,7 @@ namespace amo {
         }
         
         uv_idle_init(uv_default_loop(), &idler);
+        
         uv_idle_start(&idler, wait_for_a_while);
         return;
     }
@@ -275,6 +277,7 @@ namespace amo {
             *anyMessage = IPCMessage::fromJson(json);
             
             if (anyMessage->getArgumentList()->getString(IPCArgsPosInfo::FuncName) == "quit") {
+                MessageBox(NULL, _T("quit"), _T(""), MB_OK);
                 uv_idle_stop(handle);
                 closeMessageQueue();
                 return;

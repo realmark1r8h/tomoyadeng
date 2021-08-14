@@ -22,6 +22,7 @@
 #include "ui/win/SplashWindow.h"
 #include "settings/SplashWindowSettings.h"
 #include "transfer/SplashTransfer.h"
+#include "../ui/win/SharedMemory.h"
 
 namespace {
 
@@ -123,6 +124,10 @@ namespace amo {
     void AppContext::onUpdateAppSettings(BasicSettings* settings) {
         // 只处理主进程的参数设置
         if (getProcessType() == BrowserProcess) {
+            if (!m_pSharedMemory) {
+                m_pSharedMemory.reset(new SharedMemory(m_pAppSettings->appID));
+            }
+            
             // 设置Duilib皮肤目录
             amo::string strSkin(m_pAppSettings->skinDir, true);
             CPaintManagerUI::SetResourcePath(strSkin.to_unicode().c_str());
@@ -150,7 +155,41 @@ namespace amo {
                     }
                 }
             }
+            
+            m_pNodeMessageHandler->setAfterCreatePipe(
+                std::bind(&AppContext::needQuitWithNode, this));
+                
+                
         }
+    }
+    
+    void AppContext::needQuitWithNode() {
+        //MessageBox(NULL, _T("3311"), _T(""), MB_OK);
+        auto pAppSettings = getDefaultAppSettings();
+        auto manager = BrowserWindowManager::getInstance();
+        
+        if (pAppSettings->singleInstance
+                && m_pSharedMemory->getInstanceCount() > 1) {
+            // 单例模式下只允许一个实例
+            if (pAppSettings->useNode) {
+                manager->closeAllWindow(true);
+            }
+            
+        }
+    }
+    
+    void AppContext::needQuitWithOutNode() {
+        auto pAppSettings = getDefaultAppSettings();
+        auto manager = BrowserWindowManager::getInstance();
+        
+        if (pAppSettings->singleInstance
+                && m_pSharedMemory->getInstanceCount() > 1) {
+            // 单例模式下只允许一个实例
+            if (!pAppSettings->useNode) {
+                manager->closeAllWindow(true);
+            }
+        }
+        
     }
     
     std::shared_ptr<AppSettings> AppContext::getDefaultAppSettings() {
@@ -210,7 +249,6 @@ namespace amo {
         m_pAppSettings.reset(new AppSettings());
         m_pClientHandler = DummyClientHandler::getInstance();
         m_pNodeMessageHandler.reset(new NodeMessageHandler());
-        
         
         m_nProcessExitCode = -1;
         
@@ -319,15 +357,16 @@ namespace amo {
         startHook();
         auto manager = BrowserWindowManager::getInstance();
         manager->init();
+        auto pAppSettings = getDefaultAppSettings();
         
         // 开启启动画面
-        if (getDefaultAppSettings()->showSplash) {
+        if (pAppSettings->showSplash) {
             auto transfer = ClassTransfer::getUniqueTransfer<SplashTransfer>();
             transfer->create(getDefaultSplashSettings());
         }
         
         
-        if (!getDefaultAppSettings()->useNode) {
+        if (!pAppSettings->useNode) {
             //通过窗口管理类创建主窗口并显示
             manager->createBrowserWindow(getDefaultBrowserSettings());
         } else {
@@ -335,8 +374,11 @@ namespace amo {
             startNodeThread();
         }
         
+        CefPostTask(TID_UI, NewCefRunnableMethod(this, &AppContext::needQuitWithOutNode));
+        
         // 开始消息循环
         CefRunMessageLoop();
+        
         // 关闭钩子
         stopHook();
         

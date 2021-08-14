@@ -97,6 +97,8 @@ namespace amo {
             amo::json arr = manager->getTransferMap(m_nBrowserID).toJson();
             BrowserProcessExchangerManager::getInstance()->exchange(m_nBrowserID, arr);
             
+            CefPostTask(TID_UI, NewCefRunnableMethod(this, &NodeMessageHandler::needQuit));
+            
         } else if (message_name == MSG_PROCESS_SYNC_EXECUTE) {
             BrowserProcessExchangerManager::getInstance()->tryProcessMessage(m_nBrowserID);
         }
@@ -119,6 +121,8 @@ namespace amo {
         }
         
     }
+    
+    
     
     bool NodeMessageHandler::sendMessageToUI(IPCMessage::SmartType msg) {
         CefPostTask(TID_UI, NewCefRunnableMethod(this, &NodeMessageHandler::onNodeMessageRecv, msg));
@@ -289,12 +293,27 @@ namespace amo {
         stopReadMessage();
         
         if (getNodeRunner()) {
+            //MessageBoxA(NULL, "stopNodeProcess", "setMessageQueue", MB_OK);
             getNodeRunner()->execute("quit");
         }
         
         closeMessageQueue();
     }
     
+    void NodeMessageHandler::needQuit() {
+        if (m_fnAfterCreatePipe) {
+        
+            m_fnAfterCreatePipe();
+        }
+    }
+    
+    std::function<void()> NodeMessageHandler::getAfterCreatePipe() const {
+        return m_fnAfterCreatePipe;
+    }
+    
+    void NodeMessageHandler::setAfterCreatePipe(std::function<void()> val) {
+        m_fnAfterCreatePipe = val;
+    }
     
     void NodeMessageHandler::closeMessageQueue() {
         if (m_strMessageQueueName.empty()) {

@@ -17,7 +17,7 @@ namespace amo {
     class SharedMemory : public amo::file_mapping
         , public amo::singleton < SharedMemory > {
     public:
-        SharedMemory();
+        SharedMemory(const std::string& name);
         
         ~SharedMemory();
         

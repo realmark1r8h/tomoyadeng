@@ -10,26 +10,27 @@ namespace amo {
         decInstanceCount();
     }
     
-    SharedMemory::SharedMemory() : amo::file_mapping("ImeInstanceCount") {
-        init_file_mapping();
+    SharedMemory::SharedMemory(const std::string& name)
+        : amo::file_mapping(name) {
         incInstanceCount();
     }
     
     char SharedMemory::getInstanceCount() {
-        char count;
-        read(&count, 1, 0);
+        char count = 0;
+        read(&count, 0, 1);
         return count;
     }
     
     void SharedMemory::incInstanceCount() {
         char count = getInstanceCount();
         ++count;
-        write(&count, 1, 0);
+        write(&count, 0, 1);
+        count = getInstanceCount();
     }
     
     void SharedMemory::decInstanceCount() {
         char count = getInstanceCount();
         --count;
-        write(&count, 1, 0);
+        write(&count, 0, 1);
     }
 }
