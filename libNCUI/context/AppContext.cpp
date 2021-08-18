@@ -175,14 +175,12 @@ namespace amo {
                 manager->closeAllWindow(true);
                 return true;
             }
-            
-            return false;
         }
         
         return false;
     }
     
-    void AppContext::needQuitWithOutNode() {
+    bool AppContext::needQuitWithOutNode() {
         auto pAppSettings = getDefaultAppSettings();
         auto manager = BrowserWindowManager::getInstance();
         
@@ -191,8 +189,11 @@ namespace amo {
             // 单例模式下只允许一个实例
             if (!pAppSettings->useNode) {
                 manager->closeAllWindow(true);
+                return true;
             }
         }
+        
+        return false;
         
     }
     
@@ -363,25 +364,29 @@ namespace amo {
         manager->init();
         auto pAppSettings = getDefaultAppSettings();
         
-        // 开启启动画面
-        if (pAppSettings->showSplash) {
-            auto transfer = ClassTransfer::getUniqueTransfer<SplashTransfer>();
-            transfer->create(getDefaultSplashSettings());
+        bool bNeedQuit = needQuitWithOutNode();
+        
+        if (!bNeedQuit) {
+            // 开启启动画面
+            if (pAppSettings->showSplash) {
+                auto transfer = ClassTransfer::getUniqueTransfer<SplashTransfer>();
+                transfer->create(getDefaultSplashSettings());
+            }
+            
+            
+            if (!pAppSettings->useNode) {
+                //通过窗口管理类创建主窗口并显示
+                manager->createBrowserWindow(getDefaultBrowserSettings());
+            } else {
+                // 运行Node
+                startNodeThread();
+            }
+            
+            // 开始消息循环
+            CefRunMessageLoop();
         }
         
         
-        if (!pAppSettings->useNode) {
-            //通过窗口管理类创建主窗口并显示
-            manager->createBrowserWindow(getDefaultBrowserSettings());
-        } else {
-            // 运行Node
-            startNodeThread();
-        }
-        
-        CefPostTask(TID_UI, NewCefRunnableMethod(this, &AppContext::needQuitWithOutNode));
-        
-        // 开始消息循环
-        CefRunMessageLoop();
         
         // 关闭钩子
         stopHook();

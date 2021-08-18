@@ -233,21 +233,25 @@ namespace amo {
         void onUpdateAppSettings(BasicSettings* settings);
         
         /*!
-         * @fn	void AppContext::onAfterCreatePipe();
+         * @fn	bool AppContext::needQuitWithNode();
          *
          * @brief	回调函数，当与Node通信的管道创建后回调，是否退出程序。
-         * 			必须等待通道建好，否则会造成死锁，无法退出Node进程.
+         * 			 必须等待通道建好，否则会造成死锁，无法退出Node进程.
+         *
+         * @return	true if it succeeds, false if it fails.
          */
         
         bool needQuitWithNode();
         
         /*!
-         * @fn	void AppContext::needQuitWithOutNode();
+         * @fn	bool AppContext::needQuitWithOutNode();
          *
          * @brief	不使用Node的情况下是否退出程序.
+         *
+         * @return	true if it succeeds, false if it fails.
          */
         
-        void needQuitWithOutNode();
+        bool needQuitWithOutNode();
     public:
         AMO_CEF_IMPL_NO_REFCOUNTING(NodeMessageHandler)
         
