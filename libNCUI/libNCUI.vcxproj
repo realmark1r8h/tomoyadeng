@@ -126,6 +126,7 @@
     <ClCompile Include="handler\ResourceBundleHandler.cpp" />
     <ClCompile Include="handler\ResourceHandler.cpp" />
     <ClCompile Include="handler\URLRequestClient.cpp" />
+    <ClCompile Include="handler\UtilityV8Handler.cpp" />
     <ClCompile Include="handler\V8ExtentionHandler.cpp" />
     <ClCompile Include="module\basic\TypeConvertor.cpp" />
     <ClCompile Include="module\basic\V8HandlerManager.cpp" />
@@ -262,6 +263,7 @@
     <ClInclude Include="handler\ResourceHandler.h" />
     <ClInclude Include="handler\RunFileDialogCallback.hpp" />
     <ClInclude Include="handler\URLRequestClient.h" />
+    <ClInclude Include="handler\UtilityV8Handler.h" />
     <ClInclude Include="handler\V8ExtentionHandler.h" />
     <ClInclude Include="ipc\Any.hpp" />
     <ClInclude Include="ipc\AsyncFunctionManager.hpp" />

@@ -46,10 +46,14 @@ namespace amo {
         std::string getSpecialFolder(int nType);
     public:
     
-    
-    
         /*! @brief	是否允许外部配置文件. manifest.json 里面的内容Ansi编码， 不能用Utf8 */
         bool manifest;
+        
+        /*! @brief	程序唯一ID. */
+        std::string appID;
+        
+        /*! @brief	单例模式. */
+        bool singleInstance;
         
         /*! @brief	是否显示启动画面. */
         bool showSplash;

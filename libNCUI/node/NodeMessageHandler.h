@@ -38,6 +38,7 @@ namespace amo {
     class UIMessageEmitter;
     class BrowserWindowTransfer;
     class Transfer;
+    class AppSettings;
     
     class NodeMessageHandler  {
     
@@ -83,6 +84,13 @@ namespace amo {
         
         void stopNodeProcess();
         
+        
+        bool needQuit();
+        
+        std::function<bool()> getAfterCreatePipe() const;
+        
+        void setAfterCreatePipe(std::function<bool()> val);
+        
         AMO_CEF_IMPL_NO_REFCOUNTING(NodeMessageHandler)
         
     private:
@@ -108,6 +116,10 @@ namespace amo {
         std::shared_ptr<message_queue>  m_pMessageQueueReader;
         std::shared_ptr<message_queue> m_pMessageQueueWriter;
         std::string m_strMessageQueueName;
+        
+        std::function<bool()> m_fnAfterCreatePipe;
+        
+        
         
     };
     

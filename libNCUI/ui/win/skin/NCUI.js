@@ -18,6 +18,16 @@ function includes() {
     return includes(arguments);
 };
 
+function sleep(ms) {
+    native function sleep(ms);
+    return sleep(ms);
+};
+
+function usleep(us) {
+    native function usleep(us);
+    return usleep(us);
+};
+
 function objectToString(json) {
     return JSON.stringify(json);
 };

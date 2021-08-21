@@ -99,12 +99,14 @@ namespace amo {
                 //显示共享的文件数据。
                 lpMapAddr = (char*)MapViewOfFile(m_hMapFile, FILE_MAP_ALL_ACCESS,
                                                  0, 0, 0);
+                                                 
             } else {
                 //创建共享文件。
                 m_hMapFile = CreateFileMappingA((HANDLE)0xFFFFFFFF, NULL, PAGE_READWRITE, 0, m_nMapSize, m_strName.c_str());
                 
                 //拷贝数据到共享文件里。
                 lpMapAddr = (char*)MapViewOfFile(m_hMapFile, FILE_MAP_ALL_ACCESS, 0, 0, 0);
+                memset(lpMapAddr, 0, m_nMapSize);
             }
         }
     protected:

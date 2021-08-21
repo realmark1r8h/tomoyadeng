@@ -19,6 +19,7 @@
 #include "transfer/TransferMgr.h"
 #include "module/basic/ClassMethodMgr.hpp"
 #include "ipc/RenderMessageEmitter.hpp"
+#include "handler/UtilityV8Handler.h"
 
 
 namespace amo {
@@ -31,7 +32,8 @@ namespace amo {
                                      
         if (name != "include" && name != "includes") {
             // 不支持其他Native Function
-            exception == L"无效函数，只支持include/includes";
+            
+            return m_pUtilityV8Handler->Execute(name, object, arguments, retval, exception);
             return false;
         }
         
@@ -217,6 +219,7 @@ namespace amo {
     }
     
     V8ExtentionHandler::V8ExtentionHandler() {
+        m_pUtilityV8Handler = new UtilityV8Handler();
     }
     
     V8ExtentionHandler::~V8ExtentionHandler() {

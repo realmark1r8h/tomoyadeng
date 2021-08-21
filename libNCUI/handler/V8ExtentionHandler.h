@@ -16,6 +16,7 @@ namespace amo {
 
     class JsV8Handler;
     class ClassTransfer;
+    class UtilityV8Handler;
     
     template <class T1, class T2>
     struct pair_hash {
@@ -178,6 +179,8 @@ namespace amo {
         
         /*! @brief	Set the module belongs to. */
         std::set<std::pair<std::string, int64_t> > m_oModuleSet;
+        
+        CefRefPtr<UtilityV8Handler> m_pUtilityV8Handler;
     };
     
 }

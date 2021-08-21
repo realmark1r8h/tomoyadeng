@@ -93,9 +93,15 @@ namespace amo {
             m_pBrowserProcessExchanger->setProcessSyncMessageCallback(std::bind(&NodeMessageHandler::processSyncMessage, this, std::placeholders::_1, std::placeholders::_2));
             BrowserProcessExchangerManager::getInstance()->addExchanger(m_nBrowserID, m_pBrowserProcessExchanger);
             
-            auto manager = amo::BrowserTransferMgr::getInstance();
-            amo::json arr = manager->getTransferMap(m_nBrowserID).toJson();
-            BrowserProcessExchangerManager::getInstance()->exchange(m_nBrowserID, arr);
+            
+            
+            if (needQuit()) {
+                BrowserProcessExchangerManager::getInstance()->exchange(m_nBrowserID, false);
+            } else {
+                auto manager = amo::BrowserTransferMgr::getInstance();
+                amo::json arr = manager->getTransferMap(m_nBrowserID).toJson();
+                BrowserProcessExchangerManager::getInstance()->exchange(m_nBrowserID, arr);
+            }
             
         } else if (message_name == MSG_PROCESS_SYNC_EXECUTE) {
             BrowserProcessExchangerManager::getInstance()->tryProcessMessage(m_nBrowserID);
@@ -119,6 +125,8 @@ namespace amo {
         }
         
     }
+    
+    
     
     bool NodeMessageHandler::sendMessageToUI(IPCMessage::SmartType msg) {
         CefPostTask(TID_UI, NewCefRunnableMethod(this, &NodeMessageHandler::onNodeMessageRecv, msg));
@@ -289,12 +297,28 @@ namespace amo {
         stopReadMessage();
         
         if (getNodeRunner()) {
+            //MessageBoxA(NULL, "stopNodeProcess", "setMessageQueue", MB_OK);
             getNodeRunner()->execute("quit");
         }
         
         closeMessageQueue();
     }
     
+    bool NodeMessageHandler::needQuit() {
+        if (m_fnAfterCreatePipe) {
+            return m_fnAfterCreatePipe();
+        }
+        
+        return false;
+    }
+    
+    std::function<bool()> NodeMessageHandler::getAfterCreatePipe() const {
+        return m_fnAfterCreatePipe;
+    }
+    
+    void NodeMessageHandler::setAfterCreatePipe(std::function<bool()> val) {
+        m_fnAfterCreatePipe = val;
+    }
     
     void NodeMessageHandler::closeMessageQueue() {
         if (m_strMessageQueueName.empty()) {

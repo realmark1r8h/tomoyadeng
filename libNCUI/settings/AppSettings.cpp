@@ -64,6 +64,8 @@ namespace amo {
         
         
         DEFAULT_ARGS_SETTINGS(manifest, true);
+        DEFAULT_ARGS_SETTINGS(appID, "783a02fd-b493-45ad-aa7f-ddbefeec1122");
+        DEFAULT_ARGS_SETTINGS(singleInstance, false);
         DEFAULT_ARGS_SETTINGS(showSplash, false);
         DEFAULT_ARGS_SETTINGS(useNode, false);
         DEFAULT_ARGS_SETTINGS(useNodeProcess, false);
@@ -174,7 +176,10 @@ namespace amo {
     void AppSettings::afterUpdateArgsSettings() {
         updateCefAppSettings();
         
+        
         BOOL_ARGS_SETTING(manifest);
+        STRING_ARGS_SETTING(appID);
+        BOOL_ARGS_SETTING(singleInstance);
         BOOL_ARGS_SETTING(showSplash);
         BOOL_ARGS_SETTING(useNode);
         BOOL_ARGS_SETTING(useNodeProcess);

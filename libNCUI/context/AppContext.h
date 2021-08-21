@@ -21,6 +21,7 @@
 #include "settings/AppSettings.h"
 #include <amo/timer.hpp>
 
+
 /*!
  * @enum	ProcessType
  *
@@ -37,7 +38,7 @@ enum ProcessType {
 namespace amo {
     class SplashWindowSettings;
     class BrowserWindowManager;
-    
+    class SharedMemory;
     /*!
      * @class	AppContext
      *
@@ -231,6 +232,29 @@ namespace amo {
         
         void onUpdateAppSettings(BasicSettings* settings);
         
+        /*!
+         * @fn	bool AppContext::needQuitWithNode();
+         *
+         * @brief	回调函数，当与Node通信的管道创建后回调，是否退出程序。
+         * 			 必须等待通道建好，否则会造成死锁，无法退出Node进程.
+         *
+         * @return	true if it succeeds, false if it fails.
+         */
+        
+        bool needQuitWithNode();
+        
+        /*!
+         * @fn	bool AppContext::needQuitWithOutNode();
+         *
+         * @brief	不使用Node的情况下是否退出程序.
+         *
+         * @return	true if it succeeds, false if it fails.
+         */
+        
+        bool needQuitWithOutNode();
+    public:
+        AMO_CEF_IMPL_NO_REFCOUNTING(NodeMessageHandler)
+        
     private:
         /*! @brief	消息钩子. */
         static HHOOK g_hHook;
@@ -252,6 +276,9 @@ namespace amo {
         std::shared_ptr<NodeMessageHandler> m_pNodeMessageHandler;
         /*! @brief	Node 线程. */
         std::shared_ptr<std::thread> pNodeThread;
+        
+        /*! @brief	共享内存，用于处理单例模式. */
+        std::shared_ptr<SharedMemory> m_pSharedMemory;
     };
     
 }
