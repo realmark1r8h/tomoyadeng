@@ -168,6 +168,26 @@ namespace amo {
          */
         
         void OnBrowserDestory(int nBrowserID);
+
+		/**
+		 * @fn	void V8ExtentionHandler::triggerEventOnRendererThread(IPCMessage::SmartType msg);
+		 *
+		 * @brief	在主渲染线程中执行函数，当前线程可能非渲染线程.
+		 *
+		 * @param	msg	The message.
+		 */
+
+		void triggerEventOnRendererThread(IPCMessage::SmartType msg);
+
+		/**
+		 * @fn	void V8ExtentionHandler::triggerEventOnRendererThreadImpl(IPCMessage::SmartType msg);
+		 *
+		 * @brief	在主渲染线程中执行函数实现函数，此线程为渲染线程.
+		 *
+		 * @param	msg	The message.
+		 */
+
+		void triggerEventOnRendererThreadImpl(IPCMessage::SmartType msg);
         IMPLEMENT_REFCOUNTING(V8ExtentionHandler);
         
         

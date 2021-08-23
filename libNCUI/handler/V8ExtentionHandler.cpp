@@ -218,7 +218,24 @@ namespace amo {
         }
     }
     
-    V8ExtentionHandler::V8ExtentionHandler() {
+	void V8ExtentionHandler::triggerEventOnRendererThread(IPCMessage::SmartType msg) {
+		if (!CefCurrentlyOn(TID_RENDERER)) {
+			CefPostTask(TID_RENDERER,
+				base::Bind(&V8ExtentionHandler::triggerEventOnRendererThreadImpl,
+					this,
+					msg));
+		}
+		else {
+			triggerEventOnRendererThreadImpl(msg);
+		}
+		
+	}
+
+	void V8ExtentionHandler::triggerEventOnRendererThreadImpl(IPCMessage::SmartType msg) {
+		RendererTransferMgr::getInstance()->onMessageTransfer(msg);
+	}
+
+	V8ExtentionHandler::V8ExtentionHandler() {
         m_pUtilityV8Handler = new UtilityV8Handler();
     }
     
@@ -230,6 +247,12 @@ namespace amo {
             std::shared_ptr<ClassTransfer> pTransfer) {
         m_oClassTransferMap.insert(std::make_pair(pTransfer->transferName(),
                                    pTransfer));
+		// 设置事件回调函数
+		pTransfer->setTriggerEventFunc(
+			std::bind(&V8ExtentionHandler::triggerEventOnRendererThread, 
+						this, 
+						std::placeholders::_1));
+
         // 注册外部模块到程序中
         RendererTransferMgr::getInstance()->addTransfer(nBrowserID, pTransfer);
     }

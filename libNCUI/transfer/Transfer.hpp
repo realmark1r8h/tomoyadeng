@@ -60,7 +60,8 @@ namespace amo {
                                    IPCMessage::SmartType,
                                    amo::IPCResult&)> BerforeResultFunc;
                                    
-    public:
+		
+	public:
         /*!
          * @fn	template<typename T> std::shared_ptr<T> Transfer::getDerivedClass()
          *
@@ -429,6 +430,31 @@ namespace amo {
         void setFuncRegistered(bool val) {
             m_bIsRegistered = val;
         }
+
+		/**
+		 * @fn	std::function<void(IPCMessage::SmartType) > getTriggerEventFunc() const
+		 *
+		 * @brief	获取事件触发函数.
+		 *
+		 * @return	The trigger event function.
+		 */
+
+		std::function<void(IPCMessage::SmartType) > getTriggerEventFunc() const  {
+			return m_fnTriggerEventFunc; 
+		}
+
+		/**
+		 * @fn	void Transfer::setTriggerEventFunc(std::function<void(IPCMessage::SmartType) > val)
+		 *
+		 * @brief	设置Transfer中需要触发事件时的回调函数，
+		 * 			一般用于外部Transfer的事件触发.
+		 *
+		 * @param	val	The value.
+		 */
+
+		void setTriggerEventFunc(std::function<void(IPCMessage::SmartType) > val){ 
+			m_fnTriggerEventFunc = val;
+		}
         
     protected:
     
@@ -452,6 +478,9 @@ namespace amo {
         
         /*! @brief	判断当前类是否已经注册. */
         bool m_bIsRegistered;
+
+		/** @brief	Transfer中产生的事件触发函数. */
+		std::function<void(IPCMessage::SmartType)> m_fnTriggerEventFunc;
     };
     
 }
