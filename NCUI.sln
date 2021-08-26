@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nodeDebugPlugins", "nodeDeb
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ncui", "plugins\build\ncui.vcxproj", "{5E365D9B-518F-9DBD-1BF2-E5C1E2843AE0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rendererExtension", "extensions\rendererExtension\rendererExtension.vcxproj", "{A769AC9C-4F1D-45C3-A6D5-87673F17A685}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -125,6 +127,14 @@ Global
 		{5E365D9B-518F-9DBD-1BF2-E5C1E2843AE0}.Release|x64.ActiveCfg = Release|Win32
 		{5E365D9B-518F-9DBD-1BF2-E5C1E2843AE0}.Release|x86.ActiveCfg = Release|Win32
 		{5E365D9B-518F-9DBD-1BF2-E5C1E2843AE0}.Release|x86.Build.0 = Release|Win32
+		{A769AC9C-4F1D-45C3-A6D5-87673F17A685}.Debug|x64.ActiveCfg = Debug|x64
+		{A769AC9C-4F1D-45C3-A6D5-87673F17A685}.Debug|x64.Build.0 = Debug|x64
+		{A769AC9C-4F1D-45C3-A6D5-87673F17A685}.Debug|x86.ActiveCfg = Debug|Win32
+		{A769AC9C-4F1D-45C3-A6D5-87673F17A685}.Debug|x86.Build.0 = Debug|Win32
+		{A769AC9C-4F1D-45C3-A6D5-87673F17A685}.Release|x64.ActiveCfg = Release|x64
+		{A769AC9C-4F1D-45C3-A6D5-87673F17A685}.Release|x64.Build.0 = Release|x64
+		{A769AC9C-4F1D-45C3-A6D5-87673F17A685}.Release|x86.ActiveCfg = Release|Win32
+		{A769AC9C-4F1D-45C3-A6D5-87673F17A685}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,5 +149,6 @@ Global
 		{04C23527-8C1D-40D5-A9DB-E1A34BE62252} = {B66F8BA6-1512-4B37-B66B-798E330CA554}
 		{E53D3677-D6F9-424B-9881-D16984B1712F} = {B66F8BA6-1512-4B37-B66B-798E330CA554}
 		{5E365D9B-518F-9DBD-1BF2-E5C1E2843AE0} = {E53D3677-D6F9-424B-9881-D16984B1712F}
+		{A769AC9C-4F1D-45C3-A6D5-87673F17A685} = {8D245020-EF9F-4356-B9EF-2B0D71DBDAED}
 	EndGlobalSection
 EndGlobal

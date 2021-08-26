@@ -208,6 +208,7 @@ namespace amo {
     void WebkitView::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
         CEF_REQUIRE_UI_THREAD();
         
+        
         if (m_pBrowser) {
             //m_pDevBrowser = browser;
             
@@ -250,7 +251,10 @@ namespace amo {
     void WebkitView::OnLoadEnd(CefRefPtr<CefBrowser> browser,
                                CefRefPtr<CefFrame> frame,
                                int httpStatusCode) {
+                               
+                               
         if (m_nBrowserID != browser->GetIdentifier()) {
+        
             return;
         }
         
@@ -364,11 +368,31 @@ namespace amo {
         BrowserTransferMgr::getInstance()->addTransfer(nBrowserID, pTransfer);
     }
     
+    void WebkitView::triggerEventOnUIThread(IPCMessage::SmartType msg) {
+        CefPostTask(TID_UI,
+                    base::Bind(&WebkitView::triggerEventOnUIThreadImpl,
+                               this,
+                               msg));
+    }
+    
+    void WebkitView::triggerEventOnUIThreadImpl(IPCMessage::SmartType msg) {
+        // 向页面发送消息
+        std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter());
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int64_t nFrameID = args->getInt64(IPCArgsPosInfo::FrameID);
+        CefRefPtr<CefFrame> pFrame = ClientHandler::GetFrameByID(nFrameID);
+        runner->setIPCMessage(msg);
+        runner->setFrame(pFrame);
+        runner->execute();
+    }
+    
+    
     void WebkitView::showDevTools() {
         CefWindowInfo windowInfo;
         CefBrowserSettings settings;
         windowInfo.SetAsPopup(m_pBrowser->GetHost()->GetWindowHandle(),
                               "DevTools");
+                              
 #if CHROME_VERSION_BUILD >= 2272
         CefPoint pt;
         m_pBrowser->GetHost()->ShowDevTools(windowInfo,
@@ -645,6 +669,19 @@ namespace amo {
     
     CefRefPtr<CefBrowser> WebkitView::getBrowser() {
         return m_pBrowser;
+    }
+    
+    void WebkitView::OnLoadStart(CefRefPtr<CefBrowser> browser,
+                                 CefRefPtr<CefFrame> frame) {
+        if (frame->IsMain()) {
+            CefString url = frame->GetURL();
+            
+            if (url == "chrome-devtools://devtools/inspector.html") {
+            
+            }
+        }
+        
+        
     }
     
     CefRefPtr<CefResourceHandler> WebkitView::GetResourceHandler(

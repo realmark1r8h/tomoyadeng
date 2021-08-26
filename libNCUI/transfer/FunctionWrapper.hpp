@@ -14,6 +14,15 @@
 
 #include "ipc/Any.hpp"
 
+#ifndef AMO_CEF_IMPL_NO_REFCOUNTING
+#define AMO_CEF_IMPL_NO_REFCOUNTING(_TYPE) \
+    void    AddRef() const { } \
+    bool   Release() const { return false; } \
+    bool HasOneRef() const { return true; }
+
+#endif
+
+
 namespace amo {
     // Transfer¿‡–Õ
     enum TransferType {

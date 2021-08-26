@@ -139,8 +139,39 @@ namespace amo {
         }
     }
     
+    HWND getRootHWND(HWND hWnd) {
+        if (hWnd == NULL) {
+            return NULL;
+        }
+        
+        LONG style = ::GetWindowLong(hWnd, GWL_STYLE);
+        
+        if ((style & WS_CHILD) != 0) {
+            return getRootHWND(::GetParent(hWnd));
+        }
+        
+        return hWnd;
+        
+    }
     bool BrowserWindowCreator::preTranslateMessage(CefEventHandle os_event) {
     
+        bool bHandled = false;
+        
+        // 只处理容器中的窗口，调试窗口及其他窗口不处理
+        for (auto iter = m_WindowMap.begin(); iter != m_WindowMap.end(); ++iter) {
+            auto p = *iter;
+            std::shared_ptr<BrowserWindow> pBrowserWindow = p->toBrowserWindow();
+            
+            if (p->GetHWND() == getRootHWND(os_event->hwnd)) {
+                bHandled = true;
+                break;
+            }
+        }
+        
+        if (!bHandled) {
+            return false;
+        }
+        
         for (auto iter = m_WindowMap.rbegin() ; iter != m_WindowMap.rend(); ++iter) {
             auto p = *iter;
             
@@ -158,17 +189,6 @@ namespace amo {
                 }
             }
         }
-        
-        /* for (auto& p : m_WindowMap) {
-        	 if (p->preTranslateMessage(os_event)) {
-        
-        		 return true;
-        	 }
-        
-        	 if (p->getNativeSettings()->modal) {
-        		 return true;
-        	 }
-         }*/
         
         return false;
     }
@@ -333,9 +353,6 @@ namespace amo {
         amo::json defaultSettings = pTransfer->getBrowserWindowSettings(msg);
         pBrowserSettings->updateArgsSettings(defaultSettings.to_string());
         pBrowserSettings->url = (target_url.ToString());
-        
-        
-        
         
         // 在UI线程上创建窗口
         CefPostTask(TID_UI, NewCefRunnableMethod(m_pWindowCreator.get(),

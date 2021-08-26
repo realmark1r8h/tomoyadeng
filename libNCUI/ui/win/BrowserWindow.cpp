@@ -270,8 +270,6 @@ namespace amo {
         return m_pWebkit;
     }
     
-    
-    
     DuiLib::CDuiString BrowserWindow::GetSkinFolder() {
         return _T("");
     }

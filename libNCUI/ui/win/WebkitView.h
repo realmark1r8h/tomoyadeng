@@ -71,6 +71,9 @@ namespace amo {
         
         
         
+        
+        
+        
     public:
         virtual void OnPaint(CefRefPtr<CefBrowser> browser,
                              CefRenderHandler::PaintElementType type,
@@ -85,18 +88,20 @@ namespace amo {
         }
         
     protected:
-        void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
-        bool DoClose(CefRefPtr<CefBrowser> browser) override;
-        void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;
-        void OnLoadEnd(CefRefPtr<CefBrowser> browser,
-                       CefRefPtr<CefFrame> frame,
-                       int httpStatusCode);
-        void OnLoadError(CefRefPtr<CefBrowser> browser,
-                         CefRefPtr<CefFrame> frame,
-                         CefLoadHandler::ErrorCode errorCode,
-                         const CefString& errorText,
-                         const CefString& failedUrl) override;
-                         
+        virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
+        virtual bool DoClose(CefRefPtr<CefBrowser> browser) override;
+        virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;
+        virtual void OnLoadStart(CefRefPtr<CefBrowser> browser,
+                                 CefRefPtr<CefFrame> frame) override;
+        virtual void OnLoadEnd(CefRefPtr<CefBrowser> browser,
+                               CefRefPtr<CefFrame> frame,
+                               int httpStatusCode);
+        virtual void OnLoadError(CefRefPtr<CefBrowser> browser,
+                                 CefRefPtr<CefFrame> frame,
+                                 CefLoadHandler::ErrorCode errorCode,
+                                 const CefString& errorText,
+                                 const CefString& failedUrl) override;
+                                 
         bool OnProcessMessageReceived(CefRefPtr<CefBrowser> browser,
                                       CefProcessId source_process,
                                       CefRefPtr<CefProcessMessage> message) override;
@@ -140,19 +145,74 @@ namespace amo {
             CefRefPtr<CefRequest> request) override;
             
         // KeyboardHandlerDelegate
-        bool OnPreKeyEvent(CefRefPtr<CefBrowser> browser,
-                           const CefKeyEvent& event,
-                           CefEventHandle os_event,
-                           bool* is_keyboard_shortcut) override;
+        virtual bool OnPreKeyEvent(CefRefPtr<CefBrowser> browser,
+                                   const CefKeyEvent& event,
+                                   CefEventHandle os_event,
+                                   bool* is_keyboard_shortcut) override;
     public:
         Any focusedNodeChanged(IPCMessage::SmartType msg);
         Any asyncExecuteResult(IPCMessage::SmartType msg);
         
         void registerExternalTransfer(int nBrowserID, std::shared_ptr<ClassTransfer> pTransfer);
+        
+        /*!
+         * @fn	void triggerEventOnUIThread(IPCMessage::SmartType msg);
+         *
+         * @brief	在UI线程中执行函数，当前线程可能非UI线程.
+         *
+         * @param	msg	The message.
+         */
+        
+        void triggerEventOnUIThread(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	void triggerEventOnUIThreadImpl(IPCMessage::SmartType msg);
+         *
+         * @brief	在UI线程中执行函数实现函数，此线程为UI线程.
+         *
+         * @param	msg	The message.
+         */
+        
+        void triggerEventOnUIThreadImpl(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	void showDevTools();
+         *
+         * @brief	Shows the development tools.
+         */
+        
         void showDevTools();
+        
+        /*!
+         * @fn	void closeDevTools();
+         *
+         * @brief	Closes development tools.
+         */
+        
         void closeDevTools();
         
+        /*!
+         * @fn	Any onInclude(IPCMessage::SmartType msg);
+         *
+         * @brief	Executes the include action.
+         *
+         * @param	msg	The message.
+         *
+         * @return	Any.
+         */
+        
         Any onInclude(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	Any createPipeClient(IPCMessage::SmartType msg);
+         *
+         * @brief	Creates pipe client.
+         *
+         * @param	msg	The message.
+         *
+         * @return	The new pipe client.
+         */
+        
         Any createPipeClient(IPCMessage::SmartType msg);
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(WebkitView, ClassTransfer)
@@ -161,7 +221,8 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(onInclude, 0)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(createPipeClient, 0)
         AMO_CEF_MESSAGE_TRANSFER_END()
-        
+    public:
+        AMO_CEF_IMPL_NO_REFCOUNTING(WebkitView)
     protected:
         /*! @brief	页面渲染控件. */
         RenderView* m_pRenderWnd;

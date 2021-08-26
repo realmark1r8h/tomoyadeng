@@ -126,11 +126,6 @@ namespace amo {
                                        CefRefPtr<CefV8Value>& retval,
                                        CefString& except) {
                                        
-                                       
-        if (m_bInit) {
-            return;
-        }
-        
         if (args.size() > 0 && args.at(0)->IsString()) {
         
             std::string dragName = args.at(0)->GetStringValue();
@@ -148,9 +143,14 @@ namespace amo {
             }
         }
         
+        
+        
         strRegex =  dragClassName + "\\b|" + noDragClassName + "\\b";
         
-        
+        // 可以更新DragClassName
+        if (m_bInit) {
+            return;
+        }
         
         CefRefPtr<CefBrowser> browser;
         browser = CefV8Context::GetCurrentContext()->GetBrowser();
