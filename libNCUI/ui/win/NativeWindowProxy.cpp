@@ -179,6 +179,7 @@ namespace amo {
     
     
     Any NativeWindowProxy::setMinimumSize(IPCMessage::SmartType msg) {
+    
         // ”…LocalWindow¿‡÷ÿ‘ÿ
         return Undefined();
     }

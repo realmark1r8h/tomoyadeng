@@ -189,14 +189,7 @@ namespace amo {
     
     
     
-    Any AppTransfer::makeSingleInstance(IPCMessage::SmartType msg) {
-        /*  AppContext::getInstance()->makeSingleInstance();*/
-        return Undefined();
-    }
     
-    Any AppTransfer::releaseSingleInstance(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
     
     Any AppTransfer::data(IPCMessage::SmartType msg) {
         return m_global;

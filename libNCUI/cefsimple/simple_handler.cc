@@ -116,14 +116,20 @@ void SimpleHandler::CloseAllBrowsers(bool force_close) {
 }
 
 void SimpleHandler::OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, int httpStatusCode) {
-    /* CefWindowInfo windowInfo;
-     CefBrowserSettings settings;
-     windowInfo.SetAsPopup(browser->GetHost()->GetWindowHandle(),
-                           "DevTools");
+    std::string url = frame->GetURL();
     
-     CefPoint pt;
-     browser->GetHost()->ShowDevTools(windowInfo,
-                                      this,
-                                      settings,
-                                      pt);*/
+    if (url.find("devtools") != -1) {
+        return;
+    }
+    
+    CefWindowInfo windowInfo;
+    CefBrowserSettings settings;
+    windowInfo.SetAsPopup(browser->GetHost()->GetWindowHandle(),
+                          "DevTools");
+                          
+    CefPoint pt;
+    browser->GetHost()->ShowDevTools(windowInfo,
+                                     this,
+                                     settings,
+                                     pt);
 }

@@ -51,7 +51,6 @@ namespace amo {
         virtual Any toggleVisible(IPCMessage::SmartType msg) override;
         virtual Any showModal(IPCMessage::SmartType msg);
         
-        
         virtual HWND getNativeHWND() override;
         virtual std::shared_ptr<NativeWindowSettings> getNativeSettings() override;
         

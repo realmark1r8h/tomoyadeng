@@ -216,6 +216,8 @@ namespace amo {
     protected:
     private:
         std::list<std::pair<std::string, amo::json > > m_oBrowserWindowSettings;
+        
+        std::string m_strBaseUrl;
     };
 }
 

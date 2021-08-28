@@ -36,6 +36,9 @@ namespace amo {
         BrowserWindow(std::shared_ptr<BrowserWindowSettings> pBrowserSettings);
         
         void test();
+        
+        
+        
     public:
         // WindowImplBase
         virtual LPCTSTR GetWindowClassName() const override;

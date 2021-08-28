@@ -552,8 +552,9 @@ namespace amo {
          * @return	Any.
          */
         virtual Any toggleFullScreen(IPCMessage::SmartType msg);
+        
         /*!
-         * @fn	virtual Any NativeWindowProxy::showModal(IPCMessage::SmartType msg);
+         * @fn	Any NativeWindowProxy::showModal(IPCMessage::SmartType msg);
          *
          * @brief	ÏÔÊ¾Ä£Ì¬´°¿Ú.
          *
@@ -561,7 +562,8 @@ namespace amo {
          *
          * @return	Any.
          */
-        virtual Any showModal(IPCMessage::SmartType msg);
+        
+        Any showModal(IPCMessage::SmartType msg);
         
         Any setIcon(IPCMessage::SmartType msg);
         

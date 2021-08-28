@@ -14,10 +14,10 @@
 #pragma comment(lib, "startupUR32.lib")
 #endif
 
-
+//
 //#include <amo/path.hpp>
 //#include <string>
-
+//
 //class LoaderLite {
 //public:
 //    LoaderLite() {
@@ -80,17 +80,17 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
     
-    //LoaderLite loader;
-    //amo::path p(amo::path::getExeDir());
-    //p.append("libNCUI.dll");
-    //loader.load(p.c_str());
-    //typedef int(*fnRun)(HINSTANCE,
-    //                    HINSTANCE,
-    //                    LPTSTR,
-    //                    int);
-    //fnRun fnUpdateAppSettings = (fnRun)loader.load_symbol("run");
-    //fnUpdateAppSettings(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
-    //return 0;
+    /* LoaderLite loader;
+     amo::path p(amo::path::getExeDir());
+     p.append("libNCUI.dll");
+     loader.load(p.c_str());
+     typedef int(*fnRun)(HINSTANCE,
+    					 HINSTANCE,
+    					 LPTSTR,
+    					 int);
+     fnRun fnUpdateAppSettings = (fnRun)loader.load_symbol("runSample");
+     fnUpdateAppSettings(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+     return 0;*/
     
     run();
     
