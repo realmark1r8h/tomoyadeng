@@ -135,6 +135,8 @@ namespace amo {
             return *this;
         }
         
+        // 此函数有BUG
+        //
         amo::json& join(amo::json& other) {
             for (iterator iter = other.begin(); iter != other.end(); ++iter) {
                 std::string name = iter->name.GetString();
@@ -143,9 +145,14 @@ namespace amo {
                 if (it != this->end()) {
                     it->value.CopyFrom(iter->value, get_allocator());
                 } else {
+                
                     doc.AddMember(iter->name, iter->value, get_allocator());
                 }
             }
+            
+            // 简单处理，重新复制一下可用
+            amo::json json2 = *this;
+            *this = json2;
             
             return *this;
         }

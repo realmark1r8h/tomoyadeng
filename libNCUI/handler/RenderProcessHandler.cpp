@@ -28,6 +28,7 @@
 #include "ipc/RenderMessageEmitter.hpp"
 #include "module/basic/ClassMethodMgr.hpp"
 #include "ui/win/BrowserWindowSkin.h"
+#include "utility/utility.hpp"
 
 namespace amo {
 
@@ -226,17 +227,22 @@ namespace amo {
          amo::RendererTransferMgr::getInstance()->onMessageTransfer(ipcMessage);*/
         
         if (m_pV8ExtensionHander) {
-            //
-            IPCMessage::SmartType ipcMessage(new IPCMessage());
-            ipcMessage->setMessageName(MSG_NATIVE_EXECUTE);
-            std::shared_ptr<AnyArgsList>& args = ipcMessage->getArgumentList();
-            args->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-            args->setValue(IPCArgsPosInfo::JsFuncName, "include(\"BrowserWindow\").currentWindow.dragable");
-            args->setValue(IPCArgsPosInfo::FrameID, frame_id);
-            args->setValue(IPCArgsPosInfo::BrowserID, nBrowserID);
-            args->setValue(IPCArgsPosInfo::ArgsLength, 0);
-            args->setValue(IPCArgsPosInfo::FuncName, "runJSFunction");
-            m_pV8ExtensionHander->triggerEventOnRendererThread(ipcMessage);
+            std::string url = frame->GetURL().ToString();
+            
+            if (!util::isDevUrl(url)) {
+                IPCMessage::SmartType ipcMessage(new IPCMessage());
+                ipcMessage->setMessageName(MSG_NATIVE_EXECUTE);
+                std::shared_ptr<AnyArgsList>& args = ipcMessage->getArgumentList();
+                args->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+                args->setValue(IPCArgsPosInfo::JsFuncName, "include(\"BrowserWindow\").currentWindow.dragable");
+                args->setValue(IPCArgsPosInfo::FrameID, frame_id);
+                args->setValue(IPCArgsPosInfo::BrowserID, nBrowserID);
+                args->setValue(IPCArgsPosInfo::ArgsLength, 0);
+                args->setValue(IPCArgsPosInfo::FuncName, "runJSFunction");
+                m_pV8ExtensionHander->triggerEventOnRendererThread(ipcMessage);
+            }
+            
+            
         }
         
     }

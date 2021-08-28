@@ -247,6 +247,7 @@ namespace amo {
         } else if (pValue->IsDouble()) {
             return pValue->GetDoubleValue();
         } else if (pValue->IsString()) {
+            //amo::cdevel << pValue->GetStringValue().ToString() << amo::endl;
             return pValue->GetStringValue().ToString();
         } else if (pValue->IsArray()) {
             std::vector<Any> vec;

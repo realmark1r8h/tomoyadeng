@@ -209,7 +209,12 @@ namespace amo {
         
         if (val.type() == AnyValueType<amo::json>::value) {
             amo::json json = val;
+            // bug
             m_global.join(json);
+            /*       amo::json json2 = m_global;
+            	   m_global = json2;*/
+            
+            
             
         }
         
@@ -223,6 +228,7 @@ namespace amo {
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         
         if (val.type() == AnyValueType<Nil>::value) {
+        
             // 返回所有设置
             return m_global;
             

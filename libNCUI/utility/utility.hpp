@@ -41,6 +41,10 @@ namespace amo {
             
             return amo::string(sd, true);
         }
+        
+        static bool isDevUrl(const std::string& url) {
+            return url == "chrome-devtools://devtools/inspector.html";
+        }
     };
     
 }

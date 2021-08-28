@@ -24,6 +24,7 @@
 #include "transfer/BrowserTransfer.h"
 #include "transfer/FrameTransfer.h"
 #include "transfer/BrowserHostTransfer.h"
+#include "utility/utility.hpp"
 
 namespace amo {
     WebkitView::WebkitView(std::shared_ptr<BrowserWindowSettings> pBrowserSettings)
@@ -262,21 +263,27 @@ namespace amo {
         
         // RenderProcess OnContextCreated 不能正确触发，导致窗口不能拖动，
         // 这里再调用一次
-        std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(frame));
-        runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-        runner->setValue(IPCArgsPosInfo::TransferID, 0);
-        runner->setValue(IPCArgsPosInfo::JsFuncName, "include(\"BrowserWindow\").currentWindow.dragable");
-        runner->execute("runJSFunction",
-                        appSettings->dragClassName,
-                        appSettings->noDragClassName);
-        // 给页面一个鼠标移动的消息，触发mouseover事件
-        POINT pt = { 0 };
-        ::GetCursorPos(&pt);
-        CefMouseEvent mouse_event;
-        mouse_event.x = pt.x;
-        mouse_event.y = pt.y;
-        mouse_event.modifiers = 0;
-        browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
+        std::string url = frame->GetURL();
+        
+        if (!util::isDevUrl(url)) {
+            std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(frame));
+            runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+            runner->setValue(IPCArgsPosInfo::TransferID, 0);
+            runner->setValue(IPCArgsPosInfo::JsFuncName, "include(\"BrowserWindow\").currentWindow.dragable");
+            runner->execute("runJSFunction",
+                            appSettings->dragClassName,
+                            appSettings->noDragClassName);
+            // 给页面一个鼠标移动的消息，触发mouseover事件
+            POINT pt = { 0 };
+            ::GetCursorPos(&pt);
+            CefMouseEvent mouse_event;
+            mouse_event.x = pt.x;
+            mouse_event.y = pt.y;
+            mouse_event.modifiers = 0;
+            browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
+        }
+        
+        
         
         
     }
