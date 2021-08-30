@@ -31,6 +31,7 @@ function foo3(val) {
 	initApi('SN', 'getAllWindows', 'Array', '获取所有BrowserWindow对象');
 	initApi('SN', 'getFocusedWindow', 'Object', '获取处于焦点状态下的BrowserWindow对象');
 	initApi('SN', 'fromId', 'Object', '通过ID获取BrowserWindow对象', 'id, String, BrowserWindow ID');
+	initApi('SN', 'fromName', 'Object', '通过窗口名获取BrowserWindow对象', 'name, String, BrowserWindow Name');
 
 	initApi('MS', 'getName', 'String', '获取窗口名称');
 	initApi('MN', 'setName', '', '设置窗口名称', 'name, String, BrowserWindow 名称');
@@ -83,20 +84,20 @@ function foo3(val) {
 	initApi('MN', 'topmost', '', '置顶窗口， 同setAlwaysOnTop');
 	initApi('MS', 'isTopmost', '', '判断窗口是否置顶，同isAlwaysOnTop');
 
-	initApi('MN', 'setSkipTaskbar', '', '未实现');
-	initApi('MS', 'getNativeWindowHandle', '', '未实现');
-	initApi('MN', 'hookWindowMessage', '', '未实现');
-	initApi('MS', 'isWindowMessageHooked', '', '未实现');
-	initApi('MN', 'unhookWindowMessage', '', '未实现');
-	initApi('MN', 'unhookAllWindowMessages', '', '未实现');
-	initApi('MN', 'focusOnWebView', '', '未实现');
-	initApi('MN', 'blurWebView', '', '未实现');
-	initApi('MN', 'capturePage', '', '未实现');
+//	initApi('MN', 'setSkipTaskbar', '', '未实现');
+//	initApi('MS', 'getNativeWindowHandle', '', '未实现');
+//	initApi('MN', 'hookWindowMessage', '', '未实现');
+//	initApi('MS', 'isWindowMessageHooked', '', '未实现');
+//	initApi('MN', 'unhookWindowMessage', '', '未实现');
+//	initApi('MN', 'unhookAllWindowMessages', '', '未实现');
+//	initApi('MN', 'focusOnWebView', '', '未实现');
+//	initApi('MN', 'blurWebView', '', '未实现');
+//	initApi('MN', 'capturePage', '', '未实现');
 	initApi('MN', 'loadURL', '', '加载URL', 'url, String, URL');
 	initApi('MN', 'reload', '', '重新加载页面');
-	initApi('MN', 'setMenu', '', '未实现');
-	initApi('MN', 'setProgressBar', '', '未实现');
-	initApi('MN', 'setOverlayIcon', '', '未实现');
+//	initApi('MN', 'setMenu', '', '未实现');
+//	initApi('MN', 'setProgressBar', '', '未实现');
+//	initApi('MN', 'setOverlayIcon', '', '未实现'); 
 	initApi('MN', 'setHasShadow', '', '设置是否显示窗口阴影', 'hasShadow, Boolean, 是否显示');
 	initApi('MS', 'hasShadow', 'Boolean', '判断是否显示窗口阴影');
 
@@ -119,7 +120,7 @@ function foo3(val) {
 	// initSettings
 	// NativeWindow Settings
 	initSettings('id', 'String', '窗口ID, 默认"0"');
-	initSettings('name', 'String', '窗口名称');
+	initSettings('name', 'String', '窗口名称， BrowserWindow.fromName');
 	initSettings('parent', 'String', '父窗口ID, 默认"0"');
 	initSettings('title', 'String', '窗口标题名');
 	initSettings('icon', 'String', '窗口图标， 默认""');
@@ -187,11 +188,17 @@ function foo3(val) {
 		$('#removeBrowserWindowSettings').click(function() {
 			BrowserWindow.removeBrowserWindowSettings('http://www.oschina.net');
 		});
+		
+		$('#getBrowserWindowSettings').click(function() {
+			var settings = BrowserWindow.getBrowserWindowSettings('http://www.oschina.net');
+			console.dir(settings);
+		});
+
 
 		$('#framelessWindow').click(function() {
 			var framelessWindow = new BrowserWindow({
 				titleBar: false,
-				url: 'http://127.0.0.1:8020/amoylel/doc/example/FramelessWindow.html'
+				url: 'http://127.0.0.1:8020/example/FramelessWindow.html' 
 			});
 		});
 
@@ -459,7 +466,41 @@ function foo3(val) {
 			prompt();
 
 		});
-
+		
+		$('#currentWindow').click(function() {
+			var win = BrowserWindow.currentWindow;
+			win.flashFrame();
+			console.dir(win);
+		});
+		
+		$('#getAllWindows').click(function() {
+			var arr = BrowserWindow.getAllWindows();
+			console.dir(arr);
+			for(var i = 0; i < arr.length; ++i){
+				var win = arr[i];
+				win.flashFrame();
+			} 
+		});
+		
+		$('#getFocusedWindow').click(function() {
+			var win = BrowserWindow.getFocusedWindow();
+			win.flashFrame();
+			console.dir(win);
+		});
+		
+		$('#fromId').click(function() {
+			var win = BrowserWindow.fromId(BrowserWindow.currentWindow.id());
+			win.flashFrame();
+			console.dir(win);
+		});
+		
+		$('#fromName').click(function() {
+			var win = BrowserWindow.fromName('NCUI');
+			win.flashFrame();
+			console.dir(win);
+		});
+		
+		
 		$('#normalWindow').click(function() {
 			var normalWindow = new BrowserWindow({
 				roundcorner: 3,
@@ -472,6 +513,7 @@ function foo3(val) {
 				url: "http://www.baidu.com/more"
 			});
 		});
+		
 		$('#offscreenWindow').click(function() {
 			var offscreenWindow = new BrowserWindow({
 				roundcorner: 3,

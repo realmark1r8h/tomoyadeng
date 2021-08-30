@@ -160,6 +160,7 @@ namespace amo {
         return Undefined();
     }
     
+    
     Any BrowserWindowTransfer::currentWindow(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
@@ -230,14 +231,12 @@ namespace amo {
         return Undefined();
     }
     
-    Any BrowserWindowTransfer::fromWebContents(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        return Undefined();
-    }
     
     Any BrowserWindowTransfer::fromId(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        int64_t nID = args->getInt64(0);
+        std::string u8ID = args->getString(0);
+        amo::string strID(u8ID, true);
+        int64_t nID = strID.to_number<int64_t>();
         auto pTransfer = ClassTransfer::findTransfer(nID);
         
         if (!pTransfer) {
@@ -282,7 +281,7 @@ namespace amo {
     }
     
     
-    Any BrowserWindowTransfer::setContentSize(IPCMessage::SmartType msg) {
+    /*Any BrowserWindowTransfer::setContentSize(IPCMessage::SmartType msg) {
     
         return Undefined();
     }
@@ -329,7 +328,7 @@ namespace amo {
     Any BrowserWindowTransfer::capturePage(IPCMessage::SmartType msg) {
         return Undefined();
     }
-    
+    */
     Any BrowserWindowTransfer::loadURL(IPCMessage::SmartType msg) {
         return Undefined();
     }
@@ -338,17 +337,17 @@ namespace amo {
         return Undefined();
     }
     
-    Any BrowserWindowTransfer::setMenu(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
-    
-    Any BrowserWindowTransfer::setProgressBar(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
-    
-    Any BrowserWindowTransfer::setOverlayIcon(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
+    //Any BrowserWindowTransfer::setMenu(IPCMessage::SmartType msg) {
+    //    return Undefined();
+    //}
+    //
+    //Any BrowserWindowTransfer::setProgressBar(IPCMessage::SmartType msg) {
+    //    return Undefined();
+    //}
+    //
+    //Any BrowserWindowTransfer::setOverlayIcon(IPCMessage::SmartType msg) {
+    //    return Undefined();
+    //}
     
     //Any BrowserWindowTransfer::setHasShadow(IPCMessage::SmartType msg) {
     //    // ”…BrowserWindow¿‡÷ÿ‘ÿ

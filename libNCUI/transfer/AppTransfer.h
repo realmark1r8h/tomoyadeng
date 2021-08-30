@@ -129,9 +129,6 @@ namespace amo {
         
         Any setNoDragClassName(IPCMessage::SmartType msg);
         
-        
-        Any data(IPCMessage::SmartType msg);
-        
         /*!
          * @fn	Any AppTransfer::setGlobal(IPCMessage::SmartType msg);
          *
@@ -161,21 +158,23 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(AppTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getConfig, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setConfig, TransferFuncStatic)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(toAbsolutePath, TransferFuncStatic | TransferExecSync)
         
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(setGlobal, TransferFuncStatic)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getGlobal, TransferFuncStatic | TransferExecSync)
+        
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(toAbsolutePath, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(urlToNativePath, TransferFuncStatic | TransferExecSync)
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(addUrlMapping, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(removeUrlMapping, TransferFuncStatic)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(urlToNativePath, TransferFuncStatic | TransferExecSync)
+        
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setDragClassName, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setNoDragClassName, TransferFuncStatic | TransferExecSync)
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(quit, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(exit, TransferFuncStatic)
         
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(data, TransferFuncProperty | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(setGlobal, TransferFuncStatic)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getGlobal, TransferFuncStatic | TransferExecSync)
+        
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     private:
