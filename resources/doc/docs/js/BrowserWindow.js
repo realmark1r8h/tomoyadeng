@@ -26,7 +26,7 @@ function foo3(val) {
 		'给一个URL添加默认的窗口显示参数，如果一个BrowserWindow不是通过new BrowserWindow(options)创建的可以使用该函数设置BrowserWindow的显示参数',
 		'url, String, 需要设置显示参数的URL', 'settings, Object, 显示参数');
 	initApi('SN', 'removeBrowserWindowSettings', '', '移除所给URL的默认显示参数', 'url, String, 需要移除显示参数的URL');
-	initApi('SN', 'getBrowserWindowSettings', '', '获取所给URL的显示参数', 'url, String, URL');
+	initApi('SN', 'getBrowserWindowSettings', '', '获取所给URL的默认显示参数', 'url, String, URL');
 	initApi('SN', 'currentWindow', 'Object', '获取当前页面的BrowserWindow对象');
 	initApi('SN', 'getAllWindows', 'Array', '获取所有BrowserWindow对象');
 	initApi('SN', 'getFocusedWindow', 'Object', '获取处于焦点状态下的BrowserWindow对象');
@@ -50,7 +50,7 @@ function foo3(val) {
 	initApi('MN', 'minimize', '', '最小化窗口');
 	initApi('MN', 'restore', '', '还原窗口');
 	initApi('MS', 'isMinimized', 'Boolean', '判断窗口是否最小化');
-	initApi('MN', 'setFullScreen', '', '全屏窗口');
+	initApi('MN', 'setFullScreen', '', '全屏/退出全屏窗口，如果fullscreenable为false,那么setFullScreen(true)无效', 'bFull, Boolean, 是否全屏窗口，默认为false');
 	initApi('MS', 'isFullScreen', 'Boolean', '判断窗口是否处理全屏状态');
 	initApi('MN', 'setBounds', '', '设置窗口位置大小', 'option, Object, 例{x:0, y:0, width: 1000, height:500}');
 	initApi('MS', 'getBounds', 'Object', '获取窗口位置大小，返回一个对象{x:0, y:0, width: 1000, height:500}');
@@ -80,24 +80,14 @@ function foo3(val) {
 	initApi('MS', 'getPosition', 'Object', '获取窗口在屏幕中的位置，同getBounds');
 	initApi('MN', 'setTitle', '', '设置窗口标题', 'title, String, 窗口标题');
 	initApi('MS', 'getTitle', 'String', '获取窗口标题');
-	initApi('MN', 'flashFrame', '', '闪烁窗口');
+	initApi('MN', 'flashFrame', '', '闪烁/停止闪烁窗口', 'flash, Boolean, 是否闪烁窗口，默认false');
 	initApi('MN', 'topmost', '', '置顶窗口， 同setAlwaysOnTop');
 	initApi('MS', 'isTopmost', '', '判断窗口是否置顶，同isAlwaysOnTop');
 
-//	initApi('MN', 'setSkipTaskbar', '', '未实现');
-//	initApi('MS', 'getNativeWindowHandle', '', '未实现');
-//	initApi('MN', 'hookWindowMessage', '', '未实现');
-//	initApi('MS', 'isWindowMessageHooked', '', '未实现');
-//	initApi('MN', 'unhookWindowMessage', '', '未实现');
-//	initApi('MN', 'unhookAllWindowMessages', '', '未实现');
-//	initApi('MN', 'focusOnWebView', '', '未实现');
-//	initApi('MN', 'blurWebView', '', '未实现');
-//	initApi('MN', 'capturePage', '', '未实现');
+ 
 	initApi('MN', 'loadURL', '', '加载URL', 'url, String, URL');
 	initApi('MN', 'reload', '', '重新加载页面');
-//	initApi('MN', 'setMenu', '', '未实现');
-//	initApi('MN', 'setProgressBar', '', '未实现');
-//	initApi('MN', 'setOverlayIcon', '', '未实现'); 
+ 
 	initApi('MN', 'setHasShadow', '', '设置是否显示窗口阴影', 'hasShadow, Boolean, 是否显示');
 	initApi('MS', 'hasShadow', 'Boolean', '判断是否显示窗口阴影');
 
@@ -123,7 +113,7 @@ function foo3(val) {
 	initSettings('name', 'String', '窗口名称， BrowserWindow.fromName');
 	initSettings('parent', 'String', '父窗口ID, 默认"0"');
 	initSettings('title', 'String', '窗口标题名');
-	initSettings('icon', 'String', '窗口图标， 默认""');
+	initSettings('icon', 'String', '窗口图标， 默认使用程序图标');
 	initSettings('titleBar', 'Boolean', '是否显示标题栏, 默认false');
 	initSettings('sizebox', 'String', '可拖动改变窗口大小的边框范围, 默认"2,2,2,2"');
 	initSettings('roundcorner', 'Integer', '窗口圆角,默认0');
@@ -260,6 +250,12 @@ function foo3(val) {
 		});
 		$('#isMinimized').click(function() {
 			alert(win.isMinimized());
+		});
+		
+		$('#onMaximize').click(function() {
+			 win.on('maximize', function(){
+				win.close();
+			});
 		});
 		$('#dlltest').click(function() {
 
@@ -469,7 +465,7 @@ function foo3(val) {
 		
 		$('#currentWindow').click(function() {
 			var win = BrowserWindow.currentWindow;
-			win.flashFrame();
+			win.flashFrame(true);
 			console.dir(win);
 		});
 		
@@ -478,25 +474,25 @@ function foo3(val) {
 			console.dir(arr);
 			for(var i = 0; i < arr.length; ++i){
 				var win = arr[i];
-				win.flashFrame();
+				win.flashFrame(true);
 			} 
 		});
 		
 		$('#getFocusedWindow').click(function() {
 			var win = BrowserWindow.getFocusedWindow();
-			win.flashFrame();
+			win.flashFrame(true);
 			console.dir(win);
 		});
 		
 		$('#fromId').click(function() {
 			var win = BrowserWindow.fromId(BrowserWindow.currentWindow.id());
-			win.flashFrame();
+			win.flashFrame(true);
 			console.dir(win);
 		});
 		
 		$('#fromName').click(function() {
 			var win = BrowserWindow.fromName('NCUI');
-			win.flashFrame();
+			win.flashFrame(true);
 			console.dir(win);
 		});
 		

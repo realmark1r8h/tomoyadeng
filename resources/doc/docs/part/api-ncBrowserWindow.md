@@ -101,7 +101,7 @@ var transparentWindow = new BrowserWindow({
 // 创建一个无边框窗口
 var framelessWindow = new BrowserWindow({
     titleBar: false,
-    url: 'http://127.0.0.1:8020/amoylel/doc/example/FramelessWindow.html'
+    url: 'http://127.0.0.1:8020/example/FramelessWindow.html'
 });
 ```
 
@@ -195,37 +195,31 @@ var win = BrowserWindow.fromName('NCUI');
 </div>
 
 ## 事件监听
-  
-```html
-include('app');
-// 设置一项
-app.setConfig({skin:'%appDir%res'}); 
 
-// 同时设置多项
-app.setConfig({
-    skin:'%appDir%res',
-    web:'%appDir%webDir'
-}); 
+BrowserWindow包含EventEmitter模块，可以使用EventEmitter模块中的函数。
+
+```html
+var win = BrowserWindow.currentWindow;
+// 最大化时关闭窗口
+win.on('maximize', function(){
+	win.close();
+});
 ```
 
+<div class="row">
+    <div class="col-xs-3">
+         <button class ="btn btn-outline-primary btn-block" id="onMaximize">监听窗口最大化事件</button>
+    </div>
+</div>
 
 ## 窗口函数
  
   
 ```html
 // win. 
-
 ```
 
-<div class="row">
-   
-    <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="currentWindow">currentWindow</button>  </div> 
-    <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="getAllWindows">getAllWindows</button>  </div> 
-    <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="getFocusedWindow">getFocusedWindow</button>  </div> 
-    <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="fromWebContents">fromWebContents</button>  </div> 
-    <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="fromId">fromId</button>  </div> 
-    <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="getName">getName</button>  </div> 
-    <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="setName">setName</button>  </div> 
+<div class="row"> 
     <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="id">id</button>  </div> 
     <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="close">close</button>  </div> 
     <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="isFocused">isFocused</button>  </div> 
