@@ -48,11 +48,11 @@ namespace amo {
             const CefString& message,
             const CefString& source,
             int line) {
-        m_pHelper->getBroadcaster()->broadcast("ConsoleMessage",
-                                               m_pHelper->getJson(browser),
-                                               source.ToString(),
-                                               source.ToString(),
-                                               line);
+        /* m_pHelper->getBroadcaster()->broadcast("ConsoleMessage",
+                                                m_pHelper->getJson(browser),
+                                                source.ToString(),
+                                                source.ToString(),
+                                                line);*/
         return false;
     }
     

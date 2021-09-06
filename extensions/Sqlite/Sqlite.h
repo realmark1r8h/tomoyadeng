@@ -11,11 +11,13 @@ namespace amo {
         Sqlite(const std::string& args);
         
         virtual Any execute(IPCMessage::SmartType msg) override;
+        virtual Any insert(IPCMessage::SmartType msg) override;
         virtual Any backup(IPCMessage::SmartType msg) override;
         virtual Any query(IPCMessage::SmartType msg) override;
         
     protected:
         std::string makeSql(IPCMessage::SmartType msg);
+        std::string makeInsertSql(IPCMessage::SmartType msg);
         std::string formatArgs(IPCMessage::SmartType msg);
         std::string formatPagging(amo::json& json);
         bool queryCount(const std::string& str, amo::json& json);

@@ -62,6 +62,10 @@ namespace amo {
     }
     
     
+    Any Sqlite::insert(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
     Any Sqlite::backup(IPCMessage::SmartType msg) {
         std::shared_ptr< sqlite3pp::database> pDB;
         
@@ -223,6 +227,32 @@ namespace amo {
         return sql;
         
         
+    }
+    
+    std::string Sqlite::makeInsertSql(IPCMessage::SmartType msg) {
+        return "";
+        /*std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string utf8TableName = args->getString(0);
+        amo::json utf8Json = args->getJson(1);
+        std::vector<std::string> keys = utf8Json.keys();
+        std::stringstream stream;
+        stream << "(";
+        
+        for (size_t i = 0; i < keys.size(); ++i) {
+        	stream << keys[i];
+        
+        	if (i < keys.size() - 1) {
+        		stream << ", ";
+        	} else {
+        		stream << ") ";
+        	}
+        }
+        
+        stream << "Values(";
+        
+        for (size_t i = 0; i < keys.size(); ++i) {
+        	if()
+        }*/
     }
     
     std::string Sqlite::formatArgs(IPCMessage::SmartType msg) {

@@ -299,6 +299,12 @@ namespace amo {
             auto mananger = RendererTransferMgr::getInstance();
             TransferMap& transferMap = mananger->getTransferMap(nBrowserID);
             Transfer* pTransfer = transferMap.findTransfer(strClass);
+            
+            // 可能找到错误的DLL
+            if (pTransfer == NULL) {
+                return NULL;
+            }
+            
             FunctionWrapperMgr& mgr = pTransfer->getFuncMgr();
             mgr.setRendererClass(true);
             mgr.setBuiltIn(false);
