@@ -133,6 +133,9 @@ BrowserWindow.removeBrowserWindowSettings('http://www.oschina.net');
          <button class ="btn btn-outline-primary btn-block" id="removeBrowserWindowSettings">移除默认参数</button>
     </div>
     <div class="col-xs-3">
+     		 <button class="btn btn-outline-primary btn-block" id="getBrowserWindowSettings">获取窗口默认参数</button> 
+    </div> 
+    <div class="col-xs-3">
          <a class ="btn btn-outline-primary btn-block" href="http://www.oschina.net" target="blank">查看效果</a>
     </div>
 </div>
@@ -148,13 +151,46 @@ win.showDevTools();
 // 关闭调试
 win.closeDevTools();
 ```
-
+ 
 <div class="row">
     <div class="col-xs-3">
          <button class ="btn btn-outline-primary btn-block" id="showDevTools">打开调试</button>
     </div>
      <div class="col-xs-3">
          <button class ="btn btn-outline-primary btn-block" id="closeDevTools">关闭调试</button>
+    </div>
+</div>
+
+## 静态函数
+
+```html
+// 获取当前窗口
+var win = BrowserWindow.currentWindow;
+// 获取所有窗口
+var arr = BrowserWindow.getAllWindows();
+// 获取焦点窗口
+var win = BrowserWindow.getFocusedWindow();
+// 通过ID查找窗口
+var win = BrowserWindow.fromId(BrowserWindow.currentWindow.id);
+// 通过名称查找窗口
+var win = BrowserWindow.fromName('NCUI');
+```
+
+<div class="row">
+    <div class="col-xs-3">
+         <button class ="btn btn-outline-primary btn-block" id="currentWindow">当前窗口</button>
+    </div>
+     <div class="col-xs-3">
+         <button class ="btn btn-outline-primary btn-block" id="getAllWindows">所有窗口</button>
+    </div>
+    <div class="col-xs-3">
+         <button class ="btn btn-outline-primary btn-block" id="getFocusedWindow">焦点窗口</button>
+    </div>
+    <div class="col-xs-3">
+         <button class ="btn btn-outline-primary btn-block" id="fromId">通过ID查找窗口</button>
+    </div>
+    <div class="col-xs-3">
+         <button class ="btn btn-outline-primary btn-block" id="fromName">通过名称查找窗口</button>
     </div>
 </div>
 
@@ -182,9 +218,7 @@ app.setConfig({
 ```
 
 <div class="row">
-    <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="addBrowserWindowSettings">addBrowserWindowSettings</button>  </div> 
-    <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="removeBrowserWindowSettings">removeBrowserWindowSettings</button>  </div> 
-    <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="getBrowserWindowSettings">getBrowserWindowSettings</button>  </div> 
+   
     <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="currentWindow">currentWindow</button>  </div> 
     <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="getAllWindows">getAllWindows</button>  </div> 
     <div class="col-xs-3"><button class="btn btn-outline-primary btn-block" id="getFocusedWindow">getFocusedWindow</button>  </div> 

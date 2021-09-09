@@ -187,14 +187,6 @@ namespace amo {
         return true;
     }
     
-    
-    
-    
-    
-    Any AppTransfer::data(IPCMessage::SmartType msg) {
-        return m_global;
-    }
-    
     Any AppTransfer::setGlobal(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
@@ -202,13 +194,7 @@ namespace amo {
         
         if (val.type() == AnyValueType<amo::json>::value) {
             amo::json json = val;
-            // bug
             m_global.join(json);
-            /*       amo::json json2 = m_global;
-            	   m_global = json2;*/
-            
-            
-            
         }
         
         return Undefined();
