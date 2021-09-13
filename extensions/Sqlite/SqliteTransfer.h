@@ -26,12 +26,15 @@ namespace amo {
         virtual Any insert(IPCMessage::SmartType msg);
         virtual Any backup(IPCMessage::SmartType msg);
         virtual Any query(IPCMessage::SmartType msg);
+        virtual Any queryCount(IPCMessage::SmartType msg);
+        virtual Any getLastInsertRowID(IPCMessage::SmartType msg);
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(SqliteTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(execute, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(insert, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(backup, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(query, TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getLastInsertRowID, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         virtual Any onCreateClass(IPCMessage::SmartType msg) override;

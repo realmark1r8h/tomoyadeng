@@ -61,8 +61,49 @@ namespace amo {
         return Undefined();
     }
     
+    Any Sqlite::execute(const std::string& sql) {
+        if (!m_pDB) {
+            return Undefined();
+        }
+        
+        
+        
+        if (sql.empty()) {
+            return Undefined();
+        }
+        
+        sqlite3pp::database& db = *m_pDB;
+        sqlite3pp::transaction transcation(db, true);
+        
+        try {
+            int ret = db.execute(sql.c_str());
+            ret = db.changes();
+            transcation.commit();
+            return ret;
+            
+        } catch (std::exception& e) {
+            m_strLastError = e.what();
+            transcation.rollback();
+        }
+        
+        return Undefined();
+    }
+    
     
     Any Sqlite::insert(IPCMessage::SmartType msg) {
+        std::string sql = makeInsertSql(msg);
+        Any ret = Undefined();
+        
+        if (sql.empty()) {
+            ret = execute(msg);
+        } else {
+            ret = execute(sql);
+        }
+        
+        if (!ret.is<Undefined>()) {
+            return getLastInsertRowID(msg);
+        }
+        
         return Undefined();
     }
     
@@ -212,6 +253,10 @@ namespace amo {
         return Undefined();
     }
     
+    Any Sqlite::getLastInsertRowID(IPCMessage::SmartType msg) {
+        return m_pDB->last_insert_rowid();
+    }
+    
     std::string Sqlite::makeSql(IPCMessage::SmartType msg) {
         if (!msg) {
             return "";
@@ -229,31 +274,78 @@ namespace amo {
         
     }
     
-    std::string Sqlite::makeInsertSql(IPCMessage::SmartType msg) {
-        return "";
-        /*std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        std::string utf8TableName = args->getString(0);
-        amo::json utf8Json = args->getJson(1);
-        std::vector<std::string> keys = utf8Json.keys();
+    
+    std::string Sqlite::getValuesFromJson(amo::json& json, const std::string& key) {
         std::stringstream stream;
-        stream << "(";
         
-        for (size_t i = 0; i < keys.size(); ++i) {
-        	stream << keys[i];
-        
-        	if (i < keys.size() - 1) {
-        		stream << ", ";
-        	} else {
-        		stream << ") ";
-        	}
+        if (json.is_bool(key)) {
+            bool val = json.getBool(key);
+            
+            if (val) {
+                stream << 1;
+            } else {
+                stream << 0;
+            }
+        } else if (json.is_int(key)) {
+            stream << json.getInt(key);
+        } else if (json.is_double(key)) {
+            stream << json.getDouble(key);
+        } else if (json.is_int64(key)) {
+            stream << json.getInt64(key);
+        } else if (json.is_uint(key)) {
+            stream << json.getUint(key);
+        } else if (json.is_uint64(key)) {
+            stream << json.getUint(key);
+        } else if (json.is_string(key)) {
+            stream << "'" << json.getString(key) << "'";
         }
         
-        stream << "Values(";
+        return stream.str();
+        
+    }
+    
+    std::string Sqlite::makeInsertSql(IPCMessage::SmartType msg) {
+    
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string utf8TableName = args->getString(0);
+        amo::string ansiTableName(utf8TableName, true);
+        ansiTableName.trim();
+        std::vector<amo::string> tables = ansiTableName.split(" ");
+        
+        // 如果拆分出来不只一项,那么认为不是一个表名
+        if (tables.size() > 1) {
+        
+            return "";
+        }
+        
+        amo::json utf8Json = args->getJson(1);
+        std::vector<std::string> keys = utf8Json.keys();
+        std::stringstream streamKeys;
+        std::stringstream streamValues;
+        
+        streamKeys << "(";
+        streamValues << "(";
         
         for (size_t i = 0; i < keys.size(); ++i) {
-        	if()
-        }*/
+            streamKeys << keys[i];
+            streamValues << getValuesFromJson(utf8Json, keys[i]);
+            
+            if (i < keys.size() - 1) {
+                streamKeys << ", ";
+                streamValues << ", ";
+            } else {
+                streamKeys << ") ";
+                streamValues << ") ";
+            }
+        }
+        
+        std::string sql = "INSERT INTO " + utf8TableName + " ";
+        sql += streamKeys.str();
+        sql += " VALUES ";
+        sql += streamValues.str();
+        return sql;
     }
+    
     
     std::string Sqlite::formatArgs(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
@@ -268,7 +360,7 @@ namespace amo {
             std::vector<Any> vec = val;
             std::vector<std::string> fmtArgsList;
             
-            for (int i = 0; i < vec.size(); ++i) {
+            for (size_t i = 0; i < vec.size(); ++i) {
                 fmtArgsList.push_back(vec[i].value());
             }
             
@@ -474,6 +566,46 @@ namespace amo {
         }
         
         return false;
+    }
+    
+    Any Sqlite::queryCount(IPCMessage::SmartType msg) {
+    
+        // 生成SQL语句
+        std::string sql = makeSql(msg);
+        
+        if (sql.empty()) {
+            // -1 表示获取失败。
+            return -1;
+        }
+        
+        try {
+        
+            sqlite3pp::database& db = *m_pDB;
+            sqlite3pp::query qry(db, sql.c_str());
+            
+            for (sqlite3pp::query::iterator iter = qry.begin();
+                    iter != qry.end();
+                    ++iter) {
+                // 只能有一列，还只能有一行
+                if (qry.column_count() != 1) {
+                    return -1;
+                }
+                
+                for (int i = 0; i < qry.column_count(); ++i) {
+                    int total = (*iter).get<int>(i);
+                    return total;
+                }
+            }
+            
+            qry.reset();
+            
+            
+        } catch (std::exception& e) {
+            m_strLastError = e.what();
+            return -1;
+        }
+        
+        return -1;
     }
     
     amo::json Sqlite::getPaggingInfo(amo::json& other) {

@@ -38,6 +38,14 @@ namespace amo {
         return Undefined();
     }
     
+    Any SqliteTransfer::queryCount(IPCMessage::SmartType msg) {
+        return 0;
+    }
+    
+    Any SqliteTransfer::getLastInsertRowID(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
     Any SqliteTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string strPath = args->getString(0);
