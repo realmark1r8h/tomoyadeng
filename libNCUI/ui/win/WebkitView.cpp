@@ -373,6 +373,7 @@ namespace amo {
             std::shared_ptr<ClassTransfer> pTransfer) {
         // 注册外部模块到程序中
         BrowserTransferMgr::getInstance()->addTransfer(nBrowserID, pTransfer);
+        // TODO： UI线程同时加载多个外部模块
     }
     
     void WebkitView::triggerEventOnUIThread(IPCMessage::SmartType msg) {

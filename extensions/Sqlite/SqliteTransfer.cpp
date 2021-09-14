@@ -26,11 +26,23 @@ namespace amo {
         return Undefined();
     }
     
+    Any SqliteTransfer::insert(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
     Any SqliteTransfer::backup(IPCMessage::SmartType msg) {
         return Undefined();
     }
     
     Any SqliteTransfer::query(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
+    Any SqliteTransfer::queryCount(IPCMessage::SmartType msg) {
+        return 0;
+    }
+    
+    Any SqliteTransfer::getLastInsertRowID(IPCMessage::SmartType msg) {
         return Undefined();
     }
     

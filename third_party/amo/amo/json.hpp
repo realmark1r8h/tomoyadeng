@@ -582,6 +582,8 @@ namespace amo {
             
             return true;
         }
+        
+        
         bool is_string(const std::string& key) const {
             const_iterator iter = find_member(key);
             
@@ -634,6 +636,15 @@ namespace amo {
         int64_t getInt64(const std::string& key, int64_t default_val = 0) {
             return get<int64_t>(key, default_val);
         }
+        
+        int64_t getUint64(const std::string& key, uint64_t default_val = 0) {
+            return get<uint64_t>(key, default_val);
+        }
+        
+        int64_t getDouble(const std::string& key, double default_val = 0.0) {
+            return get<double>(key, default_val);
+        }
+        
         
         char get(const std::string& key, char default_val) {
             iterator iter = find_member(key);

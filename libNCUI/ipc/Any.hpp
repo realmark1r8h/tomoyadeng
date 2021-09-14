@@ -346,6 +346,11 @@ namespace amo {
             return stringToAny<R>(m_pData->value);
         }
         
+        // 类型判断
+        template<typename T> bool is() {
+            return (type() == AnyValueType<T>::value);
+        }
+        
         // 类型
         
         char& type() {

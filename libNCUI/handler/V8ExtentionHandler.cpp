@@ -240,6 +240,13 @@ namespace amo {
     
     void  V8ExtentionHandler::registerExternalTransfer(int nBrowserID,
             std::shared_ptr<ClassTransfer> pTransfer) {
+            
+        // 可能找到错误的DLL
+        if (pTransfer == NULL) {
+            return  ;
+        }
+        
+        
         m_oClassTransferMap.insert(std::make_pair(pTransfer->transferName(),
                                    pTransfer));
         // 设置事件回调函数
@@ -250,6 +257,25 @@ namespace amo {
                       
         // 注册外部模块到程序中
         RendererTransferMgr::getInstance()->addTransfer(nBrowserID, pTransfer);
+        
+        
+        std::string strClass = pTransfer->transferName();
+        auto mananger = RendererTransferMgr::getInstance();
+        TransferMap& transferMap = mananger->getTransferMap(nBrowserID);
+        
+        
+        
+        FunctionWrapperMgr& mgr = pTransfer->getFuncMgr();
+        mgr.setRendererClass(true);
+        mgr.setBuiltIn(false);
+        FunctionWrapperMgr mgr2 = mgr;
+        
+        for (auto& p : mgr2.toMap()) {
+            p.second.m_fn = FunctionWrapper::TransferFunc();
+        }
+        
+        auto classMethodMgr = ClassMethodMgr::getInstance();
+        classMethodMgr->addClass(strClass, mgr2);
     }
     
     bool V8ExtentionHandler::loadExternalTransfer(const std::string& strClass,
@@ -299,25 +325,32 @@ namespace amo {
             auto mananger = RendererTransferMgr::getInstance();
             TransferMap& transferMap = mananger->getTransferMap(nBrowserID);
             Transfer* pTransfer = transferMap.findTransfer(strClass);
-            FunctionWrapperMgr& mgr = pTransfer->getFuncMgr();
-            mgr.setRendererClass(true);
-            mgr.setBuiltIn(false);
-            FunctionWrapperMgr mgr2 = mgr;
             
-            for (auto& p : mgr2.toMap()) {
-                p.second.m_fn = FunctionWrapper::TransferFunc();
+            // 可能找到错误的DLL
+            if (pTransfer == NULL) {
+                return NULL;
             }
             
+            /*   FunctionWrapperMgr& mgr = pTransfer->getFuncMgr();
+               mgr.setRendererClass(true);
+               mgr.setBuiltIn(false);
+               FunctionWrapperMgr mgr2 = mgr;
             
-            classMethodMgr->addClass(strClass, mgr2);
+               for (auto& p : mgr2.toMap()) {
+                   p.second.m_fn = FunctionWrapper::TransferFunc();
+               }
             
             
+               classMethodMgr->addClass(strClass, mgr2);*/
+            
+            
+            FunctionWrapperMgr& mgr = classMethodMgr->getClass(strClass);
             
             CefRefPtr<JsClassV8Handler> pHandler = new JsClassV8Handler();
             pHandler->setRendererClass(true);
             pHandler->setHandlerName(strClass);
-            pHandler->setID(mgr2.getObjectID());
-            pHandler->setFuncMgr(mgr2);
+            pHandler->setID(mgr.getObjectID());
+            pHandler->setFuncMgr(mgr);
             /*  m_oClassHandler.insert(std::make_pair(std::pair<std::string, int>(
             		  strClass, browser->GetIdentifier()), pHandler));*/
             return pHandler;
