@@ -309,7 +309,8 @@ namespace amo {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string utf8TableName = args->getString(0);
         amo::string ansiTableName(utf8TableName, true);
-        ansiTableName.trim();
+        ansiTableName.trim_left(" ");
+        ansiTableName.trim_right(" ");
         std::vector<amo::string> tables = ansiTableName.split(" ");
         
         // 如果拆分出来不只一项,那么认为不是一个表名

@@ -25,7 +25,8 @@
 
 		$('#insert').on('click', function() {
 			var str = new Date().toString();
-			var val = db.execute(`insert into abc (a, b, c) values('{0}', {1}, {2});`, [str, 1, 33.22]);
+			var val = db.insert(`insert into abc (a, b, c) values('{0}', {1}, {2});`, [str, 1, 33.22]);
+			console.log(val);
 			if(val == 1) {
 				alert('插入成功');
 			}

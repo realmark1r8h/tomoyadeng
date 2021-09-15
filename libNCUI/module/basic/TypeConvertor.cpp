@@ -417,6 +417,10 @@ namespace amo {
             retval = CefV8Value::CreateInt((int)any);
             break;
             
+        case AnyValueType<int64_t>::value:
+            retval = CefV8Value::CreateInt((int)any);
+            break;
+            
         case AnyValueType<double>::value:
             retval = CefV8Value::CreateDouble((double)any);
             break;
