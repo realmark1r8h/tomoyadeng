@@ -30,11 +30,19 @@ namespace amo {
         return Undefined();
     }
     
+    Any SqliteTransfer::update(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
     Any SqliteTransfer::backup(IPCMessage::SmartType msg) {
         return Undefined();
     }
     
     Any SqliteTransfer::query(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
+    Any SqliteTransfer::remove(IPCMessage::SmartType msg) {
         return Undefined();
     }
     

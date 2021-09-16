@@ -24,16 +24,20 @@ namespace amo {
         // Ö´ÐÐÔ­Éúsql
         virtual Any execute(IPCMessage::SmartType msg);
         virtual Any insert(IPCMessage::SmartType msg);
+        virtual Any update(IPCMessage::SmartType msg);
         virtual Any backup(IPCMessage::SmartType msg);
         virtual Any query(IPCMessage::SmartType msg);
+        virtual Any remove(IPCMessage::SmartType msg);
         virtual Any queryCount(IPCMessage::SmartType msg);
         virtual Any getLastInsertRowID(IPCMessage::SmartType msg);
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(SqliteTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(execute, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(insert, TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(update, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(backup, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(query, TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(queryCount, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getLastInsertRowID, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         

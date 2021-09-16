@@ -13,8 +13,10 @@ namespace amo {
         virtual Any execute(IPCMessage::SmartType msg) override;
         
         virtual Any insert(IPCMessage::SmartType msg) override;
+        virtual Any update(IPCMessage::SmartType msg) override;
         virtual Any backup(IPCMessage::SmartType msg) override;
         virtual Any query(IPCMessage::SmartType msg) override;
+        virtual Any remove(IPCMessage::SmartType msg) override;
         virtual Any queryCount(IPCMessage::SmartType msg) override;
         virtual Any getLastInsertRowID(IPCMessage::SmartType msg) override;
         
@@ -23,7 +25,10 @@ namespace amo {
         std::string makeSql(IPCMessage::SmartType msg);
         std::string getValuesFromJson(amo::json& json, const std::string& key);
         std::string makeInsertSql(IPCMessage::SmartType msg);
+        std::string makeRemoveSql(IPCMessage::SmartType msg);
+        std::string makeUpdateSql(IPCMessage::SmartType msg);
         std::string formatArgs(IPCMessage::SmartType msg);
+        std::string formatArgsByArr(const std::string& sql, std::vector<Any>& vec);
         std::string formatPagging(amo::json& json);
         bool queryCount(const std::string& str, amo::json& json);
         

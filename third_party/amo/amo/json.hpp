@@ -1004,6 +1004,7 @@ namespace amo {
             m_valid = valid;
         }
         void clear() {
+        
             if (doc.IsArray()) {
                 doc.Clear();
             } else if (doc.IsObject()) {
@@ -1011,6 +1012,11 @@ namespace amo {
             }
         }
         
+        void removeKey(const std::string& key) {
+            if (is_object()) {
+                doc.RemoveMember(key);
+            }
+        }
         bool empty() {
             if (doc.IsArray()) {
                 return doc.Empty();
