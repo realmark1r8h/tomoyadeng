@@ -9,7 +9,6 @@ namespace amo {
 
     Any NativeWindowProxy::id(IPCMessage::SmartType msg) {
         return getNativeSettings()->id;
-        return 0;
     }
     
     Any NativeWindowProxy::getName(IPCMessage::SmartType msg) {

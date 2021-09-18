@@ -6,9 +6,12 @@
 	initApi('SS', 'getConfig', 'Object', '获取程序配置信息', '[key], String(可选), 配置项');
 	initApi('SN', 'setConfig', '', '更新程序配置信息', 'options, Object, 需要更新的键值');
  
-	initApi('SN', 'setGlobal', '', '设置全局数据，用法与setConfig相同，只是两者使用不同的变量保存数据');
-	initApi('SN', 'getGlobal', '', '获取全局数据，用法与getConfig相同');
-
+	initApi('SN', 'setGlobal', '', '设置全局数据，用法与setConfig相同，只是两者使用不同的变量保存数据', 'options, Object, 需要更新的键值');
+	initApi('SN', 'getGlobal', '', '获取全局数据，用法与getConfig相同',  '[key], String(可选), 配置项');
+	
+	initApi('SN', 'setAutoRun', '', '设置是否开机启动', 'autoRun, Boolean, 是否开机启动');
+	initApi('SN', 'getAutoRun', 'Boolean', '获取当前程序是否开机启动');
+	
 	initApi('SS', 'toAbsolutePath', 'String', '将一个路径转为绝对路径如：%appDir%', 'path, String, 路径');
 	initApi('SN', 'addUrlMapping', 'Boolean',
 		`将一个网络路径映射为本地路径，URL必须是一个完整的绝对路径(以网络协议开头，
@@ -107,7 +110,19 @@
 		$('#urlToNativePath').on('click', function() {
 			alert(app.urlToNativePath('http://www.baidu.com/test.html'));
 		});
-
+		
+		$('#setAutoRun').on('click', function() {
+			app.setAutoRun(true);
+		});
+		
+		$('#cancelAutoRun').on('click', function() {
+			app.setAutoRun(false);
+		});
+		
+		$('#getAutoRun').on('click', function() {
+			alert(app.getAutoRun());
+		});
+		
 		$('#quit').on('click', function() {
 			app.quit();
 		});

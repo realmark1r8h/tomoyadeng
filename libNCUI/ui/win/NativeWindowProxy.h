@@ -594,6 +594,8 @@ namespace amo {
          * @return	The browser settings.
          */
         virtual std::shared_ptr<NativeWindowSettings> getNativeSettings();
+        
+    private:
     };
     
 }

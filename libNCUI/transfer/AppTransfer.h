@@ -153,7 +153,33 @@ namespace amo {
         
         Any getGlobal(IPCMessage::SmartType msg);
         
+        /*!
+         * @fn	Any AppTransfer::getAutoRun(IPCMessage::SmartType msg);
+         *
+         * @brief	获取是否开机启动.
+         *
+         * @param	msg	The message.
+         *
+         * @return	The automatic run.
+         */
         
+        Any getAutoRun(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	Any AppTransfer::setAutoRun(IPCMessage::SmartType msg);
+         *
+         * @brief	设置是否开机启动.
+         *
+         * @param	msg	The message.
+         *
+         * @return	Any.
+         */
+        
+        Any setAutoRun(IPCMessage::SmartType msg);
+        
+        void SetAutoRun(bool bAutoRun);
+        
+        bool GetAutoRun();
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(AppTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getConfig, TransferFuncStatic | TransferExecSync)
@@ -161,6 +187,9 @@ namespace amo {
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setGlobal, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getGlobal, TransferFuncStatic | TransferExecSync)
+        
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(setAutoRun, TransferFuncStatic)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getAutoRun, TransferFuncStatic | TransferExecSync)
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(toAbsolutePath, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(urlToNativePath, TransferFuncStatic | TransferExecSync)

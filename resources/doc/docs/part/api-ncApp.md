@@ -231,6 +231,31 @@ app.setConfig({
 </div>
 
 
+## 开机启动
+
+```html
+include('app');
+// 设置开机启动
+app.setAutoRun(true);
+// 取消开机启动
+app.setAutoRun(false);
+// 获取开机启动状态
+var val =app.getAutoRun();
+```
+ 
+ <div class="row">
+     <div class="col-xs-3">
+        <button class ="btn btn-outline-primary btn-block" id="setAutoRun">设置开机启动</button>
+    </div>
+    <div class="col-xs-3">
+        <button class ="btn btn-outline-primary btn-block" id="cancelAutoRun">取消开机启动</button>
+    </div>
+    <div class="col-xs-3">
+        <button class ="btn btn-outline-primary btn-block" id="getAutoRun">是否开机启动</button>
+    </div>
+</div>
+
+
 ## 全局数据
 
 ```html

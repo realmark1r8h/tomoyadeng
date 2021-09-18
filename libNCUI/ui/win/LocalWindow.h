@@ -34,7 +34,6 @@ namespace amo {
         
         virtual Any topmost(IPCMessage::SmartType msg) override;
         virtual Any isTopmost(IPCMessage::SmartType msg) override;
-        
         virtual Any setFullScreen(IPCMessage::SmartType msg) override;
         virtual Any isFullScreen(IPCMessage::SmartType msg) override;
         virtual Any setMinimumSize(IPCMessage::SmartType msg) override;
@@ -43,10 +42,7 @@ namespace amo {
         virtual Any getMaximumSize(IPCMessage::SmartType msg) override;
         virtual Any setResizable(IPCMessage::SmartType msg) override;
         virtual Any center(IPCMessage::SmartType msg) override;
-        
         virtual Any setHasShadow(IPCMessage::SmartType msg) override;
-        
-        
         virtual Any toggleFullScreen(IPCMessage::SmartType msg) override;
         virtual Any toggleVisible(IPCMessage::SmartType msg) override;
         virtual Any showModal(IPCMessage::SmartType msg);
@@ -63,11 +59,6 @@ namespace amo {
         
         virtual std::shared_ptr<NativeWindow> toNativeWindow();
         virtual std::shared_ptr<BrowserWindow> toBrowserWindow();
-        
-        
-        
-        
-        
         
     protected:
         int64_t getTransferClassID() const;
@@ -89,9 +80,6 @@ namespace amo {
                               amo::json& data);
         void broadcastMessage(const int64_t& nID,
                               const std::string& msg);
-                              
-                              
-                              
                               
                               
     protected:
