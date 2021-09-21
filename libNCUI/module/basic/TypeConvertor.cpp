@@ -220,11 +220,13 @@ namespace amo {
             }
             
             
-            std::string transferJson = transferObject(pObject);
+            std::string transferJson = transferObject(pValue);
             
             if (transferJson.empty()) {
                 Any ret = ParseSingleObjectToAny(pValue);
                 AddAnyToJson(json, vec[i].ToString(), ret);
+                /* amo::cdevel << json.to_string() << amo::endl;
+                 amo::cdevel << amo::string(json.to_string(), true).str() << amo::endl;*/
             } else {
                 amo::json transfer(transferJson);
                 amo::string id = amo::string::from_number<int64_t>(transfer.getInt64("id"));
@@ -232,6 +234,9 @@ namespace amo {
             }
         }
         
+        /*       std::string u8String = json.to_string();
+               amo::cdevel << func_orient << u8String << amo::endl;
+               amo::cdevel << func_orient << amo::string(json.to_string(), true).str() << amo::endl;*/
         return json;
     }
     

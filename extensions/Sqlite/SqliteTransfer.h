@@ -38,6 +38,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(backup, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(query, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(queryCount, TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(remove, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getLastInsertRowID, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         

@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Ext.h"
 #include "UUIDTransfer.h"
+#include "PathTransfer.h"
 
 
 
@@ -27,7 +28,14 @@ EXT_API bool registerTransfer(int nBrowserID,
         }
     }
     
-    
+    {
+        std::shared_ptr<amo::ClassTransfer> pTransfer(new amo::PathTransfer());
+        pTransfer->registerFunction();
+        
+        if (fn) {
+            fn(nBrowserID, pTransfer);
+        }
+    }
     return true;
 }
 

@@ -154,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ext.h" />
+    <ClInclude Include="PathTransfer.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UUIDTransfer.h" />
@@ -174,6 +175,7 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Ext.cpp" />
+    <ClCompile Include="PathTransfer.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

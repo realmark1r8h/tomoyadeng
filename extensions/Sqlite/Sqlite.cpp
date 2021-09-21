@@ -110,6 +110,7 @@ namespace amo {
     
     Any Sqlite::update(IPCMessage::SmartType msg) {
         std::string sql = makeUpdateSql(msg);
+        amo::string ansiSql(sql, true);
         Any ret = Undefined();
         
         if (sql.empty()) {
@@ -466,7 +467,7 @@ namespace amo {
         std::string sql = " UPDATE " + utf8TableName + " SET ";
         stream << sql;
         
-        stream << "(";
+        stream << " ";
         
         for (size_t i = 0; i < keys.size(); ++i) {
             stream << keys[i];
@@ -476,7 +477,7 @@ namespace amo {
             if (i < keys.size() - 1) {
                 stream << ", ";
             } else {
-                stream << ") ";
+                stream << "  ";
             }
         }
         
