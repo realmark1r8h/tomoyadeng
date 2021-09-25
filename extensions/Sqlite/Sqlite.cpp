@@ -362,6 +362,11 @@ namespace amo {
         streamValues << "(";
         
         for (size_t i = 0; i < keys.size(); ++i) {
+            // 如果所给字段在表中不存在，那么跳过此字段，这里字符集有点乱
+            if (!containsField(utf8TableName, keys[i])) {
+                continue;
+            }
+            
             streamKeys << keys[i];
             streamValues << getValuesFromJson(utf8Json, keys[i]);
             
@@ -418,20 +423,18 @@ namespace amo {
             
                 amo::string sqlWhere(args->getString(1), true);
                 amo::json json = val;
-                amo::string jsonString(json.to_string(), true);
-                json = amo::json(jsonString);
-                sqlWhere = sqlWhere.format(json);
+                sqlWhere = formatArgsByU8Json(sqlWhere, json);
                 
                 if (sqlWhere.size() > 0) {
                     stream << " WHERE " <<  sqlWhere.to_utf8();
                 }
             } else if (val.is<std::vector<Any> >()) {
-                std::vector<Any> vec = val;
-                std::string sqlWhere = args->getString(1);
+                std::vector<amo::string> vec = anyToStringVec(val);
+                amo::string sqlWhere(args->getString(1), true);
                 sqlWhere = formatArgsByArr(sqlWhere, vec);
                 
                 if (sqlWhere.size() > 0) {
-                    stream << " WHERE " << sqlWhere;
+                    stream << " WHERE " << sqlWhere.to_utf8();
                 }
             }
             
@@ -470,6 +473,11 @@ namespace amo {
         stream << " ";
         
         for (size_t i = 0; i < keys.size(); ++i) {
+            // 如果所给字段在表中不存在，那么跳过此字段，这里字符集有点乱
+            if (!containsField(utf8TableName, keys[i])) {
+                continue;
+            }
+            
             stream << keys[i];
             stream << " = ";
             stream << getValuesFromJson(utf8Json, keys[i]);
@@ -490,17 +498,13 @@ namespace amo {
             
             
             if (val.is<amo::json>()) {
-            
                 amo::string sqlWhere(args->getString(2), true);
                 amo::json json = val;
-                amo::string jsonString(json.to_string(), true);
-                json = amo::json(jsonString);
-                
-                whereStream <<  sqlWhere.format(json).to_utf8();
+                whereStream <<  formatArgsByU8Json(sqlWhere, json).to_utf8();
             } else if (val.is<std::vector<Any> >()) {
-                std::vector<Any> vec = val;
-                std::string sqlWhere = args->getString(2);
-                whereStream << formatArgsByArr(sqlWhere, vec);
+                std::vector<amo::string> vec = anyToStringVec(val);
+                amo::string sqlWhere(args->getString(2), true);
+                whereStream << formatArgsByArr(sqlWhere, vec).to_utf8();
             } else if (!val.isValid() || val.is<Nil>()) {
                 // 如果格式化参数不存在，那么使用第二个参数
                 amo::string sqlWhere(args->getString(2), true);
@@ -514,12 +518,19 @@ namespace amo {
         
         std::string whereString = whereStream.str();
         
+        
+        
+        amo::string retval(stream.str(), true);
+        retval.trim_right(" ");
+        retval.trim_right(",");
+        retval += " ";
+        
         if (!whereString.empty()) {
-            stream << " WHERE " << whereString;
+            retval += " WHERE ";
+            retval +=  amo::string(whereString, true);
         }
         
-        
-        return stream.str();
+        return retval.to_utf8();
     }
     
     std::string Sqlite::formatArgs(IPCMessage::SmartType msg) {
@@ -530,24 +541,34 @@ namespace amo {
         if (val.type() == AnyValueType<amo::json>::value) {
             amo::string sql(args->getString(0), true);
             amo::json json = val;
-            amo::string jsonString(json.to_string(), true);
-            json = amo::json(jsonString);
-            return sql.format(json).to_utf8();
+            return formatArgsByU8Json(sql, json).to_utf8();
+            
         } else if (val.type() == AnyValueType<std::vector<Any> >::value) {
-            std::vector<Any> vec = val;
-            std::string sql = args->getString(0);
-            return formatArgsByArr(sql, vec);
+            std::vector<amo::string> vec = anyToStringVec(val);
+            amo::string sql(args->getString(0), true);
+            return formatArgsByArr(sql, vec).to_utf8();
         }
         
         // 返回原始SQL
         return args->getString(0);
     }
     
-    std::string Sqlite::formatArgsByArr(const std::string& sql, std::vector<Any>& vec) {
+    amo::string Sqlite::formatArgsByAnsiJson(const amo::string& sql, amo::json& json) {
+    
+        return sql.format(json);
+    }
+    
+    amo::string Sqlite::formatArgsByU8Json(const amo::string& sql, amo::json& json) {
+        amo::string jsonString(json.to_string(), true);
+        amo::json ansiJson   = amo::json(jsonString);
+        return  formatArgsByAnsiJson(sql, ansiJson).to_utf8();
+    }
+    
+    amo::string Sqlite::formatArgsByArr(const amo::string& sql, std::vector<amo::string>& vec) {
         std::vector<std::string> fmtArgsList;
         
         for (size_t i = 0; i < vec.size(); ++i) {
-            fmtArgsList.push_back(vec[i].value());
+            fmtArgsList.push_back(vec[i].str());
         }
         
         
@@ -558,29 +579,29 @@ namespace amo {
             return sql;
             
         case 1:
-            return amo::format(sql,
+            return amo::format(sql.str(),
                                fmtArgsList[0]);
                                
         case 2:
-            return amo::format(sql,
+            return amo::format(sql.str(),
                                fmtArgsList[0],
                                fmtArgsList[1]);
                                
         case 3:
-            return amo::format(sql,
+            return amo::format(sql.str(),
                                fmtArgsList[0],
                                fmtArgsList[1],
                                fmtArgsList[2]);
                                
         case 4:
-            return amo::format(sql,
+            return amo::format(sql.str(),
                                fmtArgsList[0],
                                fmtArgsList[1],
                                fmtArgsList[2],
                                fmtArgsList[3]);
                                
         case 5:
-            return amo::format(sql,
+            return amo::format(sql.str(),
                                fmtArgsList[0],
                                fmtArgsList[1],
                                fmtArgsList[2],
@@ -588,7 +609,7 @@ namespace amo {
                                fmtArgsList[4]);
                                
         case 6:
-            return amo::format(sql,
+            return amo::format(sql.str(),
                                fmtArgsList[0],
                                fmtArgsList[1],
                                fmtArgsList[2],
@@ -597,7 +618,7 @@ namespace amo {
                                fmtArgsList[5]);
                                
         case 7:
-            return amo::format(sql,
+            return amo::format(sql.str(),
                                fmtArgsList[0],
                                fmtArgsList[1],
                                fmtArgsList[2],
@@ -607,7 +628,7 @@ namespace amo {
                                fmtArgsList[6]);
                                
         case 8:
-            return amo::format(sql,
+            return amo::format(sql.str(),
                                fmtArgsList[0],
                                fmtArgsList[1],
                                fmtArgsList[2],
@@ -618,7 +639,7 @@ namespace amo {
                                fmtArgsList[7]);
                                
         case 9:
-            return amo::format(sql,
+            return amo::format(sql.str(),
                                fmtArgsList[0],
                                fmtArgsList[1],
                                fmtArgsList[2],
@@ -630,7 +651,7 @@ namespace amo {
                                fmtArgsList[8]);
                                
         case 10:
-            return amo::format(sql,
+            return amo::format(sql.str(),
                                fmtArgsList[0],
                                fmtArgsList[1],
                                fmtArgsList[2],
@@ -659,11 +680,27 @@ namespace amo {
         
     }
     
+    std::vector<amo::string> Sqlite::anyToStringVec(Any& val) {
+        std::vector<Any> vec = val;
+        std::vector<amo::string> retval;
+        
+        for (size_t i = 0; i < vec.size(); ++i) {
+            retval.push_back(amo::string(vec[i].As<std::string>(), true));
+        }
+        
+        return retval;
+    }
+    
     bool Sqlite::queryCount(const std::string& str, amo::json& json) {
+    
     
         // 不重新计算，直接返回
         if (!json.getBool("refresh")) {
             return true;
+        }
+        
+        if (!m_pDB) {
+            return false;
         }
         
         std::regex args("([S|s][E|e][L|l][E|e][C|c][T|t]).*?([F|f][R|r][O|o][M|m])",
@@ -751,7 +788,10 @@ namespace amo {
     }
     
     Any Sqlite::queryCount(IPCMessage::SmartType msg) {
-    
+        if (!m_pDB) {
+            return -1;
+        }
+        
         // 生成SQL语句
         std::string sql = makeSql(msg);
         
@@ -825,6 +865,94 @@ namespace amo {
         }
         
         return json;
+    }
+    
+    std::vector<std::string>& Sqlite::getTableField(const std::string& table) {
+        if (!m_pDB) {
+            return m_emptyFields;
+        }
+        
+        auto iter = m_tableFieldMap.find(table);
+        
+        if (iter != m_tableFieldMap.end()) {
+            return iter->second;
+        }
+        
+        std::string sql = "PRAGMA table_info( " + table + " )";
+        
+        if (sql.empty()) {
+            return m_emptyFields;
+        }
+        
+        
+        
+        try {
+        
+            sqlite3pp::database& db = *m_pDB;
+            sqlite3pp::query qry(db, sql.c_str());
+            
+            
+            std::vector<std::string> keys;
+            std::vector<std::string> names;
+            
+            bool bQueryData = true;
+            
+            // 获取类型名称、字段名
+            for (int i = 0; i < qry.column_count(); ++i) {
+                const char* columnName = qry.column_name(i);
+                
+                if (columnName != NULL) {
+                    keys.push_back(columnName);
+                } else {
+                    bQueryData = false;
+                    continue;;
+                }
+                
+                /* const char* columnType = qry.column_decltype(i);
+                
+                 if (columnType != NULL) {
+                     types.push_back(qry.column_decltype(i));
+                 } else {
+                     bQueryData = false;
+                     types.push_back("INTEGER");
+                 }*/
+            }
+            
+            
+            
+            for (sqlite3pp::query::iterator iter = qry.begin();
+                    iter != qry.end();
+                    ++iter) {
+                    
+                for (int j = 0; j < qry.column_count(); ++j) {
+                    if (keys[j] == "name") {
+                        names.push_back((*iter).get<std::string>(j));
+                        break;
+                    }
+                }
+                
+            }
+            
+            m_tableFieldMap[table] = names;
+            return  m_tableFieldMap[table];
+            
+        } catch (std::exception& e) {
+            m_strLastError = e.what();
+            return m_emptyFields;
+        }
+        
+    }
+    
+    bool Sqlite::containsField(const std::string& table, const std::string& field) {
+        auto& vec = getTableField(table);
+        
+        for (auto& p : vec) {
+            if (p == field) {
+                return true;
+            }
+        }
+        
+        return false;
     }
     
 }

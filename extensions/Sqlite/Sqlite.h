@@ -1,12 +1,24 @@
 #include "dllmain.h"
 
 #include <string>
+#include <amo/string.hpp>
 
 #include "src/sqlite3pp.h"
 #include "SqliteTransfer.h"
 
 namespace amo {
-    class Sqlite : public SqliteTransfer {
+
+    class SqliteBase {
+    public:
+        /*! @brief	当前数据库连接是否有效. */
+        bool m_bValid;
+        std::string m_strLastError;
+        std::string m_strDBPath;
+        std::shared_ptr< sqlite3pp::database> m_pDB;
+        std::unordered_map<std::string, std::vector<std::string> > m_tableFieldMap;
+        std::vector<std::string> m_emptyFields;
+    };
+    class Sqlite : public SqliteBase, public SqliteTransfer {
     public:
         Sqlite(const std::string& args);
         
@@ -28,8 +40,39 @@ namespace amo {
         std::string makeRemoveSql(IPCMessage::SmartType msg);
         std::string makeUpdateSql(IPCMessage::SmartType msg);
         std::string formatArgs(IPCMessage::SmartType msg);
-        std::string formatArgsByArr(const std::string& sql, std::vector<Any>& vec);
+        
+        /*
+         int execute(const amo::string& sql, amo::json& json);
+         int execute(const amo::string& sql, std::vector<amo::string>& vec);
+        
+         int insert(const amo::string& table, amo::json& json);
+        
+         int remove(const amo::string& table, const amo::string& whereString, amo::json& json);
+         int remove(const amo::string& table, const amo::string& whereString, std::vector<amo::string>& vec);
+        
+         int count(const amo::string& table, const amo::string& whereString, amo::json& json);
+         int count(const amo::string& table, const amo::string& whereString, std::vector<amo::string>& vec);
+        
+         int remove(const amo::string& table, const amo::string& whereString, amo::json& json);
+         int remove(const amo::string& table, const amo::string& whereString, std::vector<amo::string>& vec);
+        
+         std::vector<amo::json> query(const amo::string& sql, amo::json& json, amo::json pagging = amo::json());
+         std::vector<amo::json> query(const amo::string& sql, std::vector<amo::string>& vec, amo::json pagging = amo::json());
+        
+         std::vector<amo::json> query(const amo::string& table, const amo::string& whereString, amo::json& json, amo::json pagging = amo::json());
+         std::vector<amo::json> query(const amo::string& table, const amo::string& whereString, std::vector<amo::string>& vec, amo::json pagging = amo::json());
+        
+         int update(const amo::string& table, amo::json& json, const amo::string& whereString = "", amo::json whereJson = amo::json());
+         int update(const amo::string& table, std::vector<amo::string>& vec, const amo::string& whereString = "", amo::json whereJson = amo::json());
+        
+        
+         amo::string formatUpdateSql(const amo::string& sql, amo::json& json);*/
+        
+        amo::string formatArgsByAnsiJson(const amo::string& sql, amo::json& json);
+        amo::string formatArgsByU8Json(const amo::string& sql, amo::json& json);
+        amo::string formatArgsByArr(const amo::string& sql, std::vector<amo::string>& vec);
         std::string formatPagging(amo::json& json);
+        std::vector<amo::string> anyToStringVec(Any& vec);
         bool queryCount(const std::string& str, amo::json& json);
         
         /*!
@@ -44,12 +87,38 @@ namespace amo {
         
         amo::json getPaggingInfo(amo::json& other);
         
+        /**
+         * @fn	bool Sqlite::getTableField(const std::string& table);
+         *
+         * @brief	获取数据库表的所有字段.
+         *
+         * @param	table	The table.
+         *
+         * @return	true if it succeeds, false if it fails.
+         */
+        
+        std::vector<std::string>& getTableField(const std::string& table);
+        
+        /**
+         * @fn	bool Sqlite::containsField(const std::string& table, const std::string& field);
+         *
+         * @brief	判断所给片段是否存在于表中.
+         *
+         * @param	table	The table.
+         * @param	field	The field.
+         *
+         * @return	true if it succeeds, false if it fails.
+         */
+        
+        bool containsField(const std::string& table, const std::string& field);
     private:
-        /*! @brief	当前数据库连接是否有效. */
-        bool m_bValid;
-        std::string m_strLastError;
-        std::string m_strDBPath;
-        std::shared_ptr< sqlite3pp::database> m_pDB; ;
+        ///*! @brief	当前数据库连接是否有效. */
+        //bool m_bValid;
+        //std::string m_strLastError;
+        //std::string m_strDBPath;
+        //std::shared_ptr< sqlite3pp::database> m_pDB;
+        //std::unordered_map<std::string, std::vector<std::string> > m_tableFieldMap;
+        //std::vector<std::string> m_emptyFields;
         
     };
 }

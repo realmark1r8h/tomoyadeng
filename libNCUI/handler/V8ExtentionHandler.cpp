@@ -88,6 +88,23 @@ namespace amo {
             }
             
             CefRefPtr<CefV8Context> context = CefV8Context::GetCurrentContext();
+            
+            if (!context->IsValid()) {
+                return false;
+            }
+            
+            CefRefPtr<CefBrowser> pBrowser = context->GetBrowser();
+            
+            if (!pBrowser) {
+                return false;
+            }
+            
+            CefRefPtr<CefFrame> pFrame = context->GetFrame();
+            
+            if (!pFrame) {
+                return false;
+            }
+            
             int nBrowserID = context->GetBrowser()->GetIdentifier();
             int64_t nFrameID = context->GetFrame()->GetIdentifier();
             

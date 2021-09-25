@@ -14,7 +14,7 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="sqlite3pp">
-      <UniqueIdentifier>{38daeac1-3e5f-4f80-b471-00c448eb0c22}</UniqueIdentifier>
+      <UniqueIdentifier>{abd81fda-a5ab-42c9-ab72-a2f00ae17ddf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

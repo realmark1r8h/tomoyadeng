@@ -171,7 +171,7 @@ namespace amo {
         }
         
         json get_child(const std::string& key) {
-            iterator iter = find_member(key);
+            const_iterator iter = find_member(key);
             
             if (iter == end()) {
                 return json();
@@ -600,54 +600,54 @@ namespace amo {
         }
         
         template<typename T>
-        T get(const std::string& key, T default_val = T()) {
+        T get(const std::string& key, T default_val = T()) const {
             return get(key, default_val);
         }
         
-        char getChar(const std::string& key, char default_val = '\0') {
+        char getChar(const std::string& key, char default_val = '\0') const {
             return get<char>(key, default_val);
         }
         
-        bool getBool(const std::string& key, bool default_val = false) {
+        bool getBool(const std::string& key, bool default_val = false) const {
             return get<bool>(key, default_val);
         }
         
-        std::string getString(const std::string& key, const std::string& default_val = "") {
+        std::string getString(const std::string& key, const std::string& default_val = "") const {
             return get<std::string>(key, default_val);
         }
         
-        amo::json getJson(const std::string& key, const amo::json& default_val = amo::json()) {
+        amo::json getJson(const std::string& key, const amo::json& default_val = amo::json()) const {
             return get<amo::json>(key, default_val);
         }
         
         
-        char getChar(const std::string& key, const char& default_val = '0') {
+        char getChar(const std::string& key, const char& default_val = '0') const {
             return get<char>(key, default_val);
         }
         
-        int getInt(const std::string& key, int default_val = 0) {
+        int getInt(const std::string& key, int default_val = 0) const {
             return get<int32_t>(key, default_val);
         }
-        uint32_t getUint(const std::string& key, uint32_t default_val = 0) {
+        uint32_t getUint(const std::string& key, uint32_t default_val = 0)  const {
             return get<uint32_t>(key, default_val);
         }
         
         
-        int64_t getInt64(const std::string& key, int64_t default_val = 0) {
+        int64_t getInt64(const std::string& key, int64_t default_val = 0)  const {
             return get<int64_t>(key, default_val);
         }
         
-        int64_t getUint64(const std::string& key, uint64_t default_val = 0) {
+        int64_t getUint64(const std::string& key, uint64_t default_val = 0) const {
             return get<uint64_t>(key, default_val);
         }
         
-        int64_t getDouble(const std::string& key, double default_val = 0.0) {
+        int64_t getDouble(const std::string& key, double default_val = 0.0) const {
             return get<double>(key, default_val);
         }
         
         
-        char get(const std::string& key, char default_val) {
-            iterator iter = find_member(key);
+        char get(const std::string& key, char default_val) const {
+            const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsInt()) {
                 return default_val;
@@ -656,8 +656,8 @@ namespace amo {
             return (char)iter->value.GetInt();
         }
         
-        bool get(const std::string& key, bool default_val) {
-            iterator iter = find_member(key);
+        bool get(const std::string& key, bool default_val)  const {
+            const_iterator iter = find_member(key);
             
             if (iter == end()) {
                 return default_val;
@@ -681,8 +681,8 @@ namespace amo {
             return default_val;
         }
         
-        std::string get(const std::string& key, const char* default_val) {
-            iterator iter = find_member(key);
+        std::string get(const std::string& key, const char* default_val) const {
+            const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsString()) {
                 return default_val;
@@ -691,8 +691,8 @@ namespace amo {
             return iter->value.GetString();
         }
         
-        std::string get(const std::string& key, std::string default_val) {
-            iterator iter = find_member(key);
+        std::string get(const std::string& key, std::string default_val)  const {
+            const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsString()) {
                 return default_val;
@@ -702,8 +702,8 @@ namespace amo {
         }
         
         
-        int8_t get(const std::string& key, int8_t default_val) {
-            iterator iter = find_member(key);
+        int8_t get(const std::string& key, int8_t default_val)  const {
+            const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsInt()) {
                 return default_val;
@@ -712,8 +712,8 @@ namespace amo {
             return (int8_t)iter->value.GetInt();
         }
         
-        uint8_t get(const std::string& key, uint8_t default_val) {
-            iterator iter = find_member(key);
+        uint8_t get(const std::string& key, uint8_t default_val)  const {
+            const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsUint()) {
                 return default_val;
@@ -722,8 +722,8 @@ namespace amo {
             return (uint8_t)iter->value.GetUint();
         }
         
-        int16_t get(const std::string& key, int16_t default_val) {
-            iterator iter = find_member(key);
+        int16_t get(const std::string& key, int16_t default_val)  const {
+            const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsInt()) {
                 return default_val;
@@ -732,8 +732,8 @@ namespace amo {
             return (int16_t)iter->value.GetInt();
         }
         
-        uint16_t get(const std::string& key, uint16_t default_val) {
-            iterator iter = find_member(key);
+        uint16_t get(const std::string& key, uint16_t default_val) const {
+            const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsUint()) {
                 return default_val;
@@ -742,8 +742,8 @@ namespace amo {
             return (uint16_t)iter->value.GetUint();
         }
         
-        int32_t get(const std::string& key, int32_t default_val) {
-            iterator iter = find_member(key);
+        int32_t get(const std::string& key, int32_t default_val) const {
+            const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsInt()) {
                 return default_val;
@@ -753,8 +753,8 @@ namespace amo {
         }
         
         
-        uint32_t get(const std::string& key, uint32_t default_val) {
-            iterator iter = find_member(key);
+        uint32_t get(const std::string& key, uint32_t default_val)  const {
+            const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsUint()) {
                 return default_val;
@@ -764,8 +764,8 @@ namespace amo {
         }
         
         
-        int64_t get(const std::string& key, int64_t default_val) {
-            iterator iter = find_member(key);
+        int64_t get(const std::string& key, int64_t default_val) const {
+            const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsInt64()) {
                 return default_val;
@@ -774,8 +774,8 @@ namespace amo {
             return iter->value.GetInt64();
         }
         
-        uint64_t get(const std::string& key, uint64_t default_val) {
-            iterator iter = find_member(key);
+        uint64_t get(const std::string& key, uint64_t default_val) const {
+            const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsUint64()) {
                 return default_val;
@@ -785,8 +785,8 @@ namespace amo {
         }
         
         
-        float get(const std::string& key, float default_val) {
-            iterator iter = find_member(key);
+        float get(const std::string& key, float default_val)  const {
+            const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsNumber()) {
                 return default_val;
@@ -796,8 +796,8 @@ namespace amo {
         }
         
         
-        double get(const std::string& key, double default_val) {
-            iterator iter = find_member(key);
+        double get(const std::string& key, double default_val)  const {
+            const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsDouble()) {
                 return default_val;
@@ -806,8 +806,8 @@ namespace amo {
             return iter->value.GetDouble();
         }
         
-        amo::uuid get(const std::string& key, amo::uuid default_val) {
-            iterator iter = find_member(key);
+        amo::uuid get(const std::string& key, amo::uuid default_val)  const {
+            const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsString()) {
                 return default_val;
@@ -816,8 +816,8 @@ namespace amo {
             return amo::uuid::from_string(iter->value.GetString());
         }
         
-        json get(const std::string& key, json default_val) {
-            iterator iter = find_member(key);
+        json get(const std::string& key, json default_val) const {
+            const_iterator iter = find_member(key);
             
             if (iter == end()) {
                 return default_val;
