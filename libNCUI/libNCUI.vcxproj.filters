@@ -905,5 +905,14 @@
     <ClInclude Include="handler\UtilityV8Handler.h">
       <Filter>handler</Filter>
     </ClInclude>
+    <ClInclude Include="transfer\ThreadTransfer.hpp">
+      <Filter>transfer</Filter>
+    </ClInclude>
+    <ClInclude Include="transfer\UIThreadTransfer.hpp">
+      <Filter>transfer</Filter>
+    </ClInclude>
+    <ClInclude Include="transfer\RendererThreadTransfer.hpp">
+      <Filter>transfer</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

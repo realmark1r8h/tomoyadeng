@@ -41,32 +41,9 @@ namespace amo {
         std::string makeUpdateSql(IPCMessage::SmartType msg);
         std::string formatArgs(IPCMessage::SmartType msg);
         
-        /*
-         int execute(const amo::string& sql, amo::json& json);
-         int execute(const amo::string& sql, std::vector<amo::string>& vec);
-        
-         int insert(const amo::string& table, amo::json& json);
-        
-         int remove(const amo::string& table, const amo::string& whereString, amo::json& json);
-         int remove(const amo::string& table, const amo::string& whereString, std::vector<amo::string>& vec);
-        
-         int count(const amo::string& table, const amo::string& whereString, amo::json& json);
-         int count(const amo::string& table, const amo::string& whereString, std::vector<amo::string>& vec);
-        
-         int remove(const amo::string& table, const amo::string& whereString, amo::json& json);
-         int remove(const amo::string& table, const amo::string& whereString, std::vector<amo::string>& vec);
-        
-         std::vector<amo::json> query(const amo::string& sql, amo::json& json, amo::json pagging = amo::json());
-         std::vector<amo::json> query(const amo::string& sql, std::vector<amo::string>& vec, amo::json pagging = amo::json());
-        
-         std::vector<amo::json> query(const amo::string& table, const amo::string& whereString, amo::json& json, amo::json pagging = amo::json());
-         std::vector<amo::json> query(const amo::string& table, const amo::string& whereString, std::vector<amo::string>& vec, amo::json pagging = amo::json());
-        
-         int update(const amo::string& table, amo::json& json, const amo::string& whereString = "", amo::json whereJson = amo::json());
-         int update(const amo::string& table, std::vector<amo::string>& vec, const amo::string& whereString = "", amo::json whereJson = amo::json());
         
         
-         amo::string formatUpdateSql(const amo::string& sql, amo::json& json);*/
+        amo::string formatUpdateSql(const amo::string& sql, amo::json& json);
         
         amo::string formatArgsByAnsiJson(const amo::string& sql, amo::json& json);
         amo::string formatArgsByU8Json(const amo::string& sql, amo::json& json);

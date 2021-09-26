@@ -149,6 +149,9 @@ namespace amo {
                                    const CefKeyEvent& event,
                                    CefEventHandle os_event,
                                    bool* is_keyboard_shortcut) override;
+        // DisplayHandlerDelegate
+        virtual bool OnTooltip(CefRefPtr<CefBrowser> browser,
+                               CefString& text) override;
     public:
         Any focusedNodeChanged(IPCMessage::SmartType msg);
         Any asyncExecuteResult(IPCMessage::SmartType msg);

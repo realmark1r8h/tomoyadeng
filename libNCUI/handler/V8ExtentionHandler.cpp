@@ -221,6 +221,7 @@ namespace amo {
         }
         
         for (auto& p : vec) {
+        
             m_oModuleSet.erase(p);
         }
         

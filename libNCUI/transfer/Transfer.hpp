@@ -60,8 +60,8 @@ namespace amo {
                                    IPCMessage::SmartType,
                                    amo::IPCResult&)> BerforeResultFunc;
                                    
-		
-	public:
+                                   
+    public:
         /*!
          * @fn	template<typename T> std::shared_ptr<T> Transfer::getDerivedClass()
          *
@@ -430,32 +430,59 @@ namespace amo {
         void setFuncRegistered(bool val) {
             m_bIsRegistered = val;
         }
-
-		/**
-		 * @fn	std::function<void(IPCMessage::SmartType) > getTriggerEventFunc() const
-		 *
-		 * @brief	获取事件触发函数.
-		 *
-		 * @return	The trigger event function.
-		 */
-
-		std::function<void(IPCMessage::SmartType) > getTriggerEventFunc() const  {
-			return m_fnTriggerEventFunc; 
-		}
-
-		/**
-		 * @fn	void Transfer::setTriggerEventFunc(std::function<void(IPCMessage::SmartType) > val)
-		 *
-		 * @brief	设置Transfer中需要触发事件时的回调函数，
-		 * 			一般用于外部Transfer的事件触发.
-		 *
-		 * @param	val	The value.
-		 */
-
-		void setTriggerEventFunc(std::function<void(IPCMessage::SmartType) > val){ 
-			m_fnTriggerEventFunc = val;
-		}
         
+        /**
+         * @fn	std::function<void(IPCMessage::SmartType) > getTriggerEventFunc() const
+         *
+         * @brief	获取事件触发函数.
+         *
+         * @return	The trigger event function.
+         */
+        
+        std::function<void(IPCMessage::SmartType) > getTriggerEventFunc() const  {
+            return m_fnTriggerEventFunc;
+        }
+        
+        /**
+         * @fn	void Transfer::setTriggerEventFunc(std::function<void(IPCMessage::SmartType) > val)
+         *
+         * @brief	设置Transfer中需要触发事件时的回调函数，
+         * 			一般用于外部Transfer的事件触发.
+         *
+         * @param	val	The value.
+         */
+        
+        void setTriggerEventFunc(std::function<void(IPCMessage::SmartType) > val) {
+            m_fnTriggerEventFunc = val;
+        }
+        
+        void triggerEvent(const std::string& strEventName,
+                          const Any& val,
+                          int nBrowserID = -1,
+                          int64_t nFrameID = -1) {
+                          
+            IPCMessage::SmartType ipcMessage(new IPCMessage());
+            ipcMessage->setMessageName(MSG_NATIVE_EXECUTE);
+            std::shared_ptr<AnyArgsList>& ipcArgs = ipcMessage->getArgumentList();
+            
+            ipcArgs->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+            ipcArgs->setValue(IPCArgsPosInfo::TransferID, 0);
+            ipcArgs->setValue(IPCArgsPosInfo::EventObjectID, getObjectID());
+            ipcArgs->setValue(IPCArgsPosInfo::BrowserID, nBrowserID);
+            ipcArgs->setValue(IPCArgsPosInfo::FrameID, nFrameID);
+            
+            
+            ipcArgs->setValue(IPCArgsPosInfo::FuncName, "triggerEvent");
+            ipcArgs->setValue(0, strEventName);
+            ipcArgs->setValue(1, val);
+            ipcArgs->setValue(IPCArgsPosInfo::ArgsLength, 2);
+            
+            if (getTriggerEventFunc()) {
+                getTriggerEventFunc()(ipcMessage);
+            } else {
+                // log out
+            }
+        }
     protected:
     
         /*! @brief	JS调用C++回调处理函数集合. */
@@ -478,9 +505,9 @@ namespace amo {
         
         /*! @brief	判断当前类是否已经注册. */
         bool m_bIsRegistered;
-
-		/** @brief	Transfer中产生的事件触发函数. */
-		std::function<void(IPCMessage::SmartType)> m_fnTriggerEventFunc;
+        
+        /** @brief	Transfer中产生的事件触发函数. */
+        std::function<void(IPCMessage::SmartType)> m_fnTriggerEventFunc;
     };
     
 }

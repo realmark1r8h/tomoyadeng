@@ -122,6 +122,7 @@ namespace amo {
         return ret;
     }
     
+    
     Any Sqlite::backup(IPCMessage::SmartType msg) {
         std::shared_ptr< sqlite3pp::database> pDB;
         
@@ -267,6 +268,7 @@ namespace amo {
         
         return Undefined();
     }
+    
     
     Any Sqlite::remove(IPCMessage::SmartType msg) {
         std::string sql = makeRemoveSql(msg);

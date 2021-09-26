@@ -78,7 +78,7 @@ namespace amo {
         
         template<typename ... Args>
         Any transfer(std::string name, Args... args) {
-            msg->setMessageName(MSG_NATIVE_ASYNC_EXECUTE);
+            msg->setMessageName(MSG_NATIVE_SYNC_EXECUTE);
             makeProcessMessage(msg, args...);
             afterMakeProcessMessage(msg, name);
             int nBrowserID = m_pFrame->GetBrowser()->GetIdentifier();

@@ -188,6 +188,14 @@ namespace amo {
     }
     
     
+    void RenderView::setTooltip(const amo::string& str) {
+        CHorizontalLayoutUI* pRenderLayout = static_cast<CHorizontalLayoutUI*>(
+                m_PaintManager.FindControl(_T("reanderLayout")));
+                
+        if (pRenderLayout != NULL) {
+            pRenderLayout->SetToolTip(str.to_unicode().c_str());
+        }
+    }
     
     RenderView::~RenderView() {
     }

@@ -127,6 +127,8 @@ namespace amo {
             TypeConvertor convertor;
             convertor.setRendererObject(isRendererClass());
             
+            
+            // 调用Renderer线程中的C++方法
             if (isRendererClass()) {
                 // 如果是在渲染进程中执行，直接Transfer
                 Any  any = runner.transfer(name, arguments);
@@ -140,7 +142,7 @@ namespace amo {
                 return true;
             }
             
-            // 调用C++的方式
+            // 调用UI线程中的C++的方式
             if (p.execType() == TransferExecSync) {
                 Any  any = runner.syncExecute(name, arguments);
                 retval = convertor.toV8Value(any);

@@ -103,6 +103,7 @@ namespace amo {
         m_pClientHandler->RegisterDialogHandlerDelegate(this);
         m_pClientHandler->RegisterRenderHandlerDelegate(this);
         m_pClientHandler->RegisterKeyboardHandlerDelegate(this);
+        m_pClientHandler->RegisterDisplayHandlerDelegate(this);
         this->registerFunction();
         
         if (m_pBrowserSettings->offscreen) {   //离屏
@@ -743,6 +744,16 @@ namespace amo {
         
         if (event.windows_key_code == VK_ESCAPE) {
             ::PostMessage(m_hParentWnd, WM_KEYDOWN, VK_ESCAPE, NULL);
+        }
+        
+        return false;
+    }
+    
+    bool WebkitView::OnTooltip(CefRefPtr<CefBrowser> browser, CefString& text) {
+        if (m_pRenderWnd != NULL) {
+            amo::string str(text.ToString(), true);
+            m_pRenderWnd->setTooltip(str);
+            return true;
         }
         
         return false;

@@ -41,7 +41,7 @@ namespace amo {
         virtual void onFocusedNodeChanged(IPCMessage::SmartType msg);
         virtual void updateCaretPos(std::shared_ptr<Gdiplus::Bitmap> image);
         virtual void insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image);
-        
+        virtual void setTooltip(const amo::string& str);
         
         
         
