@@ -264,5 +264,8 @@
     <ClInclude Include="amo\file_mapping.hpp">
       <Filter>amo</Filter>
     </ClInclude>
+    <ClInclude Include="amo\file.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

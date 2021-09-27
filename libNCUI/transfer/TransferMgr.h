@@ -126,6 +126,7 @@ namespace amo {
             // 返回无效结果
             return amo::Nothing();
         }
+        
         /*!
          * @fn	amo::json TransferMap::toJson()
          *
@@ -214,6 +215,20 @@ namespace amo {
             m_oTransferMap.erase(nBrowserID);
         }
         
+        /**
+         * @fn	Transfer* TransferMgr::findTransfer(int nBrowserID, const std::string& strName)
+         *
+         * @brief	Searches for the first transfer.
+         *
+         * @param	nBrowserID	Identifier for the browser.
+         * @param	strName   	The name.
+         *
+         * @return	null if it fails, else the found transfer.
+         */
+        
+        Transfer* findTransfer(int nBrowserID, const std::string& strName) {
+            return getTransferMap(nBrowserID).findTransfer(strName);
+        }
         bool isEmpty() const {
             return m_oTransferMap.empty();
         }

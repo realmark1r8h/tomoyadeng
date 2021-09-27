@@ -33,7 +33,7 @@
 #include "transfer/MouseTransfer.h"
 #include "transfer/DesktopTransfer.h"
 #include "transfer/SplashTransfer.h"
-
+#include "transfer/UIThreadTransfer.h"
 namespace amo {
 
     void BrowserTransferMgr::returnSyncResult(int nBrowserID,
@@ -101,6 +101,8 @@ namespace amo {
                     ClassTransfer::getUniqueTransfer<MouseTransfer>());
         addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<SplashTransfer>());
+        addTransfer(nBrowserID,
+                    ClassTransfer::getUniqueTransfer<UIThreadTransfer>());
     }
     
     void RendererTransferMgr::returnSyncResult(int nBrowserID,

@@ -9,12 +9,16 @@
 
 #include <memory>
 #include <amo/looper_executor.hpp>
+#include "TransferMgr.h"
 
 namespace amo {
+    enum ThreadEnum {
+        ThreadUI,
+        ThreadRenderer,
+    };
+    template<ThreadEnum>
     class ThreadTransfer : public ClassTransfer {
     public:
-    
-    
         ThreadTransfer()
             : ClassTransfer("Thread") {
             m_nBrowserID = m_nFrameID = 0;
@@ -48,25 +52,6 @@ namespace amo {
             return m_pLooperExecutor;
         }
         
-        // 获取当前所属线程
-        
-        std::shared_ptr<amo::looper_executor> getThread() {
-            return m_pLooperExecutor;
-        }
-        
-        // 设置当前Transfer所属线程
-        
-        void setThread(std::shared_ptr<amo::looper_executor> pThread) {
-            m_pLooperExecutor = pThread;
-        }
-        
-        virtual Any onCreateClass(IPCMessage::SmartType msg) override {
-            std::shared_ptr<ThreadTransfer> pThread(new ThreadTransfer());
-            pThread->registerFunction();
-            pThread->createThread();
-            addTransfer(pThread);
-            return  pThread->getFuncMgr().toSimplifiedJson();
-        }
         
         // 唤醒线程
         
@@ -78,47 +63,47 @@ namespace amo {
             return Undefined();
         }
         
-        // 附加线程
+        virtual TransferMgr* getTransferMgr() {
+            return NULL;
+        }
         
-        Any attach(IPCMessage::SmartType msg) {
-        
-        
-            // 自身为thread不能附加别的thread
-            if (transferName() == "Thread") {
-                return false;
-            }
-            
+        Any exec(IPCMessage::SmartType msg) {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-            int64_t nObjectID = args->getInt64(0);
-            auto pTransfer = ClassTransfer::findTransfer(nObjectID);
+            std::string transferName = args->getString(IPCArgsPosInfo::ThreadTransferName);
+            int64_t transferID = args->getInt64(IPCArgsPosInfo::ThreadTransferID);
+            std::string funcName = args->getString(IPCArgsPosInfo::ThreadTransferFuncName);
+            
+            IPCMessage::SmartType ipcMsg = msg->clone();
+            ipcMsg->setMessageName(MSG_NATIVE_EXECUTE);
+            ipcMsg->getArgumentList()->setValue(IPCArgsPosInfo::TransferName, transferName);
+            ipcMsg->getArgumentList()->setValue(IPCArgsPosInfo::TransferID, transferID);
+            ipcMsg->getArgumentList()->setValue(IPCArgsPosInfo::FuncName, funcName);
+            
+            int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+            int64_t nFrameID = args->getInt64(IPCArgsPosInfo::FrameID);
+            auto manager = BrowserTransferMgr::getInstance();
+            Transfer* pTransfer = manager->findTransfer(nBrowserID, transferName);
             
             if (!pTransfer) {
-                return false;
+                return Undefined();
             }
             
-            // 如果所给transfer不是一个thread 也不能附加
-            if (pTransfer->transferName() != "Thread") {
-                return false;
-            }
+            m_pLooperExecutor->execute([ = ]() {
+                pTransfer->onMessageTransfer(ipcMsg);
+            });
+            //return  pTransfer->onMessageTransfer(ipcMsg);
+            return Undefined();
             
-            std::shared_ptr<ThreadTransfer> pThreadTransfer;
-            pThreadTransfer = std::dynamic_pointer_cast<ThreadTransfer>(pTransfer);
-            
-            if (!pThreadTransfer) {
-                return false;
-            }
-            
-            setThread(pThreadTransfer->getThread());
-            return true;
         }
         
-        // 分离线程
-        
-        Any detach(IPCMessage::SmartType msg) {
-            // 将当前线程恢复为默认线程
-            m_pLooperExecutor = getWorkThread();
-            return true;
+        Any async(IPCMessage::SmartType msg) {
+            return Undefined();
         }
+        
+        Any sync(IPCMessage::SmartType msg) {
+            return Undefined();
+        }
+        
         
         void onEventCallback(const std::string& ansiMsg, bool bPause) {
             amo::string strMsg(ansiMsg, false);
@@ -147,9 +132,11 @@ namespace amo {
         
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(ThreadTransfer, ClassTransfer)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(attach, TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(detach, TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(exec, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(async, TransferFuncNormal | TransferExecAsync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(sync, TransferFuncNormal | TransferExecSync)
+        
         AMO_CEF_MESSAGE_TRANSFER_END()
     protected:
     
@@ -166,6 +153,10 @@ namespace amo {
         /** @brief	线程. */
         std::shared_ptr<amo::looper_executor> m_pLooperExecutor;
     };
+    
+    
+    
+    
 }
 
 #endif AMO_THREADTRANSFER_HPP__

@@ -81,6 +81,15 @@ namespace amo {
         /*! @brief	动态库函数返回值类型. */
         const static int DllRetalType = 13;
         
+        /** @brief	要在线程中执行的Transfer Name. */
+        const static int ThreadTransferName = 15;
+        
+        /** @brief	要在线程中执行的Transfer ID. */
+        const static int ThreadTransferID = 16;
+        
+        /** @brief	要在线程中执行的函数名. */
+        const static int ThreadTransferFuncName = 17;
+        
         /*! @brief	异步调用时回调函数位置. */
         const static int AsyncCallback = 23;
         /*! @brief	消息列表中保存BrowserID的位置. */

@@ -2,7 +2,7 @@
 #define AMO_STDINT_HPP
 
 #ifndef __STDC_LIMIT_MACROS
-    #define __STDC_LIMIT_MACROS 1
+#define __STDC_LIMIT_MACROS 1
 #endif
 
 #ifdef BOOST_HAS_STDINT_H
@@ -41,30 +41,30 @@ using boost::uint_fast64_t;
 #endif
 using boost::intmax_t;
 using boost::uintmax_t;
-  
+
 #endif // BOOST_HAS_STDINT_H
 
 typedef unsigned int uint;
 
-#ifdef _MSC_VER
-typedef __int8  int8;
-typedef __int16 int16;
-typedef __int32 int32;
-typedef __int64 int64;
-
-typedef unsigned __int8  uint8;
-typedef unsigned __int16 uint16;
-typedef unsigned __int32 uint32;
-typedef unsigned __int64 uint64;
-#else
-typedef int8_t  int8;
-typedef int16_t int16;
-typedef int32_t int32;
-typedef int64_t int64;
-
-typedef uint8_t  uint8;
-typedef uint16_t uint16;
-typedef uint32_t uint32;
-typedef uint64_t uint64;
-#endif
+//#ifdef _MSC_VER
+//typedef __int8  int8;
+//typedef __int16 int16;
+//typedef __int32 int32;
+//typedef __int64 int64;
+//
+//typedef unsigned __int8  uint8;
+//typedef unsigned __int16 uint16;
+//typedef unsigned __int32 uint32;
+//typedef unsigned __int64 uint64;
+//#else
+//typedef int8_t  int8;
+//typedef int16_t int16;
+//typedef int32_t int32;
+//typedef int64_t int64;
+//
+//typedef uint8_t  uint8;
+//typedef uint16_t uint16;
+//typedef uint32_t uint32;
+//typedef uint64_t uint64;
+//#endif
 #endif // AMO_STDINT_HPP

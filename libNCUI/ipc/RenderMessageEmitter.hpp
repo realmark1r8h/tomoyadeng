@@ -13,6 +13,7 @@
 
 #include "transfer/TransferMgr.h"
 #include "module/basic/TypeConvertor.h"
+#include "../module/JsClassV8Handler.h"
 
 namespace amo {
 
@@ -106,12 +107,38 @@ namespace amo {
                 
                 
                 if (pValue->IsFunction()) {
-                    // 如果是函数，那么解析为一个回调函数
-                    using MGR = AsyncFunctionManager < PID_RENDERER > ;
-                    auto manager = MGR::getInstance();
-                    int nKey = manager->registerCallabackFunction(m_pFrame,
-                               pValue);
-                    args->setValue(IPCArgsPosInfo::AsyncCallback, nKey);
+                
+                
+                    CefRefPtr<CefV8Handler> pHandler = pValue->GetFunctionHandler();
+                    
+                    // 如果pHander存在，那么说明当前函数是一个C++创建的函数
+                    JsClassV8Handler* pClassHandler = NULL;
+                    
+                    if (pHandler) {
+                        pClassHandler = dynamic_cast<JsClassV8Handler*>(pHandler.get());
+                    }
+                    
+                    if (pHandler && pClassHandler != NULL) {
+                    
+                        CefString name = pValue->GetFunctionName();
+                        std::string transferName = pClassHandler->getHandlerName();
+                        int64_t transferID = pClassHandler->getID();
+                        
+                        args->setValue(IPCArgsPosInfo::ThreadTransferFuncName, name.ToString());
+                        args->setValue(IPCArgsPosInfo::ThreadTransferID, transferID);
+                        args->setValue(IPCArgsPosInfo::ThreadTransferName, transferName);
+                        
+                        
+                    } else {
+                        // 如果是函数，那么解析为一个回调函数
+                        using MGR = AsyncFunctionManager < PID_RENDERER >;
+                        auto manager = MGR::getInstance();
+                        int nKey = manager->registerCallabackFunction(m_pFrame,
+                                   pValue);
+                        args->setValue(IPCArgsPosInfo::AsyncCallback, nKey);
+                    }
+                    
+                    
                 } else {
                     TypeConvertor convertor;
                     args->setValue(nIndex++, convertor.toAny(pValue));

@@ -447,6 +447,12 @@
     <ClCompile Include="handler\UtilityV8Handler.cpp">
       <Filter>handler</Filter>
     </ClCompile>
+    <ClCompile Include="transfer\UIThreadTransfer.cpp">
+      <Filter>transfer</Filter>
+    </ClCompile>
+    <ClCompile Include="transfer\RendererThreadTransfer.cpp">
+      <Filter>transfer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context\AppContext.h">
@@ -908,10 +914,10 @@
     <ClInclude Include="transfer\ThreadTransfer.hpp">
       <Filter>transfer</Filter>
     </ClInclude>
-    <ClInclude Include="transfer\UIThreadTransfer.hpp">
+    <ClInclude Include="transfer\RendererThreadTransfer.h">
       <Filter>transfer</Filter>
     </ClInclude>
-    <ClInclude Include="transfer\RendererThreadTransfer.hpp">
+    <ClInclude Include="transfer\UIThreadTransfer.h">
       <Filter>transfer</Filter>
     </ClInclude>
   </ItemGroup>

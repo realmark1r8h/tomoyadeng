@@ -728,6 +728,7 @@ namespace amo {
             return m_str.empty();
         }
         
+        
         size_type copy(_Elem *_Ptr, size_type _Count, size_type _Off = 0) const {
             return m_str.copy(_Ptr, _Count, _Off);
         }
@@ -874,27 +875,29 @@ namespace amo {
         // หตร๗:
         //
         //------------------------------------------------------------------------------
-        std::vector< string > split(string sub) {
+        std::vector< string > split(const string& sub) const {
             std::string s = m_str;
             std::string delim = sub;
             
             std::vector<string> ret;
-            size_t last = 0;
+            size_t start = 0;
             
             if (s.empty()) {
                 return ret;
             }
             
-            size_t index = s.find_first_of(delim, last);
+            size_t index = s.find_first_of(delim, start);
             
             while (index != std::string::npos) {
-                ret.push_back(amo::string(s.substr(last, index - last), false));
-                last = index + 1;
-                index = s.find_first_of(delim, last);
+                ret.push_back(amo::string(s.substr(start, index - start), false));
+                start = index + sub.size();
+                index = s.find_first_of(delim, start);
             }
             
-            if (index - last > 0) {
-                ret.push_back(amo::string(s.substr(last, index - last), false));
+            size_t size1 = m_str.size();
+            
+            if (start < m_str.size()) {
+                ret.push_back(amo::string(s.substr(start), false));
             }
             
             return ret;

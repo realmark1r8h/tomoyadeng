@@ -24,6 +24,11 @@ namespace amo {
             memcpy(m_path, str_path.c_str(), str_path.size());
         }
         
+        path(const std::string& str_path) {
+            memset(m_path, 0, 1000);
+            memcpy(m_path, str_path.c_str(), str_path.size());
+        }
+        
         path(const char* str_path) {
             memset(m_path, 0, 1000);
             strcpy(m_path, str_path);
@@ -90,7 +95,13 @@ namespace amo {
          * @return	A reference to a path.
          */
         path& add_extension(const amo::string& ext) {
-            ::PathAddExtensionA(m_path, ext.c_str());
+            bool bOk = (::PathAddExtensionA(m_path, ext.c_str()) != FALSE);
+            
+            if (!bOk) {
+                auto id = GetLastError();
+                ++id;
+            }
+            
             return *this;
         }
         /*!
@@ -150,6 +161,10 @@ namespace amo {
             ::PathQuoteSpacesA(m_path);
             return *this;
         }
+        
+        operator std::string() {
+            return c_str();
+        }
         /*!
          * @fn	path& path::append(const path& other)
          *
@@ -163,6 +178,9 @@ namespace amo {
             ::PathAppendA(m_path, other.c_str());
             return *this;
         }
+        
+        
+        
         /*!
          * @fn	path path::append_c(const path& other)
          *
@@ -572,6 +590,58 @@ namespace amo {
             ::PathCommonPrefixA(m_path, other.c_str(), p.c_str());
             return p;
         }
+        
+        /**
+         * @fn	path& to_absolute()
+         *
+         * @brief	将一个相对路径转换成绝对路径.
+         *
+         * @return	This object as a path&amp;
+         */
+        
+        path& to_absolute() {
+            if (!is_relative()) {
+                return *this;
+            }
+            
+            path workPath = work_path();
+            work_path().append(*this);
+            *this = workPath;
+            return *this;
+        }
+        
+        /**
+         * @fn	path to_absolute_c()
+         *
+         * @brief	将一个相对路径转换成绝对路径.
+         *
+         * @return	This object as a path.
+         */
+        
+        path to_absolute_c() {
+            if (!is_relative()) {
+                return *this;
+            }
+            
+            path workPath = work_path();
+            work_path().append(*this);
+            return workPath;
+        }
+        
+        /**
+         * @fn	static path work_path()
+         *
+         * @brief	获取工作目录.
+         *
+         * @return	A path.
+         */
+        
+        static path work_path() {
+            char tszModule[MAX_PATH + 1] = { 0 };
+            ::GetCurrentDirectoryA(MAX_PATH, tszModule);
+            return path(tszModule);
+        }
+        
         /*!
          * @fn	bool file_exists()
          *
@@ -765,6 +835,11 @@ namespace amo {
             return ::CopyFileA(m_path, to.c_str(), FALSE) != FALSE;
         }
         
+        static path fullAppDir() {
+            return path(getExeDir());
+        }
+        
+        
         static amo::string getExeDir() {
             char executionDir[MAX_PATH];
             
@@ -776,6 +851,11 @@ namespace amo {
             *pos = '\0';
             return executionDir;
         }
+        
+        static path appName() {
+            return path(getExeName());
+        }
+        
         
         static amo::string getExeName() {
             char executionDir[MAX_PATH];
@@ -790,6 +870,11 @@ namespace amo {
             return ss;
         }
         
+        static path fullAppName() {
+            return path(getFullExeName());
+        }
+        
+        
         static amo::string getFullExeName() {
             char executionDir[MAX_PATH];
             
@@ -799,6 +884,14 @@ namespace amo {
             
             return amo::string(executionDir, false);
         }
+        
+        static path fullPathInAppDir(const path& filePath) {
+            return getFullPathInExeDir(filePath.c_str());
+        }
+        
+        /*  static path fullPathInAppDir(const amo::string& filePath) {
+              return getFullPathInExeDir(filePath);
+          }*/
         
         static amo::string getFullPathInExeDir(const amo::string& fileName, bool includingSlash = true) {
             amo::string file_name = fileName;
