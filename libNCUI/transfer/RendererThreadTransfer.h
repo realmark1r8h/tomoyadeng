@@ -6,12 +6,18 @@
 
 #include "transfer/ThreadTransfer.hpp"
 
-namespace amo {
 
-    class RendererThreadTransfer : public ThreadTransfer<ThreadRenderer> {
+namespace amo {
+    class TransferMgr;
+    class RendererThreadTransfer : public ThreadTransfer<ThreadRenderer>
+        , public amo::singleton<RendererThreadTransfer> {
     public:
         RendererThreadTransfer();
+        
         Any onCreateClass(IPCMessage::SmartType msg);
+        
+        virtual std::shared_ptr< TransferMgr> getTransferMgr() override;
+        
     };
     
 }

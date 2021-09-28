@@ -9,18 +9,22 @@
 
 #include <memory>
 #include <amo/looper_executor.hpp>
-#include "TransferMgr.h"
+#include "transfer/TransferMgr.h"
+#include "transfer/TransferEventInfo.hpp"
+#include "transfer/RunableTransfer.hpp"
 
 namespace amo {
     enum ThreadEnum {
         ThreadUI,
         ThreadRenderer,
     };
+    
+    
     template<ThreadEnum>
     class ThreadTransfer : public ClassTransfer {
     public:
         ThreadTransfer()
-            : ClassTransfer("Thread") {
+            : ClassTransfer("ThreadBase") {
             m_nBrowserID = m_nFrameID = 0;
             m_isPausedThread = false;
             m_pLooperExecutor = getWorkThread();
@@ -52,22 +56,26 @@ namespace amo {
             return m_pLooperExecutor;
         }
         
+        virtual  std::shared_ptr< TransferMgr> getTransferMgr() {
+            return std::shared_ptr< TransferMgr>();
+        }
+        
         
         // 唤醒线程
         
         Any weakup(IPCMessage::SmartType msg) {
-            amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
-            m_isPausedThread = false;
-            // 通知其他线程
-            m_condition_any.notify_all();
+            weakupThread();
             return Undefined();
         }
         
-        virtual TransferMgr* getTransferMgr() {
-            return NULL;
+        // 暂停线程，不能暂停正在执行的函数，只能等当前函数结束后停止执行队列中的其他函数
+        Any suspend(IPCMessage::SmartType msg) {
+        
+            return Undefined();
         }
         
-        Any exec(IPCMessage::SmartType msg) {
+        
+        IPCMessage::SmartType makeIPCMessage(IPCMessage::SmartType msg) {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             std::string transferName = args->getString(IPCArgsPosInfo::ThreadTransferName);
             int64_t transferID = args->getInt64(IPCArgsPosInfo::ThreadTransferID);
@@ -78,22 +86,51 @@ namespace amo {
             ipcMsg->getArgumentList()->setValue(IPCArgsPosInfo::TransferName, transferName);
             ipcMsg->getArgumentList()->setValue(IPCArgsPosInfo::TransferID, transferID);
             ipcMsg->getArgumentList()->setValue(IPCArgsPosInfo::FuncName, funcName);
+            return ipcMsg;
             
+        }
+        
+        Any execute(IPCMessage::SmartType msg, bool bSync = false) {
+            std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+            std::string transferName = args->getString(IPCArgsPosInfo::ThreadTransferName);
             int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
             int64_t nFrameID = args->getInt64(IPCArgsPosInfo::FrameID);
-            auto manager = BrowserTransferMgr::getInstance();
-            Transfer* pTransfer = manager->findTransfer(nBrowserID, transferName);
+            auto manager = getTransferMgr();
             
-            if (!pTransfer) {
+            if (manager == NULL) {
                 return Undefined();
             }
             
-            m_pLooperExecutor->execute([ = ]() {
-                pTransfer->onMessageTransfer(ipcMsg);
-            });
-            //return  pTransfer->onMessageTransfer(ipcMsg);
-            return Undefined();
+            IPCMessage::SmartType ipcMsg = makeIPCMessage(msg);
             
+            Transfer* pTransfer = manager->findTransfer(nBrowserID, transferName);
+            // 要执行的trnasfer必须继承RunableTransfer;
+            RunableTransfer* pRunableTransfer = dynamic_cast<RunableTransfer*>(pTransfer);
+            
+            if (pRunableTransfer == NULL) {
+                return Undefined();
+            }
+            
+            //TODO: 这样做的话，一个Transfer就只能与一个线程挂钩，否则会出错
+            pRunableTransfer->setWeakup(std::bind(&ThreadTransfer::weakupThread, this));
+            pRunableTransfer->setSuspend(std::bind(&ThreadTransfer::waitForWeakUp, this));
+            
+            if (bSync) {
+                Any ret = amo::sync<Any>(m_pLooperExecutor, [ = ]()->Any {
+                    return pTransfer->onMessageTransfer(ipcMsg);
+                });
+                return ret;
+            } else {
+                m_pLooperExecutor->execute([ = ]() {
+                    pTransfer->onMessageTransfer(ipcMsg);
+                });
+                return Undefined();
+            }
+            
+            return Undefined();
+        }
+        Any exec(IPCMessage::SmartType msg) {
+            return execute(msg, false);
         }
         
         Any async(IPCMessage::SmartType msg) {
@@ -101,7 +138,7 @@ namespace amo {
         }
         
         Any sync(IPCMessage::SmartType msg) {
-            return Undefined();
+            return execute(msg, true);
         }
         
         
@@ -117,11 +154,32 @@ namespace amo {
             }
         }
         
+        void onRunableEventCallback(std::shared_ptr<RunableTransfer> pTransfer,
+                                    const TransferEventInfo& info) {
+                                    
+            std::string utf8Event = info.name;
+            bool bSuspend = info.suspend;
+            triggerEvent(utf8Event, json, m_nBrowserID, m_nFrameID);
+            
+            if (bPause) {
+                waitForWeakUp();
+            }
+        }
+        
+        
         void waitForWeakUp() {
             std::unique_lock<std::recursive_mutex> lock(m_mutex);
             m_isPausedThread = true; // 暂停线程
             // 等待其他线程将该线程恢复
-            m_condition_any.wait(lock, amo::bind(&ThreadTransfer::isResumeThread, this));
+            m_condition_any.wait(lock,
+                                 amo::bind(&ThreadTransfer::isResumeThread, this));
+        }
+        
+        void weakupThread() {
+            amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
+            m_isPausedThread = false;
+            // 通知其他线程
+            m_condition_any.notify_all();
         }
         
         bool isResumeThread() {

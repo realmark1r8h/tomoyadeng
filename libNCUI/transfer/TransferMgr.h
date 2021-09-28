@@ -387,6 +387,9 @@ namespace amo {
         : public TransferMgr
         , public amo::singleton < RendererTransferMgr > {
     public:
+    
+    
+    
         virtual void returnSyncResult(int nBrowserID,
                                       amo::IPCResult& ret) override;
                                       
@@ -394,6 +397,8 @@ namespace amo {
                                        Any& ret,
                                        int id,
                                        int frame_id) override;
+                                       
+        virtual void registerClass(int nBrowserID) override;
     };
     
 }

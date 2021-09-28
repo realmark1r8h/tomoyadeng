@@ -76,6 +76,9 @@ namespace amo {
     }
     void BrowserWindow::InitWindow() {
     
+        auto transfer1 = ClassTransfer::getEntryTransfer();
+        
+        
         //获取图标，第二个参数为要获取第几个图标
         HICON hIcon = ExtractIconA(m_PaintManager.GetInstance(), amo::path::getFullExeName().c_str(), 0);
         ::SendMessage(m_hWnd, WM_SETICON, (WPARAM)false, (LPARAM)hIcon);

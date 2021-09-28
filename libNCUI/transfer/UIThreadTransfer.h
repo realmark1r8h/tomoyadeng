@@ -11,7 +11,7 @@ namespace amo {
     public:
         UIThreadTransfer();
         
-        
+        virtual  std::shared_ptr< TransferMgr> getTransferMgr() override;
         virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
         
@@ -22,6 +22,9 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(sync, TransferFuncNormal | TransferExecSync)
         
         AMO_CEF_MESSAGE_TRANSFER_END()
+        
+        
+        
     };
 }
 

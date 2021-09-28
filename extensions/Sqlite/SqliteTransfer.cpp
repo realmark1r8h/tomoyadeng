@@ -3,13 +3,30 @@
 #include "sqlite.h"
 
 
-SQLITE_API2 bool registerTransfer(int nBrowserID,
-                                  std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fn) {
+
+//SQLITE_API2 bool registerTransfer(int nBrowserID,
+//                                  std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fn) {
+//    std::shared_ptr<amo::ClassTransfer> pTransfer(new amo::SqliteTransfer());
+//    pTransfer->registerFunction();
+//    auto transfer1 = amo::ClassTransfer::getEntryTransfer();
+//
+//    if (fn) {
+//        fn(nBrowserID, pTransfer);
+//    }
+//
+//    return true;
+//}
+
+SQLITE_API2 bool registerTransfer(std::shared_ptr<amo::ClassRegisterInfo> info) {
+    amo::ClassTransfer::getTransferMap() = info->transferMap;
+    int nBrowserID = info->nBrowserID;
+    
     std::shared_ptr<amo::ClassTransfer> pTransfer(new amo::SqliteTransfer());
     pTransfer->registerFunction();
+    auto transfer1 = amo::ClassTransfer::getEntryTransfer();
     
-    if (fn) {
-        fn(nBrowserID, pTransfer);
+    if (info->fnCallback) {
+        info->fnCallback(nBrowserID, pTransfer);
     }
     
     return true;

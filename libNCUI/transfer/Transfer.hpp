@@ -12,6 +12,7 @@
 #include "ipc/Any.hpp"
 #include "ipc/IPCMessage.hpp"
 #include "transfer/FunctionWrapper.hpp"
+#include "transfer/TransferEventInfo.hpp"
 
 
 
@@ -111,6 +112,36 @@ namespace amo {
         
         ~Transfer() {
         
+        }
+        
+        /**
+         * @fn	virtual std::string Transfer::getClass() const
+         *
+         * @brief	获取类名.
+         *
+         * @return	The class.
+         */
+        
+        virtual std::string getClass() const {
+            return "Transfer";
+        }
+        
+        /**
+         * @fn	virtual Transfer* Transfer::getInterface(const std::string& name)
+         *
+         * @brief	通过类开获取接口.
+         *
+         * @param	name	The name.
+         *
+         * @return	null if it fails, else the interface.
+         */
+        
+        virtual Transfer* getInterface(const std::string& name) {
+            if (name == Transfer::getClass()) {
+                return this;
+            }
+            
+            return NULL;
         }
         
         /*!
@@ -475,6 +506,35 @@ namespace amo {
             ipcArgs->setValue(IPCArgsPosInfo::FuncName, "triggerEvent");
             ipcArgs->setValue(0, strEventName);
             ipcArgs->setValue(1, val);
+            ipcArgs->setValue(IPCArgsPosInfo::ArgsLength, 2);
+            
+            if (getTriggerEventFunc()) {
+                getTriggerEventFunc()(ipcMessage);
+            } else {
+                // log out
+            }
+        }
+        
+        void triggerEvent(const TransferEventInfo& info) {
+        
+            IPCMessage::SmartType ipcMessage(new IPCMessage());
+            ipcMessage->setMessageName(MSG_NATIVE_EXECUTE);
+            std::shared_ptr<AnyArgsList>& ipcArgs = ipcMessage->getArgumentList();
+            
+            ipcArgs->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+            ipcArgs->setValue(IPCArgsPosInfo::TransferID, 0);
+            ipcArgs->setValue(IPCArgsPosInfo::EventObjectID, getObjectID());
+            ipcArgs->setValue(IPCArgsPosInfo::BrowserID, info.browser);
+            ipcArgs->setValue(IPCArgsPosInfo::FrameID, info.frame);
+            
+            if (info.toAll) {
+                ipcArgs->setValue(IPCArgsPosInfo::FuncName, "emitEventAllFrame");
+            } else {
+                ipcArgs->setValue(IPCArgsPosInfo::FuncName, "triggerEvent");
+            }
+            
+            ipcArgs->setValue(0, info.name);
+            ipcArgs->setValue(1, info.data);
             ipcArgs->setValue(IPCArgsPosInfo::ArgsLength, 2);
             
             if (getTriggerEventFunc()) {

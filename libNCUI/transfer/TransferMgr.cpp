@@ -34,6 +34,7 @@
 #include "transfer/DesktopTransfer.h"
 #include "transfer/SplashTransfer.h"
 #include "transfer/UIThreadTransfer.h"
+#include "transfer/RendererThreadTransfer.h"
 namespace amo {
 
     void BrowserTransferMgr::returnSyncResult(int nBrowserID,
@@ -122,6 +123,11 @@ namespace amo {
         runner->setValue(IPCArgsPosInfo::TransferName, "ipcMain");
         runner->setValue(IPCArgsPosInfo::AsyncCallback, id);
         runner->execute("asyncExecuteResult", ret);
+    }
+    
+    void RendererTransferMgr::registerClass(int nBrowserID) {
+        addTransfer(nBrowserID,
+                    ClassTransfer::getUniqueTransfer<RendererThreadTransfer>());
     }
     
 }

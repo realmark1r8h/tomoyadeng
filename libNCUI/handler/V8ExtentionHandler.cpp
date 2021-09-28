@@ -250,6 +250,7 @@ namespace amo {
     
     V8ExtentionHandler::V8ExtentionHandler() {
         m_pUtilityV8Handler = new UtilityV8Handler();
+        m_pEntryTransfer = ClassTransfer::getEntryTransfer();
     }
     
     V8ExtentionHandler::~V8ExtentionHandler() {
@@ -264,7 +265,14 @@ namespace amo {
             return  ;
         }
         
+        auto transfer1 = ClassTransfer::getEntryTransfer();
+        auto transfer2 = pTransfer->getEntryTransfer();
+        auto transfer3 = m_pEntryTransfer;
         
+        auto transfer4 = m_pEntryTransfer->getEntryProxyTransfer();
+        auto transfer5 = pTransfer->getEntryProxyTransfer();
+        pTransfer->setEntryTransfer(m_pEntryTransfer);
+        pTransfer->getEntryProxyTransfer()->setEntryTransfer(m_pEntryTransfer);
         m_oClassTransferMap.insert(std::make_pair(pTransfer->transferName(),
                                    pTransfer));
         // 设置事件回调函数
@@ -308,14 +316,25 @@ namespace amo {
         
         // 外部模块必须提供registerTransfer函数
         int nBrowserID = browser->GetIdentifier();
-        auto options = pLoader->exec<bool, int,
+        std::shared_ptr< ClassRegisterInfo> info(new ClassRegisterInfo());
+        info->nBrowserID = nBrowserID;
+        info->fnCallback = std::bind(&V8ExtentionHandler::registerExternalTransfer,
+                                     this,
+                                     std::placeholders::_1,
+                                     std::placeholders::_2);
+                                     
+        /*auto options = pLoader->exec<bool, int,
              std::function<void(int, std::shared_ptr<ClassTransfer>) >> (
                  "registerTransfer",
                  nBrowserID,
                  std::bind(&V8ExtentionHandler::registerExternalTransfer,
                            this,
                            std::placeholders::_1,
-                           std::placeholders::_2));
+                           std::placeholders::_2));*/
+        
+        auto options = pLoader->exec<bool, std::shared_ptr<ClassRegisterInfo>> (
+                           "registerTransfer",
+                           info);
                            
         // 判断外部模块是否注册成功
         if (!options || !*options) {
@@ -349,19 +368,6 @@ namespace amo {
                 return NULL;
             }
             
-            /*   FunctionWrapperMgr& mgr = pTransfer->getFuncMgr();
-               mgr.setRendererClass(true);
-               mgr.setBuiltIn(false);
-               FunctionWrapperMgr mgr2 = mgr;
-            
-               for (auto& p : mgr2.toMap()) {
-                   p.second.m_fn = FunctionWrapper::TransferFunc();
-               }
-            
-            
-               classMethodMgr->addClass(strClass, mgr2);*/
-            
-            
             FunctionWrapperMgr& mgr = classMethodMgr->getClass(strClass);
             
             CefRefPtr<JsClassV8Handler> pHandler = new JsClassV8Handler();
@@ -373,6 +379,10 @@ namespace amo {
             		  strClass, browser->GetIdentifier()), pHandler));*/
             return pHandler;
         } else {
+        
+            int nBrowserID = browser->GetIdentifier();
+            auto manager = RendererTransferMgr::getInstance();
+            
             FunctionWrapperMgr& mgr = classMethodMgr->getClass(strClass);
             
             // 判断是否为外部模块
@@ -385,9 +395,22 @@ namespace amo {
                     return NULL;
                 }
                 
-                int nBrowserID = browser->GetIdentifier();
-                RendererTransferMgr::getInstance()->addTransfer(nBrowserID,
-                        iter->second);
+                
+                manager->addTransfer(nBrowserID, iter->second);
+            }
+            
+            
+            TransferMap& transferMap = manager->getTransferMap(nBrowserID);
+            Transfer* pTransfer = transferMap.findTransfer(strClass);
+            
+            
+            if (pTransfer != NULL && pTransfer->isWorkOnRenderer()) {
+                // 设置事件回调函数
+                pTransfer->setTriggerEventFunc(
+                    std::bind(&V8ExtentionHandler::triggerEventOnRendererThread,
+                              this,
+                              std::placeholders::_1));
+                              
             }
             
             CefRefPtr<JsClassV8Handler> pHandler = new JsClassV8Handler();

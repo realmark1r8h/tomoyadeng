@@ -370,6 +370,10 @@ namespace amo {
         pTransfer->setBrowser(browser);
         pTransfer->setWorkOnRenderer(true);
         amo::RendererTransferMgr::getInstance()->addTransfer(browser->GetIdentifier(), pTransfer);
+        // 这个IPCRendererV8Handler也应该加进去的。
+        RendererTransferMgr::getInstance()->registerClass(nBrowserID);
+        
+        
         CefRefPtr<CefProcessMessage> msg = CefProcessMessage::Create(MSG_IPC_READY);
         browser->SendProcessMessage(PID_BROWSER, msg);
         //bool bOk  = (bool)exchangerMgr->Exchange <Any>(nBrowserID);
@@ -393,6 +397,9 @@ namespace amo {
         auto manager = RendererProcessExchangerManager::getInstance();
         std::shared_ptr<ProcessExchanger> pExchanger;
         pExchanger = manager->findExchanger(nBrowserID);
+        
+        
+        
         
         if (!pExchanger) {
         

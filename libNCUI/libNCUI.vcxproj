@@ -343,12 +343,14 @@
     <ClInclude Include="transfer\NetTransfer.h" />
     <ClInclude Include="transfer\RendererThreadTransfer.h" />
     <ClInclude Include="transfer\RequestTransfer.h" />
+    <ClInclude Include="transfer\RunableTransfer.hpp" />
     <ClInclude Include="transfer\ShellTransfer.h" />
     <ClInclude Include="transfer\SplashTransfer.h" />
     <ClInclude Include="transfer\SystemInfo.h" />
     <ClInclude Include="transfer\SystemTransfer.h" />
     <ClInclude Include="transfer\ThreadTransfer.hpp" />
     <ClInclude Include="transfer\Transfer.hpp" />
+    <ClInclude Include="transfer\TransferEventInfo.hpp" />
     <ClInclude Include="transfer\TransferMapping.hpp" />
     <ClInclude Include="transfer\TransferMappingMgr.hpp" />
     <ClInclude Include="transfer\TransferMgr.h" />

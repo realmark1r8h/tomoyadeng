@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "UIThreadTransfer.h"
+#include "transfer/TransferMgr.h"
 
 namespace amo {
 
@@ -14,6 +15,10 @@ namespace amo {
         pThread->createThread();
         addTransfer(pThread);
         return  pThread->getFuncMgr().toSimplifiedJson();
+    }
+    
+    std::shared_ptr< TransferMgr> UIThreadTransfer::getTransferMgr() {
+        return BrowserTransferMgr::getInstance();
     }
     
 }

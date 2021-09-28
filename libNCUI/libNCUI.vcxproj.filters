@@ -920,5 +920,11 @@
     <ClInclude Include="transfer\UIThreadTransfer.h">
       <Filter>transfer</Filter>
     </ClInclude>
+    <ClInclude Include="transfer\TransferEventInfo.hpp">
+      <Filter>transfer</Filter>
+    </ClInclude>
+    <ClInclude Include="transfer\RunableTransfer.hpp">
+      <Filter>transfer</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

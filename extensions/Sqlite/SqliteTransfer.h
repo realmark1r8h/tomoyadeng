@@ -11,8 +11,8 @@
 
 
 extern "C" {
-    SQLITE_API2 bool registerTransfer(int nBrowserID, std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fn);
-    
+    //SQLITE_API2 bool registerTransfer(int nBrowserID, std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fn);
+    SQLITE_API2 bool registerTransfer(std::shared_ptr<amo::ClassRegisterInfo> info);
 }
 
 
