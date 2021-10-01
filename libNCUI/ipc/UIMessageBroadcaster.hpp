@@ -109,7 +109,7 @@ namespace amo {
             }
             
             // 移除Transfer, 调试时可以开启
-            //ClassTransfer::RemoveTransfer(pEventTransfer->getObjectID());
+            ClassTransfer::removeTransfer(pEventTransfer->getObjectID());
             return  pEventTransfer->getReturnValue(IPCMessage::Empty());
             
         }
@@ -185,7 +185,7 @@ namespace amo {
             }
             
             // 移除Transfer, 调试时可以开启
-            //ClassTransfer::RemoveTransfer(pEventTransfer->getObjectID());
+            ClassTransfer::removeTransfer(pEventTransfer->getObjectID());
             return  pEventTransfer->getReturnValue(IPCMessage::Empty());
             
         }

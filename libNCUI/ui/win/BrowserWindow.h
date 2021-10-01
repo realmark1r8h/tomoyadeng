@@ -34,7 +34,7 @@ namespace amo {
         
     public:
         BrowserWindow(std::shared_ptr<BrowserWindowSettings> pBrowserSettings);
-        
+        ~BrowserWindow();
         void test();
         
         

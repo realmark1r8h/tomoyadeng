@@ -193,6 +193,10 @@ namespace amo {
         return false;
     }
     
+    void BrowserWindowCreator::quitMessageLoop() {
+        CefQuitMessageLoop();	// 退出程序
+    }
+    
     std::shared_ptr<LocalWindow>
     BrowserWindowCreator::findWindow(int32_t nID) {
     
@@ -313,7 +317,10 @@ namespace amo {
             Tray::getInstance()->destory();
             Tray::getInstance()->close();
             
-            CefQuitMessageLoop();	// 退出程序
+            CefPostTask(TID_UI, NewCefRunnableMethod(m_pWindowCreator.get(),
+                        &BrowserWindowCreator::quitMessageLoop));
+                        
+                        
         }
     }
     

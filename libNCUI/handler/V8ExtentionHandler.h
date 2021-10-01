@@ -170,6 +170,13 @@ namespace amo {
         void OnBrowserDestory(int nBrowserID);
         
         /**
+         * @fn	void V8ExtentionHandler::OnProcessDestory();
+         *
+         * @brief	进程要退出之前调用此函数，删除所有第三方Transfer.
+         */
+        
+        void OnProcessDestory();
+        /**
          * @fn	void V8ExtentionHandler::triggerEventOnRendererThread(IPCMessage::SmartType msg);
          *
          * @brief	在主渲染线程中执行函数，当前线程可能非渲染线程.
@@ -201,7 +208,7 @@ namespace amo {
         std::set<std::pair<std::string, int64_t> > m_oModuleSet;
         
         CefRefPtr<UtilityV8Handler> m_pUtilityV8Handler;
-        std::shared_ptr<ClassTransfer> m_pEntryTransfer;
+        
     };
     
 }

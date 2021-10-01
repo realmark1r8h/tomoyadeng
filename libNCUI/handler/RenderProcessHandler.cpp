@@ -304,10 +304,13 @@ namespace amo {
         }
         
         if (GetAnyBrowser() == NULL) {
+            pHander->OnProcessDestory();
             ClassMethodMgr::getInstance()->clear();
             DllManager<PID_RENDERER>::getInstance()->clear();
-            
         }
+        
+        
+        
     }
     
     void RenderProcessHandler::createPipe(int nBrowserID,

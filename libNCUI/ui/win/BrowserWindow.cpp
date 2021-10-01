@@ -57,6 +57,10 @@ namespace amo {
         
     }
     
+    BrowserWindow::~BrowserWindow() {
+        amo::cdevel << func_orient << amo::endl;
+    }
+    
     void  BrowserWindow::test() {
         Clipboard clipboard;
         //clipboard.writeText("sdfsdfs");
@@ -76,9 +80,7 @@ namespace amo {
     }
     void BrowserWindow::InitWindow() {
     
-        auto transfer1 = ClassTransfer::getEntryTransfer();
-        
-        
+    
         //获取图标，第二个参数为要获取第几个图标
         HICON hIcon = ExtractIconA(m_PaintManager.GetInstance(), amo::path::getFullExeName().c_str(), 0);
         ::SendMessage(m_hWnd, WM_SETICON, (WPARAM)false, (LPARAM)hIcon);
@@ -324,6 +326,8 @@ namespace amo {
         m_pBrowserTransfer.reset();
         auto manager = amo::BrowserTransferMgr::getInstance();
         manager->removeTransfer(browser->GetIdentifier(), transferName());
+        auto transferMapMgr = TransferMappingMgr<BrowserTransfer>::getInstance();
+        transferMapMgr->removeMapping(browser);
         return ;
     }
     
@@ -568,11 +572,9 @@ namespace amo {
             CefRefPtr<amo::ClientHandler> pHandler = NULL;
             pHandler = m_pWebkit->getClientHandler();
             pHandler->UnregisterRenderHandlerDelegate(this);
-            pHandler->UnregisterLifeSpanHandlerDelegate(this);
+            //pHandler->UnregisterLifeSpanHandlerDelegate(this);
             
-            m_pCefCallbackHandler->unregisterHandlerDegate(
-                m_pWebkit->getClientHandler());
-                
+            
             /*   if (m_pBrowserLayout) {
                    m_pBrowserLayout->Remove(m_pWebkit);
             

@@ -433,15 +433,30 @@ namespace amo {
         
         // 外部模块必须提供registerTransfer函数
         int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
-        auto options = pLoader->exec<bool, int,
-             std::function<void(int, std::shared_ptr<ClassTransfer>) >> (
-                 "registerTransfer",
-                 nBrowserID,
-                 std::bind(&WebkitView::registerExternalTransfer,
-                           this,
-                           std::placeholders::_1,
-                           std::placeholders::_2));
+        
+        
+        std::shared_ptr< TransferRegister> info(new TransferRegister());
+        info->nBrowserID = nBrowserID;
+        info->fnCallback = std::bind(&WebkitView::registerExternalTransfer,
+                                     this,
+                                     std::placeholders::_1,
+                                     std::placeholders::_2);
+                                     
+                                     
+                                     
+        auto options = pLoader->exec<bool, std::shared_ptr<TransferRegister>>(
+                           "registerTransfer",
+                           info);
                            
+        //auto options = pLoader->exec<bool, int,
+        //     std::function<void(int, std::shared_ptr<ClassTransfer>) >> (
+        //         "registerTransfer",
+        //         nBrowserID,
+        //         std::bind(&WebkitView::registerExternalTransfer,
+        //                   this,
+        //                   std::placeholders::_1,
+        //                   std::placeholders::_2));
+        
         // 判断外部模块是否注册成功
         if (!options || !*options) {
             amo::string dllName(strClass, true);

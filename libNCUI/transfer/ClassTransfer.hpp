@@ -23,13 +23,18 @@ namespace amo {
     class ClassTransfer
         : public Transfer {
     public:
-        typedef std::unordered_map < int64_t,
-                std::shared_ptr<amo::ClassTransfer> > ClassTransferMap;
+        class ClassTransferMap : public std::unordered_map < int64_t,
+            std::shared_ptr<amo::ClassTransfer> > {
+        public:
+            ~ClassTransferMap() {
+                int i = 3;
+                ++i;
+            }
+        };
+        /* typedef std::unordered_map < int64_t,
+                 std::shared_ptr<amo::ClassTransfer> > ClassTransferMap;*/
     public:
-        std::shared_ptr<ClassTransfer> m_pEntryProxyTransfer;
-        std::shared_ptr<ClassTransfer> getEntryProxyTransfer() {
-            return m_pEntryProxyTransfer;
-        }
+    
         /*!
          * @fn	template<typename T, typename ... Args>
          * 		static std::shared_ptr<T>
@@ -96,61 +101,8 @@ namespace amo {
             }
             
             return iter->second;
-            
-            //getEntryTransfer()->findTransferFromEntry(nID);
-        }
-        //
-        //// 通过主模块的Trasnfer查找transfer
-        //static std::shared_ptr<ClassTransfer> findTransferFromEntry(const int64_t& nID) {
-        //    auto iter = getTransferMap()->find(nID);
-        //
-        //    if (iter != getTransferMap()->end()) {
-        //        return iter->second;
-        //    }
-        //
-        //    std::vector<std::shared_ptr<ClassTransfer> >& vec = externalTransferList();
-        //
-        //    for (auto & p : vec) {
-        //        auto pTransfer =  p->findTransferFromAlone(nID);
-        //
-        //        if (pTransfer) {
-        //            return pTransfer;
-        //        }
-        //    }
-        //
-        //    return std::shared_ptr<ClassTransfer>();
-        //}
-        //
-        //
-        //// 在自己的的模块中查找transfer
-        //static std::shared_ptr<ClassTransfer> findTransferFromAlone(const int64_t& nID) {
-        //    auto iter = getTransferMap()->find(nID);
-        //
-        //    if (iter == getTransferMap()->end()) {
-        //        return std::shared_ptr<ClassTransfer>();
-        //    }
-        //
-        //    return iter->second;
-        //}
-        //
-        //
-        //// 如果从动态库中加载了第三方的transfer,
-        //// 那么由于动态库数据独立,将无法查找到其他dll中的transfer
-        //static std::vector<std::shared_ptr<ClassTransfer> >& externalTransferList() {
-        //    static std::vector<std::shared_ptr<ClassTransfer> > list;
-        //    return list;
-        //}
-        //
-        // 查找入口transfer
-        static std::shared_ptr<ClassTransfer>& getEntryTransfer() {
-            static std::shared_ptr<ClassTransfer> pTransfer(new ClassTransfer("Entry"));
-            return pTransfer;
         }
         
-        // 设置查找入口 transfer ，如果是第三方dll，将会被替换成主程序的transfer
-        static void setEntryTransfer(std::shared_ptr<ClassTransfer> pTransfer) {
-            getEntryTransfer() = pTransfer;
-        }
         
         /*!
          * @fn	static void ClassTransfer::addTransfer(std::shared_ptr<ClassTransfer> transfer)
@@ -160,13 +112,9 @@ namespace amo {
          * @param	transfer	The transfer.
          */
         static void addTransfer(std::shared_ptr<ClassTransfer> transfer) {
-            getEntryTransfer()->addTransferImpl(transfer);
-            //getTransferMap()[transfer->getObjectID()] = transfer;
-        }
-        
-        static void addTransferImpl(std::shared_ptr<ClassTransfer> transfer) {
             (*getTransferMap())[transfer->getObjectID()] = transfer;
         }
+        
         
         /*!
          * @fn	static void ClassTransfer::removeTransfer(const int64_t& nID)
@@ -176,13 +124,20 @@ namespace amo {
          * @param	nID	The identifier.
          */
         static void removeTransfer(const int64_t& nID) {
-            getEntryTransfer()->addTransferImpl(nID);
+            getTransferMap()->erase(nID);
         }
         
-        
-        static void addTransferImpl(const int64_t& nID) {
-            //getTransferMap()[transfer->getObjectID()] = transfer;
-            getTransferMap()->erase(nID);
+        static void removeTransferByName(const std::string& name) {
+            auto ptr = getTransferMap();
+            
+            for (auto iter = ptr->begin(); iter != ptr->end();) {
+                if (iter->second->transferName() == name) {
+                    iter = ptr->erase(iter);
+                } else {
+                    ++iter;
+                }
+            }
+            
         }
         
         
@@ -195,11 +150,6 @@ namespace amo {
     
         ClassTransfer(const std::string& strName)
             : Transfer(strName) {
-            if (strName == "Entry") {
-                return;
-            }
-            
-            m_pEntryProxyTransfer = getEntryTransfer();
         }
         
         virtual std::string getClass() const {
@@ -280,9 +230,9 @@ namespace amo {
     
     
     
-    class ClassRegisterInfo {
+    class TransferRegister {
     public:
-        ClassRegisterInfo() {
+        TransferRegister() {
             nBrowserID = -1;
             transferMap = ClassTransfer::getTransferMap();
             

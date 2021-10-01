@@ -266,6 +266,7 @@ namespace amo {
     AppContext::~AppContext() {
         $log(amo::cdevel << func_orient << amo::endl;);
         m_pNodeMessageHandler.reset();
+        ClassTransfer::getTransferMap()->clear();
     }
     
     std::shared_ptr<BrowserWindowSettings> AppContext::getDefaultBrowserSettings() {
@@ -396,7 +397,17 @@ namespace amo {
             getNodeMessageHandler()->stopNodeProcess();
         }
         
+        
+        auto mm = *ClassTransfer::getTransferMap();
+        
+        for (auto  p : mm) {
+            amo::cdevel << p.second->transferName() << amo::endl;
+        }
+        
+        ClassTransfer::getTransferMap()->clear();
+        //ClassTransfer::getTransferMap().reset();
         manager.reset();
+        
         CefShutdown();
         
     }

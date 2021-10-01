@@ -232,7 +232,17 @@ namespace amo {
         RendererTransferMgr::getInstance()->removeTransfer(nBrowserID);
         
         if (RendererTransferMgr::getInstance()->isEmpty()) {
+            for (auto& p : m_oClassTransferMap) {
+                ClassTransfer::removeTransferByName(p.first);
+            }
+            
             m_oClassTransferMap.clear();
+        }
+    }
+    
+    void V8ExtentionHandler::OnProcessDestory() {
+        for (auto& p : m_oClassTransferMap) {
+            ClassTransfer::removeTransferByName(p.first);
         }
     }
     
@@ -250,7 +260,6 @@ namespace amo {
     
     V8ExtentionHandler::V8ExtentionHandler() {
         m_pUtilityV8Handler = new UtilityV8Handler();
-        m_pEntryTransfer = ClassTransfer::getEntryTransfer();
     }
     
     V8ExtentionHandler::~V8ExtentionHandler() {
@@ -265,14 +274,7 @@ namespace amo {
             return  ;
         }
         
-        auto transfer1 = ClassTransfer::getEntryTransfer();
-        auto transfer2 = pTransfer->getEntryTransfer();
-        auto transfer3 = m_pEntryTransfer;
         
-        auto transfer4 = m_pEntryTransfer->getEntryProxyTransfer();
-        auto transfer5 = pTransfer->getEntryProxyTransfer();
-        pTransfer->setEntryTransfer(m_pEntryTransfer);
-        pTransfer->getEntryProxyTransfer()->setEntryTransfer(m_pEntryTransfer);
         m_oClassTransferMap.insert(std::make_pair(pTransfer->transferName(),
                                    pTransfer));
         // 设置事件回调函数
@@ -316,7 +318,7 @@ namespace amo {
         
         // 外部模块必须提供registerTransfer函数
         int nBrowserID = browser->GetIdentifier();
-        std::shared_ptr< ClassRegisterInfo> info(new ClassRegisterInfo());
+        std::shared_ptr< TransferRegister> info(new TransferRegister());
         info->nBrowserID = nBrowserID;
         info->fnCallback = std::bind(&V8ExtentionHandler::registerExternalTransfer,
                                      this,
@@ -332,7 +334,7 @@ namespace amo {
                            std::placeholders::_1,
                            std::placeholders::_2));*/
         
-        auto options = pLoader->exec<bool, std::shared_ptr<ClassRegisterInfo>> (
+        auto options = pLoader->exec<bool, std::shared_ptr<TransferRegister>> (
                            "registerTransfer",
                            info);
                            
@@ -447,6 +449,7 @@ namespace amo {
             pCache = pClassHandler->getV8Object();
             return pCache;
         } else {
+        
         
             // 从磁盘中查找， dll
             

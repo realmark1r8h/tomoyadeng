@@ -158,6 +158,10 @@ namespace amo {
     }
     
     void DllManagerBase::clear() {
+        for (auto p : m_oMap) {
+            p.second->exec<amo::nil>("unregisterTransfer");
+        }
+        
         m_oMap.clear();
         m_oDllArgsMap.clear();
     }

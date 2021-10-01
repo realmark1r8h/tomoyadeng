@@ -49,6 +49,7 @@ namespace amo {
         
         bool preTranslateMessage(CefEventHandle os_event);
         
+        void quitMessageLoop();
         IMPLEMENT_REFCOUNTING(BrowserWindowCreator);
     public:
         /*! @brief	ä¯ÀÀÆ÷´°¿Ú¼¯ºÏ. */
