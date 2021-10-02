@@ -7,12 +7,12 @@
 namespace amo {
 
     PathTransfer::PathTransfer()
-        : ClassTransfer("Path") {
+        : RunableTransfer("Path") {
         m_pPath.reset(new path());
     }
     
     PathTransfer::PathTransfer(const std::string& ansiPath)
-        : ClassTransfer("Path") {
+        : RunableTransfer("Path") {
         
         m_pPath.reset(new path(ansiPath));
         

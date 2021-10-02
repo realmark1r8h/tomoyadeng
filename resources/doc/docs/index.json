@@ -431,6 +431,25 @@
 						}
 					],
 					"filter": "sqlite sqlite"
+				},{
+					"id": "ncPath",
+					"name": "path",
+					"icon": "icon-star",
+					"desc": "数据库",
+					"topics": [
+						{
+							"name": "接口说明"
+						}, {
+							"name": "打开数据库"
+						}, {
+							"name": "执行SQL"
+						}, {
+							"name": "查询数据"
+						}, {
+							"name": "备份数据库"
+						}
+					],
+					"filter": "sqlite sqlite"
 				}
 			],
 			"filter": "sqlite db"

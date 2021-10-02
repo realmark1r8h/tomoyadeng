@@ -5,7 +5,7 @@
 namespace amo {
 
     UUIDTransfer::UUIDTransfer()
-        : ClassTransfer("UUID") {
+        : RunableTransfer("UUID") {
         
     }
     

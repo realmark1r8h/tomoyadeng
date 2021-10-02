@@ -1,12 +1,12 @@
 #ifndef UUIDTransfer_h__
 #define UUIDTransfer_h__
 
-#include <transfer/ClassTransfer.hpp>
-#include "transfer/ClassTransfer.hpp"
+#include <transfer/RunableTransfer.hpp>
+
 
 namespace amo {
 
-    class UUIDTransfer : public ClassTransfer {
+    class UUIDTransfer : public RunableTransfer {
     public:
     
         UUIDTransfer();
@@ -76,7 +76,7 @@ namespace amo {
         
         
     public:
-        AMO_CEF_MESSAGE_TRANSFER_BEGIN(UUIDTransfer, ClassTransfer)
+        AMO_CEF_MESSAGE_TRANSFER_BEGIN(UUIDTransfer, RunableTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(fromString, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getString, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(nil, TransferFuncStatic | TransferExecSync)

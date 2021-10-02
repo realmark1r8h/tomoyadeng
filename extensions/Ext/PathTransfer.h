@@ -2,11 +2,11 @@
 #define PathTransfer_h__
 
 
-#include <transfer/ClassTransfer.hpp>
+#include <transfer/RunableTransfer.hpp>
 namespace amo {
 
     class path;
-    class PathTransfer : public ClassTransfer {
+    class PathTransfer : public RunableTransfer {
     public:
     
         PathTransfer();
@@ -29,7 +29,7 @@ namespace amo {
         
         
     public:
-        AMO_CEF_MESSAGE_TRANSFER_BEGIN(PathTransfer, ClassTransfer)
+        AMO_CEF_MESSAGE_TRANSFER_BEGIN(PathTransfer, RunableTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(toString, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(isExsit, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(append, TransferFuncNormal | TransferExecSync)

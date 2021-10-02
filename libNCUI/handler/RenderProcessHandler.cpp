@@ -376,6 +376,18 @@ namespace amo {
         // 这个IPCRendererV8Handler也应该加进去的。
         RendererTransferMgr::getInstance()->registerClass(nBrowserID);
         
+        auto classManager = ClassMethodMgr::getInstance();
+        
+        // 添加渲染进程的transfer
+        auto rendererTransferMap = RendererTransferMgr::getInstance()->getTransferMap(nBrowserID);
+        
+        for (auto& p : rendererTransferMap.transferMap()) {
+            p.second->setWorkOnRenderer(true);
+            p.second->getFuncMgr().setRendererClass(true);
+            classManager->addClass(p.first, p.second->getFuncMgr());
+        }
+        
+        
         
         CefRefPtr<CefProcessMessage> msg = CefProcessMessage::Create(MSG_IPC_READY);
         browser->SendProcessMessage(PID_BROWSER, msg);

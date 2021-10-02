@@ -20,10 +20,13 @@ namespace amo {
     class RunableTransfer : public ClassTransfer {
     public:
         typedef std::function<void(std::shared_ptr<RunableTransfer>, const TransferEventInfo&)> EventCallbackFunc;
+        
+        
+        
     public:
         RunableTransfer()
             : ClassTransfer("Runable") {
-            
+            m_nThreadID = 0;
         }
         RunableTransfer(const std::string& name)
             : ClassTransfer(name) {
@@ -39,6 +42,15 @@ namespace amo {
             }
             
             return ClassTransfer::getInterface(name);
+        }
+        
+        virtual Any onMessageTransfer(IPCMessage::SmartType message) override {
+            if (m_nThreadID == 0) {
+                return ClassTransfer::onMessageTransfer(message);
+            } else {
+                //
+                return Undefined();
+            }
         }
         
         EventCallbackFunc getEventCallback() const {
@@ -64,11 +76,27 @@ namespace amo {
         // 将当前transfer附加到一个线程中
         Any attach(IPCMessage::SmartType msg) {
             //TODO: 这如果是第三方Dll加载的Transfer,有可能找不着。
+            std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+            int64_t nObjectID = args->getInt64(0);
+            auto transfer =  ClassTransfer::findTransfer(nObjectID);
+            
+            if (transfer == NULL) {
+                return Undefined();
+            }
+            
+            m_nThreadID = nObjectID;
+            return Undefined();
         }
         // 将当前transfer从一个线程中分离
         Any detach(IPCMessage::SmartType msg) {
-        
+            m_nThreadID = 0;
+            return Undefined();
         }
+        
+        AMO_CEF_MESSAGE_TRANSFER_BEGIN(RunableTransfer, ClassTransfer)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(attach, TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(detach, TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_END()
         
     protected:
         /** @brief	事件回调函数. */
@@ -77,6 +105,8 @@ namespace amo {
         std::function<void()> m_fnWeakup;
         /** @brief	暂停线程函数. */
         std::function<void()> m_fnSuspend;
+        /*! @brief	附加到的线程ID. */
+        int64_t m_nThreadID;
     };
     
     
