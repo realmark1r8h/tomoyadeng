@@ -16,7 +16,7 @@
 #include <functional>
 
 extern "C" {
-    UIEXTENSION_API bool registerTransfer(int nBrowserID, std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fn);
+    UIEXTENSION_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info);
 }
 
 namespace amo {

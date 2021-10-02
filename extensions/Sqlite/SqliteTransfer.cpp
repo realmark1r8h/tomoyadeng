@@ -4,29 +4,18 @@
 
 
 
-//SQLITE_API2 bool registerTransfer(int nBrowserID,
-//                                  std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fn) {
-//    std::shared_ptr<amo::ClassTransfer> pTransfer(new amo::SqliteTransfer());
-//    pTransfer->registerFunction();
-//    auto transfer1 = amo::ClassTransfer::getEntryTransfer();
-//
-//    if (fn) {
-//        fn(nBrowserID, pTransfer);
-//    }
-//
-//    return true;
-//}
 
-SQLITE_API2 bool registerTransfer(std::shared_ptr<amo::ClassRegisterInfo> info) {
+SQLITE_API2 bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {
     amo::ClassTransfer::getTransferMap() = info->transferMap;
     int nBrowserID = info->nBrowserID;
+    auto fn = info->fnCallback;
     
     std::shared_ptr<amo::ClassTransfer> pTransfer(new amo::SqliteTransfer());
     pTransfer->registerFunction();
-    auto transfer1 = amo::ClassTransfer::getEntryTransfer();
     
-    if (info->fnCallback) {
-        info->fnCallback(nBrowserID, pTransfer);
+    
+    if (fn) {
+        fn(nBrowserID, pTransfer);
     }
     
     return true;
@@ -37,6 +26,11 @@ namespace amo {
     SqliteTransfer::SqliteTransfer()
         : ClassTransfer("Sqlite") {
         
+    }
+    
+    SqliteTransfer::~SqliteTransfer() {
+        int i = 3;
+        ++i;
     }
     
     Any SqliteTransfer::execute(IPCMessage::SmartType msg) {
@@ -81,5 +75,9 @@ namespace amo {
         return  pDB->getFuncMgr().toSimplifiedJson();
     }
     
+}
+
+SQLITE_API2 void unregisterTransfer() {
+    //amo::ClassTransfer::getTransferMap().reset();
 }
 

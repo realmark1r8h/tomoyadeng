@@ -11,8 +11,8 @@
 
 
 extern "C" {
-    //SQLITE_API2 bool registerTransfer(int nBrowserID, std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fn);
-    SQLITE_API2 bool registerTransfer(std::shared_ptr<amo::ClassRegisterInfo> info);
+    SQLITE_API2 bool registerTransfer(std::shared_ptr<amo::TransferRegister> info);
+    SQLITE_API2 void unregisterTransfer();
 }
 
 
@@ -21,7 +21,7 @@ namespace amo {
     public:
     
         SqliteTransfer();
-        
+        ~SqliteTransfer();
         // Ö´ÐÐÔ­Éúsql
         virtual Any execute(IPCMessage::SmartType msg);
         virtual Any insert(IPCMessage::SmartType msg);

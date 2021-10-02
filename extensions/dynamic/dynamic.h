@@ -14,7 +14,7 @@
 
 extern "C" {
     DYNAMIC_API int fndynamic(void);
-    DYNAMIC_API bool registerTransfer(int nBrowserID, std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fn);
+    DYNAMIC_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info);
 }
 
 namespace amo {

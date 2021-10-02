@@ -14,7 +14,7 @@
 #include "transfer/ClassTransfer.hpp"
 
 extern "C" {
-    EXT_API bool registerTransfer(int nBrowserID, std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fn);
+    EXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info);
 }
 
 namespace amo {

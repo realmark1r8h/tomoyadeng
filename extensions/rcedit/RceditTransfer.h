@@ -15,7 +15,7 @@
 
 
 extern "C" {
-    RCEDIT_API bool registerTransfer(int nBrowserID, std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fn);
+    RCEDIT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info);
     
 }
 

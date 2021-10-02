@@ -8,8 +8,11 @@
 
 
 
-EXT_API bool registerTransfer(int nBrowserID,
-                              std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fn) {
+EXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {
+    amo::ClassTransfer::getTransferMap() = info->transferMap;
+    int nBrowserID = info->nBrowserID;
+    auto fn = info->fnCallback;
+    
     {
         std::shared_ptr<amo::ClassTransfer> pTransfer(new amo::ExtTransfer());
         pTransfer->registerFunction();
