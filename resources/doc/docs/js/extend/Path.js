@@ -18,6 +18,7 @@
 			 
 			var path = new Path('E:/aaa.ab');
 			path.attach(thread);
+			path.toString();
 		});
  
 	})

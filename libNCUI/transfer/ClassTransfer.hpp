@@ -152,16 +152,18 @@ namespace amo {
             : Transfer(strName) {
         }
         
-        virtual std::string getClass() const {
-            return "ClassTransfer";
+        virtual std::string getClass() const override {
+            return "Class";
         }
-        virtual Transfer* getInterface(const std::string& name) {
+        
+        virtual Transfer* getInterface(const std::string& name) override {
             if (name == ClassTransfer::getClass()) {
                 return this;
             }
             
             return Transfer::getInterface(name);
         }
+        
         /*!
          * @fn	virtual TransferType ClassTransfer::transferType()
          *

@@ -33,7 +33,7 @@ namespace amo {
             
         }
         virtual std::string getClass() const {
-            return "RunableTransfer";
+            return "Runable";
         }
         
         virtual Transfer* getInterface(const std::string& name) {
@@ -44,12 +44,37 @@ namespace amo {
             return ClassTransfer::getInterface(name);
         }
         
-        virtual Any onMessageTransfer(IPCMessage::SmartType message) override {
+        virtual Any onMessageTransfer(IPCMessage::SmartType msg) override {
+            std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+            
             if (m_nThreadID == 0) {
-                return ClassTransfer::onMessageTransfer(message);
+                return ClassTransfer::onMessageTransfer(msg);
+            } else if (args->isValid(IPCArgsPosInfo::ThreadTransferFuncName)
+                       && args->isValid(IPCArgsPosInfo::ThreadTransferID)) {
+                return ClassTransfer::onMessageTransfer(msg);
             } else {
-                //
-                return Undefined();
+            
+                auto transfer = ClassTransfer::findTransfer(m_nThreadID);
+                
+                if (transfer == NULL) {
+                    return Undefined();
+                }
+                
+                IPCMessage::SmartType ipcMessage = msg->clone();
+                ipcMessage->setMessageName(MSG_NATIVE_EXECUTE);
+                
+                std::shared_ptr<AnyArgsList> ipcArgs = ipcMessage->getArgumentList();
+                
+                ipcArgs->setValue(IPCArgsPosInfo::ThreadTransferFuncName, args->getString(IPCArgsPosInfo::FuncName));
+                ipcArgs->setValue(IPCArgsPosInfo::ThreadTransferID, args->getString(IPCArgsPosInfo::TransferID));
+                ipcArgs->setValue(IPCArgsPosInfo::ThreadTransferName, args->getString(IPCArgsPosInfo::TransferName));
+                
+                
+                ipcArgs->setValue(IPCArgsPosInfo::TransferID, transfer->getObjectID());
+                ipcArgs->setValue(IPCArgsPosInfo::TransferName, transfer->transferName());
+                ipcArgs->setValue(IPCArgsPosInfo::FuncName, "exec");
+                
+                return transfer->onMessageTransfer(ipcMessage);
             }
         }
         
@@ -75,18 +100,25 @@ namespace amo {
         
         // 将当前transfer附加到一个线程中
         Any attach(IPCMessage::SmartType msg) {
-            //TODO: 这如果是第三方Dll加载的Transfer,有可能找不着。
+        
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             int64_t nObjectID = args->getInt64(0);
             auto transfer =  ClassTransfer::findTransfer(nObjectID);
             
+            
             if (transfer == NULL) {
-                return Undefined();
+                return false;
+            }
+            
+            if (transfer->getInterface("ThreadBase") == NULL) {
+                return false;
             }
             
             m_nThreadID = nObjectID;
-            return Undefined();
+            return true;
+            
         }
+        
         // 将当前transfer从一个线程中分离
         Any detach(IPCMessage::SmartType msg) {
             m_nThreadID = 0;
@@ -94,8 +126,8 @@ namespace amo {
         }
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(RunableTransfer, ClassTransfer)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(attach, TransferFuncNormal | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(detach, TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(attach, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(detach, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     protected:

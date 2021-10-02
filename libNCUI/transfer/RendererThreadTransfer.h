@@ -18,6 +18,18 @@ namespace amo {
         
         virtual std::shared_ptr< TransferMgr> getTransferMgr() override;
         
+        virtual std::string getClass() const override {
+            return "Thread";
+        }
+        
+        virtual Transfer* getInterface(const std::string& name) override {
+            if (name == RendererThreadTransfer::getClass()) {
+                return this;
+            }
+            
+            return ThreadBaseTransfer::getInterface(name);
+        }
+        
     };
     
 }

@@ -47,6 +47,7 @@ namespace amo {
     Any PathTransfer::append(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         amo::string ansiPath(args->getString(0), true);
+        
         amo::path p(ansiPath);
         m_pPath->append(p);
         
@@ -73,6 +74,18 @@ namespace amo {
         return onCreateClass(cloneMsg);
     }
     
+    
+    std::string PathTransfer::getClass() const {
+        return ("Path");
+    }
+    
+    Transfer* PathTransfer::getInterface(const std::string& name) {
+        if (name == PathTransfer::getClass()) {
+            return this;
+        }
+        
+        return RunableTransfer::getInterface(name);
+    }
     
 }
 

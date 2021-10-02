@@ -19,12 +19,36 @@ namespace amo {
         ThreadRenderer,
     };
     
+    class ThreadBaseTransfer : public ClassTransfer {
+    public:
+        ThreadBaseTransfer()
+            : ClassTransfer("ThreadBase") {
+            
+        }
+        
+        ThreadBaseTransfer(const std::string& className)
+            : ClassTransfer(className) {
+            
+        }
+        virtual std::string getClass() const override {
+            return "ThreadBase";
+        }
+        
+        virtual Transfer* getInterface(const std::string& name) override {
+            if (name == ThreadBaseTransfer::getClass()) {
+                return this;
+            }
+            
+            return ClassTransfer::getInterface(name);
+        }
+        
+    };
     
     template<ThreadEnum>
-    class ThreadTransfer : public ClassTransfer {
+    class ThreadTransfer : public ThreadBaseTransfer {
     public:
         ThreadTransfer()
-            : ClassTransfer("ThreadBase") {
+            : ThreadBaseTransfer("ThreadBase") {
             m_nBrowserID = m_nFrameID = 0;
             m_isPausedThread = false;
             m_pLooperExecutor = getWorkThread();
@@ -32,12 +56,11 @@ namespace amo {
         }
         
         ThreadTransfer(const std::string& className)
-            : ClassTransfer(className) {
+            : ThreadBaseTransfer(className) {
             m_nBrowserID = m_nFrameID = 0;
             m_isPausedThread = false;
             m_pLooperExecutor = getWorkThread();
         }
-        
         
         static std::shared_ptr<amo::looper_executor>& getWorkThread() {
             static std::shared_ptr<amo::looper_executor> pLooperExecutor;

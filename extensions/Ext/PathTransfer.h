@@ -15,7 +15,8 @@ namespace amo {
         
         
         virtual Any onCreateClass(IPCMessage::SmartType msg) override;
-        
+        virtual std::string getClass() const override;
+        virtual Transfer* getInterface(const std::string& name) override;
         
         Any toString(IPCMessage::SmartType msg);
         Any isExsit(IPCMessage::SmartType msg);
@@ -26,6 +27,9 @@ namespace amo {
         // ¾²Ì¬º¯Êý
         Any getFullAppDir(IPCMessage::SmartType msg);
         Any getFullAppName(IPCMessage::SmartType msg);
+        
+        
+        
         
         
     public:

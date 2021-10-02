@@ -13,7 +13,17 @@ namespace amo {
         
         virtual  std::shared_ptr< TransferMgr> getTransferMgr() override;
         virtual Any onCreateClass(IPCMessage::SmartType msg) override;
+        virtual std::string getClass() const override {
+            return "UIThread";
+        }
         
+        virtual Transfer* getInterface(const std::string& name) override {
+            if (name == UIThreadTransfer::getClass()) {
+                return this;
+            }
+            
+            return ThreadBaseTransfer::getInterface(name);
+        }
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(UIThreadTransfer, ThreadTransfer<ThreadUI>)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferFuncNormal | TransferExecNormal)
