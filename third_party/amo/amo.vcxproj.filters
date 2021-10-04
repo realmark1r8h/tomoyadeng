@@ -267,5 +267,17 @@
     <ClInclude Include="amo\file.hpp">
       <Filter>amo</Filter>
     </ClInclude>
+    <ClInclude Include="amo\directory.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\date_time.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\process.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\registry.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

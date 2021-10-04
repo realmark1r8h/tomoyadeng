@@ -30,6 +30,7 @@ namespace amo {
         
         pTransfer->registerFunction();
         addTransfer(pTransfer);
+        pTransfer->setTriggerEventFunc(getTriggerEventFunc());
         return  pTransfer->getFuncMgr().toSimplifiedJson();
     }
     
@@ -37,6 +38,10 @@ namespace amo {
     
     Any PathTransfer::toString(IPCMessage::SmartType msg) {
         amo::string ansiPath(m_pPath->c_str(), false);
+        TransferEventInfo info("success", false, true);
+        info.data = "fffff";
+        //broadcastEvent(info);
+        triggerEvent(info);
         return ansiPath.to_utf8();
     }
     

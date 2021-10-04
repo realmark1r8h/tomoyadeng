@@ -27,10 +27,11 @@ namespace amo {
         RunableTransfer()
             : ClassTransfer("Runable") {
             m_nThreadID = 0;
+            addModule("EventEmitter");
         }
         RunableTransfer(const std::string& name)
             : ClassTransfer(name) {
-            
+            addModule("EventEmitter");
         }
         virtual std::string getClass() const {
             return "Runable";
@@ -47,7 +48,10 @@ namespace amo {
         virtual Any onMessageTransfer(IPCMessage::SmartType msg) override {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             
-            if (m_nThreadID == 0) {
+            if (transferName() == args->getString(IPCArgsPosInfo::FuncName)) {
+                // new 不能在多线程中执行
+                return ClassTransfer::onMessageTransfer(msg);
+            } else if (m_nThreadID == 0) {
                 return ClassTransfer::onMessageTransfer(msg);
             } else if (args->isValid(IPCArgsPosInfo::ThreadTransferFuncName)
                        && args->isValid(IPCArgsPosInfo::ThreadTransferID)) {
@@ -78,12 +82,12 @@ namespace amo {
             }
         }
         
-        EventCallbackFunc getEventCallback() const {
-            return m_fnEventCallback;
-        }
-        void setEventCallback(EventCallbackFunc val) {
-            m_fnEventCallback = val;
-        }
+        /*     EventCallbackFunc getEventCallback() const {
+                 return m_fnEventCallback;
+             }
+             void setEventCallback(EventCallbackFunc val) {
+                 m_fnEventCallback = val;
+             }*/
         std::function<void()> getWeakup() const {
             return m_fnWeakup;
         }

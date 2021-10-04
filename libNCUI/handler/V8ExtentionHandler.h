@@ -209,6 +209,10 @@ namespace amo {
         
         CefRefPtr<UtilityV8Handler> m_pUtilityV8Handler;
         
+        /** @brief	加载所有renderer_modules中的transfer. */
+        
+        std::set<int> m_oRegisteredSet;
+        
     };
     
 }

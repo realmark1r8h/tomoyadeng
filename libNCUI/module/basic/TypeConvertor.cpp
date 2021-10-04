@@ -58,12 +58,13 @@ namespace amo {
         
         bool bTransfer = false;
         
-        if (json.contains_key("transferObject")
+        if (json.is_object() && json.contains_key("transferObject")
                 && json.get<bool>("transferObject")) {
             bTransfer = true;
         }
         
         if (!bTransfer
+                && json.is_object()
                 && json.contains_key("transferClass")
                 && json.get<bool>("transferClass")) {
             bTransfer = true;
@@ -71,7 +72,7 @@ namespace amo {
         
         std::string sssss = json.to_string();
         
-        if (bTransfer) {
+        if (bTransfer || (!json.is_object() && !json.is_array())) {
             return ParseSingleJsonToObject(json);
         } else {
             CefRefPtr<CefV8Value> pObject = CefV8Value::CreateObject(NULL);

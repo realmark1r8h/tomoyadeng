@@ -85,6 +85,8 @@
     <ClInclude Include="amo\codecvt.hpp" />
     <ClInclude Include="amo\config.hpp" />
     <ClInclude Include="amo\date.hpp" />
+    <ClInclude Include="amo\date_time.hpp" />
+    <ClInclude Include="amo\directory.hpp" />
     <ClInclude Include="amo\dynamic_bitset.hpp" />
     <ClInclude Include="amo\exchanger.hpp" />
     <ClInclude Include="amo\file.hpp" />
@@ -112,10 +114,12 @@
     <ClInclude Include="amo\path.hpp" />
     <ClInclude Include="amo\pipe.hpp" />
     <ClInclude Include="amo\platforms.hpp" />
+    <ClInclude Include="amo\process.hpp" />
     <ClInclude Include="amo\program_options.hpp" />
     <ClInclude Include="amo\random.hpp" />
     <ClInclude Include="amo\ratio.hpp" />
     <ClInclude Include="amo\regex.hpp" />
+    <ClInclude Include="amo\registry.hpp" />
     <ClInclude Include="amo\rtc\json\other_json.hpp" />
     <ClInclude Include="amo\rtc\p2p_connection.hpp" />
     <ClInclude Include="amo\rtc\p2p_connection_listener.hpp" />

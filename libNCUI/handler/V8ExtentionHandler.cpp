@@ -11,6 +11,7 @@
 
 #include <amo/logger.hpp>
 #include <amo/string.hpp>
+#include <amo/directory.hpp>
 #include "module/basic/V8HandlerManager.h"
 #include "module/dll/DllManager.h"
 #include "module/JsClassV8Handler.h"
@@ -45,6 +46,48 @@ namespace amo {
             exception = L"include 的参数只能以字符串组成且不能为空";
             return true;
         }
+        
+        CefRefPtr<CefV8Context> context = CefV8Context::GetCurrentContext();
+        
+        if (!context->IsValid()) {
+            return false;
+        }
+        
+        CefRefPtr<CefBrowser> pBrowser = context->GetBrowser();
+        
+        if (!pBrowser) {
+            return false;
+        }
+        
+        CefRefPtr<CefFrame> pFrame = context->GetFrame();
+        
+        if (!pFrame) {
+            return false;
+        }
+        
+        int nBrowserID = context->GetBrowser()->GetIdentifier();
+        int64_t nFrameID = context->GetFrame()->GetIdentifier();
+        
+        if (m_oRegisteredSet.find(nBrowserID) == m_oRegisteredSet.end()) {
+            m_oRegisteredSet.insert(nBrowserID);
+            amo::directory dir(amo::path::getFullPathInExeDir("renderer_modules"));
+            dir.transfer([&](amo::path & p) {
+                if (p.is_directory()) {
+                    return true;
+                }
+                
+                if (p.find_extension() != ".dll") {
+                    return true;
+                }
+                
+                amo::string module = p.strip_path().remove_extension();
+                loadExternalTransfer(module, pBrowser);
+                return true;
+            }, false);
+            
+        }
+        
+        
         
         CefV8ValueList list;
         
@@ -87,26 +130,7 @@ namespace amo {
                 return true;
             }
             
-            CefRefPtr<CefV8Context> context = CefV8Context::GetCurrentContext();
             
-            if (!context->IsValid()) {
-                return false;
-            }
-            
-            CefRefPtr<CefBrowser> pBrowser = context->GetBrowser();
-            
-            if (!pBrowser) {
-                return false;
-            }
-            
-            CefRefPtr<CefFrame> pFrame = context->GetFrame();
-            
-            if (!pFrame) {
-                return false;
-            }
-            
-            int nBrowserID = context->GetBrowser()->GetIdentifier();
-            int64_t nFrameID = context->GetFrame()->GetIdentifier();
             
             // 先检查是否已经加载
             CefRefPtr<CefV8Value> pGlobal = context->GetGlobal();
@@ -255,11 +279,33 @@ namespace amo {
     }
     
     void V8ExtentionHandler::triggerEventOnRendererThreadImpl(IPCMessage::SmartType msg) {
-        RendererTransferMgr::getInstance()->onMessageTransfer(msg);
+        std::unordered_map<int, CefRefPtr<CefBrowser> > mp
+            = BrowserManager<PID_RENDERER>::GetAllBrowser();
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        
+        if (args->getInt(IPCArgsPosInfo::BrowserID) > 0) {
+            // 如果指定了浏览器ID，那么直接执行
+            RendererTransferMgr::getInstance()->onMessageTransfer(msg);
+        } else {
+            // 如果没有指定浏览器ID，则向所有浏览器发送
+            for (auto& p : mp) {
+            
+                int nBrowserID = p.second->GetIdentifier();
+                int64_t nFrameID = p.second->GetMainFrame()->GetIdentifier();
+                args->setValue(IPCArgsPosInfo::BrowserID, nBrowserID);
+                args->setValue(IPCArgsPosInfo::FrameID, nFrameID);
+                RendererTransferMgr::getInstance()->onMessageTransfer(msg);
+            }
+        }
+        
+        
+        
+        
     }
     
     V8ExtentionHandler::V8ExtentionHandler() {
         m_pUtilityV8Handler = new UtilityV8Handler();
+        
     }
     
     V8ExtentionHandler::~V8ExtentionHandler() {
@@ -283,6 +329,7 @@ namespace amo {
                       this,
                       std::placeholders::_1));
                       
+        //TODO:有大问题，这里只能加到一个BrowserID里面去，实际上需要添加到所有的里面去还是不需要？？？
         // 注册外部模块到程序中
         RendererTransferMgr::getInstance()->addTransfer(nBrowserID, pTransfer);
         
@@ -325,15 +372,6 @@ namespace amo {
                                      std::placeholders::_1,
                                      std::placeholders::_2);
                                      
-        /*auto options = pLoader->exec<bool, int,
-             std::function<void(int, std::shared_ptr<ClassTransfer>) >> (
-                 "registerTransfer",
-                 nBrowserID,
-                 std::bind(&V8ExtentionHandler::registerExternalTransfer,
-                           this,
-                           std::placeholders::_1,
-                           std::placeholders::_2));*/
-        
         auto options = pLoader->exec<bool, std::shared_ptr<TransferRegister>> (
                            "registerTransfer",
                            info);

@@ -474,6 +474,7 @@ namespace amo {
             return m_fnTriggerEventFunc;
         }
         
+        
         /**
          * @fn	void Transfer::setTriggerEventFunc(std::function<void(IPCMessage::SmartType) > val)
          *
@@ -535,6 +536,7 @@ namespace amo {
             
             ipcArgs->setValue(0, info.name);
             ipcArgs->setValue(1, info.data);
+            //ipcArgs->setValue(1, info.toJson());
             ipcArgs->setValue(IPCArgsPosInfo::ArgsLength, 2);
             
             if (getTriggerEventFunc()) {
@@ -543,6 +545,7 @@ namespace amo {
                 // log out
             }
         }
+        
     protected:
     
         /*! @brief	JS调用C++回调处理函数集合. */

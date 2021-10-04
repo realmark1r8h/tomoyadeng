@@ -24,7 +24,11 @@
 #include <amo/stdint.hpp>
 #include <amo/base64.hpp>
 #include <amo/uuid.hpp>
+#include <amo/date_time.hpp>
+
 #include <utility>
+
+#include <amo/string/string_convertor.hpp>
 
 namespace amo {
     class json {
@@ -157,6 +161,14 @@ namespace amo {
             return *this;
         }
         
+        amo::json to_utf8() {
+            return amo::json(amo::string_convertor::ansi_to_utf8(this->to_string()));
+        }
+        
+        static amo::json form_utf8(const amo::json& other) {
+            return amo::json(amo::string_convertor::utf8_to_ansi(other.to_string()));
+        }
+        
         void put_child(const std::string& key,  const json& val) {
             iterator iter = find_member(key);
             
@@ -193,17 +205,30 @@ namespace amo {
         }
         
         iterator find_member(const std::string& key) {
-            return doc.FindMember(key.c_str());
+            if (is_object()) {
+                return doc.FindMember(key.c_str());
+            }
+            
+            return iterator();
         }
         
         
         const_iterator find_member(const std::string& key) const {
-            return doc.FindMember(key.c_str());
+            if (is_object()) {
+                return doc.FindMember(key.c_str());
+            }
+            
+            return const_iterator();
         }
         
         
         bool contains_key(const std::string& key) const {
-            return doc.HasMember(key.c_str());
+            // key 只能对Object使用
+            if (doc.IsObject()) {
+                return doc.HasMember(key.c_str());
+            }
+            
+            return false;
         }
         
         std::vector<std::string> keys() {
@@ -262,8 +287,19 @@ namespace amo {
             doc.SetDouble(val);
         }
         
+        
         void put_impl(const std::string& val) {
             doc.SetString(val.c_str(), val.size(), get_allocator());
+        }
+        
+        void put_impl(const amo::uuid& val) {
+            std::string str = val.to_string();
+            doc.SetString(str.c_str(), str.size(), get_allocator());
+        }
+        
+        void put_impl(const amo::date_time& val) {
+            std::string str = val.to_string();
+            doc.SetString(str.c_str(), str.size(), get_allocator());
         }
         
         void put_impl(const char* val) {
@@ -323,6 +359,10 @@ namespace amo {
             put(key, val.to_string());
         }
         
+        void put(const std::string& key, const amo::date_time& val) {
+            put(key, val.to_string());
+        }
+        
         void put(rapidjson::Value key,  rapidjson::Value val) {
             iterator iter = find_member(key.GetString());
             
@@ -335,7 +375,7 @@ namespace amo {
         }
         
         template<typename T>
-        T get() {
+        T get() const {
             if (!is_value()) {
                 return T();
             }
@@ -343,7 +383,7 @@ namespace amo {
             return get_impl(T());
         }
         
-        bool get_impl(bool) {
+        bool get_impl(bool)  const {
             if (doc.IsBool()) {
                 return doc.GetBool();
             }
@@ -351,7 +391,7 @@ namespace amo {
             return false;
         }
         
-        int get_impl(int) {
+        int get_impl(int)  const {
             if (doc.IsNumber()) {
                 if (doc.IsDouble()) {
                     return (int)doc.GetDouble();
@@ -371,7 +411,7 @@ namespace amo {
             return int();
         }
         
-        uint32_t get_impl(uint32_t) {
+        uint32_t get_impl(uint32_t) const {
             if (doc.IsNumber()) {
                 if (doc.IsDouble()) {
                     return (uint32_t)doc.GetDouble();
@@ -391,7 +431,7 @@ namespace amo {
             return int();
         }
         
-        uint64_t get_impl(uint64_t) {
+        uint64_t get_impl(uint64_t) const {
             if (doc.IsNumber()) {
                 return (uint64_t)doc.GetUint64();
             }
@@ -399,7 +439,7 @@ namespace amo {
             return uint64_t();
         }
         
-        int64_t get_impl(int64_t) {
+        int64_t get_impl(int64_t) const {
             if (doc.IsNumber()) {
                 return (int64_t)doc.GetInt64();
             }
@@ -407,7 +447,7 @@ namespace amo {
             return int();
         }
         
-        double get_impl(double) {
+        double get_impl(double) const {
             if (doc.IsNumber()) {
                 return doc.GetDouble();
             }
@@ -415,7 +455,7 @@ namespace amo {
             return double();
         }
         
-        float get_impl(float) {
+        float get_impl(float) const {
             if (doc.IsNumber()) {
                 return (float)doc.GetDouble();
             }
@@ -423,7 +463,7 @@ namespace amo {
             return float();
         }
         
-        std::string get_impl(std::string) {
+        std::string get_impl(std::string) const {
             if (doc.IsString()) {
                 return doc.GetString();
             }
@@ -701,6 +741,17 @@ namespace amo {
             return iter->value.GetString();
         }
         
+        date_time get(const std::string& key, date_time default_val)  const {
+            const_iterator iter = find_member(key);
+            
+            if (iter == end() || !iter->value.IsString()) {
+                return default_val;
+            }
+            
+            std::string str =  iter->value.GetString();
+            return date_time::from_string(str);
+        }
+        
         
         int8_t get(const std::string& key, int8_t default_val)  const {
             const_iterator iter = find_member(key);
@@ -721,6 +772,8 @@ namespace amo {
             
             return (uint8_t)iter->value.GetUint();
         }
+        
+        
         
         int16_t get(const std::string& key, int16_t default_val)  const {
             const_iterator iter = find_member(key);
@@ -938,6 +991,14 @@ namespace amo {
             v.SetString(val.c_str(), get_allocator());
             doc.PushBack(v, get_allocator());
         }
+        
+        void push_back(const date_time& val) {
+            std::string str = val.to_string();
+            rapidjson::Value v;
+            v.SetString(str.c_str(), get_allocator());
+            doc.PushBack(v, get_allocator());
+        }
+        
         
         
         void push_back(const json& val) {
