@@ -662,6 +662,7 @@ namespace amo {
         bool is_directory() const {
             /*   bool  bOk = ::PathIsDirectoryA(m_path);
                return bOk;*/
+            BOOL BB = ::PathIsDirectoryA(m_path);
             return ::PathIsDirectoryA(m_path) != FALSE;
         }
         /*!

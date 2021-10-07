@@ -72,6 +72,8 @@ namespace amo {
         
         pDB->registerFunction();
         addTransfer(pDB);
+        pDB->setTriggerEventFunc(this->getTriggerEventFunc());
+        
         return  pDB->getFuncMgr().toSimplifiedJson();
     }
     

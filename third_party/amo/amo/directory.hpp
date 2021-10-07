@@ -5,6 +5,7 @@
 #define AMO_DIRECTORY_HPP__
 
 #include <amo/path.hpp>
+#include <shellapi.h>
 
 namespace amo {
     class directory {
@@ -13,8 +14,49 @@ namespace amo {
             : m_path(p) {
             
         }
-        bool transfer(amo::function<bool(path&)> fn_cb, bool recursion = false) {
         
+        // 判断目录是否存在
+        bool is_exists() const {
+            return m_path.is_directory();
+        }
+        
+        // 创建目录
+        bool create() {
+            return m_path.create_directory();
+        }
+        
+        // 清空目录下的所有子目录及文件，只留当前目录
+        bool empty() {
+            std::vector<amo::path> vec;
+            transfer([&](amo::path & p) {
+                vec.push_back(p);
+                return true;
+            }, false);
+            
+            bool bOk = true;
+            
+            // 只要有一个删除失败都认为删除失败
+            for (auto& p : vec) {
+                if (!remove_path(p)) {
+                    bOk = false;
+                }
+            }
+            
+            return bOk;
+        }
+        
+        // 删除目录
+        bool remove() {
+            return remove_path(m_path);
+        }
+        
+        
+        bool transfer(amo::function<bool(path&)> fn_cb, bool recursion = false) {
+            // 判断目录是否存在
+            if (!this->is_exists()) {
+                return false;
+            }
+            
             CHAR szFind[MAX_PATH] = { ("\0") };
             WIN32_FIND_DATAA findFileData;
             
@@ -59,6 +101,23 @@ namespace amo {
             return true;
         }
         
+    private:
+        // 删除一个目录
+        bool remove_path(const path& p) {
+        
+            std::string strPath = p.c_str();
+            
+            SHFILEOPSTRUCTA FileOp;
+            ZeroMemory((void*)&FileOp, sizeof(SHFILEOPSTRUCTA));
+            FileOp.fFlags = FOF_NOCONFIRMATION;
+            FileOp.hNameMappings = NULL;
+            FileOp.hwnd = NULL;
+            FileOp.lpszProgressTitle = NULL;
+            FileOp.pFrom = strPath.c_str();
+            FileOp.pTo = NULL;
+            FileOp.wFunc = FO_DELETE;
+            return (SHFileOperationA(&FileOp) == 0);
+        }
     private:
         amo::path m_path;
         

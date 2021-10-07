@@ -279,5 +279,8 @@
     <ClInclude Include="amo\registry.hpp">
       <Filter>amo</Filter>
     </ClInclude>
+    <ClInclude Include="amo\regular.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
