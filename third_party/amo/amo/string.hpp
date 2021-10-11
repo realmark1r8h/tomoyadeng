@@ -916,6 +916,10 @@ namespace amo {
         //
         //------------------------------------------------------------------------------
         string& replace(const string &strsrc, const string &strdst) {
+            if (strsrc.empty()) {
+                return *this;
+            }
+            
             std::string::size_type pos = 0;
             std::string::size_type srclen = strsrc.size();
             std::string::size_type dstlen = strdst.size();

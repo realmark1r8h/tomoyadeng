@@ -1,8 +1,6 @@
-// sqlite.cpp : 定义 DLL 应用程序的导出函数。
-//
-
 #include "stdafx.h"
-#include "Sqlite.h"
+#include "SqliteTransfer.h"
+
 #include <iostream>
 #include <amo/json.hpp>
 #include <amo/string.hpp>
@@ -10,15 +8,17 @@
 #include <amo/json.hpp>
 #include <amo/logger.hpp>
 
-
-
 #pragma comment(lib, "sqlite3.lib")
 
 namespace amo {
-    using namespace std;
+
+    SqliteTransfer::SqliteTransfer()
+        : ClassTransfer("Sqlite") {
+        
+    }
     
-    
-    Sqlite::Sqlite(const std::string& args) {
+    SqliteTransfer::SqliteTransfer(const std::string& args)
+        : ClassTransfer("Sqlite") {
         try {
             m_strDBPath = args;
             m_pDB.reset(new sqlite3pp::database(args.c_str()));
@@ -29,12 +29,62 @@ namespace amo {
             m_pDB.reset();
         }
         
+    }
+    
+    SqliteTransfer::~SqliteTransfer() {
+    
+    }
+    
+    /*Any SqliteTransfer::execute(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
+    Any SqliteTransfer::insert(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
+    Any SqliteTransfer::update(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
+    Any SqliteTransfer::backup(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
+    Any SqliteTransfer::query(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
+    Any SqliteTransfer::remove(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
+    Any SqliteTransfer::queryCount(IPCMessage::SmartType msg) {
+        return 0;
+    }
+    
+    Any SqliteTransfer::getLastInsertRowID(IPCMessage::SmartType msg) {
+        return Undefined();
+    }*/
+    
+    Any SqliteTransfer::onCreateClass(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string strPath = args->getString(0);
+        std::shared_ptr<SqliteTransfer> pDB;
+        pDB = ClassTransfer::createTransfer<SqliteTransfer>(strPath);
         
+        /*  std::shared_ptr<Sqlite> pDB(new Sqlite(strPath));
+        
+          pDB->registerFunction();
+          addTransfer(pDB);*/
+        pDB->setTriggerEventFunc(this->getTriggerEventFunc());
+        
+        return  pDB->getFuncMgr().toSimplifiedJson();
     }
     
     
     
-    Any Sqlite::execute(IPCMessage::SmartType msg) {
+    Any SqliteTransfer::execute(IPCMessage::SmartType msg) {
         if (!m_pDB) {
             return Undefined();
         }
@@ -62,7 +112,7 @@ namespace amo {
         return Undefined();
     }
     
-    Any Sqlite::execute(const std::string& sql) {
+    Any SqliteTransfer::executeSql(const std::string& sql) {
         if (!m_pDB) {
             return Undefined();
         }
@@ -91,14 +141,14 @@ namespace amo {
     }
     
     
-    Any Sqlite::insert(IPCMessage::SmartType msg) {
+    Any SqliteTransfer::insert(IPCMessage::SmartType msg) {
         std::string sql = makeInsertSql(msg);
         Any ret = Undefined();
         
         if (sql.empty()) {
             ret = execute(msg);
         } else {
-            ret = execute(sql);
+            ret = executeSql(sql);
         }
         
         if (!ret.is<Undefined>()) {
@@ -108,7 +158,7 @@ namespace amo {
         return Undefined();
     }
     
-    Any Sqlite::update(IPCMessage::SmartType msg) {
+    Any SqliteTransfer::update(IPCMessage::SmartType msg) {
         std::string sql = makeUpdateSql(msg);
         amo::string ansiSql(sql, true);
         Any ret = Undefined();
@@ -116,14 +166,14 @@ namespace amo {
         if (sql.empty()) {
             ret = execute(msg);
         } else {
-            ret = execute(sql);
+            ret = executeSql(sql);
         }
         
         return ret;
     }
     
     
-    Any Sqlite::backup(IPCMessage::SmartType msg) {
+    Any SqliteTransfer::backup(IPCMessage::SmartType msg) {
         std::shared_ptr< sqlite3pp::database> pDB;
         
         try {
@@ -140,7 +190,7 @@ namespace amo {
         return Undefined();
     }
     
-    Any Sqlite::query(IPCMessage::SmartType msg) {
+    Any SqliteTransfer::query(IPCMessage::SmartType msg) {
     
         if (!m_pDB) {
             return Undefined();
@@ -166,7 +216,7 @@ namespace amo {
         
         if (bNeedPagging) {
             // 查询分页
-            bool bOk = queryCount(sql, queryJson);
+            bool bOk = queryCountImpl(sql, queryJson);
             
             if (!bOk) {
                 return Undefined();
@@ -236,13 +286,32 @@ namespace amo {
                                    || types.at(j) == "CHAR"
                                    || types.at(j) == "GRAPHIC"
                                    || types.at(j) == "VARGRAPHIC") {
-                            json.put(keys.at(j), (*iter).get<std::string>(j));
+                            int bytes = (*iter).column_bytes(j);
+                            const char* data = (*iter).get<const char*>(j);
+                            //int len = strlen(cc);
+                            //std::string sb(cc, bytes);
+                            //
+                            //// 如果不相等，说明字符串中的\0;
+                            //if (len != bytes) {
+                            //
+                            //}
+                            //
+                            json.put(keys.at(j), data, bytes);
+                            /*  std::string sss3 = json.to_string();
+                              std::string sssss  = json.getString(keys.at(j));
+                              size_t cc1 = sssss.size();
+                              size_t cd1 = sssss.length();*/
+                            
+                            //json.put(keys.at(j), (*iter).get<std::string>(j));
                         } else if (types.at(j) == "REAL"
                                    || types.at(j) == "FLOAT"
                                    || types.at(j) == "DOUBLE") {
                             json.put(keys.at(j), (*iter).get<double>(j));
                         } else if (types.at(j) == "BLOB") {
-                        
+                            int bytes = (*iter).column_bytes(j);
+                            const char* data = (const char*)(*iter).get<const void*>(j);
+                            json.put(keys.at(j), data, bytes);
+                            
                         } else if (types.at(j) == "DATE") {
                             json.put(keys.at(j), (*iter).get<std::string>(j));
                         } else if (types.at(j) == "TIME") {
@@ -270,24 +339,24 @@ namespace amo {
     }
     
     
-    Any Sqlite::remove(IPCMessage::SmartType msg) {
+    Any SqliteTransfer::remove(IPCMessage::SmartType msg) {
         std::string sql = makeRemoveSql(msg);
         Any ret = Undefined();
         
         if (sql.empty()) {
             ret = execute(msg);
         } else {
-            ret = execute(sql);
+            ret = executeSql(sql);
         }
         
         return ret;
     }
     
-    Any Sqlite::getLastInsertRowID(IPCMessage::SmartType msg) {
+    Any SqliteTransfer::getLastInsertRowID(IPCMessage::SmartType msg) {
         return m_pDB->last_insert_rowid();
     }
     
-    std::string Sqlite::makeSql(IPCMessage::SmartType msg) {
+    std::string SqliteTransfer::makeSql(IPCMessage::SmartType msg) {
         if (!msg) {
             return "";
         }
@@ -305,7 +374,7 @@ namespace amo {
     }
     
     
-    std::string Sqlite::getValuesFromJson(amo::json& json, const std::string& key) {
+    std::string SqliteTransfer::getValuesFromJson(amo::json& json, const std::string& key) {
         std::stringstream stream;
         
         if (json.is_bool(key)) {
@@ -334,7 +403,7 @@ namespace amo {
         
     }
     
-    std::string Sqlite::makeInsertSql(IPCMessage::SmartType msg) {
+    std::string SqliteTransfer::makeInsertSql(IPCMessage::SmartType msg) {
     
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string utf8TableName = args->getString(0);
@@ -389,7 +458,7 @@ namespace amo {
     }
     
     
-    std::string Sqlite::makeRemoveSql(IPCMessage::SmartType msg) {
+    std::string SqliteTransfer::makeRemoveSql(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string utf8TableName = args->getString(0);
         amo::string ansiTableName(utf8TableName, true);
@@ -412,7 +481,7 @@ namespace amo {
         
         std::vector<std::string> keys = utf8Json.keys();
         std::stringstream stream;
-        std::string sql = " DELETE FROM " + utf8TableName ;
+        std::string sql = " DELETE FROM " + utf8TableName;
         stream << sql;
         
         
@@ -428,7 +497,7 @@ namespace amo {
                 sqlWhere = formatArgsByU8Json(sqlWhere, json);
                 
                 if (sqlWhere.size() > 0) {
-                    stream << " WHERE " <<  sqlWhere.to_utf8();
+                    stream << " WHERE " << sqlWhere.to_utf8();
                 }
             } else if (val.is<std::vector<Any> >()) {
                 std::vector<amo::string> vec = anyToStringVec(val);
@@ -446,7 +515,7 @@ namespace amo {
         
     }
     
-    std::string Sqlite::makeUpdateSql(IPCMessage::SmartType msg) {
+    std::string SqliteTransfer::makeUpdateSql(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string utf8TableName = args->getString(0);
         amo::string ansiTableName(utf8TableName, true);
@@ -502,7 +571,7 @@ namespace amo {
             if (val.is<amo::json>()) {
                 amo::string sqlWhere(args->getString(2), true);
                 amo::json json = val;
-                whereStream <<  formatArgsByU8Json(sqlWhere, json).to_utf8();
+                whereStream << formatArgsByU8Json(sqlWhere, json).to_utf8();
             } else if (val.is<std::vector<Any> >()) {
                 std::vector<amo::string> vec = anyToStringVec(val);
                 amo::string sqlWhere(args->getString(2), true);
@@ -529,13 +598,13 @@ namespace amo {
         
         if (!whereString.empty()) {
             retval += " WHERE ";
-            retval +=  amo::string(whereString, true);
+            retval += amo::string(whereString, true);
         }
         
         return retval.to_utf8();
     }
     
-    std::string Sqlite::formatArgs(IPCMessage::SmartType msg) {
+    std::string SqliteTransfer::formatArgs(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         Any val = args->getValue(1);
         
@@ -555,18 +624,18 @@ namespace amo {
         return args->getString(0);
     }
     
-    amo::string Sqlite::formatArgsByAnsiJson(const amo::string& sql, amo::json& json) {
+    amo::string SqliteTransfer::formatArgsByAnsiJson(const amo::string& sql, amo::json& json) {
     
         return sql.format(json);
     }
     
-    amo::string Sqlite::formatArgsByU8Json(const amo::string& sql, amo::json& json) {
+    amo::string SqliteTransfer::formatArgsByU8Json(const amo::string& sql, amo::json& json) {
         amo::string jsonString(json.to_string(), true);
-        amo::json ansiJson   = amo::json(jsonString);
+        amo::json ansiJson = amo::json(jsonString);
         return  formatArgsByAnsiJson(sql, ansiJson).to_utf8();
     }
     
-    amo::string Sqlite::formatArgsByArr(const amo::string& sql, std::vector<amo::string>& vec) {
+    amo::string SqliteTransfer::formatArgsByArr(const amo::string& sql, std::vector<amo::string>& vec) {
         std::vector<std::string> fmtArgsList;
         
         for (size_t i = 0; i < vec.size(); ++i) {
@@ -672,9 +741,9 @@ namespace amo {
         return sql;
     }
     
-    std::string Sqlite::formatPagging(amo::json& json) {
+    std::string SqliteTransfer::formatPagging(amo::json& json) {
     
-        amo::string sql = " limit({rows}) offset({startrow})" ;
+        amo::string sql = " limit({rows}) offset({startrow})";
         
         int startrow = json.getInt("rows") * (json.getInt("page") - 1);
         json.put("startrow", startrow);
@@ -682,7 +751,7 @@ namespace amo {
         
     }
     
-    std::vector<amo::string> Sqlite::anyToStringVec(Any& val) {
+    std::vector<amo::string> SqliteTransfer::anyToStringVec(Any& val) {
         std::vector<Any> vec = val;
         std::vector<amo::string> retval;
         
@@ -693,7 +762,7 @@ namespace amo {
         return retval;
     }
     
-    bool Sqlite::queryCount(const std::string& str, amo::json& json) {
+    bool SqliteTransfer::queryCountImpl(const std::string& str, amo::json& json) {
     
     
         // 不重新计算，直接返回
@@ -708,7 +777,7 @@ namespace amo {
         std::regex args("([S|s][E|e][L|l][E|e][C|c][T|t]).*?([F|f][R|r][O|o][M|m])",
                         std::regex_constants::ECMAScript | std::regex_constants::icase);
         std::smatch m;
-        std::string sql ;
+        std::string sql;
         amo::string myStr(str, true);
         myStr = myStr.replace("\n", " ");
         sql = myStr.to_utf8();
@@ -718,7 +787,7 @@ namespace amo {
             std::string key = m[0].str();
             
             /* std::regex e(key, std::regex_constants::ECMAScript | std::regex_constants::icase);
-             sql = std::regex_replace(sql, e, " SELECT count(*) FROM ");*/
+            sql = std::regex_replace(sql, e, " SELECT count(*) FROM ");*/
             std::string::size_type pos = 0;
             pos = sql.find(key, pos);
             std::string strDst = " SELECT count(*) FROM ";
@@ -755,7 +824,7 @@ namespace amo {
                         rows = 1;
                     }
                     
-                    int maxpage = ceil(total  / (double)rows); //重新计算总页数
+                    int maxpage = ceil(total / (double)rows); //重新计算总页数
                     
                     // 重新计算当前页
                     if (page < 1) {
@@ -789,7 +858,7 @@ namespace amo {
         return false;
     }
     
-    Any Sqlite::queryCount(IPCMessage::SmartType msg) {
+    Any SqliteTransfer::queryCount(IPCMessage::SmartType msg) {
         if (!m_pDB) {
             return -1;
         }
@@ -832,7 +901,7 @@ namespace amo {
         return -1;
     }
     
-    amo::json Sqlite::getPaggingInfo(amo::json& other) {
+    amo::json SqliteTransfer::getPaggingInfo(amo::json& other) {
         std::string ss = other.to_string();
         amo::json json;
         json.put("page", 1); // 当前页码数
@@ -869,7 +938,7 @@ namespace amo {
         return json;
     }
     
-    std::vector<std::string>& Sqlite::getTableField(const std::string& table) {
+    std::vector<std::string>& SqliteTransfer::getTableField(const std::string& table) {
         if (!m_pDB) {
             return m_emptyFields;
         }
@@ -912,12 +981,12 @@ namespace amo {
                 
                 /* const char* columnType = qry.column_decltype(i);
                 
-                 if (columnType != NULL) {
-                     types.push_back(qry.column_decltype(i));
-                 } else {
-                     bQueryData = false;
-                     types.push_back("INTEGER");
-                 }*/
+                if (columnType != NULL) {
+                types.push_back(qry.column_decltype(i));
+                } else {
+                bQueryData = false;
+                types.push_back("INTEGER");
+                }*/
             }
             
             
@@ -945,7 +1014,7 @@ namespace amo {
         
     }
     
-    bool Sqlite::containsField(const std::string& table, const std::string& field) {
+    bool SqliteTransfer::containsField(const std::string& table, const std::string& field) {
         auto& vec = getTableField(table);
         
         for (auto& p : vec) {
@@ -958,6 +1027,4 @@ namespace amo {
     }
     
 }
-
-
 

@@ -354,6 +354,28 @@ namespace amo {
             
         }
         
+        void put(const std::string key, const char* val, size_t len = 0) {
+            if (val == NULL) {
+                return;
+            }
+            
+            if (len == 0) {
+                len = strlen(val);
+            }
+            
+            rapidjson::Value node;
+            node.SetString(val, len, get_allocator());
+            rapidjson::Value name;
+            name.SetString(key.c_str(), get_allocator());
+            
+            iterator iter = find_member(key);
+            
+            if (iter != end()) {
+                iter->value.CopyFrom(node, get_allocator());
+            } else {
+                doc.AddMember(name, node, get_allocator());
+            }
+        }
         
         void put(const std::string& key, const amo::uuid& val) {
             put(key, val.to_string());
@@ -721,7 +743,7 @@ namespace amo {
             return default_val;
         }
         
-        std::string get(const std::string& key, const char* default_val) const {
+        const char* get(const std::string& key, const char* default_val) const {
             const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsString()) {
@@ -732,13 +754,16 @@ namespace amo {
         }
         
         std::string get(const std::string& key, std::string default_val)  const {
+        
             const_iterator iter = find_member(key);
             
             if (iter == end() || !iter->value.IsString()) {
                 return default_val;
             }
             
-            return iter->value.GetString();
+            size_t len = iter->value.GetStringLength();
+            size_t len2 = strlen(iter->value.GetString());
+            return std::string(iter->value.GetString(), len);
         }
         
         date_time get(const std::string& key, date_time default_val)  const {

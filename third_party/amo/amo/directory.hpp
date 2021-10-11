@@ -37,7 +37,7 @@ namespace amo {
             
             // 只要有一个删除失败都认为删除失败
             for (auto& p : vec) {
-                if (!remove_path(p)) {
+                if (!deletePath(p)) {
                     bOk = false;
                 }
             }
@@ -45,11 +45,25 @@ namespace amo {
             return bOk;
         }
         
-        // 删除目录
+        // 删除文件夹
         bool remove() {
-            return remove_path(m_path);
+            return deletePath(m_path);
         }
         
+        // 移动文件夹
+        bool move_to(const amo::path& to) {
+            return movePath(to, m_path);
+        }
+        
+        //复制文件夹
+        bool copy_to(const amo::path& to) {
+            return copyPath(to, m_path);
+        }
+        
+        // 重命名文件夹
+        bool rename(const amo::path& to) {
+            return renamePath(to, m_path);
+        }
         
         bool transfer(amo::function<bool(path&)> fn_cb, bool recursion = false) {
             // 判断目录是否存在
@@ -101,23 +115,56 @@ namespace amo {
             return true;
         }
         
-    private:
-        // 删除一个目录
-        bool remove_path(const path& p) {
         
-            std::string strPath = p.c_str();
-            
-            SHFILEOPSTRUCTA FileOp;
-            ZeroMemory((void*)&FileOp, sizeof(SHFILEOPSTRUCTA));
-            FileOp.fFlags = FOF_NOCONFIRMATION;
-            FileOp.hNameMappings = NULL;
-            FileOp.hwnd = NULL;
-            FileOp.lpszProgressTitle = NULL;
-            FileOp.pFrom = strPath.c_str();
-            FileOp.pTo = NULL;
-            FileOp.wFunc = FO_DELETE;
+        
+    private:
+    
+        // 复制文件或文件夹
+        bool copyPath(const amo::path& to, const amo::path& from) {
+        
+            SHFILEOPSTRUCTA FileOp = { 0 };
+            FileOp.fFlags = FOF_NOCONFIRMATION |   //不出现确认对话框
+                            FOF_NOCONFIRMMKDIR; //需要时直接创建一个文件夹,不需用户确定
+            FileOp.pFrom = from.c_str();
+            FileOp.pTo = to.c_str();
+            FileOp.wFunc = FO_COPY;
             return (SHFileOperationA(&FileOp) == 0);
         }
+        
+        // 删除一个目录
+        bool deletePath(const path& p) {
+            SHFILEOPSTRUCTA FileOp = { 0 };
+            FileOp.fFlags = FOF_ALLOWUNDO |   //允许放回回收站
+                            FOF_NOCONFIRMATION; //不出现确认对话框
+            FileOp.pFrom = p.c_str();
+            FileOp.pTo = NULL;      //一定要是NULL
+            FileOp.wFunc = FO_DELETE;    //删除操作
+            return SHFileOperationA(&FileOp) == 0;
+            
+        }
+        
+        //移动文件或文件夹
+        bool movePath(const path& to, const path& from) {
+            SHFILEOPSTRUCTA FileOp = { 0 };
+            FileOp.fFlags = FOF_NOCONFIRMATION |   //不出现确认对话框
+                            FOF_NOCONFIRMMKDIR; //需要时直接创建一个文件夹,不需用户确定
+            FileOp.pFrom = from.c_str();
+            FileOp.pTo = to.c_str();
+            FileOp.wFunc = FO_MOVE;
+            return SHFileOperationA(&FileOp) == 0;
+        }
+        
+        
+        //从命名文件或文件夹
+        bool renamePath(const path& to, const path& from) {
+            SHFILEOPSTRUCTA FileOp = { 0 };
+            FileOp.fFlags = FOF_NOCONFIRMATION;   //不出现确认对话框
+            FileOp.pFrom = to.c_str();
+            FileOp.pTo = from.c_str();
+            FileOp.wFunc = FO_RENAME;
+            return SHFileOperationA(&FileOp) == 0;
+        }
+        
     private:
         amo::path m_path;
         

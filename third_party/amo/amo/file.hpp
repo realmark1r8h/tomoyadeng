@@ -119,11 +119,55 @@ namespace amo {
         }
         
         
-        // 删除文件
-        void remove() {
-        
+        // 删除文件夹
+        bool remove() {
+            bool bOk =  removeFile(m_path);
+            
+            if (bOk) {
+                m_path = amo::path();
+            }
+            
+            return bOk;
         }
         
+        // 移动文件夹
+        bool move_to(const amo::path& to) {
+            return moveFile(to, m_path);
+        }
+        
+        //复制文件夹
+        bool copy_to(const amo::path& to) {
+            return copyFile(to, m_path);
+        }
+        
+        // 重命名文件夹
+        bool rename(const amo::path& to) {
+            bool bOk =  renameFile(to, m_path);
+            
+            if (bOk) {
+                m_path = to;
+            }
+            
+            return bOk;
+        }
+        
+    private:
+        bool renameFile(const amo::path& to, const amo::path& from) {
+            return moveFile(to, from);
+        }
+        
+        bool moveFile(const amo::path& to, const amo::path& from) {
+            return ::MoveFileA(from.c_str(), to.c_str()) != FALSE;
+        }
+        
+        // 删除文件
+        bool removeFile(const amo::path& from) {
+            return ::DeleteFileA(from.c_str()) != FALSE;
+        }
+        
+        bool copyFile(const amo::path& to, const amo::path& from) {
+            return ::CopyFileA(from.c_str(), to.c_str(), FALSE) != FALSE;
+        }
         
     private:
         amo::path m_path;

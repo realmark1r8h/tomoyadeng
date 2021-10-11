@@ -13,8 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="sqlite3pp">
-      <UniqueIdentifier>{abd81fda-a5ab-42c9-ab72-a2f00ae17ddf}</UniqueIdentifier>
+    <Filter Include="sqlite">
+      <UniqueIdentifier>{fdd18b3c-1a67-4588-82fb-34b520e41b59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sqlite\src">
+      <UniqueIdentifier>{e20df7f0-e4d7-49bf-822f-deac9307a803}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,40 +30,28 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SqliteTransfer.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="sqlite\SqliteTransfer.h">
+      <Filter>sqlite</Filter>
     </ClInclude>
-    <ClInclude Include="dllmain.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="sqlite\src\sqlite3pp.h">
+      <Filter>sqlite\src</Filter>
     </ClInclude>
-    <ClInclude Include="Sqlite.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sqlite3pp.h">
-      <Filter>sqlite3pp</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sqlite3ppext.h">
-      <Filter>sqlite3pp</Filter>
+    <ClInclude Include="sqlite\src\sqlite3ppext.h">
+      <Filter>sqlite\src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="sqlite\SqliteTransfer.cpp">
+      <Filter>sqlite</Filter>
     </ClCompile>
-    <ClCompile Include="Sqlite.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="sqlite\src\sqlite3pp.cpp">
+      <Filter>sqlite\src</Filter>
     </ClCompile>
-    <ClCompile Include="SqliteTransfer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sqlite3pp.cpp">
-      <Filter>sqlite3pp</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sqlite3ppext.cpp">
-      <Filter>sqlite3pp</Filter>
+    <ClCompile Include="sqlite\src\sqlite3ppext.cpp">
+      <Filter>sqlite\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
