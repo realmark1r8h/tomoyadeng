@@ -11,19 +11,42 @@
 namespace amo {
     class file {
     public:
-        file(const std::string& name)
+    
+        /*	ios::in		为输入(读)而打开文件
+        	ios::out	为输出(写)而打开文件
+        	ios::ate	初始位置：文件尾
+        	ios::app	所有输出附加在文件末尾
+        	ios::trunc	如果文件已存在则先删除该文件
+        	ios::binary	二进制方式*/
+        file(const std::string& name, ios_base::openmode mode = ios_base::in | ios_base::out)
             : m_path(name) {
-            // 如果是一个已经存在的文件，打开
-            if (is_exists() && is_file()) {
-                ifs.reset(new ifstream(m_path.c_str()));
+            if (mode & ios_base::in) {
+                // 如果是读文件，那么在文件存在的情况下打开文件
+                if (is_exists() && is_file()) {
+                    ifs.reset(new fstream(m_path.c_str(), mode));
+                }
+            } else {
+                // 如果是写文件，不管文件是否存在，都先打开
+                ifs.reset(new fstream(m_path.c_str(), mode));
+            }
+            
+        }
+        
+        file(const amo::path& p, ios_base::openmode mode = ios_base::in | ios_base::out)
+            : m_path(p) {
+            if (mode & ios_base::in) {
+                // 如果是读文件，那么在文件存在的情况下打开文件
+                if (is_exists() && is_file()) {
+                    ifs.reset(new fstream(m_path.c_str(), mode));
+                }
+            } else {
+                // 如果是写文件，不管文件是否存在，都先打开
+                ifs.reset(new fstream(m_path.c_str(), mode));
             }
         }
         
-        file(const amo::path& p)
-            : m_path(p) {
-            if (is_exists() && is_file()) {
-                ifs.reset(new ifstream(m_path.c_str()));
-            }
+        ~file() {
+            close();
         }
         
         size_t size() const {
@@ -60,14 +83,39 @@ namespace amo {
         void encrypt() {
         
         }
-        // 打开文件
-        void open() {
         
+        bool is_open() {
+            if (!ifs) {
+                return false;
+            }
+            
+            return ifs->is_open();
+        }
+        
+        // 打开文件
+        void open(ios_base::openmode mode = ios_base::in | ios_base::out) {
+            if (!ifs) {
+                ifs.reset(new fstream());
+            }
+            
+            ifs->open(m_path.c_str(), mode);
+        }
+        
+        void close() {
+            if (ifs) {
+                ifs->close();
+            }
+            
+            ifs.reset();
         }
         
         // 写入文件
-        void write() {
-        
+        void write(const std::string& str) {
+            if (!ifs) {
+                return;
+            }
+            
+            ifs->write(str.c_str(), str.size());
         }
         
         // 读取整个文件
@@ -89,7 +137,6 @@ namespace amo {
                 vec.push_back(str);
                 memset(str, 0, 4096);
             }
-            
             
             
             return std::move(vec);
@@ -171,7 +218,7 @@ namespace amo {
         
     private:
         amo::path m_path;
-        std::shared_ptr<std::ifstream> ifs;
+        std::shared_ptr<std::fstream> ifs;
         
     };
 }

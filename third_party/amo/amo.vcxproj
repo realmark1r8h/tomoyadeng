@@ -158,6 +158,7 @@
     <ClInclude Include="amo\utility\string.hpp" />
     <ClInclude Include="amo\uuid.hpp" />
     <ClInclude Include="amo\variant.hpp" />
+    <ClInclude Include="amo\xml.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

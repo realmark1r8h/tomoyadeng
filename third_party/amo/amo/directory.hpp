@@ -15,6 +15,13 @@ namespace amo {
             
         }
         
+        std::string name() {
+            return amo::path(m_path).strip_path();
+        }
+        
+        std::string full_name() {
+            return m_path.c_str();
+        }
         // 判断目录是否存在
         bool is_exists() const {
             return m_path.is_directory();
@@ -28,7 +35,7 @@ namespace amo {
         // 清空目录下的所有子目录及文件，只留当前目录
         bool empty() {
             std::vector<amo::path> vec;
-            transfer([&](amo::path & p) {
+            for_each([&](amo::path & p) {
                 vec.push_back(p);
                 return true;
             }, false);
@@ -65,7 +72,55 @@ namespace amo {
             return renamePath(to, m_path);
         }
         
-        bool transfer(amo::function<bool(path&)> fn_cb, bool recursion = false) {
+        void transfer(std::function<void(path&)> fn_cb, bool recursion = false) {
+            // 判断目录是否存在
+            if (!this->is_exists()) {
+                return ;
+            }
+            
+            CHAR szFind[MAX_PATH] = { ("\0") };
+            WIN32_FIND_DATAA findFileData;
+            
+            strcpy_s(szFind, MAX_PATH, m_path.c_str());
+            strcat_s(szFind, ("\\*.*"));     //这里一定要指明通配符，不然不会读取所有文件和目录
+            
+            HANDLE hFind = ::FindFirstFileA(szFind, &findFileData);
+            
+            if (INVALID_HANDLE_VALUE == hFind) {
+                return ;
+            }
+            
+            do {
+            
+                amo::string pStr(findFileData.cFileName);
+                
+                if (pStr != "." && pStr != "..") {
+                    path p = m_path;
+                    p.append(path(findFileData.cFileName));
+                    
+                    
+                    if (fn_cb) {
+                        fn_cb(p);
+                    }
+                    
+                    //printf("%s\\%s\n", lpPath, findFileData.cFileName);
+                    // 如题是一个目录，且recursion=true时才进去
+                    if (p.is_directory() && recursion) {
+                        p.transfer(fn_cb, recursion);
+                        //return false;
+                    }
+                    
+                    
+                }
+                
+                
+            } while (::FindNextFileA(hFind, &findFileData));
+            
+            ::FindClose(hFind);
+            return  ;
+        }
+        
+        bool for_each(amo::function<bool(path&)> fn_cb, bool recursion = false) {
             // 判断目录是否存在
             if (!this->is_exists()) {
                 return false;

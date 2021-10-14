@@ -19,6 +19,11 @@ namespace amo {
             memset(m_path, 0, 1000);
             
         }
+        path(const path& rhs) {
+            memset(m_path, 0, 1000);
+            memcpy(m_path, rhs.c_str(), 1000);
+        }
+        
         path(const amo::string& str_path) {
             memset(m_path, 0, 1000);
             memcpy(m_path, str_path.c_str(), str_path.size());
@@ -190,7 +195,7 @@ namespace amo {
          *
          * @return	A path.
          */
-        path append_c(const path& other) {
+        path append_c(const path& other) const {
         
             char a[1000] = { 0 };
             strcpy(a, m_path);
@@ -462,6 +467,8 @@ namespace amo {
             strcpy(m_path, a);
             return *this;
         }
+        
+        
         /*!
          * @fn	path path::relative_path_to_c(const path& to)
          *
@@ -473,14 +480,76 @@ namespace amo {
          *
          * @return	A path.
          */
-        path relative_path_to_c(const path& to) {
+        path relative_path_to_c(const path& to) const {
             char a[1000] = { 0 };
             BOOL bOk = ::PathRelativePathToA(a, to.c_str(), FILE_ATTRIBUTE_DIRECTORY, m_path, FILE_ATTRIBUTE_NORMAL);
             return path(a);
         }
         
+        // 子路径
         path sub_path(const path& to) {
+            return relative_path_to(to);
+        }
         
+        // 子路径
+        path sub_path_c(const path& to) {
+            return relative_path_to_c(to);
+        }
+        
+        
+        path& replace(const path& from, const path& to) {
+            *this = to.append_c(sub_path_c(from));
+        }
+        
+        path replace_c(const path& from, const path& to) {
+            return to.append_c(sub_path_c(from));
+        }
+        
+        // 去除子路径
+        path& trim_right(const path& right) {
+            std::string strRight = right.c_str();
+            
+            while (true) {
+                if (strRight.empty()) {
+                    return *this;
+                }
+                
+                if (strRight[0] == '\\' || strRight[0] == '/') {
+                    strRight = strRight.substr(1);
+                } else {
+                    break;
+                }
+            }
+            
+            if (strRight.empty()) {
+                return *this;
+            }
+            
+            std::string m_str = m_path;
+            int nIndex = m_str.find(strRight);
+            
+            if (nIndex == -1) {
+                return *this;
+            }
+            
+            m_str = m_str.substr(0, nIndex);
+            *this = path(m_str);
+            return *this;
+            
+        }
+        
+        path trim_right_c(const path& right) {
+            amo::path p(*this);
+            return p.trim_right(right);
+        }
+        
+        // 去除父路径
+        path& trim_left(const path& left) {
+            return relative_path_to(left);
+        }
+        
+        path trim_right_c(const path& left) const  {
+            return relative_path_to_c(left);
         }
         /*!
          * @fn	path& path::resolve()

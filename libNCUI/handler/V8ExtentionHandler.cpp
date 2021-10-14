@@ -73,16 +73,15 @@ namespace amo {
             amo::directory dir(amo::path::getFullPathInExeDir("renderer_modules"));
             dir.transfer([&](amo::path & p) {
                 if (p.is_directory()) {
-                    return true;
+                    return ;
                 }
                 
                 if (p.find_extension() != ".dll") {
-                    return true;
+                    return ;
                 }
                 
                 amo::string module = p.strip_path().remove_extension();
                 loadExternalTransfer(module, pBrowser);
-                return true;
             }, false);
             
         }
