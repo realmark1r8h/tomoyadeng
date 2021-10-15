@@ -609,7 +609,9 @@ namespace amo {
          * @return	The short path.
          */
         path& get_short_path() {
-            //::PathGetShortPath()
+            char a[1000] = { 0 };
+            ::GetShortPathNameA(m_path, a, 1000);
+            memcpy(m_path, a, 1000);
             return *this;
         }
         /*!

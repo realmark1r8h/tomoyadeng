@@ -10,6 +10,7 @@
 #include <vector>
 #include <amo/string.hpp>
 #include <sstream>
+#include <amo/path.hpp>
 
 namespace amo {
     class process : public std::enable_shared_from_this<process> {
@@ -104,12 +105,17 @@ namespace amo {
             hRead = NULL;
             hWrite = NULL;
             retval = 0;
+            m_workPath = amo::path::fullAppDir(); //默认工作目录为当前程序所在目录
             memset(&pi, 0, sizeof(PROCESS_INFORMATION));
             memset(&sa, 0, sizeof(SECURITY_ATTRIBUTES));
         }
         
         void kill() {
         
+        }
+        
+        void set_work_dir(const amo::path& p) {
+            m_workPath = p;
         }
         
         void refresh() {
@@ -160,7 +166,7 @@ namespace amo {
             si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
             
             //关键步骤，CreateProcess函数参数意义请查阅MSDN
-            if (!CreateProcessA(NULL, (char*)command.c_str(), NULL, NULL, TRUE, NULL, NULL, NULL, &si, &pi)) {
+            if (!CreateProcessA(NULL, (char*)command.c_str(), NULL, NULL, TRUE, NULL, NULL, m_workPath.c_str(), &si, &pi)) {
                 CloseHandle(hWrite);
                 CloseHandle(hRead);
                 hWrite = hRead = NULL;
@@ -305,6 +311,8 @@ namespace amo {
         
         /** @brief	进程执行结果. */
         std::shared_ptr<result> m_pResult;
+        
+        amo::path m_workPath;
         
     };
 }

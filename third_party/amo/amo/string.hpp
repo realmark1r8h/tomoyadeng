@@ -1043,6 +1043,9 @@ namespace amo {
             
             return compare(size() - rhs.size(), rhs.size(), rhs) == 0;
         }
+        bool start_with(const string& rhs) const {
+            return begin_with(rhs);
+        }
         
         //------------------------------------------------------------------------------
         // ·½·¨:    ToNumber
