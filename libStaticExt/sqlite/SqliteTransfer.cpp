@@ -10,6 +10,11 @@
 
 #pragma comment(lib, "sqlite3.lib")
 
+
+const static std::string SQLITE_INVALID_CONNECTION =  "无效的数据库连接";
+const static std::string SQLITE_EMPTY_SQL = "SQL语句为空";
+const static std::string SQLITE_INVALID_SQL = "无效的SQL语句";
+
 namespace amo {
 
     SqliteTransfer::SqliteTransfer()
@@ -24,7 +29,7 @@ namespace amo {
             m_pDB.reset(new sqlite3pp::database(args.c_str()));
             m_bValid = true;
         } catch (std::exception& e) {
-            m_strLastError = e.what();
+            setLastError(e.what());
             m_bValid = false;
             m_pDB.reset();
         }
@@ -35,50 +40,13 @@ namespace amo {
     
     }
     
-    /*Any SqliteTransfer::execute(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
-    
-    Any SqliteTransfer::insert(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
-    
-    Any SqliteTransfer::update(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
-    
-    Any SqliteTransfer::backup(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
-    
-    Any SqliteTransfer::query(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
-    
-    Any SqliteTransfer::remove(IPCMessage::SmartType msg) {
-        return Undefined();
-    }
-    
-    Any SqliteTransfer::queryCount(IPCMessage::SmartType msg) {
-        return 0;
-    }
-    
-    Any SqliteTransfer::getLastInsertRowID(IPCMessage::SmartType msg) {
-        return Undefined();
-    }*/
     
     Any SqliteTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string strPath = args->getString(0);
         std::shared_ptr<SqliteTransfer> pDB;
         pDB = ClassTransfer::createTransfer<SqliteTransfer>(strPath);
-        
-        /*  std::shared_ptr<Sqlite> pDB(new Sqlite(strPath));
-        
-          pDB->registerFunction();
-          addTransfer(pDB);*/
         pDB->setTriggerEventFunc(this->getTriggerEventFunc());
-        
         return  pDB->getFuncMgr().toSimplifiedJson();
     }
     
@@ -86,12 +54,14 @@ namespace amo {
     
     Any SqliteTransfer::execute(IPCMessage::SmartType msg) {
         if (!m_pDB) {
+            setLastError(SQLITE_INVALID_CONNECTION);
             return Undefined();
         }
         
         std::string sql = makeSql(msg);
         
         if (sql.empty()) {
+            setLastError(SQLITE_EMPTY_SQL);
             return Undefined();
         }
         
@@ -105,7 +75,7 @@ namespace amo {
             return ret;
             
         } catch (std::exception& e) {
-            m_strLastError = e.what();
+            setLastError(e.what());
             transcation.rollback();
         }
         
@@ -113,13 +83,14 @@ namespace amo {
     }
     
     Any SqliteTransfer::executeSql(const std::string& sql) {
+    
         if (!m_pDB) {
+            setLastError(SQLITE_INVALID_CONNECTION);
             return Undefined();
         }
         
-        
-        
         if (sql.empty()) {
+            setLastError(SQLITE_EMPTY_SQL);
             return Undefined();
         }
         
@@ -133,7 +104,7 @@ namespace amo {
             return ret;
             
         } catch (std::exception& e) {
-            m_strLastError = e.what();
+            setLastError(e.what());
             transcation.rollback();
         }
         
@@ -143,9 +114,10 @@ namespace amo {
     
     Any SqliteTransfer::insert(IPCMessage::SmartType msg) {
         std::string sql = makeInsertSql(msg);
-        Any ret = Undefined();
+        Any ret;
         
         if (sql.empty()) {
+        
             ret = execute(msg);
         } else {
             ret = executeSql(sql);
@@ -164,6 +136,7 @@ namespace amo {
         Any ret = Undefined();
         
         if (sql.empty()) {
+        
             ret = execute(msg);
         } else {
             ret = executeSql(sql);
@@ -176,10 +149,13 @@ namespace amo {
     Any SqliteTransfer::backup(IPCMessage::SmartType msg) {
         std::shared_ptr< sqlite3pp::database> pDB;
         
+        if (!m_pDB) {
+            setLastError(SQLITE_INVALID_CONNECTION);
+            return false;
+        }
+        
         try {
             std::string args = msg->getArgumentList()->getString(0);
-            
-            
             pDB.reset(new sqlite3pp::database(args.c_str()));
             return m_pDB->backup(*pDB.get());
         } catch (std::exception& e) {
@@ -187,12 +163,13 @@ namespace amo {
             pDB.reset();
         }
         
-        return Undefined();
+        return false;
     }
     
     Any SqliteTransfer::query(IPCMessage::SmartType msg) {
     
         if (!m_pDB) {
+            setLastError(SQLITE_INVALID_CONNECTION);
             return Undefined();
         }
         
@@ -211,6 +188,7 @@ namespace amo {
         std::string sql = makeSql(msg);
         
         if (sql.empty()) {
+            setLastError(SQLITE_EMPTY_SQL);
             return Undefined();
         }
         
@@ -262,6 +240,7 @@ namespace amo {
                 }
                 
                 if (!bQueryData) {
+                    //TODO: 处理
                     //return Undefined();
                 }
                 
@@ -332,7 +311,7 @@ namespace amo {
                 return queryJson;
             }
         } catch (std::exception& e) {
-            m_strLastError = e.what();
+            setLastError(e.what());
         }
         
         return Undefined();
@@ -353,7 +332,25 @@ namespace amo {
     }
     
     Any SqliteTransfer::getLastInsertRowID(IPCMessage::SmartType msg) {
+        if (!m_pDB) {
+            setLastError(SQLITE_INVALID_CONNECTION);
+            return Undefined();
+        }
+        
         return m_pDB->last_insert_rowid();
+    }
+    
+    Any SqliteTransfer::containsTable(IPCMessage::SmartType msg) {
+        std::string tableName = msg->getArgumentList()->getString(0);
+        std::string sql = "select count(1) from sqlite_master where type='table' and name='" + tableName + "';";
+        msg->getArgumentList()->setValue(0, sql);
+        int nCount =  queryCount(msg);
+        
+        if (nCount == 0) {
+            return false;
+        }
+        
+        return true;
     }
     
     std::string SqliteTransfer::makeSql(IPCMessage::SmartType msg) {
@@ -764,13 +761,15 @@ namespace amo {
     
     bool SqliteTransfer::queryCountImpl(const std::string& str, amo::json& json) {
     
-    
+        std::string str2 = json.to_string();
+        
         // 不重新计算，直接返回
         if (!json.getBool("refresh")) {
             return true;
         }
         
         if (!m_pDB) {
+            setLastError(SQLITE_INVALID_CONNECTION);
             return false;
         }
         
@@ -798,11 +797,13 @@ namespace amo {
                 break;
             }
             
+            setLastError("无效的SELECT COUNT(*) 语句");
             return false;
         }
         
         // 判断是否为Select语句
         if (!bCountSql) {
+            setLastError("无效的SELECT COUNT(*) 语句");
             return false;
         }
         
@@ -816,6 +817,9 @@ namespace amo {
                     ++iter) {
                     
                 for (int i = 0; i < qry.column_count(); ++i) {
+                    int bytes = (*iter).column_bytes(i);
+                    const char* data = (*iter).get<const char*>(i);
+                    
                     int total = (*iter).get<int>(i);
                     int page = json.getInt("page");
                     int rows = json.getInt("rows");
@@ -851,7 +855,7 @@ namespace amo {
             
             
         } catch (std::exception& e) {
-            m_strLastError = e.what();
+            setLastError(e.what());
             return false;
         }
         
@@ -860,6 +864,7 @@ namespace amo {
     
     Any SqliteTransfer::queryCount(IPCMessage::SmartType msg) {
         if (!m_pDB) {
+            setLastError(SQLITE_INVALID_CONNECTION);
             return -1;
         }
         
@@ -868,6 +873,7 @@ namespace amo {
         
         if (sql.empty()) {
             // -1 表示获取失败。
+            setLastError(SQLITE_EMPTY_SQL);
             return -1;
         }
         
@@ -894,7 +900,7 @@ namespace amo {
             
             
         } catch (std::exception& e) {
-            m_strLastError = e.what();
+            setLastError(e.what());
             return -1;
         }
         
@@ -932,7 +938,7 @@ namespace amo {
         }
         
         if (other.contains_key("refresh")) {
-            json.put("refresh", other.getInt("refresh"));
+            json.put("refresh", other.getBool("refresh"));
         }
         
         return json;
@@ -940,6 +946,7 @@ namespace amo {
     
     std::vector<std::string>& SqliteTransfer::getTableField(const std::string& table) {
         if (!m_pDB) {
+            setLastError(SQLITE_INVALID_CONNECTION);
             return m_emptyFields;
         }
         
@@ -951,9 +958,6 @@ namespace amo {
         
         std::string sql = "PRAGMA table_info( " + table + " )";
         
-        if (sql.empty()) {
-            return m_emptyFields;
-        }
         
         
         
@@ -979,14 +983,6 @@ namespace amo {
                     continue;;
                 }
                 
-                /* const char* columnType = qry.column_decltype(i);
-                
-                if (columnType != NULL) {
-                types.push_back(qry.column_decltype(i));
-                } else {
-                bQueryData = false;
-                types.push_back("INTEGER");
-                }*/
             }
             
             
@@ -1008,7 +1004,7 @@ namespace amo {
             return  m_tableFieldMap[table];
             
         } catch (std::exception& e) {
-            m_strLastError = e.what();
+            setLastError(e.what());
             return m_emptyFields;
         }
         
@@ -1024,6 +1020,14 @@ namespace amo {
         }
         
         return false;
+    }
+    
+    const std::string& SqliteTransfer::getLastError() const {
+        return m_strLastError;
+    }
+    
+    void SqliteTransfer::setLastError(const std::string& msg) {
+        m_strLastError = msg;
     }
     
 }

@@ -17,28 +17,28 @@ namespace amo {
 
 
     // 如果一个transfer想要在ThreadTransfer中运行的话，需要继承RunableTranfer
-    class RunableTransfer : public ClassTransfer {
+    class RunnableTransfer : public ClassTransfer {
     public:
-        typedef std::function<void(std::shared_ptr<RunableTransfer>, const TransferEventInfo&)> EventCallbackFunc;
+        typedef std::function<void(std::shared_ptr<RunnableTransfer>, const TransferEventInfo&)> EventCallbackFunc;
         
         
         
     public:
-        RunableTransfer()
-            : ClassTransfer("Runable") {
+        RunnableTransfer()
+            : ClassTransfer("Runnable") {
             m_nThreadID = 0;
             addModule("EventEmitter");
         }
-        RunableTransfer(const std::string& name)
+        RunnableTransfer(const std::string& name)
             : ClassTransfer(name) {
             addModule("EventEmitter");
         }
         virtual std::string getClass() const {
-            return "Runable";
+            return "Runnable";
         }
         
         virtual Transfer* getInterface(const std::string& name) {
-            if (name == RunableTransfer::getClass()) {
+            if (name == RunnableTransfer::getClass()) {
                 return this;
             }
             
@@ -48,8 +48,11 @@ namespace amo {
         virtual Any onMessageTransfer(IPCMessage::SmartType msg) override {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             
-            if (transferName() == args->getString(IPCArgsPosInfo::FuncName)) {
+            if (transferName() == args->getString(IPCArgsPosInfo::FuncName)
+                    || "weakup" == args->getString(IPCArgsPosInfo::FuncName)
+                    || "suspend" == args->getString(IPCArgsPosInfo::FuncName)) {
                 // new 不能在多线程中执行
+                // weakup 实际上是thread上的函数，这里是为了方便
                 return ClassTransfer::onMessageTransfer(msg);
             } else if (m_nThreadID == 0) {
                 return ClassTransfer::onMessageTransfer(msg);
@@ -82,24 +85,7 @@ namespace amo {
             }
         }
         
-        /*     EventCallbackFunc getEventCallback() const {
-                 return m_fnEventCallback;
-             }
-             void setEventCallback(EventCallbackFunc val) {
-                 m_fnEventCallback = val;
-             }*/
-        std::function<void()> getWeakup() const {
-            return m_fnWeakup;
-        }
-        void setWeakup(std::function<void()> val) {
-            m_fnWeakup = val;
-        }
-        std::function<void()> getSuspend() const {
-            return m_fnSuspend;
-        }
-        void setSuspend(std::function<void()> val) {
-            m_fnSuspend = val;
-        }
+        
         
         
         // 将当前transfer附加到一个线程中
@@ -129,18 +115,80 @@ namespace amo {
             return Undefined();
         }
         
-        AMO_CEF_MESSAGE_TRANSFER_BEGIN(RunableTransfer, ClassTransfer)
+        // 唤醒线程
+        Any weakup(IPCMessage::SmartType msg) {
+            if (m_nThreadID == 0) {
+                return Undefined();
+            }
+            
+            auto transfer = ClassTransfer::findTransfer(m_nThreadID);
+            
+            
+            if (transfer == NULL) {
+                return Undefined();
+            }
+            
+            if (transfer->getInterface("ThreadBase") == NULL) {
+                return Undefined();
+            }
+            
+            IPCMessage::SmartType ipcMessage = msg->clone();
+            ipcMessage->setMessageName(MSG_NATIVE_EXECUTE);
+            std::shared_ptr<AnyArgsList> ipcArgs = ipcMessage->getArgumentList();
+            ipcArgs->setValue(IPCArgsPosInfo::TransferID, transfer->getObjectID());
+            ipcArgs->setValue(IPCArgsPosInfo::TransferName, transfer->transferName());
+            ipcArgs->setValue(IPCArgsPosInfo::FuncName, "weakup");
+            return transfer->onMessageTransfer(ipcMessage);
+        }
+        
+        // 挂起线程
+        Any suspend(IPCMessage::SmartType msg) {
+            if (m_nThreadID == 0) {
+                return Undefined();
+            }
+            
+            auto transfer = ClassTransfer::findTransfer(m_nThreadID);
+            
+            
+            if (transfer == NULL) {
+                return Undefined();
+            }
+            
+            if (transfer->getInterface("ThreadBase") == NULL) {
+                return Undefined();
+            }
+            
+            IPCMessage::SmartType ipcMessage = msg->clone();
+            ipcMessage->setMessageName(MSG_NATIVE_EXECUTE);
+            std::shared_ptr<AnyArgsList> ipcArgs = ipcMessage->getArgumentList();
+            ipcArgs->setValue(IPCArgsPosInfo::TransferID, transfer->getObjectID());
+            ipcArgs->setValue(IPCArgsPosInfo::TransferName, transfer->transferName());
+            ipcArgs->setValue(IPCArgsPosInfo::FuncName, "suspend");
+            
+            return transfer->onMessageTransfer(ipcMessage);
+            
+        }
+        
+        Any sendEvent(const TransferEventInfo& info) {
+            triggerEvent(info);
+            
+            if (info.suspend) {
+                return suspend(IPCMessage::Empty());
+            }
+            
+            return Undefined();
+        }
+        
+        AMO_CEF_MESSAGE_TRANSFER_BEGIN(RunnableTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(attach, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(detach, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     protected:
         /** @brief	事件回调函数. */
         EventCallbackFunc m_fnEventCallback;
-        /** @brief	线程唤醒函数. */
-        std::function<void()> m_fnWeakup;
-        /** @brief	暂停线程函数. */
-        std::function<void()> m_fnSuspend;
+        
         /*! @brief	附加到的线程ID. */
         int64_t m_nThreadID;
     };

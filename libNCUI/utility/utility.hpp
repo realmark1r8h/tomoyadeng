@@ -7,8 +7,8 @@
 #include <string>
 #include <sstream>
 #include <amo/string.hpp>
-
-
+#include <ipc/Any.hpp>
+#include <amo/json.hpp>
 
 namespace amo {
 
@@ -45,6 +45,89 @@ namespace amo {
         static bool isDevUrl(const std::string& url) {
             return url == "chrome-devtools://devtools/inspector.html";
         }
+        
+        
+        void addAnyToJsonArray(amo::json& json, const Any& val) const  {
+            switch (val.type()) {
+            case  AnyValueType<Undefined>::value:
+            case  AnyValueType<Nil>::value:
+                json.push_back(val.toJson());
+                break;
+                
+            case  AnyValueType<bool>::value:
+                json.push_back(val.As<bool>());
+                break;
+                
+            case  AnyValueType<int>::value:
+                json.push_back(val.As<int>());
+                break;
+                
+            case  AnyValueType<double>::value:
+                json.push_back(val.As<double>());
+                break;
+                
+            case  AnyValueType<std::string>::value:
+                json.push_back(val.As<std::string>());
+                break;
+                
+            case  AnyValueType<amo::json>::value:
+                json.push_back(val.As<amo::json>());
+                break;
+                
+            default:
+                break;
+            }
+            
+            return;
+        }
+        
+        void addAnyToJson(amo::json& json, const std::string& key, const Any& val) const  {
+            switch (val.type()) {
+            case  AnyValueType<Undefined>::value:
+            case  AnyValueType<Nil>::value:
+                json.put(key, val.toJson());
+                break;
+                
+            case  AnyValueType<bool>::value:
+                json.put(key, val.As<bool>());
+                break;
+                
+            case  AnyValueType<int>::value:
+                json.put(key, val.As<int>());
+                break;
+                
+            case  AnyValueType<double>::value:
+                json.put(key, val.As<double>());
+                break;
+                
+            case  AnyValueType<std::string>::value:
+                json.put(key, val.As<std::string>());
+                break;
+                
+            case  AnyValueType<amo::json>::value:
+                json.put(key, val.As<amo::json>());
+                break;
+                
+            case  AnyValueType<std::vector<Any> >::value: {
+                amo::json arr;
+                arr.set_array();
+                std::vector<Any> vec = val;
+                
+                for (size_t i = 0; i < vec.size(); ++i) {
+                    addAnyToJsonArray(arr, vec[i]);
+                }
+                
+                json.put(key, arr);
+            }
+            
+            break;
+            
+            default:
+                break;
+            }
+            
+        }
+        
     };
     
 }

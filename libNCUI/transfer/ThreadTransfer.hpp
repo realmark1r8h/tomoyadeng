@@ -11,7 +11,7 @@
 #include <amo/looper_executor.hpp>
 #include "transfer/TransferMgr.h"
 #include "transfer/TransferEventInfo.hpp"
-#include "transfer/RunableTransfer.hpp"
+#include "transfer/RunnableTransfer.hpp"
 
 namespace amo {
     enum ThreadEnum {
@@ -52,6 +52,7 @@ namespace amo {
             m_nBrowserID = m_nFrameID = 0;
             m_isPausedThread = false;
             m_pLooperExecutor = getWorkThread();
+            m_weakupData = Undefined();
             
         }
         
@@ -103,14 +104,19 @@ namespace amo {
         // 唤醒线程
         
         Any weakup(IPCMessage::SmartType msg) {
+            m_weakupData = msg->getArgumentList()->getValue(0);
             weakupThread();
             return Undefined();
         }
         
         // 暂停线程，不能暂停正在执行的函数，只能等当前函数结束后停止执行队列中的其他函数
         Any suspend(IPCMessage::SmartType msg) {
-        
-            return Undefined();
+            // 只能在工作线程中挂起自己
+            if (m_pLooperExecutor->get_id() != std::this_thread::get_id()) {
+                return false;
+            }
+            
+            return waitForWeakUp();
         }
         
         
@@ -143,16 +149,21 @@ namespace amo {
             IPCMessage::SmartType ipcMsg = makeIPCMessage(msg);
             
             Transfer* pTransfer = manager->findTransfer(nBrowserID, transferName);
-            // 要执行的trnasfer必须继承RunableTransfer;
-            RunableTransfer* pRunableTransfer = dynamic_cast<RunableTransfer*>(pTransfer);
             
-            if (pRunableTransfer == NULL) {
+            if (pTransfer == NULL) {
                 return Undefined();
             }
             
-            //TODO: 这样做的话，一个Transfer就只能与一个线程挂钩，否则会出错
-            pRunableTransfer->setWeakup(std::bind(&ThreadTransfer::weakupThread, this));
-            pRunableTransfer->setSuspend(std::bind(&ThreadTransfer::waitForWeakUp, this));
+            //// 要执行的trnasfer必须继承RunnableTransfer;
+            //RunnableTransfer* pRunnableTransfer = dynamic_cast<RunnableTransfer*>(pTransfer);
+            //
+            //if (pRunnableTransfer == NULL) {
+            //    return Undefined();
+            //}
+            //
+            ////TODO: 这样做的话，一个Transfer就只能与一个线程挂钩，否则会出错
+            //pRunnableTransfer->setWeakup(std::bind(&ThreadTransfer::weakupThread, this));
+            //pRunnableTransfer->setSuspend(std::bind(&ThreadTransfer::waitForWeakUp, this));
             
             if (bSync) {
                 Any ret = amo::sync<Any>(m_pLooperExecutor, [ = ]()->Any {
@@ -181,37 +192,15 @@ namespace amo {
         }
         
         
-        void onEventCallback(const std::string& ansiMsg, bool bPause) {
-            amo::string strMsg(ansiMsg, false);
-            std::string utf8Msg = strMsg.to_utf8();
-            amo::json json(utf8Msg);
-            std::string utf8Event = json.getString("name");
-            triggerEvent(utf8Event, json, m_nBrowserID, m_nFrameID);
-            
-            if (bPause) {
-                waitForWeakUp();
-            }
-        }
-        
-        void onRunableEventCallback(std::shared_ptr<RunableTransfer> pTransfer,
-                                    const TransferEventInfo& info) {
-                                    
-            std::string utf8Event = info.name;
-            bool bSuspend = info.suspend;
-            triggerEvent(utf8Event, json, m_nBrowserID, m_nFrameID);
-            
-            if (bPause) {
-                waitForWeakUp();
-            }
-        }
-        
-        
-        void waitForWeakUp() {
+        Any waitForWeakUp() {
             std::unique_lock<std::recursive_mutex> lock(m_mutex);
             m_isPausedThread = true; // 暂停线程
             // 等待其他线程将该线程恢复
             m_condition_any.wait(lock,
                                  amo::bind(&ThreadTransfer::isResumeThread, this));
+            Any ret = m_weakupData;
+            m_weakupData = Undefined();
+            return ret;
         }
         
         void weakupThread() {
@@ -230,6 +219,7 @@ namespace amo {
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(ThreadTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(suspend, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(exec, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(async, TransferFuncNormal | TransferExecAsync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(sync, TransferFuncNormal | TransferExecSync)
@@ -249,6 +239,8 @@ namespace amo {
         bool m_isPausedThread;
         /** @brief	线程. */
         std::shared_ptr<amo::looper_executor> m_pLooperExecutor;
+        /** @brief	唤醒线程时可以传递的数据. */
+        Any m_weakupData;
     };
     
     

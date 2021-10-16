@@ -488,33 +488,33 @@ namespace amo {
             m_fnTriggerEventFunc = val;
         }
         
-        void triggerEvent(const std::string& strEventName,
-                          const Any& val,
-                          int nBrowserID = -1,
-                          int64_t nFrameID = -1) {
-                          
-            IPCMessage::SmartType ipcMessage(new IPCMessage());
-            ipcMessage->setMessageName(MSG_NATIVE_EXECUTE);
-            std::shared_ptr<AnyArgsList>& ipcArgs = ipcMessage->getArgumentList();
-            
-            ipcArgs->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-            ipcArgs->setValue(IPCArgsPosInfo::TransferID, 0);
-            ipcArgs->setValue(IPCArgsPosInfo::EventObjectID, getObjectID());
-            ipcArgs->setValue(IPCArgsPosInfo::BrowserID, nBrowserID);
-            ipcArgs->setValue(IPCArgsPosInfo::FrameID, nFrameID);
-            
-            
-            ipcArgs->setValue(IPCArgsPosInfo::FuncName, "triggerEvent");
-            ipcArgs->setValue(0, strEventName);
-            ipcArgs->setValue(1, val);
-            ipcArgs->setValue(IPCArgsPosInfo::ArgsLength, 2);
-            
-            if (getTriggerEventFunc()) {
-                getTriggerEventFunc()(ipcMessage);
-            } else {
-                // log out
-            }
-        }
+        //void triggerEvent(const std::string& strEventName,
+        //                  const Any& val,
+        //                  int nBrowserID = -1,
+        //                  int64_t nFrameID = -1) {
+        //
+        //    IPCMessage::SmartType ipcMessage(new IPCMessage());
+        //    ipcMessage->setMessageName(MSG_NATIVE_EXECUTE);
+        //    std::shared_ptr<AnyArgsList>& ipcArgs = ipcMessage->getArgumentList();
+        //
+        //    ipcArgs->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+        //    ipcArgs->setValue(IPCArgsPosInfo::TransferID, 0);
+        //    ipcArgs->setValue(IPCArgsPosInfo::EventObjectID, getObjectID());
+        //    ipcArgs->setValue(IPCArgsPosInfo::BrowserID, nBrowserID);
+        //    ipcArgs->setValue(IPCArgsPosInfo::FrameID, nFrameID);
+        //
+        //
+        //    ipcArgs->setValue(IPCArgsPosInfo::FuncName, "triggerEvent");
+        //    ipcArgs->setValue(0, strEventName);
+        //    ipcArgs->setValue(1, val);
+        //    ipcArgs->setValue(IPCArgsPosInfo::ArgsLength, 2);
+        //
+        //    if (getTriggerEventFunc()) {
+        //        getTriggerEventFunc()(ipcMessage);
+        //    } else {
+        //        // log out
+        //    }
+        //}
         
         void triggerEvent(const TransferEventInfo& info) {
         
@@ -535,7 +535,7 @@ namespace amo {
             }
             
             ipcArgs->setValue(0, info.name);
-            ipcArgs->setValue(1, info.data);
+            ipcArgs->setValue(1, info.toJson());
             //ipcArgs->setValue(1, info.toJson());
             ipcArgs->setValue(IPCArgsPosInfo::ArgsLength, 2);
             

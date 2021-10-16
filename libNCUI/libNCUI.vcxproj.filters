@@ -923,7 +923,7 @@
     <ClInclude Include="transfer\TransferEventInfo.hpp">
       <Filter>transfer</Filter>
     </ClInclude>
-    <ClInclude Include="transfer\RunableTransfer.hpp">
+    <ClInclude Include="transfer\RunnableTransfer.hpp">
       <Filter>transfer</Filter>
     </ClInclude>
   </ItemGroup>

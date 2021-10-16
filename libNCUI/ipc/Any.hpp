@@ -339,15 +339,15 @@ namespace amo {
         }
         
         // 类型转换
-        template<typename R> operator R() {
+        template<typename R> operator R() const {
             return stringToAny<R>(m_pData->value);
         }
-        template<typename R> R As() {
+        template<typename R> R As() const {
             return stringToAny<R>(m_pData->value);
         }
         
         // 类型判断
-        template<typename T> bool is() {
+        template<typename T> bool is() const {
             return (type() == AnyValueType<T>::value);
         }
         
@@ -385,7 +385,7 @@ namespace amo {
             return Any(type, val);
         }
         
-        amo::json toJson() {
+        amo::json toJson() const {
             amo::json json;
             json.put("type", m_pData->type);
             json.put("value", m_pData->value);

@@ -22,4 +22,4 @@ player/
 ipch/
 *.opendb
 *.db
-col*.sln
+coll*.*

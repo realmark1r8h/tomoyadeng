@@ -7,6 +7,7 @@
 #include <amo/json.hpp>
 #include <amo/string.hpp>
 #include "ipc/Any.hpp"
+#include "utility/utility.hpp"
 
 namespace amo {
     class TransferEventInfo {
@@ -40,8 +41,9 @@ namespace amo {
             json.put("toAll", toAll);
             json.put("browser", browser);
             json.put("frame", frame);
-            //TODO: 这里要改
-            json.put("data", data.value());
+            util().addAnyToJson(json, "data", data);
+            
+            
             return json;
         }
         

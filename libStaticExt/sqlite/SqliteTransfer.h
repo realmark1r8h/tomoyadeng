@@ -29,6 +29,7 @@ namespace amo {
         virtual Any remove(IPCMessage::SmartType msg);
         virtual Any queryCount(IPCMessage::SmartType msg);
         virtual Any getLastInsertRowID(IPCMessage::SmartType msg);
+        virtual Any containsTable(IPCMessage::SmartType msg);
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(SqliteTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(execute, TransferExecSync)
@@ -39,11 +40,14 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(queryCount, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(remove, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getLastInsertRowID, TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(containsTable, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
-        
+    public:
+        const std::string& getLastError() const;
+        void setLastError(const std::string& msg);
     protected:
         Any executeSql(const std::string& sql);
         std::string makeSql(IPCMessage::SmartType msg);
@@ -91,7 +95,7 @@ namespace amo {
         /**
         * @fn	bool Sqlite::containsField(const std::string& table, const std::string& field);
         *
-        * @brief	判断所给片段是否存在于表中.
+        * @brief	判断所给字段是否存在于表中.
         *
         * @param	table	The table.
         * @param	field	The field.
@@ -100,6 +104,7 @@ namespace amo {
         */
         
         bool containsField(const std::string& table, const std::string& field);
+        
         
     private:
         /*! @brief	当前数据库连接是否有效. */
