@@ -178,7 +178,7 @@ namespace amo {
         bool copyPath(const amo::path& to, const amo::path& from) {
         
             SHFILEOPSTRUCTA FileOp = { 0 };
-            FileOp.fFlags = FOF_NOCONFIRMATION |   //不出现确认对话框
+            FileOp.fFlags = FOF_NO_UI |   //不出现确认对话框
                             FOF_NOCONFIRMMKDIR; //需要时直接创建一个文件夹,不需用户确定
             FileOp.pFrom = from.c_str();
             FileOp.pTo = to.c_str();
@@ -201,7 +201,7 @@ namespace amo {
         //移动文件或文件夹
         bool movePath(const path& to, const path& from) {
             SHFILEOPSTRUCTA FileOp = { 0 };
-            FileOp.fFlags = FOF_NOCONFIRMATION |   //不出现确认对话框
+            FileOp.fFlags = FOF_NO_UI |   //不出现确认对话框
                             FOF_NOCONFIRMMKDIR; //需要时直接创建一个文件夹,不需用户确定
             FileOp.pFrom = from.c_str();
             FileOp.pTo = to.c_str();
@@ -213,7 +213,7 @@ namespace amo {
         //从命名文件或文件夹
         bool renamePath(const path& to, const path& from) {
             SHFILEOPSTRUCTA FileOp = { 0 };
-            FileOp.fFlags = FOF_NOCONFIRMATION;   //不出现确认对话框
+            FileOp.fFlags = FOF_NO_UI;   //不出现确认对话框
             FileOp.pFrom = to.c_str();
             FileOp.pTo = from.c_str();
             FileOp.wFunc = FO_RENAME;

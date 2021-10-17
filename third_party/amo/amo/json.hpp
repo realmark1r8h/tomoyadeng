@@ -182,7 +182,7 @@ namespace amo {
             
         }
         
-        json get_child(const std::string& key) {
+        json get_child(const std::string& key) const {
             const_iterator iter = find_member(key);
             
             if (iter == end()) {

@@ -121,14 +121,6 @@
     <ClInclude Include="amo\regex.hpp" />
     <ClInclude Include="amo\registry.hpp" />
     <ClInclude Include="amo\regular.hpp" />
-    <ClInclude Include="amo\rtc\json\other_json.hpp" />
-    <ClInclude Include="amo\rtc\p2p_connection.hpp" />
-    <ClInclude Include="amo\rtc\p2p_connection_listener.hpp" />
-    <ClInclude Include="amo\rtc\rtc.hpp" />
-    <ClInclude Include="amo\rtc\util\label_generator.hpp" />
-    <ClInclude Include="amo\rtc\webrtc\object_release_ptr.hpp" />
-    <ClInclude Include="amo\rtc\webrtc\thread_manager.hpp" />
-    <ClInclude Include="amo\rtc\webrtc_engine_listener.hpp" />
     <ClInclude Include="amo\signals2.hpp" />
     <ClInclude Include="amo\sigsolt.hpp" />
     <ClInclude Include="amo\singleton.hpp" />
@@ -136,9 +128,6 @@
     <ClInclude Include="amo\smart_ptr.hpp" />
     <ClInclude Include="amo\stdint.hpp" />
     <ClInclude Include="amo\string.hpp" />
-    <ClInclude Include="amo\stringify.hpp" />
-    <ClInclude Include="amo\string\iconv.hpp" />
-    <ClInclude Include="amo\string\string_convertor.hpp" />
     <ClInclude Include="amo\string_builder.hpp" />
     <ClInclude Include="amo\system.hpp" />
     <ClInclude Include="amo\system_error.hpp" />

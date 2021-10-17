@@ -174,72 +174,6 @@
     <ClInclude Include="amo\signals2.hpp">
       <Filter>amo</Filter>
     </ClInclude>
-    <ClInclude Include="amo\ascii.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\bimap.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\date.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\dynamic_bitset.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\foreach.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\hash.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\program_options.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\rtc\json\other_json.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\rtc\p2p_connection.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\rtc\p2p_connection_listener.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\rtc\rtc.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\rtc\util\label_generator.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\rtc\webrtc\object_release_ptr.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\rtc\webrtc\thread_manager.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\rtc\webrtc_engine_listener.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\smart_memory_pool.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\smart_ptr.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\stringify.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\string\iconv.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\string\string_convertor.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\system.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="amo\thread_pool.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="amo\any.hpp">
       <Filter>amo</Filter>
     </ClInclude>
@@ -283,6 +217,39 @@
       <Filter>amo</Filter>
     </ClInclude>
     <ClInclude Include="amo\xml.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\ascii.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\bimap.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\date.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\dynamic_bitset.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\foreach.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\hash.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\program_options.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\smart_memory_pool.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\smart_ptr.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\system.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\thread_pool.hpp">
       <Filter>amo</Filter>
     </ClInclude>
   </ItemGroup>

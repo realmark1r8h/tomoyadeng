@@ -195,8 +195,14 @@ namespace amo {
             try {
                 std::string strType = typeid(R).name();
                 
+                if (!has(funcName)) {
+                    return  amo::optional<R>();
+                }
+                
                 if (is_nil<R>::value) {
                     if (m_nCallType == StdCall) {
+                    
+                    
                         get<void __stdcall(Args ...)>(funcName)(args...);
                     } else {
                         get<void __cdecl(Args ...)>(funcName)(args...);
@@ -211,7 +217,7 @@ namespace amo {
                     }
                 }
             } catch (std::exception& e) {
-                amo::cdevel << e.what() << amo::endl;
+                amo::cerr << func_orient << e.what() << amo::endl;
                 return R();
             }
             

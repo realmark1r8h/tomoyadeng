@@ -94,6 +94,7 @@ namespace amo {
          * @return	Transfer.
          */
         static std::shared_ptr<ClassTransfer> findTransfer(const int64_t& nID) {
+            std::unique_lock<std::recursive_mutex> lock(getMutex());
             auto iter = getTransferMap()->find(nID);
             
             if (iter == getTransferMap()->end()) {
@@ -112,6 +113,7 @@ namespace amo {
          * @param	transfer	The transfer.
          */
         static void addTransfer(std::shared_ptr<ClassTransfer> transfer) {
+            std::unique_lock<std::recursive_mutex> lock(getMutex());
             (*getTransferMap())[transfer->getObjectID()] = transfer;
         }
         
@@ -124,10 +126,12 @@ namespace amo {
          * @param	nID	The identifier.
          */
         static void removeTransfer(const int64_t& nID) {
+            std::unique_lock<std::recursive_mutex> lock(getMutex());
             getTransferMap()->erase(nID);
         }
         
         static void removeTransferByName(const std::string& name) {
+            std::unique_lock<std::recursive_mutex> lock(getMutex());
             auto ptr = getTransferMap();
             
             for (auto iter = ptr->begin(); iter != ptr->end();) {
@@ -144,6 +148,11 @@ namespace amo {
         static std::shared_ptr<ClassTransferMap> &getTransferMap() {
             static std::shared_ptr<ClassTransferMap> oTransferMap(new ClassTransferMap());
             return oTransferMap;
+        }
+        
+        static std::recursive_mutex& getMutex() {
+            static std::recursive_mutex m_mutex;
+            return m_mutex;
         }
         
     public:
