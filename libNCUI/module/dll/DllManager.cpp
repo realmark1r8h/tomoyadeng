@@ -42,11 +42,13 @@ namespace amo {
             ptr = iter->second;
         } else {
             ptr.reset(new amo::loader(path));
-            m_oMap[path] = ptr;
+            
             bool bOk = ptr->load();
             
             if (!bOk) {
                 ptr.reset();
+            } else {
+                m_oMap[path] = ptr;
             }
         }
         

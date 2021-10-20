@@ -80,6 +80,17 @@ namespace amo {
                     return ;
                 }
                 
+                /*  amo::path p2("E:\\中文目录\\Collection-Out\\Binary.UD32\\libNCUI.dll");
+                  amo::path p2("E:\\中文目录\\Collection-Out\\Binary.UD32\\sqlite3.dll");*/
+                /*    amo::path p2("E:\\中文目录\\Collection-Out\\Binary.UD32\\libExt.dll");
+                  amo::loader loader;
+                  bool hu = loader.load(p2.c_str());
+                
+                  if (p2.file_exists()) {
+                	  int cdd = 34;
+                	  ++cdd;
+                  }
+                  */
                 amo::string module = p.strip_path().remove_extension();
                 loadExternalTransfer(module, pBrowser);
             }, false);

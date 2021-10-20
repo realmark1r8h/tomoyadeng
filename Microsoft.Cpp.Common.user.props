@@ -46,7 +46,7 @@ Copyright (C) ShineEnergy Corporation. All rights reserved.
 		<OutputFolder Condition="!HasTrailingSlash('$(OutputFolder)')">$(OutputFolder)\</OutputFolder>
 	</PropertyGroup>
   <PropertyGroup>
-		<IncludePath>D:\SDK\sqlite3;D:\SDK\boost_1_63_0;$(ProjectDir);$(ProjectDir)header;$(ProjectDir)include;$(LibraryFolder)\cef;$(SolutionDir)\third_party\sqlite3;$(SolutionDir)\third_party\node;$(SolutionDir)include;$(SolutionDir)header;$(SolutionDir)libStaticExt;$(SolutionDir)third_party;$(SolutionDir)\third_party\Duilib;$(SolutionDir)third_party\amo;$(SolutionDir)libNCUI;$(IncludePath)</IncludePath>
+		<IncludePath>D:\SDK\sqlite3;D:\SDK\boost_1_63_0;$(ProjectDir);$(ProjectDir)header;$(ProjectDir)include;$(LibraryFolder)\cef;$(SolutionDir)\third_party\sqlite3;$(SolutionDir)\third_party\node;$(SolutionDir)include;$(SolutionDir)header;$(SolutionDir)libsExt;$(SolutionDir)third_party;$(SolutionDir)\third_party\Duilib;$(SolutionDir)third_party\amo;$(SolutionDir)libNCUI;$(IncludePath)</IncludePath>
 		<LibraryPath>D:\SDK\sqlite3\lib;D:\SDK\boost_1_63_0\stage\lib;$(LibraryFolder)\cef\$(Configuration);$(LibraryFolder)\node\$(Configuration);$(LibraryFolder)\node\$(Configuration)\lib\;$(ProjectDir)binary;$(ProjectDir)library;$(SolutionDir)library;$(OutDir);$(LibraryPath)</LibraryPath>
 	</PropertyGroup>
 
@@ -128,4 +128,10 @@ Copyright (C) ShineEnergy Corporation. All rights reserved.
 		<SourcePath>$(VCInstallDir)atlmfc\src\mfc;$(VCInstallDir)atlmfc\src\mfcm;$(VCInstallDir)atlmfc\src\atl;$(VCInstallDir)crt\src;</SourcePath>
 		<ExcludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;$(MSBuildToolsPath32);$(VCInstallDir)atlmfc\lib;$(VCInstallDir)lib;</ExcludePath>
 	</PropertyGroup>
+	
+	  <ItemDefinitionGroup >
+    <ClCompile>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
 </Project>
