@@ -57,6 +57,9 @@
     <ClInclude Include="rcedit\ResourceUpdater.h">
       <Filter>rcedit</Filter>
     </ClInclude>
+    <ClInclude Include="sqlite\SqlMessageEmitter.hpp">
+      <Filter>sqlite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

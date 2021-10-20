@@ -83,6 +83,7 @@
     <ClInclude Include="rcedit\RceditTransfer.h" />
     <ClInclude Include="rcedit\ResourceUpdater.h" />
     <ClInclude Include="sqlite\SqliteTransfer.h" />
+    <ClInclude Include="sqlite\SqlMessageEmitter.hpp" />
     <ClInclude Include="sqlite\src\sqlite3pp.h" />
     <ClInclude Include="sqlite\src\sqlite3ppext.h" />
     <ClInclude Include="stdafx.h" />
