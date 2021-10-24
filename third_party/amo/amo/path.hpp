@@ -168,6 +168,7 @@ namespace amo {
         }
         
         operator std::string() {
+        
             return c_str();
         }
         /*!
@@ -1000,6 +1001,7 @@ namespace amo {
         }*/
         
         char* c_str() {
+            canonicalize();
             return m_path;
         }
         

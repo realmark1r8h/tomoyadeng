@@ -252,5 +252,11 @@
     <ClInclude Include="amo\thread_pool.hpp">
       <Filter>amo</Filter>
     </ClInclude>
+    <ClInclude Include="amo\sha1.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\bit_converter.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

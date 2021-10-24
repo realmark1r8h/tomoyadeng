@@ -23,34 +23,34 @@ namespace amo {
     
     class year {
     public:
-        year(uint16_t year_) : _year(year_) {}
-        uint16_t _year;
+        year(uint32_t year_) : _year(year_) {}
+        uint32_t _year;
     };
     
     class month {
     public:
-        month(uint16_t month_) : _month(month_) {}
-        uint16_t _month;
+        month(uint32_t month_) : _month(month_) {}
+        uint32_t _month;
     };
     class day {
     public:
-        day(uint16_t day) : _day(day) {}
-        uint16_t _day;
+        day(uint32_t day) : _day(day) {}
+        uint32_t _day;
     };
     class hour {
     public:
-        hour(uint16_t hour_) : _hour(hour_) {}
-        uint16_t _hour;
+        hour(uint32_t hour_) : _hour(hour_) {}
+        uint32_t _hour;
     };
     class minute {
     public:
-        minute(uint16_t minute_) : _minute(minute_) {}
-        uint16_t _minute;
+        minute(uint32_t minute_) : _minute(minute_) {}
+        uint32_t _minute;
     };
     class second {
     public:
-        second(uint16_t second_) : _second(second_) {}
-        uint16_t _second;
+        second(uint32_t second_) : _second(second_) {}
+        uint32_t _second;
     };
     
     class date_time {
@@ -242,6 +242,10 @@ namespace amo {
             return date_time(_seconds - second_._second);
         }
         
+        date_time add_seconds(const uint32_t& second_) {
+            return date_time(_seconds + second_);
+        }
+        
         bool operator>(const date_time& rv) {
             return _seconds > rv._seconds;
         }
@@ -310,6 +314,9 @@ namespace amo {
             return _seconds;
         }
         
+        int64_t timestamp() const {
+            return _seconds;
+        }
         
         static date_time from_string(const std::string& str) {
             char *cha = (char*)str.data();										// ½«string×ª»»³Échar*¡£

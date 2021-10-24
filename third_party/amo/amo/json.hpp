@@ -666,9 +666,6 @@ namespace amo {
             return get(key, default_val);
         }
         
-        char getChar(const std::string& key, char default_val = '\0') const {
-            return get<char>(key, default_val);
-        }
         
         bool getBool(const std::string& key, bool default_val = false) const {
             return get<bool>(key, default_val);

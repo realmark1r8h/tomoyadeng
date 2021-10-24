@@ -63,7 +63,7 @@ namespace amo {
     };
     
     
-    class loader : public boost::dll::shared_library {
+    class loader : boost::dll::shared_library {
     public:
         loader() {
         
