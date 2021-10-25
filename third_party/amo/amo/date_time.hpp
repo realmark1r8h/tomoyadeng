@@ -32,21 +32,25 @@ namespace amo {
         month(uint32_t month_) : _month(month_) {}
         uint32_t _month;
     };
+    
     class day {
     public:
         day(uint32_t day) : _day(day) {}
         uint32_t _day;
     };
+    
     class hour {
     public:
         hour(uint32_t hour_) : _hour(hour_) {}
         uint32_t _hour;
     };
+    
     class minute {
     public:
         minute(uint32_t minute_) : _minute(minute_) {}
         uint32_t _minute;
     };
+    
     class second {
     public:
         second(uint32_t second_) : _second(second_) {}
@@ -81,6 +85,7 @@ namespace amo {
             time_tm.tm_isdst = 0;
             _seconds = mktime(&time_tm);
         }
+        
         date_time(const string& datetimeStr) {
             if (datetimeStr.length() == 19) {
                 struct tm time_tm;
@@ -286,6 +291,10 @@ namespace amo {
                                
         }
         
+        // yyyyMMdd hhmmss
+        std::string format(const std::string& format_str = "") {
+        
+        }
         string to_num_string(short len) {
         
             char buffer[20] = { 0 };
