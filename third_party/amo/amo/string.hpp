@@ -12,7 +12,7 @@
 
 #include <amo/config.hpp>
 #include <amo/lexical_cast.hpp>
-#include <amo/string/string_convertor.hpp>
+#include <amo/string/string_utils.hpp>
 
 
 #ifdef	__linux__
@@ -89,7 +89,7 @@ namespace amo {
         
         string(const std::string& str, bool is_utf8 = DEFAULT_STRING_UTF8) {
             if (is_utf8) {
-                m_str = amo::string_convertor::utf8_to_ansi(str);
+                m_str = amo::string_utils::utf8_to_ansi(str);
             } else {
                 m_str = str;
             }
@@ -97,7 +97,7 @@ namespace amo {
         }
         
         string(const std::wstring& str/*, bool is_utf8 = DEFAULT_STRING_UTF8*/) {
-            m_str = amo::string_convertor::wide_to_ansi(str);
+            m_str = amo::string_utils::wide_to_ansi(str);
         }
         
         string(const char* str, bool is_utf8 = DEFAULT_STRING_UTF8) {
@@ -106,14 +106,14 @@ namespace amo {
             }
             
             if (is_utf8) {
-                m_str = amo::string_convertor::utf8_to_ansi(str);
+                m_str = amo::string_utils::utf8_to_ansi(str);
             } else {
                 m_str = str;
             }
         }
         
         string(const wchar_t* str) {
-            m_str = amo::string_convertor::wide_to_ansi(str);
+            m_str = amo::string_utils::wide_to_ansi(str);
         }
         
         static bool is_utf8_constant() {
@@ -121,7 +121,7 @@ namespace amo {
             
             if (b_is_utf8 == -1) {
                 std::string str = "简单字面常量编码测试";
-                bool b_utf8 = amo::string_convertor::is_utf8(str);
+                bool b_utf8 = amo::string_utils::is_utf8(str);
                 b_is_utf8 = b_utf8 ? 1 : 0;
             }
             
@@ -194,11 +194,11 @@ namespace amo {
         
         
         std::string to_utf8() {
-            return  amo::string_convertor::ansi_to_utf8(m_str);
+            return  amo::string_utils::ansi_to_utf8(m_str);
         }
         
         std::string to_utf8() const {
-            return amo::string_convertor::ansi_to_utf8(m_str);
+            return amo::string_utils::ansi_to_utf8(m_str);
         }
         
         
@@ -211,11 +211,11 @@ namespace amo {
         }
         
         operator std::wstring() {
-            return amo::string_convertor::ansi_to_wide(m_str);
+            return amo::string_utils::ansi_to_wide(m_str);
         }
         
         operator std::wstring() const {
-            return amo::string_convertor::ansi_to_wide(m_str);
+            return amo::string_utils::ansi_to_wide(m_str);
         }
         
         
@@ -245,12 +245,12 @@ namespace amo {
         
         
         string& operator+=(const std::wstring& str) {
-            m_str += amo::string_convertor::wide_to_ansi(str);
+            m_str += amo::string_utils::wide_to_ansi(str);
             return *this;
         }
         
         string& operator+=(const wchar_t* str) {
-            m_str += amo::string_convertor::wide_to_ansi(str);
+            m_str += amo::string_utils::wide_to_ansi(str);
             return *this;
         }
         
@@ -270,11 +270,11 @@ namespace amo {
         
         
         string operator+(const std::wstring& str) {
-            return amo::string(m_str + amo::string_convertor::wide_to_ansi(str), false);
+            return amo::string(m_str + amo::string_utils::wide_to_ansi(str), false);
         }
         
         string operator+(const wchar_t* str) {
-            return amo::string(m_str + amo::string_convertor::wide_to_ansi(str), false);
+            return amo::string(m_str + amo::string_utils::wide_to_ansi(str), false);
         }
         
         
@@ -292,12 +292,12 @@ namespace amo {
         
         
         bool operator!=(const std::wstring& str) {
-            std::string tmp = amo::string_convertor::wide_to_ansi(str);
+            std::string tmp = amo::string_utils::wide_to_ansi(str);
             return m_str != tmp;
         }
         
         bool operator!=(const wchar_t* str) {
-            std::string tmp = amo::string_convertor::wide_to_ansi(str);
+            std::string tmp = amo::string_utils::wide_to_ansi(str);
             return m_str != tmp;
         }
         
@@ -318,12 +318,12 @@ namespace amo {
         
         
         bool operator==(const std::wstring& str) {
-            std::string tmp = amo::string_convertor::wide_to_ansi(str);
+            std::string tmp = amo::string_utils::wide_to_ansi(str);
             return m_str == tmp;
         }
         
         bool operator==(const wchar_t* str) {
-            std::string tmp = amo::string_convertor::wide_to_ansi(str);
+            std::string tmp = amo::string_utils::wide_to_ansi(str);
             return m_str == tmp;
         }
         
@@ -343,12 +343,12 @@ namespace amo {
         
         
         bool operator==(const std::wstring& str) const {
-            std::string tmp = amo::string_convertor::wide_to_ansi(str);
+            std::string tmp = amo::string_utils::wide_to_ansi(str);
             return m_str == tmp;
         }
         
         bool operator==(const wchar_t* str) const {
-            std::string tmp = amo::string_convertor::wide_to_ansi(str);
+            std::string tmp = amo::string_utils::wide_to_ansi(str);
             return m_str == tmp;
         }
         
@@ -916,7 +916,10 @@ namespace amo {
         //
         //------------------------------------------------------------------------------
         string& replace(const string &strsrc, const string &strdst) {
-            if (strsrc.empty()) {
+            amo::string_utils::replace(m_str, strsrc, strdst);
+            return *this;
+            
+            /*if (strsrc.empty()) {
                 return *this;
             }
             
@@ -929,7 +932,7 @@ namespace amo {
                 pos += dstlen;
             }
             
-            return *this;
+            return *this;*/
         }
         
         //------------------------------------------------------------------------------
@@ -1124,6 +1127,9 @@ namespace amo {
             return amo::string(ss);
         }
         
+        amo::string format(const std::unordered_map<std::string, std::string>& map) {
+            return amo::string_utils::format(m_str, map);
+        }
         
         
         //将szFormat格式化为字符串，参数解释同sprintf

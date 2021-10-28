@@ -78,9 +78,17 @@ namespace amo {
         json.put("value", aa.toJson());
         vec.push_back(json);
     }
+    
+    void date_time_test() {
+        amo::date_time time;
+        std::string ss =  time.format();
+        ss = time.format("yyMMddhhmmss");
+        ss = time.format("hh:mm:s");
+        ss = time.format("yy-MM-dd");
+    }
     void BrowserWindow::InitWindow() {
     
-    
+        date_time_test();
         //获取图标，第二个参数为要获取第几个图标
         HICON hIcon = ExtractIconA(m_PaintManager.GetInstance(), amo::path::getFullExeName().c_str(), 0);
         ::SendMessage(m_hWnd, WM_SETICON, (WPARAM)false, (LPARAM)hIcon);

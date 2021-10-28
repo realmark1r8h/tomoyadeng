@@ -9,7 +9,9 @@
 #include <ctime>
 #include <string>
 #include <stdint.h>
+#include <regex>
 #include <amo/format.hpp>
+#include <amo/string/string_utils.hpp>
 
 namespace amo {
     using namespace std;
@@ -128,11 +130,11 @@ namespace amo {
             return to_tm().tm_hour;
         }
         
-        int month_day() const {
+        int day_in_month() const {
             return to_tm().tm_mday;
         }
         
-        int months() const {
+        int month_in_year() const {
             return to_tm().tm_mon + 1;
         }
         
@@ -144,7 +146,7 @@ namespace amo {
             return to_tm().tm_wday;
         }
         
-        int year_day()  const {
+        int day_in_year()  const {
             return to_tm().tm_yday;
         }
         
@@ -169,7 +171,7 @@ namespace amo {
         }
         
         uint16_t lastDayOfMonth() {
-            return lastDayOfMonth(years(), months());
+            return lastDayOfMonth(years(), month_in_year());
         }
         
         date_time operator+(const year& year_) {
@@ -273,6 +275,7 @@ namespace amo {
         
         bool operator!=(const date_time& rv) {
             return _seconds != rv._seconds;
+            
         }
         
         string to_string(const string& format = "") const {
@@ -283,17 +286,76 @@ namespace amo {
             return string(buffer);*/
             return amo::format("{0}-{1}-{2} {3}:{4}:{5}",
                                this->years(),
-                               this->months(),
-                               this->month_day(),
+                               this->month_in_year(),
+                               this->day_in_month(),
                                this->hours(),
                                this->minutes(),
                                this->seconds());
                                
         }
         
+        //https://www.cnblogs.com/polk6/p/5465088.html
         // yyyyMMdd hhmmss
-        std::string format(const std::string& format_str = "") {
+        std::string format(const std::string& format_str = "yyyy-MM-dd hh:mm:ss") {
         
+            std::string str = parse_format(format_str);
+            std::unordered_map<std::string, std::string> time_map;
+            time_map = to_map();
+            return amo::string_utils::format(str, time_map);
+        }
+        
+        std::string parse_format(const std::string& format_str) {
+            std::string str = format_str;
+            
+            amo::string_utils::replace(str, "yyyy", "{YEAR}");
+            amo::string_utils::replace(str, "yy", "{02YEAR}");
+            
+            amo::string_utils::replace(str, "MM", "{02LUNA}");
+            amo::string_utils::replace(str, "M", "{LUNA}");
+            
+            amo::string_utils::replace(str, "dd", "{02DAY}");
+            amo::string_utils::replace(str, "d", "{DAY}");
+            
+            amo::string_utils::replace(str, "hh", "{02HOUR}");
+            amo::string_utils::replace(str, "h", "{HOUR}");
+            
+            amo::string_utils::replace(str, "mm", "{02MINUTE}");
+            amo::string_utils::replace(str, "m", "{MINUTE}");
+            
+            amo::string_utils::replace(str, "ss", "{02SECOND}");
+            amo::string_utils::replace(str, "s", "{SECOND}");
+            
+            
+            return str;
+        }
+        
+        std::string getString(const std::string& format_str, int32_t num) const {
+            char buffer[50] = { 0 };
+            snprintf(buffer, sizeof(buffer), format_str.c_str(), num);
+            return buffer;
+        }
+        std::unordered_map<std::string, std::string> to_map()const {
+            std::unordered_map<std::string, std::string> map;
+            
+            map["YEAR"] = getString("%d", years());
+            map["02YEAR"] = getString("%02d", years() % 100);
+            
+            map["LUNA"] = getString("%d", month_in_year());
+            map["02LUNA"] = getString("%02d", month_in_year());
+            
+            map["DAY"] = getString("%d", day_in_month());
+            map["02DAY"] = getString("%02d", day_in_month());
+            
+            map["HOUR"] = getString("%d", hours());
+            map["02HOUR"] = getString("%02d", hours());
+            
+            map["MINUTE"] = getString("%d", minutes());
+            map["02MINUTE"] = getString("%02d", minutes());
+            
+            map["SECOND"] = getString("%d", seconds());
+            map["02SECOND"] = getString("%02d", seconds());
+            return map;
+            
         }
         string to_num_string(short len) {
         

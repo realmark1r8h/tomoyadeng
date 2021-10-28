@@ -28,7 +28,7 @@
 
 #include <utility>
 
-#include <amo/string/string_convertor.hpp>
+#include <amo/string/string_utils.hpp>
 
 namespace amo {
     class json {
@@ -162,11 +162,11 @@ namespace amo {
         }
         
         amo::json to_utf8() {
-            return amo::json(amo::string_convertor::ansi_to_utf8(this->to_string()));
+            return amo::json(amo::string_utils::ansi_to_utf8(this->to_string()));
         }
         
         static amo::json form_utf8(const amo::json& other) {
-            return amo::json(amo::string_convertor::utf8_to_ansi(other.to_string()));
+            return amo::json(amo::string_utils::utf8_to_ansi(other.to_string()));
         }
         
         void put_child(const std::string& key,  const json& val) {
