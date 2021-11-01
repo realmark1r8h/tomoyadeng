@@ -300,6 +300,35 @@ namespace amo {
             return is_utf8(str.c_str());
         }
         
+        
+        static std::vector< std::string > split(const std::string& src, const std::string& sub)   {
+            std::string s = src;
+            std::string delim = sub;
+            
+            std::vector<std::string> ret;
+            size_t start = 0;
+            
+            if (s.empty()) {
+                return ret;
+            }
+            
+            size_t index = s.find_first_of(delim, start);
+            
+            while (index != std::string::npos) {
+                ret.push_back(std::string(s.substr(start, index - start)));
+                start = index + sub.size();
+                index = s.find_first_of(delim, start);
+            }
+            
+            size_t size1 = src.size();
+            
+            if (start < src.size()) {
+                ret.push_back(std::string(s.substr(start)));
+            }
+            
+            return ret;
+        }
+        
         static void replace(std::string& m_str, const std::string &strsrc, const std::string &strdst) {
             if (strsrc.empty()) {
                 return  ;

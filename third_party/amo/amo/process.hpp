@@ -54,6 +54,7 @@ namespace amo {
             bool success;
             std::vector<amo::string> message;
         };
+        
     public:
         template<  typename ... Args>
         static std::shared_ptr<process> create(Args ... args) {
@@ -79,6 +80,7 @@ namespace amo {
         process(const std::string& appName)
             : m_strAppName(appName) {
             init();
+            setUTF8(false);
         }
         
         process(const std::string& appName, const std::string& args)
@@ -262,7 +264,9 @@ namespace amo {
                     break;
                 }
                 
-                strRetval.append(buffer, bytesRead);
+                std::string maybeU8String(buffer, bytesRead);
+                
+                strRetval.append(amo::string(maybeU8String, m_bUTF8));
             }
             
             strRetval.replace("\r", "");
@@ -275,7 +279,12 @@ namespace amo {
             return m_pResult;
             
         }
-        
+        bool isUTF8() const {
+            return m_bUTF8;
+        }
+        void setUTF8(bool val) {
+            m_bUTF8 = val;
+        }
     protected:
         std::string makeCommand() {
             std::stringstream stream;
@@ -311,6 +320,9 @@ namespace amo {
         
         /** @brief	进程执行结果. */
         std::shared_ptr<result> m_pResult;
+        
+        /** @brief	程序输出是否为utf8编码. */
+        bool m_bUTF8;
         
         amo::path m_workPath;
         

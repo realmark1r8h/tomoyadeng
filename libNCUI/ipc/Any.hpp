@@ -8,11 +8,11 @@
 #include <map>
 #include <memory>
 #include <vector>
-
+#include <type_traits>
 #include <amo/json.hpp>
 #include <amo/nil.hpp>
 #include <amo/stdint.hpp>
-
+#include <amo/date_time.hpp>
 #include "ipc//IPCMessage.hpp"
 
 /*!
@@ -21,6 +21,9 @@
  * @brief	.
  */
 namespace amo {
+
+
+
 
     /*!
      * @typedef	amo::nil Nil
@@ -124,7 +127,9 @@ namespace amo {
     template<> static std::string anyToString<Nothing>(const Nothing& val) {
         return std::string();
     }
-    
+    template<> static std::string anyToString<date_time>(const date_time& val) {
+        return val.to_string();
+    }
     /*!
      * @fn	template<typename T> static T stringToValue(const std::string& val)
      *
@@ -183,7 +188,9 @@ namespace amo {
     template<> static Nothing stringToAny(const std::string& val) {
         return Nothing();
     }
-    
+    template<> static date_time stringToAny(const std::string& val) {
+        return date_time::from_string(val);
+    }
     /*!
      * @struct	AnyValueType
      *
@@ -257,7 +264,9 @@ namespace amo {
     template<> struct AnyValueType<std::vector<Any> > {
         static const char value = 42;
     };
-    
+    template<> struct AnyValueType <amo::date_time> {
+        static const char value = 43;
+    };
     /*!
      * @class	AnyData
      *
@@ -922,6 +931,30 @@ namespace amo {
         return jsonArr.to_string();
     }
     
+    
+    
+    /*!
+    * @class	ValidAny
+    *
+    * @brief	A valid any.
+    */
+    
+    class ValidAny {};
+    
+    /*!
+    * @class	InvalidAny
+    *
+    * @brief	An invalid any.
+    */
+    
+    class InvalidAny {};
+    
+    template<typename T>
+    class GetAnyType {
+    public:
+        typedef typename std::conditional<AnyValueType<T>::value
+        == AnyValueType<Unknown>::value, InvalidAny, ValidAny>::type Type;
+    };
 }
 
 #endif // AMO_ANY_HPP__

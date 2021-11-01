@@ -73,7 +73,7 @@ namespace amo {
             lib_name = lib_name_;
         }
         
-        loader(const amo::string& lib_name_) {
+        loader(const amo::string& lib_name_)  {
             lib_name = lib_name_.to_ansi();
         }
         

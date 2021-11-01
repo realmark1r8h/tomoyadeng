@@ -21,21 +21,7 @@ namespace amo {
     class MessageLauncher {
     public:
     
-        /*!
-         * @class	ValidAny
-         *
-         * @brief	A valid any.
-         */
-        
-        class ValidAny {};
-        
-        /*!
-         * @class	InvalidAny
-         *
-         * @brief	An invalid any.
-         */
-        
-        class InvalidAny {};
+    
     public:
         MessageLauncher(int nPipeID = -9999, int64_t nFrameID = -1) {
             m_nPipeID = nPipeID;
@@ -323,9 +309,9 @@ namespace amo {
         
         template<typename T, typename ...Args> void makeProcessMessage(
             IPCMessage::SmartType msg, const T& t, Args ... args) {
-            typedef std::conditional<AnyValueType<T>::value
-            == AnyValueType<amo::Unknown>::value, InvalidAny, ValidAny>::type Type;
-            makeProcessMessageImpl(msg, Type(), t, args...);
+            /* typedef std::conditional<AnyValueType<T>::value
+             == AnyValueType<amo::Unknown>::value, InvalidAny, ValidAny>::type Type;*/
+            makeProcessMessageImpl(msg, typename GetAnyType<T>::Type(), t, args...);
         }
         
         /*!

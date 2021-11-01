@@ -737,6 +737,9 @@ namespace amo {
             m_str.swap(_Right);
         }
         
+        bool contains(const _Myt& _Right) const {
+            return find(_Right) != -1;
+        }
         size_type find(const _Myt& _Right, size_type _Off = 0) const {
             return m_str.find(_Right, _Off);
         }
@@ -918,21 +921,17 @@ namespace amo {
         string& replace(const string &strsrc, const string &strdst) {
             amo::string_utils::replace(m_str, strsrc, strdst);
             return *this;
-            
-            /*if (strsrc.empty()) {
-                return *this;
-            }
-            
-            std::string::size_type pos = 0;
-            std::string::size_type srclen = strsrc.size();
-            std::string::size_type dstlen = strdst.size();
-            
-            while ((pos = m_str.find(strsrc, pos)) != std::string::npos) {
-                m_str.replace(pos, srclen, strdst);
-                pos += dstlen;
-            }
-            
-            return *this;*/
+        }
+        
+        
+        string replace(const string &strsrc, const string &strdst) const {
+            amo::string str = *this;
+            str.replace(strsrc, strdst);
+            return str;
+        }
+        
+        string replace_c(const string &strsrc, const string &strdst)const {
+            return replace(strsrc, strdst);
         }
         
         //------------------------------------------------------------------------------

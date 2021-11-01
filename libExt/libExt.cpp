@@ -8,11 +8,6 @@
 #include "sqlite/SqliteTransfer.h"
 #include "rcedit/RceditTransfer.h"
 
-#ifdef _DEBUG
-#pragma comment(lib, "libsExtUD32.lib")
-#else
-#pragma comment(lib, "libsExtUR32.lib")
-#endif
 
 
 LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {

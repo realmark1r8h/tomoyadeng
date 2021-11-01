@@ -598,8 +598,12 @@ namespace amo {
          */
         path& get_long_path_name() {
             char a[1000] = { 0 };
-            ::GetLongPathNameA(m_path, a, 1000);
-            strcpy(m_path, a);
+            BOOL bRet =  ::GetLongPathNameA(m_path, a, 1000);
+            
+            if (bRet != FALSE) {
+                strcpy(m_path, a);
+            }
+            
             return*this;
         }
         /*!
@@ -611,8 +615,12 @@ namespace amo {
          */
         path& get_short_path() {
             char a[1000] = { 0 };
-            ::GetShortPathNameA(m_path, a, 1000);
-            memcpy(m_path, a, 1000);
+            BOOL bRet = ::GetShortPathNameA(m_path, a, 1000);
+            
+            if (bRet != FALSE) {
+                memcpy(m_path, a, 1000);
+            }
+            
             return *this;
         }
         /*!
@@ -869,7 +877,7 @@ namespace amo {
         }
         
         bool create_directory() const {
-            // 只能为给对路径创建文件夹
+            // 只能为给绝对对路径创建文件夹
             if (this->is_relative()) {
                 return false;
             }

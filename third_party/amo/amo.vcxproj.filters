@@ -258,5 +258,11 @@
     <ClInclude Include="amo\bit_converter.hpp">
       <Filter>amo</Filter>
     </ClInclude>
+    <ClInclude Include="amo\loader_lite.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\softeware.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

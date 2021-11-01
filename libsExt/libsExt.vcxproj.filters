@@ -60,6 +60,9 @@
     <ClInclude Include="sqlite\SqlMessageEmitter.hpp">
       <Filter>sqlite</Filter>
     </ClInclude>
+    <ClInclude Include="transfer\DemoTransfer.h">
+      <Filter>transfer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -85,6 +88,9 @@
     </ClCompile>
     <ClCompile Include="rcedit\ResourceUpdater.cpp">
       <Filter>rcedit</Filter>
+    </ClCompile>
+    <ClCompile Include="transfer\DemoTransfer.cpp">
+      <Filter>transfer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

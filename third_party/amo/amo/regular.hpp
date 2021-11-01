@@ -24,6 +24,10 @@ namespace amo {
             return  std::regex_match(m_str, std::regex("^[1-9]\\d{4,10}$"));
         }
         
+        bool is_mobile_number() {
+            // 这个不行
+            return std::regex_match(m_str, std::regex("^1[0-9][0-9]{1}[0-9]{8}$|^15[0-9]{1}[0-9]{8}$|^18[0-9]{1}[0-9]{8}$"));
+        }
     private:
         std::string m_str;
     };

@@ -103,6 +103,7 @@
     <ClInclude Include="amo\json.hpp" />
     <ClInclude Include="amo\launch.hpp" />
     <ClInclude Include="amo\loader.hpp" />
+    <ClInclude Include="amo\loader_lite.hpp" />
     <ClInclude Include="amo\logger.hpp" />
     <ClInclude Include="amo\looper_executor.hpp" />
     <ClInclude Include="amo\md5.hpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="amo\singleton.hpp" />
     <ClInclude Include="amo\smart_memory_pool.hpp" />
     <ClInclude Include="amo\smart_ptr.hpp" />
+    <ClInclude Include="amo\softeware.hpp" />
     <ClInclude Include="amo\stdint.hpp" />
     <ClInclude Include="amo\string.hpp" />
     <ClInclude Include="amo\string_builder.hpp" />

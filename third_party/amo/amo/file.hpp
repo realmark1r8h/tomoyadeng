@@ -45,6 +45,12 @@ namespace amo {
             }
         }
         
+        std::string name() const {
+            amo::path p = m_path;
+            p.strip_path().remove_extension();
+            return p.c_str();
+        }
+        
         ~file() {
             close();
         }
@@ -118,6 +124,13 @@ namespace amo {
             ifs->write(str.c_str(), str.size());
         }
         
+        void write(const std::vector<int8_t>& vec) {
+            if (!ifs) {
+                return;
+            }
+            
+            ifs->write((char*)vec.data(), vec.size());
+        }
         // 读取整个文件
         std::string read() {
             std::ifstream ifs(m_path.c_str());
@@ -125,7 +138,28 @@ namespace amo {
             buffer << ifs.rdbuf();
             return buffer.str();
         }
+        std::vector<int8_t> read_all_bytes() {
+            std::vector<int8_t> vec;
+            std::ifstream ifs(m_path.c_str());
+            std::filebuf* pbuf = ifs.rdbuf();
+            // get file size using buffer's members
+            std::size_t size = pbuf->pubseekoff(0, ifs.end, ifs.in);
+            vec.resize(size);
+            pbuf->sgetn((char*)vec.data(), size);
+            ifs.close();
+            return vec;
+        }
         
+        bool read_all_bytes(std::vector<int8_t>& vec) {
+            std::ifstream ifs(m_path.c_str());
+            std::filebuf* pbuf = ifs.rdbuf();
+            // get file size using buffer's members
+            std::size_t size = pbuf->pubseekoff(0, ifs.end, ifs.in);
+            vec.resize(size);
+            pbuf->sgetn((char*)vec.data(), size);
+            ifs.close();
+            return true;
+        }
         // 按行读取
         std::vector<std::string> read_all_lines() {
             std::vector<std::string> vec;
@@ -197,7 +231,13 @@ namespace amo {
             
             return bOk;
         }
+        amo::path& get_path() {
+            return m_path;
+        }
         
+        const amo::path& get_path() const {
+            return m_path;
+        }
     private:
         bool renameFile(const amo::path& to, const amo::path& from) {
             return moveFile(to, from);

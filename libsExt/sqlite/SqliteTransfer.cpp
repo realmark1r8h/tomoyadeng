@@ -7,6 +7,7 @@
 #include <amo/format.hpp>
 #include <amo/json.hpp>
 #include <amo/logger.hpp>
+#include <map>
 
 #pragma comment(lib, "sqlite3.lib")
 
@@ -27,10 +28,10 @@ namespace amo {
         try {
             m_strDBPath = args;
             m_pDB.reset(new sqlite3pp::database(args.c_str()));
-            m_bValid = true;
+            setValid(true);
         } catch (std::exception& e) {
             setLastError(e.what());
-            m_bValid = false;
+            setValid(false);
             m_pDB.reset();
         }
         
@@ -222,7 +223,7 @@ namespace amo {
                     const char* columnName = qry.column_name(i);
                     
                     if (columnName != NULL) {
-                        keys.push_back(columnName);
+                        keys.push_back(translateFieldName(columnName));
                     } else {
                         bQueryData = false;
                         break;
@@ -231,11 +232,13 @@ namespace amo {
                     const char* columnType = qry.column_decltype(i);
                     
                     if (columnType != NULL) {
-                        types.push_back(qry.column_decltype(i));
+                    
+                        types.push_back(translateFieldType(columnType));
                     } else {
                         bQueryData = false;
-                        types.push_back("INTEGER");
-                        break;
+                        types.push_back("TEXT");
+                        amo::cwarn << func_orient << "数据表列未知类型：" << columnName << amo::endl;
+                        //break;
                     }
                 }
                 
@@ -247,6 +250,7 @@ namespace amo {
                 // 获取数据
                 amo::json jsonArr;
                 jsonArr.set_array();
+                auto ccoutn = qry.column_count();
                 
                 for (sqlite3pp::query::iterator iter = qry.begin();
                         iter != qry.end();
@@ -254,6 +258,11 @@ namespace amo {
                     amo::json json;
                     
                     for (int j = 0; j < qry.column_count(); ++j) {
+                        /* OutputDebugStringA(keys[j].c_str());
+                         OutputDebugStringA("  :  ");
+                         OutputDebugStringA(types[j].c_str());
+                         OutputDebugStringA("\n");
+                         */
                         if (types.at(j) == "Boolean") {
                             json.put(keys.at(j), (*iter).get<int>(j) != 0);
                         } else if (types.at(j) == "INTEGER"
@@ -1028,6 +1037,51 @@ namespace amo {
     
     void SqliteTransfer::setLastError(const std::string& msg) {
         m_strLastError = msg;
+    }
+    
+    int SqliteTransfer::getFieldStyle() const {
+        return nfieldStyle;
+    }
+    
+    void SqliteTransfer::setFieldStyle(int val) {
+        nfieldStyle = val;
+    }
+    
+    std::string SqliteTransfer::translateFieldName(const std::string& str) {
+    
+        switch (nfieldStyle) {
+        case FieldUpper:
+            return amo::string(str, true).to_upper().to_utf8();
+            
+        case FieldLower:
+            return amo::string(str, true).to_lower().to_utf8();
+            
+        case FieldNormal:
+        default:
+            break;
+        }
+        
+        return str;
+    }
+    
+    std::string SqliteTransfer::translateFieldType(const std::string& str) {
+        amo::string val(str, true);
+        val.to_upper();
+        
+        std::unordered_map<std::string, std::string> map {
+            { "INT", "INTEGER"},
+            {"LONG", "INTEGER"},
+            {"LONG LONG", "INTEGER"},
+            {"SHORT", "INTEGER"},
+            {"SMALLINT", "INTEGER"}
+        };
+        auto iter = map.find(val);
+        
+        if (iter != map.end()) {
+            return iter->second;
+        }
+        
+        return val;
     }
     
 }

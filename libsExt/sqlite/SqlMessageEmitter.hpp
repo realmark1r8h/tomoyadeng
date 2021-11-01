@@ -75,6 +75,13 @@ namespace amo {
             return  m_pDB->containsTable(sql);
         }
         
+    public:
+        int getFieldStyle() const {
+            return m_pDB->getFieldStyle();
+        }
+        void setFieldStyle(int val) {
+            return m_pDB->setFieldStyle(val);
+        }
         
     private:
     

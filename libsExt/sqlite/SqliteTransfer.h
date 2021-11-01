@@ -16,6 +16,14 @@ namespace amo {
 
     class SqliteTransfer : public ClassTransfer {
     public:
+        // 不改变字段名
+        const static int FieldNormal = 0;
+        // 字段字大写
+        const static int FieldUpper = 1;
+        // 字段名小写
+        const static int FieldLower = 2;
+        
+    public:
     
         SqliteTransfer();
         SqliteTransfer(const std::string& args);
@@ -45,9 +53,20 @@ namespace amo {
         
         virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
+        bool isValid() const {
+            return m_bValid;
+        }
+        void setValid(bool val) {
+            m_bValid = val;
+        }
     public:
         const std::string& getLastError() const;
         void setLastError(const std::string& msg);
+        
+        int getFieldStyle() const;
+        void setFieldStyle(int val);
+        std::string translateFieldName(const std::string& str);
+        std::string translateFieldType(const std::string& str);
     protected:
         Any executeSql(const std::string& sql);
         std::string makeSql(IPCMessage::SmartType msg);
@@ -114,6 +133,7 @@ namespace amo {
         std::shared_ptr< sqlite3pp::database> m_pDB;
         std::unordered_map<std::string, std::vector<std::string> > m_tableFieldMap;
         std::vector<std::string> m_emptyFields;
+        int nfieldStyle;
     };
 }
 

@@ -386,9 +386,36 @@ namespace amo {
         }
         
         int64_t timestamp() const {
-            return _seconds;
+            return _seconds * 1000LL;
         }
         
+        //static date_time from_string(const std::string& strDateTime) {
+        //    std::string str = strDateTime;
+        //    int nIndex = str.find(".");
+        //
+        //    // 现在还不支持ms, 去掉毫秒部分
+        //    if (nIndex != -1) {
+        //        str = str.substr(0, nIndex);
+        //    }
+        //
+        //    date_time date;
+        //    // 现在只支持 yyyy-MM-dd hh:mm:ss这种格式
+        //    std::vector<std::string> vec = amo::string_utils::split(str, " ");
+        //
+        //    if (vec.size() != 2) {
+        //        return date;
+        //    }
+        //
+        //    std::vector<std::string> dates = amo::string_utils::split(vec[0], "-");
+        //
+        //    if (dates.size() != 3) {
+        //        return date;
+        //    }
+        //
+        //    std::vector<std::string> times = amo::string_utils::split(vec[1], ":");
+        
+        
+        //}
         static date_time from_string(const std::string& str) {
             char *cha = (char*)str.data();										// 将string转换成char*。
             tm tm_;																// 定义tm结构体。
