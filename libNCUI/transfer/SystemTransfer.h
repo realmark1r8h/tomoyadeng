@@ -23,10 +23,10 @@ namespace amo {
         
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(SystemTransfer, ClassTransfer)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(info, TransferFuncProperty | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(screen, TransferFuncProperty | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(mouse, TransferFuncProperty | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(keyboard, TransferFuncProperty | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(info, TransferFuncClassProperty | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(screen, TransferFuncClassProperty | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(mouse, TransferFuncClassProperty | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(keyboard, TransferFuncClassProperty | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
     private:
     };

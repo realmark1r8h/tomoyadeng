@@ -36,7 +36,12 @@ namespace amo {
                 object->SetValue(p.second.m_strName,
                                  CefV8Value::CreateFunction(p.second.m_strName, this),
                                  V8_PROPERTY_ATTRIBUTE_NONE);
-            } else if (p.second.functionType() == TransferFuncProperty) {
+            } /*else if (p.second.functionType() == TransferFuncClassProperty) {
+            
+				object->SetValue(p.second.m_strName,
+								 V8_ACCESS_CONTROL_DEFAULT,
+								 V8_PROPERTY_ATTRIBUTE_NONE);
+			}*/ else if (p.second.functionType() == TransferFuncMemberProperty) {
                 object->SetValue(p.second.m_strName,
                                  V8_ACCESS_CONTROL_DEFAULT,
                                  V8_PROPERTY_ATTRIBUTE_NONE);

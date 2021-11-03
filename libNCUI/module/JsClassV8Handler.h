@@ -38,6 +38,10 @@ namespace amo {
                          const CefRefPtr<CefV8Value> object,
                          CefRefPtr<CefV8Value>& retval,
                          CefString& exception) override {
+            if (name == "Name") {
+                int i = 32;//for break;
+            }
+            
             if (m_fnGet) {
                 CefV8ValueList list;
                 return m_fnGet(name, object, list, retval, exception);
@@ -66,7 +70,11 @@ namespace amo {
         bool Set(const CefString& name,
                  const CefRefPtr<CefV8Value> object,
                  const CefRefPtr<CefV8Value> value,
-                 CefString& exception) {
+                 CefString& exception) override {
+            if (name == "Name") {
+                int i = 32;//for break;
+            }
+            
             if (m_fnGet) {
                 CefV8ValueList list;
                 list.push_back(value);
@@ -230,6 +238,7 @@ namespace amo {
     
         bool m_bRendererClass;
         CefRefPtr<JsClassObjectV8Accessor> m_pAccessor;
+        
     };
 }
 

@@ -203,7 +203,7 @@ namespace amo {
                     // 成员函数
                     Nan::SetPrototypeMethod(tpl, p.m_strName.c_str(),
                                             ExecuteObjectFunc);
-                } else if (p.functionType() == TransferFuncProperty) {
+                } else if (p.functionType() == TransferFuncClassProperty) {
                     /// 属性
                     tpl->SetNativeDataProperty(Nan::New(p.m_strName).ToLocalChecked(),
                                                NodeClassV8Handler::ExecuteClassAttrGetter);

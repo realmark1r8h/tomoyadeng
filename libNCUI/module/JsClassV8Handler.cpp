@@ -25,6 +25,8 @@ namespace amo {
                                        std::placeholders::_4,
                                        std::placeholders::_5));
                                        
+                                       
+                                       
     }
     
     JsClassV8Handler::~JsClassV8Handler() {
@@ -51,11 +53,9 @@ namespace amo {
                 object->SetValue(p.second.m_strName,
                                  CefV8Value::CreateFunction(p.second.m_strName, this),
                                  V8_PROPERTY_ATTRIBUTE_NONE);
-            } else if (p.second.functionType() == TransferFuncProperty) {
-            
+            } else if (p.second.functionType() == TransferFuncClassProperty) {
                 CefRefPtr<CefV8Value> obj = CefV8Value::CreateObject(m_pAccessor);
-                
-                
+                //TODO: 类的属性只能GET不能SET，不知道为啥
                 obj->SetValue(p.second.m_strName,
                               V8_ACCESS_CONTROL_DEFAULT,
                               V8_PROPERTY_ATTRIBUTE_NONE);
@@ -67,6 +67,7 @@ namespace amo {
             }
             
         }
+        
         
         CefRefPtr<CefV8Context> pContext = CefV8Context::GetCurrentContext();
         int nBrowserID = pContext->GetBrowser()->GetIdentifier();

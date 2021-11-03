@@ -427,7 +427,7 @@ namespace amo {
         amo::json utf8Json = args->getJson(1);
         
         // 如果不是一个合法的JSON，返回""
-        if (!utf8Json.is_valid()) {
+        if (!utf8Json.is_valid() || utf8Json.size() <= 0) {
             return "";
         }
         

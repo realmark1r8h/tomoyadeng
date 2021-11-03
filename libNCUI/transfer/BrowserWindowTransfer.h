@@ -97,7 +97,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(removeBrowserWindowSettings, TransferFuncStatic | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getBrowserWindowSettings, TransferFuncStatic | TransferExecSync)
         
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(currentWindow, TransferFuncProperty | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(currentWindow, TransferFuncClassProperty | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getAllWindows, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getFocusedWindow, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(fromId, TransferFuncStatic | TransferExecSync)
