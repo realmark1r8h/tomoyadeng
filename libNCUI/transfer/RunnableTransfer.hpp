@@ -49,6 +49,7 @@ namespace amo {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             
             if (transferName() == args->getString(IPCArgsPosInfo::FuncName)
+                    || "CLASS" == args->getString(IPCArgsPosInfo::FuncName)
                     || "weakup" == args->getString(IPCArgsPosInfo::FuncName)
                     || "suspend" == args->getString(IPCArgsPosInfo::FuncName)) {
                 // new 不能在多线程中执行

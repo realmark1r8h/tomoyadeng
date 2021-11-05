@@ -37,8 +37,9 @@ namespace amo {
         TransferFuncNormal = 0 << 8,				// 普通函数
         TransferFuncStatic = 1 << 8,				// 静态函数
         TransferFuncConstructor = 2 << 8,			// 构造函数
-        TransferFuncClassProperty = 3 << 8,				// 类属性
-        TransferFuncMemberProperty = 4 << 8,		// 对象属性
+        TransferFuncConstProerty = 3 << 8,			// 类静态常量属性，不能被赋值
+        TransferFuncClassProperty = 4 << 8,			// 类属性，可以通过.CLASS访问赋值
+        TransferFuncMemberProperty = 5 << 8,		// 对象属性，可以赋值
     };
     
     // JS在调用C++时的同步类型
@@ -162,6 +163,12 @@ namespace amo {
             m_strName = str;
         }
         
+        std::string getObjectName() const {
+            return m_strObjectName;
+        }
+        void setObjectName(std::string val) {
+            m_strObjectName = val;
+        }
         std::vector<FunctionWrapper> toVector() {
             std::vector<FunctionWrapper> vec;
             
@@ -180,6 +187,7 @@ namespace amo {
             std::vector<FunctionWrapper> vec = toVector();
             amo::json json;
             json.put("name", this->name());
+            json.put("objectName", this->getObjectName());
             json.put("id", this->getObjectID());
             json.put("builtin", this->isBuiltIn());
             json.put("rendererClass", this->isRendererClass());
@@ -222,6 +230,7 @@ namespace amo {
         amo::json toSimplifiedJson() {
             amo::json json;
             json.put("name", this->name());
+            json.put("objectName", this->getObjectName());
             json.put("id", this->getObjectID());
             json.put("builtin", this->isBuiltIn());
             json.put("rendererClass", this->isRendererClass());
@@ -233,6 +242,7 @@ namespace amo {
             FunctionWrapperMgr mgr;
             mgr.m_strName = json.get<std::string>("name");
             mgr.m_nObjectID = json.get<int64_t>("id");
+            mgr.m_strObjectName = json.get<std::string>("objectName");
             mgr.m_bRendererClass = json.get<bool>("rendererClass");
             std::vector<amo::json> functions;
             functions = json.get_child("functions").to_array();
@@ -322,6 +332,7 @@ namespace amo {
             m_nObjectID = val;
         }
         
+        
         /*!
         * @fn	bool JsClassV8Handler::isRendererClass() const;
         *
@@ -363,6 +374,7 @@ namespace amo {
         void setBuiltIn(bool val) {
             m_bBuiltIn = val;
         }
+        
     private:
         int64_t m_nObjectID;
         std::vector<std::string> m_vecModules;
@@ -372,6 +384,7 @@ namespace amo {
         
         std::unordered_map < std::string, FunctionWrapper > m_mpJsFunc;								//JS调用C++回调处理函数集合
         std::string m_strName;
+        std::string m_strObjectName;
         bool m_bRendererClass;
         /*! @brief	是否为内置模块，默认为true. */
         bool m_bBuiltIn;

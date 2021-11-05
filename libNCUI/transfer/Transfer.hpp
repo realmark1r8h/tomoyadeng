@@ -62,6 +62,8 @@ namespace amo {
                                    amo::IPCResult&)> BerforeResultFunc;
                                    
                                    
+                                   
+                                   
     public:
         /*!
          * @fn	template<typename T> std::shared_ptr<T> Transfer::getDerivedClass()
@@ -92,6 +94,7 @@ namespace amo {
             setObjectID(amo::uid::generate_uid());
             m_oFuncMgr.setObjectID(getObjectID());
             setFuncRegistered(false);
+            setClassObject(false);
             
         }
         /*!
@@ -108,6 +111,7 @@ namespace amo {
             setObjectID(amo::uid::generate_uid());
             m_oFuncMgr.setObjectID(getObjectID());
             setFuncRegistered(false);
+            setClassObject(false);
         }
         
         ~Transfer() {
@@ -164,6 +168,56 @@ namespace amo {
          */
         int64_t getObjectID() const {
             return m_nObjectID;
+        }
+        
+        /**
+         * @fn	std::string Transfer::getObjectName() const
+         *
+         * @brief	获取当前Transfer的名称.
+         *
+         * @return	The object name.
+         */
+        
+        std::string getObjectName() const {
+            return m_strObjectName;
+        }
+        
+        /**
+         * @fn	void Transfer::setObjectName(std::string val)
+         *
+         * @brief	设置当前Transfer的名称.
+         *
+         * @param	val	The value.
+         */
+        
+        void setObjectName(std::string val) {
+        
+            m_strObjectName = val;
+            m_oFuncMgr.setObjectName(getObjectName());
+        }
+        
+        /**
+         * @fn	bool Transfer::isClassOjbect() const
+         *
+         * @brief	判断当前Transfer是否为对象.
+         *
+         * @return	true if class ojbect, false if not.
+         */
+        
+        bool isClassOjbect() const {
+            return m_bClassObject;
+        }
+        
+        /**
+         * @fn	void Transfer::setClassObject(bool val)
+         *
+         * @brief	设置当前Trasnfer是否为对象.
+         *
+         * @param	val	true to value.
+         */
+        
+        void setClassObject(bool val) {
+            m_bClassObject = val;
         }
         
         /*!
@@ -566,8 +620,14 @@ namespace amo {
         /*! @brief	当前Transfer ID. */
         int64_t m_nObjectID;
         
+        /** @brief	当前Transfer 名称. */
+        std::string m_strObjectName;
+        
         /*! @brief	判断当前类是否已经注册. */
         bool m_bIsRegistered;
+        
+        /** @brief	判断当前transfer是类还是对象. */
+        bool m_bClassObject;
         
         /** @brief	Transfer中产生的事件触发函数. */
         std::function<void(IPCMessage::SmartType)> m_fnTriggerEventFunc;

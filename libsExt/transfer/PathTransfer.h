@@ -6,7 +6,9 @@
 namespace amo {
 
     class path;
-    class PathTransfer : public RunnableTransfer {
+    class PathTransfer
+        : public RunnableTransfer
+        , public amo::singleton<PathTransfer> {
     public:
     
         PathTransfer();

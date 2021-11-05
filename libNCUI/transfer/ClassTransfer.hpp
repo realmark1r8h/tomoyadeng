@@ -8,7 +8,7 @@
 #include <unordered_map>
 
 #include <amo/stdint.hpp>
-
+#include <amo/singleton.hpp>
 #include "transfer/Transfer.hpp"
 
 
@@ -27,8 +27,7 @@ namespace amo {
             std::shared_ptr<amo::ClassTransfer> > {
         public:
             ~ClassTransferMap() {
-                int i = 3;
-                ++i;
+            
             }
         };
         /* typedef std::unordered_map < int64_t,
@@ -51,8 +50,11 @@ namespace amo {
         template<typename T, typename ... Args>
         static std::shared_ptr<T> createTransfer(Args ... args) {
             std::shared_ptr<T> pTransfer(new T(args ...));
+            pTransfer->setClassObject(true); //这里创建的是对象
             pTransfer->registerFunction();
+            
             addTransfer(pTransfer);
+            
             return pTransfer;
         }
         
@@ -75,8 +77,15 @@ namespace amo {
                 return pTransfer;
             }
             
+            pTransfer->setClassObject(false); //这里创建的是类
             pTransfer->registerFunction();
+            
             addTransfer(pTransfer);
+            
+            auto pAssitTransfer = createTransfer<T>();
+            std::string strObjectName = "CLASS.";
+            strObjectName += pTransfer->transferName();
+            pAssitTransfer->setObjectName(strObjectName);
             return pTransfer;
         }
         
@@ -104,6 +113,72 @@ namespace amo {
             return iter->second;
         }
         
+        /**
+         * @fn	static std::shared_ptr<ClassTransfer>
+         * 		ClassTransfer::findTransfer(const std::string& strObjectName)
+         *
+         * @brief	通过对象的名称查找Transfer,返回第一个成功匹配的Transfer.
+         *
+         * @param	strObjectName	Name of the object.
+         *
+         * @return	The found transfer.
+         */
+        
+        static std::shared_ptr<ClassTransfer> findTransfer(
+            const std::string& strObjectName) {
+            
+            std::unique_lock<std::recursive_mutex> lock(getMutex());
+            
+            for (auto& p : *getTransferMap()) {
+                if (p.second->getObjectName() == strObjectName) {
+                    return p.second;
+                }
+            }
+            
+            return std::shared_ptr<ClassTransfer>();
+        }
+        
+        /**
+         * @fn	static std::vector<std::shared_ptr<ClassTransfer> >
+         * 		 ClassTransfer::findAllTransfer( const std::string& strObjectName)
+         *
+         * @brief	通过对象的名称查找Transfer,返回所有成功匹配的Transfer..
+         *
+         * @param	strObjectName	Name of the object.
+         *
+         * @return	The found all transfer.
+         */
+        
+        static std::vector<std::shared_ptr<ClassTransfer> > findAllTransfer(
+            const std::string& strObjectName) {
+            std::vector<std::shared_ptr<ClassTransfer> > vec;
+            std::unique_lock<std::recursive_mutex> lock(getMutex());
+            
+            for (auto& p : *getTransferMap()) {
+                if (p.second->getObjectName() == strObjectName) {
+                    vec.push_back(p.second);
+                }
+            }
+            
+            return vec;
+        }
+        
+        static std::shared_ptr<ClassTransfer> findClassTransfer(
+            const std::string& strClassName) {
+            std::unique_lock<std::recursive_mutex> lock(getMutex());
+            
+            for (auto& p : *getTransferMap()) {
+                if (p.second->isClassOjbect()) {
+                    continue;
+                }
+                
+                if (p.second->transferName() == strClassName) {
+                    return p.second;
+                }
+            }
+            
+            return std::shared_ptr<ClassTransfer>();
+        }
         
         /*!
          * @fn	static void ClassTransfer::addTransfer(std::shared_ptr<ClassTransfer> transfer)
@@ -143,7 +218,6 @@ namespace amo {
             }
             
         }
-        
         
         static std::shared_ptr<ClassTransferMap> &getTransferMap() {
             static std::shared_ptr<ClassTransferMap> oTransferMap(new ClassTransferMap());
@@ -195,6 +269,12 @@ namespace amo {
                              std::bind(&ClassTransfer::onCreateClass, this,
                                        std::placeholders::_1),
                              TransferExecSync | TransferFuncConstructor);
+                             
+            registerTransfer("CLASS",
+                             std::bind(&ClassTransfer::onGetClassObject, this,
+                                       std::placeholders::_1),
+                             TransferFuncClassProperty | TransferExecSync);
+                             
             return Transfer::registerFunction();
         }
         
@@ -209,6 +289,18 @@ namespace amo {
          */
         virtual Any onCreateClass(IPCMessage::SmartType msg) {
             return Undefined();
+        }
+        
+        virtual Any onGetClassObject(IPCMessage::SmartType msg) {
+            std::string strObjectName = "CLASS.";
+            strObjectName += transferName();
+            auto transfer = findTransfer(strObjectName);
+            
+            if (transfer) {
+                return transfer->getFuncMgr().toSimplifiedJson();
+            }
+            
+            return Nil();
         }
         
         /*!
@@ -233,7 +325,25 @@ namespace amo {
                 return Transfer::onMessageTransfer(message);
             }
             
-            //调用transfer的OmMessaggeTransfer
+            std::string strObjectName = transfer->getObjectName();
+            
+            if (strObjectName.find("CLASS.") == 0) {
+                // 重定向到类的Transfer中执行
+                std::shared_ptr<ClassTransfer>  pClassTransfer;
+                pClassTransfer = ClassTransfer::findClassTransfer(
+                                     transfer->transferName());
+                                     
+                if (!pClassTransfer && (pClassTransfer->getObjectID() == getObjectID())) {
+                    return Transfer::onMessageTransfer(message);
+                }
+                
+                args->setValue(IPCArgsPosInfo::TransferID,
+                               pClassTransfer->getObjectID());
+                               
+                return pClassTransfer->onMessageTransfer(message);
+            }
+            
+            //调用transfer的OnMessaggeTransfer
             return transfer->onMessageTransfer(message);
         }
         

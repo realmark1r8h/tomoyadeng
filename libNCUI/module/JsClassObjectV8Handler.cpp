@@ -21,7 +21,7 @@ namespace amo {
         
         // 创建JS类的构造函数
         _object = CefV8Value::CreateObject(m_pAccessor);
-        
+        _object->SetUserData(this);
         onGetV8Object(_object);
         
         
@@ -30,18 +30,31 @@ namespace amo {
     
     void JsClassObjectV8Handler::onGetV8Object(CefRefPtr<CefV8Value> object) {
     
+        std::string strObjectName = getFuncMgr().getObjectName();
+        bool bAssitObject = (strObjectName.find("CLASS.") == 0);
+        
         // 现在不能在类实例中调用静态函数，没有实现属性
         for (auto& p : m_oFuncMgr.toMap()) {
             if (p.second.functionType() == TransferFuncNormal) {
+                if (bAssitObject) {
+                    continue;
+                }
+                
                 object->SetValue(p.second.m_strName,
                                  CefV8Value::CreateFunction(p.second.m_strName, this),
                                  V8_PROPERTY_ATTRIBUTE_NONE);
-            } /*else if (p.second.functionType() == TransferFuncClassProperty) {
+                                 
+            } else if (p.second.functionType() == TransferFuncClassProperty) {
             
-				object->SetValue(p.second.m_strName,
-								 V8_ACCESS_CONTROL_DEFAULT,
-								 V8_PROPERTY_ATTRIBUTE_NONE);
-			}*/ else if (p.second.functionType() == TransferFuncMemberProperty) {
+                object->SetValue(p.second.m_strName,
+                                 V8_ACCESS_CONTROL_DEFAULT,
+                                 V8_PROPERTY_ATTRIBUTE_NONE);
+                                 
+            } else if (p.second.functionType() == TransferFuncMemberProperty) {
+                if (bAssitObject) {
+                    continue;
+                }
+                
                 object->SetValue(p.second.m_strName,
                                  V8_ACCESS_CONTROL_DEFAULT,
                                  V8_PROPERTY_ATTRIBUTE_NONE);

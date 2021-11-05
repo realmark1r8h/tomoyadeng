@@ -25,38 +25,38 @@ namespace amo {
     
     class year {
     public:
-        year(uint32_t year_) : _year(year_) {}
-        uint32_t _year;
+        year(int year_) : _year(year_) {}
+        int _year;
     };
     
     class month {
     public:
-        month(uint32_t month_) : _month(month_) {}
-        uint32_t _month;
+        month(int month_) : _month(month_) {}
+        int _month;
     };
     
     class day {
     public:
-        day(uint32_t day) : _day(day) {}
-        uint32_t _day;
+        day(int day) : _day(day) {}
+        int _day;
     };
     
     class hour {
     public:
-        hour(uint32_t hour_) : _hour(hour_) {}
-        uint32_t _hour;
+        hour(int hour_) : _hour(hour_) {}
+        int _hour;
     };
     
     class minute {
     public:
-        minute(uint32_t minute_) : _minute(minute_) {}
-        uint32_t _minute;
+        minute(int minute_) : _minute(minute_) {}
+        int _minute;
     };
     
     class second {
     public:
-        second(uint32_t second_) : _second(second_) {}
-        uint32_t _second;
+        second(int second_) : _second(second_) {}
+        int _second;
     };
     
     class date_time {
@@ -249,7 +249,7 @@ namespace amo {
             return date_time(_seconds - second_._second);
         }
         
-        date_time add_seconds(const uint32_t& second_) {
+        date_time add_seconds(const int& second_) {
             return date_time(_seconds + second_);
         }
         

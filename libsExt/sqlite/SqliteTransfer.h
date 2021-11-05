@@ -14,7 +14,9 @@
 
 namespace amo {
 
-    class SqliteTransfer : public ClassTransfer {
+    class SqliteTransfer
+        : public ClassTransfer,
+          public amo::singleton<SqliteTransfer> {
     public:
         // 不改变字段名
         const static int FieldNormal = 0;

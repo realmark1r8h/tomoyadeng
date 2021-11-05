@@ -131,7 +131,7 @@ namespace amo {
             if (bTransfer) {
                 int64_t nId = json.get<int64_t>("id");
                 std::string strClass = json.get<std::string>("name");
-                
+                std::string strObjectName = json.get<std::string>("objectName");
                 // 通过ID查找缓存
                 CefRefPtr<CefV8Value> pValue = getClassObject(nId);
                 
@@ -156,6 +156,7 @@ namespace amo {
                         
                     // 设置ObjectID
                     mgr.setObjectID(nId);
+                    mgr.setObjectName(strObjectName);
                     // 创建新的Object
                     CefRefPtr<JsClassObjectV8Handler> pObjectHandler;
                     pObjectHandler = new JsClassObjectV8Handler();
@@ -164,6 +165,7 @@ namespace amo {
                     //pObjectHandler->setFunctions(mgr.toVector());
                     pObjectHandler->setFuncMgr(mgr);
                     pObjectHandler->setID(nId);
+                    
                     // 设置返回值为新创建的对象
                     CefRefPtr<CefV8Value> pObject =
                         pObjectHandler->getV8Object();

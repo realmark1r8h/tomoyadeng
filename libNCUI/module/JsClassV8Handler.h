@@ -16,7 +16,9 @@ namespace amo {
     
     class JsClassObjectV8Accessor : public CefV8Accessor {
     public:
-    
+        ~JsClassObjectV8Accessor() {
+            int i = 32;
+        }
         /*!
          * @fn	virtual bool JsClassObjectV8Accessor::Get(
          * 		const CefString& name,
@@ -42,9 +44,9 @@ namespace amo {
                 int i = 32;//for break;
             }
             
-            if (m_fnGet) {
+            if (m_fnGetSet) {
                 CefV8ValueList list;
-                return m_fnGet(name, object, list, retval, exception);
+                return m_fnGetSet(name, object, list, retval, exception);
             } else {
                 return false;
             }
@@ -75,11 +77,11 @@ namespace amo {
                 int i = 32;//for break;
             }
             
-            if (m_fnGet) {
+            if (m_fnGetSet) {
                 CefV8ValueList list;
                 list.push_back(value);
                 CefRefPtr<CefV8Value> retval = CefV8Value::CreateUndefined();
-                return m_fnGet(name, object, list, retval, exception);
+                return m_fnGetSet(name, object, list, retval, exception);
             } else {
                 return false;
             }
@@ -105,8 +107,10 @@ namespace amo {
                                  const CefV8ValueList&,
                                  CefRefPtr<CefV8Value>&,
                                  CefString&) > fn) {
-            m_fnGet = fn;
+            m_fnGetSet = fn;
         }
+        
+        
         
         IMPLEMENT_REFCOUNTING(JsClassObjectV8Accessor);
         
@@ -115,7 +119,9 @@ namespace amo {
                              CefRefPtr<CefV8Value>,
                              const CefV8ValueList&,
                              CefRefPtr<CefV8Value>&,
-                             CefString&) > m_fnGet;
+                             CefString&) > m_fnGetSet;
+                             
+                             
     };
     
     // class 调用UI线程中的Transfer
@@ -125,7 +131,6 @@ namespace amo {
         JsClassV8Handler();
         
         virtual ~JsClassV8Handler();
-        
         
         /*!
          * @fn	virtual CefRefPtr<CefV8Value> JsClassV8Handler::getV8Object(

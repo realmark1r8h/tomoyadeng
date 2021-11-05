@@ -16,7 +16,9 @@ namespace amo {
 
     class ResourceUpdater;
     // test
-    class RceditTransfer : public ClassTransfer {
+    class RceditTransfer
+        : public ClassTransfer
+        , public amo::singleton<RceditTransfer> {
     public:
         RceditTransfer();
         ~RceditTransfer();

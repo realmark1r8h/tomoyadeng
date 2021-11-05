@@ -6,7 +6,9 @@
 
 namespace amo {
 
-    class UUIDTransfer : public RunnableTransfer {
+    class UUIDTransfer
+        : public RunnableTransfer
+        , public amo::singleton<UUIDTransfer> {
     public:
     
         UUIDTransfer();

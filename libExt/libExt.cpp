@@ -11,14 +11,16 @@
 
 
 LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {
-    amo::ClassTransfer::getTransferMap() = info->transferMap;
+    using namespace amo;
+    
+    ClassTransfer::getTransferMap() = info->transferMap;
     int nBrowserID = info->nBrowserID;
     auto fn = info->fnCallback;
     
     
+    
     {
-        std::shared_ptr<amo::ClassTransfer> pTransfer(new amo::UUIDTransfer());
-        pTransfer->registerFunction();
+        auto pTransfer = ClassTransfer::getUniqueTransfer<UUIDTransfer>();
         
         if (fn) {
             fn(nBrowserID, pTransfer);
@@ -26,8 +28,7 @@ LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {
     }
     
     {
-        std::shared_ptr<amo::ClassTransfer> pTransfer(new amo::PathTransfer());
-        pTransfer->registerFunction();
+        auto pTransfer = ClassTransfer::getUniqueTransfer<PathTransfer>();
         
         if (fn) {
             fn(nBrowserID, pTransfer);
@@ -35,8 +36,8 @@ LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {
     }
     
     {
-        std::shared_ptr<amo::ClassTransfer> pTransfer(new amo::SqliteTransfer());
-        pTransfer->registerFunction();
+        auto pTransfer = ClassTransfer::getUniqueTransfer<SqliteTransfer>();
+        
         
         
         if (fn) {
@@ -46,9 +47,8 @@ LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {
     }
     
     {
-    
-        std::shared_ptr<amo::ClassTransfer> pTransfer(new amo::RceditTransfer());
-        pTransfer->registerFunction();
+        auto pTransfer = ClassTransfer::getUniqueTransfer<RceditTransfer>();
+        
         
         if (fn) {
             fn(nBrowserID, pTransfer);
