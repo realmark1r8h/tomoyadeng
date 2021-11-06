@@ -37,7 +37,7 @@ namespace amo {
         TransferFuncNormal = 0 << 8,				// 普通函数
         TransferFuncStatic = 1 << 8,				// 静态函数
         TransferFuncConstructor = 2 << 8,			// 构造函数
-        TransferFuncConstProerty = 3 << 8,			// 类静态常量属性，不能被赋值
+        TransferFuncConstProperty = 3 << 8,			// 类静态常量属性，不能被赋值
         TransferFuncClassProperty = 4 << 8,			// 类属性，可以通过.CLASS访问赋值
         TransferFuncMemberProperty = 5 << 8,		// 对象属性，可以赋值
     };

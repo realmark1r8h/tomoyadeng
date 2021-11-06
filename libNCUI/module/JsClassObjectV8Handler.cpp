@@ -33,31 +33,38 @@ namespace amo {
         std::string strObjectName = getFuncMgr().getObjectName();
         bool bAssitObject = (strObjectName.find("CLASS.") == 0);
         
-        // 现在不能在类实例中调用静态函数，没有实现属性
+        //CLASS.对象用来代替CLASS来的属性无法设置的功能，所有应该具有这些类的功能
+        
         for (auto& p : m_oFuncMgr.toMap()) {
-            if (p.second.functionType() == TransferFuncNormal) {
-                if (bAssitObject) {
-                    continue;
+            // 类
+            if (bAssitObject) {
+                if (p.second.functionType() == TransferFuncStatic) {
+                    // 创建静态函数
+                    object->SetValue(p.second.m_strName,
+                                     CefV8Value::CreateFunction(p.second.m_strName, this),
+                                     V8_PROPERTY_ATTRIBUTE_NONE);
+                } else if (p.second.functionType() == TransferFuncConstProperty) {
+                    object->SetValue(p.second.m_strName,
+                                     V8_ACCESS_CONTROL_DEFAULT,
+                                     V8_PROPERTY_ATTRIBUTE_NONE);
+                                     
+                } else if (p.second.functionType() == TransferFuncClassProperty) {
+                    object->SetValue(p.second.m_strName,
+                                     V8_ACCESS_CONTROL_DEFAULT,
+                                     V8_PROPERTY_ATTRIBUTE_NONE);
                 }
-                
-                object->SetValue(p.second.m_strName,
-                                 CefV8Value::CreateFunction(p.second.m_strName, this),
-                                 V8_PROPERTY_ATTRIBUTE_NONE);
-                                 
-            } else if (p.second.functionType() == TransferFuncClassProperty) {
-            
-                object->SetValue(p.second.m_strName,
-                                 V8_ACCESS_CONTROL_DEFAULT,
-                                 V8_PROPERTY_ATTRIBUTE_NONE);
-                                 
-            } else if (p.second.functionType() == TransferFuncMemberProperty) {
-                if (bAssitObject) {
-                    continue;
+            } else {
+                // 对象
+                if (p.second.functionType() == TransferFuncNormal) {
+                    object->SetValue(p.second.m_strName,
+                                     CefV8Value::CreateFunction(p.second.m_strName, this),
+                                     V8_PROPERTY_ATTRIBUTE_NONE);
+                                     
+                } else if (p.second.functionType() == TransferFuncMemberProperty) {
+                    object->SetValue(p.second.m_strName,
+                                     V8_ACCESS_CONTROL_DEFAULT,
+                                     V8_PROPERTY_ATTRIBUTE_NONE);
                 }
-                
-                object->SetValue(p.second.m_strName,
-                                 V8_ACCESS_CONTROL_DEFAULT,
-                                 V8_PROPERTY_ATTRIBUTE_NONE);
             }
             
         }

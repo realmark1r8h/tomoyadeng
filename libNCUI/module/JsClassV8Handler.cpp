@@ -60,9 +60,9 @@ namespace amo {
                 object->SetValue(p.second.m_strName,
                                  CefV8Value::CreateFunction(p.second.m_strName, this),
                                  V8_PROPERTY_ATTRIBUTE_NONE);
-            } else if (p.second.functionType() == TransferFuncClassProperty) {
+            } else if (p.second.functionType() == TransferFuncConstProperty) {
                 CefRefPtr<CefV8Value> obj = CefV8Value::CreateObject(m_pAccessor);
-                //TODO: 类的属性只能GET不能SET，不知道为啥
+                // 类只能上常量属性，只能在初始化的时候被取值
                 obj->SetValue(p.second.m_strName,
                               V8_ACCESS_CONTROL_DEFAULT,
                               V8_PROPERTY_ATTRIBUTE_NONE);

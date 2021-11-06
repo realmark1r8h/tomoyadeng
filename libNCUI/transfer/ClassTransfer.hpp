@@ -273,7 +273,7 @@ namespace amo {
             registerTransfer("CLASS",
                              std::bind(&ClassTransfer::onGetClassObject, this,
                                        std::placeholders::_1),
-                             TransferFuncClassProperty | TransferExecSync);
+                             TransferFuncConstProperty | TransferExecSync);
                              
             return Transfer::registerFunction();
         }
