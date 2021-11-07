@@ -1,8 +1,10 @@
-// Created by amoylel on 08/19/2017.
+// Created by amoylel on 11/26/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
-#ifndef AMO_DOWLOADERSETTINGS_H__
-#define AMO_DOWLOADERSETTINGS_H__
+#ifndef AMO_REQUESTSETTINGS_H__
+#define AMO_REQUESTSETTINGS_H__
+
+
 
 #include <amo/json.hpp>
 #include <amo/string.hpp>
@@ -32,5 +34,5 @@ namespace amo {
     };
 }
 
-#endif // AMO_DOWLOADERSETTINGS_H__
 
+#endif // AMO_REQUESTSETTINGS_H__

@@ -58,6 +58,8 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;NODE_RUNNER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)node\src;$(SolutionDir)node\tools\msvs\genfiles;$(SolutionDir)node\deps\uv\src\ares;$(SolutionDir)node\deps\v8;deps\cares\include;$(SolutionDir)node\deps\v8\include;$(SolutionDir)node\deps\openssl\openssl\include;$(SolutionDir)node\deps\zlib;$(SolutionDir)node\deps\http_parser;$(SolutionDir)node\deps\uv\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

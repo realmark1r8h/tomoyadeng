@@ -9,6 +9,7 @@
 
 
 #include "ui/win/LayeredWindow.h"
+#include "ui/win/menu/ObserverImplBase.hpp"
 
 namespace amo {
     class json;

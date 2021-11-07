@@ -10,6 +10,7 @@
 
 
 namespace amo {
+	class LayeredWindow;
     class MenuTransfer
         : public ClassTransfer
         , public amo::singleton<MenuTransfer> {

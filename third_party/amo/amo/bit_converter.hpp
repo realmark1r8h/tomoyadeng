@@ -46,7 +46,7 @@ namespace amo {
         
         template<typename T>
         static T bytesToNumber(std::vector<int8_t> b, size_t len = 0) {
-            T mask = 0xff;
+            T mask = (T)0xff;
             T val = 0;
             
             if (len == 0) {
@@ -78,7 +78,7 @@ namespace amo {
         
         template<typename T>
         static std::vector<int8_t> numberToBytes(T val) {
-            T mask = 0xff;
+            T mask = (T)0xff;
             
             int len = sizeof(T);
             std::vector<int8_t> vec(len, 0);

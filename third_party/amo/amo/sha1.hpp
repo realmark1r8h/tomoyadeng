@@ -262,7 +262,7 @@ namespace amo {
             uint64_t total_bits = (transforms * BLOCK_BYTES + buffer.size()) * 8;
             
             /* Padding */
-            buffer += 0x80;
+            buffer += (char)0x80;
             size_t orig_size = buffer.size();
             
             while (buffer.size() < BLOCK_BYTES) {

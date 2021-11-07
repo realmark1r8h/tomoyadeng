@@ -93,9 +93,9 @@ namespace amo {
         
         class VersionStampValue {
         public:
-            WORD wLength = 0; // length in bytes of struct, including children
-            WORD wValueLength = 0; // stringfileinfo, stringtable: 0; string: Value size in WORD; var: Value size in bytes
-            WORD wType = 0; // 0: binary data; 1: text data
+            DWORD wLength = 0; // length in bytes of struct, including children
+            DWORD wValueLength = 0; // stringfileinfo, stringtable: 0; string: Value size in WORD; var: Value size in bytes
+            DWORD wType = 0; // 0: binary data; 1: text data
             std::wstring szKey; // stringtable: 8-digit hex stored as UTF-16 (hiword: hi6: sublang, lo10: majorlang; loword: code page); must include zero words to align next member on 32-bit boundary
             std::vector<BYTE> Value; // string: zero-terminated string; var: array of language & code page ID pairs
             std::vector<VersionStampValue> Children;
@@ -192,7 +192,7 @@ namespace amo {
                     VersionStampValue stringRaw;
                     stringRaw.wType = 1;
                     stringRaw.szKey = iString->first;
-                    stringRaw.wValueLength = strLenNullTerminated;
+                    stringRaw.wValueLength = (WORD)strLenNullTerminated;
                     
                     auto size = strLenNullTerminated * sizeof(WCHAR);
                     auto& dst = stringRaw.Value;
@@ -228,7 +228,7 @@ namespace amo {
                     auto& dst = varRaw.Value;
                     dst.resize(src.size() * newValueSize);
                     
-                    for (auto iVar = 0; iVar < src.size(); ++iVar) {
+                    for (size_t iVar = 0; iVar < src.size(); ++iVar) {
                         auto& translate = src[iVar];
                         auto var = DWORD(translate.wCodePage) << 16 | translate.wLanguage;
                         memcpy(&dst[iVar * newValueSize], &var, newValueSize);
@@ -593,7 +593,7 @@ namespace amo {
         pGrpHeader->type = 1;
         pGrpHeader->count = header.count;
         
-        for (size_t i = 0; i < header.count; ++i) {
+        for (WORD i = 0; i < header.count; ++i) {
             GRPICONENTRY* entry = pGrpHeader->entries + i;
             entry->bitCount = 0;
             entry->bytesInRes = header.entries[i].bitCount;
@@ -830,6 +830,7 @@ namespace amo {
                 try {
                     instance->versionStampMap[wIDLanguage] = VersionInfo(instance->hModule, wIDLanguage);
                 } catch (const std::system_error& e) {
+                    e.what();
                     return false;
                 }
             }

@@ -11,6 +11,7 @@
 
 #include "stdafx.h"
 
+#include <iostream>
 #include <windows.h>
 #include "libNCUI.h"
 #include <amo/path.hpp>
@@ -294,6 +295,7 @@ public:
                                         10000));
                                         
         } catch (std::exception& e) {
+			std::cout << e.what() << std::endl;
             MessageBox(NULL, _T("ÄÚ´´½¨Ê§°Ü"), _T(""), MB_OK);
         }
         
