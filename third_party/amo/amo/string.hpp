@@ -999,6 +999,10 @@ namespace amo {
             return replace(target, "");
         }
         
+        string trim_c(const string& target = " ") const {
+            return replace(target, "");
+        }
+        
         //删除左边所有包含在target中的字符
         string& trim_left(const string& target) {
             while (!empty() && (target.find(*begin()) != std::string::npos)) {

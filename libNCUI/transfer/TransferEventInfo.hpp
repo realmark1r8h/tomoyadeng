@@ -25,7 +25,6 @@ namespace amo {
             , toAll(toAll_)
             , browser(browser_)
             , frame(frame_) {
-            
         }
         
         // 这里进去的如果是一个字符串，或者JSON，必须是utf8编码的，（数据在传输过程中不会进行编码转换）
@@ -81,6 +80,7 @@ namespace amo {
         int browser;
         /** @brief	目标FrameID. */
         int64_t frame;
+        
     };
 }
 

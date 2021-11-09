@@ -926,5 +926,8 @@
     <ClInclude Include="transfer\RunnableTransfer.hpp">
       <Filter>transfer</Filter>
     </ClInclude>
+    <ClInclude Include="transfer\TransferEventEmitter.hpp">
+      <Filter>transfer</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

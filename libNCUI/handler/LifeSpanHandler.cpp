@@ -16,6 +16,7 @@ namespace amo {
         
         DelegateSet::iterator it = m_Delegates.begin();
         
+        //TODO: 退出时错误，有可能在循环的时时候，窗口被移除数据，导致程序出错
         for (; it != m_Delegates.end(); ++it) {
             (*it)->OnBeforeClose(browser);
         }
