@@ -412,6 +412,12 @@ namespace amo {
         
         manager.reset();
         
+        int i = 0;
+        std::cout << i << std::endl;
+        
+        
+        
+        
         CefShutdown();
         
     }

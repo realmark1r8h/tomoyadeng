@@ -85,16 +85,6 @@ namespace amo {
         }
         
         
-        // 通过名称查找线程
-        Any fromName(IPCMessage::SmartType msg) {
-            return Undefined();
-        }
-        
-        // 通过ID查找线程
-        Any fromID(IPCMessage::SmartType msg) {
-            return Undefined();
-        }
-        
         // 获取所有线程
         Any getAllThreads(IPCMessage::SmartType msg) {
             return Undefined();

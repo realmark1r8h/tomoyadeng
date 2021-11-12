@@ -232,7 +232,7 @@ namespace amo {
     }
     
     
-    Any BrowserWindowTransfer::fromId(IPCMessage::SmartType msg) {
+    Any BrowserWindowTransfer::fromID(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string u8ID = args->getString(0);
         amo::string strID(u8ID, true);

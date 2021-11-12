@@ -51,6 +51,7 @@ namespace amo {
             return  m_pDB->query(sql);
         }
         
+        
         template<typename ... Args>
         Any remove(Args... args) {
             IPCMessage::SmartType sql = createSqlMessage<Args ...>("remove", args...);
@@ -73,6 +74,37 @@ namespace amo {
         Any containsTable(Args... args) {
             IPCMessage::SmartType sql = createSqlMessage<Args ...>("containsTable", args...);
             return  m_pDB->containsTable(sql);
+        }
+        
+        template<typename T, typename ... Args>
+        std::shared_ptr<T> load(Args... args) {
+            Any val = queryOne<T, Args...>(args...);
+            
+            if (val.is<Undefined>()) {
+                return std::shared_ptr<T>();
+            }
+            
+            amo::json data = val;
+            return T::fromJson(data);
+        }
+        
+        template<typename ... Args>
+        Any queryOne(Args... args) {
+        
+            Any val = query<Args...>(args...);
+            
+            if (val.is<Undefined>()) {
+                return Undefined();
+            }
+            
+            amo::json json = val;
+            std::vector<amo::json> arr = json.getJson("data").to_array();
+            
+            if (arr.size() < 1) {
+                return Undefined();
+            }
+            
+            return arr[0];
         }
         
     public:

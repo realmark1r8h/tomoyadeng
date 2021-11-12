@@ -312,6 +312,22 @@ namespace amo {
                                        std::placeholders::_1),
                              TransferFuncConstProperty | TransferExecSync);
                              
+                             
+            registerTransfer("fromObjectID", std::bind(&ClassTransfer::onFromObjectID, this,
+                             std::placeholders::_1),
+                             TransferFuncStatic | TransferExecSync);
+            registerTransfer("fromObjectName", std::bind(&ClassTransfer::onFromObjectName, this,
+                             std::placeholders::_1),
+                             TransferFuncStatic | TransferExecSync);
+            registerTransfer("getObjectName", std::bind(&ClassTransfer::onGetObjectName, this,
+                             std::placeholders::_1),
+                             TransferFuncNormal | TransferExecSync);
+            registerTransfer("setObjectName", std::bind(&ClassTransfer::onSetObjectName, this,
+                             std::placeholders::_1),
+                             TransferFuncNormal | TransferExecNormal);
+            registerTransfer("release", std::bind(&ClassTransfer::onRelase, this,
+                                                  std::placeholders::_1),
+                             TransferFuncNormal | TransferExecNormal);
             return Transfer::registerFunction();
         }
         
@@ -340,6 +356,65 @@ namespace amo {
             return Nil();
         }
         
+        virtual Any onFromObjectName(IPCMessage::SmartType msg) {
+            std::string objectName = msg->getArgumentList()->getString(0);
+            auto transfer = findTransfer(objectName);
+            
+            if (!transfer) {
+                return Undefined();
+            }
+            
+            return transfer->getFuncMgr().toSimplifiedJson();
+        }
+        
+        virtual Any onFromObjectID(IPCMessage::SmartType msg) {
+            Any& val = msg->getArgumentList()->getValue(0);
+            int nObjectID = 0;
+            
+            if (val.is<int64_t>()) {
+                nObjectID = val.As<int64_t>();
+            } else if (val.is<std::string>()) {
+                std::string str = val.As<std::string>();
+                
+                if (!str.empty()) {
+                    std::stringstream stream;
+                    stream << str;
+                    stream >> nObjectID;
+                }
+            }
+            
+            if (nObjectID == 0) {
+                return Undefined();
+            }
+            
+            auto transfer = findTransfer(nObjectID);
+            
+            if (!transfer) {
+                return Undefined();
+            }
+            
+            return transfer->getFuncMgr().toSimplifiedJson();
+            return Undefined();
+        }
+        
+        virtual Any onSetObjectName(IPCMessage::SmartType msg) {
+            std::string strName = msg->getArgumentList()->getString(0);
+            this->setObjectName(strName);
+            return Undefined();
+        }
+        
+        virtual Any onGetObjectName(IPCMessage::SmartType msg) {
+            return this->getObjectName();
+        }
+        
+        Any onRelase(IPCMessage::SmartType msg) {
+            removeTransfer(getObjectID());
+            TransferEventInfo info;
+            info.name = "transfer.release";
+            info.toAll = true;
+            triggerEvent(info);
+            return Undefined();
+        }
         /*!
          * @fn	virtual Any ClassTransfer::onMessageTransfer(
          * 		IPCMessage::SmartType message) override

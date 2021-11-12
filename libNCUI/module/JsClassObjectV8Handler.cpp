@@ -11,6 +11,7 @@ namespace amo {
     }
     
     JsClassObjectV8Handler::~JsClassObjectV8Handler() {
+    
     }
     
     CefRefPtr<CefV8Value> JsClassObjectV8Handler::getV8Object(

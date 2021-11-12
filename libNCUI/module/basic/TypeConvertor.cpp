@@ -688,5 +688,11 @@ namespace amo {
         }
     }
     
+    void TypeConvertor::removeClassObject(int64_t nFrameID, int64_t nObjectID) {
+        std::vector<std::pair<int64_t, int64_t> > keys;
+        m_oObjectMap.erase({ nFrameID, nObjectID });
+        
+    }
+    
 }
 

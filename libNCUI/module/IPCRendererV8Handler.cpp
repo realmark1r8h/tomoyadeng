@@ -320,6 +320,34 @@ namespace amo {
         return Undefined();
     }
     
+    Any IPCRendererV8Handler::releaseAllTransfer(IPCMessage::SmartType msg) {
+        // 先通知页面，Transfer被移除
+        //
+        emitEventAllFrame(msg);
+        // 再删除V8Handler缓存
+        
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int32_t nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+        int nFrameId = args->getInt(IPCArgsPosInfo::FrameID);
+        using MGR = BrowserManager < PID_RENDERER >;
+        CefRefPtr<CefBrowser> pBrowser = MGR::GetBrowserByID(nBrowserID);
+        
+        if (!pBrowser) {
+            return Undefined();
+        }
+        
+        // 获取所有FrameID
+        std::vector<int64_t> vec;
+        pBrowser->GetFrameIdentifiers(vec);
+        int64_t nObjectID = args->getInt64(IPCArgsPosInfo::EventObjectID);
+        
+        for (auto& p : vec) {
+            TypeConvertor::removeClassObject(p, nObjectID);
+        }
+        
+        return Undefined();
+    }
+    
     CefRefPtr<CefBrowser> IPCRendererV8Handler::getBrowser() const {
         return m_pBrowser;
     }

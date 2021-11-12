@@ -80,6 +80,8 @@ namespace amo {
         
         Any emitEventAllFrame(IPCMessage::SmartType msg);
         
+        Any releaseAllTransfer(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	CefRefPtr<CefBrowser> IPCRendererV8Handler::getBrowser() const
          *
@@ -106,6 +108,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(triggerEvent, 0)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(triggerEventAllFrame, 0)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(emitEventAllFrame, 0)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(releaseAllTransfer, 0)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         // for handler

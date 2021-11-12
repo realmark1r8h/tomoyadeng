@@ -288,6 +288,8 @@ namespace amo {
          * @param	nFrameID	Identifier for the frame.
          */
         static void clearClassObject(int64_t nFrameID);
+        
+        static void removeClassObject(int64_t nFrameID, int64_t nObjectID);
     protected:
         /*! @brief	The object map. */
         static std::unordered_map<std::pair<int64_t, int64_t>,

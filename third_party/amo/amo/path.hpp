@@ -144,6 +144,13 @@ namespace amo {
             ::PathRemoveFileSpecA(m_path);
             return *this;
         }
+        
+        path remove_file_spec_c() {
+            amo::path p = *this;
+            p.remove_file_spec();
+            return p;
+        }
+        
         /*!
          * @fn	path& path::unquote_spaces()
          *

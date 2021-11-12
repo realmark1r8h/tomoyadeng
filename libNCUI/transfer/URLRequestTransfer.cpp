@@ -128,6 +128,23 @@ namespace amo {
         CefRefPtr<CefRequest> pRequest = CefRequest::Create();
         pRequest->SetMethod(pSettings->type);
         pRequest->SetURL(pSettings->url);
+        //////////////////////////////////////////////////////////////////////////
+        // ²âÊÔÓÃ
+        CefRequest::HeaderMap header;
+        header.insert({ "Content-Disposition", "form-data" });
+        header.insert({ "name", "zipFile" });
+        header.insert({ "filename", "1ff97805-4901-418d-9f1c-76c925e47af7.zip" });
+        header.insert({ "Content-Type", "multipart/form-data" });
+        
+        pRequest->SetHeaderMap(header);
+        
+        CefRefPtr<CefPostData> pData = CefPostData::Create();
+        CefRefPtr<CefPostDataElement> element = CefPostDataElement::Create();
+        element->SetToFile("D:\\1ff97805-4901-418d-9f1c-76c925e47af7.zip");
+        pData->AddElement(element);
+        
+        pRequest->SetPostData(pData);
+        //////////////////////////////////////////////////////////////////////////
         
         
         CefRefPtr<URLRequestClient> pClient = new URLRequestClient();

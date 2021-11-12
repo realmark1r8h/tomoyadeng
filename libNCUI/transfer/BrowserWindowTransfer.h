@@ -54,7 +54,7 @@ namespace amo {
          */
         Any getAllWindows(IPCMessage::SmartType msg);
         Any getFocusedWindow(IPCMessage::SmartType msg);
-        Any fromId(IPCMessage::SmartType msg);
+        Any fromID(IPCMessage::SmartType msg);
         Any fromName(IPCMessage::SmartType msg);
         
         //  Ù–‘
@@ -100,8 +100,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(currentWindow, TransferFuncConstProperty | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getAllWindows, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getFocusedWindow, TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(fromId, TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(fromName, TransferFuncStatic | TransferExecSync)
+        
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getName,  TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setName, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(id,  TransferExecSync)

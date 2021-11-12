@@ -397,7 +397,7 @@ namespace amo {
     }
     
     void RenderProcessHandler::RenderThreadActivityDetector() {
-        $log(amo::cdevel << func_orient << "渲染进程活着" << amo::endl;);
+        //$log(amo::cdevel << func_orient << "渲染进程活着" << amo::endl;);
         CefPostDelayedTask(TID_RENDERER,
                            NewCefRunnableMethod(this,
                                                 &RenderProcessHandler::RenderThreadActivityDetector),
