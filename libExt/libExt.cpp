@@ -7,53 +7,19 @@
 #include "transfer/PathTransfer.h"
 #include "sqlite/SqliteTransfer.h"
 #include "rcedit/RceditTransfer.h"
-
+#include "transfer/FileTransfer.hpp"
+#include "transfer/Base64Transfer.h"
 
 
 LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {
-    using namespace amo;
-    
-    ClassTransfer::getTransferMap() = info->transferMap;
-    int nBrowserID = info->nBrowserID;
-    auto fn = info->fnCallback;
-    
-    
-    
-    {
-        auto pTransfer = ClassTransfer::getUniqueTransfer<UUIDTransfer>();
-        
-        if (fn) {
-            fn(nBrowserID, pTransfer);
-        }
-    }
-    
-    {
-        auto pTransfer = ClassTransfer::getUniqueTransfer<PathTransfer>();
-        
-        if (fn) {
-            fn(nBrowserID, pTransfer);
-        }
-    }
-    
-    {
-        auto pTransfer = ClassTransfer::getUniqueTransfer<SqliteTransfer>();
-        
-        
-        
-        if (fn) {
-            fn(nBrowserID, pTransfer);
-        }
-        
-    }
-    
-    {
-        auto pTransfer = ClassTransfer::getUniqueTransfer<RceditTransfer>();
-        
-        
-        if (fn) {
-            fn(nBrowserID, pTransfer);
-        }
-        
-    }
-    return true;
+
+    AMO_CLASS_REGISTER_BEGIN()
+    AMO_CLASS_REGISTER(FileTransfer)
+    AMO_CLASS_REGISTER(Base64Transfer)
+    AMO_CLASS_REGISTER(UUIDTransfer)
+    AMO_CLASS_REGISTER(PathTransfer)
+    AMO_CLASS_REGISTER(SqliteTransfer)
+    AMO_CLASS_REGISTER(RceditTransfer)
+    AMO_CLASS_REGISTER(Base64Transfer)
+    AMO_CLASS_REGISTER_END()
 }

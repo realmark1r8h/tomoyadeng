@@ -76,6 +76,7 @@ namespace amo {
         CefRefPtr<CefURLRequest> m_pURLRequest;
         CefRefPtr<CefFrame> m_pFrame;
         std::shared_ptr<RequestSettings> m_pRequestSettings;
+        std::string m_downloadData;
     };
 }
 

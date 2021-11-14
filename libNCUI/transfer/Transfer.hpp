@@ -16,6 +16,34 @@
 
 
 
+
+#ifndef AMO_CLASS_REGISTER_BEGIN
+#define AMO_CLASS_REGISTER_BEGIN()\
+using namespace amo;\
+ClassTransfer::getTransferMap() = info->transferMap;\
+int nBrowserID = info->nBrowserID;\
+auto fn = info->fnCallback;\
+
+#endif
+
+#ifndef AMO_CLASS_REGISTER
+#define AMO_CLASS_REGISTER(ClassName) \
+{\
+	auto pTransfer = ClassTransfer::getUniqueTransfer<ClassName>(); \
+	if (fn) {\
+		fn(nBrowserID, pTransfer);\
+	}\
+	\
+}\
+
+#ifndef AMO_CLASS_REGISTER_END
+#define AMO_CLASS_REGISTER_END()\
+return true;
+#endif
+
+
+#endif
+
 // JSº¯Êý×¢²áºê ¿ªÊ¼
 #define AMO_CEF_MESSAGE_TRANSFER_BEGIN(ClassName, BaseClassName)\
 	virtual void registerFunction(){\

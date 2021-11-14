@@ -63,6 +63,12 @@
     <ClInclude Include="transfer\DemoTransfer.h">
       <Filter>transfer</Filter>
     </ClInclude>
+    <ClInclude Include="transfer\FileTransfer.hpp">
+      <Filter>transfer</Filter>
+    </ClInclude>
+    <ClInclude Include="transfer\Base64Transfer.h">
+      <Filter>transfer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -90,6 +96,9 @@
       <Filter>rcedit</Filter>
     </ClCompile>
     <ClCompile Include="transfer\DemoTransfer.cpp">
+      <Filter>transfer</Filter>
+    </ClCompile>
+    <ClCompile Include="transfer\Base64Transfer.cpp">
       <Filter>transfer</Filter>
     </ClCompile>
   </ItemGroup>

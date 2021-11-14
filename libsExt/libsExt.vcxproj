@@ -90,7 +90,9 @@
     <ClInclude Include="sqlite\src\sqlite3ppext.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="transfer\Base64Transfer.h" />
     <ClInclude Include="transfer\DemoTransfer.h" />
+    <ClInclude Include="transfer\FileTransfer.hpp" />
     <ClInclude Include="transfer\PathTransfer.h" />
     <ClInclude Include="transfer\UUIDTransfer.h" />
   </ItemGroup>
@@ -110,6 +112,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="transfer\Base64Transfer.cpp" />
     <ClCompile Include="transfer\DemoTransfer.cpp" />
     <ClCompile Include="transfer\PathTransfer.cpp" />
     <ClCompile Include="transfer\UUIDTransfer.cpp" />

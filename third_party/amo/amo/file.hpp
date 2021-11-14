@@ -72,6 +72,8 @@ namespace amo {
         }
         
         bool is_file() const {
+            return true;
+            //TODO: 这里有问题
             return m_path.is_file_spec();
         }
         
@@ -124,6 +126,13 @@ namespace amo {
             ifs->write(str.c_str(), str.size());
         }
         
+        void write(const char* str, int nSize) {
+            if (!ifs) {
+                return;
+            }
+            
+            ifs->write(str, nSize);
+        }
         void write(const std::vector<int8_t>& vec) {
             if (!ifs) {
                 return;
@@ -138,6 +147,24 @@ namespace amo {
             buffer << ifs.rdbuf();
             return buffer.str();
         }
+        
+        int read(char* buffer, int nCount) {
+            if (!ifs) {
+                return 0;
+            }
+            
+            if (ifs->eof()) {
+                return 0;
+            }
+            
+            ifs->read(buffer, nCount);
+            int nBytes = ifs->gcount();
+            
+            
+            
+            return nBytes;
+        }
+        
         std::vector<int8_t> read_all_bytes() {
             std::vector<int8_t> vec;
             std::ifstream ifs(m_path.c_str());

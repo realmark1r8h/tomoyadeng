@@ -71,6 +71,7 @@
 #include <string>
 #include <cstring>
 #include <algorithm>
+#include <fstream>
 
 namespace amo {
     /// Provides MD5 hashing functionality
@@ -459,6 +460,65 @@ namespace amo {
             return hex;
         }
         
+        
+        inline std::string md5_file_hash_hex(std::string const & input) {
+        
+            std::ifstream ifs(input, std::ios::in | std::ios::binary);
+            
+            if (!ifs.is_open()) {
+                return "0000";
+            }
+            
+            
+            char digest[16];
+            
+            md5_state_t state;
+            
+            md5_init(&state);
+            
+            
+            while (true) {
+                char s[4096] = { 0 };
+                
+                ifs.read(s, 4095);
+                int nBytes = ifs.gcount();
+                
+                if (nBytes == std::ifstream::badbit) {
+                
+                } else if (nBytes == std::ifstream::eofbit) {
+                
+                } else if (nBytes == std::ifstream::failbit) {
+                
+                }
+                
+                /* if (ifs.bad() || ifs.fail()) {
+                     return "00000000000000000000000000000000";
+                 }*/
+                
+                if (ifs.eof()) {
+                    break;
+                }
+                
+                md5_append(&state, (md5_byte_t const *)s, nBytes);
+            }
+            
+            md5_finish(&state, (md5_byte_t *)digest);
+            
+            std::string hash;
+            hash.resize(16);
+            std::copy(digest, digest + 16, hash.begin());
+            
+            //ret
+            std::string hex;
+            
+            for (size_t i = 0; i < hash.size(); i++) {
+                hex.push_back(hexval[((hash[i] >> 4) & 0xF)]);
+                hex.push_back(hexval[(hash[i]) & 0x0F]);
+            }
+            
+            return hex;
+        }
+        
         inline std::string encrypt(const std::string& input, bool upperCase = true) {
             std::string val = md5_hash_hex(input);
             
@@ -468,6 +528,7 @@ namespace amo {
             
             return val;
         }
+        
     } // md5
 } // amo
 

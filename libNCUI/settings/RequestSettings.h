@@ -4,7 +4,7 @@
 #ifndef AMO_REQUESTSETTINGS_H__
 #define AMO_REQUESTSETTINGS_H__
 
-
+#include <vector>
 
 #include <amo/json.hpp>
 #include <amo/string.hpp>
@@ -24,6 +24,9 @@ namespace amo {
         void initDefaultRequestSettings();
         virtual void afterUpdateArgsSettings() override;
         
+        std::string makeUrlWithArgs();
+        std::vector<std::pair<std::string, std::string> > getHeaderMap();
+        std::vector<amo::string> getFiles();
     public:
         /*! @brief	type. */
         std::string type;
@@ -31,6 +34,12 @@ namespace amo {
         std::string url;
         /*! @brief	数据. */
         amo::json data;
+        
+        /** @brief	头. */
+        amo::json header;
+        
+        /** @brief	要上传的文件. */
+        amo::json files;
     };
 }
 
