@@ -7,6 +7,7 @@
 
 
 #include "../startup/startup.h"
+#include "amo/file.hpp"
 
 #ifdef _DEBUG
 #pragma comment(lib, "startupUD32.lib")

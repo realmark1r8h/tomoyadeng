@@ -69,6 +69,9 @@
     <ClInclude Include="transfer\Base64Transfer.h">
       <Filter>transfer</Filter>
     </ClInclude>
+    <ClInclude Include="transfer\MD5Transfer.h">
+      <Filter>transfer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -99,6 +102,9 @@
       <Filter>transfer</Filter>
     </ClCompile>
     <ClCompile Include="transfer\Base64Transfer.cpp">
+      <Filter>transfer</Filter>
+    </ClCompile>
+    <ClCompile Include="transfer\MD5Transfer.cpp">
       <Filter>transfer</Filter>
     </ClCompile>
   </ItemGroup>

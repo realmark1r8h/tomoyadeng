@@ -11,6 +11,7 @@
 #include <amo/string.hpp>
 #include <sstream>
 #include <amo/path.hpp>
+#include <amo/logger.hpp>
 
 namespace amo {
     class process : public std::enable_shared_from_this<process> {
@@ -269,6 +270,7 @@ namespace amo {
                 strRetval.append(amo::string(maybeU8String, m_bUTF8));
             }
             
+            $log(amo::cdevel << strRetval.c_str() << amo::endl;);
             strRetval.replace("\r", "");
             m_pResult->setResultMessage(strRetval.split("\n"));
             OutputDebugStringA(strRetval.c_str());

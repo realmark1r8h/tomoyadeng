@@ -9,6 +9,7 @@
 #include "rcedit/RceditTransfer.h"
 #include "transfer/FileTransfer.hpp"
 #include "transfer/Base64Transfer.h"
+#include "transfer/MD5Transfer.h"
 
 
 LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {
@@ -16,6 +17,7 @@ LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {
     AMO_CLASS_REGISTER_BEGIN()
     AMO_CLASS_REGISTER(FileTransfer)
     AMO_CLASS_REGISTER(Base64Transfer)
+    AMO_CLASS_REGISTER(MD5Transfer)
     AMO_CLASS_REGISTER(UUIDTransfer)
     AMO_CLASS_REGISTER(PathTransfer)
     AMO_CLASS_REGISTER(SqliteTransfer)

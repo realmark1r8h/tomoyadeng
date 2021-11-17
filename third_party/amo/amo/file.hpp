@@ -250,6 +250,8 @@ namespace amo {
         
         // 重命名文件夹
         bool rename(const amo::path& to) {
+            close();
+            
             bool bOk =  renameFile(to, m_path);
             
             if (bOk) {

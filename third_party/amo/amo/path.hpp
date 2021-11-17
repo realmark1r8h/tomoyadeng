@@ -69,6 +69,82 @@ namespace amo {
         }
         
         /*!
+         * @fn	path& path::remove_front_backslash()
+         *
+         * @brief	移除路径前的斜杠.
+         *
+         * @return	A reference to a path.
+         */
+        
+        path& remove_front_backslash() {
+            std::string str = m_path;
+            {
+                int nIndex = str.find("./");
+                
+                if (nIndex = 0) {
+                    str = str.substr(2);
+                }
+            }
+            {
+                int nIndex = str.find(".\\");
+                
+                if (nIndex = 0) {
+                    str = str.substr(2);
+                }
+            }
+            {
+                int nIndex = str.find("/");
+                
+                if (nIndex = 0) {
+                    str = str.substr(1);
+                }
+            }
+            {
+                int nIndex = str.find("\\");
+                
+                if (nIndex = 0) {
+                    str = str.substr(1);
+                }
+            }
+            memset(m_path, 0, 1000);
+            strcpy(m_path, str.c_str());
+            return *this;
+        }
+        
+        path remove_front_backslash_c() const {
+            std::string str = m_path;
+            {
+                int nIndex = str.find("./");
+                
+                if (nIndex = 0) {
+                    str = str.substr(2);
+                }
+            }
+            {
+                int nIndex = str.find(".\\");
+                
+                if (nIndex = 0) {
+                    str = str.substr(2);
+                }
+            }
+            {
+                int nIndex = str.find("/");
+                
+                if (nIndex = 0) {
+                    str = str.substr(1);
+                }
+            }
+            {
+                int nIndex = str.find("\\");
+                
+                if (nIndex = 0) {
+                    str = str.substr(1);
+                }
+            }
+            return path(str);
+        }
+        
+        /*!
          * @fn	path& path::add_backslash()
          *
          * @brief	在路径最后加上反斜杠"\"
@@ -141,11 +217,12 @@ namespace amo {
          * @return	A reference to a path.
          */
         path& remove_file_spec() {
+            canonicalize();
             ::PathRemoveFileSpecA(m_path);
             return *this;
         }
         
-        path remove_file_spec_c() {
+        path remove_file_spec_c() const {
             amo::path p = *this;
             p.remove_file_spec();
             return p;
@@ -188,7 +265,8 @@ namespace amo {
          * @return	A reference to a path.
          */
         path& append(const path& other) {
-            ::PathAppendA(m_path, other.c_str());
+            path p = other.remove_front_backslash_c();
+            ::PathAppendA(m_path, p.c_str());
             return *this;
         }
         
@@ -204,10 +282,11 @@ namespace amo {
          * @return	A path.
          */
         path append_c(const path& other) const {
-        
+            path p = other.remove_front_backslash_c();
+            
             char a[1000] = { 0 };
             strcpy(a, m_path);
-            ::PathAppendA(a, other.c_str());
+            ::PathAppendA(a, p.c_str());
             return path(a);
         }
         
@@ -579,10 +658,16 @@ namespace amo {
          */
         path& canonicalize() {
             char a[1000] = { 0 };
+            std::string str = m_path;
+            amo::string_utils::replace(str, "/", "\\");
+            memset(m_path, 0, 1000);
+            strcpy(m_path, str.c_str());
             ::PathCanonicalizeA(a, m_path);
             strcpy(m_path, a);
             return *this;
         }
+        
+        
         /*!
          * @fn	path& path::get_short_path_name()
          *
@@ -916,8 +1001,12 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         bool copy_to(const amo::path& to) {
+        
             if (this->is_directory()) {
                 return to.create_directory();
+            } else {
+                amo::path parent = to.remove_file_spec_c();
+                parent.create_directory();
             }
             
             return ::CopyFileA(m_path, to.c_str(), FALSE) != FALSE;

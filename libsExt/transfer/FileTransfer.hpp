@@ -134,12 +134,21 @@ namespace amo {
             m_pFile.reset();
             return Undefined();
         }
+        
+        Any size(IPCMessage::SmartType msg) {
+            if (!m_pFile) {
+                return 0;
+            }
+            
+            return	(int)m_pFile->size();
+        }
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(FileTransfer, RunnableTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(read, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(write, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(append, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(appendTo, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(close, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(size, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     public:
