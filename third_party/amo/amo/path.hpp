@@ -341,6 +341,12 @@ namespace amo {
             return *this;
         }
         
+        path strip_path_c() const {
+            char a[1000] = { 0 };
+            strcpy(a, m_path);
+            ::PathStripPathA(a);
+            return amo::path(a);
+        }
         /*!
          * @fn	path& path::strip_to_root()
          *
@@ -1010,6 +1016,18 @@ namespace amo {
             }
             
             return ::CopyFileA(m_path, to.c_str(), FALSE) != FALSE;
+        }
+        
+        bool move_to(const amo::path& to) {
+        
+            if (this->is_directory()) {
+                return to.create_directory();
+            } else {
+                amo::path parent = to.remove_file_spec_c();
+                parent.create_directory();
+            }
+            
+            return ::MoveFileA(m_path, to.c_str()) != FALSE;
         }
         
         static path fullAppDir() {

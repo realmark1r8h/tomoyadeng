@@ -328,6 +328,10 @@ namespace amo {
             registerTransfer("release", std::bind(&ClassTransfer::onRelase, this,
                                                   std::placeholders::_1),
                              TransferFuncNormal | TransferExecNormal);
+                             
+            registerTransfer("notify", std::bind(&ClassTransfer::onNotify, this,
+                                                 std::placeholders::_1),
+                             TransferFuncNormal | TransferExecNormal);
             return Transfer::registerFunction();
         }
         
@@ -405,6 +409,31 @@ namespace amo {
         
         virtual Any onGetObjectName(IPCMessage::SmartType msg) {
             return this->getObjectName();
+        }
+        
+        /**
+         * @fn	virtual Any ClassTransfer::onNotify(IPCMessage::SmartType msg)
+         *
+         * @brief	向自己发送一个通知，可以监听这个通知得到返回结果(当transfer在单独的线程上执行时，可以通过自己定义消息来监听执行进度).
+         *
+         * @param	msg	The message.
+         *
+         * @return	Any.
+         */
+        
+        virtual Any onNotify(IPCMessage::SmartType msg) {
+            std::string strName = msg->getArgumentList()->getString(0);
+            TransferEventInfo info;
+            info.name = strName;
+            info.toAll = true;
+            Any& val = msg->getArgumentList()->getValue(1);
+            
+            if (val.isValid() && !val.is<Undefined>() && !val.is<Nil>()) {
+                info.data = val;
+            }
+            
+            triggerEvent(info);
+            return Undefined();
         }
         
         Any onRelase(IPCMessage::SmartType msg) {

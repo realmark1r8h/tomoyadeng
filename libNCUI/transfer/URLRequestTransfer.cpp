@@ -228,11 +228,11 @@ namespace amo {
     //    pRequest->SetMethod(pSettings->type);
     //    //pRequest->SetURL(pSettings->url);
     //    std::string url = pSettings->url;// +"?md5=F5D812C17E5BED5B145BA395FE8AA033&type=pmp.pc&client=Computer&type=zip&info=";
-    //    std::string md5 = "?md5=F5D812C17E5BED5B145BA395FE8AA033";
+    //    std::string md5 = "?md5=0D76A42BB1BA0DD218FA832FF0615155";
     //    std::string type = "&type=pmp.pc";
     //    std::string computer = "&client=";
     //    computer += amo::base64::encode("Computer");
-    //    std::string uuid = "&uuid=1ff97805-4901-418d-9f1c-76c925e47af7";
+    //    std::string uuid = "&uuid=10a537d0-2523-4ae9-8955-5b781d80002d";
     //    std::string info = "&info=Person:500224198708302191";
     //
     //    url += md5;
@@ -262,10 +262,10 @@ namespace amo {
     //    std::vector<int8_t> trailer(strFlag2.size(), 0);
     //    memcpy(trailer.data(), strFlag2.c_str(), strFlag2.size());
     //    std::string headbytes = "Content-Disposition: form-data; name=\"zipFile\"; filename=\"";
-    //    headbytes += "1ff97805-4901-418d-9f1c-76c925e47af7.zip";
+    //    headbytes += "10a537d0-2523-4ae9-8955-5b781d80002d.zip";
     //    headbytes += "\"\r\nContent-Type: multipart/form-data\r\n\r\n";
     //
-    //    amo::file file(amo::path("D:\\1ff97805-4901-418d-9f1c-76c925e47af7.zip"));
+    //    amo::file file(amo::path("D:\\10a537d0-2523-4ae9-8955-5b781d80002d.zip"));
     //    std::vector<int8_t> fileStream;
     //    file.read_all_bytes(fileStream);
     //
@@ -275,10 +275,10 @@ namespace amo {
     //
     //    header.insert({ "Content-Disposition", "form-data" });
     //    header.insert({ "name", "zipFile" });
-    //    //header.insert({ "filename", "1ff97805-4901-418d-9f1c-76c925e47af7.zip" });
+    //    //header.insert({ "filename", "10a537d0-2523-4ae9-8955-5b781d80002d.zip" });
     //    //header.insert({ "Content-Type", "application/octet-stream" });
     //    header.insert({ "Content-Type", std::string("multipart/form-data; boundary=") + boundary });
-    //    header.insert({ "Cookie", "JSESSIONID=DC6B6563BF79A857A5F89BCF2158711F" });
+    //    header.insert({ "Cookie", "JSESSIONID=7058DD2113B19FB9031763C6D9F9F08D" });
     //    //header.insert({ "md5", "F5D812C17E5BED5B145BA395FE8AA033" });
     //    header.insert({ "Connection", "Keep-Alive" });
     //    header.insert({ "Charset", "UTF-8" });
@@ -291,7 +291,7 @@ namespace amo {
     //    data += std::string((char*)fileStream.data(), fileStream.size());
     //    data += std::string((char*)trailer.data(), trailer.size());
     //
-    //    amo::file dd(amo::path("D:\\123456.zip"), std::ios::out | std::ios::binary);
+    //    amo::file dd(amo::path("D:\\12.zip"), std::ios::out | std::ios::binary);
     //    dd.write(data);
     //    dd.close();
     //

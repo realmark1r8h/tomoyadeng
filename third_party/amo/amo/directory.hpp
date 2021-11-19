@@ -179,6 +179,7 @@ namespace amo {
         
             SHFILEOPSTRUCTA FileOp = { 0 };
             FileOp.fFlags = FOF_NO_UI |   //不出现确认对话框
+                            FOF_SILENT | // 不显示进度
                             FOF_NOCONFIRMMKDIR; //需要时直接创建一个文件夹,不需用户确定
             FileOp.pFrom = from.c_str();
             FileOp.pTo = to.c_str();
@@ -189,7 +190,7 @@ namespace amo {
         // 删除一个目录
         bool deletePath(const path& p) {
             SHFILEOPSTRUCTA FileOp = { 0 };
-            FileOp.fFlags = FOF_ALLOWUNDO |   //允许放回回收站
+            FileOp.fFlags = FOF_SILENT | // 不显示进度
                             FOF_NOCONFIRMATION; //不出现确认对话框
             FileOp.pFrom = p.c_str();
             FileOp.pTo = NULL;      //一定要是NULL
@@ -202,6 +203,7 @@ namespace amo {
         bool movePath(const path& to, const path& from) {
             SHFILEOPSTRUCTA FileOp = { 0 };
             FileOp.fFlags = FOF_NO_UI |   //不出现确认对话框
+                            FOF_SILENT | // 不显示进度
                             FOF_NOCONFIRMMKDIR; //需要时直接创建一个文件夹,不需用户确定
             FileOp.pFrom = from.c_str();
             FileOp.pTo = to.c_str();
@@ -210,10 +212,11 @@ namespace amo {
         }
         
         
-        //从命名文件或文件夹
+        //重命名文件或文件夹
         bool renamePath(const path& to, const path& from) {
             SHFILEOPSTRUCTA FileOp = { 0 };
-            FileOp.fFlags = FOF_NO_UI;   //不出现确认对话框
+            FileOp.fFlags = FOF_NO_UI |    //不出现确认对话框
+                            FOF_SILENT; // 不显示进度;
             FileOp.pFrom = to.c_str();
             FileOp.pTo = from.c_str();
             FileOp.wFunc = FO_RENAME;

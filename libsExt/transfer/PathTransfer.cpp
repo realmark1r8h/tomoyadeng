@@ -80,6 +80,11 @@ namespace amo {
     }
     
     
+    Any PathTransfer::fileExsit(IPCMessage::SmartType msg) {
+        amo::string strPath(msg->getArgumentList()->getString(0));
+        return amo::path(strPath).file_exists();
+    }
+    
     std::string PathTransfer::getClass() const {
         return ("Path");
     }

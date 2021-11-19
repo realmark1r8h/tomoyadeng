@@ -62,6 +62,7 @@ namespace amo {
                 return 0;
             }
             
+            
             ifs.seekg(0, std::ios_base::end);
             std::streampos sp = ifs.tellg();
             return sp;
@@ -227,8 +228,9 @@ namespace amo {
         }
         
         
-        // 删除文件夹
+        // 删除文件
         bool remove() {
+            close();
             bool bOk =  removeFile(m_path);
             
             if (bOk) {
@@ -238,17 +240,19 @@ namespace amo {
             return bOk;
         }
         
-        // 移动文件夹
+        // 移动文件
         bool move_to(const amo::path& to) {
+            close();
             return moveFile(to, m_path);
         }
         
-        //复制文件夹
+        //复制文件
         bool copy_to(const amo::path& to) {
+            close();
             return copyFile(to, m_path);
         }
         
-        // 重命名文件夹
+        // 重命名文件
         bool rename(const amo::path& to) {
             close();
             
@@ -278,6 +282,7 @@ namespace amo {
         
         // 删除文件
         bool removeFile(const amo::path& from) {
+        
             return ::DeleteFileA(from.c_str()) != FALSE;
         }
         

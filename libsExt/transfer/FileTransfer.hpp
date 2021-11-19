@@ -16,12 +16,12 @@ namespace amo {
         , public amo::singleton<FileTransfer> {
     public:
         FileTransfer()
-            : RunnableTransfer("File2") {
+            : RunnableTransfer("LocalFile") {
             
         }
         
         FileTransfer(const amo::string& fileName, int mode = 3)
-            : RunnableTransfer("File2") {
+            : RunnableTransfer("LocalFile") {
             amo::path p(fileName);
             m_pFile.reset(new amo::file(p, mode));
         }
@@ -103,10 +103,12 @@ namespace amo {
               return Undefined();*/
             
             amo::file file(p, std::ios::in | std::ios::binary);
+            int nTotal = 0;
             
             while (true) {
                 char buffer[4096] = { 0 };
                 int nBytes = file.read(buffer, 4095);
+                nTotal += nBytes;
                 
                 if (nBytes == 0) {
                     break;
@@ -140,8 +142,22 @@ namespace amo {
                 return 0;
             }
             
+            amo::path p = m_pFile->get_path();
+            m_pFile->close();
+            m_pFile.reset(new amo::file(p));
             return	(int)m_pFile->size();
         }
+        
+        // ¾²Ì¬º¯Êý
+        // É¾³ýÎÄ¼þ
+        Any remove(IPCMessage::SmartType msg) {
+            amo::string strPath(msg->getArgumentList()->getString(0), true);
+            amo::path p(strPath);
+            amo::file fi(p);
+            fi.remove();
+            return Undefined();
+        }
+        
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(FileTransfer, RunnableTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(read, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(write, TransferFuncNormal | TransferExecNormal)
@@ -149,6 +165,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(appendTo, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(close, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(size, TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(remove, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     public:

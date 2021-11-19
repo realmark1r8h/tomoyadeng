@@ -289,6 +289,11 @@ namespace amo {
         
         static std::string md5_file(const char* filename) {
             std::FILE* file = std::fopen(filename, "rb");
+            
+            if (file == NULL) {
+                return "00000000000000000000000000000000";
+            }
+            
             std::string res = md5_file(file);
             std::fclose(file);
             return res;

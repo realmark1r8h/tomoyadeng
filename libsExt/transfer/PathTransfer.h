@@ -30,7 +30,7 @@ namespace amo {
         Any getFullAppDir(IPCMessage::SmartType msg);
         Any getFullAppName(IPCMessage::SmartType msg);
         
-        
+        Any fileExsit(IPCMessage::SmartType msg);
         
         
         
@@ -43,6 +43,7 @@ namespace amo {
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getFullAppDir, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getFullAppName, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(fileExsit, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     private:
