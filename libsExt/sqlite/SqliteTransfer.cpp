@@ -18,6 +18,8 @@ const static std::string SQLITE_INVALID_SQL = "ÎÞÐ§µÄSQLÓï¾ä";
 
 namespace amo {
 
+
+
     SqliteTransfer::SqliteTransfer()
         : ClassTransfer("Sqlite") {
         
@@ -1082,6 +1084,12 @@ namespace amo {
         }
         
         return val;
+    }
+    
+    void SqliteTransfer::onBeforeRelease() {
+        if (m_pDB) {
+            m_pDB.reset();
+        }
     }
     
 }

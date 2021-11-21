@@ -235,7 +235,14 @@ namespace amo {
                 return;
             }
             
-            ptr->erase(nID);
+            auto iter = ptr->find(nID);
+            
+            if (iter != ptr->end()) {
+                iter->second->onBeforeRelease();
+                ptr->erase(iter);
+            }
+            
+            return;
         }
         
         static void removeTransferByName(const std::string& name) {
@@ -248,6 +255,7 @@ namespace amo {
             
             for (auto iter = ptr->begin(); iter != ptr->end();) {
                 if (iter->second->transferName() == name) {
+                    iter->second->onBeforeRelease();
                     iter = ptr->erase(iter);
                 } else {
                     ++iter;
@@ -346,6 +354,16 @@ namespace amo {
          */
         virtual Any onCreateClass(IPCMessage::SmartType msg) {
             return Undefined();
+        }
+        
+        /**
+         * @fn	virtual void ClassTransfer::onBeforeRelease()
+         *
+         * @brief	ÊÍ·Å×ÊÔ´.
+         */
+        
+        virtual void onBeforeRelease() {
+            return;
         }
         
         virtual Any onGetClassObject(IPCMessage::SmartType msg) {

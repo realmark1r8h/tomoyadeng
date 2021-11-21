@@ -61,7 +61,7 @@
 #include <amo/boost/dynamic_bitset.hpp>
 #include <amo/boost/bimap.hpp>
 #include <amo/boost/utility.hpp>
-#include <amo/boost/program_options.hpp> 
+#include <amo/boost/program_options.hpp>
 #include <amo/boost/tokenizer.hpp>
 #include <amo/boost/token_functions.hpp>
 #include <amo/boost/random.hpp>
@@ -102,7 +102,7 @@
 #include <boost/dynamic_bitset.hpp>
 #include <boost/bimap.hpp>
 #include <boost/utility.hpp>
-#include <boost/program_options.hpp> 
+#include <boost/program_options.hpp>
 #include <boost/tokenizer.hpp>
 #include <boost/token_functions.hpp>
 #include <boost/random.hpp>
@@ -114,7 +114,7 @@
 #include <boost/optional.hpp>
 #endif
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(_WIN64) ||defined(WIN32) || defined(WIN64)
 #	include <WinSock2.h>
 #   include <windows.h>
 #   include <process.h>
@@ -169,7 +169,9 @@
 #   include <sys/types.h>
 #   include <unistd.h>
 #   if defined(__VMS)
-namespace { enum { MAXHOSTNAMELEN = 64 }; }
+namespace {
+    enum { MAXHOSTNAMELEN = 64 };
+}
 #   endif
 #   define $unix $yes
 #endif
@@ -180,14 +182,16 @@ namespace { enum { MAXHOSTNAMELEN = 64 }; }
 #endif
 
 #if defined(__GNUC__) && (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__ <= 40902 )
-namespace std
-{
-	static std::string put_time( const std::tm* tmb, const char* fmt ) {
-		std::string s( 128, '\0' );
-		while( !strftime( &s[0], s.size(), fmt, tmb ) )
-			s.resize( s.size() + 128 );
-		return s;
-	}
+namespace std {
+    static std::string put_time(const std::tm* tmb, const char* fmt) {
+        std::string s(128, '\0');
+        
+        while (!strftime(&s[0], s.size(), fmt, tmb)) {
+            s.resize(s.size() + 128);
+        }
+        
+        return s;
+    }
 }
 #endif
 

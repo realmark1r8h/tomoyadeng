@@ -85,6 +85,16 @@ namespace amo {
         ss = time.format("yyMMddhhmmss");
         ss = time.format("hh:mm:s");
         ss = time.format("yy-MM-dd");
+        
+        amo::loader load;
+        load.load("RX3GDll.dll");
+        std::vector<amo::string> vec;
+        load.exports(vec);
+        
+        for (auto& p : vec) {
+            amo::cdevel << p.to_ansi() << amo::endl;
+        }
+        
     }
     void BrowserWindow::InitWindow() {
     

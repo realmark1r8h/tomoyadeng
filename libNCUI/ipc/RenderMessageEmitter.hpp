@@ -68,7 +68,7 @@ namespace amo {
         /*!
          * @fn	template<typename ... Args> Any RenderMessageEmitter::Transfer(std::string name, Args... args)
          *
-         * @brief	Transfers.
+         * @brief	使用自己进程的transfer执行函数，不需要向对方进程 返回数据.
          *
          * @tparam	Args	Type of the arguments.
          * @param	name	The name.
@@ -83,6 +83,7 @@ namespace amo {
             makeProcessMessage(msg, args...);
             afterMakeProcessMessage(msg, name);
             int nBrowserID = m_pFrame->GetBrowser()->GetIdentifier();
+            msg->getArgumentList()->setValue(IPCArgsPosInfo::CrossProcessFlag, 1);
             return RendererTransferMgr::getInstance()->onMessageTransfer(msg);
         }
         

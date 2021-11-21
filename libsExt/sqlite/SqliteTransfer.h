@@ -25,6 +25,8 @@ namespace amo {
         // ×Ö¶ÎÃûÐ¡Ð´
         const static int FieldLower = 2;
         
+        
+        
     public:
     
         SqliteTransfer();
@@ -69,6 +71,10 @@ namespace amo {
         void setFieldStyle(int val);
         std::string translateFieldName(const std::string& str);
         std::string translateFieldType(const std::string& str);
+        
+        virtual void onBeforeRelease() override;
+        
+        
     protected:
         Any executeSql(const std::string& sql);
         std::string makeSql(IPCMessage::SmartType msg);

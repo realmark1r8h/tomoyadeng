@@ -339,14 +339,26 @@ namespace amo {
             if (strMessageName == MSG_NATIVE_EXECUTE) {
                 // 普通调用不需要返回结果
             } else if (strMessageName == MSG_NATIVE_SYNC_EXECUTE)	{
-                // 通过管道向页面同步返回结果
-                returnSyncResult(nBrowserID, result);
+                int nFlag = args->getInt(IPCArgsPosInfo::CrossProcessFlag);
+                
+                if (nFlag != 1) {
+                    // 通过管道向页面同步返回结果
+                    returnSyncResult(nBrowserID, result);
+                }
+                
             } else if (strMessageName == MSG_NATIVE_ASYNC_EXECUTE) {
-                // 通过发送IPCMessage向页面异步返回结果
-                returnAsyncResult(nBrowserID,
-                                  ret,
-                                  args->getInt(IPCArgsPosInfo::AsyncCallback),
-                                  nFrameID);
+            
+                int nFlag = args->getInt(IPCArgsPosInfo::CrossProcessFlag);
+                
+                if (nFlag != 1) {
+                
+                    // 通过发送IPCMessage向页面异步返回结果
+                    returnAsyncResult(nBrowserID,
+                                      ret,
+                                      args->getInt(IPCArgsPosInfo::AsyncCallback),
+                                      nFrameID);
+                }
+                
             }
             
             return ret;

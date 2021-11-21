@@ -39,7 +39,7 @@ namespace amo {
     static const std::string MSG_FOCUSED_NODE_CHANGED = "FocusedNodeChanged";
     
     /*! @brief	默认管道大小. */
-    static const int DefaultPipeSize = 200000;
+    static const int DefaultPipeSize = 2000000;
     
     /*! @brief	渲染进程管道前缀. */
     static const std::string RendererPipePrefix = "render_pipe_name_";
@@ -89,6 +89,9 @@ namespace amo {
         
         /** @brief	要在线程中执行的函数名. */
         const static int ThreadTransferFuncName = 17;
+        
+        /** @brief	跨进程调用标志1表示只在当前进程中执行，0表示跨进程调用. */
+        const static int CrossProcessFlag = 22;
         
         /*! @brief	异步调用时回调函数位置. */
         const static int AsyncCallback = 23;

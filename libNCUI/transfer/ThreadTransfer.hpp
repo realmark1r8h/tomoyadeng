@@ -73,6 +73,16 @@ namespace amo {
             return pLooperExecutor;
         }
         
+        
+        
+        virtual void onBeforeRelease() override {
+            if (m_pLooperExecutor) {
+                m_pLooperExecutor->kill();
+            }
+            
+            m_pLooperExecutor.reset();
+        }
+        
         // 创建一个新线程
         
         std::shared_ptr<amo::looper_executor> createThread() {
@@ -101,6 +111,10 @@ namespace amo {
         
         // 暂停线程，不能暂停正在执行的函数，只能等当前函数结束后停止执行队列中的其他函数
         Any suspend(IPCMessage::SmartType msg) {
+            if (!m_pLooperExecutor) {
+                return Undefined();
+            }
+            
             // 只能在工作线程中挂起自己
             if (m_pLooperExecutor->get_id() != std::this_thread::get_id()) {
                 return false;
@@ -126,6 +140,10 @@ namespace amo {
         }
         
         Any execute(IPCMessage::SmartType msg, bool bSync = false) {
+            if (!m_pLooperExecutor) {
+                return Undefined();
+            }
+            
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             std::string transferName = args->getString(IPCArgsPosInfo::ThreadTransferName);
             int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
@@ -182,6 +200,51 @@ namespace amo {
         }
         
         
+        Any kill(IPCMessage::SmartType msg) {
+            if (m_pLooperExecutor) {
+                m_pLooperExecutor->kill();
+                m_pLooperExecutor.reset();
+            }
+            
+            return Undefined();
+        }
+        
+        Any start(IPCMessage::SmartType msg) {
+            if (m_pLooperExecutor) {
+                m_pLooperExecutor->start();
+                return true;
+                
+            }
+            
+            return false;
+            
+        }
+        
+        Any stop(IPCMessage::SmartType msg) {
+            if (m_pLooperExecutor) {
+                m_pLooperExecutor->stop();
+                return true;
+            }
+            
+            return false;
+        }
+        
+        AMO_CEF_MESSAGE_TRANSFER_BEGIN(ThreadTransfer, ClassTransfer)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(suspend, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(exec, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(async, TransferFuncNormal | TransferExecAsync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(sync, TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(start, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(stop, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(kill, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_END()
+        
+        
+        
+        
+    public:
+    
         Any waitForWeakUp() {
             std::unique_lock<std::recursive_mutex> lock(m_mutex);
             m_isPausedThread = true; // 暂停线程
@@ -207,14 +270,6 @@ namespace amo {
         
         
         
-        AMO_CEF_MESSAGE_TRANSFER_BEGIN(ThreadTransfer, ClassTransfer)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(suspend, TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(exec, TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(async, TransferFuncNormal | TransferExecAsync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(sync, TransferFuncNormal | TransferExecSync)
-        
-        AMO_CEF_MESSAGE_TRANSFER_END()
     protected:
     
         /** @brief	所属浏览器id. */

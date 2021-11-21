@@ -657,6 +657,20 @@ namespace amo {
                                           const CefString & message_text,
                                           bool is_reload,
                                           CefRefPtr<CefJSDialogCallback> callback) {
+        // 如果页面回返了true of false,那么直接向cef返回结果
+        if (message_text == "true"
+                || message_text == "True"
+                || message_text == "1"
+                || message_text == "TRUE") {
+            return true;
+        } else if (message_text == "false"
+                   || message_text == "False"
+                   || message_text == "0"
+                   || message_text == "FALSE") {
+            m_bIsClosing = false;
+            return true;
+        }
+        
         //接管JS 弹出框 ，显示自定义JS弹出框 页面退出时的询问框 unload
         if (m_nBrowserID != browser->GetIdentifier()) {
             return false;
@@ -684,8 +698,8 @@ namespace amo {
         }
         
         if (status == TS_PROCESS_CRASHED) {
-            MessageWindow::Show(m_hBrowserWnd, _T("页面崩溃了。。"));
-            loadURL("http://www.baidu.com");
+            MessageWindow::Show(m_hBrowserWnd, _T("页面崩溃了。"));
+            
         }
         
         return;

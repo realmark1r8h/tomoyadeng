@@ -13,6 +13,7 @@
 #include <amo/memory.hpp>
 #include <amo/logger.hpp>
 #include <amo/atomic.hpp>
+#include <amo/config.hpp>
 
 
 
@@ -250,6 +251,22 @@ namespace amo {
             if (m_work_thread.joinable()) {
                 m_work_thread.join();
             }
+        }
+        
+        void kill() {
+            amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
+            $windows({
+                std::thread::native_handle_type handle = m_work_thread.native_handle();
+                TerminateThread(handle, -1);
+                m_running = false;
+                m_not_empty.notify_all();
+                m_not_full.notify_all();
+                lock.unlock();
+                
+                if (m_work_thread.joinable()) {
+                    m_work_thread.join();
+                }
+            })
         }
     private:
         bool is_not_full(int64_t buffer_size = 100) {
