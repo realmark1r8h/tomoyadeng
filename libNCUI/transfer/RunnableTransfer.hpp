@@ -48,10 +48,7 @@ namespace amo {
         virtual Any onMessageTransfer(IPCMessage::SmartType msg) override {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             
-            if (transferName() == args->getString(IPCArgsPosInfo::FuncName)
-                    || "CLASS" == args->getString(IPCArgsPosInfo::FuncName)
-                    || "weakup" == args->getString(IPCArgsPosInfo::FuncName)
-                    || "suspend" == args->getString(IPCArgsPosInfo::FuncName)) {
+            if (multiType(args->getString(IPCArgsPosInfo::FuncName)) == TransferMultiDisabled) {
                 // new 不能在多线程中执行
                 // weakup 实际上是thread上的函数，这里是为了方便
                 return ClassTransfer::onMessageTransfer(msg);
@@ -183,7 +180,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(RunnableTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(attach, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(detach, TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     protected:

@@ -305,20 +305,20 @@ namespace amo {
             registerTransfer(transferName(),
                              std::bind(&ClassTransfer::onCreateClass, this,
                                        std::placeholders::_1),
-                             TransferExecSync | TransferFuncConstructor);
+                             TransferMultiDisabled | TransferExecSync | TransferFuncConstructor);
                              
             registerTransfer("CLASS",
                              std::bind(&ClassTransfer::onGetClassObject, this,
                                        std::placeholders::_1),
-                             TransferFuncConstProperty | TransferExecSync);
+                             TransferMultiDisabled | TransferFuncConstProperty | TransferExecSync);
                              
                              
             registerTransfer("fromObjectID", std::bind(&ClassTransfer::onFromObjectID, this,
                              std::placeholders::_1),
-                             TransferFuncStatic | TransferExecSync);
+                             TransferMultiDisabled | TransferFuncStatic | TransferExecSync);
             registerTransfer("fromObjectName", std::bind(&ClassTransfer::onFromObjectName, this,
                              std::placeholders::_1),
-                             TransferFuncStatic | TransferExecSync);
+                             TransferMultiDisabled | TransferFuncStatic | TransferExecSync);
             registerTransfer("getObjectName", std::bind(&ClassTransfer::onGetObjectName, this,
                              std::placeholders::_1),
                              TransferFuncNormal | TransferExecSync);

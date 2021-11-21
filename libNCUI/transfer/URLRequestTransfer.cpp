@@ -68,8 +68,6 @@ namespace amo {
             int64 total) {
         std::shared_ptr<UIMessageEmitter> emitter = getMessageEmitter();
         emitter->execute("triggerEvent", "request.download.progress", current, total);
-        
-        
     }
     
     void URLRequestTransfer::OnDownloadData(CefRefPtr<CefURLRequest> request,

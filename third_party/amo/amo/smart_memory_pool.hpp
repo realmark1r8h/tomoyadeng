@@ -1,8 +1,8 @@
 // Created by ËÕÔªº£ on 08/11/2016.
 // Copyright (c) 2016 amoylel. All rights reserved.
 
-#ifndef IME_SMART_MEMORY_POOL_HPP__
-#define IME_SMART_MEMORY_POOL_HPP__
+#ifndef IME_SMART_MemoRY_POOL_HPP__
+#define IME_SMART_MemoRY_POOL_HPP__
 
 
 #include <deque>
@@ -132,4 +132,4 @@ namespace amo
 	};
 }
 
-#endif // IME_SMART_MEMORY_POOL_HPP__
+#endif // IME_SMART_MemoRY_POOL_HPP__

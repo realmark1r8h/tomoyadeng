@@ -301,6 +301,20 @@ namespace amo {
             return TransferUnknown;
         }
         
+        /**
+         * @fn	TransferMultiType Transfer::multiType(const std::string& funcName)
+         *
+         * @brief	判断当前函数是否支持多线程执行.
+         *
+         * @param	funcName	Name of the function.
+         *
+         * @return	A TransferMultiType.
+         */
+        
+        TransferMultiType multiType(const std::string& funcName) {
+            return getFuncMgr().multiType(funcName);
+        }
+        
         /*!
          * @fn	TransferFuncType Transfer::functionType(const std::string& funcName)
          *

@@ -12,6 +12,9 @@
 #include <sstream>
 #include <amo/path.hpp>
 #include <amo/logger.hpp>
+#include <amo/regular.hpp>
+#include "pipe.hpp"
+
 
 namespace amo {
     class process : public std::enable_shared_from_this<process> {
@@ -81,7 +84,6 @@ namespace amo {
         process(const std::string& appName)
             : m_strAppName(appName) {
             init();
-            setUTF8(false);
         }
         
         process(const std::string& appName, const std::string& args)
@@ -108,13 +110,21 @@ namespace amo {
             hRead = NULL;
             hWrite = NULL;
             retval = 0;
+            setUTF8(false);
             m_workPath = amo::path::fullAppDir(); //默认工作目录为当前程序所在目录
             memset(&pi, 0, sizeof(PROCESS_INFORMATION));
             memset(&sa, 0, sizeof(SECURITY_ATTRIBUTES));
         }
         
-        void kill() {
-        
+        bool kill() {
+            if (pi.hProcess == NULL) {
+                return true;
+            }
+            
+            BOOL bOk = ::TerminateProcess(pi.hProcess, -1);
+            /*DWORD pid = GetProcessId(pi.hProcess);
+            DWORD erropr = GetLastError();*/
+            return bOk != FALSE;
         }
         
         void set_work_dir(const amo::path& p) {
@@ -150,9 +160,11 @@ namespace amo {
             }
             
             
+            
             sa.nLength = sizeof(SECURITY_ATTRIBUTES);
             sa.lpSecurityDescriptor = NULL;
             sa.bInheritHandle = TRUE;
+            
             
             if (!CreatePipe(&hRead, &hWrite, &sa, 0)) {
                 return false;
@@ -261,7 +273,7 @@ namespace amo {
             amo::string strRetval;
             
             while (true) {
-                if (ReadFile(hRead, buffer, 4095, &bytesRead, NULL) == NULL) {
+                if (ReadFile(hRead, buffer, 4095, &bytesRead, NULL) == FALSE) {
                     break;
                 }
                 
@@ -286,6 +298,211 @@ namespace amo {
         }
         void setUTF8(bool val) {
             m_bUTF8 = val;
+        }
+        
+    public:
+    
+        /**
+         * @fn	static int find_pid_by_port(int port)
+         *
+         * @brief	通过端口号查找pid.
+         *
+         * @param	port	The port.
+         *
+         * @return	The found PID by port.
+         */
+        
+        static int find_pid_by_port(int port) {
+            using namespace amo;
+            std::shared_ptr<amo::process> pProcess(new process("cmd.exe"));
+            pProcess->addArgs(" /c netstat -aon|findstr ");
+            std::stringstream stream;
+            stream << "\"";
+            stream << port;
+            stream << "\"";
+            pProcess->addArgs(stream.str());
+            
+            pProcess->start();
+            auto result = pProcess->getResult();
+            
+            if (!result->isSuccess()) {
+                return 0;
+            }
+            
+            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
+            
+            if (message.empty()) {
+                return 0;
+            }
+            
+            std::string strPID;
+            
+            // 查找PID
+            for (auto& p : message) {
+                p.replace("\t", "");
+                std::vector<amo::string> vec = p.split(" ");
+                
+                for (auto iter = vec.rbegin(); iter != vec.rend(); ++iter) {
+                    if (iter->empty()) {
+                        continue;
+                    }
+                    
+                    if (!amo::regular(*iter).is_number()) {
+                        break;
+                    }
+                    
+                    strPID = *iter;
+                    break;
+                }
+                
+                if (!strPID.empty()) {
+                    break;
+                }
+            }
+            
+            if (strPID.empty()) {
+                return 0;
+            }
+            
+            // 返回PID
+            return  amo::string(strPID, false).to_number<int>();
+            
+        }
+        
+        
+        static std::vector<int> find_pid_by_process_name(const std::string& name) {
+            std::vector<int> retval;
+            using namespace amo;
+            std::shared_ptr<amo::process> pProcess(new process("cmd.exe"));
+            pProcess->addArgs(" /c tasklist |findstr ");
+            std::stringstream stream;
+            stream << "\"";
+            stream << name;
+            stream << "\"";
+            pProcess->addArgs(stream.str());
+            
+            pProcess->start();
+            auto result = pProcess->getResult();
+            
+            if (!result->isSuccess()) {
+                return retval;
+            }
+            
+            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
+            
+            if (message.empty()) {
+                return retval;
+            }
+            
+            std::string strPID;
+            
+            // 查找PID
+            for (auto& p : message) {
+                p.replace(name, "");
+                p.replace("\t", "");
+                std::vector<amo::string> vec = p.split(" ");
+                
+                for (auto iter = vec.begin(); iter != vec.end(); ++iter) {
+                    if (iter->empty()) {
+                        continue;
+                    }
+                    
+                    if (amo::regular(*iter).is_number()) {
+                        retval.push_back(amo::string(*iter).to_number<int>());
+                    }
+                    
+                    break;
+                }
+                
+            }
+            
+            return retval;
+            
+        }
+        
+        /**
+         * @fn	static bool kill_process_bu_pid(int pid)
+         *
+         * @brief	通过 PID 杀进程.
+         *
+         * @param	pid	The PID.
+         *
+         * @return	true if it succeeds, false if it fails.
+         */
+        
+        static  bool kill_process_bu_pid(int pid) {
+            if (pid <= 0) {
+                return true;
+            }
+            
+            using namespace amo;
+            std::shared_ptr<amo::process> pProcess(new process("cmd.exe"));
+            pProcess->addArgs(" /c taskkill /pid  ");
+            std::stringstream stream;
+            stream << pid;
+            stream << " /F";
+            pProcess->addArgs(stream.str());
+            
+            pProcess->start();
+            auto result = pProcess->getResult();
+            
+            if (!result->isSuccess()) {
+                return false;
+            }
+            
+            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
+            
+            if (message.size() > 1) {
+                return false;
+            }
+            
+            for (auto& p : message) {
+                if (p.find("success") != -1 || p.find("成功") != -1) {
+                    return true;
+                }
+                
+                return false;
+            }
+            
+            return false;
+        }
+        
+        /**
+         * @fn	static bool kill_process_by_port(int port)
+         *
+         * @brief	通过端口号杀进程.
+         *
+         * @param	port	The port.
+         *
+         * @return	true if it succeeds, false if it fails.
+         */
+        
+        static bool kill_process_by_port(int port) {
+            int pid = find_pid_by_port(port);
+            return kill_process_bu_pid(pid);
+        }
+        
+        /**
+         * @fn	static bool kill_process_by_name(const std::string& name)
+         *
+         * @brief	通过进程名杀进程.
+         *
+         * @param	name	The name.
+         *
+         * @return	true if it succeeds, false if it fails.
+         */
+        
+        static bool kill_process_by_name(const std::string& name) {
+            auto vec = find_pid_by_process_name(name);
+            bool bOk = true;
+            
+            for (auto & pid : vec) {
+                if (!kill_process_bu_pid(pid)) {
+                    bOk = false;
+                }
+            }
+            
+            return bOk;
         }
     protected:
         std::string makeCommand() {

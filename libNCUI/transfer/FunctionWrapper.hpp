@@ -31,6 +31,12 @@ namespace amo {
         TransferObject						//对象
     };
     
+    // 多线程支持
+    enum TransferMultiType {
+        TransferMultiUnkown = -1, //未知
+        TransferMultiSupport = 0 << 16,  // 允许在其他线程上执行（默认）
+        TransferMultiDisabled = 1 << 16, // 禁止多线程执行
+    };
     // JS类中的函数类型，
     enum TransferFuncType {
         TransferFuncUnknown = -1,					// 未知
@@ -90,6 +96,24 @@ namespace amo {
             json.put("function", m_strName);
             json.put("exec", m_nExecType);
             return json;
+        }
+        
+        /**
+         * @fn	TransferMultiThread FunctionWrapper::multiType()
+         *
+         * @brief	多线程类型.
+         *
+         * @return	A TransferMultiThread.
+         */
+        
+        TransferMultiType multiType() {
+            int type = m_nExecType & 0xff0000;
+            
+            if (type < 0) {
+                return TransferMultiUnkown;
+            }
+            
+            return (TransferMultiType)type;
         }
         
         TransferFuncType functionType() {
@@ -303,6 +327,17 @@ namespace amo {
         
         std::vector<Any>& getAttributes() {
             return m_vecAttributes;
+        }
+        
+        TransferMultiType multiType(const std::string& funcName) {
+            auto iter = toMap().find(funcName);
+            
+            if (iter == toMap().end()) {
+                return TransferMultiUnkown;
+            }
+            
+            return iter->second.multiType();
+            
         }
         
         TransferFuncType functionType(const std::string& funcName) {
