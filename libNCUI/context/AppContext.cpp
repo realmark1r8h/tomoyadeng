@@ -2,7 +2,7 @@
 
 #include "context/AppContext.h"
 #include "ui/win/BrowserWindowManager.h"
-#include "handler/LocalSchemeHandler.h"
+#include "scheme/LocalSchemeHandler.h"
 #include "handler/ClientApp.h"
 
 #include <amo/smart_ptr.hpp>

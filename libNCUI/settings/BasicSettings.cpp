@@ -56,7 +56,6 @@ namespace amo {
     
     std::string BasicSettings::toAbsolutePath(const std::string& str) {
         amo::string strClassList(str, true);
-        
         std::regex reg("^%\\w+%");
         std::smatch m;
         std::vector<std::string> class_list;

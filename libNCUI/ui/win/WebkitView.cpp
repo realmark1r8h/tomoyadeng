@@ -20,11 +20,12 @@
 #include "ui/win/RenderView.h"
 #include "settings/BrowserWindowSettings.h"
 #include "transfer/AppTransfer.h"
-#include "handler/NativeFileHandler.h"
+#include "scheme/NativeFileHandler.h"
 #include "transfer/BrowserTransfer.h"
 #include "transfer/FrameTransfer.h"
 #include "transfer/BrowserHostTransfer.h"
 #include "utility/utility.hpp"
+#include "../../scheme/UrlResourceHandlerFactory.h"
 
 namespace amo {
     WebkitView::WebkitView(std::shared_ptr<BrowserWindowSettings> pBrowserSettings)
@@ -727,23 +728,25 @@ namespace amo {
         CefRefPtr<CefFrame> frame,
         CefRefPtr<CefRequest> request) {
         
-        
-        std::shared_ptr<AppTransfer> pTransfer ;
-        pTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
-        IPCMessage::SmartType msg(new IPCMessage());
         std::string url = request->GetURL();
+        return UrlResourceHandlerFactory::getInstance()->create(url);
+        
+        /*   std::shared_ptr<AppTransfer> pTransfer ;
+           pTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
+           IPCMessage::SmartType msg(new IPCMessage());
         
         
-        msg->getArgumentList()->setValue(0, url);
-        msg->getArgumentList()->setValue(1, true);
-        Any ret = pTransfer->urlToNativePath(msg);
-        std::string file = ret.As<std::string>();
         
-        if (file.empty()) {
-            return NULL;
-        }
+           msg->getArgumentList()->setValue(0, url);
+           msg->getArgumentList()->setValue(1, true);
+           Any ret = pTransfer->urlToNativePath(msg);
+           std::string file = ret.As<std::string>();
         
-        return new NativeFileHandler(url, file);
+           if (file.empty()) {
+               return NULL;
+           }
+        
+           return new NativeFileHandler(url, file);*/
         
         
     }

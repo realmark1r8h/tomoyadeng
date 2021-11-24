@@ -175,14 +175,27 @@ namespace amo {
             
             if (bSync) {
                 Any ret = amo::sync<Any>(m_pLooperExecutor, [ = ]()->Any {
+                    Transfer* pTransfer = manager->findTransfer(nBrowserID, transferName);
+                    
+                    if (pTransfer == NULL) {
+                        return Undefined();
+                    }
+                    
                     return pTransfer->onMessageTransfer(ipcMsg);
                 });
                 return ret;
             } else {
+            
                 m_pLooperExecutor->execute([ = ]() {
+                    Transfer* pTransfer = manager->findTransfer(nBrowserID, transferName);
+                    
+                    if (pTransfer == NULL) {
+                        return Undefined();
+                    }
+                    
                     pTransfer->onMessageTransfer(ipcMsg);
+                    return Undefined();
                 });
-                return Undefined();
             }
             
             return Undefined();
@@ -191,9 +204,6 @@ namespace amo {
             return execute(msg, false);
         }
         
-        Any async(IPCMessage::SmartType msg) {
-            return Undefined();
-        }
         
         Any sync(IPCMessage::SmartType msg) {
             return execute(msg, true);
@@ -229,15 +239,24 @@ namespace amo {
             return false;
         }
         
+        Any Exec(IPCMessage::SmartType msg) {
+            return execute(msg, false);
+        }
+        
+        Any Sync(IPCMessage::SmartType msg) {
+            return execute(msg, true);
+        }
+        
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(ThreadTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(suspend, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(exec, TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(async, TransferFuncNormal | TransferExecAsync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(sync, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(start, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(stop, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(kill, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(Exec, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(Sync, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         

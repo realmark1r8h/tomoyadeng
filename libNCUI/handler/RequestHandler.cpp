@@ -7,7 +7,7 @@
 #include <amo/logger.hpp>
 
 #include "handler/ResourceHandler.h"
-#include "handler/LocalSchemeHandler.h"
+#include "scheme/LocalSchemeHandler.h"
 
 #include "handler/MessageRouterBrowserSide.h"
 #include "handler/ResourceHandler.h"

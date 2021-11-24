@@ -194,9 +194,7 @@
     <ClCompile Include="handler\KeyboardHandler.cpp" />
     <ClCompile Include="handler\LifeSpanHandler.cpp" />
     <ClCompile Include="handler\LoadHandler.cpp" />
-    <ClCompile Include="handler\LocalSchemeHandler.cpp" />
     <ClCompile Include="handler\MessageRouterBrowserSide.cpp" />
-    <ClCompile Include="handler\NativeFileHandler.cpp" />
     <ClCompile Include="handler\RenderHandler.cpp" />
     <ClCompile Include="handler\RenderProcessHandler.cpp" />
     <ClCompile Include="handler\RequestHandler.cpp" />
@@ -237,6 +235,11 @@
     <ClCompile Include="node\NodeRenderHandler.cpp" />
     <ClCompile Include="node\NodeRequestHandler.cpp" />
     <ClCompile Include="libNCUI.cpp" />
+    <ClCompile Include="scheme\LocalSchemeHandler.cpp" />
+    <ClCompile Include="scheme\NativeFileHandler.cpp" />
+    <ClCompile Include="scheme\UrlResourceHandlerFactory.cpp" />
+    <ClCompile Include="scheme\ZipFileHandler.cpp" />
+    <ClCompile Include="scheme\ZipFileMnager.cpp" />
     <ClCompile Include="settings\AppSettings.cpp" />
     <ClCompile Include="settings\BasicSettings.cpp" />
     <ClCompile Include="settings\BrowserWindowSettings.cpp" />
@@ -309,6 +312,7 @@
     <ClCompile Include="ui\win\ViewRenderer.cpp" />
     <ClCompile Include="ui\win\WebkitView.cpp" />
     <ClCompile Include="ui\win\ShadowWindow.cpp" />
+    <ClCompile Include="utility\libzippp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cefsimple\simple_app.h" />
@@ -333,10 +337,8 @@
     <ClInclude Include="handler\KeyboardHandler.h" />
     <ClInclude Include="handler\LifeSpanHandler.h" />
     <ClInclude Include="handler\LoadHandler.h" />
-    <ClInclude Include="handler\LocalSchemeHandler.h" />
     <ClInclude Include="handler\MessageHandlerDelegate.hpp" />
     <ClInclude Include="handler\MessageRouterBrowserSide.h" />
-    <ClInclude Include="handler\NativeFileHandler.h" />
     <ClInclude Include="handler\RenderHandler.h" />
     <ClInclude Include="handler\RenderProcessHandler.h" />
     <ClInclude Include="handler\RequestHandler.h" />
@@ -389,6 +391,11 @@
     <ClInclude Include="node\NodeRenderHandler.h" />
     <ClInclude Include="node\NodeRequestHandler.h" />
     <ClInclude Include="libNCUI.h" />
+    <ClInclude Include="scheme\LocalSchemeHandler.h" />
+    <ClInclude Include="scheme\NativeFileHandler.h" />
+    <ClInclude Include="scheme\UrlResourceHandlerFactory.h" />
+    <ClInclude Include="scheme\ZipFileHandler.h" />
+    <ClInclude Include="scheme\ZipFileMnager.h" />
     <ClInclude Include="settings\AppSettings.h" />
     <ClInclude Include="settings\BasicSettings.h" />
     <ClInclude Include="settings\BrowserWindowSettings.h" />
@@ -468,6 +475,7 @@
     <ClInclude Include="ui\win\ViewRenderer.h" />
     <ClInclude Include="ui\win\WebkitView.h" />
     <ClInclude Include="ui\win\ShadowWindow.h" />
+    <ClInclude Include="utility\libzippp.h" />
     <ClInclude Include="utility\utility.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

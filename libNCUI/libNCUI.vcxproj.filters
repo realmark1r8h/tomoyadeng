@@ -40,9 +40,6 @@
     <Filter Include="cefsimple">
       <UniqueIdentifier>{6e8dc24e-e0b4-4272-b623-cf370b46eaae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ipc">
-      <UniqueIdentifier>{1518d5ed-61be-4952-b9e8-93a8eb506dad}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ui\win\clipboard">
       <UniqueIdentifier>{7bef711a-4abf-4070-ae10-1d954963c93a}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,12 @@
     </Filter>
     <Filter Include="头文件">
       <UniqueIdentifier>{8045ae72-af7f-4ad5-a794-67a3d3d41f73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scheme">
+      <UniqueIdentifier>{08963fad-917a-4535-931e-e1fa31276293}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ipc">
+      <UniqueIdentifier>{1518d5ed-61be-4952-b9e8-93a8eb506dad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +109,6 @@
       <Filter>handler</Filter>
     </ClCompile>
     <ClCompile Include="handler\LoadHandler.cpp">
-      <Filter>handler</Filter>
-    </ClCompile>
-    <ClCompile Include="handler\LocalSchemeHandler.cpp">
       <Filter>handler</Filter>
     </ClCompile>
     <ClCompile Include="handler\MessageRouterBrowserSide.cpp">
@@ -354,9 +354,6 @@
     <ClCompile Include="ui\win\clipboard\Clipboard.cpp">
       <Filter>ui\win\clipboard</Filter>
     </ClCompile>
-    <ClCompile Include="handler\NativeFileHandler.cpp">
-      <Filter>handler</Filter>
-    </ClCompile>
     <ClCompile Include="settings\GlobalShortcutSettings.cpp">
       <Filter>settings</Filter>
     </ClCompile>
@@ -453,6 +450,22 @@
     <ClCompile Include="transfer\RendererThreadTransfer.cpp">
       <Filter>transfer</Filter>
     </ClCompile>
+    <ClCompile Include="scheme\LocalSchemeHandler.cpp">
+      <Filter>scheme</Filter>
+    </ClCompile>
+    <ClCompile Include="scheme\NativeFileHandler.cpp">
+      <Filter>scheme</Filter>
+    </ClCompile>
+    <ClCompile Include="scheme\ZipFileHandler.cpp">
+      <Filter>scheme</Filter>
+    </ClCompile>
+    <ClCompile Include="scheme\UrlResourceHandlerFactory.cpp">
+      <Filter>scheme</Filter>
+    </ClCompile>
+    <ClCompile Include="utility\libzippp.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="scheme\ZipFileMnager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context\AppContext.h">
@@ -513,9 +526,6 @@
       <Filter>handler</Filter>
     </ClInclude>
     <ClInclude Include="handler\LoadHandler.h">
-      <Filter>handler</Filter>
-    </ClInclude>
-    <ClInclude Include="handler\LocalSchemeHandler.h">
       <Filter>handler</Filter>
     </ClInclude>
     <ClInclude Include="handler\MessageHandlerDelegate.hpp">
@@ -818,9 +828,6 @@
     <ClInclude Include="utility\utility.hpp">
       <Filter>utility</Filter>
     </ClInclude>
-    <ClInclude Include="handler\NativeFileHandler.h">
-      <Filter>handler</Filter>
-    </ClInclude>
     <ClInclude Include="settings\GlobalShortcutSettings.h">
       <Filter>settings</Filter>
     </ClInclude>
@@ -928,6 +935,24 @@
     </ClInclude>
     <ClInclude Include="transfer\TransferEventEmitter.hpp">
       <Filter>transfer</Filter>
+    </ClInclude>
+    <ClInclude Include="scheme\LocalSchemeHandler.h">
+      <Filter>scheme</Filter>
+    </ClInclude>
+    <ClInclude Include="scheme\NativeFileHandler.h">
+      <Filter>scheme</Filter>
+    </ClInclude>
+    <ClInclude Include="scheme\ZipFileHandler.h">
+      <Filter>scheme</Filter>
+    </ClInclude>
+    <ClInclude Include="scheme\UrlResourceHandlerFactory.h">
+      <Filter>scheme</Filter>
+    </ClInclude>
+    <ClInclude Include="scheme\ZipFileMnager.h">
+      <Filter>scheme</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\libzippp.h">
+      <Filter>utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

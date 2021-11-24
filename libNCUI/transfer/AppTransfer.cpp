@@ -10,6 +10,7 @@
 #include "utility/utility.hpp"
 #include "ui/win/MessageWindow.h"
 #include "handler/RunFileDialogCallback.hpp"
+#include "../scheme/UrlResourceHandlerFactory.h"
 
 namespace amo {
 
@@ -108,7 +109,7 @@ namespace amo {
         std::string url = args->getString(0);
         std::string nativeFile = args->getString(1);
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
-        nativeFile = appSettings->toAbsolutePath(nativeFile);
+        nativeFile = UrlResourceHandlerFactory::getInstance()->getAbsolutePath(nativeFile);
         
         if (url.empty() || nativeFile.empty()) {
             return false;

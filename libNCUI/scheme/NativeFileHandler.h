@@ -8,7 +8,7 @@
 
 
 #include "handler/CefHeader.hpp"
-#include "handler/LocalSchemeHandler.h"
+#include "scheme/LocalSchemeHandler.h"
 
 namespace amo {
     class NativeFileHandler : public LocalSchemeHandler {

@@ -39,11 +39,15 @@ namespace amo {
                                   int& bytes_read,
                                   CefRefPtr<CefCallback> callback) override;
                                   
+                                  
+                                  
         IMPLEMENT_REFCOUNTING(LocalSchemeHandler);
     protected:
         bool ReadNativeFile(const amo::string& strPath,
                             CefRefPtr<CefCallback> callback);
-    private:
+                            
+        bool readMimeType(const std::string& str);
+    protected:
         std::string m_strData;
         std::string m_strMimeType;
         size_t m_nOffset;

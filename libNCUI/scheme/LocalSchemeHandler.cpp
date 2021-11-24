@@ -1,6 +1,6 @@
 #include "stdAfx.h"
 
-#include "handler/LocalSchemeHandler.h"
+#include "scheme/LocalSchemeHandler.h"
 
 #include <algorithm>
 #include <fstream>
@@ -227,12 +227,30 @@ namespace amo {
             return false;    //没有读取到数据，返回false
         }
         
+        bool bHandled = readMimeType(ext);
+        
+        
+        if (bHandled) {
+            callback->Continue();
+            return true;
+        }
+        
+        return false;
+    }
+    
+    bool LocalSchemeHandler::readMimeType(const std::string& str) {
         bool bHandled = true;
-        ext = ext.substr(1);
-        m_strMimeType =  FindMimeType(primary_mappings,
-                                      getArrayLen(primary_mappings),
-                                      ext);
-                                      
+        
+        std::string ext = str;
+        
+        if (ext.find(".") == 0) {
+            ext = ext.substr(1);
+        }
+        
+        m_strMimeType = FindMimeType(primary_mappings,
+                                     getArrayLen(primary_mappings),
+                                     ext);
+                                     
         if (m_strMimeType.empty()) {
             m_strMimeType = FindMimeType(secondary_mappings,
                                          getArrayLen(secondary_mappings),
@@ -244,12 +262,7 @@ namespace amo {
             bHandled = false;
         }
         
-        if (bHandled) {
-            callback->Continue();
-            return true;
-        }
-        
-        return false;
+        return bHandled;
     }
     
     LocalSchemeHandler::LocalSchemeHandler() : m_nOffset(0) {

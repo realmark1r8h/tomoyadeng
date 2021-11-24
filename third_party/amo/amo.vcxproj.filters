@@ -264,5 +264,8 @@
     <ClInclude Include="amo\softeware.hpp">
       <Filter>amo</Filter>
     </ClInclude>
+    <ClInclude Include="amo\json_helper.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

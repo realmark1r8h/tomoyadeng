@@ -95,6 +95,7 @@
     <ClInclude Include="amo\foreach.hpp" />
     <ClInclude Include="amo\future.hpp" />
     <ClInclude Include="amo\hash.hpp" />
+    <ClInclude Include="amo\json_helper.hpp" />
     <ClInclude Include="amo\lexical_cast.hpp" />
     <ClInclude Include="amo\limits.hpp" />
     <ClInclude Include="amo\format.hpp" />

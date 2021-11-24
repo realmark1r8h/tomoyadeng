@@ -1,0 +1,115 @@
+#include "stdafx.h"
+#include "scheme/UrlResourceHandlerFactory.h"
+#include "scheme/ZipFileHandler.h"
+
+
+namespace amo {
+
+    UrlResourceHandlerFactory::UrlResourceHandlerFactory() {
+    
+    }
+    
+    CefRefPtr<CefResourceHandler> UrlResourceHandlerFactory::create(const std::string& url) {
+        IPCMessage::SmartType msg(new IPCMessage());
+        msg->getArgumentList()->setValue(0, url);
+        
+        std::shared_ptr<AppTransfer> pTransfer;
+        pTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
+        Any ret = pTransfer->urlToNativePath(msg);
+        
+        std::string u8File = ret.As<std::string>();
+        
+        if (u8File.empty()) {
+            return NULL;
+        }
+        
+        CefRefPtr<CefResourceHandler> pHandler = getZipResourceHandler(url, u8File);
+        
+        if (pHandler) {
+            return pHandler;
+        }
+        
+        pHandler = getDBResourceHandler(url, u8File);
+        
+        if (pHandler) {
+            return pHandler;
+        }
+        
+        amo::string ansiPath(u8File, true);
+        
+        if (amo::path(ansiPath).file_exists()) {
+            return new NativeFileHandler(url, u8File);
+        }
+        
+        return NULL;
+    }
+    
+    
+    CefRefPtr<CefResourceHandler> UrlResourceHandlerFactory::getDBResourceHandler(const std::string& url, const std::string& u8Path) {
+    
+        return NULL;
+    }
+    
+    CefRefPtr<CefResourceHandler> UrlResourceHandlerFactory::getZipResourceHandler(const std::string& url, const std::string& u8Path) {
+        if (!isZipPath(u8Path)) {
+            return NULL;
+        }
+        
+        
+        std::string dbFile = u8Path.substr(7);
+        
+        int  nIndex = dbFile.find(".zip");
+        
+        if (nIndex == -1) {
+            return NULL;
+        }
+        
+        std::string u8DBPath = dbFile.substr(0, nIndex + 4);
+        std::string u8File = dbFile.substr(nIndex + 4);
+        
+        return new ZipFileHandler(url, u8DBPath, u8File);
+        
+        
+    }
+    
+    std::string UrlResourceHandlerFactory::getAbsolutePath(const std::string& u8Path) {
+    
+        auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
+        
+        if (isZipPath(u8Path)) {
+            std::string retval = "zip:///";
+            std::string u8SubPath = u8Path.substr(retval.size());
+            return retval + appSettings->toAbsolutePath(u8SubPath);
+        } else if (isDBPath(u8Path)) {
+            std::string retval = "db:///";
+            std::string u8SubPath = u8Path.substr(retval.size());
+            return retval + appSettings->toAbsolutePath(u8SubPath);
+        }
+        
+        return appSettings->toAbsolutePath(u8Path);
+    }
+    
+    bool UrlResourceHandlerFactory::isZipPath(const std::string& u8Path) {
+        int nIndex = u8Path.find("zip:///");
+        
+        if (nIndex == 0) {
+            return true;
+        }
+        
+        nIndex = u8Path.find("zip:\\\\\\");
+        return nIndex == 0;
+    }
+    
+    bool UrlResourceHandlerFactory::isDBPath(const std::string& u8Path) {
+        int nIndex = u8Path.find("db:///");
+        
+        if (nIndex == 0) {
+            return true;
+        }
+        
+        nIndex = u8Path.find("db:\\\\\\");
+        return nIndex == 0;
+    }
+    
+}
+

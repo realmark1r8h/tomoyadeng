@@ -81,28 +81,28 @@ namespace amo {
             {
                 int nIndex = str.find("./");
                 
-                if (nIndex = 0) {
+                if (nIndex == 0) {
                     str = str.substr(2);
                 }
             }
             {
                 int nIndex = str.find(".\\");
                 
-                if (nIndex = 0) {
+                if (nIndex == 0) {
                     str = str.substr(2);
                 }
             }
             {
                 int nIndex = str.find("/");
                 
-                if (nIndex = 0) {
+                if (nIndex == 0) {
                     str = str.substr(1);
                 }
             }
             {
                 int nIndex = str.find("\\");
                 
-                if (nIndex = 0) {
+                if (nIndex == 0) {
                     str = str.substr(1);
                 }
             }
