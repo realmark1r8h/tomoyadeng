@@ -15,6 +15,8 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/dist_sink.h>
 #include <spdlog/sinks/msvc_sink.h>
+#include <amo/logger/raw_daily_file_sink.h>
+
 #include <amo/format.hpp>
 #include <amo/string.hpp>
 
@@ -69,6 +71,9 @@
 #define log_separator ("--------------------------------------------------------------------------------\n")
 
 #define log_asterisk_separator ("********************************************************************************\n")
+
+
+
 
 namespace amo {
     enum flag {

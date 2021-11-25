@@ -414,6 +414,11 @@ namespace amo {
             int index = str.find_last_of('\\');
             
             if (index == -1) {
+                index = str.find_last_of('/');
+                
+            }
+            
+            if (index == -1) {
                 return path();
             }
             
@@ -783,7 +788,7 @@ namespace amo {
             }
             
             path workPath = work_path();
-            work_path().append(*this);
+            workPath.append(*this);
             *this = workPath;
             return *this;
         }
@@ -802,7 +807,7 @@ namespace amo {
             }
             
             path workPath = work_path();
-            work_path().append(*this);
+            workPath.append(*this);
             return workPath;
         }
         

@@ -19,6 +19,9 @@
     <Filter Include="amo\utility">
       <UniqueIdentifier>{34612973-573e-4800-8e03-a141d816ab58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="amo\logger">
+      <UniqueIdentifier>{1c614ffa-fadd-4f6b-aa0e-fa98dbb735f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="amo\functional.hpp">
@@ -266,6 +269,12 @@
     </ClInclude>
     <ClInclude Include="amo\json_helper.hpp">
       <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\logger\raw_file_helper.h">
+      <Filter>amo\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\logger\raw_daily_file_sink.h">
+      <Filter>amo\logger</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
