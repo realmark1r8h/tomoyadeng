@@ -276,5 +276,8 @@
     <ClInclude Include="amo\logger\raw_daily_file_sink.h">
       <Filter>amo\logger</Filter>
     </ClInclude>
+    <ClInclude Include="amo\app.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

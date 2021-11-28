@@ -13,6 +13,12 @@
 #include <amo/format.hpp>
 #include <amo/string/string_utils.hpp>
 
+#ifndef UTC_OFFSET
+#define UTC_OFFSET (60*60*8*1000)
+#endif
+
+
+
 namespace amo {
     using namespace std;
     
@@ -61,23 +67,28 @@ namespace amo {
     
     class date_time {
     public:
-    
-        date_time(time_t seconds_ = 0) : _seconds(seconds_) {
-            if (_seconds == 0) {
-                time(&_seconds);
-            }
-        }
-        date_time(struct tm time_tm) {
-            _seconds = mktime(&time_tm);
-        }
+        /*std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+        int64_t tt = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
+        std::chrono::system_clock::time_point pt;
+        pt += (std::chrono::milliseconds(tt));
+        
+        
+        
+        int64_t tt2 = std::chrono::duration_cast<amo::chrono::milliseconds>(pt.time_since_epoch()).count();
+        int64_t utc2 = amo::date_time().to_utc();
+        amo::date_time t1(tt2);
+        std::string ssss = t1.to_string();
+        std::string ssss2 = amo::date_time::from_utc(utc2).to_string();*/
+        
         date_time(int year_,
                   int month_ = 0,
                   int day = 0,
                   int hour_ = 0,
                   int minute_ = 0,
-                  int second_ = 0) {
+                  int second_ = 0,
+                  int ms = 0) {
             struct tm time_tm;
-            //time_t seconds_;
+            
             time_tm.tm_year = year_ - 1900;
             time_tm.tm_mon = month_ - 1;
             time_tm.tm_mday = day;
@@ -85,7 +96,19 @@ namespace amo {
             time_tm.tm_min = minute_;
             time_tm.tm_sec = second_;
             time_tm.tm_isdst = 0;
-            _seconds = mktime(&time_tm);
+            time_t t = mktime(&time_tm);
+            int64_t mill = t * 1000 + ms;
+            setSeconds(mill);
+        }
+        
+        date_time() {
+            amo::chrono::time_point<amo::chrono::system_clock> now = amo::chrono::system_clock::now();
+            int64_t ms = amo::chrono::duration_cast<amo::chrono::milliseconds>(now.time_since_epoch()).count();
+            setSeconds(ms);
+        }
+        
+        date_time(const int64_t & timestamp) {
+            setSeconds(timestamp);
         }
         
         date_time(const string& datetimeStr) {
@@ -101,7 +124,7 @@ namespace amo {
                        &time_tm.tm_sec);
                 time_tm.tm_year -= 1900;
                 time_tm.tm_mon -= 1;
-                _seconds = mktime(&time_tm);
+                setSeconds(mktime(&time_tm) * 1000LL);
             } else if (datetimeStr.length() == 8) {
                 struct tm time_tm;
                 sscanf(datetimeStr.c_str(),
@@ -114,11 +137,21 @@ namespace amo {
                 time_tm.tm_hour = 0;
                 time_tm.tm_min = 0;
                 time_tm.tm_sec = 0;
-                _seconds = mktime(&time_tm);
+                setSeconds(mktime(&time_tm) * 1000LL);
             } else {
-                _seconds = 0;
+                setSeconds(0);
             }
         }
+        
+        static date_time from_utc(const int64_t& timestamp) {
+            return date_time(timestamp + UTC_OFFSET);
+        }
+        
+        
+        int64_t to_utc() const {
+            return _seconds - UTC_OFFSET;
+        }
+        
         
         int seconds() const {
             return to_tm().tm_sec;
@@ -194,19 +227,19 @@ namespace amo {
         }
         
         date_time operator+(const day& day) {
-            return date_time(_seconds + 24 * 60 * 60 * day._day);
+            return date_time(getSeconds() + 1000 * 24 * 60 * 60 * day._day);
         }
         
         date_time operator+(const hour& hour_) {
-            return date_time(_seconds + 60 * 60 * hour_._hour);
+            return date_time(getSeconds() + 1000 *  60 * 60 * hour_._hour);
         }
         
         date_time operator+(const minute& minute_) {
-            return date_time(_seconds + 60 * minute_._minute);
+            return date_time(getSeconds() + 1000 * 60 * minute_._minute);
         }
         
         date_time operator+(const second& second_) {
-            return date_time(_seconds + second_._second);
+            return date_time(getSeconds() + 1000 * second_._second);
         }
         
         date_time operator-(const year& year_) {
@@ -234,47 +267,47 @@ namespace amo {
         }
         
         date_time operator-(const day& day) {
-            return date_time(_seconds - 24 * 60 * 60 * day._day);
+            return date_time(getSeconds() - 1000 * 24 * 60 * 60 * day._day);
         }
         
         date_time operator-(const hour& hour_) {
-            return date_time(_seconds - 60 * 60 * hour_._hour);
+            return date_time(getSeconds() - 1000 * 60 * 60 * hour_._hour);
         }
         
         date_time operator-(const minute& minute_) {
-            return date_time(_seconds - 60 * minute_._minute);
+            return date_time(getSeconds() - 1000 * 60 * minute_._minute);
         }
         
         date_time operator-(const second& second_) {
-            return date_time(_seconds - second_._second);
+            return date_time(getSeconds() - second_._second);
         }
         
         date_time add_seconds(const int& second_) {
-            return date_time(_seconds + second_);
+            return date_time(getSeconds() + second_ * 1000);
         }
         
         bool operator>(const date_time& rv) {
-            return _seconds > rv._seconds;
+            return getSeconds() > rv.getSeconds();
         }
         
         bool operator==(const date_time& rv) {
-            return _seconds == rv._seconds;
+            return getSeconds() == rv.getSeconds();
         }
         
         bool operator<(const date_time& rv) {
-            return _seconds < rv._seconds;
+            return getSeconds() < rv.getSeconds();
         }
         
         bool operator>=(const date_time& rv) {
-            return _seconds >= rv._seconds;
+            return getSeconds() >= rv.getSeconds();
         }
         
         bool operator<=(const date_time& rv) {
-            return _seconds <= rv._seconds;
+            return getSeconds() <= rv.getSeconds();
         }
         
         bool operator!=(const date_time& rv) {
-            return _seconds != rv._seconds;
+            return getSeconds() != rv.getSeconds();
             
         }
         
@@ -361,7 +394,8 @@ namespace amo {
         
             char buffer[20] = { 0 };
             struct tm time_tm;
-            localtime_s(&time_tm, &_seconds);
+            time_t t = getSeconds() / 1000;
+            localtime_s(&time_tm, &t);
             snprintf(buffer,
                      sizeof(buffer),
                      "%04d%02d%02d%02d%02d%02d",
@@ -376,17 +410,17 @@ namespace amo {
         
         struct tm to_tm()  const {
             struct tm time_tm;
-            
-            localtime_s(&time_tm, &_seconds);
+            time_t t = getSeconds() / 1000;
+            localtime_s(&time_tm, &t);
             return time_tm;
         }
         
         time_t to_time()  const {
-            return _seconds;
+            return getSeconds() / 1000;
         }
         
         int64_t timestamp() const {
-            return _seconds * 1000LL;
+            return getSeconds() ;
         }
         
         //static date_time from_string(const std::string& strDateTime) {
@@ -419,7 +453,7 @@ namespace amo {
         static date_time from_string(const std::string& str) {
             char *cha = (char*)str.data();										// 将string转换成char*。
             tm tm_;																// 定义tm结构体。
-            int year_, month_, day_, hour_, minute_, second_;							// 定义时间的各个int临时变量。
+            int year_, month_, day_, hour_, minute_, second_;					// 定义时间的各个int临时变量。
             sscanf(cha,
                    "%d-%d-%d %d:%d:%d",
                    &year_,
@@ -427,22 +461,29 @@ namespace amo {
                    &day_,
                    &hour_,
                    &minute_,
-                   &second_);														// 将string存储的日期时间，转换为int临时变量。
+                   &second_);													// 将string存储的日期时间，转换为int临时变量。
             tm_.tm_year = year_ - 1900;											// 年，由于tm结构体存储的是从1900年开始的时间，所以tm_year为int临时变量减去1900。
-            tm_.tm_mon = month_ - 1;												// 月，由于tm结构体的月份存储范围为0-11，所以tm_mon为int临时变量减去1。
+            tm_.tm_mon = month_ - 1;											// 月，由于tm结构体的月份存储范围为0-11，所以tm_mon为int临时变量减去1。
             tm_.tm_mday = day_;													// 日。
-            tm_.tm_hour = hour_;													// 时。
+            tm_.tm_hour = hour_;												// 时。
             tm_.tm_min = minute_;												// 分。
             
-            tm_.tm_sec = second_;												//秒
+            tm_.tm_sec = second_;												// 秒
             tm_.tm_isdst = 0;													// 非夏令时。
             time_t t_ = mktime(&tm_);											// 将tm结构体转换成time_t格式。
             return date_time(t_);												// 返回值。
         }
         
-        
+        int64_t getSeconds() const {
+            return _seconds;
+        }
+        void setSeconds(int64_t val) {
+            _seconds = val;
+        }
     private:
-        time_t _seconds;//自1970-01-01 08:00:00起的秒数;
+        int64_t _seconds;//自1970-01-01 08:00:00起的秒数;
+        
+        
     };
     
     

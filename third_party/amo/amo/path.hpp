@@ -646,7 +646,7 @@ namespace amo {
             return relative_path_to(left);
         }
         
-        path trim_right_c(const path& left) const  {
+        path trim_left_c(const path& left)  {
             return relative_path_to_c(left);
         }
         /*!
@@ -823,6 +823,11 @@ namespace amo {
             char tszModule[MAX_PATH + 1] = { 0 };
             ::GetCurrentDirectoryA(MAX_PATH, tszModule);
             return path(tszModule);
+        }
+        
+        static bool set_work_path_to_app_path() {
+            BOOL bOk = ::SetCurrentDirectoryA(fullAppDir().c_str());
+            return bOk != FALSE;
         }
         
         /*!

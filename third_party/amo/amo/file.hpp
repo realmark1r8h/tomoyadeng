@@ -149,6 +149,17 @@ namespace amo {
             return buffer.str();
         }
         
+        /*!
+         * @fn	int file::read(char* buffer, int nCount)
+         *
+         * @brief	不能读在正使用的文件。。.
+         *
+         * @param [in,out]	buffer	If non-null, the buffer.
+         * @param	nCount		  	Number of.
+         *
+         * @return	An int.
+         */
+        
         int read(char* buffer, int nCount) {
             if (!ifs) {
                 return 0;
@@ -164,6 +175,18 @@ namespace amo {
             
             
             return nBytes;
+        }
+        
+        int readsome(char* buffer, int nCount) {
+            if (!ifs) {
+                return 0;
+            }
+            
+            if (ifs->eof()) {
+                return 0;
+            }
+            
+            return ifs->readsome(buffer, nCount);
         }
         
         std::vector<int8_t> read_all_bytes() {

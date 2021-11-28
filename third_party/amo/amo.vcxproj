@@ -73,6 +73,7 @@
   <ItemGroup>
     <ClInclude Include="amo\amo.hpp" />
     <ClInclude Include="amo\any.hpp" />
+    <ClInclude Include="amo\app.hpp" />
     <ClInclude Include="amo\array.hpp" />
     <ClInclude Include="amo\ascii.hpp" />
     <ClInclude Include="amo\atomic.hpp" />

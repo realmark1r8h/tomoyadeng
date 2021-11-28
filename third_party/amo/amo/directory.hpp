@@ -31,7 +31,9 @@ namespace amo {
         bool create() {
             return m_path.create_directory();
         }
-        
+        amo::path get_path() const {
+            return m_path;
+        }
         // 清空目录下的所有子目录及文件，只留当前目录
         bool empty() {
             std::vector<amo::path> vec;

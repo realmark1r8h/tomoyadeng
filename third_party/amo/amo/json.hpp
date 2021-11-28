@@ -47,9 +47,9 @@ namespace amo {
                 return json();
             }
             
-            std::stringstream strem;
-            strem << ifs.rdbuf();
-            return json(strem.str());
+            std::stringstream stream;
+            stream << ifs.rdbuf();
+            return json(stream.str());
             
         }
         
@@ -413,6 +413,85 @@ namespace amo {
             return false;
         }
         
+        int8_t get_impl(int8_t)  const {
+            if (doc.IsNumber()) {
+                if (doc.IsDouble()) {
+                    return (int8_t)doc.GetDouble();
+                } else if (doc.IsFloat()) {
+                    return (int8_t)doc.GetFloat();
+                } else if (doc.IsInt()) {
+                    return (int8_t)doc.GetInt();
+                } else if (doc.IsInt64()) {
+                    return (int8_t)doc.GetInt64();
+                } else if (doc.IsUint()) {
+                    return (int8_t)doc.GetUint();
+                } else if (doc.IsUint64()) {
+                    return (int8_t)doc.GetUint64();
+                }
+            }
+            
+            return int8_t();
+        }
+        
+        uint8_t get_impl(uint8_t)  const {
+            if (doc.IsNumber()) {
+                if (doc.IsDouble()) {
+                    return (uint8_t)doc.GetDouble();
+                } else if (doc.IsFloat()) {
+                    return (uint8_t)doc.GetFloat();
+                } else if (doc.IsInt()) {
+                    return (uint8_t)doc.GetInt();
+                } else if (doc.IsInt64()) {
+                    return (uint8_t)doc.GetInt64();
+                } else if (doc.IsUint()) {
+                    return (uint8_t)doc.GetUint();
+                } else if (doc.IsUint64()) {
+                    return (uint8_t)doc.GetUint64();
+                }
+            }
+            
+            return uint8_t();
+        }
+        
+        int16_t get_impl(int16_t)  const {
+            if (doc.IsNumber()) {
+                if (doc.IsDouble()) {
+                    return (int16_t)doc.GetDouble();
+                } else if (doc.IsFloat()) {
+                    return (int16_t)doc.GetFloat();
+                } else if (doc.IsInt()) {
+                    return (int16_t)doc.GetInt();
+                } else if (doc.IsInt64()) {
+                    return (int16_t)doc.GetInt64();
+                } else if (doc.IsUint()) {
+                    return (int16_t)doc.GetUint();
+                } else if (doc.IsUint64()) {
+                    return (int16_t)doc.GetUint64();
+                }
+            }
+            
+            return int16_t();
+        }
+        uint16_t get_impl(uint16_t)  const {
+            if (doc.IsNumber()) {
+                if (doc.IsDouble()) {
+                    return (uint16_t)doc.GetDouble();
+                } else if (doc.IsFloat()) {
+                    return (uint16_t)doc.GetFloat();
+                } else if (doc.IsInt()) {
+                    return (uint16_t)doc.GetInt();
+                } else if (doc.IsInt64()) {
+                    return (uint16_t)doc.GetInt64();
+                } else if (doc.IsUint()) {
+                    return (uint16_t)doc.GetUint();
+                } else if (doc.IsUint64()) {
+                    return (uint16_t)doc.GetUint64();
+                }
+            }
+            
+            return uint16_t();
+        }
+        
         int get_impl(int)  const {
             if (doc.IsNumber()) {
                 if (doc.IsDouble()) {
@@ -684,7 +763,28 @@ namespace amo {
             return get<char>(key, default_val);
         }
         
-        int getInt(const std::string& key, int default_val = 0) const {
+        
+        int8_t getInt8(const std::string& key, int8_t default_val = 0) const {
+            return get<int8_t>(key, default_val);
+        }
+        
+        uint8_t getUint8(const std::string& key, uint8_t default_val = 0)  const {
+            return get<uint8_t>(key, default_val);
+        }
+        
+        
+        
+        int16_t getInt16(const std::string& key, int16_t default_val = 0) const {
+            return get<int16_t>(key, default_val);
+        }
+        
+        uint16_t getUint16(const std::string& key, uint16_t default_val = 0)  const {
+            return get<uint16_t>(key, default_val);
+        }
+        
+        
+        
+        int32_t getInt(const std::string& key, int32_t default_val = 0) const {
             return get<int32_t>(key, default_val);
         }
         uint32_t getUint(const std::string& key, uint32_t default_val = 0)  const {
@@ -696,11 +796,11 @@ namespace amo {
             return get<int64_t>(key, default_val);
         }
         
-        int64_t getUint64(const std::string& key, uint64_t default_val = 0) const {
+        uint64_t getUint64(const std::string& key, uint64_t default_val = 0) const {
             return get<uint64_t>(key, default_val);
         }
         
-        int64_t getDouble(const std::string& key, double default_val = 0.0) const {
+        double getDouble(const std::string& key, double default_val = 0.0) const {
             return get<double>(key, default_val);
         }
         
@@ -965,9 +1065,34 @@ namespace amo {
         }
         
         
+        
         void push_back(const bool& val) {
             rapidjson::Value v;
             v.SetBool(val);
+            doc.PushBack(v, get_allocator());
+        }
+        
+        void push_back(const int8_t& val) {
+            rapidjson::Value v;
+            v.SetInt(val);
+            doc.PushBack(v, get_allocator());
+        }
+        
+        void push_back(const uint8_t& val) {
+            rapidjson::Value v;
+            v.SetUint(val);
+            doc.PushBack(v, get_allocator());
+        }
+        
+        void push_back(const int16_t& val) {
+            rapidjson::Value v;
+            v.SetInt(val);
+            doc.PushBack(v, get_allocator());
+        }
+        
+        void push_back(const uint16_t& val) {
+            rapidjson::Value v;
+            v.SetUint(val);
             doc.PushBack(v, get_allocator());
         }
         
@@ -1005,6 +1130,12 @@ namespace amo {
         void push_back(const double& val) {
             rapidjson::Value v;
             v.SetDouble(val);
+            doc.PushBack(v, get_allocator());
+        }
+        
+        void push_back(const char* val) {
+            rapidjson::Value v;
+            v.SetString(val, get_allocator());
             doc.PushBack(v, get_allocator());
         }
         

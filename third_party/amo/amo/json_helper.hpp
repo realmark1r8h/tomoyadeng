@@ -45,6 +45,7 @@ static void jsonFromType(const T& val, amo::json& json, const std::string& key) 
 
 // ×¢²áºê ½áÊø
 #define ENTITY_ARGS_SET_END()\
+		this->onToJson(json); \
 		return json;\
 	}\
 	std::string toString() const {\
@@ -66,6 +67,7 @@ static void jsonFromType(const T& val, amo::json& json, const std::string& key) 
 
 
 #define ENTITY_ARGS_GET_END()\
+		ptr->onFromJson(json);\
 		return ptr;\
 	}
 
