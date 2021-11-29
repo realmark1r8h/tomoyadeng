@@ -225,7 +225,8 @@ bool ZipArchive::setEntryCompressionEnabled(const ZipEntry& entry, bool value) c
     }
     
     libzippp_uint16 compMode = value ? ZIP_CM_DEFLATE : ZIP_CM_STORE;
-    return zip_set_file_compression(zipHandle, entry.index, compMode, 0);
+    int result =  zip_set_file_compression(zipHandle, entry.index, compMode, 0);
+    return result != 0;
 }
 
 libzippp_int64 ZipArchive::getNbEntries(State state) const {
@@ -377,7 +378,7 @@ bool ZipArchive::setEntryComment(const ZipEntry& entry, const string& comment) c
         return false;
     }
     
-    bool result = zip_file_set_comment(zipHandle, entry.getIndex(), comment.c_str(), comment.size(), ZIP_FL_ENC_GUESS);
+    int result = zip_file_set_comment(zipHandle, entry.getIndex(), comment.c_str(), (zip_uint16_t)comment.size(), ZIP_FL_ENC_GUESS);
     return result == 0;
 }
 

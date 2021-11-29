@@ -285,7 +285,7 @@ namespace amo {
             $log(amo::cdevel << strRetval.c_str() << amo::endl;);
             strRetval.replace("\r", "");
             m_pResult->setResultMessage(strRetval.split("\n"));
-            OutputDebugStringA(strRetval.c_str());
+            //OutputDebugStringA(strRetval.c_str());
             //std::cout << strRetval.str() << std::endl;
             
             CloseHandle(hRead);

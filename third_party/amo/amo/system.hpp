@@ -116,14 +116,14 @@ namespace amo {
             
             time_t t99 = std::chrono::system_clock::to_time_t(pt);
             tm temptm = *localtime(&t99);
-            SYSTEMTIME systime = { 1900 + temptm.tm_year,
-                                   1 + temptm.tm_mon,
-                                   temptm.tm_wday,
-                                   temptm.tm_mday,
-                                   temptm.tm_hour,
-                                   temptm.tm_min,
-                                   temptm.tm_sec,
-                                   0
+            SYSTEMTIME systime = { (WORD)(1900 + temptm.tm_year),
+                                   (WORD)(1 + temptm.tm_mon),
+                                   (WORD)temptm.tm_wday,
+                                   (WORD)temptm.tm_mday,
+                                   (WORD)temptm.tm_hour,
+                                   (WORD)temptm.tm_min,
+                                   (WORD)temptm.tm_sec,
+                                   (WORD)0
                                  };
                                  
             HANDLE hToken;
@@ -171,14 +171,14 @@ namespace amo {
             
             time_t t99 = std::chrono::system_clock::to_time_t(pt);
             tm temptm = *localtime(&t99);
-            SYSTEMTIME systime = { 1900 + temptm.tm_year,
-                                   1 + temptm.tm_mon,
-                                   temptm.tm_wday,
-                                   temptm.tm_mday,
-                                   temptm.tm_hour,
-                                   temptm.tm_min,
-                                   temptm.tm_sec,
-                                   0
+            SYSTEMTIME systime = { (WORD)(1900 + temptm.tm_year),
+                                   (WORD)(1 + temptm.tm_mon),
+                                   (WORD)temptm.tm_wday,
+                                   (WORD)temptm.tm_mday,
+                                   (WORD)temptm.tm_hour,
+                                   (WORD)temptm.tm_min,
+                                   (WORD)temptm.tm_sec,
+                                   (WORD) 0
                                  };
                                  
             HANDLE hToken;
