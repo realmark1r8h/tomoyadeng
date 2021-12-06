@@ -83,7 +83,7 @@ namespace amo {
         {
             CefRefPtr<CefV8Value> className = target->GetValue("className");
             amo::string strClassList(className->GetStringValue().ToString(), true);
-            $log(amo::cdevel << strClassList.to_ansi() << amo::endl;);
+            //$log(amo::cdevel << strClassList.to_ansi() << amo::endl;);
             std::vector<amo::string> vec = strClassList.split(" ");
             
             for (auto& str : vec) {

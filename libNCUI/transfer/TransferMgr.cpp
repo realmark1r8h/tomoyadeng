@@ -35,6 +35,8 @@
 #include "transfer/SplashTransfer.h"
 #include "transfer/UIThreadTransfer.h"
 #include "transfer/RendererThreadTransfer.h"
+#include "transfer/ProcessTransfer.h"
+
 namespace amo {
 
     void BrowserTransferMgr::returnSyncResult(int nBrowserID,
@@ -104,6 +106,8 @@ namespace amo {
                     ClassTransfer::getUniqueTransfer<SplashTransfer>());
         addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<UIThreadTransfer>());
+        addTransfer(nBrowserID,
+                    ClassTransfer::getUniqueTransfer<ProcessTransfer>());
     }
     
     void RendererTransferMgr::returnSyncResult(int nBrowserID,

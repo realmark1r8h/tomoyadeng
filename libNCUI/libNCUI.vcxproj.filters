@@ -466,6 +466,7 @@
       <Filter>utility</Filter>
     </ClCompile>
     <ClCompile Include="scheme\ZipFileMnager.cpp" />
+    <ClCompile Include="transfer\ProcessTransfer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context\AppContext.h">
@@ -953,6 +954,9 @@
     </ClInclude>
     <ClInclude Include="utility\libzippp.h">
       <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="transfer\ProcessTransfer.h">
+      <Filter>transfer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

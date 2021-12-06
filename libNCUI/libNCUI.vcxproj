@@ -273,6 +273,7 @@
     <ClCompile Include="transfer\MouseTransfer.cpp" />
     <ClCompile Include="transfer\NativeWindowTransfer.cpp" />
     <ClCompile Include="transfer\NetTransfer.cpp" />
+    <ClCompile Include="transfer\ProcessTransfer.cpp" />
     <ClCompile Include="transfer\RendererThreadTransfer.cpp" />
     <ClCompile Include="transfer\RequestTransfer.cpp" />
     <ClCompile Include="transfer\ShellTransfer.cpp" />
@@ -427,6 +428,7 @@
     <ClInclude Include="transfer\MouseTransfer.h" />
     <ClInclude Include="transfer\NativeWindowTransfer.h" />
     <ClInclude Include="transfer\NetTransfer.h" />
+    <ClInclude Include="transfer\ProcessTransfer.h" />
     <ClInclude Include="transfer\RendererThreadTransfer.h" />
     <ClInclude Include="transfer\RequestTransfer.h" />
     <ClInclude Include="transfer\RunnableTransfer.hpp" />

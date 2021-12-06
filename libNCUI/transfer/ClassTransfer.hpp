@@ -10,7 +10,7 @@
 #include <amo/stdint.hpp>
 #include <amo/singleton.hpp>
 #include "transfer/Transfer.hpp"
-
+#include <amo/logger.hpp>
 
 
 
@@ -515,11 +515,12 @@ namespace amo {
         TransferRegister() {
             nBrowserID = -1;
             transferMap = ClassTransfer::getTransferMap();
-            
+            pLogger = amo::log::logger();
         }
         int nBrowserID;
         std::shared_ptr<amo::ClassTransfer::ClassTransferMap> transferMap;
         std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fnCallback;
+        std::shared_ptr<spdlog::logger> pLogger;
     };
     
 }

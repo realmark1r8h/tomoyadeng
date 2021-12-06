@@ -311,7 +311,7 @@ namespace amo {
             
         }
         
-        string to_string(const string& format = "") const {
+        std::string to_string(const string& format = "") const {
             /* char buffer[40] = { 0 };
              struct tm time_tm;
              localtime_s(&time_tm, &_seconds);
@@ -358,6 +358,7 @@ namespace amo {
             amo::string_utils::replace(str, "ss", "{02SECOND}");
             amo::string_utils::replace(str, "s", "{SECOND}");
             
+            amo::string_utils::replace(str, "S", "{02SECOND}");
             
             return str;
         }
@@ -387,6 +388,9 @@ namespace amo {
             
             map["SECOND"] = getString("%d", seconds());
             map["02SECOND"] = getString("%02d", seconds());
+            
+            map["MSEC"] = getString("%d", seconds());
+            map["03MSEC"] = getString("%03d", seconds());
             return map;
             
         }
@@ -471,7 +475,7 @@ namespace amo {
             tm_.tm_sec = second_;												// 秒
             tm_.tm_isdst = 0;													// 非夏令时。
             time_t t_ = mktime(&tm_);											// 将tm结构体转换成time_t格式。
-            return date_time(t_);												// 返回值。
+            return date_time(t_ * 1000LL);										// 返回值。
         }
         
         int64_t getSeconds() const {

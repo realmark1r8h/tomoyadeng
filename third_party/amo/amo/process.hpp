@@ -4,6 +4,7 @@
 #ifndef AMO_PROCESS_HPP__
 #define AMO_PROCESS_HPP__
 
+#include <WinSock2.h>
 #include <windows.h>
 #include <iostream>
 #include <string>
@@ -14,6 +15,9 @@
 #include <amo/logger.hpp>
 #include <amo/regular.hpp>
 #include "pipe.hpp"
+#include <amo/timer.hpp>
+#include <amo/date_time.hpp>
+#include <amo/system.hpp>
 
 
 namespace amo {
@@ -53,6 +57,20 @@ namespace amo {
                 }
                 
                 return shared_from_this();
+            }
+            
+            amo::json toJson() {
+                amo::json data;
+                data.set_array();
+                
+                for (auto& p : message) {
+                    data.push_back(p.to_utf8());
+                }
+                
+                amo::json json;
+                json.put("success", success);
+                json.put("data", data);
+                return json;
             }
         public:
             bool success;
@@ -150,6 +168,10 @@ namespace amo {
         
         
         bool start(const std::string args = "") {
+            m_timer.restart();
+            $log(amo::cdevel << log_separator << amo::endl;);
+            $log(amo::cdevel  << "process start: " << amo::date_time().to_string() << amo::endl;);
+            
             if (pi.hProcess != NULL) {
                 return false;
             }
@@ -160,17 +182,19 @@ namespace amo {
             }
             
             
-            
             sa.nLength = sizeof(SECURITY_ATTRIBUTES);
             sa.lpSecurityDescriptor = NULL;
             sa.bInheritHandle = TRUE;
             
             
             if (!CreatePipe(&hRead, &hWrite, &sa, 0)) {
+                $log(amo::cerr << "process error£º" << amo::system::getLastErrorMessage() << amo::endl;);
                 return false;
             }
             
             std::string command = makeCommand();
+            
+            $log(amo::cdevel << "process command£º" << command << amo::endl;);
             STARTUPINFOA si;
             
             si.cb = sizeof(STARTUPINFO);
@@ -278,11 +302,13 @@ namespace amo {
                 }
                 
                 std::string maybeU8String(buffer, bytesRead);
+                amo::string ansiStr(maybeU8String, m_bUTF8);
+                $log(amo::cdevel << ansiStr.str() << amo::endl;);
                 
-                strRetval.append(amo::string(maybeU8String, m_bUTF8));
+                strRetval.append(ansiStr);
             }
             
-            $log(amo::cdevel << strRetval.c_str() << amo::endl;);
+            //$log(amo::cdevel << strRetval.c_str() << amo::endl;);
             strRetval.replace("\r", "");
             m_pResult->setResultMessage(strRetval.split("\n"));
             //OutputDebugStringA(strRetval.c_str());
@@ -290,12 +316,16 @@ namespace amo {
             
             CloseHandle(hRead);
             hWrite = hRead = NULL;
+            $log(amo::cdevel << "process completed£º" << amo::date_time().to_string() << "£¬used£º" << m_timer.elapsed()  << amo::endl;);
+            $log(amo::cdevel << log_separator << amo::endl;);
             return m_pResult;
             
         }
+        
         bool isUTF8() const {
             return m_bUTF8;
         }
+        
         void setUTF8(bool val) {
             m_bUTF8 = val;
         }
@@ -371,6 +401,7 @@ namespace amo {
         
         
         static std::vector<int> find_pid_by_process_name(const std::string& name) {
+            amo::timer t;
             std::vector<int> retval;
             using namespace amo;
             std::shared_ptr<amo::process> pProcess(new process("cmd.exe"));
@@ -391,6 +422,7 @@ namespace amo {
             std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
             
             if (message.empty()) {
+                SetLastError(0);
                 return retval;
             }
             
@@ -416,6 +448,8 @@ namespace amo {
                 
             }
             
+            $log(amo::cdevel << "find pid by name [" << name << "] complete: " << t.elapsed() << "ms" <<  amo::endl);
+            SetLastError(0);
             return retval;
             
         }
@@ -544,6 +578,8 @@ namespace amo {
         bool m_bUTF8;
         
         amo::path m_workPath;
+        
+        amo::timer m_timer;
         
     };
 }

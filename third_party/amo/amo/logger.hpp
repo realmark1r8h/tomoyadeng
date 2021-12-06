@@ -20,8 +20,20 @@
 #include <amo/format.hpp>
 #include <amo/string.hpp>
 
+
+#define file_orient (std::string("[") + amo::short_file_name(__FILE__) + std::string(":") + amo::long_to_string(__LINE__) + "] ")
+
+#define func_orient (std::string("[") + std::string(__FUNCTION__) + std::string(":") + amo::long_to_string(__LINE__) + "] ")
+
+#define log_separator ("--------------------------------------------------------------------------------\n")
+
+#define log_asterisk_separator ("********************************************************************************\n")
+
+
+
+
 #ifndef AMO_LOG_TRACE_OFF
-#define $cdevel(format, ...) amo::cdevel(format, ##__VA_ARGS__)
+#define $cdevel(format, ...) amo::cdevel(std::string() + ##format, ##__VA_ARGS__)
 #else
 #define $cdevel(format, ...)
 #endif
@@ -40,19 +52,19 @@
 
 
 #ifndef AMO_LOG_WARN_OFF
-#define $cwarn(format, ...) amo::cwarn(format, ##__VA_ARGS__)
+#define $cwarn(format, ...) amo::cwarn((func_orient + ##format).c_str(), ##__VA_ARGS__)
 #else
 #define $cwarn(format, ...)
 #endif
 
 #ifndef AMO_LOG_ERR_OFF
-#define $cerr(format, ...) amo::cerr(format, ##__VA_ARGS__)
+#define $cerr(format, ...) amo::cerr((func_orient + ##format).c_str(), ##__VA_ARGS__)
 #else
 #define $cerr(format, ...)
 #endif
 
 #ifndef AMO_LOG_CRITICAL_OFF
-#define $cfatal(format, ...) amo::cfatal(format, ##__VA_ARGS__)
+#define $cfatal(format, ...) amo::cfatal((func_orient + ##format).c_str(), ##__VA_ARGS__)
 #else
 #define $cfatal(format, ...)
 #endif
@@ -62,17 +74,6 @@
 #else
 #define $log(...)
 #endif
-
-
-#define file_orient (std::string("[") + amo::short_file_name(__FILE__) + std::string(":") + amo::long_to_string(__LINE__) + "] ")
-
-#define func_orient (std::string("[") + std::string(__FUNCTION__) + std::string(":") + amo::long_to_string(__LINE__) + "] ")
-
-#define log_separator ("--------------------------------------------------------------------------------\n")
-
-#define log_asterisk_separator ("********************************************************************************\n")
-
-
 
 
 namespace amo {
@@ -128,26 +129,62 @@ namespace amo {
         }
         
         static void set_level(amo::log::level::level_enum l) {
+            auto pLog = logger();
+            
+            if (!pLog) {
+                return;
+            }
+            
             logger()->set_level(l);
         }
         
         static bool should_log(amo::log::level::level_enum l) {
+            auto pLog = logger();
+            
+            if (!pLog) {
+                return false;
+            }
+            
             return logger()->should_log(l);
         }
         
         static amo::log::level::level_enum get_level() {
+            auto pLog = logger();
+            
+            if (!pLog) {
+                return level::off;
+            }
+            
             return logger()->level();
         }
         
         static const std::string& name() {
+            auto pLog = logger();
+            
+            if (!pLog) {
+                return "";
+            }
+            
             return logger()->name();
         }
         
         static void set_pattern(const std::string& str) {
+            auto pLog = logger();
+            
+            if (!pLog) {
+                return ;
+            }
+            
             logger()->set_pattern(str);
         }
         
         static void write(const std::string& str) {
+            auto pLog = logger();
+            
+            if (!pLog) {
+                return;
+            }
+            
             logger()->log(spdlog::level::level_enum::critical, str);
         }
         
@@ -170,6 +207,20 @@ namespace amo {
             }
         }
         
+        static bool register_logger(std::shared_ptr<spdlog::logger> ptr) {
+            if (!ptr) {
+                return false;
+            }
+            
+            auto p = spdlog::get(ptr->name());
+            
+            if (p == ptr) {
+                return true;
+            }
+            
+            spdlog::register_logger(ptr);
+            return true;
+        }
         static void finalize() {
             spdlog::drop_all();
         }
@@ -182,7 +233,7 @@ namespace amo {
             }
             
             template <typename... Args>
-            inline void operator()(const char* fmt, const Args&... args) {
+            inline void operator()(const std::string& fmt, const Args&... args) {
                 if (!m_logger) {
                     m_logger = logger();
                 }
@@ -191,7 +242,7 @@ namespace amo {
                     return;
                 }
                 
-                m_logger->log(m_level, fmt, args...);
+                m_logger->log(m_level, fmt.c_str(), args...);
             }
             
             unit& operator << (amo::flag val) {

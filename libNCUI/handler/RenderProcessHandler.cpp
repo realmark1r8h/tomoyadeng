@@ -37,61 +37,61 @@ namespace amo {
             CefRefPtr<CefProcessMessage> message) {
         assert(source_process == PID_BROWSER);
         std::string strMessageName = message->GetName();
-        $log(
-            amo::cdevel << func_orient << "From Browser : " << strMessageName << amo::endl;
-            amo::string message_name(message->GetName().ToString(), true);
-            
-        if (message_name != MSG_LOG_MESSAGE) {
+        /* $log(
+             amo::cdevel << func_orient << "From Browser : " << strMessageName << amo::endl;
+             amo::string message_name(message->GetName().ToString(), true);
         
-        amo::cdevel << func_orient << message_name << "\n" << log_asterisk_separator;
+         if (message_name != MSG_LOG_MESSAGE) {
         
-        for (size_t i = 0; i < message->GetArgumentList()->GetSize(); ++i) {
-                CefValueType value_type = message->GetArgumentList()->GetType(i);
-                
-                switch (value_type) {
-                
-                case 	VTYPE_NULL:
-                    amo::cdevel << i << ".\t VTYPE_NULL\t\t ( " << "NULL" << " )\n";
-                    break;
-                    
-                case 	VTYPE_BOOL:
-                    amo::cdevel << i << ".\t VTYPE_BOOL\t\t ( " << message->GetArgumentList()->GetBool(i) << " )\n";
-                    break;
-                    
-                case 	VTYPE_INT:
-                    amo::cdevel << i << ".\t VTYPE_INT\t\t ( " << message->GetArgumentList()->GetInt(i) << " )\n";
-                    break;
-                    
-                case 	VTYPE_DOUBLE:
-                    amo::cdevel << i << ".\t VTYPE_DOUBLE\t ( " << message->GetArgumentList()->GetDouble(i) << " )\n";
-                    break;
-                    
-                case 	VTYPE_STRING:
-                    amo::cdevel << i << ".\t VTYPE_STRING\t ( " << amo::string(message->GetArgumentList()->GetString(i).ToString(), true).str() << " )\n";
-                    break;
-                    
-                case 	VTYPE_BINARY:
-                    amo::cdevel << i << ".\t VTYPE_BINARY\t ( " << "NO VIEW " << " )\n";
-                    break;
-                    
-                case 	VTYPE_DICTIONARY:
-                    amo::cdevel << i << ".\t VTYPE_DICTIONARY\t ( " << "NO VIEW " << " )\n";
-                    break;
-                    
-                case 	VTYPE_LIST:
-                    amo::cdevel << i << ".\t VTYPE_LIST\t\t ( " << " NO VIEW" << " )\n";
-                    break;
-                    
-                case	VTYPE_INVALID:
-                default:
-                    amo::cdevel << i << ".\t VTYPE_INVALID\t ( " << " NO VIEW" << " )\n";
-                    break;
-                    
-                }
-            }
-        }
-        amo::cdevel << log_asterisk_separator << amo::endl;
-        );
+         amo::cdevel << func_orient << message_name << "\n" << log_asterisk_separator;
+        
+         for (size_t i = 0; i < message->GetArgumentList()->GetSize(); ++i) {
+                 CefValueType value_type = message->GetArgumentList()->GetType(i);
+        
+                 switch (value_type) {
+        
+                 case 	VTYPE_NULL:
+                     amo::cdevel << i << ".\t VTYPE_NULL\t\t ( " << "NULL" << " )\n";
+                     break;
+        
+                 case 	VTYPE_BOOL:
+                     amo::cdevel << i << ".\t VTYPE_BOOL\t\t ( " << message->GetArgumentList()->GetBool(i) << " )\n";
+                     break;
+        
+                 case 	VTYPE_INT:
+                     amo::cdevel << i << ".\t VTYPE_INT\t\t ( " << message->GetArgumentList()->GetInt(i) << " )\n";
+                     break;
+        
+                 case 	VTYPE_DOUBLE:
+                     amo::cdevel << i << ".\t VTYPE_DOUBLE\t ( " << message->GetArgumentList()->GetDouble(i) << " )\n";
+                     break;
+        
+                 case 	VTYPE_STRING:
+                     amo::cdevel << i << ".\t VTYPE_STRING\t ( " << amo::string(message->GetArgumentList()->GetString(i).ToString(), true).str() << " )\n";
+                     break;
+        
+                 case 	VTYPE_BINARY:
+                     amo::cdevel << i << ".\t VTYPE_BINARY\t ( " << "NO VIEW " << " )\n";
+                     break;
+        
+                 case 	VTYPE_DICTIONARY:
+                     amo::cdevel << i << ".\t VTYPE_DICTIONARY\t ( " << "NO VIEW " << " )\n";
+                     break;
+        
+                 case 	VTYPE_LIST:
+                     amo::cdevel << i << ".\t VTYPE_LIST\t\t ( " << " NO VIEW" << " )\n";
+                     break;
+        
+                 case	VTYPE_INVALID:
+                 default:
+                     amo::cdevel << i << ".\t VTYPE_INVALID\t ( " << " NO VIEW" << " )\n";
+                     break;
+        
+                 }
+             }
+         }
+         amo::cdevel << log_asterisk_separator << amo::endl;
+         );*/
         
         
         

@@ -132,5 +132,5 @@ namespace amo {
     
 }
 
-#endif // AMO_UTILITY_HPP__
+#endif // AMO_UTILITY_HPP2__
 

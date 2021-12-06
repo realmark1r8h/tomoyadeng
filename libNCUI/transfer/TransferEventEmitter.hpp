@@ -7,6 +7,7 @@
 #include <memory>
 #include <functional>
 #include "transfer/TransferEventInfo.hpp"
+#include <amo/logger.hpp>
 
 namespace amo {
     class TransferEventEmitter
@@ -45,6 +46,7 @@ namespace amo {
             }
             
             if (m_fnEventCallback) {
+				$cdevel(info.toString().c_str());
                 return m_fnEventCallback(info);
             }
             

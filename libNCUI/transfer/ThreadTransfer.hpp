@@ -52,6 +52,10 @@ namespace amo {
             m_nBrowserID = m_nFrameID = 0;
             m_isPausedThread = false;
             m_pLooperExecutor = getWorkThread();
+            m_pLooperExecutor->set_exception_callback(
+                std::bind(&ThreadTransfer::onExecption,
+                          this,
+                          std::placeholders::_1));
             m_weakupData = Undefined();
             
         }
@@ -61,6 +65,11 @@ namespace amo {
             m_nBrowserID = m_nFrameID = 0;
             m_isPausedThread = false;
             m_pLooperExecutor = getWorkThread();
+            m_pLooperExecutor->set_exception_callback(
+                std::bind(&ThreadTransfer::onExecption,
+                          this,
+                          std::placeholders::_1));
+            m_weakupData = Undefined();
         }
         
         static std::shared_ptr<amo::looper_executor>& getWorkThread() {
@@ -287,7 +296,14 @@ namespace amo {
             return !m_isPausedThread;
         }
         
-        
+    protected:
+        bool onExecption(const std::string& ansiStr) {
+            TransferEventInfo info;
+            info.name = "execption";
+            info.data = amo::string(ansiStr, false).to_utf8();
+            triggerEvent(info);
+            return true;
+        }
         
     protected:
     

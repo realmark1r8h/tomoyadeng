@@ -301,14 +301,14 @@ namespace amo {
         }
         
         auto sink1 = std::make_shared<spdlog::sinks::msvc_sink_mt>();
-        /*  auto sink2 = std::make_shared<spdlog::sinks::daily_file_sink_mt>("logfile", "txt", 23, 59);
-          sink2->set_level(amo::log::level::trace);*/
-        /* auto sink3 = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-        				"logfile", SPDLOG_FILENAME_T("txt"), 1048576 * 5, 3);*/
-        
+        /*auto sink2 = std::make_shared<spdlog::sinks::daily_file_sink_mt>("logfile", "txt", 23, 59);
+        sink2->set_level(amo::log::level::trace);*/
+        auto sink3 = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+                         "logfile", SPDLOG_FILENAME_T("txt"), 1048576 * 15, 3);
+                         
         amo::log::add_sink(sink1);
         //amo::log::add_sink(sink2);
-        //amo::log::add_sink(sink3);
+        amo::log::add_sink(sink3);
         amo::log::set_level(amo::log::level::trace);
         amo::log::set_pattern("[%Y-%m-%d %H:%M:%S][%l] %v");
         
@@ -422,9 +422,6 @@ namespace amo {
                 iter->second->onBeforeRelease();
                 iter = classMap->erase(iter);
             }
-            
-            
-            
         }
         
         manager.reset();

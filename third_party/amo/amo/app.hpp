@@ -9,6 +9,7 @@
 #include <amo/path.hpp>
 #include <amo/string.hpp>
 #include <tchar.h>
+#include <amo/process.hpp>
 
 namespace amo {
     class app {
@@ -106,6 +107,37 @@ namespace amo {
             return false;
         }
         
+        /**
+         * @fn	bool app::restart(int delay = 3)
+         *
+         * @brief	重启当前程序.
+         *
+         * @param	delay	(Optional) 延时（秒）.
+         *
+         * @return	true if it succeeds, false if it fails.
+         */
+        
+        bool restart(int delay = 3) {
+            amo::string ss  = amo::path::getFullExeName();
+            
+            // 只能重启自己，目前
+            if (ss != m_appPath) {
+                return false;
+            }
+            
+            if (delay < 1) {
+                delay = 1;
+            }
+            
+            std::shared_ptr<amo::process> pProcess(new process("cmd.exe /c ping 127.0.0.1 -n "));
+            pProcess->addArgs(amo::string::from_number(delay).c_str());
+            pProcess->addArgs(" -w 1000 > nul & start ");
+            pProcess->show(false);
+            pProcess->start(m_appPath.c_str());
+            // 退出程序
+            //exit(0);
+            return true;
+        }
     private:
         amo::string m_appPath;
     };

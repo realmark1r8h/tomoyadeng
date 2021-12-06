@@ -103,7 +103,7 @@ namespace amo {
                     break;
                 }
                 
-                $log(amo::cdevel << func_orient << "数据读取成功：：" << std::string((char*)msg.data()) << amo::endl;);
+                //$log(amo::cdevel << func_orient << "数据读取成功：：" << std::string((char*)msg.data()) << amo::endl;);
                 return Any(value_type, std::string((char*)msg.data()));		// 返回Any类型
             } while (false);
             
@@ -276,7 +276,7 @@ namespace amo {
             const IPCMessage::SmartType&  t) {
             std::unique_lock<std::recursive_mutex> lock(m_mutexClient);
             
-            $log(amo::cdevel << func_orient << "开始写入数据：" << t->toJson().to_string() << amo::endl;);
+            //$log(amo::cdevel << func_orient << "开始写入数据：" << t->toJson().to_string() << amo::endl;);
             
             do {
                 int nCount = 0;
@@ -326,7 +326,7 @@ namespace amo {
                     break;
                 }
                 
-                $log(amo::cdevel << func_orient << "数据写入成功：" << t->toJson().to_string() << amo::endl;);
+                //$log(amo::cdevel << func_orient << "数据写入成功：" << t->toJson().to_string() << amo::endl;);
                 return true;
             } while (false);
             
@@ -556,7 +556,7 @@ namespace amo {
             $log(amo::cdevel << func_orient << amo::endl;);
             
             if (!isReady()) {
-                $log(amo::cdevel << func_orient << "Not Ready" << amo::endl;);
+                //$log(amo::cdevel << func_orient << "Not Ready" << amo::endl;);
                 return Nothing();
             }
             
@@ -571,7 +571,7 @@ namespace amo {
                 IPCMessage::SmartType msg(new amo::IPCMessage());
                 *msg = any;
                 m_fnSyncMessageCallback(getBrowserID(), msg);
-                $log(amo::cdevel << __FUNCTION__ << ", " << msg->getID() << amo::endl;);
+                //$log(amo::cdevel << __FUNCTION__ << ", " << msg->getID() << amo::endl;);
                 return Nothing();
             } else if (any.type() == AnyValueType<IPCResult>::value) {
                 return any;
@@ -626,7 +626,7 @@ namespace amo {
             }
             
             R ret = iter->second->exchange<R>();
-            $log(amo::cdevel << "管道：：" << m_nN << ", "  << ret << amo::endl;);
+            //$log(amo::cdevel << "管道：：" << m_nN << ", "  << ret << amo::endl;);
             return ret;
         }
         
@@ -649,7 +649,7 @@ namespace amo {
             }
             
             Any ret = iter->second->exchange<Any>();
-            $log(amo::cdevel << "管道：：" << m_nN << ", " << ret.value() << amo::endl;);
+            //$log(amo::cdevel << "管道：：" << m_nN << ", " << ret.value() << amo::endl;);
             return ret;
         }
         
@@ -769,7 +769,7 @@ namespace amo {
                 if (any.type() == AnyValueType<amo::IPCResult>::value) {
                     removeCache(id, message_id);
                     amo::IPCResult result = any;
-                    $log(amo::cdevel << __FUNCTION__ << ", " <<  result.getID() << amo::endl;);
+                    //$log(amo::cdevel << __FUNCTION__ << ", " <<  result.getID() << amo::endl;);
                     return result.getResult();
                 }
                 
@@ -915,7 +915,7 @@ namespace amo {
                 
                 insertCache(id, result.getID(), ret);
                 
-                $log(amo::cdevel << func_orient << "处理到其他结果" << amo::endl;);
+                //$log(amo::cdevel << func_orient << "处理到其他结果" << amo::endl;);
                 // 一直处理，直到管道中没有消息为止
                 tryProcessMessage(id);
             } else if (ret.type() != AnyValueType<Nothing>::value) {

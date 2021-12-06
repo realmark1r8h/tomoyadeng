@@ -23,6 +23,7 @@ using namespace amo;\
 ClassTransfer::getTransferMap() = info->transferMap;\
 int nBrowserID = info->nBrowserID;\
 auto fn = info->fnCallback;\
+amo::log::register_logger(info->pLogger);\
 
 #endif
 
@@ -36,13 +37,14 @@ auto fn = info->fnCallback;\
 	\
 }\
 
+#endif
+
 #ifndef AMO_CLASS_REGISTER_END
 #define AMO_CLASS_REGISTER_END()\
 return true;
 #endif
 
 
-#endif
 
 // JSº¯Êý×¢²áºê ¿ªÊ¼
 #define AMO_CEF_MESSAGE_TRANSFER_BEGIN(ClassName, BaseClassName)\

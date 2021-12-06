@@ -71,6 +71,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="amo\adb.hpp" />
     <ClInclude Include="amo\amo.hpp" />
     <ClInclude Include="amo\any.hpp" />
     <ClInclude Include="amo\app.hpp" />

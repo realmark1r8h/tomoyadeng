@@ -75,6 +75,7 @@ namespace amo {
         typedef std::priority_queue<runnable, std::vector<runnable>, std::greater<runnable> > handler;
         typedef amo::chrono::time_point<amo::chrono::system_clock> time_point;
         typedef amo::function<void()> executor;
+        
     public:
         const static uint64_t empty_queue = 4070880000000;
     public:
@@ -200,11 +201,23 @@ namespace amo {
                 }
             } catch (std::exception& e) {
                 amo::cfatal("[{0}][{1}]{2}", m_thread_id, m_thread_name, e.what());
+                
+                if (get_exception_callback()) {
+                    m_fn_exception_cb(e.what());
+                }
+                
                 /*m_running = false;
                 return;*/
             }
         }
         
+        std::function<bool(const std::string&)> get_exception_callback() const {
+            return m_fn_exception_cb;
+        }
+        void set_exception_callback(std::function<bool(const std::string&)> val) {
+            m_fn_exception_cb = val;
+            
+        }
         void set_name(const std::string& thread_name) {
             m_thread_name = std::string(" [") + thread_name + std::string("] ");
         }
@@ -299,6 +312,7 @@ namespace amo {
         int m_buffer_size;
         std::string m_thread_name;
         time_point m_empty_queue_time;											//!< The empty queue time
+        std::function<bool(const std::string&)> m_fn_exception_cb;				//!< 线程抛出异常时回调
     };
     
     

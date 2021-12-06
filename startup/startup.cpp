@@ -5,10 +5,6 @@
 #include "startup.h"
 
 
-
-
-
-
 #include "stdafx.h"
 
 #include <iostream>
@@ -118,19 +114,18 @@ public:
         strSplashSettings = strLoader.load(111);
         
         
-        bool bManifest = (strAppSettings.find("\"manifest\":true") != -1);
+        m_bManifest = (strAppSettings.find("\"manifest\":true") != -1);
         
         
         // 读取磁盘中的配置文件
-        if (bManifest) {
-        
-        
-        
+        if (m_bManifest) {
             amo::path p(amo::path::getExeDir());
             p.append("manifest.json");
             
             
             if (p.file_exists()) {
+                OutputDebugStringA("读取manifest.json\n");
+                //$cdevel("读取manifest.json");
                 std::ifstream ifs(p.c_str());
                 std::stringstream buffer;
                 buffer << ifs.rdbuf();
@@ -138,8 +133,17 @@ public:
                 manifestJson = amo::json(strJson);
                 
                 if (!manifestJson.is_valid()) {
+                    OutputDebugStringA("manifest.json文件格式错误\n");
+                    //$cwarn("manifest.json文件格式错误");
                     manifestJson = amo::json();
                 }
+                
+                OutputDebugStringA(strJson.c_str());
+                
+                //$cdevel(strJson.c_str());
+            } else {
+                OutputDebugStringA("manifest.json不存在");
+                //$cdevel("manifest.json不存在");
             }
         }
         
@@ -295,7 +299,7 @@ public:
                                         10000));
                                         
         } catch (std::exception& e) {
-			std::cout << e.what() << std::endl;
+            std::cout << e.what() << std::endl;
             MessageBox(NULL, _T("内创建失败"), _T(""), MB_OK);
         }
         

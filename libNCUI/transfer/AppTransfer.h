@@ -31,6 +31,7 @@ namespace amo {
         
         
         Any getConfig(IPCMessage::SmartType msg);
+        
         Any setConfig(IPCMessage::SmartType msg);
         
         /*!
@@ -177,9 +178,19 @@ namespace amo {
         
         Any setAutoRun(IPCMessage::SmartType msg);
         
-        void SetAutoRun(bool bAutoRun);
+        /**
+         * @fn	bool AppTransfer::restart(IPCMessage::SmartType msg);
+         *
+         * @brief	重启当前程序.
+         *
+         * @param	msg	The message.
+         *
+         * @return	true if it succeeds, false if it fails.
+         */
         
-        bool GetAutoRun();
+        bool restart(IPCMessage::SmartType msg);
+        
+        
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(AppTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getConfig, TransferFuncStatic | TransferExecSync)
@@ -203,6 +214,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(quit, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(exit, TransferFuncStatic)
         
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(restart, TransferFuncStatic)
         
         AMO_CEF_MESSAGE_TRANSFER_END()
         

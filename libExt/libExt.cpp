@@ -14,6 +14,7 @@
 
 LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {
 
+
     AMO_CLASS_REGISTER_BEGIN()
     AMO_CLASS_REGISTER(FileTransfer)
     AMO_CLASS_REGISTER(Base64Transfer)

@@ -1,7 +1,9 @@
+
 #ifndef AMO_UTILITY_HPP__
 #define AMO_UTILITY_HPP__
 
-
+#include <algorithm>
+#include <cctype>
 
 namespace amo {
     inline int isnan(double x) {
@@ -23,7 +25,50 @@ namespace amo {
         return (vec.size() > 0) ? &vec[0] : 0;
     }
     
-    
+    static std::string bytes_to_hex_string(const unsigned char* bytes, int buffer_size, bool to_upper = false) {
+        std::string ret;
+        
+        for (int i = 0; i < buffer_size; ++i) {
+            unsigned char p = bytes[i];
+            int val = p;
+            
+            char high = (p & 0xf0) >> 4;
+            
+            if (high < 10) {
+                high += 0x30;
+            } else {
+                high += 0x61 - 10;
+            }
+            
+            char low = p & 0xf;
+            
+            if (low < 10) {
+                low += 0x30;
+            } else {
+                low += 0x61 - 10;
+            }
+            
+            
+            
+            
+            /*  std::cout << high << std::endl;
+              std::cout << low << std::endl;*/
+            ret += high;
+            ret += low;
+        }
+        
+        if (to_upper) {
+            std::transform(ret.begin(), ret.end(), ret.begin(), [](unsigned char c) {
+                return std::toupper(c);
+            });
+        } else {
+            std::transform(ret.begin(), ret.end(), ret.begin(), [](unsigned char c) {
+                return std::tolower(c);
+            });
+        }
+        
+        return ret;
+    }
     
     template <typename IntegerType>
     static IntegerType bytes_to_int(const unsigned char* bytes, bool littleEndian = true) {

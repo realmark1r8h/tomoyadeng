@@ -115,7 +115,7 @@ namespace amo {
             pt += (std::chrono::milliseconds(utc_timestamp));
             
             time_t t99 = std::chrono::system_clock::to_time_t(pt);
-            tm temptm = *localtime(&t99);
+            tm temptm = *::localtime(&t99);
             SYSTEMTIME systime = { (WORD)(1900 + temptm.tm_year),
                                    (WORD)(1 + temptm.tm_mon),
                                    (WORD)temptm.tm_wday,
@@ -170,7 +170,7 @@ namespace amo {
             pt += (std::chrono::milliseconds(timestamp));
             
             time_t t99 = std::chrono::system_clock::to_time_t(pt);
-            tm temptm = *localtime(&t99);
+            tm temptm = *::localtime(&t99);
             SYSTEMTIME systime = { (WORD)(1900 + temptm.tm_year),
                                    (WORD)(1 + temptm.tm_mon),
                                    (WORD)temptm.tm_wday,

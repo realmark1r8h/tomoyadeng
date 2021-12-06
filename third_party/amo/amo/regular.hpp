@@ -16,7 +16,7 @@ namespace amo {
         }
         
         bool is_number() {
-            return  std::regex_match(m_str, std::regex("^\\d+$"));
+            return  std::regex_match(m_str, std::regex("^(-|\\+)?\\d+$"));
         }
         
         bool is_qq_number() {
