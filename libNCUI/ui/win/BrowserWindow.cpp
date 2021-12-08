@@ -95,6 +95,8 @@ namespace amo {
             amo::cdevel << p.to_ansi() << amo::endl;
         }
         
+        amo::loader loader;
+        bool bbb = loader.load(amo::path::fullPathInAppDir("renderer_modules\\libExt.dll"));
     }
     void BrowserWindow::InitWindow() {
     
