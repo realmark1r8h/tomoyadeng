@@ -52,7 +52,7 @@
 
 
 #ifndef AMO_LOG_WARN_OFF
-#define $cwarn(format, ...) amo::cwarn((func_orient + ##format).c_str(), ##__VA_ARGS__)
+#define $cwarn(format, ...) amo::cwarn((std::string() + ##format).c_str(), ##__VA_ARGS__)
 #else
 #define $cwarn(format, ...)
 #endif
@@ -188,7 +188,7 @@ namespace amo {
             logger()->log(spdlog::level::level_enum::critical, str);
         }
         
-        static bool initialize() {
+        static bool initialize(bool stdlog = false, bool msvclog = false) {
             try {
                 if (logger()) {
                     return true;
@@ -199,6 +199,19 @@ namespace amo {
                 if (!ptr) {
                     return false;
                 }
+                
+                if (stdlog) {
+                    auto sink1 = std::make_shared<spdlog::sinks::stdout_sink_mt>();			// 标准输出
+                    add_sink(sink1);
+                }
+                
+                if (msvclog) {
+                    auto sink2 = std::make_shared<spdlog::sinks::msvc_sink_mt>();			// MSVC 输出
+                    add_sink(sink2);
+                }
+                
+                set_level(amo::log::level::trace);
+                set_pattern("[%Y-%m-%d %H:%M:%S.%e][%l] %v");
                 
                 return true;
             } catch (const spdlog::spdlog_ex& ex) {

@@ -282,5 +282,8 @@
     <ClInclude Include="amo\adb.hpp">
       <Filter>amo</Filter>
     </ClInclude>
+    <ClInclude Include="amo\shell.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

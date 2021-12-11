@@ -129,6 +129,7 @@
     <ClInclude Include="amo\registry.hpp" />
     <ClInclude Include="amo\regular.hpp" />
     <ClInclude Include="amo\sha1.hpp" />
+    <ClInclude Include="amo\shell.hpp" />
     <ClInclude Include="amo\signals2.hpp" />
     <ClInclude Include="amo\sigsolt.hpp" />
     <ClInclude Include="amo\singleton.hpp" />

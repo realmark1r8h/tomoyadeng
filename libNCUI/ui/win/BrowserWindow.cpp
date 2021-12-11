@@ -38,6 +38,7 @@
 #include "settings/BrowserWindowSettings.h"
 #include "ui/win/clipboard/Clipboard.h"
 
+#include <amo/adb.hpp>
 
 namespace amo {
     BrowserWindow::BrowserWindow(std::shared_ptr<BrowserWindowSettings> pBrowserSettings)
@@ -98,6 +99,8 @@ namespace amo {
         amo::loader loader;
         bool bbb = loader.load(amo::path::fullPathInAppDir("renderer_modules\\libExt.dll"));
     }
+    
+    
     void BrowserWindow::InitWindow() {
     
         date_time_test();

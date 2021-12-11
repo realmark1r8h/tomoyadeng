@@ -77,6 +77,12 @@ namespace amo {
             std::vector<amo::string> message;
         };
         
+        DWORD getCreationFlags() const {
+            return dwCreationFlags;
+        }
+        void setCreationFlags(DWORD val) {
+            dwCreationFlags = val;
+        }
     public:
         template<  typename ... Args>
         static std::shared_ptr<process> create(Args ... args) {
@@ -124,6 +130,7 @@ namespace amo {
         }
         
         void init() {
+            setCreationFlags(0);
             m_bShowWindow = false;
             hRead = NULL;
             hWrite = NULL;
@@ -140,8 +147,11 @@ namespace amo {
             }
             
             BOOL bOk = ::TerminateProcess(pi.hProcess, -1);
-            /*DWORD pid = GetProcessId(pi.hProcess);
-            DWORD erropr = GetLastError();*/
+            
+            if (bOk != FALSE) {
+                pi.hProcess = NULL;
+            }
+            
             return bOk != FALSE;
         }
         
@@ -205,7 +215,16 @@ namespace amo {
             si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
             
             //关键步骤，CreateProcess函数参数意义请查阅MSDN
-            if (!CreateProcessA(NULL, (char*)command.c_str(), NULL, NULL, TRUE, NULL, NULL, m_workPath.c_str(), &si, &pi)) {
+            if (!CreateProcessA(NULL,
+                                (char*)command.c_str(),
+                                NULL,
+                                NULL,
+                                TRUE,
+                                dwCreationFlags,
+                                NULL,
+                                m_workPath.c_str(),
+                                &si,
+                                &pi)) {
                 CloseHandle(hWrite);
                 CloseHandle(hRead);
                 hWrite = hRead = NULL;
@@ -268,7 +287,7 @@ namespace amo {
             return strRet;
         }
         
-        std::shared_ptr<result>  getResult() {
+        std::shared_ptr<result>  getResult(int nMaxDelayMS = 0) {
             if (m_pResult) {
                 return m_pResult;
             }
@@ -297,6 +316,23 @@ namespace amo {
             amo::string strRetval;
             
             while (true) {
+            
+                DWORD cbBytesRead = 0;
+                BOOL fSuccess = PeekNamedPipe(hRead, NULL, 0, NULL, &cbBytesRead, NULL);
+                
+                if (!fSuccess) {
+                    break;
+                }
+                
+                if (nMaxDelayMS > 0 && m_timer.elapsed() > nMaxDelayMS) {
+                    $cerr("进程执行超时，将被强行终止");
+                    // 超时，杀掉进程
+                    kill();
+                } else if (cbBytesRead == 0) {
+                    Sleep(10);
+                    continue;
+                }
+                
                 if (ReadFile(hRead, buffer, 4095, &bytesRead, NULL) == FALSE) {
                     break;
                 }
@@ -464,7 +500,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        static  bool kill_process_bu_pid(int pid) {
+        static  bool kill_process_by_pid(int pid) {
             if (pid <= 0) {
                 return true;
             }
@@ -513,7 +549,7 @@ namespace amo {
         
         static bool kill_process_by_port(int port) {
             int pid = find_pid_by_port(port);
-            return kill_process_bu_pid(pid);
+            return kill_process_by_pid(pid);
         }
         
         /**
@@ -531,7 +567,7 @@ namespace amo {
             bool bOk = true;
             
             for (auto & pid : vec) {
-                if (!kill_process_bu_pid(pid)) {
+                if (!kill_process_by_pid(pid)) {
                     bOk = false;
                 }
             }
@@ -580,6 +616,10 @@ namespace amo {
         amo::path m_workPath;
         
         amo::timer m_timer;
+        
+        DWORD dwCreationFlags;
+        
+        
         
     };
 }

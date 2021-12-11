@@ -10,6 +10,9 @@
 #include <string>
 #include <amo/process.hpp>
 #include <amo/file.hpp>
+#include <amo/string.hpp>
+#include <vector>
+#include <amo/timer.hpp>
 
 namespace amo {
     class adb :
@@ -24,6 +27,7 @@ namespace amo {
         adb(const std::string& deviceID = "")
             : m_strDeviceID(deviceID) {
             setAdbPath("adb/adb.exe");
+            
         }
         
         /**
@@ -345,10 +349,14 @@ namespace amo {
                 nRetry = 30;
             }
             
+            amo::file fi(strAppFile);
+            size_t nSize = fi.size();
+            int nDelay = nSize * 3 / (1000);
+            
             for (int i = 0; i < nRetry; ++i) {
                 auto pProcess = createProcess("install -r -d ");
                 pProcess->start(strAppFile);
-                auto result = pProcess->getResult();
+                auto result = pProcess->getResult(nDelay);
                 
                 
                 if (!result->isSuccess()) {
@@ -616,7 +624,7 @@ namespace amo {
             pProcess->addArgs(localName);
             pProcess->addArgs(strPackage);
             pProcess->start();
-             
+            
             auto result = pProcess->getResult();
             
             if (!result->isSuccess()) {
@@ -668,28 +676,28 @@ namespace amo {
                 return true;
             }
             
-            return false; 
+            return false;
         }
         
-		bool sayString(const std::string& strMsg) {
-			auto pProcess = createProcess("shell input text ");
-			pProcess->start(strMsg);
-
-			auto result = pProcess->getResult();
-
-			if (!result->isSuccess()) {
-				return false;
-			}
-
-			std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-
-			if (message.empty()) {
-				return true;
-			}
-
-			return false;
-		}
-
+        bool sayString(const std::string& strMsg) {
+            auto pProcess = createProcess("shell input text ");
+            pProcess->start(strMsg);
+            
+            auto result = pProcess->getResult();
+            
+            if (!result->isSuccess()) {
+                return false;
+            }
+            
+            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
+            
+            if (message.empty()) {
+                return true;
+            }
+            
+            return false;
+        }
+        
         /**
          * @fn	bool AdbCommand::keyevent(const int nKey);
          *
@@ -1111,6 +1119,48 @@ namespace amo {
             return m_process->kill();
         }
         
+        bool reboot(int nWaitTime = 300000) {
+            amo::timer t;
+            auto pProcess = createProcess("reboot");
+            pProcess->start();
+            auto result = pProcess->getResult(3000);
+            
+            
+            
+            
+            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
+            
+            if (message.empty() && t.elapsed() > 3000) {
+                $cerr("重启手机是adb被超时终止");
+                return false;
+            }
+            
+            // versionName 的格式    versionName=1.0.0
+            for (auto& p : message) {
+                if (p.find("error")  != -1) {
+                    return false;
+                }
+            }
+            
+            t.restart();
+            
+            do {
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+                std::vector<amo::string> vec = getDevicelist();
+                
+                for (auto& p : vec) {
+                    if (p == m_strDeviceID) {
+                        $cdevel("手机重启完成");
+                        return true;
+                    }
+                    
+                }
+            } while (t.elapsed() < nWaitTime);
+            
+            
+            return false;
+            
+        }
     protected:
     
         /**
