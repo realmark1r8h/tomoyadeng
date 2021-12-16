@@ -26,8 +26,11 @@ namespace amo {
         
         
     public:
-    
-    
+        virtual bool beforeTriggerEvent(TransferEventInfo& info) {
+            $cdevel(info.toString().c_str());
+            return false;
+        }
+        
         Any triggerEvent(TransferEventInfo& info) {
             if (m_bToAll) {
                 info.toAll = true;
@@ -45,11 +48,13 @@ namespace amo {
                 m_bToAll.reset(new bool(true));
             }
             
-            if (m_fnEventCallback) {
-				$cdevel(info.toString().c_str());
-                return m_fnEventCallback(info);
+            if (beforeTriggerEvent(info)) {
+                return Undefined();
             }
             
+            if (m_fnEventCallback) {
+                return m_fnEventCallback(info);
+            }
             
             return Undefined();
         }
@@ -63,6 +68,8 @@ namespace amo {
             info.setData(data);
             return triggerEvent(info);
         }
+        
+        
         
         template<>
         Any triggerEvent<amo::string>(const amo::string& name, const amo::string& data) {

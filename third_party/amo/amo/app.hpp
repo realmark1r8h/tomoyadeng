@@ -20,6 +20,7 @@ namespace amo {
             
             if (m_appPath.empty()) {
                 m_appPath = amo::path::getFullExeName();
+				m_pid = GetCurrentProcessId();
             }
         }
         
@@ -174,10 +175,17 @@ namespace amo {
 		void registerCloseCallback(std::function<void()> fn) {
 			m_fnClose = fn;
 		}
+
+		int64_t pid() const {
+			return m_pid;
+		}
+
     private:
         amo::string m_appPath;
 
 		std::function<void()> m_fnClose;
+
+		int64_t m_pid;
     };
 }
 

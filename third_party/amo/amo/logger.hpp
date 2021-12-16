@@ -76,6 +76,34 @@
 #endif
 
 
+#ifndef $devel
+#define $devel $cdevel
+#endif
+
+#ifndef $debug
+#define $debug $cdebug
+#endif
+
+#ifndef $info
+#define $info $cinfo
+#endif
+
+#ifndef $warn
+#define $warn $cwarn
+#endif
+
+#ifndef $err
+#define $err $cerr
+#endif
+
+#ifndef $fatal
+#define $fatal $cfatal
+#endif
+
+#ifndef $log
+#define $log $clog
+#endif
+
 namespace amo {
     enum flag {
         endl = 0,		//日志写入标志
@@ -291,22 +319,27 @@ namespace amo {
             }
             
             void write_buffer() {
-                std::string str = buffer.str();
-                buffer.clear();
-                
-                if (str.empty()) {
-                    return;
+                try {
+                    std::string str = buffer.str();
+                    buffer.clear();
+                    
+                    if (str.empty()) {
+                        return;
+                    }
+                    
+                    if (!m_logger) {
+                        m_logger = logger();
+                    }
+                    
+                    if (!m_logger) {
+                        return;
+                    }
+                    
+                    m_logger->log(m_level, str);
+                } catch (const std::exception& e) {
+                    std::cout << e.what() << std::endl;
                 }
                 
-                if (!m_logger) {
-                    m_logger = logger();
-                }
-                
-                if (!m_logger) {
-                    return;
-                }
-                
-                m_logger->log(m_level, str);
             }
             
         private:

@@ -11,10 +11,12 @@
 #include <Windows.h>
 #include <windowsx.h>
 #include <iostream>
+#include <sstream>
 
 #include <future>
 #include <thread>
 #include <amo/path.hpp>
+#include <amo/app.hpp>
 #include "ui/win/BrowserWindow.h"
 #include <amo/loader.hpp>
 #include "transfer/ClassTransfer.hpp"
@@ -22,7 +24,9 @@
 #include "ui/win/SplashWindow.h"
 #include "settings/SplashWindowSettings.h"
 #include "transfer/SplashTransfer.h"
-#include "../ui/win/SharedMemory.h"
+#include "ui/win/SharedMemory.h"
+
+
 
 namespace {
 
@@ -303,9 +307,15 @@ namespace amo {
         auto sink1 = std::make_shared<spdlog::sinks::msvc_sink_mt>();
         /*auto sink2 = std::make_shared<spdlog::sinks::daily_file_sink_mt>("logfile", "txt", 23, 59);
         sink2->set_level(amo::log::level::trace);*/
+
+		
+		std::stringstream stream;
+		stream << "logfile_";
+		stream << amo::app().pid();
         auto sink3 = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                         "logfile", SPDLOG_FILENAME_T("txt"), 1048576 * 15, 3);
-                         
+			stream.str(), SPDLOG_FILENAME_T("txt"), 1048576 * 15, 3);
+		
+		
         amo::log::add_sink(sink1);
         //amo::log::add_sink(sink2);
         amo::log::add_sink(sink3);
