@@ -61,14 +61,14 @@ namespace amo {
         //CefRefPtr<CefV8Value> className = target->GetValue("className");
         //std::string strClassList = className->GetStringValue().ToString();
         //
-        //$log(amo::cdevel << strClassList << amo::endl;);
+        //$clog(amo::cdevel << strClassList << amo::endl;);
         //std::regex reg(strRegex);
         //std::smatch m;
         //std::vector<std::string> class_list;
         //
         //while (std::regex_search(strClassList, m, reg)) {
         //    for (auto x = m.begin(); x != m.end(); x++) {
-        //        $log(amo::cdevel << x->str() << amo::endl;);
+        //        $clog(amo::cdevel << x->str() << amo::endl;);
         //
         //        if (x->str() == noDragClassName) {
         //            return sendDragableToBrowserProcess(false);
@@ -83,7 +83,7 @@ namespace amo {
         {
             CefRefPtr<CefV8Value> className = target->GetValue("className");
             amo::string strClassList(className->GetStringValue().ToString(), true);
-            //$log(amo::cdevel << strClassList.to_ansi() << amo::endl;);
+            //$clog(amo::cdevel << strClassList.to_ansi() << amo::endl;);
             std::vector<amo::string> vec = strClassList.split(" ");
             
             for (auto& str : vec) {

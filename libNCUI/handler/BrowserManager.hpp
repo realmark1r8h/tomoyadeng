@@ -131,7 +131,7 @@ namespace amo {
          * @param	pBrowser	The browser.
          */
         static void RegisterBrowser(CefRefPtr<CefBrowser> pBrowser) {
-            $log(amo::cdevel << func_orient << "11111" << pBrowser->GetIdentifier() << amo::endl;);
+            $clog(amo::cdevel << func_orient << "11111" << pBrowser->GetIdentifier() << amo::endl;);
             m_oBrowserMap[pBrowser->GetIdentifier()] = pBrowser;
         }
         

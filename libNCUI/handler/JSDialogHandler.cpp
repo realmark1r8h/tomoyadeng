@@ -7,7 +7,7 @@
 namespace amo {
 
     void JSDialogHandler::OnDialogClosed(CefRefPtr<CefBrowser> browser) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -15,7 +15,7 @@ namespace amo {
     }
 
     void JSDialogHandler::OnResetDialogState(CefRefPtr<CefBrowser> browser) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -26,7 +26,7 @@ namespace amo {
             const CefString& message_text,
             bool is_reload,
             CefRefPtr<CefJSDialogCallback> callback) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
 
@@ -47,7 +47,7 @@ namespace amo {
                                      const CefString& default_prompt_text,
                                      CefRefPtr<CefJSDialogCallback> callback,
                                      bool& suppress_message) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
 

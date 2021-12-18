@@ -121,7 +121,7 @@ namespace amo {
         //auto iter = mp.begin();
         //for (; iter != mp.end(); ++iter)
         //{
-        //	$log(amo::cdevel << iter->first << "    :    " << iter->second << amo::endl;);
+        //	$clog(amo::cdevel << iter->first << "    :    " << iter->second << amo::endl;);
         //}
         ////int i = 3;
         

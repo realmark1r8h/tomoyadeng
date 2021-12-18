@@ -86,7 +86,7 @@ namespace amo {
                 
                 return *ret;
             } catch (std::exception& e) {
-                $log(amo::cdevel << __FUNCTION__ << e.what() << amo::endl;);
+                $clog(amo::cdevel << __FUNCTION__ << e.what() << amo::endl;);
                 m_nErrorCode = DllExecError;
                 return R();
             }

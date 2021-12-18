@@ -65,7 +65,7 @@ namespace amo {
     
     void NodeMessageHandler::onNodeMessageRecv(IPCMessage::SmartType msg) {
     
-        $log(amo::cdevel << __FUNCTION__ << msg->toJson().to_string() << amo::endl;);
+        $clog(amo::cdevel << __FUNCTION__ << msg->toJson().to_string() << amo::endl;);
         //CefRefPtr<CefProcessMessage> message = amo::createCefProcessMessage(anyMessage);
         const std::string& message_name = msg->getMessageName();
         
@@ -77,16 +77,16 @@ namespace amo {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             int id = -9999;
             std::string strPipeClientName = RendererPipePrefix + (std::string)args->getString(0);
-            $log(amo::cdevel << func_orient << "连接管道：" << strPipeClientName << amo::endl;);
+            $clog(amo::cdevel << func_orient << "连接管道：" << strPipeClientName << amo::endl;);
             std::string strPipeServerName = BrowserPipePrefix + (std::string)args->getString(0);
             m_pRenderPipeClient.reset(new amo::pipe<amo::pipe_type::client>(strPipeClientName));
             m_pBrowserPipeServer.reset(new amo::pipe<amo::pipe_type::server>(strPipeServerName, DefaultPipeSize));
             bool bOK = m_pRenderPipeClient->connect();
             
-            $log(amo::cdevel << func_orient << "管道连接" << (bOK ? "成功" : "失败") << amo::endl;);
+            $clog(amo::cdevel << func_orient << "管道连接" << (bOK ? "成功" : "失败") << amo::endl;);
             
             bOK = m_pBrowserPipeServer->connect();
-            $log(amo::cdevel << func_orient << "主进程管道服务连接" << (bOK ? "成功" : "失败") << amo::endl;);
+            $clog(amo::cdevel << func_orient << "主进程管道服务连接" << (bOK ? "成功" : "失败") << amo::endl;);
             m_pBrowserProcessExchanger->setPipeClient(m_pRenderPipeClient);
             m_pBrowserProcessExchanger->setPipeServer(m_pBrowserPipeServer);
             m_pBrowserProcessExchanger->setBrowserID(id);
@@ -137,7 +137,7 @@ namespace amo {
     bool NodeMessageHandler::sendMessageToNode(IPCMessage::SmartType msg) {
         /*if (!m_fnSendMessageToNode) return false;
         return m_fnSendMessageToNode(msg);*/
-        $log(amo::cdevel << func_orient << msg->toJson().to_string() << amo::endl;);
+        $clog(amo::cdevel << func_orient << msg->toJson().to_string() << amo::endl;);
         
         try {
             if (msg->getArgumentList()->getString(IPCArgsPosInfo::FuncName) == "quit") {
@@ -277,7 +277,7 @@ namespace amo {
                                                  
             }
         } catch (std::exception& e) {
-            $log(amo::cerr << e.what() << amo::endl;);
+            $clog(amo::cerr << e.what() << amo::endl;);
             closeMessageQueue();
             MessageBox(NULL, L"消息打开失败", L"Error", MB_OK);
             return;

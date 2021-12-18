@@ -7,7 +7,7 @@ namespace amo {
     bool KeyboardHandler::OnKeyEvent(CefRefPtr<CefBrowser> browser,
                                      const CefKeyEvent& event,
                                      CefEventHandle os_event) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
 
         bool bRet = OnHotkeyPro(browser, event);
 
@@ -31,7 +31,7 @@ namespace amo {
                                         const CefKeyEvent& event,
                                         CefEventHandle os_event,
                                         bool* is_keyboard_shortcut) {
-        $log(amo::cdevel << func_orient << event.windows_key_code << ":" << event.type << amo::endl;);
+        $clog(amo::cdevel << func_orient << event.windows_key_code << ":" << event.type << amo::endl;);
 
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();

@@ -8,7 +8,7 @@
 namespace amo {
     void ContextMenuHandler::OnContextMenuDismissed(CefRefPtr<CefBrowser> browser,
             CefRefPtr<CefFrame> frame) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
@@ -20,7 +20,7 @@ namespace amo {
             CefRefPtr<CefFrame> frame,
             CefRefPtr<CefContextMenuParams> params,
             int command_id, EventFlags event_flags) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
         
@@ -52,7 +52,7 @@ namespace amo {
             CefRefPtr<CefFrame> frame,
             CefRefPtr<CefContextMenuParams> params,
             CefRefPtr<CefMenuModel> model) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {

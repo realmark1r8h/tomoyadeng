@@ -8,7 +8,7 @@ namespace amo {
     int LifeSpanHandler::m_BrowserCount = 0;
     
     void LifeSpanHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         
         if (m_pMessageRouter) {
             m_pMessageRouter->OnBeforeClose(browser);
@@ -23,7 +23,7 @@ namespace amo {
     }
     
     bool LifeSpanHandler::DoClose(CefRefPtr<CefBrowser> browser) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         // 通知浏览器父窗口即将关闭
 #if CHROME_VERSION_BUILD >= 2272
         //TODO: 这里关闭浏览器
@@ -51,7 +51,7 @@ namespace amo {
     }
     
     bool LifeSpanHandler::RunModal(CefRefPtr<CefBrowser> browser) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
         
@@ -67,7 +67,7 @@ namespace amo {
     }
     
     void LifeSpanHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
@@ -88,7 +88,7 @@ namespace amo {
                                         CefRefPtr<CefClient>& client,
                                         CefBrowserSettings& settings,
                                         bool* no_javascript_access) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
         
@@ -117,7 +117,7 @@ namespace amo {
                                         CefRefPtr<CefClient>& client,
                                         CefBrowserSettings& settings,
                                         bool* no_javascript_access) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
     
@@ -137,7 +137,7 @@ namespace amo {
     
     
     void LifeSpanHandler::SetMessageRouter(CefRefPtr<MessageRouterBrowserSide> router) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         m_pMessageRouter = router;
     }
 }

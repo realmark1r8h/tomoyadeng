@@ -103,7 +103,7 @@ namespace amo {
         //    //amo::log::add_sink(sink3);
         //    amo::log::set_level(amo::log::level::trace);
         //    amo::log::set_pattern("[%Y-%m-%d %H:%M:%S][%l] %v");
-        //    $log(amo::endl amo::cinfo << "日志初始化成功" << amo::endl);
+        //    $clog(amo::endl amo::cinfo << "日志初始化成功" << amo::endl);
         //}
         //
         
@@ -176,7 +176,7 @@ namespace amo {
         
         SendMessageToUI(anyMessage);
         
-        $log(amo::cdevel << func_orient << "创建管道服务端：" << strPipeServerName << amo::endl);
+        $clog(amo::cdevel << func_orient << "创建管道服务端：" << strPipeServerName << amo::endl);
         /* MessageBoxA(NULL, "3333", "223", MB_OK);*/
         //等待管道建立
         bool rec = m_pRenderPipeServer->connect();
@@ -184,7 +184,7 @@ namespace amo {
         
         
         if (!rec || !bOk) {
-            $log(amo::cdevel << "管道连接失败" << amo::endl);
+            $clog(amo::cdevel << "管道连接失败" << amo::endl);
             MessageBoxA(NULL, "管道连接失败", "223", MB_OK);
         }
         
@@ -207,7 +207,7 @@ namespace amo {
             return;
         }
         
-        $log(amo::cdevel << ret.value() << amo::endl);
+        $clog(amo::cdevel << ret.value() << amo::endl);
         
         amo::json jsonArr(ret.value());
         std::vector<amo::json> arr = jsonArr.to_array();
@@ -324,7 +324,7 @@ namespace amo {
             m_pMessageQueueWriter->send(cc, 10000, 0);
             return true;
         } catch (std::exception& e) {
-            $log(amo::cdevel << e.what() << amo::endl);
+            $clog(amo::cdevel << e.what() << amo::endl);
             MessageBoxA(NULL, "SEND MESSAGE TO UI", (""), MB_OK);
             return false;
         }
@@ -334,7 +334,7 @@ namespace amo {
         const std::string& strMessageName = anyMessage->getMessageName();
         
         
-        $log(amo::cdevel << func_orient << anyMessage->toJson().to_string() << amo::endl);
+        $clog(amo::cdevel << func_orient << anyMessage->toJson().to_string() << amo::endl);
         
         if (strMessageName == MSG_PROCESS_SYNC_EXECUTE) {
             NodeProcessExchangerManager::get_instance()->tryProcessMessage(m_nPipeID);

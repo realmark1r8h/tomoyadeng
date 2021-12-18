@@ -175,7 +175,7 @@ namespace amo {
         
         	for (int i = 0; i < nCount; ++i){
         	char d = *(p1+i);
-        	$log(amo::cdevel << d << amo::endl;);
+        	$clog(amo::cdevel << d << amo::endl;);
         	}
         	int c = 32;
         	}

@@ -70,9 +70,9 @@
 #endif
 
 #ifndef AMO_LOG_MACRO_OFF
-#define $log(...) __VA_ARGS__
+#define $clog(...) __VA_ARGS__
 #else
-#define $log(...)
+#define $clog(...)
 #endif
 
 
@@ -105,6 +105,7 @@
 #endif
 
 namespace amo {
+
     enum flag {
         endl = 0,		//日志写入标志
         separator = 1,	//分隔符
@@ -268,8 +269,11 @@ namespace amo {
         
         class unit {
         public:
-            unit(spdlog::level::level_enum l)
-                : m_level(l) {
+            unit(spdlog::level::level_enum l,
+                 std::function<bool(spdlog::level::level_enum, const std::string&)> fn_cb
+                 = std::function<bool(spdlog::level::level_enum, const std::string&)>())
+                : m_level(l)
+                , m_fn_before_write(fn_cb) {
                 
             }
             
@@ -327,6 +331,11 @@ namespace amo {
                         return;
                     }
                     
+                    // 使用其他
+                    if (m_fn_before_write && m_fn_before_write(m_level, str)) {
+                        return;
+                    }
+                    
                     if (!m_logger) {
                         m_logger = logger();
                     }
@@ -346,6 +355,7 @@ namespace amo {
             spdlog::level::level_enum m_level;
             amo::memory_writer buffer;
             std::shared_ptr<spdlog::logger> m_logger;
+            std::function<bool(spdlog::level::level_enum, const std::string&)> m_fn_before_write;
         };
     }
     

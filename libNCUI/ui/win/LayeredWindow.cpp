@@ -43,7 +43,7 @@ namespace amo {
     }
     
     LayeredWindow::~LayeredWindow() {
-        $log(amo::cdevel << __FUNCTION__ << amo::endl;);
+        $clog(amo::cdevel << __FUNCTION__ << amo::endl;);
         
     }
     
@@ -296,7 +296,7 @@ namespace amo {
         amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
         
         if (m_hWnd == NULL) {
-            $log(amo::cwarn << "RunOnUiThread 无句柄支持" << amo::endl;);
+            $clog(amo::cwarn << "RunOnUiThread 无句柄支持" << amo::endl;);
             return;
         }
         

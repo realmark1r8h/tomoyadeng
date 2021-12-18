@@ -37,7 +37,7 @@ namespace amo {
             CefRefPtr<CefProcessMessage> message) {
         assert(source_process == PID_BROWSER);
         std::string strMessageName = message->GetName();
-        /* $log(
+        /* $clog(
              amo::cdevel << func_orient << "From Browser : " << strMessageName << amo::endl;
              amo::string message_name(message->GetName().ToString(), true);
         
@@ -106,7 +106,7 @@ namespace amo {
             }
         } else if (strMessageName == MSG_ENABLE_BACK_FORWORD) {
             m_bEnableBackForword = message->GetArgumentList()->GetBool(0);
-            $log(amo::cdevel << func_orient << MSG_ENABLE_BACK_FORWORD << m_bEnableBackForword << amo::endl;);
+            $clog(amo::cdevel << func_orient << MSG_ENABLE_BACK_FORWORD << m_bEnableBackForword << amo::endl;);
             return true;
         } else if (strMessageName == MSG_PROCESS_SYNC_EXECUTE) {
             RendererProcessExchangerManager::getInstance()->tryProcessMessage(browser->GetIdentifier());
@@ -157,7 +157,7 @@ namespace amo {
             CefRefPtr<CefV8Context> context,
             CefRefPtr<CefV8Exception> exception,
             CefRefPtr<CefV8StackTrace> stackTrace) {
-        $log(amo::cdevel << func_orient << amo::string(exception->GetMessageW().ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::string(exception->GetMessageW().ToString(), true).str() << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
@@ -168,7 +168,7 @@ namespace amo {
     
     void RenderProcessHandler::OnContextReleased(CefRefPtr<CefBrowser> browser,
             CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
@@ -192,7 +192,7 @@ namespace amo {
     void RenderProcessHandler::OnContextCreated(CefRefPtr<CefBrowser> browser,
             CefRefPtr<CefFrame> frame,
             CefRefPtr<CefV8Context> context) {
-        $log(amo::cdevel << func_orient << frame->GetIdentifier() << amo::endl;);
+        $clog(amo::cdevel << func_orient << frame->GetIdentifier() << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
@@ -252,7 +252,7 @@ namespace amo {
             CefRefPtr<CefRequest> request,
             CefRenderProcessHandler::NavigationType navigation_type,
             bool is_redirect) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         
         if (!m_bEnableBackForword && (navigation_type == NAVIGATION_BACK_FORWARD)) {
             return true;    //屏蔽BackSpace回退页面
@@ -271,7 +271,7 @@ namespace amo {
     }
     
     CefRefPtr<CefLoadHandler> RenderProcessHandler::GetLoadHandler() {
-        $log(amo::cdevel << func_orient << "GetLoadHandler。" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "GetLoadHandler。" << amo::endl;);
         CefRefPtr<CefLoadHandler> load_handler;
         DelegateSet::iterator it = m_Delegates.begin();
         
@@ -287,7 +287,7 @@ namespace amo {
     }
     
     void RenderProcessHandler::OnBrowserDestroyed(CefRefPtr<CefBrowser> browser) {
-        $log(amo::cdevel << func_orient << "浏览器销毁。" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "浏览器销毁。" << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
@@ -321,14 +321,14 @@ namespace amo {
         /* CefPostTask(TID_RENDERER, NewCefRunnableMethod(this,
                      &RenderProcessHandler::afterCreatePipe,
                      browser, pExchanger));*/
-        $log(amo::cdevel << func_orient << ", 准备" << amo::endl;);
+        $clog(amo::cdevel << func_orient << ", 准备" << amo::endl;);
         //MessageBoxA(NULL, "闪图", __FUNCTION__, MB_OK);
         
     }
     
     void RenderProcessHandler::afterCreatePipe(CefRefPtr<CefBrowser> browser,
             std::shared_ptr<ProcessExchanger> pExchanger, Any ret) {
-        $log(amo::cdevel << func_orient << ", 开始" << amo::endl;);
+        $clog(amo::cdevel << func_orient << ", 开始" << amo::endl;);
         int nBrowserID = browser->GetIdentifier();
         auto exchangerMgr = RendererProcessExchangerManager::getInstance();
         exchangerMgr->addExchanger(nBrowserID, pExchanger);
@@ -337,7 +337,7 @@ namespace amo {
             ret = exchangerMgr->exchange <Any>(nBrowserID);
         }
         
-        $log(amo::cdevel << func_orient << "注册：" << browser->GetIdentifier() << amo::endl;);
+        $clog(amo::cdevel << func_orient << "注册：" << browser->GetIdentifier() << amo::endl;);
         
         // 管道创建成功后再注册Browser
         RegisterBrowser(browser);
@@ -393,11 +393,11 @@ namespace amo {
         browser->SendProcessMessage(PID_BROWSER, msg);
         //bool bOk  = (bool)exchangerMgr->Exchange <Any>(nBrowserID);
         
-        $log(amo::cdevel << func_orient << ", 结束" << amo::endl;);
+        $clog(amo::cdevel << func_orient << ", 结束" << amo::endl;);
     }
     
     void RenderProcessHandler::RenderThreadActivityDetector() {
-        //$log(amo::cdevel << func_orient << "渲染进程活着" << amo::endl;);
+        //$clog(amo::cdevel << func_orient << "渲染进程活着" << amo::endl;);
         CefPostDelayedTask(TID_RENDERER,
                            NewCefRunnableMethod(this,
                                                 &RenderProcessHandler::RenderThreadActivityDetector),
@@ -405,7 +405,7 @@ namespace amo {
     }
     
     void RenderProcessHandler::OnBrowserCreated(CefRefPtr<CefBrowser> browser) {
-        $log(amo::cdevel << func_orient << "浏览器创建成功。" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "浏览器创建成功。" << amo::endl;);
         
         int nBrowserID = browser->GetIdentifier();
         
@@ -433,7 +433,7 @@ namespace amo {
                 new amo::pipe<amo::pipe_type::client>(strPipeClientName));
                 
             //browser->SendProcessMessage(PID_BROWSER, msg);
-            $log(amo::cdevel << func_orient << "创建管道服务端：" << strPipeServerName << amo::endl;);
+            $clog(amo::cdevel << func_orient << "创建管道服务端：" << strPipeServerName << amo::endl;);
             
             ////等待管道建立
             //bool rec = m_pRenderPipeServer->connect();
@@ -506,7 +506,7 @@ namespace amo {
     
         std::string s_extension(skinNCUI);
         
-        $log(amo::cdevel << func_orient << "WebKit初始化完成，开始注册NativeJS。" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "WebKit初始化完成，开始注册NativeJS。" << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
@@ -521,7 +521,7 @@ namespace amo {
     }
     
     void RenderProcessHandler::OnRenderThreadCreated(CefRefPtr<CefListValue> extra_info) {
-        $log(amo::cdevel << func_orient << "渲染进程创建。" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "渲染进程创建。" << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
@@ -539,7 +539,7 @@ namespace amo {
     bool RenderProcessHandler::ProcessSyncMessage(int nID,
             IPCMessage::SmartType msg) {
         CefRefPtr<CefBrowser> pBrowser = GetBrowserByID(nID);
-        $log(amo::cdevel << func_orient << msg->toJson().to_string() << amo::endl;);
+        $clog(amo::cdevel << func_orient << msg->toJson().to_string() << amo::endl;);
         
         if (!pBrowser) {
             return false;

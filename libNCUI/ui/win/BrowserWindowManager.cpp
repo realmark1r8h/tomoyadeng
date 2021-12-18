@@ -121,7 +121,7 @@ namespace amo {
         for (auto& p : m_WindowMap) {
             if (p->getNativeSettings()->id == id) {
                 int nUseCount = p.use_count();
-                $log(amo::cdevel << p.use_count() << amo::endl;);
+                $clog(amo::cdevel << p.use_count() << amo::endl;);
                 m_WindowMap.remove(p);
                 
                 return;
@@ -302,7 +302,7 @@ namespace amo {
     
     
     BrowserWindowManager::~BrowserWindowManager() {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
     }
     
     void BrowserWindowManager::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
@@ -348,7 +348,7 @@ namespace amo {
             CefBrowserSettings& settings,
             bool* no_javascript_access) {
         CEF_REQUIRE_IO_THREAD();														//运行在IO线程上
-        $log(amo::cdevel << func_orient
+        $clog(amo::cdevel << func_orient
              << amo::string(target_url.ToString(), true).str()
              << amo::endl;);
              

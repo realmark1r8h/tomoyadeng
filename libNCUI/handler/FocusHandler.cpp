@@ -6,7 +6,7 @@
 namespace amo {
 
     void FocusHandler::OnGotFocus(CefRefPtr<CefBrowser> browser) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -15,7 +15,7 @@ namespace amo {
 
     bool FocusHandler::OnSetFocus(CefRefPtr<CefBrowser> browser,
                                   FocusSource source) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
 
@@ -30,7 +30,7 @@ namespace amo {
 
     void FocusHandler::OnTakeFocus(CefRefPtr<CefBrowser> browser,
                                    bool next) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)

@@ -10,7 +10,7 @@ namespace amo {
     bool ResourceBundleHandler::GetDataResource(int resource_id,
             void*& data,
             size_t& data_size) {
-        $log(amo::cdevel << func_orient << "resource_id:" << resource_id << amo::endl;);
+        $clog(amo::cdevel << func_orient << "resource_id:" << resource_id << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
 
@@ -25,7 +25,7 @@ namespace amo {
 
     bool ResourceBundleHandler::GetLocalizedString(int message_id,
             CefString& string) {
-        $log(amo::cdevel << func_orient << "message_id:" << message_id << amo::endl;);
+        $clog(amo::cdevel << func_orient << "message_id:" << message_id << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
 

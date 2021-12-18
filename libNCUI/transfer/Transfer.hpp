@@ -23,7 +23,7 @@ using namespace amo;\
 ClassTransfer::getTransferMap() = info->transferMap;\
 int nBrowserID = info->nBrowserID;\
 auto fn = info->fnCallback;\
-amo::log::register_logger(info->pLogger);\
+amo::log::register_logger(info->pLogger); \
 
 #endif
 

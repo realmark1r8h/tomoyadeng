@@ -58,7 +58,7 @@ namespace amo {
     }
     
     void fooo(Any& arg) {
-        $log(amo::cdevel << arg.value() << amo::endl;);
+        $clog(amo::cdevel << arg.value() << amo::endl;);
     }
     
     Any BrowserWindowTransfer::test6(IPCMessage::SmartType msg) {

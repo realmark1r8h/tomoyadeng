@@ -566,7 +566,7 @@ namespace amo {
         pV8Value->GetKeys(vvv);
         
         for (auto& p : vvv) {
-        $log(amo::cdevel << p.ToString() << amo::endl;);
+        $clog(amo::cdevel << p.ToString() << amo::endl;);
         }
         
         CefRefPtr<CefV8Value> pFunction = pV8Value->GetValue("nativeObject");

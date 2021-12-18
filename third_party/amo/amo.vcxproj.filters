@@ -285,5 +285,8 @@
     <ClInclude Include="amo\shell.hpp">
       <Filter>amo</Filter>
     </ClInclude>
+    <ClInclude Include="amo\logger\notify_sink_sinks.h">
+      <Filter>amo\logger</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

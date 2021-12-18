@@ -1131,7 +1131,7 @@ namespace amo {
             std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
             
             if (message.empty() && t.elapsed() > 3000) {
-                $cerr("重启手机是adb被超时终止");
+                $err("重启手机是adb被超时终止");
                 return false;
             }
             
@@ -1150,7 +1150,7 @@ namespace amo {
                 
                 for (auto& p : vec) {
                     if (p == m_strDeviceID) {
-                        $cdevel("手机重启完成");
+                        $devel("手机重启完成");
                         return true;
                     }
                     

@@ -16,7 +16,7 @@
 namespace amo {
     void RequestHandler::OnRenderProcessTerminated(CefRefPtr<CefBrowser> browser,
             TerminationStatus status) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         
         if (m_pMessageRouter) {
             m_pMessageRouter->OnRenderProcessTerminated(browser);
@@ -44,7 +44,7 @@ namespace amo {
     
     void RequestHandler::OnPluginCrashed(CefRefPtr<CefBrowser> browser,
                                          const CefString& plugin_path) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
@@ -58,7 +58,7 @@ namespace amo {
                                             const CefString& url,
                                             const CefString& policy_url,
                                             CefRefPtr<CefWebPluginInfo> info) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
         
@@ -77,7 +77,7 @@ namespace amo {
                                             const CefString& url,
                                             const CefString& policy_url,
                                             CefRefPtr<CefWebPluginInfo> info) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
     
@@ -101,7 +101,7 @@ namespace amo {
                                             const CefString& request_url,
                                             CefRefPtr<CefSSLInfo> ssl_info,
                                             CefRefPtr<CefRequestCallback> callback) {
-        $log(amo::cdevel << func_orient << amo::string(request_url.ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::string(request_url.ToString(), true).str() << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
         
@@ -122,7 +122,7 @@ namespace amo {
     bool RequestHandler::OnCertificateError(cef_errorcode_t cert_error,
                                             const CefString& request_url,
                                             CefRefPtr<CefAllowCertificateErrorCallback> callback) {
-        $log(amo::cdevel << func_orient << request_url << amo::endl;);
+        $clog(amo::cdevel << func_orient << request_url << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
     
@@ -143,7 +143,7 @@ namespace amo {
     
     void RequestHandler::OnProtocolExecution(CefRefPtr<CefBrowser> browser,
             const CefString& url, bool& allow_os_execution) {
-        $log(amo::cdevel << func_orient << amo::string(url.ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::string(url.ToString(), true).str() << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
@@ -157,7 +157,7 @@ namespace amo {
                                         const CefString& origin_url,
                                         int64 new_size,
                                         CefRefPtr<CefRequestCallback> callback) {
-        $log(amo::cdevel << func_orient << amo::string(origin_url.ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::string(origin_url.ToString(), true).str() << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
         
@@ -181,7 +181,7 @@ namespace amo {
                                         const CefString& origin_url,
                                         int64 new_size,
                                         CefRefPtr<CefQuotaCallback> callback) {
-        $log(amo::cdevel << func_orient << origin_url << amo::endl;);
+        $clog(amo::cdevel << func_orient << origin_url << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
     
@@ -211,7 +211,7 @@ namespace amo {
                                             const CefString& realm,
                                             const CefString& scheme,
                                             CefRefPtr<CefAuthCallback> callback) {
-        $log(amo::cdevel << func_orient << amo::string(host.ToString(), true).str() << ":   " << amo::string(scheme.ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::string(host.ToString(), true).str() << ":   " << amo::string(scheme.ToString(), true).str() << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
         
@@ -232,7 +232,7 @@ namespace amo {
                                             CefRefPtr<CefFrame> frame,
                                             const CefString& old_url,
                                             CefString& new_url) {
-        $log(amo::cdevel << func_orient << amo::string(old_url.ToString(), true).str() << ":" << amo::string(new_url.ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::string(old_url.ToString(), true).str() << ":" << amo::string(new_url.ToString(), true).str() << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
@@ -243,7 +243,7 @@ namespace amo {
     CefRefPtr<CefResourceHandler> RequestHandler::GetResourceHandler(CefRefPtr<CefBrowser> browser,
             CefRefPtr<CefFrame> frame,
             CefRefPtr<CefRequest> request) {
-        $log(amo::cdevel << func_orient << amo::string(request->GetURL().ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::string(request->GetURL().ToString(), true).str() << amo::endl;);
         amo::string url(request->GetURL().ToString(), true);
         std::string ss = url;
         
@@ -271,7 +271,7 @@ namespace amo {
             CefRefPtr<CefFrame> frame,
             CefRefPtr<CefRequest> request,
             CefRefPtr<CefRequestCallback> callback) {
-        $log(amo::cdevel << func_orient << amo::string(request->GetURL().ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::string(request->GetURL().ToString(), true).str() << amo::endl;);
         
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
@@ -291,7 +291,7 @@ namespace amo {
     bool RequestHandler::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser,
             CefRefPtr<CefFrame> frame,
             CefRefPtr<CefRequest> request) {
-        $log(amo::cdevel << func_orient << request->GetURL() << amo::endl;);
+        $clog(amo::cdevel << func_orient << request->GetURL() << amo::endl;);
     
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
@@ -315,7 +315,7 @@ namespace amo {
                                         CefRefPtr<CefFrame> frame,
                                         CefRefPtr<CefRequest> request,
                                         bool is_redirect) {
-        $log(amo::cdevel << func_orient << request->GetTransitionType() << amo::string(request->GetURL().ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient << request->GetTransitionType() << amo::string(request->GetURL().ToString(), true).str() << amo::endl;);
         
         
         CefRequest::TransitionType type = request->GetTransitionType();

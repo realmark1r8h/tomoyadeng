@@ -14,7 +14,7 @@ namespace amo {
     void RenderHandler::OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser,
             double x,
             double y) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -25,7 +25,7 @@ namespace amo {
                                        CefCursorHandle cursor,
                                        CursorType type,
                                        const CefCursorInfo& custom_cursor_info) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -38,7 +38,7 @@ namespace amo {
                                       DragOperationsMask allowed_ops,
                                       int x,
                                       int y) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -49,7 +49,7 @@ namespace amo {
 
     void RenderHandler::UpdateDragCursor(CefRefPtr<CefBrowser> browser,
                                          DragOperation operation) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -60,7 +60,7 @@ namespace amo {
 #else
     void RenderHandler::OnCursorChange(CefRefPtr<CefBrowser> browser,
                                        CefCursorHandle cursor) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -70,7 +70,7 @@ namespace amo {
     }
 
     void RenderHandler::OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -87,7 +87,7 @@ namespace amo {
                                 const void* buffer,
                                 int width,
                                 int height) {
-        //$log(amo::cdevel << func_orient << amo::endl;);
+        //$clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -96,7 +96,7 @@ namespace amo {
 
     void RenderHandler::OnPopupSize(CefRefPtr<CefBrowser> browser,
                                     const CefRect& rect) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -105,7 +105,7 @@ namespace amo {
 
     void RenderHandler::OnPopupShow(CefRefPtr<CefBrowser> browser,
                                     bool show) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -114,7 +114,7 @@ namespace amo {
 
     bool RenderHandler::GetScreenInfo(CefRefPtr<CefBrowser> browser,
                                       CefScreenInfo& screen_info) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
 
@@ -132,7 +132,7 @@ namespace amo {
                                        int viewY,
                                        int& screenX,
                                        int& screenY) {
-        //$log(amo::cdevel << func_orient << amo::endl;);
+        //$clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
 
@@ -147,7 +147,7 @@ namespace amo {
 
     bool RenderHandler::GetViewRect(CefRefPtr<CefBrowser> browser,
                                     CefRect& rect) {
-        //$log(amo::cdevel << func_orient << amo::endl;);
+        //$clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
 
@@ -162,7 +162,7 @@ namespace amo {
 
     bool RenderHandler::GetRootScreenRect(CefRefPtr<CefBrowser> browser,
                                           CefRect& rect) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
 

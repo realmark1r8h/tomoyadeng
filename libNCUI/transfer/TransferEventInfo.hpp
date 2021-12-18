@@ -46,7 +46,7 @@ namespace amo {
             return json;
         }
         
-        amo::string toString() const {
+        std::string toString() const {
             return toJson().to_string();
         }
         

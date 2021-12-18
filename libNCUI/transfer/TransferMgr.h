@@ -319,8 +319,8 @@ namespace amo {
             
             
             
-            /*     $log(amo::cdevel << func_orient << "处理消息：" << msg->toJson().to_string() << amo::endl;);
-                 $log(amo::cdevel << func_orient << "处理结果：" << ret.value() << amo::endl;);*/
+            /*     $clog(amo::cdevel << func_orient << "处理消息：" << msg->toJson().to_string() << amo::endl;);
+                 $clog(amo::cdevel << func_orient << "处理结果：" << ret.value() << amo::endl;);*/
             
             if (!ret.isValid()) {
                 if (strMessageName == MSG_NATIVE_SYNC_EXECUTE) {

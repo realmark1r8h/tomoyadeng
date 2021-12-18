@@ -29,13 +29,13 @@ namespace amo {
     };
     void ClientApp::RegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar> registrar,
                                           std::vector<CefString>& cookiable_schemes) {
-        $log(amo::cdevel << func_orient << "注册自定义协议:" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "注册自定义协议:" << amo::endl;);
         registrar->AddCustomScheme("local", true, false, false);
         cookiable_schemes.push_back("local");
     }
     
     ClientApp::ClientApp() {
-        $log(amo::cdevel << func_orient << "ClientApp 构造函数" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "ClientApp 构造函数" << amo::endl;);
         m_pBrowserProcessHandler = new BrowserProcessHandler();
         m_pRenderProcessHandler = new RenderProcessHandler();
         m_pResourceBundleHandler = new ResourceBundleHandler();
@@ -48,23 +48,23 @@ namespace amo {
     }
     
     CefRefPtr<CefRenderProcessHandler> ClientApp::GetRenderProcessHandler() {
-        //$log(amo::cdevel << func_orient << amo::endl;);
+        //$clog(amo::cdevel << func_orient << amo::endl;);
         return m_pRenderProcessHandler.get();
     }
     
     CefRefPtr<CefBrowserProcessHandler> ClientApp::GetBrowserProcessHandler() {
-        //$log(amo::cdevel << func_orient << amo::endl;);
+        //$clog(amo::cdevel << func_orient << amo::endl;);
         return m_pBrowserProcessHandler.get();
     }
     
     CefRefPtr<CefResourceBundleHandler> ClientApp::GetResourceBundleHandler() {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         //return m_pResourceBundleHandler.get();
         return NULL;
     }
     
     void ClientApp::OnRegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar> registrar) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         m_CookieableSchemes.push_back("http");
         m_CookieableSchemes.push_back("https");
         RegisterCustomSchemes(registrar, m_CookieableSchemes);
@@ -174,12 +174,12 @@ namespace amo {
         //      //command_line->AppendSwitch("--register-netscape-plugins = \"E:\\amoylel-Out\\Binary.UR32\\plugins\\npaemo.dll;application/x-demo-a\"");
         //      //command_line->AppendArgument("--register-pepper-plugins = \"E:\\amoylel-Out\\Binary.UR32\\plugins\\npaemo.dll;application/x-demo-a\"");
         
-        $log(amo::cdevel << func_orient << "自定义CommandLine" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "自定义CommandLine" << amo::endl;);
         return;
     }
     
     void ClientApp::OnContextInitialized() {
-        $log(amo::cdevel << func_orient << "Context初始化完成回调" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "Context初始化完成回调" << amo::endl;);
 #if CHROME_VERSION_BUILD >= 2357
         CefRefPtr<CefCookieManager> manager = CefCookieManager::GetGlobalManager(NULL);
 #else
@@ -216,7 +216,7 @@ namespace amo {
     bool ClientApp::RegisterCustomSchemeFactory(const CefString& scheme_name,
             const CefString& domain_name,
             CefRefPtr<CefSchemeHandlerFactory> factory) {
-        $log(amo::cdevel << func_orient << "注册自定义协议工厂类，协议名："
+        $clog(amo::cdevel << func_orient << "注册自定义协议工厂类，协议名："
              << amo::string(scheme_name.ToString(), true).str() << "域名："
              << amo::string(domain_name.ToString(), true).str() << amo::endl;);
         return CefRegisterSchemeHandlerFactory(scheme_name, domain_name, factory);

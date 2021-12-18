@@ -493,14 +493,14 @@ namespace amo {
     
     Any WebkitView::createPipeClient(IPCMessage::SmartType msg) {
     
-        $log(amo::cdevel << func_orient << "95271" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "95271" << amo::endl;);
         
         std::shared_ptr<amo::pipe<amo::pipe_type::server> > pBrowserPipeServer;			//消息管道主进程服务端
         std::shared_ptr<amo::pipe<amo::pipe_type::client> > pRenderPipeClient;			//消息管道主进程客户端
         
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string strPipeClientName = RendererPipePrefix + (std::string)args->getString(0);
-        $log(amo::cdevel << func_orient << "连接管道：" << strPipeClientName << amo::endl;);
+        $clog(amo::cdevel << func_orient << "连接管道：" << strPipeClientName << amo::endl;);
         std::string strPipeServerName = BrowserPipePrefix + (std::string)args->getString(0);
         pRenderPipeClient.reset(new amo::pipe<amo::pipe_type::client>(strPipeClientName));
         pBrowserPipeServer.reset(new amo::pipe<amo::pipe_type::server>(strPipeServerName, DefaultPipeSize));
@@ -508,10 +508,10 @@ namespace amo {
         
         int nBrowserID = args->getInt(1);
         
-        $log(amo::cdevel << func_orient << "管道连接" << (bOK ? "成功" : "失败") << amo::endl;);
+        $clog(amo::cdevel << func_orient << "管道连接" << (bOK ? "成功" : "失败") << amo::endl;);
         
         bOK = pBrowserPipeServer->connect();
-        $log(amo::cdevel << func_orient << "主进程管道服务连接" << (bOK ? "成功" : "失败") << amo::endl;);
+        $clog(amo::cdevel << func_orient << "主进程管道服务连接" << (bOK ? "成功" : "失败") << amo::endl;);
         std::shared_ptr<ProcessExchanger> pBrowserProcessExchanger;					//消息管道数据交换类
         pBrowserProcessExchanger = BrowserProcessExchangerManager::getInstance()->findExchanger(nBrowserID);
         assert(pBrowserProcessExchanger);

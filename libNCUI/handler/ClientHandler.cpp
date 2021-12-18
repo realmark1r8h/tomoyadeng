@@ -47,7 +47,7 @@ namespace amo {
         
         if (message_name != MSG_LOG_MESSAGE) {
         
-            /* $log(
+            /* $clog(
             
                  amo::cdevel << func_orient << message_name << "\n" << log_separator;
             

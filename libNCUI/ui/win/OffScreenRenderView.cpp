@@ -850,7 +850,7 @@ namespace amo {
         }
         
         Gdiplus::Rect rt(left, top, width, height);
-        $log(amo::cdevel << "查找范围：" << left << ", " << top << ", " << width << ", " << height << amo::endl;);
+        $clog(amo::cdevel << "查找范围：" << left << ", " << top << ", " << width << ", " << height << amo::endl;);
         Gdiplus::Status status = image->LockBits(&rt, ImageLockModeRead, PixelFormat32bppARGB, &bmpData);
         
         if (status != Gdiplus::Status::Ok) {
@@ -887,7 +887,7 @@ namespace amo {
                 }
                 
                 if (nCount >= m_oActiveElementInfo.fontSize) {
-                    $log(amo::cdevel << "找到了11：" << x << ", " << y << amo::endl;);
+                    $clog(amo::cdevel << "找到了11：" << x << ", " << y << amo::endl;);
                     m_point.x = x + left - 1;
                     m_point.y = y - m_oActiveElementInfo.fontSize + top;
                     
@@ -903,7 +903,7 @@ namespace amo {
         
         image->UnlockBits(&bmpData);
         imm32_manager_->updateImeWindow(m_point);
-        $log(amo::cdevel << "查找用时t1：" << t1.elapsed() << amo::endl;);
+        $clog(amo::cdevel << "查找用时t1：" << t1.elapsed() << amo::endl;);
     }
     
 }

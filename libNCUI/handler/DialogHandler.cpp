@@ -15,7 +15,7 @@ namespace amo {
                                      const std::vector<CefString>& accept_filters,
                                      int selected_accept_filter,
                                      CefRefPtr<CefFileDialogCallback> callback) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
 
@@ -36,7 +36,7 @@ namespace amo {
                                      const CefString& default_file_name,
                                      const std::vector<CefString>& accept_types,
                                      CefRefPtr<CefFileDialogCallback> callback) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
 

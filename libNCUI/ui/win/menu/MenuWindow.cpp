@@ -504,7 +504,7 @@ namespace amo {
             
             for (auto& p : vec) {
                 std::string sb = p.to_string();
-                $log(amo::cdevel << sb << amo::endl;);
+                $clog(amo::cdevel << sb << amo::endl;);
                 amo::string menuElenent(skinMenuElement, true);
                 
                 if (!p.contains_key("enabled")) {

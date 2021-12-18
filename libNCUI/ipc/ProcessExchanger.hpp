@@ -103,11 +103,11 @@ namespace amo {
                     break;
                 }
                 
-                //$log(amo::cdevel << func_orient << "数据读取成功：：" << std::string((char*)msg.data()) << amo::endl;);
+                //$clog(amo::cdevel << func_orient << "数据读取成功：：" << std::string((char*)msg.data()) << amo::endl;);
                 return Any(value_type, std::string((char*)msg.data()));		// 返回Any类型
             } while (false);
             
-            $log(amo::cdevel << func_orient << "数据读取失败 " << amo::endl;);
+            $clog(amo::cdevel << func_orient << "数据读取失败 " << amo::endl;);
             return Nothing();
         }
         
@@ -202,7 +202,7 @@ namespace amo {
                 return true;
             } while (false);
             
-            $log(amo::cdevel << func_orient << "数据写入失败:: " << anyToString(t) << amo::endl;);
+            $clog(amo::cdevel << func_orient << "数据写入失败:: " << anyToString(t) << amo::endl;);
             return false;
         }
         
@@ -268,7 +268,7 @@ namespace amo {
                 return true;
             } while (false);
             
-            $log(amo::cdevel << func_orient << "数据写入失败:: " << t.value() << amo::endl;);
+            $clog(amo::cdevel << func_orient << "数据写入失败:: " << t.value() << amo::endl;);
             return false;
         }
         
@@ -276,7 +276,7 @@ namespace amo {
             const IPCMessage::SmartType&  t) {
             std::unique_lock<std::recursive_mutex> lock(m_mutexClient);
             
-            //$log(amo::cdevel << func_orient << "开始写入数据：" << t->toJson().to_string() << amo::endl;);
+            //$clog(amo::cdevel << func_orient << "开始写入数据：" << t->toJson().to_string() << amo::endl;);
             
             do {
                 int nCount = 0;
@@ -326,11 +326,11 @@ namespace amo {
                     break;
                 }
                 
-                //$log(amo::cdevel << func_orient << "数据写入成功：" << t->toJson().to_string() << amo::endl;);
+                //$clog(amo::cdevel << func_orient << "数据写入成功：" << t->toJson().to_string() << amo::endl;);
                 return true;
             } while (false);
             
-            $log(amo::cdevel << func_orient << "数据写入失败:: " << t->toJson().to_string() << amo::endl;);
+            $clog(amo::cdevel << func_orient << "数据写入失败:: " << t->toJson().to_string() << amo::endl;);
             return false;
             
             
@@ -544,7 +544,7 @@ namespace amo {
             if (any.type() == AnyValueType<IPCMessage>::value) {
                 IPCMessage::SmartType msg(new IPCMessage());
                 *msg = any;
-                $log(amo::cdevel << func_orient << any.value() << amo::endl;);
+                $clog(amo::cdevel << func_orient << any.value() << amo::endl;);
                 m_fnSyncMessageCallback(getBrowserID(), msg);
                 return amo::Nothing();
             } else {
@@ -553,10 +553,10 @@ namespace amo {
         }
         
         Any tryProcessMessage() {
-            $log(amo::cdevel << func_orient << amo::endl;);
+            $clog(amo::cdevel << func_orient << amo::endl;);
             
             if (!isReady()) {
-                //$log(amo::cdevel << func_orient << "Not Ready" << amo::endl;);
+                //$clog(amo::cdevel << func_orient << "Not Ready" << amo::endl;);
                 return Nothing();
             }
             
@@ -571,7 +571,7 @@ namespace amo {
                 IPCMessage::SmartType msg(new amo::IPCMessage());
                 *msg = any;
                 m_fnSyncMessageCallback(getBrowserID(), msg);
-                //$log(amo::cdevel << __FUNCTION__ << ", " << msg->getID() << amo::endl;);
+                //$clog(amo::cdevel << __FUNCTION__ << ", " << msg->getID() << amo::endl;);
                 return Nothing();
             } else if (any.type() == AnyValueType<IPCResult>::value) {
                 return any;
@@ -582,7 +582,7 @@ namespace amo {
                 throw std::runtime_error("处理到不应该出现的消息，只能收到ProcessMessage类");
             }
             
-            $log(amo::cdevel << func_orient << "tryProcessMessage 失败::: " << any.value() << amo::endl;);
+            $clog(amo::cdevel << func_orient << "tryProcessMessage 失败::: " << any.value() << amo::endl;);
             return Nothing();
         }
     protected:
@@ -626,7 +626,7 @@ namespace amo {
             }
             
             R ret = iter->second->exchange<R>();
-            //$log(amo::cdevel << "管道：：" << m_nN << ", "  << ret << amo::endl;);
+            //$clog(amo::cdevel << "管道：：" << m_nN << ", "  << ret << amo::endl;);
             return ret;
         }
         
@@ -649,7 +649,7 @@ namespace amo {
             }
             
             Any ret = iter->second->exchange<Any>();
-            //$log(amo::cdevel << "管道：：" << m_nN << ", " << ret.value() << amo::endl;);
+            //$clog(amo::cdevel << "管道：：" << m_nN << ", " << ret.value() << amo::endl;);
             return ret;
         }
         
@@ -680,7 +680,7 @@ namespace amo {
             auto iter = m_mpBrowserExchanger.find(id);
             
             if (iter == m_mpBrowserExchanger.end() || !iter->second) {
-                $log(amo::cdevel << func_orient << "没有找到管道 " << amo::endl;);
+                $clog(amo::cdevel << func_orient << "没有找到管道 " << amo::endl;);
                 return false;
             }
             
@@ -761,7 +761,7 @@ namespace amo {
                 ++n;
                 
                 if (n % 5000 == 0) {
-                    $log(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " << message_id << amo::endl;);
+                    $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " << message_id << amo::endl;);
                 }
                 
                 Any any = findCache(id, message_id);
@@ -769,7 +769,7 @@ namespace amo {
                 if (any.type() == AnyValueType<amo::IPCResult>::value) {
                     removeCache(id, message_id);
                     amo::IPCResult result = any;
-                    //$log(amo::cdevel << __FUNCTION__ << ", " <<  result.getID() << amo::endl;);
+                    //$clog(amo::cdevel << __FUNCTION__ << ", " <<  result.getID() << amo::endl;);
                     return result.getResult();
                 }
                 
@@ -785,14 +785,14 @@ namespace amo {
                             amo::IPCResult result = ret;
                             
                             if (result.getID() == message_id) {
-                                $log(amo::cdevel << __FUNCTION__ << ", " << result.getID() << amo::endl;);
+                                $clog(amo::cdevel << __FUNCTION__ << ", " << result.getID() << amo::endl;);
                                 return result.getResult();
                             }
                             
                             insertCache(p.first, result.getID(), ret);
                         } else {
                             // 不应该出现
-                            $log(amo::cdevel << func_orient << amo::endl;);
+                            $clog(amo::cdevel << func_orient << amo::endl;);
                         }
                     } else {
                         tryProcessMessage(p.first);
@@ -804,7 +804,7 @@ namespace amo {
                         //
                         //    if (result.getID() == message_id) {
                         //        // 这里不应该出现
-                        //        $log(amo::cdevel << __FUNCTION__ << ", " << result.getID() << amo::endl;);
+                        //        $clog(amo::cdevel << __FUNCTION__ << ", " << result.getID() << amo::endl;);
                         //        return result.GetResult();
                         //    }
                         //
@@ -828,7 +828,7 @@ namespace amo {
          */
         
         void insertCache(int browserID, int messageID, Any& ret) {
-            $log(amo::cdevel << func_orient << ret.value() << amo::endl;);
+            $clog(amo::cdevel << func_orient << ret.value() << amo::endl;);
             auto iter = m_oResultCache.find(browserID);
             
             if (iter == m_oResultCache.end()) {
@@ -904,7 +904,7 @@ namespace amo {
             std::shared_ptr<T> ptr = findExchanger(id);
             
             if (!ptr) {
-                $log(amo::cdevel << func_orient << "Nothing" << amo::endl;);
+                $clog(amo::cdevel << func_orient << "Nothing" << amo::endl;);
                 return Nothing();
             }
             
@@ -915,14 +915,14 @@ namespace amo {
                 
                 insertCache(id, result.getID(), ret);
                 
-                //$log(amo::cdevel << func_orient << "处理到其他结果" << amo::endl;);
+                //$clog(amo::cdevel << func_orient << "处理到其他结果" << amo::endl;);
                 // 一直处理，直到管道中没有消息为止
                 tryProcessMessage(id);
             } else if (ret.type() != AnyValueType<Nothing>::value) {
                 assert(false);
             }
             
-            $log(amo::cdevel << func_orient << ret.value() << amo::endl;);
+            $clog(amo::cdevel << func_orient << ret.value() << amo::endl;);
             return ret;
         }
     private:

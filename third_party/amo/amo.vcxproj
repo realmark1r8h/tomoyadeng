@@ -108,6 +108,7 @@
     <ClInclude Include="amo\loader.hpp" />
     <ClInclude Include="amo\loader_lite.hpp" />
     <ClInclude Include="amo\logger.hpp" />
+    <ClInclude Include="amo\logger\notify_sink_sinks.h" />
     <ClInclude Include="amo\logger\raw_daily_file_sink.h" />
     <ClInclude Include="amo\logger\raw_file_helper.h" />
     <ClInclude Include="amo\looper_executor.hpp" />

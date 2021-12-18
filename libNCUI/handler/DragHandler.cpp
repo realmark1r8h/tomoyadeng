@@ -8,7 +8,7 @@ namespace amo {
     bool DragHandler::OnDragEnter(CefRefPtr<CefBrowser> browser,
                                   CefRefPtr<CefDragData> dragData,
                                   DragOperationsMask mask) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
 
@@ -23,7 +23,7 @@ namespace amo {
 
     void DragHandler::OnDraggableRegionsChanged(CefRefPtr<CefBrowser> browser,
             const std::vector<CefDraggableRegion>& regions) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it) {

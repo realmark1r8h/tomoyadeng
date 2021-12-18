@@ -17,7 +17,7 @@ namespace amo {
     void DownloadHandler::OnDownloadUpdated(CefRefPtr<CefBrowser> browser,
                                             CefRefPtr<CefDownloadItem> download_item,
                                             CefRefPtr<CefDownloadItemCallback> callback) {
-        $log(amo::cdevel << func_orient << "文件下载进度：" << amo::string(download_item->GetSuggestedFileName().ToString(), true).str() << ": " << download_item->GetReceivedBytes() << " / " << download_item->GetTotalBytes() << amo::endl;);
+        $clog(amo::cdevel << func_orient << "文件下载进度：" << amo::string(download_item->GetSuggestedFileName().ToString(), true).str() << ": " << download_item->GetReceivedBytes() << " / " << download_item->GetTotalBytes() << amo::endl;);
         
         if (m_fnDownloadUpdate) {
             bool bOk = m_fnDownloadUpdate(browser, download_item, callback);
@@ -55,7 +55,7 @@ namespace amo {
                                            CefRefPtr<CefDownloadItem> download_item,
                                            const CefString& suggested_name,
                                            CefRefPtr<CefBeforeDownloadCallback> callback) {
-        $log(amo::cdevel << func_orient << "下载文件：" << amo::string(download_item->GetSuggestedFileName().ToString(), true).str() << download_item->GetTotalBytes() << amo::endl;);
+        $clog(amo::cdevel << func_orient << "下载文件：" << amo::string(download_item->GetSuggestedFileName().ToString(), true).str() << download_item->GetTotalBytes() << amo::endl;);
         ASSERT(CefCurrentlyOn(TID_UI));
         
         if (m_fnBeforeDownload) {

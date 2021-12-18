@@ -179,8 +179,7 @@ namespace amo {
         
         bool start(const std::string args = "") {
             m_timer.restart();
-            $log(amo::cdevel << log_separator << amo::endl;);
-            $log(amo::cdevel  << "process start: " << amo::date_time().to_string() << amo::endl;);
+            $devel("process start: {0}", amo::date_time().to_string());
             
             if (pi.hProcess != NULL) {
                 return false;
@@ -198,13 +197,13 @@ namespace amo {
             
             
             if (!CreatePipe(&hRead, &hWrite, &sa, 0)) {
-                $log(amo::cerr << "process error：" << amo::system::getLastErrorMessage() << amo::endl;);
+                $err("process error：{0}", amo::system::getLastErrorMessage());
                 return false;
             }
             
             std::string command = makeCommand();
             
-            $log(amo::cdevel << "process command：" << command << amo::endl;);
+            $devel("process command：{0}", command);
             STARTUPINFOA si;
             
             si.cb = sizeof(STARTUPINFO);
@@ -325,7 +324,7 @@ namespace amo {
                 }
                 
                 if (nMaxDelayMS > 0 && m_timer.elapsed() > nMaxDelayMS) {
-                    $cerr("进程执行超时，将被强行终止");
+                    $err("进程执行超时，将被强行终止");
                     // 超时，杀掉进程
                     kill();
                 } else if (cbBytesRead == 0) {
@@ -339,12 +338,12 @@ namespace amo {
                 
                 std::string maybeU8String(buffer, bytesRead);
                 amo::string ansiStr(maybeU8String, m_bUTF8);
-                $log(amo::cdevel << ansiStr.str() << amo::endl;);
+                $devel(ansiStr.str());
                 
                 strRetval.append(ansiStr);
             }
             
-            //$log(amo::cdevel << strRetval.c_str() << amo::endl;);
+            //$devel << strRetval.c_str() << amo::endl;);
             strRetval.replace("\r", "");
             m_pResult->setResultMessage(strRetval.split("\n"));
             //OutputDebugStringA(strRetval.c_str());
@@ -352,8 +351,8 @@ namespace amo {
             
             CloseHandle(hRead);
             hWrite = hRead = NULL;
-            $log(amo::cdevel << "process completed：" << amo::date_time().to_string() << "，used：" << m_timer.elapsed()  << amo::endl;);
-            $log(amo::cdevel << log_separator << amo::endl;);
+            $devel("process completed：{0}，used：{1}", amo::date_time().to_string(), m_timer.elapsed());
+            $devel(log_separator);
             return m_pResult;
             
         }
@@ -484,7 +483,7 @@ namespace amo {
                 
             }
             
-            $log(amo::cdevel << "find pid by name [" << name << "] complete: " << t.elapsed() << "ms" <<  amo::endl);
+            $devel("find pid by name [{0}] complete: {1}ms", name, t.elapsed());
             SetLastError(0);
             return retval;
             

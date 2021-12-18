@@ -8,7 +8,7 @@ namespace amo {
 #if CHROME_VERSION_BUILD >= 2623
     void GeolocationHandler::OnCancelGeolocationPermission(CefRefPtr<CefBrowser> browser,
             int request_id) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -18,7 +18,7 @@ namespace amo {
     void GeolocationHandler::OnCancelGeolocationPermission(CefRefPtr<CefBrowser> browser,
             const CefString& requesting_url,
             int request_id) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -32,7 +32,7 @@ namespace amo {
             const CefString& requesting_url,
             int request_id,
             CefRefPtr<CefGeolocationCallback> callback) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         //允许所有网站访问地理位置
         callback->Continue(true);
 
@@ -48,7 +48,7 @@ namespace amo {
             const CefString& requesting_url,
             int request_id,
             CefRefPtr<CefGeolocationCallback> callback) {
-        $log(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         //允许所有网站访问地理位置
         callback->Continue(true);
 

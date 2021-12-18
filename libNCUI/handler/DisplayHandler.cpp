@@ -7,7 +7,7 @@ namespace amo {
                                           const CefString& message,
                                           const CefString& source,
                                           int line) {
-        $log(amo::cdevel << func_orient << "\nmessage:\n" << amo::string(message.ToString(), true).str() << "\nsouce: \n" << amo::string(source.ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient << "\nmessage:\n" << amo::string(message.ToString(), true).str() << "\nsouce: \n" << amo::string(source.ToString(), true).str() << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
 
@@ -22,7 +22,7 @@ namespace amo {
 
     void DisplayHandler::OnStatusMessage(CefRefPtr<CefBrowser> browser,
                                          const CefString& value) {
-        $log(amo::cdevel << func_orient << amo::string(value.ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::string(value.ToString(), true).str() << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -30,7 +30,7 @@ namespace amo {
     }
 
     bool DisplayHandler::OnTooltip(CefRefPtr<CefBrowser> browser, CefString& text) {
-        //$log(amo::cdevel << func_orient << text << amo::endl;);
+        //$clog(amo::cdevel << func_orient << text << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
 
@@ -46,7 +46,7 @@ namespace amo {
     void DisplayHandler::OnTitleChange(CefRefPtr<CefBrowser> browser,
                                        const CefString& title) {
 
-        $log(amo::cdevel << func_orient << amo::string(title.ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::string(title.ToString(), true).str() << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
@@ -56,7 +56,7 @@ namespace amo {
     void DisplayHandler::OnAddressChange(CefRefPtr<CefBrowser> browser,
                                          CefRefPtr<CefFrame> frame,
                                          const CefString& url) {
-        $log(amo::cdevel << func_orient << amo::string(url.ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::string(url.ToString(), true).str() << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
 
         for (; it != m_Delegates.end(); ++it)
