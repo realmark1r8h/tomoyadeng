@@ -14,14 +14,16 @@
 #include <amo/path.hpp>
 #include <amo/logger.hpp>
 #include <amo/regular.hpp>
-#include "pipe.hpp"
 #include <amo/timer.hpp>
 #include <amo/date_time.hpp>
 #include <amo/system.hpp>
+#include <amo/logger.hpp>
 
 
 namespace amo {
-    class process : public std::enable_shared_from_this<process> {
+    class process
+        : public log_object
+        , public std::enable_shared_from_this<process> {
     public:
         class result : public std::enable_shared_from_this<result> {
         public:
@@ -483,7 +485,7 @@ namespace amo {
                 
             }
             
-            $devel("find pid by name [{0}] complete: {1}ms", name, t.elapsed());
+            $cdevel("find pid by name [{0}] complete: {1}ms", name, t.elapsed());
             SetLastError(0);
             return retval;
             

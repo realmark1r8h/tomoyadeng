@@ -15,8 +15,9 @@
 #include <amo/timer.hpp>
 
 namespace amo {
-    class adb :
-        public std::enable_shared_from_this<adb> {
+    class adb
+        : public log_object
+        , public std::enable_shared_from_this<adb> {
     public:
         static std::shared_ptr<adb> create(const std::string& deviceID = "") {
             std::shared_ptr<adb> pCommand(new adb(deviceID));
@@ -1175,6 +1176,7 @@ namespace amo {
         
         std::shared_ptr<process> createProcess(const std::string& args = "") {
             std::shared_ptr<amo::process> pProcess(new process(m_strAdbPath));
+            pProcess->setLogger(getLogger());
             
             if (!m_strDeviceID.empty()) {
                 std::string args = "-s ";

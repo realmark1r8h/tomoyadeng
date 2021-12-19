@@ -77,32 +77,30 @@
 
 
 #ifndef $devel
-#define $devel $cdevel
+#define $devel(format, ...) writeLog(amo::log::level::trace, (std::string() + ##format).c_str(), ##__VA_ARGS__);
 #endif
 
 #ifndef $debug
-#define $debug $cdebug
+#define $debug(format, ...) writeLog(amo::log::level::debug, (std::string() + ##format).c_str(), ##__VA_ARGS__);
 #endif
 
 #ifndef $info
-#define $info $cinfo
+#define $info(format, ...) writeLog(amo::log::level::info, (std::string() + ##format).c_str(), ##__VA_ARGS__);
 #endif
 
 #ifndef $warn
-#define $warn $cwarn
+#define $warn(format, ...) writeLog(amo::log::level::warn, (std::string() + ##format).c_str(), ##__VA_ARGS__);
 #endif
 
 #ifndef $err
-#define $err $cerr
+#define $err(format, ...) writeLog(amo::log::level::err, (std::string() + ##format).c_str(), ##__VA_ARGS__);
 #endif
 
 #ifndef $fatal
-#define $fatal $cfatal
+#define $fatal(format, ...) writeLog(amo::log::level::critical, (std::string() + ##format).c_str(), __VA_ARGS__);
 #endif
 
-#ifndef $log
-#define $log $clog
-#endif
+
 
 namespace amo {
 
@@ -400,6 +398,60 @@ namespace amo {
     static amo::log::unit&	cwarn	= log_utils::get_default_warn_unit();
     static amo::log::unit&	cerr	= log_utils::get_default_rerror_unit();
     static amo::log::unit&	cfatal	= log_utils::get_default_fatal_unit();
+    
+    
+    class log_object {
+    public:
+        log_object() {
+        
+        }
+        
+        std::shared_ptr<spdlog::logger> getLogger() const {
+            return m_logger;
+        }
+        
+        void setLogger(std::shared_ptr<spdlog::logger> val) {
+            m_logger = val;
+        }
+        
+        template <typename... Args>
+        inline void writeLog(log::level::level_enum lvl, const char* fmt, const Args&... args) {
+            if (getLogger()) {
+                getLogger()->log(lvl, fmt, args...);
+            } else {
+                switch (lvl) {
+                case log::level::trace:
+                    $cdevel(fmt, args...);
+                    break;
+                    
+                case log::level::debug:
+                    $cdebug(fmt, args...);
+                    break;
+                    
+                case log::level::info:
+                    $cinfo(fmt, args...);
+                    break;
+                    
+                case log::level::warn:
+                    $cwarn(fmt, args...);
+                    break;
+                    
+                case log::level::err:
+                    $cerr(fmt, args...);
+                    break;
+                    
+                case log::level::critical:
+                    $cfatal(fmt, args...);
+                    break;
+                    
+                default:
+                    break;
+                }
+            }
+        }
+    private:
+        std::shared_ptr<spdlog::logger> m_logger;
+    };
     
 }
 
