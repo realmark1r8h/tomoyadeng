@@ -14,6 +14,7 @@
 #include <vector>
 #include <amo/timer.hpp>
 
+
 namespace amo {
     class adb
         : public log_object
@@ -658,6 +659,7 @@ namespace amo {
             pProcess->start();
             
             int64_t nLastTimestamp = 0;
+            int64_t nLastFileSize = 0;
             auto result = pProcess->getResult(0, 0, [ & ](int64_t nTime)->bool {
             
                 if (nLastTimestamp + DEFAULT_ADB_TIMEOUT > nTime) {
@@ -673,6 +675,14 @@ namespace amo {
                     return false;
                 }
                 int nSize = file.size();
+                
+                if (nSize == nLastFileSize) {
+                    $devel("备份文件长时间未写入数据，当前大小[{0}],耗费时间[{1}ms]，包名[{2}]，判定备份可能失败", nSize, nTime, strPackage);
+                    return false;
+                }
+                
+                nLastFileSize = nSize;
+                
                 $devel("正在备份文件，当前大小[{0}],耗费时间[{1}ms]，包名[{2}]", nSize, nTime, strPackage);
                 
                 if (nSize < nTime) {
@@ -683,9 +693,9 @@ namespace amo {
                 return true;
             });
             
-            if (!result->isSuccess()) {
-                return false;
-            }
+            /* if (!result->isSuccess()) {
+                 return false;
+             }*/
             
             std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
             
@@ -1106,6 +1116,80 @@ namespace amo {
         }
         
         bool startServer() {
+        
+            bool bStarted = false;
+            
+            do {
+                $devel("第一次尝试启动ADB服务");
+                
+                // 关闭占用12580端口程序
+                //amo::process::kill_process_by_port(12580);
+                
+                if (this->startADBServer()) {
+                    $devel("ADB服务启动成功");
+                    bStarted = true;
+                    break;
+                }
+                
+                
+                $devel("正在尝试结束占用端口5037的进程");
+                // 干掉端口5037的进程
+                bool bOk = amo::process::kill_process_by_port(5037);
+                
+                if (!bOk) {
+                    $err("占用端口5037的进程结束失败，无法启动ADB服务");
+                    bStarted = false;
+                    break;
+                }
+                
+                $devel("正在验证端口5037的进程是否被结束");
+                int pid = amo::process::find_pid_by_port(5037);
+                
+                if (pid != 0) {
+                
+                    $err("验证未通过：占用端口5037的进程结束失败，无法启动ADB服务");
+                    bStarted = false;
+                    break;
+                }
+                
+                $devel("第二次尝试启动ADB服务");
+                
+                if (this->startADBServer()) {
+                    $devel("ADB服务启动成功");
+                    bStarted = true;
+                    break;
+                }
+                
+                $devel("尝试结束所有名为adb.exe的进程");
+                
+                // 还是没办法启动，那么杀掉所有名为adb.exe 的进程
+                if (!amo::process::kill_process_by_name("adb.exe")) {
+                    $err("结束所有名为adb.exe的进程失败");
+                    bStarted = false;
+                    break;
+                }
+                
+                $devel("再三次尝试启动ADB服务");
+                
+                // 再开一次adb服务
+                if (this->startADBServer()) {
+                    $devel("ADB服务启动成功");
+                    bStarted = true;
+                    break;
+                }
+                
+                // 还是不行的话，那也没办法了
+                
+            } while (false);
+            
+            if (!bStarted) {
+                $devel("ADB服务启动失败");
+            }
+            
+            return bStarted;
+        }
+        
+        bool startADBServer() {
             auto pProcess = createProcess("start-server");
             pProcess->start();
             // 开启服务的超时时间为10秒
@@ -1139,6 +1223,55 @@ namespace amo {
         }
         
         bool killServer() {
+        
+            $devel("第一次尝试停止ADB服务");
+            
+            if (this->killADBServer()) {
+                $devel("停止ADB服务成功");
+                return true;
+            }
+            
+            $devel("正在尝试结束占用端口5037的进程");
+            bool bOk = amo::process::kill_process_by_port(5037);
+            
+            if (!bOk) {
+                $err("占用端口5037的进程结束失败，无法停止ADB服务");
+                return false;
+            }
+            
+            $devel("正在验证端口5037的进程是否被结束");
+            int pid = amo::process::find_pid_by_port(5037);
+            
+            if (pid != 0) {
+                $err("验证未通过：占用端口5037的进程结束失败，无法停止ADB服务");
+                return false;
+            }
+            
+            $devel("第二次尝试停止ADB服务");
+            
+            if (this->killADBServer()) {
+                $devel("停止ADB服务成功");
+                return true;
+            }
+            
+            $devel("尝试结束所有名为adb.exe的进程");
+            
+            if (!amo::process::kill_process_by_name("adb.exe")) {
+                $err("结束所有名为adb.exe的进程失败，无法停止ADB服务");
+                return false;
+            }
+            
+            $devel("第三次尝试停止ADB服务");
+            
+            if (this->killADBServer()) {
+                $devel("停止ADB服务成功");
+                return true;
+            }
+            
+            return false;
+        }
+        
+        bool killADBServer() {
             auto pProcess = createProcess("kill-server");
             pProcess->start();
             auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
@@ -1231,6 +1364,7 @@ namespace amo {
         
         std::shared_ptr<process> createProcess(const std::string& args = "") {
             std::shared_ptr<amo::process> pProcess(new process(m_strAdbPath));
+            pProcess->setEventCallback(std::bind(&amo::adb::onEventCallback, this, std::placeholders::_1));
             pProcess->setLogger(getLogger());
             // 升级了adb.exe 新版本的adb输出使用utf8编码
             pProcess->setUTF8(true);
@@ -1248,6 +1382,24 @@ namespace amo {
             m_process = pProcess;
             
             return pProcess;
+        }
+        
+    private:
+        void onEventCallback(const amo::process_event& nEventID) {
+            if (nEventID == process_event_timeout) {
+                for (int i = 0; i < 3; ++i) {
+                    if (killServer()) {
+                        break;
+                    }
+                }
+                
+                for (int i = 0; i < 3; ++i) {
+                    if (startServer()) {
+                        break;
+                    }
+                }
+                
+            }
         }
         
     private:

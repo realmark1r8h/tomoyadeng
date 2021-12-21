@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <functional>
 #include <amo/string.hpp>
 #include <sstream>
 #include <amo/path.hpp>
@@ -21,9 +22,19 @@
 
 
 namespace amo {
+
+    enum process_event {
+        process_event_success = 0, // 成功
+        process_event_timeout = 1, // 超时
+    };
+    
     class process
         : public log_object
         , public std::enable_shared_from_this<process> {
+    public:
+    
+    
+    
     public:
         class result : public std::enable_shared_from_this<result> {
         public:
@@ -78,7 +89,6 @@ namespace amo {
             bool success;
             std::vector<amo::string> message;
         };
-        
         
     public:
         template<  typename ... Args>
@@ -346,6 +356,11 @@ namespace amo {
                         $err("进程长时间[{0}, {1}]没有输出，将被强行终止", nTimeoutMS, m_timer.elapsed());
                         m_pResult->setSuccess(false);
                         kill();
+                        
+                        if (getEventCallback()) {
+                            getEventCallback()(process_event_timeout);
+                        }
+                        
                         break;
                     }
                 }
@@ -395,6 +410,12 @@ namespace amo {
         }
         
         
+        std::function<void(const process_event &)> getEventCallback() const {
+            return m_fnEventCallback;
+        }
+        void setEventCallback(std::function<void(const process_event &)> val) {
+            m_fnEventCallback = val;
+        }
     public:
     
         /**
@@ -648,7 +669,7 @@ namespace amo {
         
         DWORD dwCreationFlags;
         
-        
+        std::function<void(const process_event&)> m_fnEventCallback;
         
     };
 }
