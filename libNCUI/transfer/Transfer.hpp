@@ -8,6 +8,7 @@
 
 #include <amo/json.hpp>
 #include <amo/stdint.hpp>
+#include <amo/logger.hpp>
 
 #include "ipc/Any.hpp"
 #include "ipc/IPCMessage.hpp"
@@ -79,7 +80,7 @@ namespace amo {
      * @brief	JS调用C++时消息遍历基类.
      * 			所有的JS对C++的调用都由此类派生
      */
-    class Transfer : public std::enable_shared_from_this<Transfer> {
+    class Transfer : public log_object, public std::enable_shared_from_this<Transfer> {
     public:
         /*!
          * @typedef	std::function<bool(const std::string&,
@@ -145,7 +146,7 @@ namespace amo {
         }
         
         ~Transfer() {
-        
+            $cdevel("正在释放资源：transferName = \"{0}\"， objectName = \"{1}\"， objectID = {2}", transferName(), getObjectName(), getObjectID());
         }
         
         /**

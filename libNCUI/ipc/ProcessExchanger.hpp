@@ -606,6 +606,10 @@ namespace amo {
     public:
         int m_nN;
         
+        ProcessExchangerManager() {
+            m_nTimeout = 1000;
+        }
+        
         /*!
          * @fn	template<typename R> R ProcessExchangerManager::exchange(int id)
          *
@@ -755,13 +759,26 @@ namespace amo {
                 return Undefined();
             }
             
-            int n = 0;
+            
+            amo::timer t;
             
             while (true) {
-                ++n;
+            
+                if (t.elapsed() > m_nTimeout) {
                 
-                if (n % 5000 == 0) {
                     $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " << message_id << amo::endl;);
+                    $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " << message_id << amo::endl;);
+                    $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " << message_id << amo::endl;);
+                    $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " << message_id << amo::endl;);
+                    $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " << message_id << amo::endl;);
+                    m_oDeadlockIDs.insert(std::make_pair(id, message_id));
+                    
+                    if (getDeadlockCallback()) {
+                        return  getDeadlockCallback()();
+                    } else {
+                        return Deadlock();
+                    }
+                    
                 }
                 
                 Any any = findCache(id, message_id);
@@ -829,6 +846,13 @@ namespace amo {
         
         void insertCache(int browserID, int messageID, Any& ret) {
             $clog(amo::cdevel << func_orient << ret.value() << amo::endl;);
+            
+            if (m_oDeadlockIDs.find(std::make_pair(browserID, messageID)) != m_oDeadlockIDs.end()) {
+                $cwarn("处理到已放弃的死锁ID，该消息不会被缓存");
+                m_oDeadlockIDs.erase(std::make_pair(browserID, messageID));
+                return;
+            }
+            
             auto iter = m_oResultCache.find(browserID);
             
             if (iter == m_oResultCache.end()) {
@@ -925,6 +949,12 @@ namespace amo {
             $clog(amo::cdevel << func_orient << ret.value() << amo::endl;);
             return ret;
         }
+        std::function<Any()> getDeadlockCallback() const {
+            return m_fnDeadlockCallback;
+        }
+        void setDeadlockCallback(std::function<Any()> val) {
+            m_fnDeadlockCallback = val;
+        }
     private:
         /*! @brief	保存管道. */
         std::unordered_map<int, std::shared_ptr<T> > m_mpBrowserExchanger;
@@ -932,6 +962,15 @@ namespace amo {
         std::mutex m_mutex;
         /*! @brief	同步调用结果缓存. */
         std::unordered_map<int, std::unordered_map<int, Any> > m_oResultCache;
+        
+        /** @brief	进程死锁回调函数. */
+        std::function<Any()> m_fnDeadlockCallback;
+        
+        /** @brief	发生死锁的消息ID(BrowserID + MessageID)，如果执行的结果里面有这个ID，说明该消息已经被放弃了，直接丢掉就可以了. */
+        std::set<std::pair<int, int> > m_oDeadlockIDs;
+        
+        /** @brief	任务超时时间，如果超过这个时间任务还未完成，那么认为程序发生了死锁将放弃该任务的执行，默认为1000ms. */
+        int64_t m_nTimeout;
     };
     
     /*!

@@ -185,7 +185,7 @@ namespace amo {
         
     protected:
         /** @brief	事件回调函数. */
-        EventCallbackFunc m_fnEventCallback;
+        //EventCallbackFunc m_fnEventCallback;
         
         /*! @brief	附加到的线程ID. */
         int64_t m_nThreadID;

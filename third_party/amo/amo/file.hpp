@@ -56,17 +56,27 @@ namespace amo {
             close();
         }
         
-        size_t size() const {
-            std::ifstream ifs(m_path.c_str());
+        uint64_t size() const {
+        
+            WIN32_FILE_ATTRIBUTE_DATA fad;
+            uint64_t nSize = 0;
             
-            if (!ifs.is_open()) {
-                return 0;
+            if (GetFileAttributesExA(m_path.c_str(), GetFileExInfoStandard, &fad)) {
+                nSize += ((ULONG64)fad.nFileSizeHigh & 0xffffffff) << 32 | (ULONG64)fad.nFileSizeLow;
             }
             
+            return nSize;
             
-            ifs.seekg(0, std::ios_base::end);
-            std::streampos sp = ifs.tellg();
-            return sp;
+            /* std::ifstream ifs(m_path.c_str());
+            
+             if (!ifs.is_open()) {
+                 return 0;
+             }
+            
+            
+             ifs.seekg(0, std::ios_base::end);
+             std::streampos sp = ifs.tellg();
+             return sp;*/
         }
         
         bool is_exists() const {

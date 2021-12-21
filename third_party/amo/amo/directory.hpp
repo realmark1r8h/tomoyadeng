@@ -74,7 +74,56 @@ namespace amo {
             return renamePath(to, m_path);
         }
         
-        void transfer(std::function<void(path&)> fn_cb, bool recursion = false) {
+        /**
+         * @fn	int directory::count(bool recursion = false, bool includeDir = false)
+         *
+         * @brief	获取当前文件夹下的文件个数.
+         *
+         * @param	recursion 	(Optional) true to recursion.
+         * @param	includeDir	(Optional) true to include, false to exclude the dir.
+         *
+         * @return	An int.
+         */
+        
+        int count(bool recursion = false, bool includeDir = false) {
+            int nCount = 0;
+            transfer([&](amo::path & p) {
+                if (p.is_directory() && includeDir) {
+                    ++nCount;
+                } else {
+                    ++nCount;
+                }
+            }, recursion);
+            return nCount;
+        }
+        
+        /**
+         * @fn	uint64_t directory::size()
+         *
+         * @brief	获取当前文件夹下文件大小.
+         *
+         * @return	An uint64_t.
+         */
+        
+        uint64_t size() {
+        
+            uint64_t nSize = 0;
+            transfer([&](amo::path & p) {
+                if (p.is_directory()) {
+                    return;
+                } else {
+                    WIN32_FILE_ATTRIBUTE_DATA fad;
+                    
+                    if (GetFileAttributesExA(p.c_str(), GetFileExInfoStandard, &fad)) {
+                        nSize += ((ULONG64)fad.nFileSizeHigh & 0xffffffff) << 32 | (ULONG64)fad.nFileSizeLow;
+                    }
+                }
+            }, true);
+            return nSize;
+            
+        }
+        
+        void transfer(std::function<void(amo::path&)> fn_cb, bool recursion = false) {
             // 判断目录是否存在
             if (!this->is_exists()) {
                 return ;
@@ -122,7 +171,7 @@ namespace amo {
             return  ;
         }
         
-        bool for_each(amo::function<bool(path&)> fn_cb, bool recursion = false) {
+        bool for_each(amo::function<bool(amo::path&)> fn_cb, bool recursion = false) {
             // 判断目录是否存在
             if (!this->is_exists()) {
                 return false;
@@ -190,6 +239,7 @@ namespace amo {
         bool copyPath(const amo::path& to, const amo::path& from) {
         
             SHFILEOPSTRUCTA FileOp = { 0 };
+            FileOp.hwnd = HWND_DESKTOP;
             FileOp.fFlags = FOF_NO_UI |   //不出现确认对话框
                             FOF_SILENT | // 不显示进度
                             FOF_NOCONFIRMMKDIR; //需要时直接创建一个文件夹,不需用户确定
@@ -202,6 +252,7 @@ namespace amo {
         // 删除一个目录
         bool deletePath(const path& p) {
             SHFILEOPSTRUCTA FileOp = { 0 };
+            FileOp.hwnd = HWND_DESKTOP;
             FileOp.fFlags = /*FOF_SILENT |*/ // 不显示进度
                 FOF_NOCONFIRMATION //不出现确认对话框
                 | FOF_NOERRORUI; //设置此项后，当文件处理过程中出现错误时，不出现错误提示，否则会进行错误提示。
@@ -215,6 +266,7 @@ namespace amo {
         //移动文件或文件夹
         bool movePath(const path& to, const path& from) {
             SHFILEOPSTRUCTA FileOp = { 0 };
+            FileOp.hwnd = HWND_DESKTOP;
             FileOp.fFlags = FOF_NO_UI |   //不出现确认对话框
                             FOF_SILENT | // 不显示进度
                             FOF_NOCONFIRMMKDIR; //需要时直接创建一个文件夹,不需用户确定
@@ -228,10 +280,12 @@ namespace amo {
         //重命名文件或文件夹
         bool renamePath(const path& to, const path& from) {
             SHFILEOPSTRUCTA FileOp = { 0 };
-            FileOp.fFlags = FOF_NO_UI |    //不出现确认对话框
-                            FOF_SILENT; // 不显示进度;
-            FileOp.pFrom = to.c_str();
-            FileOp.pTo = from.c_str();
+            FileOp.hwnd = HWND_DESKTOP;
+            FileOp.fFlags = FOF_NO_UI     //不出现确认对话框
+                            | FOF_SILENT // 不显示进度
+                            | FOF_NOCONFIRMATION; //如果设置，确认对话框在任何情况下都不出现
+            FileOp.pFrom = from.c_str();
+            FileOp.pTo = to.c_str();
             FileOp.wFunc = FO_RENAME;
             return SHFileOperationA(&FileOp) == 0;
         }

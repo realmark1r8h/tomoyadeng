@@ -181,6 +181,16 @@ namespace amo {
             if (!bOk) {
                 auto id = GetLastError();
                 ++id;
+                
+                amo::string p(m_path);
+                
+                if (!p.end_with(ext)) {
+                    p += ext;
+                }
+                
+                memset(m_path, 0, 1000);
+                strcpy(m_path, p.c_str());
+                
             }
             
             return *this;
@@ -1007,6 +1017,53 @@ namespace amo {
                 return CreateDirectoryA(m_path, NULL) != FALSE;
             }
         }
+        
+        /**
+         * @fn	bool is_valid() const
+         *
+         * @brief	判断路径是否合法（现在只有非法字符）.
+         *
+         * @return	true if valid, false if not.
+         */
+        
+        bool is_valid() const {
+            amo::string p(m_path);
+            
+            /*  if (p.find('\\') != -1) {
+                  return false;
+              }
+            
+              if (p.find('/') != -1) {
+                  return false;
+              }
+              */
+            /*  if (p.find(':') != -1) {
+                  return false;
+              }
+            
+              if (p.find('?') != -1) {
+                  return false;
+              }
+            
+              if (p.find('\"') != -1) {
+                  return false;
+              }
+            
+              if (p.find('<') != -1) {
+                  return false;
+              }
+            
+              if (p.find('>') != -1) {
+                  return false;
+              }
+            
+              if (p.find('|') != -1) {
+                  return false;
+              }*/
+            
+            return true;
+        }
+        
         /*!
          * @fn	bool copy_to(const amo::path& to)
          *

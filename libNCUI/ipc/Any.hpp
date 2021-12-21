@@ -54,6 +54,13 @@ namespace amo {
      */
     class Nothing {};
     
+    /**
+     * @class	Deadlock
+     *
+     * @brief	进程死锁时的返回类型.
+     */
+    
+    class Deadlock {};
     /*!
      * @class	Unknown
      *
@@ -121,12 +128,16 @@ namespace amo {
     template<> static std::string anyToString<NonReturn>(const NonReturn& val) {
         return valueToString<std::string>("nonreturn");
     }
+    template<> static std::string anyToString<Deadlock>(const Deadlock& val) {
+        return valueToString<std::string>("deadlock");
+    }
     template<> static std::string anyToString<amo::json>(const amo::json& val) {
         return val.to_string();
     }
     template<> static std::string anyToString<Nothing>(const Nothing& val) {
         return std::string();
     }
+    
     template<> static std::string anyToString<date_time>(const date_time& val) {
         return val.to_string();
     }
@@ -181,6 +192,9 @@ namespace amo {
     }
     template<> static Undefined stringToAny(const std::string& val) {
         return Undefined();
+    }
+    template<> static Deadlock stringToAny(const std::string& val) {
+        return Deadlock();
     }
     template<> static NonReturn stringToAny(const std::string& val) {
         return NonReturn();
@@ -242,7 +256,9 @@ namespace amo {
     template<> struct AnyValueType <NonReturn> {
         static const char value = 23;
     };
-    
+    template<> struct AnyValueType <Deadlock> {
+        static const char value = 24;
+    };
     template<> struct AnyValueType < Any > {
         static const char value = 30;
     };

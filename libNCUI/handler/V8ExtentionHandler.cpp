@@ -373,7 +373,6 @@ namespace amo {
             return NULL;
         }
         
-        amo::cdevel << "999999999999999999999999" << amo:: endl;
         // 外部模块必须提供registerTransfer函数
         int nBrowserID = browser->GetIdentifier();
         std::shared_ptr< TransferRegister> info(new TransferRegister());

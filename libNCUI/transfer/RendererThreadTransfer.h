@@ -13,7 +13,7 @@ namespace amo {
         , public amo::singleton<RendererThreadTransfer> {
     public:
         RendererThreadTransfer();
-        
+        ~RendererThreadTransfer();
         Any onCreateClass(IPCMessage::SmartType msg);
         
         virtual std::shared_ptr< TransferMgr> getTransferMgr() override;

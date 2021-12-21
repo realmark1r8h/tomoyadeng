@@ -410,6 +410,8 @@ namespace amo {
         int nBrowserID = browser->GetIdentifier();
         
         auto manager = RendererProcessExchangerManager::getInstance();
+        
+        //manager->setDeadlockCallback()
         std::shared_ptr<ProcessExchanger> pExchanger;
         pExchanger = manager->findExchanger(nBrowserID);
         

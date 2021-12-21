@@ -412,27 +412,27 @@ namespace amo {
         }
         
         
+        ClassTransfer::clearTransferMap();
         
+        /* auto classMap = ClassTransfer::getTransferMap();
         
-        auto classMap = ClassTransfer::getTransferMap();
+         if (classMap) {
+             for (auto iter = classMap->begin(); iter != classMap->end();) {
+                 if (iter->second->transferName() != "Thread") {
+                     amo::cdevel << "清理Transfer: " << iter->first << ", " << iter->second->transferName() << amo::endl;
+                     iter->second->onBeforeRelease();
+                     iter = classMap->erase(iter);
+                 } else {
+                     ++iter;
+                 }
+             }
         
-        if (classMap) {
-            for (auto iter = classMap->begin(); iter != classMap->end();) {
-                if (iter->second->transferName() != "Thread") {
-                    amo::cdevel << "清理Transfer: " << iter->first << ", " << iter->second->transferName() << amo::endl;
-                    iter->second->onBeforeRelease();
-                    iter = classMap->erase(iter);
-                } else {
-                    ++iter;
-                }
-            }
-            
-            for (auto iter = classMap->begin(); iter != classMap->end();) {
-                amo::cdevel << "清理Transfer: " << iter->first << ", " << iter->second->transferName() << ", " << iter->second->getObjectName() << amo::endl;
-                iter->second->onBeforeRelease();
-                iter = classMap->erase(iter);
-            }
-        }
+             for (auto iter = classMap->begin(); iter != classMap->end();) {
+                 amo::cdevel << "清理Transfer: " << iter->first << ", " << iter->second->transferName() << ", " << iter->second->getObjectName() << amo::endl;
+                 iter->second->onBeforeRelease();
+                 iter = classMap->erase(iter);
+             }
+         }*/
         
         manager.reset();
         

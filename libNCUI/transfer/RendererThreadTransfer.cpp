@@ -10,6 +10,10 @@ namespace amo {
         setWorkOnRenderer(true);
     }
     
+    RendererThreadTransfer::~RendererThreadTransfer() {
+    
+    }
+    
     Any RendererThreadTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<ThreadTransfer> pThread(new RendererThreadTransfer());
         pThread->setWorkOnRenderer(true);

@@ -49,6 +49,7 @@ namespace amo {
          */
         template<typename T, typename ... Args>
         static std::shared_ptr<T> createTransfer(Args ... args) {
+            std::unique_lock<std::recursive_mutex> lock(getMutex());
             std::shared_ptr<T> pTransfer(new T(args ...));
             pTransfer->setClassObject(true); //这里创建的是对象
             pTransfer->registerFunction();
@@ -71,6 +72,7 @@ namespace amo {
          */
         template<typename T>
         static std::shared_ptr<T> getUniqueTransfer() {
+            std::unique_lock<std::recursive_mutex> lock(getMutex());
             std::shared_ptr<T> pTransfer = T::getInstance()->getDerivedClass<T>();
             
             if (pTransfer->isFuncRegistered()) {
@@ -265,6 +267,7 @@ namespace amo {
         }
         
         static std::shared_ptr<ClassTransferMap> &getTransferMap() {
+            std::unique_lock<std::recursive_mutex> lock(getMutex());
             static std::shared_ptr<ClassTransferMap> oTransferMap(new ClassTransferMap());
             return oTransferMap;
         }
@@ -272,6 +275,35 @@ namespace amo {
         static std::recursive_mutex& getMutex() {
             static std::recursive_mutex m_mutex;
             return m_mutex;
+        }
+        
+        static void clearTransferMap() {
+            std::unique_lock<std::recursive_mutex> lock(getMutex());
+            
+            auto classMap = ClassTransfer::getTransferMap();
+            
+            if (classMap) {
+                for (auto iter = classMap->begin(); iter != classMap->end();) {
+                    if (iter->second->transferName() != "Thread") {
+                        $cdevel("清理Transfer:{0}, {1} ",
+                                iter->first,
+                                iter->second->transferName());
+                        iter->second->onBeforeRelease();
+                        iter = classMap->erase(iter);
+                    } else {
+                        ++iter;
+                    }
+                }
+                
+                for (auto iter = classMap->begin(); iter != classMap->end();) {
+                    $cdevel("清理Transfer:{0}, {1}, {2} ",
+                            iter->first,
+                            iter->second->transferName(),
+                            iter->second->getObjectName());
+                    iter->second->onBeforeRelease();
+                    iter = classMap->erase(iter);
+                }
+            }
         }
         
     public:
@@ -335,7 +367,7 @@ namespace amo {
                              TransferFuncNormal | TransferExecNormal);
             registerTransfer("release", std::bind(&ClassTransfer::onRelase, this,
                                                   std::placeholders::_1),
-                             TransferFuncNormal | TransferExecNormal);
+                             TransferMultiDisabled |  TransferFuncNormal | TransferExecNormal);
                              
             registerTransfer("notify", std::bind(&ClassTransfer::onNotify, this,
                                                  std::placeholders::_1),

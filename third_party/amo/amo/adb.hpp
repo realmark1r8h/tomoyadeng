@@ -44,19 +44,20 @@ namespace amo {
         }
         
         /**
-         * @fn	std::shared_ptr<process::result> AdbCommand::execute(const std::string& args);
+         * @fn	std::shared_ptr<process::result> adb::execute(const std::string& args, int nDelayMS = 0)
          *
          * @brief	执行adb命令.
          *
-         * @param	args	The arguments.
+         * @param	args		The arguments.
+         * @param	nDelayMS	(Optional) the delay in milliseconds.
          *
          * @return	A std::shared_ptr&lt;process::result&gt;
          */
         
-        std::shared_ptr<process::result> execute(const std::string& args) {
+        std::shared_ptr<process::result> execute(const std::string& args, int nTimeoutMS = 0) {
             auto pProcess = createProcess(args);
             pProcess->start();
-            return pProcess->getResult();
+            return pProcess->getResult(nTimeoutMS);
         }
         
         /**
@@ -73,7 +74,7 @@ namespace amo {
                 pProcess->clearArgs();
                 pProcess->start("kill-server");
                 
-                auto result = pProcess->getResult();
+                auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             }
             
             {
@@ -81,7 +82,7 @@ namespace amo {
                 pProcess->clearArgs();
                 pProcess->start("start-server");
                 
-                auto result = pProcess->getResult();
+                auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             }
             
             return true;
@@ -100,7 +101,7 @@ namespace amo {
             auto pProcess = createProcess();
             pProcess->clearArgs();
             pProcess->start("devices");
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return ret;
@@ -136,7 +137,7 @@ namespace amo {
             pProcess->addArgs(keys);
             pProcess->start();
             
-            std::vector<amo::string> message = pProcess->getResult()->removeBlankMessage()->getResultMessage();
+            std::vector<amo::string> message = pProcess->getResult(DEFAULT_ADB_TIMEOUT)->removeBlankMessage()->getResultMessage();
             
             for (auto& p : message) {
                 amo::string str = p;
@@ -168,7 +169,7 @@ namespace amo {
             auto pProcess = createProcess();
             pProcess->start("-d shell getprop ro.product.brand");
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return"";
@@ -195,7 +196,7 @@ namespace amo {
             auto pProcess = createProcess();
             pProcess->start("-d shell dumpsys iphonesubinfo");
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return"";
@@ -228,7 +229,7 @@ namespace amo {
             auto pProcess = createProcess();
             pProcess->start("-d shell getprop ro.product.model");
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return"";
@@ -259,7 +260,7 @@ namespace amo {
             auto pProcess = createProcess("shell pm path ");
             pProcess->start(strApp);
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -296,7 +297,34 @@ namespace amo {
             pProcess->addArgs(srcPath);
             pProcess->addArgs(dstPath);
             pProcess->start();
-            auto result = pProcess->getResult();
+            
+            int64_t nLastTimestamp = 0;
+            auto result = pProcess->getResult(0, 0, [ & ](int64_t nTime)->bool {
+            
+                if (nLastTimestamp + DEFAULT_ADB_TIMEOUT > nTime) {
+                    return true;
+                }
+                
+                nLastTimestamp = nTime;
+                
+                amo::file file(dstPath);
+                
+                if (!file.is_exists()) {
+                    $err("文件不存在：{0}", dstPath);
+                    return false;
+                }
+                int nSize = file.size();
+                $devel("正在PULL文件，当前大小[{0}],耗费时间[{1}ms]", nSize, nTime);
+                
+                if (nSize < nTime) {
+                
+                    $err("PULL文件写入速度不正常,当前文件大小[{0}],当前耗费时间[{1}]", nSize, nTime);
+                    return false;
+                }
+                
+                return true;
+            });
+            
             
             if (!result->isSuccess()) {
                 return false;
@@ -350,14 +378,17 @@ namespace amo {
                 nRetry = 30;
             }
             
-            amo::file fi(strAppFile);
-            size_t nSize = fi.size();
-            int nDelay = nSize * 3 / (1000);
+            /*
+               amo::file fi(strAppFile);
+               size_t nSize = fi.size();
+               int nDelay = nSize  / (1000 * 10)*/;
             
             for (int i = 0; i < nRetry; ++i) {
-                auto pProcess = createProcess("install -r -d ");
+                //auto pProcess = createProcess("install -r -d ");
+                auto pProcess = createProcess("install ");
                 pProcess->start(strAppFile);
-                auto result = pProcess->getResult(nDelay);
+                // 安装APP5分钟超时
+                auto result = pProcess->getResult(20 * DEFAULT_ADB_TIMEOUT);
                 
                 
                 if (!result->isSuccess()) {
@@ -411,7 +442,7 @@ namespace amo {
             }
             
             pProcess->start(strPackage);
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -450,7 +481,7 @@ namespace amo {
             auto pProcess = createProcess("shell am start -n ");
             pProcess->start(activity);
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -490,7 +521,7 @@ namespace amo {
             auto pProcess = createProcess("shell am force-stop ");
             pProcess->start(strPackageName);
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -517,7 +548,7 @@ namespace amo {
             auto pProcess = createProcess("root");
             pProcess->start();
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -552,7 +583,7 @@ namespace amo {
             pProcess->addArgs("'\"");
             pProcess->start();
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -586,7 +617,7 @@ namespace amo {
             auto pProcess = createProcess("shell dumpsys package ");
             pProcess->start(strPackage);
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -626,7 +657,31 @@ namespace amo {
             pProcess->addArgs(strPackage);
             pProcess->start();
             
-            auto result = pProcess->getResult();
+            int64_t nLastTimestamp = 0;
+            auto result = pProcess->getResult(0, 0, [ & ](int64_t nTime)->bool {
+            
+                if (nLastTimestamp + DEFAULT_ADB_TIMEOUT > nTime) {
+                    return true;
+                }
+                
+                nLastTimestamp = nTime;
+                
+                amo::file file(localName);
+                
+                if (!file.is_exists()) {
+                    $err("备份文件不存在：{0}", localName);
+                    return false;
+                }
+                int nSize = file.size();
+                $devel("正在备份文件，当前大小[{0}],耗费时间[{1}ms]，包名[{2}]", nSize, nTime, strPackage);
+                
+                if (nSize < nTime) {
+                
+                    $err("备份文件写入速度不正常,当前文件大小[{0}],当前耗费时间[{1}]", nSize, nTime);
+                    return false;
+                }
+                return true;
+            });
             
             if (!result->isSuccess()) {
                 return false;
@@ -643,7 +698,7 @@ namespace amo {
             
             // 通过文件是否存在和文件大小来判断是否备份成功，一个正常的备份文件不会小于1M
             // 现在包含了一个测试备份的APP文件，备份出来的很小
-            if (!file.is_exists() || file.size() < unsigned int(1 * 5)) {
+            if (!file.is_exists() || file.size() < unsigned int(10000)) {
                 return false;
             }
             
@@ -665,7 +720,7 @@ namespace amo {
             auto pProcess = createProcess("shell input keyevent ");
             pProcess->start(strMsg);
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -684,7 +739,7 @@ namespace amo {
             auto pProcess = createProcess("shell input text ");
             pProcess->start(strMsg);
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -727,7 +782,7 @@ namespace amo {
             auto pProcess = createProcess("shell input swipe 300 1000 300 500  ");
             pProcess->start();
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -754,7 +809,7 @@ namespace amo {
             auto pProcess = createProcess("shell svc power stayon usb");
             pProcess->start();
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -823,7 +878,7 @@ namespace amo {
             auto pProcess = createProcess("shell input swipe 300 1000 300 500  ");
             pProcess->start();
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -853,7 +908,7 @@ namespace amo {
             auto pProcess = createProcess("shell settings put global adb_enabled 0");
             pProcess->start();
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -892,10 +947,11 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool waitForDevice() {
+        bool waitForDevice(int nMaxWaitTime = 0) {
             auto pProcess = createProcess("wait-for-device");
             pProcess->start();
-            auto result = pProcess->getResult();
+            
+            auto result = pProcess->getResult(nMaxWaitTime);
             
             if (!result->isSuccess()) {
                 return false;
@@ -915,9 +971,10 @@ namespace amo {
          */
         
         bool screencap(const std::string& strSavePath) {
-            auto pProcess = createProcess("wait-for-device");
+            //TODO: 截图未实现
+            auto pProcess = createProcess("adb shell screencap -p  ");
             pProcess->start();
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -937,7 +994,7 @@ namespace amo {
         amo::string releaseVersion() {
             auto pProcess = createProcess(" shell getprop ro.build.version.release");
             pProcess->start();
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return "";
@@ -977,7 +1034,7 @@ namespace amo {
         amo::string sdkVersion() {
             auto pProcess = createProcess(" shell getprop ro.build.version.sdk");
             pProcess->start();
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return "";
@@ -1020,7 +1077,7 @@ namespace amo {
             auto pProcess = createProcess("shell dumpsys package ");
             pProcess->start(packageName);
             
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return "";
@@ -1051,7 +1108,8 @@ namespace amo {
         bool startServer() {
             auto pProcess = createProcess("start-server");
             pProcess->start();
-            auto result = pProcess->getResult();
+            // 开启服务的超时时间为10秒
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -1083,7 +1141,7 @@ namespace amo {
         bool killServer() {
             auto pProcess = createProcess("kill-server");
             pProcess->start();
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             if (!result->isSuccess()) {
                 return false;
@@ -1124,15 +1182,12 @@ namespace amo {
             amo::timer t;
             auto pProcess = createProcess("reboot");
             pProcess->start();
-            auto result = pProcess->getResult(3000);
-            
-            
-            
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
             std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
             
-            if (message.empty() && t.elapsed() > 3000) {
-                $err("重启手机是adb被超时终止");
+            if (message.empty() && t.elapsed() > DEFAULT_ADB_TIMEOUT) {
+                $err("重启手机时adb被超时终止");
                 return false;
             }
             
@@ -1146,7 +1201,7 @@ namespace amo {
             t.restart();
             
             do {
-                std::this_thread::sleep_for(std::chrono::seconds(2));
+                std::this_thread::sleep_for(std::chrono::seconds(3));
                 std::vector<amo::string> vec = getDevicelist();
                 
                 for (auto& p : vec) {
@@ -1177,6 +1232,8 @@ namespace amo {
         std::shared_ptr<process> createProcess(const std::string& args = "") {
             std::shared_ptr<amo::process> pProcess(new process(m_strAdbPath));
             pProcess->setLogger(getLogger());
+            // 升级了adb.exe 新版本的adb输出使用utf8编码
+            pProcess->setUTF8(true);
             
             if (!m_strDeviceID.empty()) {
                 std::string args = "-s ";
@@ -1201,6 +1258,8 @@ namespace amo {
         std::shared_ptr<process> m_process;
         /** @brief	adb路径. */
         std::string m_strAdbPath;
+        /** @brief	默认adb命令超时时间为30秒. */
+        const static int DEFAULT_ADB_TIMEOUT = 30000;
     };
 }
 

@@ -79,12 +79,7 @@ namespace amo {
             std::vector<amo::string> message;
         };
         
-        DWORD getCreationFlags() const {
-            return dwCreationFlags;
-        }
-        void setCreationFlags(DWORD val) {
-            dwCreationFlags = val;
-        }
+        
     public:
         template<  typename ... Args>
         static std::shared_ptr<process> create(Args ... args) {
@@ -141,6 +136,7 @@ namespace amo {
             m_workPath = amo::path::fullAppDir(); //默认工作目录为当前程序所在目录
             memset(&pi, 0, sizeof(PROCESS_INFORMATION));
             memset(&sa, 0, sizeof(SECURITY_ATTRIBUTES));
+            
         }
         
         bool kill() {
@@ -288,18 +284,19 @@ namespace amo {
             return strRet;
         }
         
-        std::shared_ptr<result>  getResult(int nMaxDelayMS = 0) {
+        
+        std::shared_ptr<result>  getResult(int nTimeoutMS = 0,
+                                           int needMsg = 0,
+                                           std::function<bool(int64_t)> fn = {}) {
+            // nTimeoutMS  所调用的程序必须在这个时间类执行完成
+            // needMsg 所调用的程序必须在这个时间类有内容输出到管道中
+            // fn 等待过程中的回调函数
             if (m_pResult) {
                 return m_pResult;
             }
             
             // 获取执行结果
             waitForResult();
-            
-            /*  do {
-                  GetExitCodeProcess(pi.hProcess, &retval);
-                  std::this_thread::sleep_for(std::chrono::milliseconds(100));
-              } while (retval == 259);*/
             GetExitCodeProcess(pi.hProcess, &retval);
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
             
@@ -311,7 +308,7 @@ namespace amo {
             //TODO: 注释掉
             m_pResult->setSuccess(true);
             
-            /** @brief	用4K的空间来存储输出的内容，只要不是显示文件内容，一般情况下是够用了。. */
+            
             char buffer[4096] = { 0 };
             DWORD bytesRead = 0;
             amo::string strRetval;
@@ -322,19 +319,45 @@ namespace amo {
                 BOOL fSuccess = PeekNamedPipe(hRead, NULL, 0, NULL, &cbBytesRead, NULL);
                 
                 if (!fSuccess) {
+                    $devel("等待数据时管道断开，程序调用完毕");
                     break;
                 }
                 
-                if (nMaxDelayMS > 0 && m_timer.elapsed() > nMaxDelayMS) {
-                    $err("进程执行超时，将被强行终止");
-                    // 超时，杀掉进程
-                    kill();
-                } else if (cbBytesRead == 0) {
-                    Sleep(10);
+                if (fn) {
+                    if (!fn(m_timer.elapsed())) {
+                        $err("当前调用被调用者终止");
+                        m_pResult->setSuccess(false);
+                        kill();
+                        break;
+                    }
+                }
+                
+                if (needMsg > 0) {
+                    if (strRetval.empty() && m_timer.elapsed() > needMsg) {
+                        $err("进程长时间[{0}, {1}]没有输出，将被强行终止", needMsg, m_timer.elapsed());
+                        m_pResult->setSuccess(false);
+                        kill();
+                        break;
+                    }
+                }
+                
+                if (nTimeoutMS > 0) {
+                    if (m_timer.elapsed() > nTimeoutMS) {
+                        $err("进程长时间[{0}, {1}]没有输出，将被强行终止", nTimeoutMS, m_timer.elapsed());
+                        m_pResult->setSuccess(false);
+                        kill();
+                        break;
+                    }
+                }
+                
+                if (cbBytesRead == 0) {
+                    Sleep(500);
                     continue;
                 }
                 
+                
                 if (ReadFile(hRead, buffer, 4095, &bytesRead, NULL) == FALSE) {
+                    $devel("读取数据时管道断开，程序调用完毕");
                     break;
                 }
                 
@@ -345,11 +368,8 @@ namespace amo {
                 strRetval.append(ansiStr);
             }
             
-            //$devel << strRetval.c_str() << amo::endl;);
             strRetval.replace("\r", "");
             m_pResult->setResultMessage(strRetval.split("\n"));
-            //OutputDebugStringA(strRetval.c_str());
-            //std::cout << strRetval.str() << std::endl;
             
             CloseHandle(hRead);
             hWrite = hRead = NULL;
@@ -366,6 +386,14 @@ namespace amo {
         void setUTF8(bool val) {
             m_bUTF8 = val;
         }
+        
+        DWORD getCreationFlags() const {
+            return dwCreationFlags;
+        }
+        void setCreationFlags(DWORD val) {
+            dwCreationFlags = val;
+        }
+        
         
     public:
     
@@ -390,7 +418,7 @@ namespace amo {
             pProcess->addArgs(stream.str());
             
             pProcess->start();
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(10000);
             
             if (!result->isSuccess()) {
                 return 0;
@@ -450,7 +478,7 @@ namespace amo {
             pProcess->addArgs(stream.str());
             
             pProcess->start();
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(10000);
             
             if (!result->isSuccess()) {
                 return retval;
@@ -515,7 +543,7 @@ namespace amo {
             pProcess->addArgs(stream.str());
             
             pProcess->start();
-            auto result = pProcess->getResult();
+            auto result = pProcess->getResult(10000);
             
             if (!result->isSuccess()) {
                 return false;
