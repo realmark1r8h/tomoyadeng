@@ -970,7 +970,7 @@ namespace amo {
         std::set<std::pair<int, int> > m_oDeadlockIDs;
         
         /** @brief	任务超时时间，如果超过这个时间任务还未完成，那么认为程序发生了死锁将放弃该任务的执行，默认为1000ms. */
-        int64_t m_nTimeout;
+        uint64_t m_nTimeout;
     };
     
     /*!

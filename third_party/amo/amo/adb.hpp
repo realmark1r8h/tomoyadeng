@@ -55,7 +55,7 @@ namespace amo {
          * @return	A std::shared_ptr&lt;process::result&gt;
          */
         
-        std::shared_ptr<process::result> execute(const std::string& args, int nTimeoutMS = 0) {
+        virtual   std::shared_ptr<process::result> execute(const std::string& args, int nTimeoutMS = 0) {
             auto pProcess = createProcess(args);
             pProcess->start();
             return pProcess->getResult(nTimeoutMS);
@@ -69,7 +69,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool restartService() {
+        virtual   bool restartService() {
             {
                 auto pProcess = createProcess();
                 pProcess->clearArgs();
@@ -97,7 +97,7 @@ namespace amo {
          * @return	The devicelist.
          */
         
-        std::vector<amo::string> getDevicelist() {
+        virtual   std::vector<amo::string> getDevicelist() {
             std::vector<amo::string> ret;
             auto pProcess = createProcess();
             pProcess->clearArgs();
@@ -130,7 +130,7 @@ namespace amo {
          * @return	The application list.
          */
         
-        std::vector<std::pair<amo::string, amo::string> > getAppList(const std::string& keys = "") {
+        virtual  std::vector<std::pair<amo::string, amo::string> > getAppList(const std::string& keys = "") {
             std::vector<std::pair<amo::string, amo::string> > ret;
             auto pProcess = createProcess();
             
@@ -166,7 +166,7 @@ namespace amo {
          * @return	The phone information for brand.
          */
         
-        amo::string getPhoneInfoForBrand() {
+        virtual   amo::string getPhoneInfoForBrand() {
             auto pProcess = createProcess();
             pProcess->start("-d shell getprop ro.product.brand");
             
@@ -193,7 +193,7 @@ namespace amo {
          * @return	The phone information for imei.
          */
         
-        amo::string getPhoneInfoForIMEI() {
+        virtual  amo::string getPhoneInfoForIMEI() {
             auto pProcess = createProcess();
             pProcess->start("-d shell dumpsys iphonesubinfo");
             
@@ -226,7 +226,7 @@ namespace amo {
          * @return	The phone information for model.
          */
         
-        amo::string getPhoneInfoForModel() {
+        virtual  amo::string getPhoneInfoForModel() {
             auto pProcess = createProcess();
             pProcess->start("-d shell getprop ro.product.model");
             
@@ -257,7 +257,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool isInstalled(const std::string& strApp) {
+        virtual  bool isInstalled(const std::string& strApp) {
             auto pProcess = createProcess("shell pm path ");
             pProcess->start(strApp);
             
@@ -293,7 +293,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool pull(const std::string& srcPath, const std::string& dstPath) {
+        virtual  bool pull(const std::string& srcPath, const std::string& dstPath) {
             auto pProcess = createProcess("pull ");
             pProcess->addArgs(srcPath);
             pProcess->addArgs(dstPath);
@@ -370,7 +370,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool install(const std::string& strAppFile, int nRetry = 5) {
+        virtual  bool install(const std::string& strAppFile, int nRetry = 5) {
             if (nRetry < 1) {
                 nRetry = 1;
             }
@@ -432,7 +432,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool unistall(const std::string& strPackage, bool bReserved = true) {
+        virtual  bool unistall(const std::string& strPackage, bool bReserved = true) {
             //TODO: 看网上教程可能是有两步
             // adb uninstall -k com.tencent.mm
             // adb shell pm uninstall –k com.tencent.mm
@@ -478,7 +478,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool start(const std::string& activity) {
+        virtual   bool start(const std::string& activity) {
             auto pProcess = createProcess("shell am start -n ");
             pProcess->start(activity);
             
@@ -518,7 +518,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool stop(const std::string& strPackageName) {
+        virtual  bool stop(const std::string& strPackageName) {
             auto pProcess = createProcess("shell am force-stop ");
             pProcess->start(strPackageName);
             
@@ -545,7 +545,7 @@ namespace amo {
          * @return	true if root, false if not.
          */
         
-        bool isRoot() {
+        virtual  bool isRoot() {
             auto pProcess = createProcess("root");
             pProcess->start();
             
@@ -578,7 +578,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool chmod777(const std::string& strPath) {
+        virtual  bool chmod777(const std::string& strPath) {
             auto pProcess = createProcess("shell \"su -c chmod 777 '");
             pProcess->addArgs(strPath);
             pProcess->addArgs("'\"");
@@ -614,7 +614,7 @@ namespace amo {
          * @return	true if we allow backup, false if not.
          */
         
-        bool allowBackup(const std::string& strPackage) {
+        virtual  bool allowBackup(const std::string& strPackage) {
             auto pProcess = createProcess("shell dumpsys package ");
             pProcess->start(strPackage);
             
@@ -652,7 +652,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool backup(const std::string& strPackage, const std::string& localName) {
+        virtual  bool backup(const std::string& strPackage, const std::string& localName) {
             auto pProcess = createProcess("backup -f ");
             pProcess->addArgs(localName);
             pProcess->addArgs(strPackage);
@@ -725,7 +725,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool keyevent(const std::string& strMsg) {
+        virtual  bool keyevent(const std::string& strMsg) {
         
             auto pProcess = createProcess("shell input keyevent ");
             pProcess->start(strMsg);
@@ -745,7 +745,7 @@ namespace amo {
             return false;
         }
         
-        bool sayString(const std::string& strMsg) {
+        virtual  bool sayString(const std::string& strMsg) {
             auto pProcess = createProcess("shell input text ");
             pProcess->start(strMsg);
             
@@ -774,7 +774,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool keyevent(const int nKey) {
+        virtual  bool keyevent(const int nKey) {
             return keyevent(amo::string::from_number<int>(nKey));
         }
         
@@ -788,7 +788,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool swipe(const std::string& strMsg) {
+        virtual  bool swipe(const std::string& strMsg) {
             auto pProcess = createProcess("shell input swipe 300 1000 300 500  ");
             pProcess->start();
             
@@ -815,7 +815,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool powerStayonUSB() {
+        virtual   bool powerStayonUSB() {
             auto pProcess = createProcess("shell svc power stayon usb");
             pProcess->start();
             
@@ -842,7 +842,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool lightScreen() {
+        virtual  bool lightScreen() {
             return keyevent(224);
         }
         
@@ -854,7 +854,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool incBrightness() {
+        virtual  bool incBrightness() {
             // 增加屏幕亮度
             return keyevent(221);
         }
@@ -867,7 +867,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool decBrightness() {
+        virtual    bool decBrightness() {
             // 降低屏幕亮度
             return keyevent(220);
         }
@@ -880,7 +880,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool unlockPhone() {
+        virtual  bool unlockPhone() {
             if (!lightScreen()) {
                 return false;
             }
@@ -913,7 +913,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool closeUSBModel() {
+        virtual   bool closeUSBModel() {
         
             auto pProcess = createProcess("shell settings put global adb_enabled 0");
             pProcess->start();
@@ -957,7 +957,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool waitForDevice(int nMaxWaitTime = 0) {
+        virtual   bool waitForDevice(int nMaxWaitTime = 0) {
             auto pProcess = createProcess("wait-for-device");
             pProcess->start();
             
@@ -980,7 +980,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool screencap(const std::string& strSavePath) {
+        virtual  bool screencap(const std::string& strSavePath) {
             //TODO: 截图未实现
             auto pProcess = createProcess("adb shell screencap -p  ");
             pProcess->start();
@@ -1001,7 +1001,7 @@ namespace amo {
          * @return	An amo::string.
          */
         
-        amo::string releaseVersion() {
+        virtual   amo::string releaseVersion() {
             auto pProcess = createProcess(" shell getprop ro.build.version.release");
             pProcess->start();
             auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
@@ -1041,7 +1041,7 @@ namespace amo {
          * @return	An amo::string.
          */
         
-        amo::string sdkVersion() {
+        virtual  amo::string sdkVersion() {
             auto pProcess = createProcess(" shell getprop ro.build.version.sdk");
             pProcess->start();
             auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
@@ -1083,7 +1083,7 @@ namespace amo {
          * @return	An amo::string.
          */
         
-        amo::string appVersion(const amo::string& packageName) {
+        virtual amo::string appVersion(const amo::string& packageName) {
             auto pProcess = createProcess("shell dumpsys package ");
             pProcess->start(packageName);
             
@@ -1311,7 +1311,7 @@ namespace amo {
             return m_process->kill();
         }
         
-        bool reboot(int nWaitTime = 300000) {
+        virtual bool reboot(int nWaitTime = 300000) {
             amo::timer t;
             auto pProcess = createProcess("reboot");
             pProcess->start();
@@ -1362,7 +1362,7 @@ namespace amo {
          * @return	The new process.
          */
         
-        std::shared_ptr<process> createProcess(const std::string& args = "") {
+        virtual std::shared_ptr<process> createProcess(const std::string& args = "") {
             std::shared_ptr<amo::process> pProcess(new process(m_strAdbPath));
             pProcess->setEventCallback(std::bind(&amo::adb::onEventCallback, this, std::placeholders::_1));
             pProcess->setLogger(getLogger());

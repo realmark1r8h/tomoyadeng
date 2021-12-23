@@ -11,6 +11,7 @@
 #include <amo/singleton.hpp>
 #include "transfer/Transfer.hpp"
 #include <amo/logger.hpp>
+#include <mutex>
 
 
 
@@ -23,12 +24,108 @@ namespace amo {
     class ClassTransfer
         : public Transfer {
     public:
-        class ClassTransferMap : public std::unordered_map < int64_t,
-            std::shared_ptr<amo::ClassTransfer> > {
+        class ClassTransferMap /*: public std::unordered_map < int64_t,
+            std::shared_ptr<amo::ClassTransfer> >*/ {
+
+        public:
+            typedef std::unordered_map < int64_t,
+                    std::shared_ptr<amo::ClassTransfer> > ContainerType;
+                    
+            typedef ContainerType::hasher hasher;
+            typedef ContainerType::key_type key_type;
+            typedef ContainerType::mapped_type mapped_type;
+            typedef ContainerType::key_equal key_equal;
+            typedef ContainerType::key_compare key_compare;	// extra
+            
+            //	typedef typename _Mybase::value_compare value_compare;
+            typedef  ContainerType::allocator_type allocator_type;
+            typedef  ContainerType::size_type size_type;
+            typedef  ContainerType::difference_type difference_type;
+            typedef  ContainerType::pointer pointer;
+            typedef  ContainerType::const_pointer const_pointer;
+            typedef  ContainerType::reference reference;
+            typedef  ContainerType::const_reference const_reference;
+            typedef  ContainerType::iterator iterator;
+            typedef  ContainerType::const_iterator const_iterator;
+            typedef  ContainerType::value_type value_type;
+            
+            typedef  ContainerType::iterator local_iterator;
+            typedef  ContainerType::const_iterator const_local_iterator;
+            
         public:
             ~ClassTransferMap() {
                 int nSize = size();
             }
+            
+            iterator begin() {
+                //std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                return m_oMap.begin();
+            }
+            
+            const_iterator begin() const {
+                return m_oMap.begin();
+            }
+            
+            iterator end() {
+                //  std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                return m_oMap.end();
+            }
+            
+            const_iterator end() const {
+                return m_oMap.end();
+            }
+            
+            size_t size() const {
+                return m_oMap.size();
+            }
+            
+            
+            iterator erase(const_iterator _Plist) {
+                //  std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                return m_oMap.erase(_Plist);
+            }
+            
+            iterator erase(const_iterator _First, const_iterator _Last) {
+                // std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                return m_oMap.erase(_First, _Last);
+            }
+            
+            size_type erase(const key_type& _Keyval) {
+                // std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                return m_oMap.erase(_Keyval);
+            }
+            
+            void clear()   {
+                //  std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                return m_oMap.clear();
+            }
+            
+            iterator find(const key_type& _Keyval) {
+                //std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                return m_oMap.find(_Keyval);
+            }
+            
+            const_iterator find(const key_type& _Keyval) const {
+                return m_oMap.find(_Keyval);
+            }
+            
+            
+            mapped_type& operator[](const key_type& _Keyval) {
+                //std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                return m_oMap[_Keyval];
+            }
+            
+            mapped_type& at(const key_type& _Keyval) {
+                // std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                return m_oMap.at(_Keyval);
+            }
+            
+            const mapped_type& at(const key_type& _Keyval) const {
+                return m_oMap.at(_Keyval);
+            }
+        private:
+            ContainerType m_oMap;
+            std::recursive_mutex m_mutex;
         };
         /* typedef std::unordered_map < int64_t,
                  std::shared_ptr<amo::ClassTransfer> > ClassTransferMap;*/
