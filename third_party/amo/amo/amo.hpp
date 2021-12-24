@@ -1,6 +1,9 @@
 #ifndef AMO_AMO_HPP__
 #define AMO_AMO_HPP__
-
+#if defined(_WIN32) || defined(_WIN64) ||defined(WIN32) || defined(WIN64)
+#	include <WinSock2.h>
+#   include <windows.h>
+#endif
 #include <amo/config.hpp>
 #include <amo/platforms.hpp>
 

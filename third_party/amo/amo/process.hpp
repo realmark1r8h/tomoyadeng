@@ -137,11 +137,12 @@ namespace amo {
         }
         
         void init() {
-            setCreationFlags(0);
+            setCreationFlags(CREATE_NO_WINDOW);
             m_bShowWindow = false;
             hRead = NULL;
             hWrite = NULL;
             retval = 0;
+            m_bProcessCreated = false;
             setUTF8(false);
             m_workPath = amo::path::fullAppDir(); //默认工作目录为当前程序所在目录
             memset(&pi, 0, sizeof(PROCESS_INFORMATION));
@@ -235,9 +236,12 @@ namespace amo {
                 CloseHandle(hWrite);
                 CloseHandle(hRead);
                 hWrite = hRead = NULL;
+                m_bProcessCreated = false;
+                $err("进程创建失败：{0}", amo::system::getLastErrorMessage());
                 return false;
             }
             
+            m_bProcessCreated = true;
             CloseHandle(hWrite);
             hWrite = NULL;
             return true;
@@ -313,10 +317,15 @@ namespace amo {
             
             m_pResult.reset(new result());
             
-            m_pResult->setSuccess(retval == 0);
+            m_pResult->setSuccess(m_bProcessCreated);
+            
+            if (!m_bProcessCreated) {
+                kill();
+                return m_pResult;
+            }
             
             //TODO: 注释掉
-            m_pResult->setSuccess(true);
+            //m_pResult->setSuccess(true);
             
             
             char buffer[4096] = { 0 };
@@ -670,6 +679,8 @@ namespace amo {
         DWORD dwCreationFlags;
         
         std::function<void(const process_event&)> m_fnEventCallback;
+        
+        bool m_bProcessCreated;
         
     };
 }

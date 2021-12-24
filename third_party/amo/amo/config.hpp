@@ -1,6 +1,10 @@
 #ifndef AMO_CONFIG_HPP__
 #define AMO_CONFIG_HPP__
 
+#if defined(_WIN32) || defined(_WIN64) ||defined(WIN32) || defined(WIN64)
+#	include <WinSock2.h>
+#   include <windows.h>
+#endif
 //以下类需要编译使用
 //- atomic : building
 //- chrono : building

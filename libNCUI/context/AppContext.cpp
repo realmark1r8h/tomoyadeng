@@ -324,10 +324,11 @@ namespace amo {
         
         $clog(amo::cinfo << "日志初始化成功" << amo::endl;);
         void* sandbox_info = NULL;
-#if defined(CEF_USE_SANDBOX)
-        CefScopedSandboxInfo scoped_sandbox;
-        sandbox_info = scoped_sandbox.sandbox_info();
-#endif
+        // 不使用沙箱
+        //#if defined(CEF_USE_SANDBOX)
+        //		CefScopedSandboxInfo scoped_sandbox;
+        //		sandbox_info = scoped_sandbox.sandbox_info();
+        //#endif
         
         
         int exit_code = CefExecuteProcess(main_args,

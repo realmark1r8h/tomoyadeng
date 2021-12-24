@@ -1117,6 +1117,7 @@ namespace amo {
         
         bool startServer() {
         
+        
             bool bStarted = false;
             
             do {
@@ -1193,7 +1194,9 @@ namespace amo {
             auto pProcess = createProcess("start-server");
             pProcess->start();
             // 开启服务的超时时间为10秒
-            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
+            auto result = pProcess->getResult(0, 0, [&](int64_t nTimeOut) {
+                return DEFAULT_ADB_TIMEOUT > nTimeOut;
+            });
             
             if (!result->isSuccess()) {
                 return false;
@@ -1274,7 +1277,10 @@ namespace amo {
         bool killADBServer() {
             auto pProcess = createProcess("kill-server");
             pProcess->start();
-            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
+            //auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
+            auto result = pProcess->getResult(0, 0, [&](int64_t nTimeOut) {
+                return DEFAULT_ADB_TIMEOUT > nTimeOut;
+            });
             
             if (!result->isSuccess()) {
                 return false;

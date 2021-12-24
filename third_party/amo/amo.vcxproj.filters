@@ -288,5 +288,14 @@
     <ClInclude Include="amo\logger\notify_sink_sinks.h">
       <Filter>amo\logger</Filter>
     </ClInclude>
+    <ClInclude Include="amo\adb1031.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\adb1036.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
+    <ClInclude Include="amo\adb1039.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

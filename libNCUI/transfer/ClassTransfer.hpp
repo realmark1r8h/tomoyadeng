@@ -58,69 +58,73 @@ namespace amo {
             }
             
             iterator begin() {
-                //std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                std::unique_lock<std::recursive_mutex> lock(m_mutex);
                 return m_oMap.begin();
             }
             
             const_iterator begin() const {
+                //std::unique_lock<std::recursive_mutex> lock(m_mutex);
                 return m_oMap.begin();
             }
-            
             iterator end() {
-                //  std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                std::unique_lock<std::recursive_mutex> lock(m_mutex);
                 return m_oMap.end();
             }
             
             const_iterator end() const {
+                //std::unique_lock<std::recursive_mutex> lock(m_mutex);
                 return m_oMap.end();
             }
             
             size_t size() const {
+                //std::unique_lock<std::recursive_mutex> lock(m_mutex);
                 return m_oMap.size();
             }
             
             
             iterator erase(const_iterator _Plist) {
-                //  std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                std::unique_lock<std::recursive_mutex> lock(m_mutex);
                 return m_oMap.erase(_Plist);
             }
             
             iterator erase(const_iterator _First, const_iterator _Last) {
-                // std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                std::unique_lock<std::recursive_mutex> lock(m_mutex);
                 return m_oMap.erase(_First, _Last);
             }
             
             size_type erase(const key_type& _Keyval) {
-                // std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                std::unique_lock<std::recursive_mutex> lock(m_mutex);
                 return m_oMap.erase(_Keyval);
             }
             
             void clear()   {
-                //  std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                std::unique_lock<std::recursive_mutex> lock(m_mutex);
                 return m_oMap.clear();
             }
             
             iterator find(const key_type& _Keyval) {
-                //std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                std::unique_lock<std::recursive_mutex> lock(m_mutex);
                 return m_oMap.find(_Keyval);
             }
             
             const_iterator find(const key_type& _Keyval) const {
+                //std::unique_lock<std::recursive_mutex> lock(m_mutex);
                 return m_oMap.find(_Keyval);
             }
             
             
             mapped_type& operator[](const key_type& _Keyval) {
-                //std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                std::unique_lock<std::recursive_mutex> lock(m_mutex);
                 return m_oMap[_Keyval];
             }
             
             mapped_type& at(const key_type& _Keyval) {
-                // std::unique_lock<std::recursive_mutex> lock(m_mutex);
+                std::unique_lock<std::recursive_mutex> lock(m_mutex);
                 return m_oMap.at(_Keyval);
             }
             
             const mapped_type& at(const key_type& _Keyval) const {
+                //std::unique_lock<std::recursive_mutex> lock(m_mutex);
                 return m_oMap.at(_Keyval);
             }
         private:
