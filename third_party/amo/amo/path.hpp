@@ -4,6 +4,7 @@
 #include <amo/string.hpp>
 #include <amo/config.hpp>
 #include <amo/functional.hpp>
+#include <amo/filesystem.hpp>
 
 #include <memory.h>
 #include <shlwapi.h>
@@ -17,7 +18,6 @@ namespace amo {
     public:
         path() {
             memset(m_path, 0, 1000);
-            
         }
         path(const path& rhs) {
             memset(m_path, 0, 1000);
@@ -37,6 +37,10 @@ namespace amo {
         path(const char* str_path) {
             memset(m_path, 0, 1000);
             strcpy(m_path, str_path);
+        }
+        
+        path(const amo::filesystem::path& p) {
+            filesystem_path(p);
         }
         
         //////////////////////////////////////////////////////////////////////////
@@ -176,12 +180,12 @@ namespace amo {
          * @return	A reference to a path.
          */
         path& add_extension(const amo::string& ext) {
-            bool bOk = (::PathAddExtensionA(m_path, ext.c_str()) != FALSE);
-            
+            bool bOk = (::PathAddExtensionA(m_path,
+                                            ext.c_str()) != FALSE);
+                                            
             if (!bOk) {
                 auto id = GetLastError();
                 ++id;
-                
                 amo::string p(m_path);
                 
                 if (!p.end_with(ext)) {
@@ -190,35 +194,11 @@ namespace amo {
                 
                 memset(m_path, 0, 1000);
                 strcpy(m_path, p.c_str());
-                
             }
             
             return *this;
         }
-        /*!
-         * @fn	path& path::remove_extension()
-         *
-         * @brief	去除文件路径扩展名.
-         *
-         * @return	A reference to a path.
-         */
-        path& remove_extension() {
-            ::PathRemoveExtensionA(m_path);
-            return *this;
-        }
-        /*!
-         * @fn	path& path::rename_extension(const amo::string& ext);
-         *
-         * @brief	更改文件路径扩展名.
-         *
-         * @param	ext	The extent.
-         *
-         * @return	A reference to a path.
-         */
-        path& rename_extension(const amo::string& ext) {
-            ::PathRenameExtensionA(m_path, ext.c_str());
-            return *this;
-        }
+        
         /*!
          * @fn	path& path::remove_file_spec()
          *
@@ -261,10 +241,7 @@ namespace amo {
             return *this;
         }
         
-        operator std::string() {
         
-            return c_str();
-        }
         /*!
          * @fn	path& path::append(const path& other)
          *
@@ -293,7 +270,6 @@ namespace amo {
          */
         path append_c(const path& other) const {
             path p = other.remove_front_backslash_c();
-            
             char a[1000] = { 0 };
             strcpy(a, m_path);
             ::PathAppendA(a, p.c_str());
@@ -308,7 +284,8 @@ namespace amo {
                 return *this;
             }
             
-            amo::string ss = str.substr(0, index);													//!< The ss
+            amo::string ss = str.substr(0,
+                                        index);													//!< The ss
             ss.replace(".", "");
             
             if (ss.empty()) {
@@ -425,7 +402,6 @@ namespace amo {
             
             if (index == -1) {
                 index = str.find_last_of('/');
-                
             }
             
             if (index == -1) {
@@ -449,7 +425,8 @@ namespace amo {
          * @return	The found path.
          */
         bool find_on_path(const path& other) {
-            BOOL bOk = ::PathFindOnPathA(m_path, (PZPCSTR)other.c_str());
+            BOOL bOk = ::PathFindOnPathA(m_path,
+                                         (PZPCSTR)other.c_str());
             return bOk != FALSE;
         }
         /*!
@@ -471,7 +448,8 @@ namespace amo {
          * @return	The found file name.
          */
         amo::string find_file_name() {
-            return amo::string(::PathFindFileNameA(m_path), false);
+            return amo::string(::PathFindFileNameA(m_path),
+                               false);
         }
         /*!
          * @fn	amo::string path::find_next_component()
@@ -481,7 +459,8 @@ namespace amo {
          * @return	The found component.
          */
         amo::string find_next_component() {
-            return amo::string(::PathFindNextComponentA(m_path), false);
+            return amo::string(::PathFindNextComponentA(
+                                   m_path), false);
         }
         /*!
          * @fn	bool path::find_suffix_array(std::vector<amo::string> suffix)
@@ -492,7 +471,8 @@ namespace amo {
          *
          * @return	true if it succeeds, false if it fails.
          */
-        bool find_suffix_array(std::vector<amo::string> suffix) {
+        bool find_suffix_array(std::vector<amo::string>
+                               suffix) {
             char **a = new char*[suffix.size()];
             
             for (std::size_t i = 0; i < suffix.size(); ++i) {
@@ -505,8 +485,9 @@ namespace amo {
             	{
             	strcpy(a[i], suffix[i].c_str());
             	}*/
-            bool bOk = find_suffix_array((const char**)a, suffix.size());
-            
+            bool bOk = find_suffix_array((const char**)a,
+                                         suffix.size());
+                                         
             for (std::size_t i = 0; i < suffix.size(); ++i) {
                 delete[] a[i];
             }
@@ -524,8 +505,10 @@ namespace amo {
          *
          * @return	true if it succeeds, false if it fails.
          */
-        bool find_suffix_array(const char** suffix, int size) {
-            return ::PathFindSuffixArrayA(m_path, suffix, size) != NULL;
+        bool find_suffix_array(const char** suffix,
+                               int size) {
+            return ::PathFindSuffixArrayA(m_path, suffix,
+                                          size) != NULL;
         }
         /*!
          * @fn	amo::string path::get_args()
@@ -571,7 +554,9 @@ namespace amo {
          */
         path& relative_path_to(const path& to) {
             char a[1000] = { 0 };
-            BOOL bOk = ::PathRelativePathToA(a, to.c_str(), FILE_ATTRIBUTE_DIRECTORY, m_path, FILE_ATTRIBUTE_NORMAL);
+            BOOL bOk = ::PathRelativePathToA(a, to.c_str(),
+                                             FILE_ATTRIBUTE_DIRECTORY, m_path,
+                                             FILE_ATTRIBUTE_NORMAL);
             strcpy(m_path, a);
             return *this;
         }
@@ -590,7 +575,9 @@ namespace amo {
          */
         path relative_path_to_c(const path& to) const {
             char a[1000] = { 0 };
-            BOOL bOk = ::PathRelativePathToA(a, to.c_str(), FILE_ATTRIBUTE_DIRECTORY, m_path, FILE_ATTRIBUTE_NORMAL);
+            BOOL bOk = ::PathRelativePathToA(a, to.c_str(),
+                                             FILE_ATTRIBUTE_DIRECTORY, m_path,
+                                             FILE_ATTRIBUTE_NORMAL);
             return path(a);
         }
         
@@ -624,6 +611,7 @@ namespace amo {
                 
                 if (strRight[0] == '\\' || strRight[0] == '/') {
                     strRight = strRight.substr(1);
+                    
                 } else {
                     break;
                 }
@@ -643,7 +631,6 @@ namespace amo {
             m_str = m_str.substr(0, nIndex);
             *this = path(m_str);
             return *this;
-            
         }
         
         path trim_right_c(const path& right) {
@@ -780,46 +767,11 @@ namespace amo {
          */
         path common_prefix(const path& other) {
             path p;
-            ::PathCommonPrefixA(m_path, other.c_str(), p.c_str());
+            ::PathCommonPrefixA(m_path, other.c_str(),
+                                p.c_str());
             return p;
         }
         
-        /**
-         * @fn	path& to_absolute()
-         *
-         * @brief	将一个相对路径转换成绝对路径.
-         *
-         * @return	This object as a path&amp;
-         */
-        
-        path& to_absolute() {
-            if (!is_relative()) {
-                return *this;
-            }
-            
-            path workPath = work_path();
-            workPath.append(*this);
-            *this = workPath;
-            return *this;
-        }
-        
-        /**
-         * @fn	path to_absolute_c()
-         *
-         * @brief	将一个相对路径转换成绝对路径.
-         *
-         * @return	This object as a path.
-         */
-        
-        path to_absolute_c() {
-            if (!is_relative()) {
-                return *this;
-            }
-            
-            path workPath = work_path();
-            workPath.append(*this);
-            return workPath;
-        }
         
         /**
          * @fn	static path work_path()
@@ -836,33 +788,12 @@ namespace amo {
         }
         
         static bool set_work_path_to_app_path() {
-            BOOL bOk = ::SetCurrentDirectoryA(fullAppDir().c_str());
+            BOOL bOk = ::SetCurrentDirectoryA(
+                           fullAppDir().c_str());
             return bOk != FALSE;
         }
         
-        /*!
-         * @fn	bool file_exists()
-         *
-         * @brief		验证路径是否存在.
-         *
-         * @return	true if it succeeds, false if it fails.
-         */
-        bool file_exists() const {
-            return ::PathFileExistsA(m_path) != FALSE;
-        }
-        /*!
-         * @fn	bool is_directory()
-         *
-         * @brief		判断路径是否是一个有效的目录.
-         *
-         * @return	true if directory, false if not.
-         */
-        bool is_directory() const {
-            /*   bool  bOk = ::PathIsDirectoryA(m_path);
-               return bOk;*/
-            BOOL BB = ::PathIsDirectoryA(m_path);
-            return ::PathIsDirectoryA(m_path) != FALSE;
-        }
+        
         /*!
          * @fn	bool is_file_spec()
          *
@@ -894,16 +825,16 @@ namespace amo {
         bool is_root() const {
             return PathIsRootA(m_path) != FALSE;
         }
-        /*!
-         * @fn	bool is_relative()
-         *
-         * @brief		判断路径是否是相对路径.
-         *
-         * @return	true if relative, false if not.
-         */
-        bool is_relative() const {
-            return PathIsRelativeA(m_path) != FALSE;
-        }
+        ///*!
+        // * @fn	bool is_relative()
+        // *
+        // * @brief		判断路径是否是相对路径.
+        // *
+        // * @return	true if relative, false if not.
+        // */
+        //bool is_relative() const {
+        //    return PathIsRelativeA(m_path) != FALSE;
+        //}
         /*!
          * @fn	bool is_prefix(const path& prefix)
          *
@@ -914,7 +845,8 @@ namespace amo {
          * @return	true if prefix, false if not.
          */
         bool is_prefix(const path& prefix) const {
-            return ::PathIsPrefixA(prefix.c_str(), m_path) == NULL;
+            return ::PathIsPrefixA(prefix.c_str(),
+                                   m_path) == NULL;
         }
         /*!
          * @fn	bool is_same_root(const path& other)
@@ -926,7 +858,8 @@ namespace amo {
          * @return	true if same root, false if not.
          */
         bool is_same_root(const path& other) {
-            return ::PathIsSameRootA(m_path, other.c_str()) != FALSE;
+            return ::PathIsSameRootA(m_path,
+                                     other.c_str()) != FALSE;
         }
         /*!
          * @fn	bool transfer(amo::function<void(path&)> fn_cb, bool recursion = false)
@@ -938,23 +871,23 @@ namespace amo {
          *
          * @return	true if it succeeds, false if it fails.
          */
-        bool transfer(amo::function<void(path&)> fn_cb, bool recursion = false) {
+        bool transfer(amo::function<void(path&)> fn_cb,
+                      bool recursion = false) {
             char* lpPath = m_path;
             CHAR szFind[MAX_PATH] = { ("\0") };
             WIN32_FIND_DATAA findFileData;
-            
             strcpy_s(szFind, MAX_PATH, m_path);
-            strcat_s(szFind, ("\\*.*"));     //这里一定要指明通配符，不然不会读取所有文件和目录
-            
-            HANDLE hFind = ::FindFirstFileA(szFind, &findFileData);
-            
+            strcat_s(szFind,
+                     ("\\*.*"));     //这里一定要指明通配符，不然不会读取所有文件和目录
+            HANDLE hFind = ::FindFirstFileA(szFind,
+                                            &findFileData);
+                                            
             if (INVALID_HANDLE_VALUE == hFind) {
                 return false;
             }
             
             do {
                 //path p(amo::string(this->c_str()) + amo::string(findFileData.cFileName));
-                
                 amo::string pStr(findFileData.cFileName);
                 
                 if (pStr != "." && pStr != "..") {
@@ -985,37 +918,23 @@ namespace amo {
                 //		p.transfer(fn_cb, recursion);
                 //		//return false;
                 //	}
-                
                 //}
-                
             } while (::FindNextFileA(hFind, &findFileData));
             
             ::FindClose(hFind);
             return true;
         }
         
-        bool create_directory() const {
-            // 只能为给绝对对路径创建文件夹
-            if (this->is_relative()) {
-                return false;
-            }
-            
-            // 如果当前路径存在，且不为文件夹，返回失败
-            if (this->file_exists()) {
-                if (this->is_directory()) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                path p = parent();
-                
-                if (!p.create_directory()) {
-                    return false;
-                }
-                
-                return CreateDirectoryA(m_path, NULL) != FALSE;
-            }
+        /*!
+        * @fn	bool file_exists()
+        *
+        * @brief		验证路径是否存在.
+        *
+        * @return	true if it succeeds, false if it fails.
+        */
+        bool file_exists() const {
+            return	amo::filesystem::exists(filesystem_path());
+            //return ::PathFileExistsA(m_path) != FALSE;
         }
         
         /**
@@ -1028,7 +947,6 @@ namespace amo {
         
         bool is_valid() const {
             amo::string p(m_path);
-            
             /*  if (p.find('\\') != -1) {
                   return false;
               }
@@ -1060,42 +978,9 @@ namespace amo {
               if (p.find('|') != -1) {
                   return false;
               }*/
-            
             return true;
         }
         
-        /*!
-         * @fn	bool copy_to(const amo::path& to)
-         *
-         * @brief	Copies to described by to. 将当前路径文件复制到所给路径
-         *
-         * @param	to	to.
-         *
-         * @return	true if it succeeds, false if it fails.
-         */
-        bool copy_to(const amo::path& to) {
-        
-            if (this->is_directory()) {
-                return to.create_directory();
-            } else {
-                amo::path parent = to.remove_file_spec_c();
-                parent.create_directory();
-            }
-            
-            return ::CopyFileA(m_path, to.c_str(), FALSE) != FALSE;
-        }
-        
-        bool move_to(const amo::path& to) {
-        
-            if (this->is_directory()) {
-                return to.create_directory();
-            } else {
-                amo::path parent = to.remove_file_spec_c();
-                parent.create_directory();
-            }
-            
-            return ::MoveFileA(m_path, to.c_str()) != FALSE;
-        }
         
         static path fullAppDir() {
             return path(getExeDir());
@@ -1105,7 +990,8 @@ namespace amo {
         static amo::string getExeDir() {
             char executionDir[MAX_PATH];
             
-            if (::GetModuleFileNameA(NULL, executionDir, sizeof executionDir) == NULL) {
+            if (::GetModuleFileNameA(NULL, executionDir,
+                                     sizeof executionDir) == NULL) {
                 executionDir[0] = 0;
             }
             
@@ -1122,7 +1008,8 @@ namespace amo {
         static amo::string getExeName() {
             char executionDir[MAX_PATH];
             
-            if (::GetModuleFileNameA(NULL, executionDir, sizeof executionDir) == NULL) {
+            if (::GetModuleFileNameA(NULL, executionDir,
+                                     sizeof executionDir) == NULL) {
                 executionDir[0] = 0;
             }
             
@@ -1140,14 +1027,16 @@ namespace amo {
         static amo::string getFullExeName() {
             char executionDir[MAX_PATH];
             
-            if (::GetModuleFileNameA(NULL, executionDir, sizeof executionDir) == NULL) {
+            if (::GetModuleFileNameA(NULL, executionDir,
+                                     sizeof executionDir) == NULL) {
                 executionDir[0] = 0;
             }
             
             return amo::string(executionDir, false);
         }
         
-        static path fullPathInAppDir(const path& filePath) {
+        static path fullPathInAppDir(const path&
+                                     filePath) {
             return getFullPathInExeDir(filePath.c_str());
         }
         
@@ -1155,7 +1044,9 @@ namespace amo {
               return getFullPathInExeDir(filePath);
           }*/
         
-        static amo::string getFullPathInExeDir(const amo::string& fileName, bool includingSlash = true) {
+        static amo::string getFullPathInExeDir(
+            const amo::string& fileName,
+            bool includingSlash = true) {
             amo::string file_name = fileName;
             char buf[MAX_PATH];
             ZeroMemory(buf, MAX_PATH);
@@ -1189,6 +1080,30 @@ namespace amo {
         	::PathYetAnotherMakeUniqueName()
         }*/
         
+        
+        
+        
+        // 新接口
+        
+        
+        
+        
+        amo::filesystem::path filesystem_path() const {
+            return  amo::filesystem::path(
+                        amo::string(
+                            m_path).to_string<amo::filesystem::path::string_type>());
+        }
+        
+        void filesystem_path(const amo::filesystem::path&
+                             p) {
+            *this = p.generic_string();
+            return;
+        }
+        
+        operator amo::filesystem::path() const {
+            return filesystem_path();
+        }
+        
         char* c_str() {
             canonicalize();
             return m_path;
@@ -1197,9 +1112,525 @@ namespace amo {
         const char* c_str() const {
             return m_path;
         }
+        
+        std::string to_string() const {
+            return m_path;
+        }
+        
+        operator std::string() {
+            return c_str();
+        }
+        
+        /**
+         * @fn	std::string string() const
+         *
+         * @brief	返回用于初始化 path 的字符串的副本，其格式符合 path 语法规则。.
+         *
+         * @return	A std::string.
+         */
+        
+        std::string string() const {
+            return filesystem_path().string();
+        }
+        
+        
+        
+        //  -----  decomposition  -----
+        
+        path  root_path() const {
+            return filesystem_path().root_path();
+        }
+        
+        /**
+         * @fn	path root_name() const
+         *
+         * @brief	在给定从文件系统根目录开始的路径的情况下，
+         * 			此例程将返回包含 PATHNAME 的第一个字符的字符串。.
+         *
+         * @return	A path.
+         */
+        
+        path  root_name()
+        const {       // returns 0 or 1 element path
+            return filesystem_path().root_name();
+        }
+        
+        /**
+        * @fn	amo::path root_directory()
+        *
+        * @brief	在提供了路径的情况下，此 API 将返回根目录，否则将返回空字符串。
+        * 			例如，如果路径包含 /tmp/var1，则此例程将返回 /，即 UNIX 文件系统的根。
+        * 			不过，如果路径是相对路径，如 ../mywork/bin，此例程将返回空字符串。.
+        *
+        * @return	An amo::path.
+        */
+        
+        amo::path root_directory() {
+            return filesystem_path().root_directory();
+        }
+        
+        path  relative_path() const {
+            return filesystem_path().relative_path();
+        }
+        path  parent_path() const {
+            return filesystem_path().parent_path();
+        }
+        
+        path  filename() const {
+            return filesystem_path().filename();
+        }
+        path  stem() const {
+            return filesystem_path().stem();
+        }
+        path  extension() const {
+            return filesystem_path().extension();
+        }
+        
+        //  -----  query  -----
+        
+        bool empty() const  {
+            return filesystem_path().empty();
+        }
+        bool filename_is_dot() const {
+            return filesystem_path().filename_is_dot();
+        }
+        bool filename_is_dot_dot() const {
+            return filesystem_path().filename_is_dot_dot();
+        }
+        bool has_root_path() const {
+            return filesystem_path().has_root_path();
+        }
+        bool has_root_name() const {
+            return filesystem_path().has_root_name();
+        }
+        bool has_root_directory() const {
+            return filesystem_path().has_root_directory();
+        }
+        
+        bool has_relative_path() const {
+            return filesystem_path().has_relative_path();
+        }
+        
+        bool has_parent_path() const {
+            return filesystem_path().has_parent_path();
+        }
+        
+        bool has_filename() const {
+            return filesystem_path().has_filename();
+        }
+        
+        bool has_stem() const {
+            return filesystem_path().has_stem();
+        }
+        
+        bool has_extension() const {
+            return filesystem_path().has_extension();
+        }
+        
+        bool is_relative() const {
+            return filesystem_path().is_relative();
+        }
+        
+        bool is_absolute() const {
+            return filesystem_path().is_absolute();
+        }
+        
+        //  -----  lexical operations  -----
+        
+        path  lexically_normal() const {
+            return filesystem_path().lexically_normal();
+        }
+        path  lexically_relative(const path& base) const {
+            return filesystem_path().lexically_relative(
+                       base.filesystem_path());
+        }
+        path  lexically_proximate(const path& base)
+        const {
+            return filesystem_path().lexically_proximate(
+                       base.filesystem_path());
+        }
+        
+        
+        path&  normalize() {
+            amo::filesystem::path p = filesystem_path();
+            p.normalize();
+            filesystem_path(p);
+            return *this;
+        }
+        path&  remove_leaf() {
+            amo::filesystem::path p = filesystem_path();
+            p.remove_leaf();
+            filesystem_path(p);
+            return *this;
+        }
+        path   leaf() const {
+            return filesystem_path().leaf();
+        }
+        path   branch_path() const {
+            return filesystem_path().branch_path();
+        }
+        path   generic() const {
+            return filesystem_path().generic();
+        }
+        
+        bool   has_leaf() const {
+            return filesystem_path().has_leaf();
+        }
+        
+        bool   has_branch_path() const {
+            return filesystem_path().has_branch_path();
+        }
+        
+        bool   is_complete() const {
+            return filesystem_path().is_complete();
+        }
+        
+        /**
+         * @fn	bool create_directory() const
+         *
+         * @brief	创建文件夹.
+         *
+         * @return	true if it succeeds, false if it fails.
+         */
+        
+        bool create_directory() const {
+            try {
+                if (this->is_directory() && this->exists()) {
+                    return true;
+                }
+                
+                return amo::filesystem::create_directories(
+                           filesystem_path());
+                           
+            } catch (const std::exception&) {
+                return false;
+            }
+            
+        }
+        
+        
+        /**
+        * @fn	bool exists() const
+        *
+        * @brief	此函数检查文件的扩展名.
+        * 			文件可以为任何类型：常规文件、目录、符号链接等等.
+        *
+        * @return	true if it succeeds, false if it fails.
+        */
+        
+        bool exists() const {
+            return amo::filesystem::exists(filesystem_path());
+        }
+        
+        /*!
+        * @fn	bool is_directory()
+        *
+        * @brief 判断路径是否是一个有效的目录.
+        *
+        * @return	true if directory, false if not.
+        */
+        bool is_directory() const {
+            return	amo::filesystem::is_directory(
+                        filesystem_path());
+        }
+        
+        /**
+         * @fn	bool is_regular() const
+         *
+         * @brief	判断是否为普通文件
+         * 			(即此文件不是目录、符号链接、套接字或设备文件).
+         *
+         * @return	true if regular, false if not.
+         */
+        
+        bool is_regular() const {
+            return	amo::filesystem::is_regular(
+                        filesystem_path());
+        }
+        
+        /**
+         * @fn	bool is_file() const
+         *
+         * @brief	判断是否为普通文件.
+         *
+         * @return	true if file, false if not.
+         */
+        
+        bool is_file() const {
+            return	is_regular();
+        }
+        
+        /**
+         * @fn	bool is_other() const
+         *
+         * @brief	通常，此函数检查设备文件（如 /dev/tty0）或套接字文件.
+         *
+         * @return	true if other, false if not.
+         */
+        
+        bool is_other() const {
+            return	amo::filesystem::is_other(
+                        filesystem_path());
+        }
+        
+        /**
+         * @fn	bool equal_to(const amo::path& other) const
+         *
+         * @brief	两个路径是否等效, 可以判断相对路径 和 绝对路径.
+         *
+         * @param	other	The other.
+         *
+         * @return	true if it succeeds, false if it fails.
+         */
+        
+        bool equal_to(const amo::path& other) const {
+            return amo::filesystem::equivalent(
+                       filesystem_path(),
+                       other.filesystem_path());
+        }
+        
+        /**
+         * @fn	bool is_empty() const
+         *
+         * @brief	如果路径与文件夹对应，此函数将检查文件夹是否为空，
+         * 			并据此返回“True”或“False”。如果路径与文件对应，
+         * 			此函数将检查文件的大小是否等于 0。
+         * 			对于文件的硬链接或符号链接的情况，
+         * 			此 API 将检查原始文件是否为空。.
+         *
+         * @return	true if empty, false if not.
+         */
+        
+        bool is_empty() const {
+            return	amo::filesystem::is_empty(
+                        filesystem_path());
+        }
+        
+        /**
+         * @fn	amo::path to_absolute()
+         *
+         * @brief	此函数是与 bool equivalent(const path1&amp; p1, const path2&amp; p2) 同一系列的另一个 API。
+         * 			给定当前工作目录中任意文件路径的情况下，此 API 将返回该文件的绝对路径。 例如，如果用户位于目录 /home/user1 并查询文件 ../user2/file2，
+         * 			此函数将返回 /home/user2/file2，即文件 file2 的完整路径名.
+         *
+         * @param	p	The amo::path to process.
+         *
+         * @return	An amo::path.
+         */
+        
+        amo::path& to_absolute() {
+            amo::path p(amo::filesystem::system_complete(
+                            filesystem_path()));
+            *this = p;
+            return *this;
+        }
+        
+        amo::path to_absolute_c() const {
+            amo::path p(amo::filesystem::system_complete(
+                            filesystem_path()));
+            return p;
+        }
+        
+        amo::path& absolute() {
+            return to_absolute();
+        }
+        
+        ///**
+        // * @fn	std::string extension() const
+        // *
+        // * @brief	此函数以前面带句点 (.) 的形式返回给定文件名的扩展名。
+        // * 			例如，对于文件名为 test.cpp 的文件，extension 将返回 .cpp。
+        // * 			对于文件没有扩展名的情况，此函数将返回空字符串。
+        // * 			对于隐藏文件（即 UNIX 系统中文件名以 . 开始的文件），
+        // * 			此函数将相应地计算扩展名类型或返回空字符串
+        // * 			（因此，对于 .test.profile，此例程将返回 .profile）。
+        // *
+        // * @return	A std::string.
+        // */
+        //
+        //std::string extension() const {
+        //    return amo::string(amo::filesystem::extension(
+        //                           filesystem_path()).c_str()).str();
+        //}
+        
+        /**
+         * @fn	std::string basename() const
+         *
+         * @brief	这是与 extension 互补的例程。它将返回文件名中 . 之前的字符串。
+         * 			请注意，即使提供了绝对文件名，此 API 仍然仅会返回属于文件名的直接部分.
+         *
+         * @return	A std::string.
+         */
+        
+        std::string basename() const {
+            return amo::filesystem::basename(
+                       filesystem_path());
+        }
+        
+        /**
+         * @fn	std::string change_extension(const std::string& new_extension)
+         *
+         * @brief	此 API 将返回反映更改后的名称的新字符串。
+         * 			请注意，与 oldpath 对应的文件保持不变。
+         * 			这只是一个常规函数。另请注意，您必须显式地在扩展名中指定点。
+         * 			例如，change_extension("test.c", "so") 会得到 testso，而不是 test.so。.
+         *
+         * @param	new_extension	The new extension.
+         *
+         * @return	A std::string.
+         */
+        
+        amo::path& change_extension(const std::string&
+                                    new_extension) {
+            amo::filesystem::path oldpath(filesystem_path());
+            amo::filesystem::path p = amo::path(
+                                          new_extension).filesystem_path();
+            this->filesystem_path(
+                amo::filesystem::change_extension(oldpath, p));
+            return *this;
+        }
+        
+        /*!
+        * @fn	path& path::remove_extension()
+        *
+        * @brief	去除文件路径扩展名.
+        *
+        * @return	A reference to a path.
+        */
+        path& remove_extension() {
+            return change_extension("");
+        }
+        
+        /*!
+        * @fn	path& path::rename_extension(const amo::string& ext);
+        *
+        * @brief	更改文件路径扩展名.
+        *
+        * @param	ext	The extent.
+        *
+        * @return	A reference to a path.
+        */
+        path& rename_extension(const std::string& ext) {
+            return change_extension(ext);
+        }
+        
+        
+        
+        /*!
+        * @fn	bool copy_to(const amo::path& to)
+        *
+        * @brief	复制文件或目录
+        *
+        * @param	to	to.
+        *
+        * @return	true if it succeeds, false if it fails.
+        */
+        bool copy_to(const amo::path& to) {
+            //to.branch_path().create_directory();
+            
+            try {
+            
+                if (this->is_file()) {
+                    amo::filesystem::copy_file(filesystem_path(),
+                                               to.filesystem_path(),
+                                               amo::filesystem::copy_option::overwrite_if_exists);
+                    return true;
+                } else {
+                    copy_files(filesystem_path(), to);
+                    return true;
+                }
+                
+                
+            } catch (const std::exception& e) {
+                std::cout << e.what() << std::endl;
+                return false;
+            }
+        }
+        
+        /* bool move_to(const amo::path& to) {
+             try {
+                 amo::filesystem::rename(filesystem_path(), to.filesystem_path());
+                 return true;
+             } catch (const std::exception& e) {
+                 e.what();
+                 return false;
+             }
+         }*/
+        
+        bool move_to(const amo::path& to) {
+        
+            to.create_directory();
+            return ::MoveFileA(m_path, to.c_str()) != FALSE;
+        }
+        
+        
+        bool rename(const amo::path& to) {
+            return move_to(to);
+        }
+        
+        /**
+         * @fn	bool remove()
+         *
+         * @brief	移除一个文件或空目录.
+         *
+         * @return	true if it succeeds, false if it fails.
+         */
+        
+        bool remove() {
+            try {
+                amo::filesystem::remove(filesystem_path());
+                return true;
+            } catch (const std::exception& e) {
+                e.what();
+                return false;
+            }
+        }
+        
+        /**
+         * @fn	bool remove_all()
+         *
+         * @brief	移除一个文件或递归地移除一个目录及其所有内容.
+         *
+         * @return	true if it succeeds, false if it fails.
+         */
+        
+        bool remove_all() {
+            try {
+                amo::filesystem::remove_all(filesystem_path());
+                return true;
+            } catch (const std::exception& e) {
+                e.what();
+                return false;
+            }
+        }
+        
+    private:
+        void copy_files(const amo::filesystem::path &src,
+                        const amo::filesystem::path &dst) {
+                        
+            if (!amo::filesystem::exists(dst)) {
+                amo::filesystem::create_directories(dst);
+            }
+            
+            for (amo::filesystem::directory_iterator it(src);
+                    it != amo::filesystem::directory_iterator(); ++it) {
+                const amo::filesystem::path newSrc = it->path();
+                const amo::filesystem::path newDst = dst / it->path().filename().string();
+                
+                if (amo::filesystem::is_directory(newSrc)) {
+                    copy_files(newSrc, newDst);
+                } else if (amo::filesystem::is_regular_file(newSrc)) {
+                    amo::filesystem::copy_file(newSrc, newDst,
+                                               amo::filesystem::copy_option::overwrite_if_exists);
+                } else {
+                    std:: cerr << "Error: unrecognized file - " << newSrc.string() << std::endl;
+                }
+            }
+        }
     private:
         //amo::string m_path;
         char m_path[1000];
+        
     };
 }
 

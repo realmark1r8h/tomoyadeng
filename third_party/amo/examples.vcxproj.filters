@@ -57,6 +57,9 @@
     <ClCompile Include="examples\uid.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="examples\main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="examples\systeminfo.h">

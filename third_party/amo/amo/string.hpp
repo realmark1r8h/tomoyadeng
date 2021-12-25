@@ -192,6 +192,17 @@ namespace amo {
         }
 #endif
         
+        template<typename T>
+        T to_string() const {
+            return T();
+        }
+        
+        template<> std::string to_string<std::string>() const {
+            return to_ansi();
+        }
+        template<> std::wstring to_string<std::wstring>() const {
+            return to_wide();
+        }
         
         std::string to_utf8() {
             return  amo::string_utils::ansi_to_utf8(m_str);

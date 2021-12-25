@@ -33,8 +33,9 @@ TEST(Init, LoadDLL) {
     bool bbb = loader.load(amo::path::fullPathInAppDir("7z.dll"));
     {
         amo::loader loader;
-        bool bbb2 = loader.load(amo::path::fullPathInAppDir("renderer_modules\\libExt.dll"));
-        
+        bool bbb2 = loader.load(
+                        amo::path::fullPathInAppDir("renderer_modules\\libExt.dll"));
+                        
         if (bbb2) {
             int i = 23;
         }
@@ -417,12 +418,14 @@ TEST(List, ListFiles_Test1) {
 class ProgressCallbackOutput : public SevenZip::ProgressCallback {
 
 public:
-    virtual void OnStartWithTotal(SevenZip::TString filePath, unsigned __int64 totalBytes) override {
+    virtual void OnStartWithTotal(SevenZip::TString filePath,
+                                  unsigned __int64 totalBytes) override {
         std::wcout << __FUNCTION__ << filePath << ", " << totalBytes << std::endl;
     }
     
     
-    virtual void OnProgress(SevenZip::TString filePath, unsigned __int64 bytesCompleted) override {
+    virtual void OnProgress(SevenZip::TString filePath,
+                            unsigned __int64 bytesCompleted) override {
         std::wcout << __FUNCTION__ << filePath << ", " << bytesCompleted << std::endl;
     }
     
@@ -432,7 +435,8 @@ public:
     }
     
     
-    virtual void OnFileDone(SevenZip::TString filePath, unsigned __int64 bytesCompleted) override {
+    virtual void OnFileDone(SevenZip::TString filePath,
+                            unsigned __int64 bytesCompleted) override {
         std::wcout << __FUNCTION__ << filePath << ", " << bytesCompleted << std::endl;
     }
     

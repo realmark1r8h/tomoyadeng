@@ -1,26 +1,24 @@
 // amo_tests.cpp : 定义控制台应用程序的入口点。
 //
 
-#include "stdafx.h" 
+#include "stdafx.h"
 #include <gtest/gtest.h>
 
-#ifdef _DEBUG 
+#ifdef _DEBUG
 #pragma comment(lib, "gtestd.lib")
 #pragma comment(lib, "gtest_maind.lib")
 #else
 #pragma comment(lib, "gtest.lib")
 #pragma comment(lib, "gtest_main.lib")
 #endif
- 
 
-int Add(int a, int b)
-{
-	return a + b;
+
+int Add(int a, int b) {
+    return a + b;
 }
 
-TEST(testCase, test0)
-{
-	EXPECT_EQ(14, 14);//EXPECT_EQ是比较两个值是否相等
+TEST(testCase, test0) {
+    EXPECT_EQ(14, 14);//EXPECT_EQ是比较两个值是否相等
 }
 //
 //TEST(testCase, test1)
@@ -34,9 +32,8 @@ TEST(testCase, test0)
 //	EXPECT_EQ(28, Add(10, 18));
 //}
 
-int _tmain(int argc, _TCHAR* argv[])
-{
+int _tmain(int argc, _TCHAR* argv[]) {
 
-	testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

@@ -96,6 +96,7 @@
     <ClInclude Include="amo\dynamic_bitset.hpp" />
     <ClInclude Include="amo\exchanger.hpp" />
     <ClInclude Include="amo\file.hpp" />
+    <ClInclude Include="amo\filesystem.hpp" />
     <ClInclude Include="amo\file_mapping.hpp" />
     <ClInclude Include="amo\foreach.hpp" />
     <ClInclude Include="amo\future.hpp" />

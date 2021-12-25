@@ -55,7 +55,8 @@ namespace amo {
          * @return	A std::shared_ptr&lt;process::result&gt;
          */
         
-        virtual   std::shared_ptr<process::result> execute(const std::string& args, int nTimeoutMS = 0) {
+        virtual   std::shared_ptr<process::result> execute(const std::string& args,
+                int nTimeoutMS = 0) {
             auto pProcess = createProcess(args);
             pProcess->start();
             return pProcess->getResult(nTimeoutMS);
@@ -108,8 +109,9 @@ namespace amo {
                 return ret;
             }
             
-            const std::vector<amo::string>& message = result->removeBlankMessage()->getResultMessage();
-            
+            const std::vector<amo::string>& message =
+                result->removeBlankMessage()->getResultMessage();
+                
             for (auto& p : message) {
                 if (p.find("\tdevice") != -1) {
                     std::vector<amo::string> vec = p.split("\t");
@@ -130,7 +132,8 @@ namespace amo {
          * @return	The application list.
          */
         
-        virtual  std::vector<std::pair<amo::string, amo::string> > getAppList(const std::string& keys = "") {
+        virtual  std::vector<std::pair<amo::string, amo::string> > getAppList(
+            const std::string& keys = "") {
             std::vector<std::pair<amo::string, amo::string> > ret;
             auto pProcess = createProcess();
             
@@ -138,8 +141,9 @@ namespace amo {
             pProcess->addArgs(keys);
             pProcess->start();
             
-            std::vector<amo::string> message = pProcess->getResult(DEFAULT_ADB_TIMEOUT)->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message = pProcess->getResult(
+                                                   DEFAULT_ADB_TIMEOUT)->removeBlankMessage()->getResultMessage();
+                                                   
             for (auto& p : message) {
                 amo::string str = p;
                 str.replace("package:", "");
@@ -176,8 +180,9 @@ namespace amo {
                 return"";
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.size() != 1) {
                 return "";
             }
@@ -203,8 +208,9 @@ namespace amo {
                 return"";
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             // 一个手机可能有多个IMEI,只里只处理了一个
             for (auto& p : message) {
                 amo::string strVal = p;
@@ -236,8 +242,9 @@ namespace amo {
                 return"";
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty()) {
                 return "";
             }
@@ -267,8 +274,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty()) {
                 return false;
             }
@@ -319,7 +327,8 @@ namespace amo {
                 
                 if (nSize < nTime) {
                 
-                    $err("PULL文件写入速度不正常,当前文件大小[{0}],当前耗费时间[{1}]", nSize, nTime);
+                    $err("PULL文件写入速度不正常,当前文件大小[{0}],当前耗费时间[{1}]",
+                         nSize, nTime);
                     return false;
                 }
                 
@@ -389,15 +398,16 @@ namespace amo {
                 auto pProcess = createProcess("install ");
                 pProcess->start(strAppFile);
                 // 安装APP5分钟超时
-                auto result = pProcess->getResult(20 * DEFAULT_ADB_TIMEOUT);
+                auto result = pProcess->getResult(200 * DEFAULT_ADB_TIMEOUT);
                 
                 
                 if (!result->isSuccess()) {
                     continue;
                 }
                 
-                std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-                
+                std::vector<amo::string> message =
+                    result->removeBlankMessage()->getResultMessage();
+                    
                 if (message.empty()) {
                     continue;
                 }
@@ -449,8 +459,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             // 如果没有消息，认为卸载成功
             if (message.empty()) {
                 return true;
@@ -488,8 +499,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty()) {
                 return false;
             }
@@ -528,8 +540,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty()) {
                 return true;
             }
@@ -555,8 +568,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             // restarting adbd as root # 说明有root权限 ，
             // 若是adbd cannot run as root in production builds 则说明没有root权限
             for (auto& p : message) {
@@ -590,9 +604,10 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
+                
             for (auto& p : message) {
                 // /system/bin/sh: su: not found
                 if (p.find("not") != -1
@@ -624,8 +639,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             // 允许备份的格式
             // flags = [DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP]
             for (auto& p : message) {
@@ -652,7 +668,8 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        virtual  bool backup(const std::string& strPackage, const std::string& localName) {
+        virtual  bool backup(const std::string& strPackage,
+                             const std::string& localName) {
             auto pProcess = createProcess("backup -f ");
             pProcess->addArgs(localName);
             pProcess->addArgs(strPackage);
@@ -677,7 +694,8 @@ namespace amo {
                 int nSize = file.size();
                 
                 if (nSize == nLastFileSize) {
-                    $devel("备份文件长时间未写入数据，当前大小[{0}],耗费时间[{1}ms]，包名[{2}]，判定备份可能失败", nSize, nTime, strPackage);
+                    $devel("备份文件长时间未写入数据，当前大小[{0}],耗费时间[{1}ms]，包名[{2}]，判定备份可能失败",
+                           nSize, nTime, strPackage);
                     return false;
                 }
                 
@@ -687,7 +705,8 @@ namespace amo {
                 
                 if (nSize < nTime) {
                 
-                    $err("备份文件写入速度不正常,当前文件大小[{0}],当前耗费时间[{1}]", nSize, nTime);
+                    $err("备份文件写入速度不正常,当前文件大小[{0}],当前耗费时间[{1}]",
+                         nSize, nTime);
                     return false;
                 }
                 return true;
@@ -697,8 +716,9 @@ namespace amo {
                  return false;
              }*/
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.size() > 1) {
                 return false;
             }
@@ -736,8 +756,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty()) {
                 return true;
             }
@@ -755,8 +776,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty()) {
                 return true;
             }
@@ -798,8 +820,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty()) {
                 return true;
             }
@@ -825,8 +848,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty()) {
                 return true;
             }
@@ -894,8 +918,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty()) {
                 return true;
             }
@@ -924,8 +949,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty()) {
                 return true;
             }
@@ -1010,8 +1036,9 @@ namespace amo {
                 return "";
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.size() != 1) {
                 return "";
             }
@@ -1050,8 +1077,9 @@ namespace amo {
                 return "";
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.size() != 1) {
                 return "";
             }
@@ -1093,8 +1121,9 @@ namespace amo {
                 return "";
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             // versionName 的格式    versionName=1.0.0
             for (auto& p : message) {
             
@@ -1202,8 +1231,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty()) {
                 return true;
             }
@@ -1286,8 +1316,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty()) {
                 return true;
             }
@@ -1317,14 +1348,38 @@ namespace amo {
             return m_process->kill();
         }
         
+        bool connect(const std::string addr) {
+            auto pProcess = createProcess("connect");
+            pProcess->start(addr);
+            auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
+            
+            if (!result->isSuccess()) {
+                return false;
+            }
+            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
+            for (auto& p : message) {
+                auto str = p.to_upper();
+                
+                if (str.find("UNABLE") != -1) {
+                    return false;
+                }
+                
+            }
+            
+            return true;
+        }
         virtual bool reboot(int nWaitTime = 300000) {
             amo::timer t;
             auto pProcess = createProcess("reboot");
             pProcess->start();
             auto result = pProcess->getResult(DEFAULT_ADB_TIMEOUT);
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty() && t.elapsed() > DEFAULT_ADB_TIMEOUT) {
                 $err("重启手机时adb被超时终止");
                 return false;
@@ -1370,7 +1425,8 @@ namespace amo {
         
         virtual std::shared_ptr<process> createProcess(const std::string& args = "") {
             std::shared_ptr<amo::process> pProcess(new process(m_strAdbPath));
-            pProcess->setEventCallback(std::bind(&amo::adb::onEventCallback, this, std::placeholders::_1));
+            pProcess->setEventCallback(std::bind(&amo::adb::onEventCallback, this,
+                                                 std::placeholders::_1));
             pProcess->setLogger(getLogger());
             // 升级了adb.exe 新版本的adb输出使用utf8编码
             pProcess->setUTF8(true);

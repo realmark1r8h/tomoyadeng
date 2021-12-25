@@ -159,6 +159,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\amo\examples\path.cpp" />
     <ClCompile Include="amo_tests.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="uuid.cpp" />
