@@ -323,6 +323,10 @@ namespace amo {
         amo::log::set_pattern("[%Y-%m-%d %H:%M:%S][%l] %v");
         
         $clog(amo::cinfo << "日志初始化成功" << amo::endl;);
+        
+        // 设置进程消息超时时间
+        ProcessExchanger::ipcTimeOut() = getDefaultAppSettings()->ipcTimeout;
+        
         void* sandbox_info = NULL;
         // 不使用沙箱
         //#if defined(CEF_USE_SANDBOX)

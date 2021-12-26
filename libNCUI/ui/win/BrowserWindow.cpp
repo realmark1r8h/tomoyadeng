@@ -41,7 +41,8 @@
 #include <amo/adb.hpp>
 
 namespace amo {
-    BrowserWindow::BrowserWindow(std::shared_ptr<BrowserWindowSettings> pBrowserSettings)
+    BrowserWindow::BrowserWindow(std::shared_ptr<BrowserWindowSettings>
+                                 pBrowserSettings)
         : LocalWindow(pBrowserSettings)
         , m_pWebkit(NULL)
         , m_pBrowserSettings(pBrowserSettings) {
@@ -80,32 +81,14 @@ namespace amo {
         vec.push_back(json);
     }
     
-    void date_time_test() {
-        amo::date_time time;
-        std::string ss =  time.format();
-        ss = time.format("yyMMddhhmmss");
-        ss = time.format("hh:mm:s");
-        ss = time.format("yy-MM-dd");
-        
-        amo::loader load;
-        load.load("RX3GDll.dll");
-        std::vector<amo::string> vec;
-        load.exports(vec);
-        
-        for (auto& p : vec) {
-            amo::cdevel << p.to_ansi() << amo::endl;
-        }
-        
-        amo::loader loader;
-        bool bbb = loader.load(amo::path::fullPathInAppDir("renderer_modules\\libExt.dll"));
-    }
     
     
     void BrowserWindow::InitWindow() {
     
-        date_time_test();
+    
         //获取图标，第二个参数为要获取第几个图标
-        HICON hIcon = ExtractIconA(m_PaintManager.GetInstance(), amo::path::getFullExeName().c_str(), 0);
+        HICON hIcon = ExtractIconA(m_PaintManager.GetInstance(),
+                                   amo::path::getFullExeName().c_str(), 0);
         ::SendMessage(m_hWnd, WM_SETICON, (WPARAM)false, (LPARAM)hIcon);
         // 添加到Transfer管理,如果不是用JS创建的，则没有添加进
         addTransfer(getDerivedClass<ClassTransfer>());
@@ -118,7 +101,8 @@ namespace amo {
         	::SendMessage(m_hWnd, WM_SETICON, (WPARAM)false, (LPARAM)m_hIcon);*/
         auto clientApp = amo::AppContext::getInstance()->getClientApp();
         clientApp->RegisterBrowserProcessHandlerDelegate(this);
-        m_pTitleBar = static_cast<CControlUI*>(m_PaintManager.FindControl(_T("titleLayout")));
+        m_pTitleBar = static_cast<CControlUI*>(m_PaintManager.FindControl(
+                _T("titleLayout")));
         assert(m_pTitleBar != NULL);
         
         if (m_pBrowserSettings->titleBar) {
@@ -177,7 +161,8 @@ namespace amo {
         //delete this;
     }
     
-    LRESULT BrowserWindow::OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT BrowserWindow::OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                   BOOL& bHandled) {
         if (!m_pBrowserSettings->closable) {
             bHandled = TRUE;
             return TRUE;
@@ -201,8 +186,9 @@ namespace amo {
         return LocalWindow::OnClose(uMsg, wParam, lParam, bHandled);
     }
     
-    LRESULT BrowserWindow::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
-    
+    LRESULT BrowserWindow::HandleCustomMessage(UINT uMsg, WPARAM wParam,
+            LPARAM lParam, BOOL& bHandled) {
+            
         LRESULT lRes = FALSE;
         
         switch (uMsg) {
@@ -279,7 +265,8 @@ namespace amo {
         return m_pBrowserSettings->main;
     }
     
-    std::shared_ptr<amo::BrowserWindowSettings> BrowserWindow::getBrowserSettings() const {
+    std::shared_ptr<amo::BrowserWindowSettings> BrowserWindow::getBrowserSettings()
+    const {
         return m_pBrowserSettings;
     }
     
@@ -504,10 +491,11 @@ namespace amo {
         return false;
     }
     
-    LRESULT BrowserWindow::OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
-    
-    
-    
+    LRESULT BrowserWindow::OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                       BOOL& bHandled) {
+                                       
+                                       
+                                       
         if (!ptInWindow()) {
         
             return HTCLIENT;
@@ -584,8 +572,9 @@ namespace amo {
         return m_pWebkit->getBrowser()->GetIdentifier();
     }
     
-    LRESULT BrowserWindow::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
-    
+    LRESULT BrowserWindow::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                     BOOL& bHandled) {
+                                     
         if (m_pWebkit != NULL && isLayered()) {
             m_pWebkit->insertBitmap(std::shared_ptr<Gdiplus::Bitmap>());
         }
@@ -616,7 +605,8 @@ namespace amo {
     }
     
     
-    LRESULT BrowserWindow::OnNcLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT BrowserWindow::OnNcLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                           BOOL& bHandled) {
         UINT nHitTest = wParam;
         POINT pt;
         POINTSTOPOINT(pt, lParam);
@@ -655,7 +645,8 @@ namespace amo {
         return lRes;
     }
     
-    LRESULT BrowserWindow::OnNcLButtonDbClick(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT BrowserWindow::OnNcLButtonDbClick(UINT uMsg, WPARAM wParam,
+            LPARAM lParam, BOOL& bHandled) {
         if (!m_pBrowserSettings->resizeable) {
             bHandled = TRUE;
             return TRUE;

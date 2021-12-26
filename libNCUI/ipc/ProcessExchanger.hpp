@@ -34,12 +34,14 @@ namespace {
     
     static int bytesToInt(int8_t* b) {
         int mask = 0x000000ff;
-        return ((b[0] & mask) << 24) + ((b[1] & mask) << 16) + ((b[2] & mask) << 8) + (b[3] & mask);
+        return ((b[0] & mask) << 24) + ((b[1] & mask) << 16) + ((b[2] & mask) << 8) +
+               (b[3] & mask);
     }
     
     static int bytesToInt(std::vector<int8_t>& b) {
         int mask = 0x000000ff;
-        return ((b[0] & mask) << 24) + ((b[1] & mask) << 16) + ((b[2] & mask) << 8) + (b[3] & mask);
+        return ((b[0] & mask) << 24) + ((b[1] & mask) << 16) + ((b[2] & mask) << 8) +
+               (b[3] & mask);
     }
 }
 
@@ -47,6 +49,11 @@ namespace amo {
 
 
     class ProcessExchanger {
+    public:
+        static uint64_t& ipcTimeOut() {
+            static uint64_t nIPCTimeout = 0;
+            return nIPCTimeout;
+        }
     public:
     
         ProcessExchanger() {
@@ -202,7 +209,8 @@ namespace amo {
                 return true;
             } while (false);
             
-            $clog(amo::cdevel << func_orient << "数据写入失败:: " << anyToString(t) << amo::endl;);
+            $clog(amo::cdevel << func_orient << "数据写入失败:: " << anyToString(
+                      t) << amo::endl;);
             return false;
         }
         
@@ -268,7 +276,8 @@ namespace amo {
                 return true;
             } while (false);
             
-            $clog(amo::cdevel << func_orient << "数据写入失败:: " << t.value() << amo::endl;);
+            $clog(amo::cdevel << func_orient << "数据写入失败:: " << t.value() <<
+                  amo::endl;);
             return false;
         }
         
@@ -330,7 +339,8 @@ namespace amo {
                 return true;
             } while (false);
             
-            $clog(amo::cdevel << func_orient << "数据写入失败:: " << t->toJson().to_string() << amo::endl;);
+            $clog(amo::cdevel << func_orient << "数据写入失败:: " <<
+                  t->toJson().to_string() << amo::endl;);
             return false;
             
             
@@ -456,7 +466,8 @@ namespace amo {
          * @return	The process synchronise message callback.
          */
         
-        std::function<bool(int, IPCMessage::SmartType)>& getProcessSyncMessageCallback() {
+        std::function<bool(int, IPCMessage::SmartType)>&
+        getProcessSyncMessageCallback() {
             return m_fnSyncMessageCallback;
         }
         
@@ -582,7 +593,8 @@ namespace amo {
                 throw std::runtime_error("处理到不应该出现的消息，只能收到ProcessMessage类");
             }
             
-            $clog(amo::cdevel << func_orient << "tryProcessMessage 失败::: " << any.value() << amo::endl;);
+            $clog(amo::cdevel << func_orient << "tryProcessMessage 失败::: " <<
+                  any.value() << amo::endl;);
             return Nothing();
         }
     protected:
@@ -607,7 +619,7 @@ namespace amo {
         int m_nN;
         
         ProcessExchangerManager() {
-            m_nTimeout = 1000;
+            m_nTimeout = ProcessExchanger::ipcTimeOut();
         }
         
         /*!
@@ -764,21 +776,42 @@ namespace amo {
             
             while (true) {
             
-                if (t.elapsed() > m_nTimeout) {
-                
-                    $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " << message_id << amo::endl;);
-                    $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " << message_id << amo::endl;);
-                    $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " << message_id << amo::endl;);
-                    $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " << message_id << amo::endl;);
-                    $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " << message_id << amo::endl;);
-                    m_oDeadlockIDs.insert(std::make_pair(id, message_id));
+                if (m_nTimeout > 0) {
+                    if (t.elapsed() > m_nTimeout) {
                     
-                    if (getDeadlockCallback()) {
-                        return  getDeadlockCallback()();
-                    } else {
-                        return Deadlock();
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
+                              message_id << amo::endl;);
+                        m_oDeadlockIDs.insert(std::make_pair(id, message_id));
+                        
+                        if (getDeadlockCallback()) {
+                            return  getDeadlockCallback()();
+                        } else {
+                            return Deadlock();
+                        }
                     }
-                    
+                } else {
+                    if (t.elapsed() > 5000) {
+                        // 打印消息出来提示死锁
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
+                              message_id << amo::endl;);
+                              
+                    }
                 }
                 
                 Any any = findCache(id, message_id);
@@ -847,7 +880,8 @@ namespace amo {
         void insertCache(int browserID, int messageID, Any& ret) {
             $clog(amo::cdevel << func_orient << ret.value() << amo::endl;);
             
-            if (m_oDeadlockIDs.find(std::make_pair(browserID, messageID)) != m_oDeadlockIDs.end()) {
+            if (m_oDeadlockIDs.find(std::make_pair(browserID,
+                                                   messageID)) != m_oDeadlockIDs.end()) {
                 $cwarn("处理到已放弃的死锁ID，该消息不会被缓存");
                 m_oDeadlockIDs.erase(std::make_pair(browserID, messageID));
                 return;
@@ -858,7 +892,8 @@ namespace amo {
             if (iter == m_oResultCache.end()) {
                 std::unordered_map<int, Any> val;
                 val[messageID] = ret;
-                m_oResultCache.insert(std::pair<int, std::unordered_map<int, Any> >(browserID, val));
+                m_oResultCache.insert(std::pair<int, std::unordered_map<int, Any> >(browserID,
+                                      val));
                 return;
             } else {
                 auto& p = iter->second;
@@ -979,7 +1014,8 @@ namespace amo {
      * @brief	主进程管道管理器， 子进程中没有，各是各的exchanger.
      */
     
-    class BrowserProcessExchangerManager : public ProcessExchangerManager < ProcessExchanger >
+    class BrowserProcessExchangerManager : public ProcessExchangerManager
+        < ProcessExchanger >
         , public amo::singleton < BrowserProcessExchangerManager > {
     public:
         BrowserProcessExchangerManager() {
@@ -987,7 +1023,8 @@ namespace amo {
         }
     };
     
-    class RendererProcessExchangerManager : public ProcessExchangerManager < ProcessExchanger >
+    class RendererProcessExchangerManager : public ProcessExchangerManager
+        < ProcessExchanger >
         , public amo::singleton < RendererProcessExchangerManager > {
     public:
         RendererProcessExchangerManager()  {

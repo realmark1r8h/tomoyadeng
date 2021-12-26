@@ -300,5 +300,8 @@
     <ClInclude Include="amo\filesystem.hpp">
       <Filter>amo</Filter>
     </ClInclude>
+    <ClInclude Include="amo\archive.hpp">
+      <Filter>amo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

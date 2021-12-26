@@ -63,6 +63,9 @@ namespace amo {
         /*! @brief	是否在单独的进程中使用NODEJS. */
         bool useNodeProcess;
         
+        /** @brief	进程通信的超时时间，如果超过这个时间没有得到返回结果，该消息将被丢弃。可以用来解决部分死锁问题。默认为0（永不超时）. */
+        uint64_t ipcTimeout;
+        
         /*! @brief	main.js 文件位置. */
         std::string main;
         
@@ -71,6 +74,7 @@ namespace amo {
         
         /*! @brief	程序完整路径. */
         std::string appPath;
+        
         /*! @brief	程序所在目录. */
         std::string appDir;
         
@@ -79,25 +83,32 @@ namespace amo {
         
         /*! @brief	Duilib skin 目录. */
         std::string skinDir;
+        
         /*! @brief	工作目录,默认与程序所有目录相同. */
         std::string workDir;
+        
         /*! @brief	html 源代码目录. */
         std::string webDir;
         
         
         /*! @brief	储存你应用程序设置文件的文件夹，默认是 appDataDir 文件夹附加应用的名称. */
         std::string homeDir;
+        
         /*! @brief	用户下载目录的路径. */
         std::string downloadsDir;
+        
         /*! @brief	用户音乐目录的路径. */
         std::string musicsDir;
+        
         /*! @brief	用户图片目录的路径. */
         std::string picturesDir;
+        
         /*! @brief	用户视频目录的路径. */
         std::string videosDir;
         
         /*! @brief	拖拽移动窗口的元素类名. */
         std::string dragClassName;
+        
         /*! @brief	禁止窗口元素类名. */
         std::string noDragClassName;
         

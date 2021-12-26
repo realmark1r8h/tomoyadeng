@@ -2,17 +2,17 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Spec">
-      <UniqueIdentifier>{50896108-0297-4ec8-93dd-f061eab0f171}</UniqueIdentifier>
+      <UniqueIdentifier>{39d6b6d5-874f-4026-acc7-4f92afe879ad}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
     </Filter>
     <Filter Include="Windows">
-      <UniqueIdentifier>{238f60f9-0cb1-4596-91e6-4491133fb302}</UniqueIdentifier>
+      <UniqueIdentifier>{b8662c00-62e4-41ab-ab66-bba6a874409e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common">
-      <UniqueIdentifier>{2cbd3d79-8abd-4ad0-a677-d73088d91743}</UniqueIdentifier>
+      <UniqueIdentifier>{28a5adcb-f32e-4d36-bf79-58b1555ce6cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="7zip Common">
-      <UniqueIdentifier>{3c55211f-7c37-4145-a583-b51743d98a8a}</UniqueIdentifier>
+      <UniqueIdentifier>{da41f8d9-e680-4386-965f-4c0f26f48393}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

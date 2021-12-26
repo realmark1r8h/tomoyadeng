@@ -679,7 +679,8 @@ namespace amo {
             int64_t nLastFileSize = 0;
             auto result = pProcess->getResult(0, 0, [ & ](int64_t nTime)->bool {
             
-                if (nLastTimestamp + DEFAULT_ADB_TIMEOUT > nTime) {
+            
+                if (nLastTimestamp + DEFAULT_ADB_TIMEOUT  > nTime) {
                     return true;
                 }
                 
@@ -1112,6 +1113,7 @@ namespace amo {
          */
         
         virtual amo::string appVersion(const amo::string& packageName) {
+        
             auto pProcess = createProcess("shell dumpsys package ");
             pProcess->start(packageName);
             
@@ -1224,12 +1226,16 @@ namespace amo {
             pProcess->start();
             // 开启服务的超时时间为10秒
             auto result = pProcess->getResult(0, 0, [&](int64_t nTimeOut) {
-                return DEFAULT_ADB_TIMEOUT > nTimeOut;
+                if (DEFAULT_ADB_TIMEOUT / 2 > nTimeOut) {
+                    return true;
+                } else {
+                    return false;
+                }
             });
             
-            if (!result->isSuccess()) {
-                return false;
-            }
+            /* if (!result->isSuccess()) {
+                 return false;
+             }*/
             
             std::vector<amo::string> message =
                 result->removeBlankMessage()->getResultMessage();

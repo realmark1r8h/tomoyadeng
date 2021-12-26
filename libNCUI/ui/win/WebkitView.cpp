@@ -119,7 +119,8 @@ namespace amo {
             m_pRenderWnd = window;
         }
         
-        m_pRenderWnd->Create(m_hParentWnd, NULL, UI_WNDSTYLE_CHILD, NULL); //UI_WNDSTYLE_CHILD 防止闪屏
+        m_pRenderWnd->Create(m_hParentWnd, NULL, UI_WNDSTYLE_CHILD,
+                             NULL); //UI_WNDSTYLE_CHILD 防止闪屏
         //UpdateBrowserPos();	//设置窗口位置
         SetPos(GetPos());
         m_hBrowserWnd = m_pRenderWnd->GetHWND();	//获取浏览器窗口句柄
@@ -271,7 +272,8 @@ namespace amo {
             std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(frame));
             runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
             runner->setValue(IPCArgsPosInfo::TransferID, 0);
-            runner->setValue(IPCArgsPosInfo::JsFuncName, "include(\"BrowserWindow\").currentWindow.dragable");
+            runner->setValue(IPCArgsPosInfo::JsFuncName,
+                             "include(\"BrowserWindow\").currentWindow.dragable");
             runner->execute("runJSFunction",
                             appSettings->dragClassName,
                             appSettings->noDragClassName);
@@ -495,25 +497,36 @@ namespace amo {
     
         $clog(amo::cdevel << func_orient << "95271" << amo::endl;);
         
-        std::shared_ptr<amo::pipe<amo::pipe_type::server> > pBrowserPipeServer;			//消息管道主进程服务端
-        std::shared_ptr<amo::pipe<amo::pipe_type::client> > pRenderPipeClient;			//消息管道主进程客户端
+        std::shared_ptr<amo::pipe<amo::pipe_type::server> >
+        pBrowserPipeServer;			//消息管道主进程服务端
+        std::shared_ptr<amo::pipe<amo::pipe_type::client> >
+        pRenderPipeClient;			//消息管道主进程客户端
         
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        std::string strPipeClientName = RendererPipePrefix + (std::string)args->getString(0);
-        $clog(amo::cdevel << func_orient << "连接管道：" << strPipeClientName << amo::endl;);
-        std::string strPipeServerName = BrowserPipePrefix + (std::string)args->getString(0);
-        pRenderPipeClient.reset(new amo::pipe<amo::pipe_type::client>(strPipeClientName));
-        pBrowserPipeServer.reset(new amo::pipe<amo::pipe_type::server>(strPipeServerName, DefaultPipeSize));
+        std::string strPipeClientName = RendererPipePrefix + (std::string)
+                                        args->getString(0);
+        $clog(amo::cdevel << func_orient << "连接管道：" << strPipeClientName <<
+              amo::endl;);
+        std::string strPipeServerName = BrowserPipePrefix + (std::string)
+                                        args->getString(0);
+        pRenderPipeClient.reset(new amo::pipe<amo::pipe_type::client>
+                                (strPipeClientName));
+        pBrowserPipeServer.reset(new amo::pipe<amo::pipe_type::server>
+                                 (strPipeServerName, DefaultPipeSize));
         bool bOK = pRenderPipeClient->connect();
         
         int nBrowserID = args->getInt(1);
         
-        $clog(amo::cdevel << func_orient << "管道连接" << (bOK ? "成功" : "失败") << amo::endl;);
-        
+        $clog(amo::cdevel << func_orient << "管道连接" << (bOK ? "成功" :
+                "失败") << amo::endl;);
+                
         bOK = pBrowserPipeServer->connect();
-        $clog(amo::cdevel << func_orient << "主进程管道服务连接" << (bOK ? "成功" : "失败") << amo::endl;);
-        std::shared_ptr<ProcessExchanger> pBrowserProcessExchanger;					//消息管道数据交换类
-        pBrowserProcessExchanger = BrowserProcessExchangerManager::getInstance()->findExchanger(nBrowserID);
+        $clog(amo::cdevel << func_orient << "主进程管道服务连接" <<
+              (bOK ? "成功" : "失败") << amo::endl;);
+        std::shared_ptr<ProcessExchanger>
+        pBrowserProcessExchanger;					//消息管道数据交换类
+        pBrowserProcessExchanger =
+            BrowserProcessExchangerManager::getInstance()->findExchanger(nBrowserID);
         assert(pBrowserProcessExchanger);
         pBrowserProcessExchanger->setPipeClient(pRenderPipeClient);
         pBrowserProcessExchanger->setPipeServer(pBrowserPipeServer);
@@ -598,7 +611,8 @@ namespace amo {
         if (SUCCEEDED(SHGetFolderPath(NULL, CSIDL_PERSONAL | CSIDL_FLAG_CREATE,
                                       NULL, 0, szFolderPath))) {
             path = amo::string(szFolderPath);
-            path += std::string("\\") + amo::string(suggested_name.ToString(), true).to_ansi();
+            path += std::string("\\") + amo::string(suggested_name.ToString(),
+                                                    true).to_ansi();
         }
         
         callback->Continue(amo::string(path).to_utf8(), true);

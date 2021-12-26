@@ -115,7 +115,8 @@ namespace amo {
                     WIN32_FILE_ATTRIBUTE_DATA fad;
                     
                     if (GetFileAttributesExA(p.c_str(), GetFileExInfoStandard, &fad)) {
-                        nSize += ((ULONG64)fad.nFileSizeHigh & 0xffffffff) << 32 | (ULONG64)fad.nFileSizeLow;
+                        nSize += ((ULONG64)fad.nFileSizeHigh & 0xffffffff) << 32 |
+                                 (ULONG64)fad.nFileSizeLow;
                     }
                 }
             }, true);
@@ -133,8 +134,9 @@ namespace amo {
             WIN32_FIND_DATAA findFileData;
             
             strcpy_s(szFind, MAX_PATH, m_path.c_str());
-            strcat_s(szFind, ("\\*.*"));     //这里一定要指明通配符，不然不会读取所有文件和目录
-            
+            strcat_s(szFind,
+                     ("\\*.*"));     //这里一定要指明通配符，不然不会读取所有文件和目录
+                     
             HANDLE hFind = ::FindFirstFileA(szFind, &findFileData);
             
             if (INVALID_HANDLE_VALUE == hFind) {
@@ -181,8 +183,9 @@ namespace amo {
             WIN32_FIND_DATAA findFileData;
             
             strcpy_s(szFind, MAX_PATH, m_path.c_str());
-            strcat_s(szFind, ("\\*.*"));     //这里一定要指明通配符，不然不会读取所有文件和目录
-            
+            strcat_s(szFind,
+                     ("\\*.*"));     //这里一定要指明通配符，不然不会读取所有文件和目录
+                     
             HANDLE hFind = ::FindFirstFileA(szFind, &findFileData);
             
             if (INVALID_HANDLE_VALUE == hFind) {

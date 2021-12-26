@@ -216,6 +216,7 @@
     <ClCompile Include="lib\7zSDK\CPP\Common\MyVector.cpp" />
     <ClCompile Include="lib\7zSDK\CPP\Windows\PropVariant.cpp" />
     <ClCompile Include="lib\7zSDK\CPP\7zip\Common\StreamObjects.cpp" />
+    <ClCompile Include="src\archive.cpp" />
     <ClCompile Include="src\bit7zlibrary.cpp" />
     <ClCompile Include="src\bitarchivecreator.cpp" />
     <ClCompile Include="src\bitarchivehandler.cpp" />
@@ -241,6 +242,7 @@
     <ClCompile Include="src\util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\archive.hpp" />
     <ClInclude Include="include\bit7z.hpp" />
     <ClInclude Include="include\bit7zlibrary.hpp" />
     <ClInclude Include="include\bitarchivecreator.hpp" />

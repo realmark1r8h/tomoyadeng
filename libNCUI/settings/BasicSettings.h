@@ -16,6 +16,7 @@
 #define INT_ARGS_SETTING(val) val = settings.getInt(#val, val);
 #define INT64_ARGS_SETTING(val) val = settings.getInt64(#val, val);
 #define UINT_ARGS_SETTING(val) val = settings.getUint(#val, val);
+#define UINT64_ARGS_SETTING(val) val = settings.getUint64(#val, val);
 #define STRING_ARGS_SETTING(val) val = toAbsolutePath(settings.getString(#val, val));
 #define JSON_ARGS_SETTING(val) val = settings.getJson(#val, val);
 

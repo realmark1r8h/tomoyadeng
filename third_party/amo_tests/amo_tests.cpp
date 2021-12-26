@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include <gtest/gtest.h>
-
+#include <amo/logger.hpp>
 #ifdef _DEBUG
 #pragma comment(lib, "gtestd.lib")
 #pragma comment(lib, "gtest_maind.lib")
@@ -33,7 +33,8 @@ TEST(testCase, test0) {
 //}
 
 int _tmain(int argc, _TCHAR* argv[]) {
-
+    amo::path::set_work_path_to_app_path();
+    amo::log::initialize(true, true);
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

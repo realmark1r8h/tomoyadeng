@@ -2,31 +2,31 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Spec">
-      <UniqueIdentifier>{0be1bc40-6707-42f5-a53f-b2965921c6fc}</UniqueIdentifier>
+      <UniqueIdentifier>{b05fa898-a374-49ea-b2cb-c5b7fad2634b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine">
-      <UniqueIdentifier>{db2bddfd-88ca-4bf1-9ea8-39cdc0357428}</UniqueIdentifier>
+      <UniqueIdentifier>{5dcb2248-9964-4834-a3d5-e9593bcf8692}</UniqueIdentifier>
     </Filter>
     <Filter Include="Interface">
-      <UniqueIdentifier>{fd120147-83e1-49fc-8efb-d8e505b234ec}</UniqueIdentifier>
+      <UniqueIdentifier>{e81e9b46-4b31-447c-9594-e12807e04576}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common">
-      <UniqueIdentifier>{8152e260-8fa3-4ff9-8570-413502a52bcd}</UniqueIdentifier>
+      <UniqueIdentifier>{479cf4fb-a00f-4238-a841-5aece6273b75}</UniqueIdentifier>
     </Filter>
     <Filter Include="Archive Common">
-      <UniqueIdentifier>{2317c8a1-2a8d-479a-a928-3084c231db5b}</UniqueIdentifier>
+      <UniqueIdentifier>{56e454bf-0ffc-4c2e-aaad-cafffd7de82d}</UniqueIdentifier>
     </Filter>
     <Filter Include="7-Zip Common">
-      <UniqueIdentifier>{151219ba-6943-4406-b37c-4ef634dc1727}</UniqueIdentifier>
+      <UniqueIdentifier>{bcb4c1cf-b876-46c6-8c36-471fb2c16670}</UniqueIdentifier>
     </Filter>
     <Filter Include="Windows">
-      <UniqueIdentifier>{b0f0c06f-ae01-4d51-878c-00edf951a694}</UniqueIdentifier>
+      <UniqueIdentifier>{23a7969a-e847-42af-bad3-2f6354a14246}</UniqueIdentifier>
     </Filter>
     <Filter Include="Compress">
-      <UniqueIdentifier>{2b4de13b-7286-4174-af98-1f63703ad600}</UniqueIdentifier>
+      <UniqueIdentifier>{78f9aebb-24ff-4f71-8f94-120729645093}</UniqueIdentifier>
     </Filter>
     <Filter Include="C">
-      <UniqueIdentifier>{8e525759-358a-48a2-87e7-1da85e7db777}</UniqueIdentifier>
+      <UniqueIdentifier>{4c743084-f0be-4797-bc8c-f8452a8951f3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
