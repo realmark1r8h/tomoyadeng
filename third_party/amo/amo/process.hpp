@@ -137,14 +137,16 @@ namespace amo {
         }
         
         void init() {
-            setCreationFlags(CREATE_NO_WINDOW);
+            //setCreationFlags(DETACHED_PROCESS | CREATE_NO_WINDOW);
+            setCreationFlags(0);
             m_bShowWindow = false;
             hRead = NULL;
             hWrite = NULL;
             retval = 0;
             m_bProcessCreated = false;
             setUTF8(false);
-            m_workPath = amo::path::fullAppDir(); //默认工作目录为当前程序所在目录
+            m_workPath =
+                amo::path::fullAppDir(); //默认工作目录为当前程序所在目录
             memset(&pi, 0, sizeof(PROCESS_INFORMATION));
             memset(&sa, 0, sizeof(SECURITY_ATTRIBUTES));
             
@@ -217,8 +219,11 @@ namespace amo {
             
             si.cb = sizeof(STARTUPINFO);
             GetStartupInfoA(&si);
-            si.hStdError = hWrite;            //把创建进程的标准错误输出重定向到管道输入
-            si.hStdOutput = hWrite;           //把创建进程的标准输出重定向到管道输入
+            //把创建进程的标准错误输出重定向到管道输入
+            si.hStdError =  hWrite;
+            //si.hStdInput = hRead;
+            //把创建进程的标准输出重定向到管道输入
+            si.hStdOutput = hWrite;
             si.wShowWindow = m_bShowWindow ? SW_SHOW : SW_HIDE;
             si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
             
@@ -242,8 +247,7 @@ namespace amo {
             }
             
             m_bProcessCreated = true;
-            CloseHandle(hWrite);
-            hWrite = NULL;
+            
             return true;
         }
         
@@ -268,7 +272,8 @@ namespace amo {
             //启动命令行
             PROCESS_INFORMATION pi;
             
-            if (!CreateProcessA(NULL, (char *)pszCmd, NULL, NULL, TRUE, NULL, NULL, NULL, &si, &pi)) {
+            if (!CreateProcessA(NULL, (char *)pszCmd, NULL, NULL, TRUE, NULL, NULL, NULL,
+                                &si, &pi)) {
                 return "";
             }
             
@@ -353,7 +358,8 @@ namespace amo {
                 
                 if (needMsg > 0) {
                     if (strRetval.empty() && m_timer.elapsed() > needMsg) {
-                        $err("进程长时间[{0}, {1}]没有输出，将被强行终止", needMsg, m_timer.elapsed());
+                        $err("进程长时间[{0}, {1}]没有输出，将被强行终止", needMsg,
+                             m_timer.elapsed());
                         m_pResult->setSuccess(false);
                         kill();
                         break;
@@ -362,7 +368,8 @@ namespace amo {
                 
                 if (nTimeoutMS > 0) {
                     if (m_timer.elapsed() > nTimeoutMS) {
-                        $err("进程长时间[{0}, {1}]没有输出，将被强行终止", nTimeoutMS, m_timer.elapsed());
+                        $err("进程长时间[{0}, {1}]没有输出，将被强行终止", nTimeoutMS,
+                             m_timer.elapsed());
                         m_pResult->setSuccess(false);
                         kill();
                         
@@ -396,8 +403,11 @@ namespace amo {
             m_pResult->setResultMessage(strRetval.split("\n"));
             
             CloseHandle(hRead);
-            hWrite = hRead = NULL;
-            $devel("process completed：{0}，used：{1}", amo::date_time().to_string(), m_timer.elapsed());
+            CloseHandle(hWrite);
+            hWrite = NULL;
+            hRead = NULL;
+            $devel("process completed：{0}，used：{1}", amo::date_time().to_string(),
+                   m_timer.elapsed());
             $devel(log_separator);
             return m_pResult;
             
@@ -454,8 +464,9 @@ namespace amo {
                 return 0;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty()) {
                 return 0;
             }
@@ -514,8 +525,9 @@ namespace amo {
                 return retval;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.empty()) {
                 SetLastError(0);
                 return retval;
@@ -579,8 +591,9 @@ namespace amo {
                 return false;
             }
             
-            std::vector<amo::string> message = result->removeBlankMessage()->getResultMessage();
-            
+            std::vector<amo::string> message =
+                result->removeBlankMessage()->getResultMessage();
+                
             if (message.size() > 1) {
                 return false;
             }

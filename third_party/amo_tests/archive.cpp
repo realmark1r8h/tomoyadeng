@@ -6,10 +6,13 @@
 
 TEST(archive, addFile) {
     amo::archive zip("D:\\ddd.zip");
-    bool bOk =  zip.addFile("D:/test/aaa.txt");
+    //zip.addFile("text.txt", "D:/test/aaa.txt");
+    //system("7z.exe a D:\\ddd.zip -sitext.txt < D:/test/.txt");
     
+    //EXPECT_EQ(true, zip.addFile("text.txt", "D:/test/aaa.txt"));
+    EXPECT_EQ(true, zip.addFile("D:/test/aaa.txt"));
     
-    EXPECT_EQ(true, bOk);
+    //EXPECT_EQ(true, zip.addFile("DDD/text.txt", "D:/test/aaa.txt"));
 }
 
 TEST(archive, test) {

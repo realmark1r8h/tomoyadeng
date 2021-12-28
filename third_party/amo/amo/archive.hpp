@@ -8,6 +8,7 @@
 #include <memory>
 #include <amo/process.hpp>
 #include <amo/logger.hpp>
+#include <amo/shell.hpp>
 
 namespace amo {
     class archive : public log_object {
@@ -15,6 +16,26 @@ namespace amo {
         archive(const std::string& archivePath, const std::string& password = "")
             : m_path(archivePath)
             , m_password(password) {
+            
+        }
+        
+        bool addFile(const std::string& entryName, const std::string& filePath) {
+            auto pProcess = createProcess("a");
+            pProcess->show(true);
+            pProcess->addArgs("-si" + entryName);
+            pProcess->addArgs("<");
+            pProcess->start(filePath);
+            
+            
+            return parseReult(pProcess->getResult());
+            
+            /*amo::shell shell("7z.exe");
+            shell.addArgs("a");
+            shell.addArgs(m_path);
+            shell.addArgs("-si" + entryName);
+            shell.addArgs("<");
+            shell.addArgs(filePath);
+            return shell.open();*/
             
         }
         
