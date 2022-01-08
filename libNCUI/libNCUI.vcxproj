@@ -168,11 +168,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="$(solutionDir)third_party\DuiLib\DuiLib.vcxproj">
-      <Project>{e106acd7-4e53-4aee-942b-d0dd426db34e}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="cefsimple\cefsimple_win.cc" />
     <ClCompile Include="cefsimple\simple_app.cc" />
     <ClCompile Include="cefsimple\simple_handler.cc" />
@@ -479,6 +474,11 @@
     <ClInclude Include="ui\win\ShadowWindow.h" />
     <ClInclude Include="utility\libzippp.h" />
     <ClInclude Include="utility\utility.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\third_party\DuiLib\DuiLib.vcxproj">
+      <Project>{e106acd7-4e53-4aee-942b-d0dd426db34e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
