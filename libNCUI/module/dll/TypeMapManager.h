@@ -214,7 +214,7 @@ namespace amo {
             }
         }
     public:
-        amo::any data;
+        boost::any data;
         JS_TYPE nType;
         int32_t nAddr;
         amo::function<void()> m_fnRelease;

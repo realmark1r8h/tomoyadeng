@@ -13,7 +13,8 @@
 
 #include "transfer/TransferMgr.h"
 #include "module/basic/TypeConvertor.h"
-#include "../module/JsClassV8Handler.h"
+#include "module/JsClassV8Handler.h"
+#include "transfer/RendererTransferMgr.h"
 
 namespace amo {
 
@@ -62,7 +63,8 @@ namespace amo {
          */
         
         virtual Any waitResult(int nPipeID, int nMessageID) {
-            return RendererProcessExchangerManager::getInstance()->waitResult<Any>(nPipeID, nMessageID);
+            return RendererProcessExchangerManager::getInstance()->waitResult<Any>(nPipeID,
+                    nMessageID);
         }
         
         /*!
@@ -98,7 +100,8 @@ namespace amo {
         
         virtual void onMakeProcessMessage(IPCMessage::SmartType msg,
                                           void* param) override {
-            const CefV8ValueList* arguments = reinterpret_cast<const CefV8ValueList*>(param);
+            const CefV8ValueList* arguments = reinterpret_cast<const CefV8ValueList*>
+                                              (param);
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             int nIndex = 0;
             

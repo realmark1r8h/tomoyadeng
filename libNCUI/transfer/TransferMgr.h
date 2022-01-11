@@ -369,49 +369,8 @@ namespace amo {
         std::unordered_map<int, TransferMap> m_oTransferMap;
     };
     
-    /*!
-     * @class	BrowserTransferMgr
-     *
-     * @brief	管理浏览器进程的TransferMap.
-     */
-    class BrowserTransferMgr
-        : public TransferMgr
-        , public amo::singleton < BrowserTransferMgr > {
-    public:
-        virtual void returnSyncResult(int nBrowserID,
-                                      amo::IPCResult& ret) override;
-                                      
-        virtual void returnAsyncResult(int nBrowserID,
-                                       Any& ret,
-                                       int id,
-                                       int frame_id) override;
-                                       
-        virtual void registerClass(int nBrowserID) override;
-        
-    };
-    
-    /*!
-     * @class	RendererTransferMgr
-     *
-     * @brief	管理渲染进程的TransferMap.
-     */
-    class RendererTransferMgr
-        : public TransferMgr
-        , public amo::singleton < RendererTransferMgr > {
-    public:
     
     
-    
-        virtual void returnSyncResult(int nBrowserID,
-                                      amo::IPCResult& ret) override;
-                                      
-        virtual void returnAsyncResult(int nBrowserID,
-                                       Any& ret,
-                                       int id,
-                                       int frame_id) override;
-                                       
-        virtual void registerClass(int nBrowserID) override;
-    };
     
 }
 

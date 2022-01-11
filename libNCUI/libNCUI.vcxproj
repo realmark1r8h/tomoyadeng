@@ -253,6 +253,7 @@
     <ClCompile Include="transfer\AppTransfer.cpp" />
     <ClCompile Include="transfer\BrowserHostTransfer.cpp" />
     <ClCompile Include="transfer\BrowserTransfer.cpp" />
+    <ClCompile Include="transfer\BrowserTransferMgr.cpp" />
     <ClCompile Include="transfer\BrowserWindowTransfer.cpp" />
     <ClCompile Include="transfer\CommandLineTransfer.cpp" />
     <ClCompile Include="transfer\ControlTransfer.cpp" />
@@ -270,6 +271,7 @@
     <ClCompile Include="transfer\NetTransfer.cpp" />
     <ClCompile Include="transfer\ProcessTransfer.cpp" />
     <ClCompile Include="transfer\RendererThreadTransfer.cpp" />
+    <ClCompile Include="transfer\RendererTransferMgr.cpp" />
     <ClCompile Include="transfer\RequestTransfer.cpp" />
     <ClCompile Include="transfer\ShellTransfer.cpp" />
     <ClCompile Include="transfer\SplashTransfer.cpp" />
@@ -349,6 +351,7 @@
     <ClInclude Include="ipc\IPCMessage.hpp" />
     <ClInclude Include="ipc\MessageLauncher.hpp" />
     <ClInclude Include="ipc\ProcessExchanger.hpp" />
+    <ClInclude Include="ipc\IPCEmitter.hpp" />
     <ClInclude Include="ipc\RenderMessageEmitter.hpp" />
     <ClInclude Include="ipc\UIMessageBroadcaster.hpp" />
     <ClInclude Include="ipc\UIMessageEmitter.hpp" />
@@ -406,6 +409,7 @@
     <ClInclude Include="transfer\AppTransfer.h" />
     <ClInclude Include="transfer\BrowserHostTransfer.h" />
     <ClInclude Include="transfer\BrowserTransfer.h" />
+    <ClInclude Include="transfer\BrowserTransferMgr.h" />
     <ClInclude Include="transfer\BrowserWindowTransfer.h" />
     <ClInclude Include="transfer\ClassTransfer.hpp" />
     <ClInclude Include="transfer\CommandLineTransfer.h" />
@@ -425,6 +429,7 @@
     <ClInclude Include="transfer\NetTransfer.h" />
     <ClInclude Include="transfer\ProcessTransfer.h" />
     <ClInclude Include="transfer\RendererThreadTransfer.h" />
+    <ClInclude Include="transfer\RendererTransferMgr.h" />
     <ClInclude Include="transfer\RequestTransfer.h" />
     <ClInclude Include="transfer\RunnableTransfer.hpp" />
     <ClInclude Include="transfer\ShellTransfer.h" />

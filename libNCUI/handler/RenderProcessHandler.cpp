@@ -29,10 +29,12 @@
 #include "module/basic/ClassMethodMgr.hpp"
 #include "ui/win/BrowserWindowSkin.h"
 #include "utility/utility.hpp"
+#include "transfer/RendererTransferMgr.h"
 
 namespace amo {
 
-    bool RenderProcessHandler::OnProcessMessageReceived(CefRefPtr<CefBrowser> browser,
+    bool RenderProcessHandler::OnProcessMessageReceived(CefRefPtr<CefBrowser>
+            browser,
             CefProcessId source_process,
             CefRefPtr<CefProcessMessage> message) {
         assert(source_process == PID_BROWSER);
@@ -106,10 +108,12 @@ namespace amo {
             }
         } else if (strMessageName == MSG_ENABLE_BACK_FORWORD) {
             m_bEnableBackForword = message->GetArgumentList()->GetBool(0);
-            $clog(amo::cdevel << func_orient << MSG_ENABLE_BACK_FORWORD << m_bEnableBackForword << amo::endl;);
+            $clog(amo::cdevel << func_orient << MSG_ENABLE_BACK_FORWORD <<
+                  m_bEnableBackForword << amo::endl;);
             return true;
         } else if (strMessageName == MSG_PROCESS_SYNC_EXECUTE) {
-            RendererProcessExchangerManager::getInstance()->tryProcessMessage(browser->GetIdentifier());
+            RendererProcessExchangerManager::getInstance()->tryProcessMessage(
+                browser->GetIdentifier());
         }
         
         
@@ -157,7 +161,8 @@ namespace amo {
             CefRefPtr<CefV8Context> context,
             CefRefPtr<CefV8Exception> exception,
             CefRefPtr<CefV8StackTrace> stackTrace) {
-        $clog(amo::cdevel << func_orient << amo::string(exception->GetMessageW().ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::string(
+                  exception->GetMessageW().ToString(), true).str() << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
@@ -179,8 +184,9 @@ namespace amo {
             m_pMessageRouter->OnContextReleased(browser, frame, context);
         }
         
-        V8ExtentionHandler* pHander = dynamic_cast<V8ExtentionHandler*>(m_pV8ExtensionHander.get());
-        
+        V8ExtentionHandler* pHander = dynamic_cast<V8ExtentionHandler*>
+                                      (m_pV8ExtensionHander.get());
+                                      
         if (pHander != NULL) {
             pHander->OnContextReleased(frame->GetIdentifier());
         }
@@ -234,7 +240,8 @@ namespace amo {
                 ipcMessage->setMessageName(MSG_NATIVE_EXECUTE);
                 std::shared_ptr<AnyArgsList>& args = ipcMessage->getArgumentList();
                 args->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-                args->setValue(IPCArgsPosInfo::JsFuncName, "include(\"BrowserWindow\").currentWindow.dragable");
+                args->setValue(IPCArgsPosInfo::JsFuncName,
+                               "include(\"BrowserWindow\").currentWindow.dragable");
                 args->setValue(IPCArgsPosInfo::FrameID, frame_id);
                 args->setValue(IPCArgsPosInfo::BrowserID, nBrowserID);
                 args->setValue(IPCArgsPosInfo::ArgsLength, 0);
@@ -295,10 +302,12 @@ namespace amo {
         }
         
         RemoveBrowserByID(browser->GetIdentifier());
-        RendererProcessExchangerManager::getInstance()->removeExchanger(browser->GetIdentifier());
-        
-        V8ExtentionHandler* pHander = dynamic_cast<V8ExtentionHandler*>(m_pV8ExtensionHander.get());
-        
+        RendererProcessExchangerManager::getInstance()->removeExchanger(
+            browser->GetIdentifier());
+            
+        V8ExtentionHandler* pHander = dynamic_cast<V8ExtentionHandler*>
+                                      (m_pV8ExtensionHander.get());
+                                      
         if (pHander != NULL) {
             pHander->OnBrowserDestory(browser->GetIdentifier());
         }
@@ -337,8 +346,9 @@ namespace amo {
             ret = exchangerMgr->exchange <Any>(nBrowserID);
         }
         
-        $clog(amo::cdevel << func_orient << "注册：" << browser->GetIdentifier() << amo::endl;);
-        
+        $clog(amo::cdevel << func_orient << "注册：" << browser->GetIdentifier() <<
+              amo::endl;);
+              
         // 管道创建成功后再注册Browser
         RegisterBrowser(browser);
         
@@ -372,15 +382,17 @@ namespace amo {
         pTransfer->registerFunction();
         pTransfer->setBrowser(browser);
         pTransfer->setWorkOnRenderer(true);
-        amo::RendererTransferMgr::getInstance()->addTransfer(browser->GetIdentifier(), pTransfer);
+        amo::RendererTransferMgr::getInstance()->addTransfer(browser->GetIdentifier(),
+                pTransfer);
         // 这个IPCRendererV8Handler也应该加进去的。
         RendererTransferMgr::getInstance()->registerClass(nBrowserID);
         
         auto classManager = ClassMethodMgr::getInstance();
         
         // 添加渲染进程的transfer
-        auto rendererTransferMap = RendererTransferMgr::getInstance()->getTransferMap(nBrowserID);
-        
+        auto rendererTransferMap = RendererTransferMgr::getInstance()->getTransferMap(
+                                       nBrowserID);
+                                       
         for (auto& p : rendererTransferMap.transferMap()) {
             p.second->setWorkOnRenderer(true);
             p.second->getFuncMgr().setRendererClass(true);
@@ -435,8 +447,9 @@ namespace amo {
                 new amo::pipe<amo::pipe_type::client>(strPipeClientName));
                 
             //browser->SendProcessMessage(PID_BROWSER, msg);
-            $clog(amo::cdevel << func_orient << "创建管道服务端：" << strPipeServerName << amo::endl;);
-            
+            $clog(amo::cdevel << func_orient << "创建管道服务端：" <<
+                  strPipeServerName << amo::endl;);
+                  
             ////等待管道建立
             //bool rec = m_pRenderPipeServer->connect();
             //bool bOk = m_pBrowserPipeClient->connect();
@@ -508,7 +521,8 @@ namespace amo {
     
         std::string s_extension(skinNCUI);
         
-        $clog(amo::cdevel << func_orient << "WebKit初始化完成，开始注册NativeJS。" << amo::endl;);
+        $clog(amo::cdevel << func_orient <<
+              "WebKit初始化完成，开始注册NativeJS。" << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
@@ -522,7 +536,8 @@ namespace amo {
         CefRegisterExtension(L"v8/CEF-X", s_extension, m_pV8ExtensionHander);
     }
     
-    void RenderProcessHandler::OnRenderThreadCreated(CefRefPtr<CefListValue> extra_info) {
+    void RenderProcessHandler::OnRenderThreadCreated(CefRefPtr<CefListValue>
+            extra_info) {
         $clog(amo::cdevel << func_orient << "渲染进程创建。" << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         

@@ -106,28 +106,28 @@ namespace amo {
                     case JS_INT: {
                         using type = typename IntToType<JS_INT32>::type;
                         return runDllFunc<R>(valueWrapper,
-                                             amo::any_cast<type>(val.data),
+                                             boost::any_cast<type>(val.data),
                                              args...);
                     }
                     
                     case JS_DOUBLE: {
                         using type = typename IntToType<JS_DOUBLE>::type;
                         return runDllFunc<R>(valueWrapper,
-                                             amo::any_cast<type>(val.data),
+                                             boost::any_cast<type>(val.data),
                                              args...);
                     }
                     
                     case JS_STRING: {
                         using type = typename IntToType<JS_STRING>::type;
                         return runDllFunc<R>(valueWrapper,
-                                             amo::any_cast<type>(val.data),
+                                             boost::any_cast<type>(val.data),
                                              args...);
                     }
                     
                     case JS_BOOL: {
                         using type = typename IntToType<JS_BOOL>::type;
                         return runDllFunc<R>(valueWrapper,
-                                             amo::any_cast<type>(val.data),
+                                             boost::any_cast<type>(val.data),
                                              args...);
                     }
                     

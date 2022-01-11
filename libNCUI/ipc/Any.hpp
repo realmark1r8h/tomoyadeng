@@ -13,7 +13,7 @@
 #include <amo/nil.hpp>
 #include <amo/stdint.hpp>
 #include <amo/date_time.hpp>
-#include "ipc//IPCMessage.hpp"
+#include "ipc/IPCMessage.hpp"
 
 /*!
  * @namespace	amo
@@ -662,28 +662,9 @@ namespace amo {
         IPCMessage() {
             m_nID = getProcessMessageID();
             
-            if (m_nID == 62) {
-                int i = 32;
-            }
-            
-            if (m_nID == 70) {
-                int i = 32;
-            }
-            
-            if (m_nID == 71) {
-                int i = 32;
-            }
-            
-            if (m_nID == 72) {
-                int i = 32;
-            }
-            
-            if (m_nID == 73) {
-                int i = 32;
-            }
-            
             m_pMessageList.reset(new AnyArgsList());
         }
+        
         
         ~IPCMessage() {
         }

@@ -25,7 +25,7 @@
 #include "transfer/FrameTransfer.h"
 #include "transfer/BrowserHostTransfer.h"
 #include "utility/utility.hpp"
-#include "../../scheme/UrlResourceHandlerFactory.h"
+#include "scheme/UrlResourceHandlerFactory.h"
 
 namespace amo {
     WebkitView::WebkitView(std::shared_ptr<BrowserWindowSettings> pBrowserSettings)

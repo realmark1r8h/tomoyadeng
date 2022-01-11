@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "transfer/RendererThreadTransfer.h"
 #include "transfer/TransferMgr.h"
+#include "transfer/RendererTransferMgr.h"
 
 
 namespace amo {

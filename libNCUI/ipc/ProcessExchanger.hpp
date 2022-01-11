@@ -20,6 +20,7 @@
 #include "Any.hpp"
 #include <amo/pipe.hpp>
 #include "ipc/IPCMessage.hpp"
+#include <amo/timer.hpp>
 
 namespace {
     static std::vector<int8_t> intToBytes(int n) {
@@ -47,7 +48,11 @@ namespace {
 
 namespace amo {
 
-
+    enum IPCTYPE {
+        IPCSERVER,
+        IPCCLIENT
+    };
+    
     class ProcessExchanger {
     public:
         static uint64_t& ipcTimeOut() {

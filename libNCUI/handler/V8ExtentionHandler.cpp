@@ -21,6 +21,7 @@
 #include "module/basic/ClassMethodMgr.hpp"
 #include "ipc/RenderMessageEmitter.hpp"
 #include "handler/UtilityV8Handler.h"
+#include "transfer/RendererTransferMgr.h"
 
 
 namespace amo {
@@ -280,7 +281,8 @@ namespace amo {
         }
     }
     
-    void V8ExtentionHandler::triggerEventOnRendererThread(IPCMessage::SmartType msg) {
+    void V8ExtentionHandler::triggerEventOnRendererThread(IPCMessage::SmartType
+            msg) {
         CefPostTask(TID_RENDERER,
                     base::Bind(&V8ExtentionHandler::triggerEventOnRendererThreadImpl,
                                this,
@@ -288,7 +290,8 @@ namespace amo {
                                
     }
     
-    void V8ExtentionHandler::triggerEventOnRendererThreadImpl(IPCMessage::SmartType msg) {
+    void V8ExtentionHandler::triggerEventOnRendererThreadImpl(
+        IPCMessage::SmartType msg) {
         std::unordered_map<int, CefRefPtr<CefBrowser> > mp
             = BrowserManager<PID_RENDERER>::GetAllBrowser();
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
@@ -394,7 +397,8 @@ namespace amo {
         return true;
     }
     
-    CefRefPtr<JsV8Handler> V8ExtentionHandler::fromClass(const std::string& strClass,
+    CefRefPtr<JsV8Handler> V8ExtentionHandler::fromClass(const std::string&
+            strClass,
             CefRefPtr<CefBrowser> browser) {
             
         // 当前为一个class

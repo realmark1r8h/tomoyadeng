@@ -467,6 +467,8 @@
     </ClCompile>
     <ClCompile Include="scheme\ZipFileMnager.cpp" />
     <ClCompile Include="transfer\ProcessTransfer.cpp" />
+    <ClCompile Include="transfer\BrowserTransferMgr.cpp" />
+    <ClCompile Include="transfer\RendererTransferMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context\AppContext.h">
@@ -956,6 +958,15 @@
       <Filter>utility</Filter>
     </ClInclude>
     <ClInclude Include="transfer\ProcessTransfer.h">
+      <Filter>transfer</Filter>
+    </ClInclude>
+    <ClInclude Include="ipc\IPCEmitter.hpp">
+      <Filter>ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="transfer\BrowserTransferMgr.h">
+      <Filter>transfer</Filter>
+    </ClInclude>
+    <ClInclude Include="transfer\RendererTransferMgr.h">
       <Filter>transfer</Filter>
     </ClInclude>
   </ItemGroup>

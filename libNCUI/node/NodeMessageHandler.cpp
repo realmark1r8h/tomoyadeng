@@ -70,31 +70,44 @@ namespace amo {
         const std::string& message_name = msg->getMessageName();
         
         if (message_name == MSG_CREATE_PIPE_CLIENT) {
-            std::shared_ptr<amo::pipe<amo::pipe_type::server> > m_pBrowserPipeServer;			//消息管道主进程服务端
+            std::shared_ptr<amo::pipe<amo::pipe_type::server> >
+            m_pBrowserPipeServer;			//消息管道主进程服务端
             
-            std::shared_ptr<amo::pipe<amo::pipe_type::client> > m_pRenderPipeClient;			//消息管道主进程客户端
-            std::shared_ptr<ProcessExchanger> m_pBrowserProcessExchanger(new ProcessExchanger());			//消息管道数据交换类
+            std::shared_ptr<amo::pipe<amo::pipe_type::client> >
+            m_pRenderPipeClient;			//消息管道主进程客户端
+            std::shared_ptr<ProcessExchanger> m_pBrowserProcessExchanger(
+                new ProcessExchanger());			//消息管道数据交换类
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             int id = -9999;
-            std::string strPipeClientName = RendererPipePrefix + (std::string)args->getString(0);
-            $clog(amo::cdevel << func_orient << "连接管道：" << strPipeClientName << amo::endl;);
-            std::string strPipeServerName = BrowserPipePrefix + (std::string)args->getString(0);
-            m_pRenderPipeClient.reset(new amo::pipe<amo::pipe_type::client>(strPipeClientName));
-            m_pBrowserPipeServer.reset(new amo::pipe<amo::pipe_type::server>(strPipeServerName, DefaultPipeSize));
+            std::string strPipeClientName = RendererPipePrefix + (std::string)
+                                            args->getString(0);
+            $clog(amo::cdevel << func_orient << "连接管道：" << strPipeClientName <<
+                  amo::endl;);
+            std::string strPipeServerName = BrowserPipePrefix + (std::string)
+                                            args->getString(0);
+            m_pRenderPipeClient.reset(new amo::pipe<amo::pipe_type::client>
+                                      (strPipeClientName));
+            m_pBrowserPipeServer.reset(new amo::pipe<amo::pipe_type::server>
+                                       (strPipeServerName, DefaultPipeSize));
             bool bOK = m_pRenderPipeClient->connect();
             
-            $clog(amo::cdevel << func_orient << "管道连接" << (bOK ? "成功" : "失败") << amo::endl;);
-            
+            $clog(amo::cdevel << func_orient << "管道连接" << (bOK ? "成功" :
+                    "失败") << amo::endl;);
+                    
             bOK = m_pBrowserPipeServer->connect();
-            $clog(amo::cdevel << func_orient << "主进程管道服务连接" << (bOK ? "成功" : "失败") << amo::endl;);
+            $clog(amo::cdevel << func_orient << "主进程管道服务连接" <<
+                  (bOK ? "成功" : "失败") << amo::endl;);
             m_pBrowserProcessExchanger->setPipeClient(m_pRenderPipeClient);
             m_pBrowserProcessExchanger->setPipeServer(m_pBrowserPipeServer);
             m_pBrowserProcessExchanger->setBrowserID(id);
-            m_pBrowserProcessExchanger->setProcessSyncMessageCallback(std::bind(&NodeMessageHandler::processSyncMessage, this, std::placeholders::_1, std::placeholders::_2));
-            BrowserProcessExchangerManager::getInstance()->addExchanger(m_nBrowserID, m_pBrowserProcessExchanger);
-            
-            
-            
+            m_pBrowserProcessExchanger->setProcessSyncMessageCallback(std::bind(
+                        &NodeMessageHandler::processSyncMessage, this, std::placeholders::_1,
+                        std::placeholders::_2));
+            BrowserProcessExchangerManager::getInstance()->addExchanger(m_nBrowserID,
+                    m_pBrowserProcessExchanger);
+                    
+                    
+                    
             if (needQuit()) {
                 BrowserProcessExchangerManager::getInstance()->exchange(m_nBrowserID, false);
             } else {
@@ -111,9 +124,11 @@ namespace amo {
         
         if (strMessageName == MSG_NATIVE_EXECUTE
                 || strMessageName == MSG_NATIVE_SYNC_EXECUTE
-                || strMessageName == MSG_NATIVE_ASYNC_EXECUTE)	{									//JS调用C++，此消息不向页面返回结果
-            CefString handlerName = msg->getArgumentList()->getString(IPCArgsPosInfo::CustomArgs);
-            
+                || strMessageName ==
+                MSG_NATIVE_ASYNC_EXECUTE)	{									//JS调用C++，此消息不向页面返回结果
+            CefString handlerName = msg->getArgumentList()->getString(
+                                        IPCArgsPosInfo::CustomArgs);
+                                        
             if (!handlerName.empty()) {
                 BrowserTransferMgr::getInstance()->onMessageTransfer(msg);
                 /*for (auto & p : m_oMessageTransferSet) {
@@ -129,7 +144,8 @@ namespace amo {
     
     
     bool NodeMessageHandler::sendMessageToUI(IPCMessage::SmartType msg) {
-        CefPostTask(TID_UI, NewCefRunnableMethod(this, &NodeMessageHandler::onNodeMessageRecv, msg));
+        CefPostTask(TID_UI, NewCefRunnableMethod(this,
+                    &NodeMessageHandler::onNodeMessageRecv, msg));
         return true;
     }
     
@@ -189,8 +205,9 @@ namespace amo {
     
     bool NodeMessageHandler::getFunctionWrappers(
         std::unordered_map<std::string, amo::FunctionWrapperMgr>& mp) {
-        auto map = BrowserTransferMgr::getInstance()->getTransferMap(m_nBrowserID).transferMap();
-        
+        auto map = BrowserTransferMgr::getInstance()->getTransferMap(
+                       m_nBrowserID).transferMap();
+                       
         for (auto& p : map) {
             mp[p.second->transferName()] = p.second->getFuncMgr();
         }
@@ -209,13 +226,15 @@ namespace amo {
     
     bool NodeMessageHandler::tryReadMessage() {
     
-        boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time()
-                                      + boost::posix_time::milliseconds(5);
+        boost::posix_time::ptime pt =
+            boost::posix_time::microsec_clock::universal_time()
+            + boost::posix_time::milliseconds(5);
         char str[10000] = { 0 };
         unsigned int priority = 0;
         message_queue::size_type recvd_size = 0;
         
-        while (m_pMessageQueueReader->timed_receive(&str, 10000, recvd_size, priority, pt)) {
+        while (m_pMessageQueueReader->timed_receive(&str, 10000, recvd_size, priority,
+                pt)) {
             if (recvd_size == 0) {
                 return false;
             }
@@ -243,7 +262,8 @@ namespace amo {
         ::KillTimer(pNotifyWindow->GetHWND(), m_nPickMessageTimer);
     }
     
-    VOID CALLBACK MessageQueueProc(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime) {
+    VOID CALLBACK MessageQueueProc(HWND hwnd, UINT uMsg, UINT_PTR idEvent,
+                                   DWORD dwTime) {
         AppContext::getInstance()->getNodeMessageHandler()->tryReadMessage();
         
     }
@@ -262,9 +282,11 @@ namespace amo {
             /*m_pMessageQueueReader.reset(new message_queue(open_or_create, strReaderName.c_str(), 1000, 10000));
             m_pMessageQueueWriter.reset(new message_queue(open_or_create, strWriterName.c_str(), 1000, 10000));*/
             
-            m_pMessageQueueReader.reset(new message_queue(open_only, strReaderName.c_str()));
-            m_pMessageQueueWriter.reset(new message_queue(open_only, strWriterName.c_str()));
-            
+            m_pMessageQueueReader.reset(new message_queue(open_only,
+                                        strReaderName.c_str()));
+            m_pMessageQueueWriter.reset(new message_queue(open_only,
+                                        strWriterName.c_str()));
+                                        
             NotifyWindow*  pNotifyWindow = Tray::getInstance()->getNotifyWindow();
             
             if (pNotifyWindow == NULL) {

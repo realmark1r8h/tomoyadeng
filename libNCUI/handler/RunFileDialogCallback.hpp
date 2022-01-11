@@ -8,6 +8,7 @@
 #include <vector>
 #include "handler/CefHeader.hpp"
 #include "ipc/Any.hpp"
+#include "transfer/BrowserTransferMgr.h"
 
 namespace amo {
     class RunFileDialogCalllback : public CefRunFileDialogCallback {

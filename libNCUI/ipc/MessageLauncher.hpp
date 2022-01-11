@@ -8,6 +8,7 @@
 #include <functional>
 #include "ipc/Any.hpp"
 #include "ipc/ProcessExchanger.hpp"
+#include "ipc/IPCMessage.hpp"
 
 
 namespace amo {
@@ -200,7 +201,8 @@ namespace amo {
                 return Undefined();
             }
             
-            IPCMessage::SmartType notifyMsg(new amo::IPCMessage());	// 通知对方处理数据
+            IPCMessage::SmartType notifyMsg(new
+                                            amo::IPCMessage());	// 通知对方处理数据
             notifyMsg->setMessageName(MSG_PROCESS_SYNC_EXECUTE);
             sendMessage(notifyMsg);
             
@@ -224,7 +226,8 @@ namespace amo {
                 return Undefined();
             }
             
-            IPCMessage::SmartType notifyMsg(new amo::IPCMessage());	// 通知对方处理数据
+            IPCMessage::SmartType notifyMsg(new
+                                            amo::IPCMessage());	// 通知对方处理数据
             notifyMsg->setMessageName(MSG_PROCESS_SYNC_EXECUTE);
             notifyMsg->setID(msg->getID());
             notifyMsg->getArgumentList()->setValue(IPCArgsPosInfo::MessageID, msg->getID());

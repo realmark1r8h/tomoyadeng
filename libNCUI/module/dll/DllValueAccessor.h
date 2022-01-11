@@ -56,7 +56,7 @@ namespace amo {
             TypeItem& item = TypeMapManager::getInstance()->get(m_nID);
             
             if (arguments.size() == 0) {
-                value_type value = amo::any_cast<value_type>(item.data);
+                value_type value = boost::any_cast<value_type>(item.data);
                 retval = CefV8Value::CreateBool(value);
             } else {
                 if (arguments.at(0)->IsString()) {
@@ -121,7 +121,7 @@ namespace amo {
             TypeItem& item = TypeMapManager::getInstance()->get(m_nID);
             
             if (arguments.size() == 0) {
-                value_type value = amo::any_cast<value_type>(item.data);
+                value_type value = boost::any_cast<value_type>(item.data);
                 retval = CefV8Value::CreateInt(value);
             } else {
                 if (arguments.at(0)->IsString()) {
@@ -178,7 +178,7 @@ namespace amo {
             TypeItem& item = TypeMapManager::getInstance()->get(m_nID);
             
             if (arguments.size() == 0) {
-                value_type value =  amo::any_cast<value_type>(item.data);
+                value_type value =  boost::any_cast<value_type>(item.data);
                 retval = CefV8Value::CreateDouble(value);
             } else {
                 if (arguments.at(0)->IsString()) {
@@ -234,7 +234,7 @@ namespace amo {
             TypeItem& item = TypeMapManager::getInstance()->get(m_nID);
             
             if (arguments.size() == 0) {
-                value_type value = amo::any_cast<value_type>(item.data);
+                value_type value = boost::any_cast<value_type>(item.data);
                 retval = CefV8Value::CreateString(value);
             } else {
                 if (arguments.at(0)->IsString()) {
@@ -346,7 +346,7 @@ namespace amo {
             TypeItem& item = TypeMapManager::getInstance()->get(m_nID);
             
             if (arguments.size() == 0) {
-                retval = CefV8Value::CreateInt(*amo::any_cast<value_type>(item.data));
+                retval = CefV8Value::CreateInt(*boost::any_cast<value_type>(item.data));
             } else if (arguments.size() == 2) {
                 item.data = (value_type)arguments.at(0)->GetIntValue();
             } else {
