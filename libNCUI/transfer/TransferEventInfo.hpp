@@ -50,7 +50,7 @@ namespace amo {
             return toJson().to_string();
         }
         
-        TransferEventInfo fromJson(const amo::json& json) {
+        static TransferEventInfo fromJson(const amo::json& json) {
             TransferEventInfo info;
             
             if (json.is_valid()) {

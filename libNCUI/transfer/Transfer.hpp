@@ -80,7 +80,8 @@ namespace amo {
      * @brief	JS调用C++时消息遍历基类.
      * 			所有的JS对C++的调用都由此类派生
      */
-    class Transfer : public log_object, public std::enable_shared_from_this<Transfer> {
+    class Transfer : public log_object,
+        public std::enable_shared_from_this<Transfer> {
     public:
         /*!
          * @typedef	std::function<bool(const std::string&,
@@ -146,7 +147,8 @@ namespace amo {
         }
         
         ~Transfer() {
-            $cdevel("正在释放资源：transferName = \"{0}\"， objectName = \"{1}\"， objectID = {2}", transferName(), getObjectName(), getObjectID());
+            $cdevel("正在释放资源：transferName = \"{0}\"， objectName = \"{1}\"， objectID = {2}",
+                    transferName(), getObjectName(), getObjectID());
         }
         
         /**
@@ -430,6 +432,15 @@ namespace amo {
             return m_oFuncMgr;
         }
         
+        virtual Any onDefaultMessageTransfer(IPCMessage::SmartType msg) {
+            if (m_fnDefaultMsgFunc) {
+                return m_fnDefaultMsgFunc(msg);
+            }
+            
+            return Nothing();
+        }
+        
+        
         /*!
          * @fn	virtual Any Transfer::onMessageTransfer(IPCMessage::SmartType message)
          *
@@ -457,12 +468,21 @@ namespace amo {
             
             //JS普通调用C++, 这种执行方式不向调用者返回结果
             if (strExecName == MSG_NATIVE_EXECUTE) {
+                Any ret;
+                
                 if (iter == getFuncMgr().toMap().end()) {
-                    return Nothing();
+                    ret = onDefaultMessageTransfer(msg);
+                    
+                    if (ret.is<Nothing>()) {
+                        return Nothing();
+                    }
+                } else {
+                    // 调用所注册的C++函数
+                    Any ret = iter->second(msg);
                 }
                 
-                // 调用所注册的C++函数
-                Any ret = iter->second(msg);
+                
+                
                 result.setResult(ret);
                 
                 // 向调用者返回结果前先处理该结果
@@ -493,8 +513,13 @@ namespace amo {
                     
                     return ret;
                 } else {
+                    Any ret = onDefaultMessageTransfer(msg);
+                    
                     // 没有找到相关函数，但是还是需要返回一个值给调用者，以免死锁
-                    Any  ret = Undefined();
+                    if (ret.is<Nothing>()) {
+                        ret = Undefined();
+                    }
+                    
                     result.setResult(ret);
                     
                     if (m_fnResultCallback
@@ -522,7 +547,13 @@ namespace amo {
                     
                     return ret;
                 } else {
-                    Any  ret = Undefined();
+                    Any ret = onDefaultMessageTransfer(msg);
+                    
+                    // 没有找到相关函数，但是还是需要返回一个值给调用者，以免死锁
+                    if (ret.is<Nothing>()) {
+                        ret = Undefined();
+                    }
+                    
                     result.setResult(ret);
                     
                     if (m_fnResultCallback
@@ -622,7 +653,12 @@ namespace amo {
             
             return Undefined();
         }
-        
+        std::function < Any(IPCMessage::SmartType) > getDefaultMsgFunc() const {
+            return m_fnDefaultMsgFunc;
+        }
+        void setDefaultMsgFunc(std::function < Any(IPCMessage::SmartType) > val) {
+            m_fnDefaultMsgFunc = val;
+        }
     protected:
     
         /*! @brief	JS调用C++回调处理函数集合. */
@@ -654,6 +690,9 @@ namespace amo {
         
         /** @brief	Transfer中产生的事件触发函数. */
         std::function<void(IPCMessage::SmartType)> m_fnTriggerEventFunc;
+        
+        /** @brief	默认消息处理函数，如果没有找到消息处理函数将触发该函数. */
+        std::function<Any(IPCMessage::SmartType)> m_fnDefaultMsgFunc;
     };
     
 }
