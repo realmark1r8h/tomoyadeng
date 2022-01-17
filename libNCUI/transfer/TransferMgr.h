@@ -87,7 +87,13 @@ namespace amo {
             
             return iter->second;
         }
-        
+        Any onDefaultMessageTransfer(IPCMessage::SmartType msg) {
+            if (m_fnDefaultMsgFunc) {
+                return m_fnDefaultMsgFunc(msg);
+            }
+            
+            return Nothing();
+        }
         /*!
          * @fn	Any TransferMap::onMessageTransfer(IPCMessage::SmartType msg)
          *
@@ -121,6 +127,8 @@ namespace amo {
                         // 返回值无效，继续遍历（实际上应该直接返回）
                     }
                 }
+                
+                return onDefaultMessageTransfer(msg);
             }
             
             // 返回无效结果
@@ -156,12 +164,19 @@ namespace amo {
         std::unordered_map<std::string, Transfer*>& transferMap() {
             return m_oTransferMap;
         }
-        
+        std::function < Any(IPCMessage::SmartType) > getDefaultMsgFunc() const {
+            return m_fnDefaultMsgFunc;
+        }
+        void setDefaultMsgFunc(std::function < Any(IPCMessage::SmartType) > val) {
+            m_fnDefaultMsgFunc = val;
+        }
     private:
         /*! @brief	保存通过普通指针添加的Transfer. */
         std::unordered_map<std::string, Transfer*> m_oTransferMap;
         /*! @brief	保存通过智能指针添加的Transfer. */
         std::unordered_map<std::string, std::shared_ptr<Transfer> > m_oSmartMap;
+        /** @brief	默认消息处理函数，如果没有找到消息处理函数将触发该函数. */
+        std::function<Any(IPCMessage::SmartType)> m_fnDefaultMsgFunc;
     };
     /*!
      * @class	TransferMgr
@@ -250,6 +265,7 @@ namespace amo {
             }
             
             m_oTransferMap[nBrowserID] = TransferMap();
+            m_oTransferMap[nBrowserID].setDefaultMsgFunc(getDefaultMsgFunc());
             return m_oTransferMap.insert(std::make_pair(nBrowserID,
                                          TransferMap())).first->second;
         }
@@ -364,9 +380,27 @@ namespace amo {
             return ret;
             
         }
+        std::function < Any(IPCMessage::SmartType) > getDefaultMsgFunc() const {
+            return m_fnDefaultMsgFunc;
+        }
+        void setDefaultMsgFunc(std::function < Any(IPCMessage::SmartType) > val) {
+            m_fnDefaultMsgFunc = val;
+        }
+        
+        
+        std::function < Any(IPCMessage::SmartType) > getDefaultMsgFunc(int nBrowserID) {
+            return getTransferMap(nBrowserID).getDefaultMsgFunc();
+        }
+        void setDefaultMsgFunc(int nBrowserID,
+                               std::function < Any(IPCMessage::SmartType) > val) {
+            getTransferMap(nBrowserID).setDefaultMsgFunc(val);
+        }
     private:
         /*! @brief	保存各浏览器的TransferMap. */
         std::unordered_map<int, TransferMap> m_oTransferMap;
+        
+        /** @brief	默认消息处理函数，如果没有找到消息处理函数将触发该函数. */
+        std::function<Any(IPCMessage::SmartType)> m_fnDefaultMsgFunc;
     };
     
     

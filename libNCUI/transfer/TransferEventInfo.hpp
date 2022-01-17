@@ -53,7 +53,7 @@ namespace amo {
         static TransferEventInfo fromJson(const amo::json& json) {
             TransferEventInfo info;
             
-            if (json.is_valid()) {
+            if (!json.is_valid()) {
                 return info;
             }
             
@@ -62,8 +62,8 @@ namespace amo {
             info.toAll = json.getBool("toAll");
             info.browser = json.getInt("browser", -1);
             info.frame = json.getInt64("frame", -1);
-            //TODO: 这里要改
-            info.data = json.getString("data");
+            
+            info.data = util().jsonToAny(json, "data");
             return info;
         }
         

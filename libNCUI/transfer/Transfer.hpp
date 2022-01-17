@@ -614,7 +614,8 @@ namespace amo {
          * @param	val	The value.
          */
         
-        void setTriggerEventFunc(std::function<void(IPCMessage::SmartType) > val) {
+        virtual void setTriggerEventFunc(std::function<void(IPCMessage::SmartType) >
+                                         val) {
             m_fnTriggerEventFunc = val;
         }
         
