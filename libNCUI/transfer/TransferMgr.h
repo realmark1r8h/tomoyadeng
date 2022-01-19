@@ -24,7 +24,10 @@ namespace amo {
      *
      * @brief	保存一个浏览器的所有Transfer类（这里只保存类，不保存类的实例）.
      */
-    class TransferMap  {
+    class TransferMap {
+    public:
+        typedef  std::shared_ptr<std::function<Any(IPCMessage::SmartType)> >
+        SmartEventFnType;
     public:
     
         /*!
@@ -88,8 +91,8 @@ namespace amo {
             return iter->second;
         }
         Any onDefaultMessageTransfer(IPCMessage::SmartType msg) {
-            if (m_fnDefaultMsgFunc) {
-                return m_fnDefaultMsgFunc(msg);
+            if (m_fnDefaultMsgFunc && *m_fnDefaultMsgFunc) {
+                return (*m_fnDefaultMsgFunc)(msg);
             }
             
             return Nothing();
@@ -164,10 +167,10 @@ namespace amo {
         std::unordered_map<std::string, Transfer*>& transferMap() {
             return m_oTransferMap;
         }
-        std::function < Any(IPCMessage::SmartType) > getDefaultMsgFunc() const {
+        SmartEventFnType getDefaultMsgFunc() const {
             return m_fnDefaultMsgFunc;
         }
-        void setDefaultMsgFunc(std::function < Any(IPCMessage::SmartType) > val) {
+        void setDefaultMsgFunc(SmartEventFnType val) {
             m_fnDefaultMsgFunc = val;
         }
     private:
@@ -176,7 +179,7 @@ namespace amo {
         /*! @brief	保存通过智能指针添加的Transfer. */
         std::unordered_map<std::string, std::shared_ptr<Transfer> > m_oSmartMap;
         /** @brief	默认消息处理函数，如果没有找到消息处理函数将触发该函数. */
-        std::function<Any(IPCMessage::SmartType)> m_fnDefaultMsgFunc;
+        SmartEventFnType m_fnDefaultMsgFunc;
     };
     /*!
      * @class	TransferMgr
@@ -184,6 +187,9 @@ namespace amo {
      * @brief	管理所有的Transfer.
      */
     class TransferMgr {
+    public:
+        typedef  std::shared_ptr<std::function<Any(IPCMessage::SmartType)> >
+        SmartEventFnType;
     public:
     
         /*!
@@ -380,19 +386,28 @@ namespace amo {
             return ret;
             
         }
-        std::function < Any(IPCMessage::SmartType) > getDefaultMsgFunc() const {
+        SmartEventFnType getDefaultMsgFunc() const {
             return m_fnDefaultMsgFunc;
         }
-        void setDefaultMsgFunc(std::function < Any(IPCMessage::SmartType) > val) {
+        void setDefaultMsgFunc(SmartEventFnType val) {
+            for (auto& p : m_oTransferMap) {
+                SmartEventFnType fn = p.second.getDefaultMsgFunc();
+                
+                
+                if (m_fnDefaultMsgFunc == fn) {
+                    p.second.setDefaultMsgFunc(val);
+                }
+            }
+            
             m_fnDefaultMsgFunc = val;
         }
         
         
-        std::function < Any(IPCMessage::SmartType) > getDefaultMsgFunc(int nBrowserID) {
+        SmartEventFnType getDefaultMsgFunc(int nBrowserID) {
             return getTransferMap(nBrowserID).getDefaultMsgFunc();
         }
         void setDefaultMsgFunc(int nBrowserID,
-                               std::function < Any(IPCMessage::SmartType) > val) {
+                               SmartEventFnType val) {
             getTransferMap(nBrowserID).setDefaultMsgFunc(val);
         }
     private:
@@ -400,7 +415,7 @@ namespace amo {
         std::unordered_map<int, TransferMap> m_oTransferMap;
         
         /** @brief	默认消息处理函数，如果没有找到消息处理函数将触发该函数. */
-        std::function<Any(IPCMessage::SmartType)> m_fnDefaultMsgFunc;
+        SmartEventFnType m_fnDefaultMsgFunc;
     };
     
     
