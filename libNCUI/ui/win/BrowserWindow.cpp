@@ -40,6 +40,22 @@
 
 #include <amo/adb.hpp>
 
+#ifndef SPI_GETWINARRANGING
+#define SPI_GETWINARRANGING 0x0082
+#endif
+
+#ifndef SPI_SETWINARRANGING
+#define SPI_SETWINARRANGING 0x0083
+#endif
+
+#ifndef SPI_GETSNAPSIZING
+#define SPI_GETSNAPSIZING   0x008E
+#endif
+
+#ifndef SPI_SETSNAPSIZING
+#define SPI_SETSNAPSIZING   0x008F
+#endif
+
 namespace amo {
     BrowserWindow::BrowserWindow(std::shared_ptr<BrowserWindowSettings>
                                  pBrowserSettings)
@@ -68,6 +84,67 @@ namespace amo {
         //clipboard.writeText("sdfsdfs");
         clipboard.getClipboardFiles();
         
+    }
+    
+    LRESULT BrowserWindow::OnLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                         BOOL& bHandled) {
+        if (wParam == HTCAPTION) {
+            m_pt.reset(new POINT());
+            POINT pt;
+            ::GetCursorPos(&pt);
+            m_pt->x = pt.x;
+            m_pt->y = pt.y;
+            
+            bHandled = true;
+            return TRUE;
+        }
+        
+        return LocalWindow::OnLButtonDown(uMsg, wParam, lParam, bHandled);
+    }
+    
+    LRESULT BrowserWindow::OnLButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                       BOOL& bHandled) {
+        m_pt.reset();
+        
+        if (wParam == HTCAPTION) {
+            bHandled = true;
+            return TRUE;
+        }
+        
+        return LocalWindow::OnLButtonUp(uMsg, wParam, lParam, bHandled);
+    }
+    
+    LRESULT BrowserWindow::OnMouseMove(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                       BOOL& bHandled) {
+        if (m_pt && wParam == HTCAPTION) {
+            POINT curPt;
+            ::GetCursorPos(&curPt);
+            int offset_x = curPt.x - m_pt->x;
+            int offset_y = curPt.y - m_pt->y;
+            RECT rect = { 0 };
+            ::GetWindowRect(m_hWnd, &rect);
+            bool bFullScreen = isFullScreen(IPCMessage::Empty());
+            
+            if (IsLButtonDown() && !bFullScreen && ::PtInRect(&rect, curPt)) {
+                rect.left += offset_x;
+                rect.right += offset_x;
+                rect.top += offset_y;
+                rect.bottom += offset_y;
+                
+                ::SetWindowPos(m_hWnd, NULL, rect.left, rect.top, rect.right - rect.left,
+                               rect.bottom - rect.top, NULL);
+                m_pt->x = curPt.x;
+                m_pt->y = curPt.y;
+            }
+            
+        }
+        
+        if (wParam == HTCAPTION) {
+            bHandled = true;
+            return TRUE;
+        }
+        
+        return LocalWindow::OnMouseMove(uMsg, wParam, lParam, bHandled);
     }
     
     void foo(std::string ss, Any val) {
@@ -195,6 +272,10 @@ namespace amo {
         
         case WM_NCLBUTTONDOWN:
             lRes = OnNcLButtonDown(uMsg, wParam, lParam, bHandled);
+            break;
+            
+        case WM_NCLBUTTONUP:
+            lRes = OnNcLButtonUp(uMsg, wParam, lParam, bHandled);
             break;
             
         case WM_NCLBUTTONDBLCLK:
@@ -413,14 +494,24 @@ namespace amo {
                     || nHitTest == HTBOTTOMLEFT
                     || nHitTest == HTBOTTOMRIGHT
                ) {
-                LRESULT lRes = ::SendMessage(hParent,
-                                             WM_NCLBUTTONDOWN,
-                                             nHitTest,
-                                             MAKELPARAM(point.x, point.y));
-                ::SendMessage(hParent,
-                              WM_NCLBUTTONUP,
-                              NULL,
-                              MAKELPARAM(point.x, point.y));
+               
+                if (m_pBrowserSettings->resizeable) {
+                    LRESULT lRes = ::SendMessage(hParent,
+                                                 WM_NCLBUTTONDOWN,
+                                                 nHitTest,
+                                                 MAKELPARAM(point.x, point.y));
+                    ::SendMessage(hParent,
+                                  WM_NCLBUTTONUP,
+                                  NULL,
+                                  MAKELPARAM(point.x, point.y));
+                } else if (nHitTest == HTCAPTION) {
+                    ::SendMessage(hParent,
+                                  WM_LBUTTONDOWN,
+                                  nHitTest,
+                                  MAKELPARAM(point.x, point.y));
+                                  
+                }
+                
                 return true;
             }
             
@@ -441,14 +532,25 @@ namespace amo {
                     || nHitTest == HTBOTTOMLEFT
                     || nHitTest == HTBOTTOMRIGHT
                ) {
-                ::SendMessage(hParent,
-                              WM_NCLBUTTONDBLCLK,
-                              nHitTest,
-                              MAKELPARAM(point.x, point.y));
-                ::SendMessage(hParent,
-                              WM_NCLBUTTONUP,
-                              NULL,
-                              MAKELPARAM(point.x, point.y));
+               
+                if (m_pBrowserSettings->resizeable) {
+                    ::SendMessage(hParent,
+                                  WM_NCLBUTTONDBLCLK,
+                                  nHitTest,
+                                  MAKELPARAM(point.x, point.y));
+                    ::SendMessage(hParent,
+                                  WM_NCLBUTTONUP,
+                                  NULL,
+                                  MAKELPARAM(point.x, point.y));
+                } else if (nHitTest == HTCAPTION) {
+                    ::SendMessage(hParent,
+                                  WM_LBUTTONUP,
+                                  nHitTest,
+                                  MAKELPARAM(point.x, point.y));
+                                  
+                }
+                
+                
                 return true;
             }
             
@@ -477,6 +579,15 @@ namespace amo {
                 ::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_SIZENESW)));
                 return true;
                 
+            case HTCAPTION: {
+                if (!m_pBrowserSettings->resizeable) {
+                    ::SendMessage(hParent,
+                                  WM_MOUSEMOVE,
+                                  nHitTest,
+                                  MAKELPARAM(point.x, point.y));
+                }
+            }
+            
             default:
             
             
@@ -607,6 +718,15 @@ namespace amo {
     
     LRESULT BrowserWindow::OnNcLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                            BOOL& bHandled) {
+        /* if (!m_pBrowserSettings->resizeable) {
+             fWinArrange.reset(new BOOL(FALSE));
+             fSnapSizing.reset(new BOOL(FALSE));
+             SystemParametersInfo(SPI_GETWINARRANGING, 0, (LPVOID)&*fWinArrange, 0);
+             SystemParametersInfo(SPI_GETSNAPSIZING, 0, (LPVOID)&*fSnapSizing, 0);
+             SystemParametersInfo(SPI_SETWINARRANGING, 0, (LPVOID)TRUE, 0);
+             SystemParametersInfo(SPI_SETSNAPSIZING, 0, (LPVOID)TRUE, 0);
+         }
+         */
         UINT nHitTest = wParam;
         POINT pt;
         POINTSTOPOINT(pt, lParam);
@@ -640,6 +760,25 @@ namespace amo {
             lRes = SendMessage(WM_SYSCOMMAND,
                                SC_MOVE | 4, MAKELPARAM(pt.x, pt.y));
         }
+        
+        bHandled = true;
+        return lRes;
+    }
+    
+    LRESULT BrowserWindow::OnNcLButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                         BOOL& bHandled) {
+        /*if (!m_pBrowserSettings->resizeable) {
+            if (fWinArrange && fSnapSizing) {
+        
+                SystemParametersInfo(SPI_SETWINARRANGING, 0, (LPVOID)*fWinArrange, 0);
+                SystemParametersInfo(SPI_SETSNAPSIZING, 0, (LPVOID)*fSnapSizing, 0);
+            }
+        
+            fWinArrange.reset();
+            fSnapSizing.reset();
+        }
+        */
+        LRESULT lRes = 0;
         
         bHandled = true;
         return lRes;

@@ -24,12 +24,16 @@ namespace amo {
         
         virtual void InitWindow() override;
         
-        virtual LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
+        virtual LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                  BOOL& bHandled) override;
         virtual void Notify(TNotifyUI& msg) override;
-        virtual LRESULT OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        
+        virtual LRESULT OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                     BOOL& bHandled) override;
+        virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                            BOOL& bHandled) override;
+        virtual LRESULT OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                  BOOL& bHandled) override;
+                                  
         virtual bool preTranslateMessage(CefEventHandle os_event) ;
         
         virtual Any topmost(IPCMessage::SmartType msg) override;
@@ -60,6 +64,10 @@ namespace amo {
         virtual std::shared_ptr<NativeWindow> toNativeWindow();
         virtual std::shared_ptr<BrowserWindow> toBrowserWindow();
         
+        
+        virtual LRESULT OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                               BOOL& bHandled) override;
+                               
     protected:
         int64_t getTransferClassID() const;
         void setTransferClassID(int64_t val);

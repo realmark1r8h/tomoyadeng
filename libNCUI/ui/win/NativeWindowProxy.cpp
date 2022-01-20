@@ -386,6 +386,16 @@ namespace amo {
         return Undefined();
     }
     
+    Any NativeWindowProxy::getConfigs(IPCMessage::SmartType msg) {
+        std::shared_ptr<NativeWindowSettings> pSettings = getNativeSettings();
+        
+        if (!pSettings) {
+            return Undefined();
+        }
+        
+        return pSettings->settings;
+    }
+    
     HWND NativeWindowProxy::getNativeHWND(std::shared_ptr<AnyArgsList> args) {
         return getNativeHWND();
     }

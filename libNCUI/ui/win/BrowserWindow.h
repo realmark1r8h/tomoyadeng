@@ -39,6 +39,8 @@ namespace amo {
         
         
         
+        
+        
     public:
         // WindowImplBase
         virtual LPCTSTR GetWindowClassName() const override;
@@ -47,15 +49,31 @@ namespace amo {
         virtual CDuiString GetSkinFile()  override;
         virtual CDuiString GetSkinFolder()  override;
         
-        virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT OnNcLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        virtual LRESULT OnNcLButtonDbClick(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        
-        
-        
+        virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                            BOOL& bHandled) override;
+        virtual LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                BOOL& bHandled) override;
+        virtual LRESULT OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                    BOOL& bHandled) override;
+        virtual LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                  BOOL& bHandled) override;
+        virtual LRESULT OnNcLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                        BOOL& bHandled);
+        virtual LRESULT OnNcLButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                      BOOL& bHandled);
+        virtual LRESULT OnNcLButtonDbClick(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                           BOOL& bHandled);
+                                           
+                                           
+        virtual LRESULT OnLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                      BOOL& bHandled) override;
+                                      
+                                      
+        virtual LRESULT OnLButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                    BOOL& bHandled) override;
+                                    
+        virtual LRESULT OnMouseMove(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                    BOOL& bHandled);
     public:
         // LifeSpanHandlerDelegate
         virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
@@ -143,6 +161,11 @@ namespace amo {
         /*! @brief	The browser settings. */
         std::shared_ptr<BrowserWindowSettings> m_pBrowserSettings;
         
+        
+        std::shared_ptr<BOOL> fWinArrange;
+        std::shared_ptr<BOOL> fSnapSizing;
+        
+        std::shared_ptr<POINT> m_pt;
     };
 }
 

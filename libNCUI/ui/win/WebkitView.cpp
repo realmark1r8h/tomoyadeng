@@ -11,6 +11,7 @@
 
 #include <amo/logger.hpp>
 #include <amo/loader.hpp>
+#include <amo/rect.hpp>
 
 #include "ui/win/OffScreenRenderView.h"
 #include "ui/win/MessageWindow.h"
@@ -133,6 +134,20 @@ namespace amo {
             // 最小化时不能改变浏览器的大小，否则还原时左上角会显示滚动条
             return;
         }
+        
+        /* RECT rcRect = { 0 };
+         ::GetClientRect(m_hParentWnd, &rcRect);
+         amo::rect rect2 = rcRect;
+         rect2.width();
+         amo::rect rect1 = rect;
+        
+         if (rect1.width() > rect2.width()) {
+             rect.right = rect.left + rect2.width();
+         }
+        
+         if (rect1.height() > rect2.height()) {
+             rect.bottom = rect.left + rect2.height();
+         }*/
         
         CControlUI::SetPos(rect);
         ::SetWindowPos((HWND)*m_pRenderWnd,

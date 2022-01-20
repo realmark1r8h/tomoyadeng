@@ -24,8 +24,9 @@ namespace amo {
         return LayeredWindow::InitWindow();
     }
     
-    LRESULT LocalWindow::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
-    
+    LRESULT LocalWindow::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                   BOOL& bHandled) {
+                                   
         // ÒÆ³ýÓ³Éä
         for (auto& p : m_oTransferedSet) {
             auto manager = TransferMappingMgr<ControlTransfer>::getInstance();
@@ -48,9 +49,13 @@ namespace amo {
         return LayeredWindow::OnDestroy(uMsg, wParam, lParam, bHandled);
     }
     
-    LRESULT LocalWindow::OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT LocalWindow::OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                      BOOL& bHandled) {
+        $cdevel("LPARAM:0x{}", amo::string::from_number((int)wParam, 16).str());
+        
+        // 0xf014 == SC_
         // ½ûÖ¹¸Ä±ä´óÐ¡
-        if (!m_pNativeSettings->resizeable && wParam == SC_MAXIMIZE) {
+        if (!m_pNativeSettings->resizeable && (wParam == SC_MAXIMIZE)) {
             return TRUE;
         }
         
@@ -65,6 +70,11 @@ namespace amo {
                 (wParam == SC_MAXIMIZE || wParam == 0xf032)) {
             // 0xf032 == SC_MAXIMIZE2
             return TRUE;
+        }
+        
+        if (wParam == SC_MAXIMIZE) {
+            int i = 23;
+            $cdevel("LPARAM:0x{}", amo::string::from_number((int)wParam, 16).str());
         }
         
         // ½ûÖ¹¹Ø±Õ
@@ -112,8 +122,9 @@ namespace amo {
         return lRes;
     }
     
-    LRESULT LocalWindow::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
-    
+    LRESULT LocalWindow::HandleCustomMessage(UINT uMsg, WPARAM wParam,
+            LPARAM lParam, BOOL& bHandled) {
+            
         //return FALSE;
         
         switch (uMsg) {
@@ -180,7 +191,8 @@ namespace amo {
         return LayeredWindow::HandleCustomMessage(uMsg, wParam, lParam, bHandled);
     }
     
-    LRESULT LocalWindow::OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT LocalWindow::OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                   BOOL& bHandled) {
         switch (wParam) {
         case VK_ESCAPE:
             if (m_pNativeSettings->esc) {
@@ -403,6 +415,16 @@ namespace amo {
         return std::shared_ptr<BrowserWindow>();
     }
     
+    
+    LRESULT LocalWindow::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                BOOL& bHandled) {
+        /*if (!m_pNativeSettings->resizeable) {
+            return TRUE;
+        }*/
+        /*   RECT rt = { 0 };
+           ::GetClientRect(m_hWnd, &rt);*/
+        return LayeredWindow::OnSize(uMsg, wParam, lParam, bHandled);
+    }
     
     int64_t LocalWindow::getTransferClassID() const {
         return m_nTransferClassID;

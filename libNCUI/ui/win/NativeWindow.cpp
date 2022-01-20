@@ -13,7 +13,8 @@ namespace amo {
 
 
 
-    NativeWindow::NativeWindow(std::shared_ptr<NativeWindowSettings> pBrowserSettings)
+    NativeWindow::NativeWindow(std::shared_ptr<NativeWindowSettings>
+                               pBrowserSettings)
         : LocalWindow(pBrowserSettings) {
         setNativeWindow(true);
         m_pNativeSettings->id = amo::string::from_number(getObjectID()).to_utf8();

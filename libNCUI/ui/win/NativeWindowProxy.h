@@ -567,6 +567,17 @@ namespace amo {
         
         Any setIcon(IPCMessage::SmartType msg);
         
+        /**
+         * @fn	Any NativeWindowProxy::config(IPCMessage::SmartType msg);
+         *
+         * @brief	获取窗口的配置信息.
+         *
+         * @param	msg	The message.
+         *
+         * @return	Any.
+         */
+        
+        Any getConfigs(IPCMessage::SmartType msg);
     public:
         /*!
          * @fn	HWND NativeWindowProxy::getNativeHWND(std::shared_ptr<AnyArgsList> args);

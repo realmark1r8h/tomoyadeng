@@ -93,14 +93,20 @@ namespace amo {
         //AMO_CEF_MESSAGE_TRANSFER_FUNC(test5, TransferExecSync)
         //AMO_CEF_MESSAGE_TRANSFER_FUNC(test6, TransferExecSync)
         
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(addBrowserWindowSettings, TransferFuncStatic | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(removeBrowserWindowSettings, TransferFuncStatic | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getBrowserWindowSettings, TransferFuncStatic | TransferExecSync)
-        
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(currentWindow, TransferFuncConstProperty | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getAllWindows, TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getFocusedWindow, TransferFuncStatic | TransferExecSync)
-        
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(addBrowserWindowSettings,
+                                      TransferFuncStatic | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(removeBrowserWindowSettings,
+                                      TransferFuncStatic | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getBrowserWindowSettings,
+                                      TransferFuncStatic | TransferExecSync)
+                                      
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(currentWindow,
+                                      TransferFuncConstProperty | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getAllWindows,
+                                      TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getFocusedWindow,
+                                      TransferFuncStatic | TransferExecSync)
+                                      
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getName,  TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setName, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(id,  TransferExecSync)
@@ -177,7 +183,7 @@ namespace amo {
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(isMainWindow, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(showModal, TransferExecNormal)
-        
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getConfigs, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         

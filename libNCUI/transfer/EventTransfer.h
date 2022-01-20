@@ -106,8 +106,10 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(EventTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getReturnValue, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setReturnValue, TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(target, TransferFuncConstProperty | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(data, TransferFuncConstProperty | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(target,
+                                      TransferFuncMemberProperty | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(data,
+                                      TransferFuncMemberProperty | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(stopPropagation,  TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(isStopPropagation, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
