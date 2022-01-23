@@ -1,8 +1,9 @@
-// Created by amoylel on 10/28/2016.
-// Copyright (c) 2016 amoylel. All rights reserved.
+// Created by amoylel on 02/03/2018.
+// Copyright (c) 2018 amoylel All rights reserved.
 
-#ifndef AMO_PROCESSEXCHANGER_HPP__
-#define AMO_PROCESSEXCHANGER_HPP__
+#ifndef LIBNCUI_PROCESSEXCHANGER_A052CB09_41C8_4C51_A40F_54CFDD16FACB_HPP__
+#define LIBNCUI_PROCESSEXCHANGER_A052CB09_41C8_4C51_A40F_54CFDD16FACB_HPP__
+
 
 #include <mutex>
 #include <functional>
@@ -21,30 +22,7 @@
 #include <amo/pipe.hpp>
 #include "ipc/IPCMessage.hpp"
 #include <amo/timer.hpp>
-
-namespace {
-    static std::vector<int8_t> intToBytes(int n) {
-        std::vector<int8_t> b(4, 0);
-        
-        for (int i = 0; i < 4; i++) {
-            b[i] = (int8_t)(n >> (24 - i * 8));
-        }
-        
-        return b;
-    }
-    
-    static int bytesToInt(int8_t* b) {
-        int mask = 0x000000ff;
-        return ((b[0] & mask) << 24) + ((b[1] & mask) << 16) + ((b[2] & mask) << 8) +
-               (b[3] & mask);
-    }
-    
-    static int bytesToInt(std::vector<int8_t>& b) {
-        int mask = 0x000000ff;
-        return ((b[0] & mask) << 24) + ((b[1] & mask) << 16) + ((b[2] & mask) << 8) +
-               (b[3] & mask);
-    }
-}
+#include <map>
 
 namespace amo {
 
@@ -54,6 +32,28 @@ namespace amo {
     };
     
     class ProcessExchanger {
+    public:
+        static std::vector<int8_t> intToBytes(int n) {
+            std::vector<int8_t> b(4, 0);
+            
+            for (int i = 0; i < 4; i++) {
+                b[i] = (int8_t)(n >> (24 - i * 8));
+            }
+            
+            return b;
+        }
+        
+        static int bytesToInt(int8_t* b) {
+            int mask = 0x000000ff;
+            return ((b[0] & mask) << 24) + ((b[1] & mask) << 16) + ((b[2] & mask) << 8) +
+                   (b[3] & mask);
+        }
+        
+        static int bytesToInt(std::vector<int8_t>& b) {
+            int mask = 0x000000ff;
+            return ((b[0] & mask) << 24) + ((b[1] & mask) << 16) + ((b[2] & mask) << 8) +
+                   (b[3] & mask);
+        }
     public:
         static uint64_t& ipcTimeOut() {
             static uint64_t nIPCTimeout = 0;
@@ -892,17 +892,27 @@ namespace amo {
                 return;
             }
             
+            
+            
+            
             auto iter = m_oResultCache.find(browserID);
             
             if (iter == m_oResultCache.end()) {
-                std::unordered_map<int, Any> val;
+                std::map<int, Any> val;
                 val[messageID] = ret;
-                m_oResultCache.insert(std::pair<int, std::unordered_map<int, Any> >(browserID,
+                m_oResultCache.insert(std::pair<int, std::map<int, Any> >(browserID,
                                       val));
                 return;
             } else {
                 auto& p = iter->second;
                 p[messageID] = ret;
+                
+                if (p.size() > 200) {
+                    $cdevel("移除缓存：{0}", p.begin()->first);
+                    p.erase(p.begin());
+                }
+                
+                
             }
         }
         
@@ -964,6 +974,83 @@ namespace amo {
          */
         
         Any tryProcessMessage(int id) {
+            Any ret = tryProcessMessageImpl(id);
+            
+            while (true) {
+                Any ret = tryProcessMessageImpl(id);
+                
+                if (ret.is<IPCResult>()) {
+                    continue;
+                }
+                
+                break;
+            }
+            
+            return ret;
+            
+            
+            
+            //std::shared_ptr<T> ptr = findExchanger(id);
+            //
+            //if (!ptr) {
+            //    $clog(amo::cdevel << func_orient << "Nothing" << amo::endl;);
+            //    return Nothing();
+            //}
+            //
+            //Any ret = ptr->tryProcessMessage();
+            //
+            //if (ret.type() == AnyValueType<IPCResult>::value) {
+            //    IPCResult result = ret;
+            //
+            //    insertCache(id, result.getID(), ret);
+            //
+            //    //$clog(amo::cdevel << func_orient << "处理到其他结果" << amo::endl;);
+            //    // 一直处理，直到管道中没有消息为止
+            //    tryProcessMessage(id);
+            //} else if (ret.type() != AnyValueType<Nothing>::value) {
+            //    assert(false);
+            //}
+            //
+            //$clog(amo::cdevel << func_orient << ret.value() << amo::endl;);
+            //return ret;
+        }
+        
+        //Any tryProcessMessage(int id) {
+        
+        //	std::shared_ptr<T> ptr = findExchanger(id);
+        
+        //	if (!ptr) {
+        //		$clog(amo::cdevel << func_orient << "Nothing" << amo::endl;);
+        //		return Nothing();
+        //	}
+        
+        //	Any ret = ptr->tryProcessMessage();
+        
+        //	if (ret.type() == AnyValueType<IPCResult>::value) {
+        //		IPCResult result = ret;
+        
+        //		insertCache(id, result.getID(), ret);
+        
+        //		//$clog(amo::cdevel << func_orient << "处理到其他结果" << amo::endl;);
+        //		// 一直处理，直到管道中没有消息为止
+        //		tryProcessMessage(id);
+        //	}
+        //	else if (ret.type() != AnyValueType<Nothing>::value) {
+        //		assert(false);
+        //	}
+        
+        //	$clog(amo::cdevel << func_orient << ret.value() << amo::endl;);
+        //	return ret;
+        //}
+        
+        std::function<Any()> getDeadlockCallback() const {
+            return m_fnDeadlockCallback;
+        }
+        void setDeadlockCallback(std::function<Any()> val) {
+            m_fnDeadlockCallback = val;
+        }
+    protected:
+        Any tryProcessMessageImpl(int id) {
         
             std::shared_ptr<T> ptr = findExchanger(id);
             
@@ -981,7 +1068,7 @@ namespace amo {
                 
                 //$clog(amo::cdevel << func_orient << "处理到其他结果" << amo::endl;);
                 // 一直处理，直到管道中没有消息为止
-                tryProcessMessage(id);
+                //tryProcessMessage(id);
             } else if (ret.type() != AnyValueType<Nothing>::value) {
                 assert(false);
             }
@@ -989,19 +1076,13 @@ namespace amo {
             $clog(amo::cdevel << func_orient << ret.value() << amo::endl;);
             return ret;
         }
-        std::function<Any()> getDeadlockCallback() const {
-            return m_fnDeadlockCallback;
-        }
-        void setDeadlockCallback(std::function<Any()> val) {
-            m_fnDeadlockCallback = val;
-        }
     private:
         /*! @brief	保存管道. */
         std::unordered_map<int, std::shared_ptr<T> > m_mpBrowserExchanger;
         /*! @brief	读写锁. */
         std::mutex m_mutex;
         /*! @brief	同步调用结果缓存. */
-        std::unordered_map<int, std::unordered_map<int, Any> > m_oResultCache;
+        std::unordered_map<int, std::map<int, Any> > m_oResultCache;
         
         /** @brief	进程死锁回调函数. */
         std::function<Any()> m_fnDeadlockCallback;
@@ -1037,7 +1118,9 @@ namespace amo {
         }
     };
     
-    
-    
 }
-#endif // AMO_PROCESSEXCHANGER_HPP__
+
+
+
+
+#endif //LIBNCUI_PROCESSEXCHANGER_A052CB09_41C8_4C51_A40F_54CFDD16FACB_HPP__

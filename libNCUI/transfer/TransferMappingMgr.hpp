@@ -28,13 +28,58 @@ namespace amo {
         }
     };
     
+    template<typename T>
+    bool static isSameCefRefPtr(const T a, const T b) {
+        return false;
+    }
+    
+    template<>
+    bool static isSameCefRefPtr < CefRefPtr<CefBrowser> > (const
+            CefRefPtr<CefBrowser> a,
+            const CefRefPtr<CefBrowser> b) {
+        if (a == NULL && b == NULL) {
+            return true;
+        }
+        
+        if (a == NULL || b == NULL) {
+            return false;
+        }
+        
+        return a->IsSame(b);
+    }
+    
+    template<>
+    bool static isSameCefRefPtr < CefRefPtr<CefFrame> > (const CefRefPtr<CefFrame>
+            a,
+            const  CefRefPtr<CefFrame> b) {
+        if (a == NULL && b == NULL) {
+            return true;
+        }
+        
+        if (a == NULL || b == NULL) {
+            return false;
+        }
+        
+        return a->GetIdentifier() == b->GetIdentifier();
+    }
     
     template<typename T, typename P1, typename P2>
-    class TransferMappingMgrBase : public amo::singleton<TransferMappingMgrBase<T, P1, P2> >  {
+    class TransferMappingMgrBase : public
+        amo::singleton<TransferMappingMgrBase<T, P1, P2> >  {
     public:
         typedef P1 transfer_type;
         typedef P2 cefrefptr_type;
     public:
+    
+        transfer_type findTransferByCefRefPtr(cefrefptr_type pCefRefPtr) {
+            for (auto& p : m_oTransferMap) {
+                if (isSameCefRefPtr<cefrefptr_type>(p.first, pCefRefPtr)) {
+                    return p.second;
+                }
+            }
+            
+            return transfer_type();
+        }
         /*!
         * @fn	transfer_type TransferMappingMgr::toTransfer(cefrefptr_type pCefRefPtr)
         *
@@ -45,15 +90,15 @@ namespace amo {
         * @return	Transfer类型.
         */
         transfer_type toTransfer(cefrefptr_type pCefRefPtr) {
-            auto iter = m_oTransferMap.find(pCefRefPtr);
+            transfer_type pTransfer;
+            pTransfer = findTransferByCefRefPtr(pCefRefPtr);
             
-            // 如果已经有映射的Transfer存在，直接返回
-            if (iter != m_oTransferMap.end()) {
-                return iter->second;
+            if (pTransfer) {
+                return pTransfer;
             }
             
             // 创建一个新的Transfer并保存
-            transfer_type pTransfer;
+            
             pTransfer = ClassTransfer::createTransfer<T>(pCefRefPtr);
             m_oTransferMap[pCefRefPtr] = pTransfer;
             return pTransfer;
@@ -119,14 +164,14 @@ namespace amo {
          * @param	pCefRefPtr	The cef reference pointer.
          */
         void removeMapping(cefrefptr_type pCefRefPtr) {
-            auto iter = m_oTransferMap.find(pCefRefPtr);
+            transfer_type pTransfer = findTransferByCefRefPtr(pCefRefPtr);
             
-            if (iter == m_oTransferMap.end()) {
+            if (!pTransfer) {
                 return;
             }
             
-            ClassTransfer::removeTransfer(iter->second->getObjectID());
-            m_oTransferMap.erase(iter);
+            ClassTransfer::removeTransfer(pTransfer->getObjectID());
+            removeMapping(pTransfer);
         }
         /*!
          * @fn	void TransferMappingMgrBase::removeMapping(transfer_type pTransfer)

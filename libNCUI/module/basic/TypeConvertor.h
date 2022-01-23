@@ -40,7 +40,8 @@ namespace amo {
     
     class TypeConvertor {
     public:
-        typedef std::vector< std::pair<int64_t, CefRefPtr<CefV8Value> > > ObjectContainer;
+        typedef std::vector< std::pair<int64_t, CefRefPtr<CefV8Value> > >
+        ObjectContainer;
         
     public:
         TypeConvertor(CefRefPtr<CefFrame> frame = NULL);

@@ -51,7 +51,7 @@ namespace amo {
     
     LRESULT LocalWindow::OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                       BOOL& bHandled) {
-        $cdevel("LPARAM:0x{}", amo::string::from_number((int)wParam, 16).str());
+        //$cdevel("LPARAM:0x{}", amo::string::from_number((int)wParam, 16).str());
         
         // 0xf014 == SC_
         // 禁止改变大小
@@ -103,6 +103,7 @@ namespace amo {
                 break;
                 
             case SC_MOVE:
+            
                 runner->broadcast("move");
                 break;
                 

@@ -38,7 +38,9 @@ namespace amo {
          * @param 	pTransfer	If non-null, the transfer.
          */
         void addTransfer(Transfer* pTransfer) {
+            pTransfer->setDefaultTriggerEventFunc(getDefaultTriggerEventFunc());
             m_oTransferMap[pTransfer->transferName()] = pTransfer;
+            
         }
         
         /*!
@@ -49,6 +51,7 @@ namespace amo {
          * @param	pTransfer	The transfer.
          */
         void addTransfer(std::shared_ptr<Transfer> pTransfer) {
+            pTransfer->setDefaultTriggerEventFunc(getDefaultTriggerEventFunc());
             m_oSmartMap.insert(std::make_pair(pTransfer->transferName(),
                                               pTransfer));
             m_oTransferMap[pTransfer->transferName()] = pTransfer.get();
@@ -173,6 +176,18 @@ namespace amo {
         void setDefaultMsgFunc(SmartEventFnType val) {
             m_fnDefaultMsgFunc = val;
         }
+        void setDefaultTriggerEventFunc(
+            std::function<void(IPCMessage::SmartType) >
+            val) {
+            m_fnDefaultTriggerEventFunc = val;
+        }
+        
+        
+        
+        std::function<void(IPCMessage::SmartType) > getDefaultTriggerEventFunc() const {
+            return m_fnDefaultTriggerEventFunc;
+        }
+        
     private:
         /*! @brief	保存通过普通指针添加的Transfer. */
         std::unordered_map<std::string, Transfer*> m_oTransferMap;
@@ -180,6 +195,8 @@ namespace amo {
         std::unordered_map<std::string, std::shared_ptr<Transfer> > m_oSmartMap;
         /** @brief	默认消息处理函数，如果没有找到消息处理函数将触发该函数. */
         SmartEventFnType m_fnDefaultMsgFunc;
+        
+        std::function<void(IPCMessage::SmartType)> m_fnDefaultTriggerEventFunc;
     };
     /*!
      * @class	TransferMgr
@@ -190,6 +207,7 @@ namespace amo {
     public:
         typedef  std::shared_ptr<std::function<Any(IPCMessage::SmartType)> >
         SmartEventFnType;
+        
     public:
     
         /*!
@@ -410,12 +428,28 @@ namespace amo {
                                SmartEventFnType val) {
             getTransferMap(nBrowserID).setDefaultMsgFunc(val);
         }
+        
+        
+        void setDefaultTriggerEventFunc(
+            std::function<void(IPCMessage::SmartType) >
+            val) {
+            m_fnDefaultTriggerEventFunc = val;
+        }
+        
+        
+        
+        std::function<void(IPCMessage::SmartType) > getDefaultTriggerEventFunc() const {
+            return m_fnDefaultTriggerEventFunc;
+        }
+        
     private:
         /*! @brief	保存各浏览器的TransferMap. */
         std::unordered_map<int, TransferMap> m_oTransferMap;
         
         /** @brief	默认消息处理函数，如果没有找到消息处理函数将触发该函数. */
         SmartEventFnType m_fnDefaultMsgFunc;
+        
+        std::function<void(IPCMessage::SmartType)> m_fnDefaultTriggerEventFunc;
     };
     
     

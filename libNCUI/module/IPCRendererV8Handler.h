@@ -82,6 +82,7 @@ namespace amo {
         
         Any releaseAllTransfer(IPCMessage::SmartType msg);
         
+        
         /*!
          * @fn	CefRefPtr<CefBrowser> IPCRendererV8Handler::getBrowser() const
          *

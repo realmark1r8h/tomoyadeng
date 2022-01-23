@@ -127,6 +127,7 @@ namespace amo {
             m_oFuncMgr.setObjectID(getObjectID());
             setFuncRegistered(false);
             setClassObject(false);
+            m_bReleased = false;
             
         }
         /*!
@@ -144,11 +145,18 @@ namespace amo {
             m_oFuncMgr.setObjectID(getObjectID());
             setFuncRegistered(false);
             setClassObject(false);
+            m_bReleased = false;
         }
         
         ~Transfer() {
+            onRelase(IPCMessage::Empty());
             $cdevel("正在释放资源：transferName = \"{0}\"， objectName = \"{1}\"， objectID = {2}",
                     transferName(), getObjectName(), getObjectID());
+        }
+        
+        virtual Any onRelase(IPCMessage::SmartType msg) {
+        
+            return Undefined();
         }
         
         /**
@@ -593,6 +601,33 @@ namespace amo {
         }
         
         /**
+         * @fn	std::function<void(IPCMessage::SmartType) > getDefaultTriggerEventFunc() const
+         *
+         * @brief	获取事件触发函数.
+         *
+         * @return	The trigger event function.
+         */
+        
+        std::function<void(IPCMessage::SmartType) > getDefaultTriggerEventFunc() const {
+            return m_fnDefaultTriggerEventFunc;
+        }
+        
+        /**
+         * @fn	virtual void Transfer::setDefaultTriggerEventFunc( std::function<void(IPCMessage::SmartType) > val)
+         *
+         * @brief	设置Transfer中需要触发事件时的回调函数， 一般用于外部Transfer的事件触发.
+         *
+         * @param	val	The value.
+         */
+        
+        virtual void setDefaultTriggerEventFunc(
+            std::function<void(IPCMessage::SmartType) >
+            val) {
+            m_fnDefaultTriggerEventFunc = val;
+        }
+        
+        
+        /**
          * @fn	std::function<void(IPCMessage::SmartType) > getTriggerEventFunc() const
          *
          * @brief	获取事件触发函数.
@@ -648,8 +683,8 @@ namespace amo {
             
             if (getTriggerEventFunc()) {
                 getTriggerEventFunc()(ipcMessage);
-            } else {
-                // log out
+            } else if (getDefaultTriggerEventFunc()) {
+                getDefaultTriggerEventFunc()(ipcMessage);
             }
             
             return Undefined();
@@ -689,11 +724,17 @@ namespace amo {
         /** @brief	判断当前transfer是类还是对象. */
         bool m_bClassObject;
         
+        /** @brief	Transfer中产生的默认事件触发函数，m_fnTriggerEventFunc无效时会尝试使用该函数. */
+        std::function<void(IPCMessage::SmartType)> m_fnDefaultTriggerEventFunc;
+        
         /** @brief	Transfer中产生的事件触发函数. */
         std::function<void(IPCMessage::SmartType)> m_fnTriggerEventFunc;
         
         /** @brief	默认消息处理函数，如果没有找到消息处理函数将触发该函数. */
         std::function<Any(IPCMessage::SmartType)> m_fnDefaultMsgFunc;
+        
+        /** @brief	是否已经被释放掉，（在页面上释放掉）. */
+        std::atomic_bool m_bReleased;
     };
     
 }

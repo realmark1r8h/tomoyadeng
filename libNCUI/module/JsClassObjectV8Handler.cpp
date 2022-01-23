@@ -5,13 +5,48 @@
 
 namespace amo {
 
+    class JSExecV8Handler : public CefV8Handler {
+    public:
+        JSExecV8Handler()   {}
+        ~JSExecV8Handler() {
+        
+        }
+        static CefRefPtr<JSExecV8Handler> GetHandler() {
+            static CefRefPtr<JSExecV8Handler> pHandler(new JSExecV8Handler());
+            return pHandler;
+        }
+        virtual bool Execute(const CefString& name, CefRefPtr<CefV8Value> object,
+                             const CefV8ValueList& arguments, CefRefPtr<CefV8Value>& retval,
+                             CefString& exception) override {
+                             
+                             
+            JsClassV8Handler* pHandler = dynamic_cast<JsClassV8Handler*>
+                                         (object->GetUserData().get());
+                                         
+            if (pHandler == NULL) {
+                return false;
+            }
+            
+            pHandler->Execute(name, object, arguments, retval, exception);
+            return true;
+            
+            
+        }
+        IMPLEMENT_REFCOUNTING(JSExecV8Handler);
+        
+    };
+    static int ffff = 0;
+    static int eeee = 0;
     JsClassObjectV8Handler::JsClassObjectV8Handler() {
         setHandlerName("JsClassObjectV8Handler");
         
+        ++ffff;
     }
     
     JsClassObjectV8Handler::~JsClassObjectV8Handler() {
     
+        $cdevel("IDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD:{}", getID());
+        ++eeee;
     }
     
     CefRefPtr<CefV8Value> JsClassObjectV8Handler::getV8Object(
@@ -20,9 +55,12 @@ namespace amo {
         // 不理会object是否为空，我们现在创建的是一个类
         CefRefPtr<CefV8Value> _object;
         
+        
+        
         // 创建JS类的构造函数
-        _object = CefV8Value::CreateObject(m_pAccessor);
+        _object = CefV8Value::CreateObject(NULL);
         _object->SetUserData(this);
+        
         onGetV8Object(_object);
         
         
@@ -35,6 +73,7 @@ namespace amo {
         bool bAssitObject = (strObjectName.find("CLASS.") == 0);
         
         //CLASS.对象用来代替CLASS来的属性无法设置的功能，所有应该具有这些类的功能
+        //CefRefPtr<CefV8Handler> pFuncHandler(new JSExecV8Handler(getID()));
         
         for (auto& p : m_oFuncMgr.toMap()) {
             // 类
@@ -42,7 +81,7 @@ namespace amo {
                 if (p.second.functionType() == TransferFuncStatic) {
                     // 创建静态函数
                     object->SetValue(p.second.m_strName,
-                                     CefV8Value::CreateFunction(p.second.m_strName, this),
+                                     CefV8Value::CreateFunction(p.second.m_strName, JSExecV8Handler::GetHandler()),
                                      V8_PROPERTY_ATTRIBUTE_NONE);
                 } else if (p.second.functionType() == TransferFuncConstProperty) {
                     object->SetValue(p.second.m_strName,
@@ -57,9 +96,11 @@ namespace amo {
             } else {
                 // 对象
                 if (p.second.functionType() == TransferFuncNormal) {
+                
                     object->SetValue(p.second.m_strName,
-                                     CefV8Value::CreateFunction(p.second.m_strName, this),
+                                     CefV8Value::CreateFunction(p.second.m_strName, JSExecV8Handler::GetHandler()),
                                      V8_PROPERTY_ATTRIBUTE_NONE);
+                                     
                                      
                 } else if (p.second.functionType() == TransferFuncMemberProperty) {
                     object->SetValue(p.second.m_strName,

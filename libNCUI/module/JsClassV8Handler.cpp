@@ -39,6 +39,7 @@ namespace amo {
         
         // 创建JS类的构造函数
         _object = CefV8Value::CreateFunction(getHandlerName(), this);
+        _object->SetUserData(this);
         onGetV8Object(_object);
         return _object;
     }
@@ -121,7 +122,6 @@ namespace amo {
                                    const CefV8ValueList& arguments,
                                    CefRefPtr<CefV8Value>& retval,
                                    CefString& exception) {
-                                   
                                    
         CefRefPtr<CefV8Context> pContext = CefV8Context::GetCurrentContext();
         

@@ -28,6 +28,38 @@ namespace amo {
             
         }
         
+        static void triggerEventToBorwser(IPCMessage::SmartType msg) {
+        
+        
+            auto args = msg->getArgumentList();
+            
+            //TODO: 加入NodeJS支持
+            
+            std::string strEventName = args->getString(IPCArgsPosInfo::FuncName);
+            
+            if (strEventName == "triggerEvent") {
+                // FrameID 和BrowserID 都必需存在
+                std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter());
+                int64_t nFrameID = args->getInt64(IPCArgsPosInfo::FrameID);
+                runner->setIPCMessage(msg->clone());
+                runner->setFrame(BrowserManager<PID_BROWSER>::GetFrameByID(nFrameID));
+                runner->execute();
+            } else if (strEventName == "emitEventAllFrame"
+                       || strEventName == "releaseAllTransfer") {
+                // 不管FrameID,所有的都去一份
+                std::unordered_map<int, CefRefPtr<CefBrowser> > mp
+                    = BrowserManager<PID_BROWSER>::GetAllBrowser();
+                    
+                for (auto& p : mp) {
+                    std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter());
+                    runner->setIPCMessage(msg->clone());
+                    runner->setFrame(p.second->GetMainFrame());
+                    
+                    runner->execute();
+                }
+            }
+            
+        }
         
         /*!
          * @fn	template<typename ... Args> Any UIMessageBroadcaster::broadcast(Args... args)
@@ -52,16 +84,6 @@ namespace amo {
             runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
             runner->setValue(IPCArgsPosInfo::EventObjectID, m_nObjectID);
             runner->setValue(IPCArgsPosInfo::TransferID, 0);
-            
-            std::shared_ptr<ClassTransfer> pTarget;
-            pTarget = ClassTransfer::findTransfer(m_nObjectID);
-            std::shared_ptr<EventTransfer> pEventTransfer;
-            pEventTransfer = ClassTransfer::createTransfer<EventTransfer>();
-            pEventTransfer->setTarget(pTarget);
-            pEventTransfer->setMsg(runner->getIPCMessage()->clone());
-            // 自发参数列表
-            runner->setValue(1, pEventTransfer->getFuncMgr().toSimplifiedJson());
-            runner->clearValue(2, IPCArgsPosInfo::FuncName);
             runner->setValue(IPCArgsPosInfo::ArgsLength, 2);
             runner->setValue(IPCArgsPosInfo::BrowserID, -9999);
             runner->setValue(IPCArgsPosInfo::FrameID, -1);
@@ -72,46 +94,22 @@ namespace amo {
             
             if (fn) {
                 runner->execute();
-                //pEventTransfer->setRetval(ret);
-                
-                if (pEventTransfer->isStopPropagation(IPCMessage::Empty())) {
-                    return pEventTransfer->getReturnValue(IPCMessage::Empty());
-                }
-                
             }
             
             std::unordered_map<int, CefRefPtr<CefBrowser> > mp
                 = BrowserManager<PID_BROWSER>::GetAllBrowser();
                 
             int nIndex = 0;
-            /*       int nId11 = runner->getIPCMessage()->getID();
             
-            int nSize = mp.size();*/
             
             // 向所有浏览器广播消息
             for (auto& p : mp) {
                 ++nIndex;
-                int nBrowserID = p.second->GetIdentifier();
                 runner->setFrame(p.second->GetMainFrame());
-                int id = runner->getIPCMessage()->getID();
-                
-                
                 runner->execute();
-                // 调试用
-                /* int nMessageID = IPCMessage::GetProcessMessageID();
-                 runner->getIPCMessage()->setID(nMessageID);
-                 runner->getIPCMessage()->GetArgumentList()->setValue(IPCArgsPosInfo::MessageID, nMessageID);
-                 runner->Execute();*/
-                
-                if (pEventTransfer->isStopPropagation(IPCMessage::Empty())) {
-                    return pEventTransfer->getReturnValue(IPCMessage::Empty());
-                }
             }
             
-            // 移除Transfer, 调试时可以开启
-            ClassTransfer::removeTransfer(pEventTransfer->getObjectID());
-            return  pEventTransfer->getReturnValue(IPCMessage::Empty());
-            
+            return Undefined();
         }
         
         
@@ -126,17 +124,6 @@ namespace amo {
             runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
             runner->setValue(IPCArgsPosInfo::EventObjectID, m_nObjectID);
             runner->setValue(IPCArgsPosInfo::TransferID, 0);
-            
-            std::shared_ptr<ClassTransfer> pTarget;
-            pTarget = ClassTransfer::findTransfer(m_nObjectID);
-            std::shared_ptr<EventTransfer> pEventTransfer;
-            pEventTransfer = ClassTransfer::createTransfer<EventTransfer>();
-            pEventTransfer->setTarget(pTarget);
-            pEventTransfer->setMsg(runner->getIPCMessage()->clone());
-            
-            // 自发参数列表
-            runner->setValue(1, pEventTransfer->getFuncMgr().toSimplifiedJson());
-            runner->clearValue(2, IPCArgsPosInfo::FuncName);
             runner->setValue(IPCArgsPosInfo::ArgsLength, 2);
             runner->setValue(IPCArgsPosInfo::BrowserID, -9999);
             runner->setValue(IPCArgsPosInfo::FrameID, -1);
@@ -147,10 +134,9 @@ namespace amo {
             
             if (fn) {
                 Any ret = runner->syncExecute();
-                pEventTransfer->setRetval(ret);
                 
-                if (pEventTransfer->isStopPropagation(IPCMessage::Empty())) {
-                    return pEventTransfer->getReturnValue(IPCMessage::Empty());
+                if (ret.is<bool>() && !ret.As<bool>()) {
+                    return Undefined();
                 }
                 
             }
@@ -159,35 +145,20 @@ namespace amo {
                 = BrowserManager<PID_BROWSER>::GetAllBrowser();
                 
             int nIndex = 0;
-            /*       int nId11 = runner->getIPCMessage()->getID();
-            
-                   int nSize = mp.size();*/
             
             // 向所有浏览器广播消息
             for (auto& p : mp) {
                 ++nIndex;
-                int nBrowserID = p.second->GetIdentifier();
                 runner->setFrame(p.second->GetMainFrame());
-                int id = runner->getIPCMessage()->getID();
-                
-                
                 Any ret = runner->syncExecute();
                 
-                // 死锁调试时可以更改消息ID，方便调试
-                /* int nMessageID = IPCMessage::GetProcessMessageID();
-                 runner->getIPCMessage()->setID(nMessageID);
-                 runner->getIPCMessage()->GetArgumentList()->setValue(IPCArgsPosInfo::MessageID, nMessageID);
-                 Any ret = runner->syncExecute();*/
-                
-                if (pEventTransfer->isStopPropagation(IPCMessage::Empty())) {
-                    return pEventTransfer->getReturnValue(IPCMessage::Empty());
+                // 如果返回值是一个BOOL类型且为False，那么停止循环
+                if (ret.is<bool>() && !ret.As<bool>()) {
+                    break;
                 }
             }
             
-            // 移除Transfer, 调试时可以开启
-            ClassTransfer::removeTransfer(pEventTransfer->getObjectID());
-            return  pEventTransfer->getReturnValue(IPCMessage::Empty());
-            
+            return Undefined();
         }
     protected:
         int64_t m_nObjectID;

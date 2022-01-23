@@ -9,6 +9,7 @@
 #include "utility/utility.hpp"
 
 
+
 namespace amo {
 
     std::unordered_map < std::pair<int64_t, int64_t>,
@@ -157,6 +158,31 @@ namespace amo {
                     // 设置ObjectID
                     mgr.setObjectID(nId);
                     mgr.setObjectName(strObjectName);
+                    
+                    //{
+                    //    // 创建新的Object
+                    //    CefRefPtr<JsClassObjectV8Handler> pObjectHandler;
+                    //    pObjectHandler = new JsClassObjectV8Handler();
+                    //    pObjectHandler->setRendererClass(mgr.isRendererClass());
+                    //    pObjectHandler->setHandlerName(strClass);
+                    //    //pObjectHandler->setFunctions(mgr.toVector());
+                    //    pObjectHandler->setFuncMgr(mgr);
+                    //    pObjectHandler->setID(nId);
+                    //
+                    //    // 设置返回值为新创建的对象
+                    //    CefRefPtr<CefV8Value> pObject =
+                    //        pObjectHandler->getV8Object();
+                    //    // 添加对象进缓存
+                    //    //addClassObject(nId, pObject);
+                    //    //pObject->Release();
+                    //
+                    //    int i = 3;
+                    //    ++i;
+                    //
+                    //    if (i == 4) {
+                    //
+                    //    }
+                    //}
                     // 创建新的Object
                     CefRefPtr<JsClassObjectV8Handler> pObjectHandler;
                     pObjectHandler = new JsClassObjectV8Handler();
@@ -171,6 +197,11 @@ namespace amo {
                         pObjectHandler->getV8Object();
                     // 添加对象进缓存
                     addClassObject(nId, pObject);
+                    
+                    
+                    /* int64_t nFrameID =
+                    	 CefV8Context::GetCurrentContext()->GetFrame()->GetIdentifier();
+                     removeClassObject(nFrameID, nId);*/
                     return pObject;
                 }
                 
@@ -193,6 +224,8 @@ namespace amo {
         
         return CefV8Value::CreateUndefined();
     }
+    
+    
     
     Any TypeConvertor::ParseObjectToJson(CefRefPtr<CefV8Value> pObject) {
         amo::json json;
@@ -273,7 +306,8 @@ namespace amo {
         return Nothing();
     }
     
-    void TypeConvertor::AddAnyToJson(amo::json& json, const std::string& key, Any& val) {
+    void TypeConvertor::AddAnyToJson(amo::json& json, const std::string& key,
+                                     Any& val) {
         return amo::util().addAnyToJson(json, key, val);
         
         /* switch (val.type()) {
@@ -672,6 +706,8 @@ namespace amo {
         CefRefPtr<CefFrame> pFrame = context->GetFrame();
         int64_t nFrameID = pFrame->GetIdentifier();
         m_oObjectMap[std::pair<int64_t, int64_t>(nFrameID, nID)] = pObject;
+        //m_oObjectMap.erase({ nFrameID, nID });
+        
     }
     
     void TypeConvertor::clearClassObject(int64_t nFrameID) {
@@ -689,8 +725,51 @@ namespace amo {
     }
     
     void TypeConvertor::removeClassObject(int64_t nFrameID, int64_t nObjectID) {
-        std::vector<std::pair<int64_t, int64_t> > keys;
+        auto frame = BrowserManager<PID_RENDERER>::GetFrameByID(nFrameID);
+        CefRefPtr<CefV8Context> pContext;
+        
+        if (frame) {
+            pContext = frame->GetV8Context();
+        }
+        
+        if (pContext) {
+            // 如果是C++在调用JS,那么需要Context环境
+            pContext->Enter();
+        }
+        
+        auto ptr = m_oObjectMap.find({ nFrameID, nObjectID });
+        
+        if (ptr != m_oObjectMap.end()) {
+            auto pObject = ptr->second;
+            
+            if (pContext && pObject && pObject->IsObject()) {
+                JsClassV8Handler* pHandler = dynamic_cast<JsClassV8Handler*>
+                                             (pObject->GetUserData().get());
+                                             
+                if (pHandler != NULL) {
+                    auto vec = pHandler->getFuncMgr().toMap();
+                    
+                    for (auto& p : vec) {
+                        CefString strKey = p.first;
+                        
+                        if (pObject->HasValue(strKey)) {
+                            pObject->DeleteValue(strKey);
+                        }
+                    }
+                }
+            }
+            
+            pObject->SetUserData(NULL);
+            
+        }
+        
+        
         m_oObjectMap.erase({ nFrameID, nObjectID });
+        
+        if (pContext) {
+            pContext->Exit();
+        }
+        
         
     }
     

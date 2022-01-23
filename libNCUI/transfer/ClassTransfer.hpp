@@ -335,7 +335,7 @@ namespace amo {
             auto ptr = getTransferMap();
             
             if (!ptr) {
-                return;
+                return  ;
             }
             
             auto iter = ptr->find(nID);
@@ -355,6 +355,19 @@ namespace amo {
             if (!ptr) {
                 return;
             }
+            
+            /* std::vector<int64_t> vec;
+            
+             for (auto& p : *ptr) {
+                 if (p.second->transferName() == name) {
+                     vec.push_back(p.first);
+                 }
+             }
+            
+             for (auto& p : vec) {
+                 removeTransfer(p);
+             }*/
+            
             
             for (auto iter = ptr->begin(); iter != ptr->end();) {
                 if (iter->second->transferName() == name) {
@@ -457,13 +470,16 @@ namespace amo {
             registerTransfer("fromObjectID", std::bind(&ClassTransfer::onFromObjectID, this,
                              std::placeholders::_1),
                              TransferMultiDisabled | TransferFuncStatic | TransferExecSync);
-            registerTransfer("fromObjectName", std::bind(&ClassTransfer::onFromObjectName, this,
+            registerTransfer("fromObjectName", std::bind(&ClassTransfer::onFromObjectName,
+                             this,
                              std::placeholders::_1),
                              TransferMultiDisabled | TransferFuncStatic | TransferExecSync);
-            registerTransfer("getObjectName", std::bind(&ClassTransfer::onGetObjectName, this,
+            registerTransfer("getObjectName", std::bind(&ClassTransfer::onGetObjectName,
+                             this,
                              std::placeholders::_1),
                              TransferFuncNormal | TransferExecSync);
-            registerTransfer("setObjectName", std::bind(&ClassTransfer::onSetObjectName, this,
+            registerTransfer("setObjectName", std::bind(&ClassTransfer::onSetObjectName,
+                             this,
                              std::placeholders::_1),
                              TransferFuncNormal | TransferExecNormal);
             registerTransfer("release", std::bind(&ClassTransfer::onRelase, this,
@@ -587,8 +603,15 @@ namespace amo {
             return Undefined();
         }
         
-        Any onRelase(IPCMessage::SmartType msg) {
+        virtual Any onRelase(IPCMessage::SmartType msg) override {
+        
             removeTransfer(getObjectID());
+            
+            if (m_bReleased) {
+                return Undefined();
+            }
+            
+            m_bReleased = true;
             TransferEventInfo info;
             info.name = "transfer.release";
             info.toAll = true;

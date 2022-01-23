@@ -10,7 +10,7 @@ namespace amo {
     
     Any MD5Transfer::onCreateClass(IPCMessage::SmartType msg) {
         auto pTransfer = ClassTransfer::createTransfer<MD5Transfer>();
-        pTransfer->setTriggerEventFunc(this->getTriggerEventFunc());
+        pTransfer->setTriggerEventFunc(this->getTriggerEventFunc());pTransfer->setDefaultTriggerEventFunc(this->getDefaultTriggerEventFunc());
         return pTransfer->getFuncMgr().toSimplifiedJson();
     }
     

@@ -102,6 +102,18 @@ namespace amo {
                 || strMessageName == MSG_NATIVE_ASYNC_EXECUTE) {
             int nBrowserID = browser->GetIdentifier();
             IPCMessage::SmartType  msg = amo::createAnyProcessMessage(message);
+            //auto strings = msg->toJson().to_string();
+            //
+            //$cdevel(strings);
+            //auto name = msg->getArgumentList()->getString(IPCArgsPosInfo::FuncName);
+            //
+            //if (strings.find("move") != -1) {
+            //    return true;
+            //}
+            //
+            ///* if (name == "emitEventAllFrame") {
+            //     return true;
+            // }*/
             
             if (RendererTransferMgr::getInstance()->onMessageTransfer(msg).isValid()) {
                 return true;

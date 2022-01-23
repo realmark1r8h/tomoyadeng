@@ -12,7 +12,8 @@
 #pragma comment(lib, "sqlite3.lib")
 
 
-const static std::string SQLITE_INVALID_CONNECTION =  "无效的数据库连接";
+const static std::string SQLITE_INVALID_CONNECTION =
+    "无效的数据库连接";
 const static std::string SQLITE_EMPTY_SQL = "SQL语句为空";
 const static std::string SQLITE_INVALID_SQL = "无效的SQL语句";
 
@@ -47,10 +48,11 @@ namespace amo {
     Any SqliteTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string strPath = args->getString(0);
-        std::shared_ptr<SqliteTransfer> pDB;
-        pDB = ClassTransfer::createTransfer<SqliteTransfer>(strPath);
-        pDB->setTriggerEventFunc(this->getTriggerEventFunc());
-        return  pDB->getFuncMgr().toSimplifiedJson();
+        std::shared_ptr<SqliteTransfer> pTransfer;
+        pTransfer = ClassTransfer::createTransfer<SqliteTransfer>(strPath);
+        pTransfer->setTriggerEventFunc(this->getTriggerEventFunc());
+        pTransfer->setDefaultTriggerEventFunc(this->getDefaultTriggerEventFunc());
+        return  pTransfer->getFuncMgr().toSimplifiedJson();
     }
     
     
@@ -239,7 +241,8 @@ namespace amo {
                     } else {
                         bQueryData = false;
                         types.push_back("TEXT");
-                        amo::cwarn << func_orient << "数据表列未知类型：" << columnName << amo::endl;
+                        amo::cwarn << func_orient << "数据表列未知类型：" << columnName <<
+                                   amo::endl;
                         //break;
                     }
                 }
@@ -353,7 +356,9 @@ namespace amo {
     
     Any SqliteTransfer::containsTable(IPCMessage::SmartType msg) {
         std::string tableName = msg->getArgumentList()->getString(0);
-        std::string sql = "select count(1) from sqlite_master where type='table' and name='" + tableName + "';";
+        std::string sql =
+            "select count(1) from sqlite_master where type='table' and name='" + tableName +
+            "';";
         msg->getArgumentList()->setValue(0, sql);
         int nCount =  queryCount(msg);
         
@@ -382,7 +387,8 @@ namespace amo {
     }
     
     
-    std::string SqliteTransfer::getValuesFromJson(amo::json& json, const std::string& key) {
+    std::string SqliteTransfer::getValuesFromJson(amo::json& json,
+            const std::string& key) {
         std::stringstream stream;
         
         if (json.is_bool(key)) {
@@ -632,18 +638,21 @@ namespace amo {
         return args->getString(0);
     }
     
-    amo::string SqliteTransfer::formatArgsByAnsiJson(const amo::string& sql, amo::json& json) {
-    
+    amo::string SqliteTransfer::formatArgsByAnsiJson(const amo::string& sql,
+            amo::json& json) {
+            
         return sql.format(json);
     }
     
-    amo::string SqliteTransfer::formatArgsByU8Json(const amo::string& sql, amo::json& json) {
+    amo::string SqliteTransfer::formatArgsByU8Json(const amo::string& sql,
+            amo::json& json) {
         amo::string jsonString(json.to_string(), true);
         amo::json ansiJson = amo::json(jsonString);
         return  formatArgsByAnsiJson(sql, ansiJson).to_utf8();
     }
     
-    amo::string SqliteTransfer::formatArgsByArr(const amo::string& sql, std::vector<amo::string>& vec) {
+    amo::string SqliteTransfer::formatArgsByArr(const amo::string& sql,
+            std::vector<amo::string>& vec) {
         std::vector<std::string> fmtArgsList;
         
         for (size_t i = 0; i < vec.size(); ++i) {
@@ -955,7 +964,8 @@ namespace amo {
         return json;
     }
     
-    std::vector<std::string>& SqliteTransfer::getTableField(const std::string& table) {
+    std::vector<std::string>& SqliteTransfer::getTableField(
+        const std::string& table) {
         if (!m_pDB) {
             setLastError(SQLITE_INVALID_CONNECTION);
             return m_emptyFields;
@@ -1021,7 +1031,8 @@ namespace amo {
         
     }
     
-    bool SqliteTransfer::containsField(const std::string& table, const std::string& field) {
+    bool SqliteTransfer::containsField(const std::string& table,
+                                       const std::string& field) {
         auto& vec = getTableField(table);
         
         for (auto& p : vec) {

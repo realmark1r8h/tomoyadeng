@@ -271,7 +271,6 @@ namespace amo {
         }
         
         
-        
         // 遍历对象，触发事件
         for (size_t i = 0; i < values.size(); ++i) {
         
@@ -292,13 +291,19 @@ namespace amo {
             
             CefRefPtr<CefV8Value> pFunction = pValue->GetValue("emit");
             
+            
+            
+            
             if (pFunction && pFunction->IsFunction()) {
                 CefV8ValueList list;
                 TypeConvertor convertor(pFrame);
                 
                 for (int i = 0; i < args->getArgsSize(); ++i) {
+                
                     list.push_back(convertor.toV8Value(args, i));
+                    
                 }
+                
                 
                 CefRefPtr<CefV8Value> v8Value;
                 v8Value = pFunction->ExecuteFunctionWithContext(
@@ -315,6 +320,8 @@ namespace amo {
                 
                 continue;
             }
+            
+            
         }
         
         return Undefined();
@@ -347,6 +354,8 @@ namespace amo {
         
         return Undefined();
     }
+    
+    
     
     CefRefPtr<CefBrowser> IPCRendererV8Handler::getBrowser() const {
         return m_pBrowser;

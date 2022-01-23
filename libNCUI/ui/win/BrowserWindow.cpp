@@ -395,6 +395,10 @@ namespace amo {
         m_pBrowser = browser;
         
         auto manager = amo::BrowserTransferMgr::getInstance();
+        
+        manager->setDefaultTriggerEventFunc(
+            UIMessageBroadcaster::triggerEventToBorwser);
+            
         int nBrowserID = browser->GetIdentifier();
         
         manager->registerClass(nBrowserID);
