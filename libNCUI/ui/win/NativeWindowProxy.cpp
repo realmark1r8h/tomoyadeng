@@ -204,7 +204,7 @@ namespace amo {
     }
     
     Any NativeWindowProxy::isResizable(IPCMessage::SmartType msg) {
-        return  getNativeSettings()->resizeable;
+        return  getNativeSettings()->resizable;
     }
     
     Any NativeWindowProxy::setMovable(IPCMessage::SmartType msg) {

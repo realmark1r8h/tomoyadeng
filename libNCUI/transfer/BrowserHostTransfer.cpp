@@ -15,6 +15,38 @@ namespace amo {
         
     }
     
+    Any BrowserHostTransfer::current(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+        int64_t nFrameID = args->getInt64(IPCArgsPosInfo::FrameID);
+        CefRefPtr<CefFrame> pFrame = BrowserManager<PID_BROWSER>::GetFrameByID(
+                                         nFrameID);
+                                         
+        if (!pFrame) {
+            return Undefined();
+        }
+        
+        CefRefPtr<CefBrowser> pBrowser = pFrame->GetBrowser();
+        
+        if (!pBrowser) {
+            return Undefined();
+        }
+        
+        CefRefPtr<CefBrowserHost> pHost = pBrowser->GetHost();
+        
+        if (!pHost) {
+            return Undefined();
+        }
+        
+        auto manager = TransferMappingMgr<BrowserHostTransfer>::getInstance();
+        return manager->toSimplifiedJson(pHost);
+        
+    }
+    
+    Any BrowserHostTransfer::click(IPCMessage::SmartType msg) {
+        return SendMouseClickEvent(msg);
+    }
+    
     Any BrowserHostTransfer::GetBrowser(IPCMessage::SmartType msg) {
         CefRefPtr<CefBrowser> pBrowser = m_pBrowserHost->GetBrowser();
         
@@ -111,11 +143,13 @@ namespace amo {
         return Undefined();
     }
     
-    Any BrowserHostTransfer::SetMouseCursorChangeDisabled(IPCMessage::SmartType msg) {
+    Any BrowserHostTransfer::SetMouseCursorChangeDisabled(IPCMessage::SmartType
+            msg) {
         return Undefined();
     }
     
-    Any BrowserHostTransfer::IsMouseCursorChangeDisabled(IPCMessage::SmartType msg) {
+    Any BrowserHostTransfer::IsMouseCursorChangeDisabled(IPCMessage::SmartType
+            msg) {
         return Undefined();
     }
     
@@ -186,11 +220,13 @@ namespace amo {
         return Undefined();
     }
     
-    Any BrowserHostTransfer::HandleKeyEventBeforeTextInputClient(IPCMessage::SmartType msg) {
+    Any BrowserHostTransfer::HandleKeyEventBeforeTextInputClient(
+        IPCMessage::SmartType msg) {
         return Undefined();
     }
     
-    Any BrowserHostTransfer::HandleKeyEventAfterTextInputClient(IPCMessage::SmartType msg) {
+    Any BrowserHostTransfer::HandleKeyEventAfterTextInputClient(
+        IPCMessage::SmartType msg) {
         return Undefined();
     }
     

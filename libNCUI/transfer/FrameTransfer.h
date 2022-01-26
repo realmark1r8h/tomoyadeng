@@ -17,6 +17,8 @@ namespace amo {
         FrameTransfer();
         FrameTransfer(CefRefPtr<CefFrame> pFrame);
         
+        Any current(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any FrameTransfer::injectSrcipt(IPCMessage::SmartType msg);
          *
@@ -63,8 +65,10 @@ namespace amo {
         Any GetURL(IPCMessage::SmartType msg);
         Any GetBrowser(IPCMessage::SmartType msg);
         
-        AMO_CEF_MESSAGE_TRANSFER_BEGIN(FrameTransfer, ClassTransfer)
         
+        AMO_CEF_MESSAGE_TRANSFER_BEGIN(FrameTransfer, ClassTransfer)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(current,
+                                      TransferFuncConstProperty | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(injectSrcipt, TransferExecNormal)
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(IsValid, TransferExecSync)

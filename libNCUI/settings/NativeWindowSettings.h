@@ -75,7 +75,7 @@ namespace amo {
         int maxHeight;
         
         /*! @brief	true if resizeable. */
-        bool resizeable;
+        bool resizable;
         /*! @brief	true if moveable. */
         bool moveable;
         /*! @brief	true if minimizable. */

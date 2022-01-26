@@ -883,8 +883,7 @@ namespace amo {
          */
         
         void insertCache(int browserID, int messageID, Any& ret) {
-            $clog(amo::cdevel << func_orient << ret.value() << amo::endl;);
-            
+        
             if (m_oDeadlockIDs.find(std::make_pair(browserID,
                                                    messageID)) != m_oDeadlockIDs.end()) {
                 $cwarn("处理到已放弃的死锁ID，该消息不会被缓存");
@@ -908,7 +907,7 @@ namespace amo {
                 p[messageID] = ret;
                 
                 if (p.size() > 200) {
-                    $cdevel("移除缓存：{0}", p.begin()->first);
+                    //$cdevel("移除缓存：{0}", p.begin()->first);
                     p.erase(p.begin());
                 }
                 
@@ -989,59 +988,9 @@ namespace amo {
             return ret;
             
             
-            
-            //std::shared_ptr<T> ptr = findExchanger(id);
-            //
-            //if (!ptr) {
-            //    $clog(amo::cdevel << func_orient << "Nothing" << amo::endl;);
-            //    return Nothing();
-            //}
-            //
-            //Any ret = ptr->tryProcessMessage();
-            //
-            //if (ret.type() == AnyValueType<IPCResult>::value) {
-            //    IPCResult result = ret;
-            //
-            //    insertCache(id, result.getID(), ret);
-            //
-            //    //$clog(amo::cdevel << func_orient << "处理到其他结果" << amo::endl;);
-            //    // 一直处理，直到管道中没有消息为止
-            //    tryProcessMessage(id);
-            //} else if (ret.type() != AnyValueType<Nothing>::value) {
-            //    assert(false);
-            //}
-            //
-            //$clog(amo::cdevel << func_orient << ret.value() << amo::endl;);
-            //return ret;
         }
         
-        //Any tryProcessMessage(int id) {
         
-        //	std::shared_ptr<T> ptr = findExchanger(id);
-        
-        //	if (!ptr) {
-        //		$clog(amo::cdevel << func_orient << "Nothing" << amo::endl;);
-        //		return Nothing();
-        //	}
-        
-        //	Any ret = ptr->tryProcessMessage();
-        
-        //	if (ret.type() == AnyValueType<IPCResult>::value) {
-        //		IPCResult result = ret;
-        
-        //		insertCache(id, result.getID(), ret);
-        
-        //		//$clog(amo::cdevel << func_orient << "处理到其他结果" << amo::endl;);
-        //		// 一直处理，直到管道中没有消息为止
-        //		tryProcessMessage(id);
-        //	}
-        //	else if (ret.type() != AnyValueType<Nothing>::value) {
-        //		assert(false);
-        //	}
-        
-        //	$clog(amo::cdevel << func_orient << ret.value() << amo::endl;);
-        //	return ret;
-        //}
         
         std::function<Any()> getDeadlockCallback() const {
             return m_fnDeadlockCallback;
@@ -1073,7 +1022,7 @@ namespace amo {
                 assert(false);
             }
             
-            $clog(amo::cdevel << func_orient << ret.value() << amo::endl;);
+            //$clog(amo::cdevel << func_orient << ret.value() << amo::endl;);
             return ret;
         }
     private:

@@ -44,6 +44,21 @@ namespace amo {
         return true;
     }
     
+    Any FrameTransfer::current(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+        int64_t nFrameID = args->getInt64(IPCArgsPosInfo::FrameID);
+        CefRefPtr<CefFrame> pFrame = BrowserManager<PID_BROWSER>::GetFrameByID(
+                                         nFrameID);
+                                         
+        if (!pFrame) {
+            return Undefined();
+        }
+        
+        auto manager = TransferMappingMgr<FrameTransfer>::getInstance();
+        return manager->toSimplifiedJson(pFrame);
+    }
+    
     Any FrameTransfer::IsValid(IPCMessage::SmartType msg) {
         return m_pFrame->IsValid();
     }
@@ -163,6 +178,8 @@ namespace amo {
         auto manager = TransferMappingMgr<BrowserTransfer>::getInstance();
         return manager->toSimplifiedJson(pBrowser);
     }
+    
+    
     
 }
 

@@ -88,61 +88,61 @@ namespace amo {
     
     LRESULT BrowserWindow::OnLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                          BOOL& bHandled) {
-        if (wParam == HTCAPTION) {
-            m_pt.reset(new POINT());
-            POINT pt;
-            ::GetCursorPos(&pt);
-            m_pt->x = pt.x;
-            m_pt->y = pt.y;
-            
-            bHandled = true;
-            return TRUE;
-        }
+        /* if (wParam == HTCAPTION) {
+             m_pt.reset(new POINT());
+             POINT pt;
+             ::GetCursorPos(&pt);
+             m_pt->x = pt.x;
+             m_pt->y = pt.y;
+        
+             bHandled = true;
+             return TRUE;
+         }*/
         
         return LocalWindow::OnLButtonDown(uMsg, wParam, lParam, bHandled);
     }
     
     LRESULT BrowserWindow::OnLButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                        BOOL& bHandled) {
-        m_pt.reset();
+        /* m_pt.reset();
         
-        if (wParam == HTCAPTION) {
-            bHandled = true;
-            return TRUE;
-        }
-        
+         if (wParam == HTCAPTION) {
+             bHandled = true;
+             return TRUE;
+         }
+         */
         return LocalWindow::OnLButtonUp(uMsg, wParam, lParam, bHandled);
     }
     
     LRESULT BrowserWindow::OnMouseMove(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                        BOOL& bHandled) {
-        if (m_pt && wParam == HTCAPTION) {
-            POINT curPt;
-            ::GetCursorPos(&curPt);
-            int offset_x = curPt.x - m_pt->x;
-            int offset_y = curPt.y - m_pt->y;
-            RECT rect = { 0 };
-            ::GetWindowRect(m_hWnd, &rect);
-            bool bFullScreen = isFullScreen(IPCMessage::Empty());
-            
-            if (IsLButtonDown() && !bFullScreen && ::PtInRect(&rect, curPt)) {
-                rect.left += offset_x;
-                rect.right += offset_x;
-                rect.top += offset_y;
-                rect.bottom += offset_y;
-                
-                ::SetWindowPos(m_hWnd, NULL, rect.left, rect.top, rect.right - rect.left,
-                               rect.bottom - rect.top, NULL);
-                m_pt->x = curPt.x;
-                m_pt->y = curPt.y;
-            }
-            
-        }
+        /* if (m_pt && wParam == HTCAPTION) {
+             POINT curPt;
+             ::GetCursorPos(&curPt);
+             int offset_x = curPt.x - m_pt->x;
+             int offset_y = curPt.y - m_pt->y;
+             RECT rect = { 0 };
+             ::GetWindowRect(m_hWnd, &rect);
+             bool bFullScreen = isFullScreen(IPCMessage::Empty());
         
-        if (wParam == HTCAPTION) {
-            bHandled = true;
-            return TRUE;
-        }
+             if (IsLButtonDown() && !bFullScreen && ::PtInRect(&rect, curPt)) {
+                 rect.left += offset_x;
+                 rect.right += offset_x;
+                 rect.top += offset_y;
+                 rect.bottom += offset_y;
+        
+                 ::SetWindowPos(m_hWnd, NULL, rect.left, rect.top, rect.right - rect.left,
+                                rect.bottom - rect.top, NULL);
+                 m_pt->x = curPt.x;
+                 m_pt->y = curPt.y;
+             }
+        
+         }
+        
+         if (wParam == HTCAPTION) {
+             bHandled = true;
+             return TRUE;
+         }*/
         
         return LocalWindow::OnMouseMove(uMsg, wParam, lParam, bHandled);
     }
@@ -499,23 +499,15 @@ namespace amo {
                     || nHitTest == HTBOTTOMRIGHT
                ) {
                
-                if (m_pBrowserSettings->resizeable) {
-                    LRESULT lRes = ::SendMessage(hParent,
-                                                 WM_NCLBUTTONDOWN,
-                                                 nHitTest,
-                                                 MAKELPARAM(point.x, point.y));
-                    ::SendMessage(hParent,
-                                  WM_NCLBUTTONUP,
-                                  NULL,
-                                  MAKELPARAM(point.x, point.y));
-                } else if (nHitTest == HTCAPTION) {
-                    ::SendMessage(hParent,
-                                  WM_LBUTTONDOWN,
-                                  nHitTest,
-                                  MAKELPARAM(point.x, point.y));
-                                  
-                }
-                
+                LRESULT lRes = ::SendMessage(hParent,
+                                             WM_NCLBUTTONDOWN,
+                                             nHitTest,
+                                             MAKELPARAM(point.x, point.y));
+                ::SendMessage(hParent,
+                              WM_NCLBUTTONUP,
+                              NULL,
+                              MAKELPARAM(point.x, point.y));
+                              
                 return true;
             }
             
@@ -537,24 +529,15 @@ namespace amo {
                     || nHitTest == HTBOTTOMRIGHT
                ) {
                
-                if (m_pBrowserSettings->resizeable) {
-                    ::SendMessage(hParent,
-                                  WM_NCLBUTTONDBLCLK,
-                                  nHitTest,
-                                  MAKELPARAM(point.x, point.y));
-                    ::SendMessage(hParent,
-                                  WM_NCLBUTTONUP,
-                                  NULL,
-                                  MAKELPARAM(point.x, point.y));
-                } else if (nHitTest == HTCAPTION) {
-                    ::SendMessage(hParent,
-                                  WM_LBUTTONUP,
-                                  nHitTest,
-                                  MAKELPARAM(point.x, point.y));
-                                  
-                }
-                
-                
+                ::SendMessage(hParent,
+                              WM_NCLBUTTONDBLCLK,
+                              nHitTest,
+                              MAKELPARAM(point.x, point.y));
+                ::SendMessage(hParent,
+                              WM_NCLBUTTONUP,
+                              NULL,
+                              MAKELPARAM(point.x, point.y));
+                              
                 return true;
             }
             
@@ -583,15 +566,8 @@ namespace amo {
                 ::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_SIZENESW)));
                 return true;
                 
-            case HTCAPTION: {
-                if (!m_pBrowserSettings->resizeable) {
-                    ::SendMessage(hParent,
-                                  WM_MOUSEMOVE,
-                                  nHitTest,
-                                  MAKELPARAM(point.x, point.y));
-                }
-            }
-            
+                
+                
             default:
             
             
@@ -790,7 +766,7 @@ namespace amo {
     
     LRESULT BrowserWindow::OnNcLButtonDbClick(UINT uMsg, WPARAM wParam,
             LPARAM lParam, BOOL& bHandled) {
-        if (!m_pBrowserSettings->resizeable) {
+        if (!m_pBrowserSettings->resizable) {
             bHandled = TRUE;
             return TRUE;
         }

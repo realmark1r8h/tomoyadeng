@@ -77,11 +77,23 @@ namespace amo {
         }
         
         amo::string title(info->title, true);
-        window->Create(wnd,
-                       title.to_unicode().c_str(),
-                       UI_WNDSTYLE_FRAME,
-                       NULL,
-                       0, 0, 0, 0);
+        
+        if (info->resizable) {
+            window->Create(wnd,
+                           title.to_unicode().c_str(),
+                           UI_WNDSTYLE_FRAME,
+                           NULL,
+                           0, 0, 0, 0);
+        } else {
+            // UI_WNDSTYLE_DIALOG 可以不响应HTCAPTION之类的消息，
+            // 当前鼠标拖拽窗口到桌面边缘时不化改变 窗口大小
+            window->Create(wnd,
+                           title.to_unicode().c_str(),
+                           UI_WNDSTYLE_DIALOG,
+                           NULL,
+                           0, 0, 0, 0);
+        }
+        
         // bug,
         window->ShowWindow(info->show);
         
@@ -311,7 +323,8 @@ namespace amo {
         
         if (m_BrowserCount == 0) {
             std::shared_ptr<UIMessageBroadcaster> broadcaster;
-            int64_t nObjectID = ClassTransfer::getUniqueTransfer<AppTransfer>()->getObjectID();
+            int64_t nObjectID =
+                ClassTransfer::getUniqueTransfer<AppTransfer>()->getObjectID();
             broadcaster.reset(new UIMessageBroadcaster(nObjectID));
             broadcaster->syncBroadcast("window-all-closed");
             Tray::getInstance()->destory();
@@ -349,9 +362,9 @@ namespace amo {
             bool* no_javascript_access) {
         CEF_REQUIRE_IO_THREAD();														//运行在IO线程上
         $clog(amo::cdevel << func_orient
-             << amo::string(target_url.ToString(), true).str()
-             << amo::endl;);
-             
+              << amo::string(target_url.ToString(), true).str()
+              << amo::endl;);
+              
         std::shared_ptr<BrowserWindowSettings> pBrowserSettings;
         pBrowserSettings.reset(new BrowserWindowSettings());
         IPCMessage::SmartType msg(new IPCMessage());
@@ -440,7 +453,8 @@ namespace amo {
     }
     
     
-    std::shared_ptr<amo::LocalWindow> BrowserWindowManager::findValidWindow(int nBrowserID) {
+    std::shared_ptr<amo::LocalWindow> BrowserWindowManager::findValidWindow(
+        int nBrowserID) {
         std::shared_ptr<BrowserWindow> pWindow;
         
         // 先通过ID查找

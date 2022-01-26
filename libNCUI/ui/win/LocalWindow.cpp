@@ -55,7 +55,7 @@ namespace amo {
         
         // 0xf014 == SC_
         // 禁止改变大小
-        if (!m_pNativeSettings->resizeable && (wParam == SC_MAXIMIZE)) {
+        if (!m_pNativeSettings->resizable && (wParam == SC_MAXIMIZE)) {
             return TRUE;
         }
         
@@ -315,14 +315,28 @@ namespace amo {
     Any LocalWindow::setResizable(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         bool resizeable = args->getBool(0);
-        m_pNativeSettings->resizeable = resizeable;
+        m_pNativeSettings->resizable = resizeable;
         
         if (!resizeable) {
             RECT rcSizeBox = { 0, 0, 0, 0 };
             m_PaintManager.SetSizeBox(rcSizeBox);
+            
+            LONG styleValue = ::GetWindowLong(*this, GWL_STYLE);
+            styleValue &= ~UI_WNDSTYLE_FRAME;
+            styleValue |= UI_WNDSTYLE_DIALOG;
+            ::SetWindowLong(*this, GWL_STYLE,
+                            styleValue);
+                            
         } else {
             RECT rcSizeBox = { 4, 4, 4, 4 };
             m_PaintManager.SetSizeBox(rcSizeBox);
+            
+            LONG styleValue = ::GetWindowLong(*this, GWL_STYLE);
+            styleValue &= ~UI_WNDSTYLE_DIALOG;
+            styleValue |= UI_WNDSTYLE_FRAME;
+            ::SetWindowLong(*this, GWL_STYLE,
+                            styleValue);
+                            
         }
         
         return Undefined();

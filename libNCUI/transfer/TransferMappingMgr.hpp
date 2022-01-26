@@ -32,6 +32,20 @@ namespace amo {
     bool static isSameCefRefPtr(const T a, const T b) {
         return false;
     }
+    template<>
+    bool static isSameCefRefPtr < CefRefPtr<CefBrowserHost> >(const
+            CefRefPtr<CefBrowserHost> a,
+            const CefRefPtr<CefBrowserHost> b) {
+        if (a == NULL && b == NULL) {
+            return true;
+        }
+        
+        if (a == NULL || b == NULL) {
+            return false;
+        }
+        
+        return a->GetBrowser()->IsSame(b->GetBrowser());
+    }
     
     template<>
     bool static isSameCefRefPtr < CefRefPtr<CefBrowser> > (const

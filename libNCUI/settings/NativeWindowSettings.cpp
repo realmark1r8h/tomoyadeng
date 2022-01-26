@@ -38,7 +38,7 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(maxWidth, 0);
         DEFAULT_ARGS_SETTINGS(maxHeight, 0);
         
-        DEFAULT_ARGS_SETTINGS(resizeable, true);
+        DEFAULT_ARGS_SETTINGS(resizable, true);
         DEFAULT_ARGS_SETTINGS(moveable, true);
         DEFAULT_ARGS_SETTINGS(minimizable, true);
         DEFAULT_ARGS_SETTINGS(maximizable, true);
@@ -84,7 +84,7 @@ namespace amo {
         INT_ARGS_SETTING(maxWidth);
         INT_ARGS_SETTING(maxHeight);
         
-        BOOL_ARGS_SETTING(resizeable);
+        BOOL_ARGS_SETTING(resizable);
         BOOL_ARGS_SETTING(moveable);
         BOOL_ARGS_SETTING(minimizable);
         BOOL_ARGS_SETTING(maximizable);

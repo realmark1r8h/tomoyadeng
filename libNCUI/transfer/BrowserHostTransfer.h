@@ -19,6 +19,10 @@ namespace amo {
         BrowserHostTransfer();
         BrowserHostTransfer(CefRefPtr<CefBrowserHost> pBrowserHost);
         
+        Any current(IPCMessage::SmartType msg);
+        
+        Any click(IPCMessage::SmartType msg);
+        
         // Cef вт╢Ь
         Any GetBrowser(IPCMessage::SmartType msg);
         Any CloseBrowser(IPCMessage::SmartType msg);
@@ -72,6 +76,9 @@ namespace amo {
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(BrowserHostTransfer, ClassTransfer)
         
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(current,
+                                      TransferFuncConstProperty | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(click, TransferExecNormal)
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(GetBrowser, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(CloseBrowser, TransferExecNormal)

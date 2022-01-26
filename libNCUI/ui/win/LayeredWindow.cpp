@@ -13,15 +13,18 @@
 
 namespace amo {
 
-    std::function<bool(int32_t, amo::json)> LayeredWindow::getHotKeyEventCallback() const {
+    std::function<bool(int32_t, amo::json)> LayeredWindow::getHotKeyEventCallback()
+    const {
         return m_fnHotKeyEventCallback;
     }
     
-    void LayeredWindow::setHotKeyEventCallback(std::function<bool(int32_t, amo::json)> val) {
+    void LayeredWindow::setHotKeyEventCallback(
+        std::function<bool(int32_t, amo::json)> val) {
         m_fnHotKeyEventCallback = val;
     }
     
-    LayeredWindow::LayeredWindow(std::shared_ptr<NativeWindowSettings> pBrowserSettings)
+    LayeredWindow::LayeredWindow(std::shared_ptr<NativeWindowSettings>
+                                 pBrowserSettings)
         : m_nMsgIndex(CUSTOM_MSG_BEGIN)
         , m_pNativeSettings(pBrowserSettings) {
         
@@ -98,7 +101,8 @@ namespace amo {
         ::ReleaseDC(m_hWnd, hDC);
     }
     
-    LRESULT LayeredWindow::OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT LayeredWindow::OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                        BOOL& bHandled) {
         if (wParam == SC_CLOSE) {
             bHandled = TRUE;
             SendMessage(WM_CLOSE);
@@ -132,7 +136,8 @@ namespace amo {
         //return WindowImplBase::OnSysCommand(uMsg, wParam, lParam, bHandled);
     }
     
-    LRESULT LayeredWindow::OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT LayeredWindow::OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                       BOOL& bHandled) {
         if (m_isFullScreen) {
             return HTCLIENT;
         }
@@ -194,7 +199,8 @@ namespace amo {
         //return WindowImplBase::OnNcHitTest(uMsg, wParam, lParam, bHandled);
     }
     
-    LRESULT LayeredWindow::OnGetMinMaxInfo(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT LayeredWindow::OnGetMinMaxInfo(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                           BOOL& bHandled) {
         if (!m_isFullScreen) {
             return WindowImplBase::OnGetMinMaxInfo(uMsg, wParam, lParam, bHandled);
         }
@@ -242,15 +248,18 @@ namespace amo {
         return   WindowImplBase::HandleMessage(uMsg, wParam, lParam);
     }
     
-    LRESULT LayeredWindow::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT LayeredWindow::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                     BOOL& bHandled) {
         unregisterAllHotKey();
         return WindowImplBase::OnDestroy(uMsg, wParam, lParam, bHandled);
     }
     
-    LRESULT LayeredWindow::OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT LayeredWindow::OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                   BOOL& bHandled) {
         if (isLayered()) {
             DWORD dwExStyle = ::GetWindowLong(m_hWnd, GWL_EXSTYLE);
-            dwExStyle |= WS_EX_LAYERED | 0x80000L ;					//!< 修改窗口的扩展风格为透明
+            dwExStyle |= WS_EX_LAYERED | 0x80000L
+                         ;					//!< 修改窗口的扩展风格为透明
             ::SetWindowLong(m_hWnd, GWL_EXSTYLE, dwExStyle);
             ::PostMessage(m_hWnd, WM_DRAWWINDOW, NULL, NULL);
         }
@@ -259,7 +268,8 @@ namespace amo {
     }
     
     
-    LRESULT LayeredWindow::OnHotKey(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT LayeredWindow::OnHotKey(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                    BOOL& bHandled) {
         // 如果有热键处理回调函数，先交给回调函数处理
         if (m_fnHotKeyEventCallback) {
             int32_t nKey = (int)wParam;
@@ -382,7 +392,7 @@ namespace amo {
         
         
         // 禁止改变窗口大小， 包括禁止拖动窗口，禁止最大化， 不响应NCLDBCLICK
-        if (!m_pNativeSettings->resizeable) {
+        if (!m_pNativeSettings->resizable) {
             RECT rcSizeBox = { 0, 0, 0, 0 };
             m_PaintManager.SetSizeBox(rcSizeBox);
         }
@@ -572,7 +582,8 @@ namespace amo {
         return true;
     }
     
-    int32_t LayeredWindow::registerHotKey(const uint32_t& nMod, const uint32_t& nKey) {
+    int32_t LayeredWindow::registerHotKey(const uint32_t& nMod,
+                                          const uint32_t& nKey) {
         int32_t nID = createHotKey();
         
         if (registerHotKey(nID, nMod, nKey)) {
@@ -623,8 +634,9 @@ namespace amo {
     }
     
     
-    int32_t LayeredWindow::registerHotKey(std::shared_ptr<GlobalShortcutSettings> pSettings) {
-    
+    int32_t LayeredWindow::registerHotKey(std::shared_ptr<GlobalShortcutSettings>
+                                          pSettings) {
+                                          
         uint32_t uiModifiers = 0;
         uint32_t uiVk = 0;
         
