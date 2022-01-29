@@ -322,11 +322,13 @@ namespace amo {
         m_BrowserCount--;
         
         if (m_BrowserCount == 0) {
+            ClassTransfer::getUniqueTransfer<SplashTransfer>()->closeSplash(0);
             std::shared_ptr<UIMessageBroadcaster> broadcaster;
             int64_t nObjectID =
                 ClassTransfer::getUniqueTransfer<AppTransfer>()->getObjectID();
             broadcaster.reset(new UIMessageBroadcaster(nObjectID));
             broadcaster->syncBroadcast("window-all-closed");
+            
             Tray::getInstance()->destory();
             Tray::getInstance()->close();
             
@@ -387,6 +389,7 @@ namespace amo {
         if (m_BrowserCount == 0
                 && m_pWindowCreator
                 && m_pWindowCreator->allBrowserWindow().size() == 0) {
+                
             // 如果没有创建窗口，直接退出程序
             Tray::getInstance()->destory();
             CefQuitMessageLoop();

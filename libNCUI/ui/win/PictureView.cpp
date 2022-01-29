@@ -66,7 +66,7 @@ namespace amo {
     }
     
     PictureView::~PictureView() {
-    
+        m_pBitmap.reset();
     }
     
     LPCTSTR PictureView::GetClass() const {

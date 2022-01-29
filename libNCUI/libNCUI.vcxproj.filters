@@ -465,10 +465,18 @@
     <ClCompile Include="utility\libzippp.cpp">
       <Filter>utility</Filter>
     </ClCompile>
-    <ClCompile Include="scheme\ZipFileMnager.cpp" />
-    <ClCompile Include="transfer\ProcessTransfer.cpp" />
-    <ClCompile Include="transfer\BrowserTransferMgr.cpp" />
-    <ClCompile Include="transfer\RendererTransferMgr.cpp" />
+    <ClCompile Include="transfer\BrowserTransferMgr.cpp">
+      <Filter>transfer</Filter>
+    </ClCompile>
+    <ClCompile Include="transfer\ProcessTransfer.cpp">
+      <Filter>transfer</Filter>
+    </ClCompile>
+    <ClCompile Include="transfer\RendererTransferMgr.cpp">
+      <Filter>transfer</Filter>
+    </ClCompile>
+    <ClCompile Include="scheme\ZipFileMnager.cpp">
+      <Filter>scheme</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context\AppContext.h">
