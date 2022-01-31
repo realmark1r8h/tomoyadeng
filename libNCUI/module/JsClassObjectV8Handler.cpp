@@ -58,7 +58,7 @@ namespace amo {
         
         
         // 创建JS类的构造函数
-        _object = CefV8Value::CreateObject(NULL);
+        _object = CefV8Value::CreateObject(m_pAccessor);
         _object->SetUserData(this);
         
         onGetV8Object(_object);

@@ -159,30 +159,30 @@ namespace amo {
                     mgr.setObjectID(nId);
                     mgr.setObjectName(strObjectName);
                     
-                    //{
-                    //    // 创建新的Object
-                    //    CefRefPtr<JsClassObjectV8Handler> pObjectHandler;
-                    //    pObjectHandler = new JsClassObjectV8Handler();
-                    //    pObjectHandler->setRendererClass(mgr.isRendererClass());
-                    //    pObjectHandler->setHandlerName(strClass);
-                    //    //pObjectHandler->setFunctions(mgr.toVector());
-                    //    pObjectHandler->setFuncMgr(mgr);
-                    //    pObjectHandler->setID(nId);
-                    //
-                    //    // 设置返回值为新创建的对象
-                    //    CefRefPtr<CefV8Value> pObject =
-                    //        pObjectHandler->getV8Object();
-                    //    // 添加对象进缓存
-                    //    //addClassObject(nId, pObject);
-                    //    //pObject->Release();
-                    //
-                    //    int i = 3;
-                    //    ++i;
-                    //
-                    //    if (i == 4) {
-                    //
-                    //    }
-                    //}
+                    {
+                        //// 创建新的Object
+                        //CefRefPtr<JsClassObjectV8Handler> pObjectHandler;
+                        //pObjectHandler = new JsClassObjectV8Handler();
+                        //pObjectHandler->setRendererClass(mgr.isRendererClass());
+                        //pObjectHandler->setHandlerName(strClass);
+                        ////pObjectHandler->setFunctions(mgr.toVector());
+                        //pObjectHandler->setFuncMgr(mgr);
+                        //pObjectHandler->setID(nId);
+                        //
+                        //// 设置返回值为新创建的对象
+                        //CefRefPtr<CefV8Value> pObject =
+                        //    pObjectHandler->getV8Object();
+                        //// 添加对象进缓存
+                        ////addClassObject(nId, pObject);
+                        ////pObject->Release();
+                        //
+                        //int i = 3;
+                        //++i;
+                        //
+                        //if (i == 4) {
+                        //
+                        //}
+                    }
                     // 创建新的Object
                     CefRefPtr<JsClassObjectV8Handler> pObjectHandler;
                     pObjectHandler = new JsClassObjectV8Handler();
