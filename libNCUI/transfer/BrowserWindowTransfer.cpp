@@ -37,7 +37,8 @@ namespace amo {
     Any BrowserWindowTransfer::test4(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         int nFrameID = args->getInt(IPCArgsPosInfo::FrameID);
-        CefRefPtr<CefFrame> pFrame = BrowserManager<PID_BROWSER>::GetFrameByID(nFrameID);
+        CefRefPtr<CefFrame> pFrame = BrowserManager<PID_BROWSER>::GetFrameByID(
+                                         nFrameID);
         std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(pFrame));
         runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
         runner->setValue(IPCArgsPosInfo::JsFuncName, "foo1");
@@ -49,7 +50,8 @@ namespace amo {
     Any BrowserWindowTransfer::test5(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         int nFrameID = args->getInt(IPCArgsPosInfo::FrameID);
-        CefRefPtr<CefFrame> pFrame = BrowserManager<PID_BROWSER>::GetFrameByID(nFrameID);
+        CefRefPtr<CefFrame> pFrame = BrowserManager<PID_BROWSER>::GetFrameByID(
+                                         nFrameID);
         std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(pFrame));
         runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
         runner->setValue(IPCArgsPosInfo::JsFuncName, "foo2");
@@ -64,7 +66,8 @@ namespace amo {
     Any BrowserWindowTransfer::test6(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         int nFrameID = args->getInt(IPCArgsPosInfo::FrameID);
-        CefRefPtr<CefFrame> pFrame = BrowserManager<PID_BROWSER>::GetFrameByID(nFrameID);
+        CefRefPtr<CefFrame> pFrame = BrowserManager<PID_BROWSER>::GetFrameByID(
+                                         nFrameID);
         std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(pFrame));
         runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
         runner->setValue(IPCArgsPosInfo::JsFuncName, "foo3");
@@ -110,7 +113,8 @@ namespace amo {
         return true;
     }
     
-    Any BrowserWindowTransfer::removeBrowserWindowSettings(IPCMessage::SmartType msg) {
+    Any BrowserWindowTransfer::removeBrowserWindowSettings(IPCMessage::SmartType
+            msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string url = args->getString(0);
         
@@ -185,6 +189,10 @@ namespace amo {
         
         // 没有找到，返回Undefined(), NodeJS 就不支持
         return Undefined();
+    }
+    
+    Any BrowserWindowTransfer::current(IPCMessage::SmartType msg) {
+        return currentWindow(msg);
     }
     
     Any BrowserWindowTransfer::getAllWindows(IPCMessage::SmartType msg) {

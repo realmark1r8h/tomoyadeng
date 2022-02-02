@@ -149,7 +149,8 @@ namespace amo {
         }
         
         ~Transfer() {
-        
+            $cdevel("正在释放资源：transferName = \"{0}\"， objectName = \"{1}\"， objectID = {2}",
+                    transferName(), getObjectName(), getObjectID());
         }
         
         virtual Any onRelase(IPCMessage::SmartType msg) {

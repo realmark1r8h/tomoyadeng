@@ -58,6 +58,7 @@ namespace amo {
         for (auto& p : m_oFuncMgr.toMap()) {
             if (p.second.functionType() == TransferFuncStatic) {
                 // ´´½¨¾²Ì¬º¯Êý
+                
                 object->SetValue(p.second.m_strName,
                                  CefV8Value::CreateFunction(p.second.m_strName, this),
                                  V8_PROPERTY_ATTRIBUTE_NONE);

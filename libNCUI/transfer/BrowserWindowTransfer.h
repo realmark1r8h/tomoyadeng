@@ -43,6 +43,7 @@ namespace amo {
          * @return	Any.
          */
         Any currentWindow(IPCMessage::SmartType msg);
+        Any current(IPCMessage::SmartType msg);
         /*!
          * @fn	Any BrowserWindowTransfer::getAllWindows(IPCMessage::SmartType msg);
          *
@@ -99,7 +100,8 @@ namespace amo {
                                       TransferFuncStatic | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getBrowserWindowSettings,
                                       TransferFuncStatic | TransferExecSync)
-                                      
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(current,
+                                      TransferFuncConstProperty | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(currentWindow,
                                       TransferFuncConstProperty | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getAllWindows,
@@ -112,6 +114,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(id,  TransferExecSync)
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(close, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(destroy, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(focus, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(isFocused, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(show, TransferExecNormal)
@@ -184,6 +187,8 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(isMainWindow, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(showModal, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getConfigs, TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getConfig, TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(setConfig, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         

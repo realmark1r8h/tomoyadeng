@@ -113,7 +113,7 @@ namespace amo {
                 if (pValue->IsFunction()) {
                 
                 
-                    CefRefPtr<CefV8Handler> pHandler = pValue->GetFunctionHandler();
+                    CefRefPtr<CefBase> pHandler = pValue->GetFunctionHandler();
                     
                     // 如果pHander存在，那么说明当前函数是一个C++创建的函数
                     JsClassV8Handler* pClassHandler = NULL;
@@ -121,6 +121,17 @@ namespace amo {
                     if (pHandler) {
                         pClassHandler = dynamic_cast<JsClassV8Handler*>(pHandler.get());
                     }
+                    
+                    if (pClassHandler == NULL) {
+                        pHandler = pValue->GetUserData();
+                        
+                        if (pHandler) {
+                            pClassHandler = dynamic_cast<JsClassV8Handler*>(pHandler.get());
+                        }
+                        
+                    }
+                    
+                    
                     
                     if (pHandler && pClassHandler != NULL) {
                     

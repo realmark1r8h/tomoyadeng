@@ -79,9 +79,12 @@ namespace amo {
             // 类
             if (bAssitObject) {
                 if (p.second.functionType() == TransferFuncStatic) {
+                    CefRefPtr<CefV8Value> pFunc = CefV8Value::CreateFunction(p.second.m_strName,
+                                                  JSExecV8Handler::GetHandler());
+                    pFunc->SetUserData(this);
                     // 创建静态函数
                     object->SetValue(p.second.m_strName,
-                                     CefV8Value::CreateFunction(p.second.m_strName, JSExecV8Handler::GetHandler()),
+                                     pFunc,
                                      V8_PROPERTY_ATTRIBUTE_NONE);
                 } else if (p.second.functionType() == TransferFuncConstProperty) {
                     object->SetValue(p.second.m_strName,
@@ -96,9 +99,11 @@ namespace amo {
             } else {
                 // 对象
                 if (p.second.functionType() == TransferFuncNormal) {
-                
+                    CefRefPtr<CefV8Value> pFunc = CefV8Value::CreateFunction(p.second.m_strName,
+                                                  JSExecV8Handler::GetHandler());
+                    pFunc->SetUserData(this);
                     object->SetValue(p.second.m_strName,
-                                     CefV8Value::CreateFunction(p.second.m_strName, JSExecV8Handler::GetHandler()),
+                                     pFunc,
                                      V8_PROPERTY_ATTRIBUTE_NONE);
                                      
                                      

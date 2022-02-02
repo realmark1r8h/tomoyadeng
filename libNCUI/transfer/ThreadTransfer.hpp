@@ -165,6 +165,15 @@ namespace amo {
             
             IPCMessage::SmartType ipcMsg = makeIPCMessage(msg);
             
+            if (msg->toJson().to_string().find("packet.save.complete") != -1) {
+                int i = 3;
+                ++i;
+                
+                if (i == 4) {
+                    std::cout << i << std::endl;
+                }
+            }
+            
             Transfer* pTransfer = manager->findTransfer(nBrowserID, transferName);
             
             if (pTransfer == NULL) {

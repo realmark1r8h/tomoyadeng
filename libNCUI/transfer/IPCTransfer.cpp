@@ -13,7 +13,7 @@ namespace amo {
     Any IPCTransfer::exec(IPCMessage::SmartType msg) {
         std::shared_ptr<UIMessageBroadcaster> runner;
         runner.reset(new UIMessageBroadcaster(getObjectID()));
-        runner->syncBroadcast(msg);
+        runner->broadcast(msg);
         return Undefined();
     }
     

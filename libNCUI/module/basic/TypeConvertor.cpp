@@ -172,8 +172,14 @@ namespace amo {
                         //// 设置返回值为新创建的对象
                         //CefRefPtr<CefV8Value> pObject =
                         //    pObjectHandler->getV8Object();
-                        //// 添加对象进缓存
+                        ////// 添加对象进缓存
                         ////addClassObject(nId, pObject);
+                        ////
+                        ////CefRefPtr<CefV8Context> context = CefV8Context::GetCurrentContext();
+                        ////CefRefPtr<CefFrame> pFrame = context->GetFrame();
+                        ////int64_t nFrameID = pFrame->GetIdentifier();
+                        ////
+                        ////removeClassObject(nFrameID, nId);
                         ////pObject->Release();
                         //
                         //int i = 3;
@@ -753,6 +759,7 @@ namespace amo {
                         CefString strKey = p.first;
                         
                         if (pObject->HasValue(strKey)) {
+                            pObject->GetValue(strKey)->SetUserData(NULL);
                             pObject->DeleteValue(strKey);
                         }
                     }

@@ -396,6 +396,57 @@ namespace amo {
         return pSettings->settings;
     }
     
+    Any NativeWindowProxy::setConfig(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        
+        Any& val = args->getValue(0);
+        auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
+        
+        if (val.type() == AnyValueType<amo::json>::value) {
+            // 更新AppSettings
+            std::string strConfig = args->getString(0);
+            getNativeSettings()->updateArgsSettings(strConfig);
+        }
+        
+        return Undefined();
+    }
+    
+    Any NativeWindowProxy::getConfig(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        
+        Any& val = args->getValue(0);
+        auto pSettings = getNativeSettings();
+        
+        if (val.type() == AnyValueType<Nil>::value) {
+            // 返回所有设置
+            return pSettings->settings;
+            
+        } else  if (val.type() == AnyValueType<std::string>::value) {
+            std::string strKey = args->getString(0);
+            auto& json = pSettings->settings;
+            
+            if (json.is_bool(strKey)) {
+                return json.getBool(strKey);
+            } else if (json.is_int(strKey)) {
+                return json.getInt(strKey);
+            } else if (json.is_string(strKey)) {
+                return json.getString(strKey);
+            } else if (json.is_double(strKey)) {
+                return json.get<double>(strKey);
+            } else if (json.is_uint(strKey)) {
+                return (int)json.getUint(strKey);
+            } else if (json.is_object(strKey)) {
+                return json.getJson(strKey);
+            } else {
+                return Undefined();
+            }
+            
+            // 返回单项设置
+        }
+        
+        return Undefined();
+    }
+    
     HWND NativeWindowProxy::getNativeHWND(std::shared_ptr<AnyArgsList> args) {
         return getNativeHWND();
     }

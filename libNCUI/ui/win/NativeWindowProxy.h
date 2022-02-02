@@ -578,6 +578,10 @@ namespace amo {
          */
         
         Any getConfigs(IPCMessage::SmartType msg);
+        
+        Any setConfig(IPCMessage::SmartType msg);
+        
+        Any getConfig(IPCMessage::SmartType msg);
     public:
         /*!
          * @fn	HWND NativeWindowProxy::getNativeHWND(std::shared_ptr<AnyArgsList> args);

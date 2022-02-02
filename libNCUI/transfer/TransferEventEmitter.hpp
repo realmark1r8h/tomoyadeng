@@ -9,6 +9,19 @@
 #include "transfer/TransferEventInfo.hpp"
 #include <amo/logger.hpp>
 
+#ifndef PROCESS_EVENT
+#define PROCESS_EVENT(name, process)\
+	m_data->collectProcessEvent(#name, process);\
+
+#endif
+
+#ifndef PROCESS_ERROR_EVENT
+#define PROCESS_ERROR_EVENT(name)\
+	m_data->collectProcessEvent(#name, 100, 1);\
+
+#endif
+
+
 namespace amo {
     class TransferEventEmitter
         : public std::enable_shared_from_this<TransferEventEmitter> {
@@ -59,8 +72,19 @@ namespace amo {
             return Undefined();
         }
         
-        
-        
+        // status 0 Õý³£
+        // status 1 Ê§°Ü
+        //
+        Any collectProcessEvent(const amo::string& processName, int pec,
+                                int status = 0) {
+            TransferEventInfo info("collect.process");
+            amo::json json;
+            json.put("name", processName.to_utf8());
+            json.put("process", pec);
+            json.put("status", status);
+            info.setData(json);
+            return triggerEvent(info);
+        }
         
         template<typename T>
         Any triggerEvent(const amo::string& name, const T& data) {
@@ -72,7 +96,8 @@ namespace amo {
         
         
         template<>
-        Any triggerEvent<amo::string>(const amo::string& name, const amo::string& data) {
+        Any triggerEvent<amo::string>(const amo::string& name,
+                                      const amo::string& data) {
             TransferEventInfo info(name.to_utf8());
             info.setData(data.to_utf8());
             return triggerEvent(info);

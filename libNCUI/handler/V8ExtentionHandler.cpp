@@ -279,6 +279,8 @@ namespace amo {
         for (auto& p : m_oClassTransferMap) {
             ClassTransfer::removeTransferByName(p.first);
         }
+        
+        m_oClassTransferMap.clear();
     }
     
     void V8ExtentionHandler::triggerEventOnRendererThread(IPCMessage::SmartType
