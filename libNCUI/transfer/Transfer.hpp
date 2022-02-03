@@ -32,6 +32,7 @@ amo::log::register_logger(info->pLogger); \
 #define AMO_CLASS_REGISTER(ClassName) \
 {\
 	auto pTransfer = ClassTransfer::getUniqueTransfer<ClassName>(); \
+	pTransfer->setModuleName(info->moduleName);\
 	if (fn) {\
 		fn(nBrowserID, pTransfer);\
 	}\
@@ -92,6 +93,7 @@ namespace amo {
         typedef std::function<bool(const std::string&,
                                    IPCMessage::SmartType,
                                    amo::IPCResult&)> BerforeResultFunc;
+                                   
                                    
                                    
                                    
@@ -694,6 +696,13 @@ namespace amo {
         void setDefaultMsgFunc(std::function < Any(IPCMessage::SmartType) > val) {
             m_fnDefaultMsgFunc = val;
         }
+        
+        std::string getModuleName() const {
+            return m_strModuleName;
+        }
+        void setModuleName(const std::string& val) {
+            m_strModuleName = val;
+        }
     protected:
     
         /*! @brief	JS调用C++回调处理函数集合. */
@@ -734,6 +743,9 @@ namespace amo {
         
         /** @brief	是否已经被释放掉，（在页面上释放掉）. */
         std::atomic_bool m_bReleased;
+        
+        /** @brief	所属模块名称. */
+        std::string m_strModuleName;
     };
     
 }

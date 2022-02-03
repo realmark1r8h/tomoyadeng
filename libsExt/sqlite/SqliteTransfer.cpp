@@ -48,10 +48,12 @@ namespace amo {
     Any SqliteTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string strPath = args->getString(0);
+        
         std::shared_ptr<SqliteTransfer> pTransfer;
         pTransfer = ClassTransfer::createTransfer<SqliteTransfer>(strPath);
         pTransfer->setTriggerEventFunc(this->getTriggerEventFunc());
         pTransfer->setDefaultTriggerEventFunc(this->getDefaultTriggerEventFunc());
+        pTransfer->setModuleName(this->getModuleName());
         return  pTransfer->getFuncMgr().toSimplifiedJson();
     }
     

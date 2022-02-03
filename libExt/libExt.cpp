@@ -26,3 +26,7 @@ LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {
     AMO_CLASS_REGISTER(Base64Transfer)
     AMO_CLASS_REGISTER_END()
 }
+
+LIBEXT_API void unregisterTransfer(const std::string & strClass) {
+    amo::ClassTransfer::removeTransferByName(strClass);
+}

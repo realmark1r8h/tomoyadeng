@@ -680,6 +680,7 @@ namespace amo {
         std::shared_ptr<amo::ClassTransfer::ClassTransferMap> transferMap;
         std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fnCallback;
         std::shared_ptr<spdlog::logger> pLogger;
+        std::string moduleName;
     };
     
 }
