@@ -13,6 +13,8 @@
 
 #include "transfer/ClassTransfer.hpp"
 
-extern "C" {
-    LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info);
-}
+AMO_CLASS_TRANSFER_DECLARE(LIBEXT_API)
+
+//extern "C" {
+//    LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info);
+//}

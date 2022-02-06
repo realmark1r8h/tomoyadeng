@@ -74,7 +74,8 @@ namespace amo {
             auto iter = m_oArgsListMap.find(functionName);
             
             if (iter == m_oArgsListMap.end()) {
-                iter = m_oArgsListMap.insert(std::make_pair(functionName, FunctionArgs())).first;
+                iter = m_oArgsListMap.insert(std::make_pair(functionName,
+                                             FunctionArgs())).first;
             }
             
             return iter->second;
@@ -123,6 +124,8 @@ namespace amo {
         bool getRunOnRenderThread() const;
         void setRunOnRenderThread(bool val);
         void clear();
+        
+        
     private:
         std::unordered_map<amo::string, std::shared_ptr<amo::loader> > m_oMap;
         amo::string m_strExtensionDir;

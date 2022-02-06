@@ -15,41 +15,47 @@ namespace amo {
         , m_strFile(u8File)
         , m_strZip(u8ZipPath) {
         
+        
+        m_strUrl = amo::util().getUrlFromUtf8(m_strUrl);
+        m_strFile = amo::util().getUrlFromUtf8(m_strFile);
+        m_strZip = amo::util().getUrlFromUtf8(m_strZip);
     }
     
     bool ZipFileHandler::ProcessRequest(CefRefPtr<CefRequest> request,
                                         CefRefPtr<CefCallback> callback) {
-        std::string url = request->GetURL();
+        amo::string url = amo::util().getUrlFromUtf8(request->GetURL());
         
         if (url != m_strUrl) {
             return false;
         }
         
-        amo::string zipPath(m_strZip, true);
+        amo::string zipPath = m_strZip;
         zipPath.replace("\\", "/");
         //zipPath = "web/web.zip";
         
-        std::shared_ptr<libzippp::ZipArchive> zf = ZipFileManager::getInstance()->get(zipPath);
-        
+        std::shared_ptr<libzippp::ZipArchive> zf = ZipFileManager::getInstance()->get(
+                    zipPath);
+                    
         if (!zf) {
             return false;
         }
         
-        amo::path p(amo::string(m_strFile, true));
+        amo::path p(m_strFile);
         p.remove_front_backslash();
         amo::string strFile(p.c_str(), false);
         strFile.replace("\\", "/");
         //amo::path dirPath = p.remove_file_spec_c().remove_front_backslash();
-        /*  std::vector<libzippp::ZipEntry>  vec = zf->getEntries();
+        /*std::vector<libzippp::ZipEntry>  vec = zf->getEntries();
         
-          for (auto& p : vec) {
-        	  amo::cdevel << p.getName() << amo::endl;
-          }*/
+        for (auto& p : vec) {
+            amo::cdevel << p.getName() << amo::endl;
+        }*/
         
         auto entry =  zf->getEntry(strFile.to_utf8(), false, false);
+        /*  entry = zf->getEntry("ReactJs/images/列表01.png", false, false);
+          entry = zf->getEntry(amo::string("ReactJs/images/列表01.png").to_utf8());*/
         
         if (entry.isNull()) {
-        
             amo::cerr << "未能找到资源文件：" << strFile.to_ansi() << amo::endl;
             return false;
         }

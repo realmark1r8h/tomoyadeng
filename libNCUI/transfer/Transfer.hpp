@@ -16,7 +16,14 @@
 #include "transfer/TransferEventInfo.hpp"
 
 
-
+#ifndef AMO_CLASS_TRANSFER_DECLARE
+#define AMO_CLASS_TRANSFER_DECLARE(LIB_API)\
+extern "C"{\
+	LIB_API  bool registerTransfer(std::shared_ptr<amo::TransferRegister> info);\
+	LIB_API void removeTransferByName(const std::string& strClass);\
+	LIB_API void removeTransferByID(const int64_t& nID);\
+}
+#endif
 
 #ifndef AMO_CLASS_REGISTER_BEGIN
 #define AMO_CLASS_REGISTER_BEGIN()\
@@ -45,6 +52,44 @@ amo::log::register_logger(info->pLogger); \
 #define AMO_CLASS_REGISTER_END()\
 return true;
 #endif
+
+
+
+
+#ifndef AMO_REMOVE_TRANSFER_BY_NAME
+#define AMO_REMOVE_TRANSFER_BY_NAME(LIB_API)\
+LIB_API void removeTransferByName(const std::string& strClassName){\
+	amo::ClassTransfer::removeTransferByName(strClassName);\
+	return;\
+}\
+
+#endif
+
+#ifndef AMO_REMOVE_TRANSFER_BY_ID
+#define AMO_REMOVE_TRANSFER_BY_ID(LIB_API)\
+LIB_API void removeTransferByID(const int64_t& nID){\
+	amo::ClassTransfer::removeTransfer(nID);\
+	return;\
+}\
+
+#endif
+
+#ifndef AMO_REGISTER_TRANSFER_BEGIN
+#define AMO_REGISTER_TRANSFER_BEGIN(LIB_API)\
+	AMO_REMOVE_TRANSFER_BY_NAME(LIB_API)\
+	AMO_REMOVE_TRANSFER_BY_ID(LIB_API)\
+	LIB_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {\
+		AMO_CLASS_REGISTER_BEGIN()\
+
+#endif
+
+#ifndef	AMO_REGISTER_TRANSFER_END
+#define AMO_REGISTER_TRANSFER_END()\
+	AMO_CLASS_REGISTER_END()\
+}\
+
+#endif
+
 
 
 
@@ -151,8 +196,8 @@ namespace amo {
         }
         
         ~Transfer() {
-            $cdevel("正在释放资源：transferName = \"{0}\"， objectName = \"{1}\"， objectID = {2}",
-                    transferName(), getObjectName(), getObjectID());
+            /* $cdevel("正在释放资源：transferName = \"{0}\"， objectName = \"{1}\"， objectID = {2}",
+                     transferName(), getObjectName(), getObjectID());*/
         }
         
         virtual Any onRelase(IPCMessage::SmartType msg) {

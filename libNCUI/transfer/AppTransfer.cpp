@@ -65,7 +65,7 @@ namespace amo {
         }
         
         
-        url = util::getUrlFromUtf8(url);
+        url = util::getUrlFromUtf8(url).to_utf8();
         
         
         for (auto& p : m_oUrlToNativeMap) {
@@ -110,8 +110,9 @@ namespace amo {
         std::string url = args->getString(0);
         std::string nativeFile = args->getString(1);
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
-        nativeFile = UrlResourceHandlerFactory::getInstance()->getAbsolutePath(nativeFile);
-        
+        nativeFile = UrlResourceHandlerFactory::getInstance()->getAbsolutePath(
+                         nativeFile);
+                         
         if (url.empty() || nativeFile.empty()) {
             return false;
         }

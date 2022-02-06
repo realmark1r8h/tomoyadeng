@@ -457,7 +457,7 @@ namespace amo {
         virtual void registerFunction() {
             //注册对象创建函数，这个函数与Transfer名称相同
             registerTransfer(transferName(),
-                             std::bind(&ClassTransfer::onCreateClass, this,
+                             std::bind(&ClassTransfer::createClass, this,
                                        std::placeholders::_1),
                              TransferMultiDisabled | TransferExecSync | TransferFuncConstructor);
                              
@@ -505,6 +505,24 @@ namespace amo {
             return Undefined();
         }
         
+        
+        virtual Any createClass(IPCMessage::SmartType msg) {
+            Any val = this->onCreateClass(msg);
+            
+            if (val.is<amo::json>()) {
+                amo::json json = val.As<amo::json>();
+                int64_t nID = json.get<int64_t>("id");
+                auto pTransfer = findTransfer(nID);
+                
+                if (pTransfer) {
+                    pTransfer->setTriggerEventFunc(this->getTriggerEventFunc());
+                    pTransfer->setDefaultTriggerEventFunc(this->getDefaultTriggerEventFunc());
+                    pTransfer->setModuleName(this->getModuleName());
+                }
+            }
+            
+            return val;
+        }
         /**
          * @fn	virtual void ClassTransfer::onBeforeRelease()
          *
@@ -515,6 +533,14 @@ namespace amo {
         
             $cdevel("正在释放资源：transferName = \"{0}\"， objectName = \"{1}\"， objectID = {2}",
                     transferName(), getObjectName(), getObjectID());
+                    
+                    
+            /* this->isWorkOnRenderer() {
+                 amo::DllManager<PID_RENDERER>::
+             } else {
+            
+             }*/
+            
             return;
         }
         
@@ -607,6 +633,7 @@ namespace amo {
         }
         
         virtual Any onRelase(IPCMessage::SmartType msg) override {
+        
         
             removeTransfer(getObjectID());
             

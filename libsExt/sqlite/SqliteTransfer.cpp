@@ -51,9 +51,9 @@ namespace amo {
         
         std::shared_ptr<SqliteTransfer> pTransfer;
         pTransfer = ClassTransfer::createTransfer<SqliteTransfer>(strPath);
-        pTransfer->setTriggerEventFunc(this->getTriggerEventFunc());
-        pTransfer->setDefaultTriggerEventFunc(this->getDefaultTriggerEventFunc());
-        pTransfer->setModuleName(this->getModuleName());
+        /*   pTransfer->setTriggerEventFunc(this->getTriggerEventFunc());
+           pTransfer->setDefaultTriggerEventFunc(this->getDefaultTriggerEventFunc());
+           pTransfer->setModuleName(this->getModuleName());*/
         return  pTransfer->getFuncMgr().toSimplifiedJson();
     }
     
@@ -73,17 +73,25 @@ namespace amo {
         }
         
         sqlite3pp::database& db = *m_pDB;
-        sqlite3pp::transaction transcation(db, true);
+        
+        std::shared_ptr<sqlite3pp::transaction> transaction;
+        
+        
         
         try {
+            transaction.reset(new sqlite3pp::transaction(db, true));
+            
             int ret = db.execute(sql.c_str());
             ret = db.changes();
-            transcation.commit();
+            transaction->commit();
             return ret;
             
         } catch (std::exception& e) {
             setLastError(e.what());
-            transcation.rollback();
+            
+            if (transaction) {
+                transaction->rollback();
+            }
         }
         
         return Undefined();
@@ -102,17 +110,23 @@ namespace amo {
         }
         
         sqlite3pp::database& db = *m_pDB;
-        sqlite3pp::transaction transcation(db, true);
+        std::shared_ptr<sqlite3pp::transaction> transaction;
+        
+        
         
         try {
+            transaction.reset(new sqlite3pp::transaction(db, true));
             int ret = db.execute(sql.c_str());
             ret = db.changes();
-            transcation.commit();
+            transaction->commit();
             return ret;
             
         } catch (std::exception& e) {
             setLastError(e.what());
-            transcation.rollback();
+            
+            if (transaction) {
+                transaction->rollback();
+            }
         }
         
         return Undefined();
@@ -214,7 +228,6 @@ namespace amo {
         try {
         
             sqlite3pp::database& db = *m_pDB;
-            sqlite3pp::transaction transcation(db, true);
             
             {
                 sqlite3pp::query qry(db, sql.c_str());
@@ -270,19 +283,27 @@ namespace amo {
                          OutputDebugStringA(types[j].c_str());
                          OutputDebugStringA("\n");
                          */
+                        
+                        const char* data = (*iter).get<const char*>(j);
+                        
                         if (types.at(j) == "Boolean") {
-                            json.put(keys.at(j), (*iter).get<int>(j) != 0);
+                            if (data != NULL) {
+                                json.put(keys.at(j), (*iter).get<int>(j) != 0);
+                            }
                         } else if (types.at(j) == "INTEGER"
                                    || types.at(j) == "SMALLINT"
                                    || types.at(j) == "DECIMAL") {
-                            json.put(keys.at(j), (*iter).get<int>(j));
+                            if (data != NULL) {
+                                json.put(keys.at(j), (*iter).get<int>(j));
+                            }
+                            
                         } else if (types.at(j) == "TEXT"
                                    || types.at(j) == "VARCHAR"
                                    || types.at(j) == "CHAR"
                                    || types.at(j) == "GRAPHIC"
                                    || types.at(j) == "VARGRAPHIC") {
                             int bytes = (*iter).column_bytes(j);
-                            const char* data = (*iter).get<const char*>(j);
+                            
                             //int len = strlen(cc);
                             //std::string sb(cc, bytes);
                             //
@@ -301,20 +322,33 @@ namespace amo {
                         } else if (types.at(j) == "REAL"
                                    || types.at(j) == "FLOAT"
                                    || types.at(j) == "DOUBLE") {
-                            json.put(keys.at(j), (*iter).get<double>(j));
+                            if (data != NULL) {
+                                json.put(keys.at(j), (*iter).get<double>(j));
+                            }
                         } else if (types.at(j) == "BLOB") {
                             int bytes = (*iter).column_bytes(j);
-                            const char* data = (const char*)(*iter).get<const void*>(j);
-                            json.put(keys.at(j), data, bytes);
+                            const char* dataBlob = (const char*)(*iter).get<const void*>(j);
+                            
+                            if (dataBlob != NULL) {
+                                json.put(keys.at(j), dataBlob, bytes);
+                            }
                             
                         } else if (types.at(j) == "DATE") {
-                            json.put(keys.at(j), (*iter).get<std::string>(j));
+                            if (data != NULL) {
+                                json.put(keys.at(j), (*iter).get<std::string>(j));
+                            }
                         } else if (types.at(j) == "TIME") {
-                            json.put(keys.at(j), (*iter).get<std::string>(j));
+                            if (data != NULL) {
+                                json.put(keys.at(j), (*iter).get<std::string>(j));
+                            }
                         } else if (types.at(j) == "DATETIME") {
-                            json.put(keys.at(j), (*iter).get<std::string>(j));
+                            if (data != NULL) {
+                                json.put(keys.at(j), (*iter).get<std::string>(j));
+                            }
                         } else if (types.at(j) == "TIMESTAMP") {
-                            json.put(keys.at(j), (*iter).get<std::string>(j));
+                            if (data != NULL) {
+                                json.put(keys.at(j), (*iter).get<std::string>(j));
+                            }
                         }
                         
                     }

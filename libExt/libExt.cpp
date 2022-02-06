@@ -12,21 +12,34 @@
 #include "transfer/MD5Transfer.h"
 
 
-LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {
 
 
-    AMO_CLASS_REGISTER_BEGIN()
-    AMO_CLASS_REGISTER(FileTransfer)
-    AMO_CLASS_REGISTER(Base64Transfer)
-    AMO_CLASS_REGISTER(MD5Transfer)
-    AMO_CLASS_REGISTER(UUIDTransfer)
-    AMO_CLASS_REGISTER(PathTransfer)
-    AMO_CLASS_REGISTER(SqliteTransfer)
-    AMO_CLASS_REGISTER(RceditTransfer)
-    AMO_CLASS_REGISTER(Base64Transfer)
-    AMO_CLASS_REGISTER_END()
-}
+AMO_REGISTER_TRANSFER_BEGIN(LIBEXT_API)
+AMO_CLASS_REGISTER(FileTransfer)
+AMO_CLASS_REGISTER(Base64Transfer)
+AMO_CLASS_REGISTER(MD5Transfer)
+AMO_CLASS_REGISTER(UUIDTransfer)
+AMO_CLASS_REGISTER(PathTransfer)
+AMO_CLASS_REGISTER(SqliteTransfer)
+AMO_CLASS_REGISTER(RceditTransfer)
+AMO_CLASS_REGISTER(Base64Transfer)
+AMO_REGISTER_TRANSFER_END()
 
-LIBEXT_API void unregisterTransfer(const std::string & strClass) {
-    amo::ClassTransfer::removeTransferByName(strClass);
-}
+//LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {
+//
+//
+//    AMO_CLASS_REGISTER_BEGIN()
+//    AMO_CLASS_REGISTER(FileTransfer)
+//    AMO_CLASS_REGISTER(Base64Transfer)
+//    AMO_CLASS_REGISTER(MD5Transfer)
+//    AMO_CLASS_REGISTER(UUIDTransfer)
+//    AMO_CLASS_REGISTER(PathTransfer)
+//    AMO_CLASS_REGISTER(SqliteTransfer)
+//    AMO_CLASS_REGISTER(RceditTransfer)
+//    AMO_CLASS_REGISTER(Base64Transfer)
+//    AMO_CLASS_REGISTER_END()
+//}
+//
+//LIBEXT_API void unregisterTransfer(const std::string & strClass) {
+//    amo::ClassTransfer::removeTransferByName(strClass);
+//}

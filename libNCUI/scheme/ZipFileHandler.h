@@ -15,9 +15,10 @@
 namespace amo {
     class ZipFileHandler : public LocalSchemeHandler {
     public:
-        ZipFileHandler(const std::string& url, const std::string& u8ZipPath, const std::string& u8File);
-        
-        
+        ZipFileHandler(const std::string& url, const std::string& u8ZipPath,
+                       const std::string& u8File);
+                       
+                       
         /*!
          * @fn	virtual bool ZipFileHandler::ProcessRequest(
          * 		CefRefPtr<CefRequest> request,
@@ -38,9 +39,9 @@ namespace amo {
         IMPLEMENT_REFCOUNTING(ZipFileHandler);
         
     private:
-        std::string m_strUrl; // utf8
-        std::string m_strFile; // utf8
-        std::string m_strZip; // utf8;
+        amo::string m_strUrl; //
+        amo::string m_strFile; //
+        amo::string m_strZip; //
     };
 }
 

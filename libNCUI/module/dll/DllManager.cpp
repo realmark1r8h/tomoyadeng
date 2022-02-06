@@ -126,7 +126,8 @@ namespace amo {
         funcWrapper.addArgsList(argsList);
     }
     
-    DllFunctionWrapper& DllManagerBase::getDllFunctionWrapper(const std::string& dllName) {
+    DllFunctionWrapper& DllManagerBase::getDllFunctionWrapper(
+        const std::string& dllName) {
         auto iter = m_oDllArgsMap.find(dllName);
         
         if (iter == m_oDllArgsMap.end()) {
@@ -167,6 +168,8 @@ namespace amo {
         m_oMap.clear();
         m_oDllArgsMap.clear();
     }
+    
+    
     
 }
 

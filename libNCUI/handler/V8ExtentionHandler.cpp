@@ -263,75 +263,100 @@ namespace amo {
         
     }
     
-    //void V8ExtentionHandler::OnBrowserDestory(int nBrowserID) {
-    //    RendererTransferMgr::getInstance()->removeTransfer(nBrowserID);
-    //
-    //    if (RendererTransferMgr::getInstance()->isEmpty()) {
-    //
-    //        std::vector<std::pair<std::string, std::string> > vec;
-    //
-    //        for (auto&p : m_oClassTransferMap) {
-    //            vec.push_back({p.first, p.second->getModuleName() });
-    //
-    //        }
-    //
-    //        m_oClassTransferMap.clear();
-    //
-    //        for (auto& p : vec) {
-    //            std::string& moduleName = p.second;
-    //            std::shared_ptr<amo::loader> loader;
-    //
-    //            if (!moduleName.empty()) {
-    //                loader = DllManager<PID_RENDERER>::getInstance()->load(moduleName);
-    //            }
-    //
-    //            if (loader) {
-    //                loader->exec<amo::nil>("unregisterTransfer", p.first);
-    //            } else {
-    //                ClassTransfer::removeTransferByName(p.first);
-    //            }
-    //        }
-    //
-    //        //for (auto& p : m_oClassTransferMap) {
-    //        //
-    //        //    auto pppp =    p.second->getObjectName();
-    //        //    std::cout << pppp << std::endl;
-    //        //
-    //        //    p.second->removeTransferByName(p.first);
-    //        //    //ClassTransfer::removeTransferByName(p.first);
-    //        //}
-    //        //
-    //        //m_oClassTransferMap.clear();
-    //    }
-    //}
-    
     void V8ExtentionHandler::OnBrowserDestory(int nBrowserID) {
         RendererTransferMgr::getInstance()->removeTransfer(nBrowserID);
         
         if (RendererTransferMgr::getInstance()->isEmpty()) {
-            std::vector<std::string> vec;
+        
+            std::vector<std::pair<std::string, std::string> > vec;
             
             for (auto&p : m_oClassTransferMap) {
-                vec.push_back(p.first);
+                vec.push_back({p.first, p.second->getModuleName() });
                 
             }
             
             m_oClassTransferMap.clear();
             
             for (auto& p : vec) {
-                ClassTransfer::removeTransferByName(p);
+                std::string& moduleName = p.second;
+                std::shared_ptr<amo::loader> loader;
+                
+                if (!moduleName.empty()) {
+                    loader = DllManager<PID_RENDERER>::getInstance()->load(moduleName);
+                }
+                
+                if (loader) {
+                    loader->exec<amo::nil, const std::string&>("removeTransferByName", p.first);
+                } else {
+                    ClassTransfer::removeTransferByName(p.first);
+                }
             }
             
-            
+            //for (auto& p : m_oClassTransferMap) {
+            //
+            //    auto pppp =    p.second->getObjectName();
+            //    std::cout << pppp << std::endl;
+            //
+            //    p.second->removeTransferByName(p.first);
+            //    //ClassTransfer::removeTransferByName(p.first);
+            //}
+            //
+            //m_oClassTransferMap.clear();
         }
     }
     
+    /*void V8ExtentionHandler::OnBrowserDestory(int nBrowserID) {
+        RendererTransferMgr::getInstance()->removeTransfer(nBrowserID);
+    
+        if (RendererTransferMgr::getInstance()->isEmpty()) {
+            std::vector<std::string> vec;
+    
+            for (auto&p : m_oClassTransferMap) {
+                vec.push_back(p.first);
+    
+            }
+    
+            m_oClassTransferMap.clear();
+    
+            for (auto& p : vec) {
+                ClassTransfer::removeTransferByName(p);
+            }
+    
+    
+        }
+    }*/
+    
     void V8ExtentionHandler::OnProcessDestory() {
-        for (auto& p : m_oClassTransferMap) {
-            ClassTransfer::removeTransferByName(p.first);
+    
+        std::vector<std::pair<std::string, std::string> > vec;
+        
+        for (auto&p : m_oClassTransferMap) {
+            vec.push_back({ p.first, p.second->getModuleName() });
+            
         }
         
         m_oClassTransferMap.clear();
+        
+        for (auto& p : vec) {
+            std::string& moduleName = p.second;
+            std::shared_ptr<amo::loader> loader;
+            
+            if (!moduleName.empty()) {
+                loader = DllManager<PID_RENDERER>::getInstance()->load(moduleName);
+            }
+            
+            if (loader) {
+                loader->exec<amo::nil, const std::string&>("removeTransferByName", p.first);
+            } else {
+                ClassTransfer::removeTransferByName(p.first);
+            }
+        }
+        
+        /*for (auto& p : m_oClassTransferMap) {
+        	ClassTransfer::removeTransferByName(p.first);
+        }
+        
+        m_oClassTransferMap.clear();*/
     }
     
     void V8ExtentionHandler::triggerEventOnRendererThread(IPCMessage::SmartType
