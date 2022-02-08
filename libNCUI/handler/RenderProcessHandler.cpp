@@ -118,14 +118,17 @@ namespace amo {
             if (RendererTransferMgr::getInstance()->onMessageTransfer(msg).isValid()) {
                 return true;
             }
-        } else if (strMessageName == MSG_ENABLE_BACK_FORWORD) {
-            m_bEnableBackForword = message->GetArgumentList()->GetBool(0);
-            $clog(amo::cdevel << func_orient << MSG_ENABLE_BACK_FORWORD <<
-                  m_bEnableBackForword << amo::endl;);
-            return true;
-        } else if (strMessageName == MSG_PROCESS_SYNC_EXECUTE) {
+        }   else if (strMessageName == MSG_PROCESS_SYNC_EXECUTE) {
             RendererProcessExchangerManager::getInstance()->tryProcessMessage(
                 browser->GetIdentifier());
+        } else if (strMessageName == MSG_BROWSER_SETTINGS) {
+            std::shared_ptr<BrowserWindowSettings> pSettings(new BrowserWindowSettings());
+            
+            pSettings->updateArgsSettings(message->GetArgumentList()->GetString(
+                                              0).ToString());
+                                              
+            m_browserSettingsMap[browser->GetIdentifier()] = pSettings;
+            return true;
         }
         
         
@@ -152,20 +155,53 @@ namespace amo {
     void RenderProcessHandler::OnFocusedNodeChanged(CefRefPtr<CefBrowser> browser,
             CefRefPtr<CefFrame> frame,
             CefRefPtr<CefDOMNode> node) {
-        return;
+            
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
             (*it)->OnFocusedNodeChanged(browser, frame, node);
         }
         
+        auto iter = m_browserSettingsMap.find(browser->GetIdentifier());
+        
+        if (iter == m_browserSettingsMap.end()) {
+            return;
+        }
+        
+        // 只在离屏模式下计算元素位置
+        if (!iter->second->offscreen) {
+            return;
+        }
+        
         bool isEditable = IsEditableElement(node);
         int nID = frame->GetIdentifier();
         std::vector<int64_t> identifiers;
         frame->GetBrowser()->GetFrameIdentifiers(identifiers);
+        
         std::shared_ptr<RenderMessageEmitter> runner(new RenderMessageEmitter(frame));
         runner->setValue(IPCArgsPosInfo::TransferName, "ipcMain");
-        runner->execute(MSG_FOCUSED_NODE_CHANGED, isEditable);
+        Any val = Undefined();
+        
+        if (isEditable) {
+            IPCMessage::SmartType msg(new IPCMessage());
+            auto args = msg->getArgumentList();
+            args->setValue(IPCArgsPosInfo::FuncName, "runJSFunction");
+            args->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+            args->setValue(IPCArgsPosInfo::JsFuncName, "getActiveElementInfo");
+            args->setValue(IPCArgsPosInfo::BrowserID, frame->GetBrowser()->GetIdentifier());
+            args->setValue(IPCArgsPosInfo::FrameID, frame->GetIdentifier());
+            args->setValue(IPCArgsPosInfo::ArgsLength, 0);
+            args->setValue(IPCArgsPosInfo::MessageID, IPCMessage::getProcessMessageID());
+            msg->setMessageName(MSG_NATIVE_EXECUTE);
+            val = RendererTransferMgr::getInstance()->onMessageTransfer(msg);
+        }
+        
+        if (val.is<amo::json>()) {
+            runner->execute(MSG_FOCUSED_NODE_CHANGED, isEditable, val.As<amo::json>());
+        } else {
+            runner->execute(MSG_FOCUSED_NODE_CHANGED, isEditable);
+        }
+        
     }
     
     void RenderProcessHandler::OnUncaughtException(CefRefPtr<CefBrowser> browser,
@@ -273,9 +309,16 @@ namespace amo {
             bool is_redirect) {
         $clog(amo::cdevel << func_orient << amo::endl;);
         
-        if (!m_bEnableBackForword && (navigation_type == NAVIGATION_BACK_FORWARD)) {
-            return true;    //屏蔽BackSpace回退页面
+        if (navigation_type == NAVIGATION_BACK_FORWARD) {
+            auto iter = m_browserSettingsMap.find(browser->GetIdentifier());
+            
+            // 判断是否允许前进后退 屏蔽BackSpace回退页面
+            if (iter != m_browserSettingsMap.end()
+                    && !iter->second->back_forword) {
+                return true;
+            }
         }
+        
         
         DelegateSet::iterator it = m_Delegates.begin();
         
@@ -308,6 +351,9 @@ namespace amo {
     void RenderProcessHandler::OnBrowserDestroyed(CefRefPtr<CefBrowser> browser) {
         $clog(amo::cdevel << func_orient << "浏览器销毁。" << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
+        
+        m_browserSettingsMap.erase(browser->GetIdentifier());
+        
         
         for (; it != m_Delegates.end(); ++it) {
             (*it)->OnBrowserDestroyed(browser);
@@ -581,7 +627,6 @@ namespace amo {
     
     
     RenderProcessHandler::RenderProcessHandler() {
-        m_bEnableBackForword = false;
         m_pV8ExtensionHander = new V8ExtentionHandler();
         
     }

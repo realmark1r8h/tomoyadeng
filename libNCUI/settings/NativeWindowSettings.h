@@ -108,6 +108,9 @@ namespace amo {
         
         /*! @brief	ESC关闭窗口. */
         bool esc;
+        
+        /** @brief	是否允许前进后退. */
+        bool back_forword;
     };
 }
 

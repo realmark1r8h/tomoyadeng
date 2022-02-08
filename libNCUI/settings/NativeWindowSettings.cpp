@@ -55,7 +55,7 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(hasShadow, true);
         DEFAULT_ARGS_SETTINGS(focusable, true);
         DEFAULT_ARGS_SETTINGS(esc, false);
-        
+        DEFAULT_ARGS_SETTINGS(back_forword, false);
     }
     
     
@@ -102,6 +102,7 @@ namespace amo {
         BOOL_ARGS_SETTING(focusable);
         
         BOOL_ARGS_SETTING(esc);
+        BOOL_ARGS_SETTING(back_forword);
         return ;
     }
     

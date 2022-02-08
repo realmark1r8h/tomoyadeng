@@ -5,15 +5,17 @@
 #define AMO_RENDERPROCESSHANDLER_H__
 
 #include <memory>
+#include <map>
+
 #include <amo/string.hpp>
 #include "handler/CefHeader.hpp"
 #include "handler/HandlerDelegate.hpp"
 #include "ipc/Any.hpp"
 #include "handler/BrowserManager.hpp"
 
-
 namespace amo {
     class V8ExtentionHandler;
+    class BrowserWindowSettings;
     class RenderProcessHandlerDelegate {
     public:
         RenderProcessHandlerDelegate() {}
@@ -349,10 +351,11 @@ namespace amo {
     public:
         /*! @brief	The message router. */
         CefRefPtr<CefMessageRouterRendererSide> m_pMessageRouter;
-        /*! @brief	true to enable, false to disable the back forword. */
-        bool m_bEnableBackForword;
+        
         /*! @brief	The v 8 extension hander. */
         CefRefPtr<V8ExtentionHandler> m_pV8ExtensionHander;
+        
+        std::map<int, std::shared_ptr<BrowserWindowSettings> > m_browserSettingsMap;
     };
 }
 

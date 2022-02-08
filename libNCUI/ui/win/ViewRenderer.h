@@ -11,7 +11,8 @@ namespace amo {
 
     //Ò³ÃæäÖÈ¾¿Ø¼þ
     class ViewRenderer : public CControlUI {
-    public:
+    
+    
     
     public:
         ViewRenderer();
@@ -20,6 +21,7 @@ namespace amo {
         virtual void PaintStatusImage(HDC hDC) override;
         
         virtual void insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image);
+        virtual void SetToolTip(LPCTSTR pstrText) override;
     protected:
         std::shared_ptr<Gdiplus::Bitmap> m_pBitmap;
         

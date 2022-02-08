@@ -36,7 +36,9 @@ namespace amo {
     /*! @brief	通知对方处理同步数据. */
     static const std::string MSG_PROCESS_SYNC_EXECUTE = "ProcesssyncExecute";
     /*! @brief	焦点发生改变时触发. */
-    static const std::string MSG_FOCUSED_NODE_CHANGED = "FocusedNodeChanged";
+    static const std::string MSG_FOCUSED_NODE_CHANGED = "focusedNodeChanged";
+    
+    static const std::string MSG_BROWSER_SETTINGS = "browserSettings";
     
     /*! @brief	默认管道大小. */
     static const int DefaultPipeSize = 2000000;

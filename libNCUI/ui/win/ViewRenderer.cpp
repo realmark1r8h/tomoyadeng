@@ -9,6 +9,10 @@ namespace amo {
         PaintStatusImage(GetManager()->GetPaintDC());
     }
     
+    void ViewRenderer::SetToolTip(LPCTSTR pstrText) {
+        return CControlUI::SetToolTip(pstrText);
+    }
+    
     ViewRenderer::ViewRenderer() {
     
     }

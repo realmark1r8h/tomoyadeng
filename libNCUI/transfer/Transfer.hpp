@@ -532,7 +532,7 @@ namespace amo {
                     }
                 } else {
                     // 调用所注册的C++函数
-                    Any ret = iter->second(msg);
+                    ret = iter->second(msg);
                 }
                 
                 

@@ -81,7 +81,8 @@ namespace amo {
     
     
     
-    LRESULT OffScreenRenderView::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    LRESULT OffScreenRenderView::HandleMessage(UINT uMsg, WPARAM wParam,
+            LPARAM lParam) {
         static POINT lastMousePos, curMousePos;
         static bool mouseRotation = false;
         static bool mouseTracking = false;
@@ -112,7 +113,8 @@ namespace amo {
             currentTime = GetMessageTime();
             int x = GET_X_LPARAM(lParam);
             int y = GET_Y_LPARAM(lParam);
-            cancelPreviousClick = (abs(lastClickX - x) > (GetSystemMetrics(SM_CXDOUBLECLK) / 2))
+            cancelPreviousClick = (abs(lastClickX - x) > (GetSystemMetrics(
+                                       SM_CXDOUBLECLK) / 2))
                                   || (abs(lastClickY - y) > (GetSystemMetrics(SM_CYDOUBLECLK) / 2))
                                   || ((currentTime - gLastClickTime) > GetDoubleClickTime());
                                   
@@ -325,7 +327,8 @@ namespace amo {
                                       
     }
     
-    LRESULT OffScreenRenderView::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT OffScreenRenderView::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                        BOOL& bHandled) {
         if (m_pBrowser) {
             m_pBrowser->GetHost()->WasResized();
         }
@@ -369,11 +372,13 @@ namespace amo {
         return _T("OffScreenRenderView");
     }
     
-    LRESULT OffScreenRenderView::OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT OffScreenRenderView::OnNcHitTest(UINT uMsg, WPARAM wParam,
+            LPARAM lParam, BOOL& bHandled) {
         return HTCLIENT;
     }
     
-    bool OffScreenRenderView::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) {
+    bool OffScreenRenderView::GetRootScreenRect(CefRefPtr<CefBrowser> browser,
+            CefRect& rect) {
         RECT window_rect = { 0 };
         HWND root_window = GetAncestor(m_hWnd, GA_ROOT);
         
@@ -465,7 +470,8 @@ namespace amo {
         dwBmBitsSize = ((Bitmap.bmWidth * wBitCount + 31) / 32) * 4 * Bitmap.bmHeight;
         
         //为位图内容分配内存
-        hDib = GlobalAlloc(GHND, dwBmBitsSize + dwPaletteSize + sizeof(BITMAPINFOHEADER));
+        hDib = GlobalAlloc(GHND,
+                           dwBmBitsSize + dwPaletteSize + sizeof(BITMAPINFOHEADER));
         lpbi = (LPBITMAPINFOHEADER)GlobalLock(hDib);
         *lpbi = bi;
         
@@ -500,11 +506,13 @@ namespace amo {
         
         //     设置位图文件头
         bmfHdr.bfType = 0x4D42;     //     "BM"
-        dwDIBSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + dwPaletteSize + dwBmBitsSize;
+        dwDIBSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + dwPaletteSize
+                    + dwBmBitsSize;
         bmfHdr.bfSize = dwDIBSize;
         bmfHdr.bfReserved1 = 0;
         bmfHdr.bfReserved2 = 0;
-        bmfHdr.bfOffBits = (DWORD)sizeof(BITMAPFILEHEADER) + (DWORD)sizeof(BITMAPINFOHEADER) + dwPaletteSize;
+        bmfHdr.bfOffBits = (DWORD)sizeof(BITMAPFILEHEADER) + (DWORD)sizeof(
+                               BITMAPINFOHEADER) + dwPaletteSize;
         //     写入位图文件头
         WriteFile(fh, (LPSTR)&bmfHdr, sizeof(BITMAPFILEHEADER), &dwWritten, NULL);
         //     写入位图文件其余内容
@@ -533,7 +541,8 @@ namespace amo {
     }
     
     
-    LRESULT OffScreenRenderView::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT OffScreenRenderView::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                           BOOL& bHandled) {
 #if defined(CEF_USE_ATL)
         // Revoke/delete the drag&drop handler.
         RevokeDragDrop(m_hWnd);
@@ -621,7 +630,8 @@ namespace amo {
             return;
         }
         
-        SetClassLongPtr(m_hWnd, GCLP_HCURSOR, static_cast<LONG>(reinterpret_cast<LONG_PTR>(cursor)));
+        SetClassLongPtr(m_hWnd, GCLP_HCURSOR,
+                        static_cast<LONG>(reinterpret_cast<LONG_PTR>(cursor)));
         SetCursor(cursor);
     }
     
@@ -753,8 +763,9 @@ namespace amo {
         return current_drag_op_;
     }
     
-    CefBrowserHost::DragOperationsMask OffScreenRenderView::OnDragOver(CefMouseEvent ev,
-            CefBrowserHost::DragOperationsMask effect) {
+    CefBrowserHost::DragOperationsMask OffScreenRenderView::OnDragOver(
+        CefMouseEvent ev,
+        CefBrowserHost::DragOperationsMask effect) {
         if (browser_) {
             deviceToLogical(ev, device_scale_factor_);
             browser_->GetHost()->DragTargetDragOver(ev, effect);
@@ -808,10 +819,19 @@ namespace amo {
         
         int nFrameID = msg->getArgumentList()->getInt(IPCArgsPosInfo::FrameID);
         CefRefPtr<CefFrame> pFrame = m_pBrowser->GetFrame(nFrameID);
-        getActiveElementInfo(pFrame);
+        Any val = msg->getArgumentList()->getValue(1);
+        
+        if (val.is<amo::json>()) {
+            setFocusFrame(pFrame);
+            setActiveElementInfo(val.As<amo::json>());
+        } else {
+            getActiveElementInfo(pFrame);
+        }
+        
     }
     
-    void OffScreenRenderView::updateCaretPos(std::shared_ptr<Gdiplus::Bitmap> image) {
+    void OffScreenRenderView::updateCaretPos(std::shared_ptr<Gdiplus::Bitmap>
+            image) {
         amo::timer t1;
         
         if (m_oActiveElementInfo.empty()) {
@@ -850,9 +870,11 @@ namespace amo {
         }
         
         Gdiplus::Rect rt(left, top, width, height);
-        $clog(amo::cdevel << "查找范围：" << left << ", " << top << ", " << width << ", " << height << amo::endl;);
-        Gdiplus::Status status = image->LockBits(&rt, ImageLockModeRead, PixelFormat32bppARGB, &bmpData);
-        
+        $clog(amo::cdevel << "查找范围：" << left << ", " << top << ", " << width
+              << ", " << height << amo::endl;);
+        Gdiplus::Status status = image->LockBits(&rt, ImageLockModeRead,
+                                 PixelFormat32bppARGB, &bmpData);
+                                 
         if (status != Gdiplus::Status::Ok) {
             return;
         }

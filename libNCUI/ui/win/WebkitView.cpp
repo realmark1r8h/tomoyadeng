@@ -249,11 +249,25 @@ namespace amo {
             return;
         }
         
-        //设置是否允许前进后退，离屏模式下，不允许前进后退
-        CefRefPtr<CefProcessMessage> message;
-        message = CefProcessMessage::Create(MSG_ENABLE_BACK_FORWORD);
-        message->GetArgumentList()->SetBool(0, !m_pBrowserSettings->offscreen);
-        m_pBrowser->SendProcessMessage(PID_RENDERER, message);
+        //{
+        //    //设置是否允许前进后退，离屏模式下，不允许前进后退
+        //    CefRefPtr<CefProcessMessage> message;
+        //    message = CefProcessMessage::Create(MSG_ENABLE_BACK_FORWORD);
+        //    message->GetArgumentList()->SetBool(0, false);
+        //    m_pBrowser->SendProcessMessage(PID_RENDERER, message);
+        //}
+        //
+        
+        
+        
+        {
+            //
+            CefRefPtr<CefProcessMessage> message;
+            message = CefProcessMessage::Create(MSG_BROWSER_SETTINGS);
+            message->GetArgumentList()->SetString(0,
+                                                  m_pBrowserSettings->settings.to_string());
+            m_pBrowser->SendProcessMessage(PID_RENDERER, message);
+        }
         
         // 设置窗口大小
         RECT rect;
@@ -811,10 +825,12 @@ namespace amo {
     }
     
     bool WebkitView::OnTooltip(CefRefPtr<CefBrowser> browser, CefString& text) {
+        amo::string str(text.ToString(), true);
+        //this->SetToolTip(str.to_unicode().c_str());
+        
         if (m_pRenderWnd != NULL) {
-            amo::string str(text.ToString(), true);
             m_pRenderWnd->setTooltip(str);
-            return true;
+            return false;
         }
         
         return false;
