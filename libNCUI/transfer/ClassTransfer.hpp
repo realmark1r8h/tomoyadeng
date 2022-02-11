@@ -53,6 +53,9 @@ namespace amo {
             typedef  ContainerType::const_iterator const_local_iterator;
             
         public:
+            ClassTransferMap() {
+                int nSize = size();
+            }
             ~ClassTransferMap() {
                 int nSize = size();
             }

@@ -418,7 +418,7 @@ namespace amo {
         
         
         ClassTransfer::clearTransferMap();
-        
+        ClassTransfer::getTransferMap().reset();
         /* auto classMap = ClassTransfer::getTransferMap();
         
          if (classMap) {

@@ -19,7 +19,8 @@
 #ifndef AMO_CLASS_TRANSFER_DECLARE
 #define AMO_CLASS_TRANSFER_DECLARE(LIB_API)\
 extern "C"{\
-	LIB_API  bool registerTransfer(std::shared_ptr<amo::TransferRegister> info);\
+	LIB_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info);\
+	LIB_API void unregisterTransfer();\
 	LIB_API void removeTransferByName(const std::string& strClass);\
 	LIB_API void removeTransferByID(const int64_t& nID);\
 }
@@ -55,6 +56,16 @@ return true;
 
 
 
+#ifndef AMO_UNREGISTER_TRANSFER
+#define AMO_UNREGISTER_TRANSFER(LIB_API)\
+LIB_API void unregisterTransfer(){\
+	using namespace amo;\
+	ClassTransfer::getTransferMap().reset();\
+	return;\
+}\
+
+#endif
+
 
 #ifndef AMO_REMOVE_TRANSFER_BY_NAME
 #define AMO_REMOVE_TRANSFER_BY_NAME(LIB_API)\
@@ -76,6 +87,7 @@ LIB_API void removeTransferByID(const int64_t& nID){\
 
 #ifndef AMO_REGISTER_TRANSFER_BEGIN
 #define AMO_REGISTER_TRANSFER_BEGIN(LIB_API)\
+	AMO_UNREGISTER_TRANSFER(LIB_API)\
 	AMO_REMOVE_TRANSFER_BY_NAME(LIB_API)\
 	AMO_REMOVE_TRANSFER_BY_ID(LIB_API)\
 	LIB_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {\

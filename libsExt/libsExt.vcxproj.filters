@@ -48,9 +48,6 @@
     <ClInclude Include="transfer\UUIDTransfer.h">
       <Filter>transfer</Filter>
     </ClInclude>
-    <ClInclude Include="transfer\PathTransfer.h">
-      <Filter>transfer</Filter>
-    </ClInclude>
     <ClInclude Include="rcedit\RceditTransfer.h">
       <Filter>rcedit</Filter>
     </ClInclude>
@@ -72,6 +69,9 @@
     <ClInclude Include="transfer\MD5Transfer.h">
       <Filter>transfer</Filter>
     </ClInclude>
+    <ClInclude Include="transfer\PathTransfer.h">
+      <Filter>transfer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -85,9 +85,6 @@
     </ClCompile>
     <ClCompile Include="sqlite\src\sqlite3ppext.cpp">
       <Filter>sqlite\src</Filter>
-    </ClCompile>
-    <ClCompile Include="transfer\PathTransfer.cpp">
-      <Filter>transfer</Filter>
     </ClCompile>
     <ClCompile Include="transfer\UUIDTransfer.cpp">
       <Filter>transfer</Filter>
@@ -105,6 +102,9 @@
       <Filter>transfer</Filter>
     </ClCompile>
     <ClCompile Include="transfer\MD5Transfer.cpp">
+      <Filter>transfer</Filter>
+    </ClCompile>
+    <ClCompile Include="transfer\PathTransfer.cpp">
       <Filter>transfer</Filter>
     </ClCompile>
   </ItemGroup>

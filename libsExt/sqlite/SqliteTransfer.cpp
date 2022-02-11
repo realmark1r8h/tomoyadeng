@@ -189,12 +189,18 @@ namespace amo {
     
     Any SqliteTransfer::query(IPCMessage::SmartType msg) {
     
+        amo::json queryJson;
+        // 获取数据
+        amo::json jsonArr;
+        jsonArr.set_array();
+        
         if (!m_pDB) {
             setLastError(SQLITE_INVALID_CONNECTION);
-            return Undefined();
+            queryJson.put("data", jsonArr);
+            return queryJson;
         }
         
-        amo::json queryJson;
+        
         bool bNeedPagging = false;
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
@@ -210,7 +216,8 @@ namespace amo {
         
         if (sql.empty()) {
             setLastError(SQLITE_EMPTY_SQL);
-            return Undefined();
+            queryJson.put("data", jsonArr);
+            return queryJson;
         }
         
         if (bNeedPagging) {
@@ -218,7 +225,8 @@ namespace amo {
             bool bOk = queryCountImpl(sql, queryJson);
             
             if (!bOk) {
-                return Undefined();
+                queryJson.put("data", jsonArr);
+                return queryJson;
             }
             
             sql += formatPagging(queryJson);
@@ -267,9 +275,7 @@ namespace amo {
                     //return Undefined();
                 }
                 
-                // 获取数据
-                amo::json jsonArr;
-                jsonArr.set_array();
+                
                 auto ccoutn = qry.column_count();
                 
                 for (sqlite3pp::query::iterator iter = qry.begin();
@@ -364,7 +370,9 @@ namespace amo {
             setLastError(e.what());
         }
         
-        return Undefined();
+        queryJson.put("data", jsonArr);
+        return queryJson;
+        
     }
     
     

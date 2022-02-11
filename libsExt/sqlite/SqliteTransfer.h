@@ -35,7 +35,7 @@ namespace amo {
         // Ö´ÐÐÔ­Éúsql
         virtual Any execute(IPCMessage::SmartType msg);
         virtual Any insert(IPCMessage::SmartType msg);
-        virtual Any update(IPCMessage::SmartType msg);
+        virtual Any update(IPCMessage::SmartType msg) ;
         virtual Any backup(IPCMessage::SmartType msg);
         virtual Any query(IPCMessage::SmartType msg);
         virtual Any remove(IPCMessage::SmartType msg);
@@ -90,7 +90,8 @@ namespace amo {
         
         amo::string formatArgsByAnsiJson(const amo::string& sql, amo::json& json);
         amo::string formatArgsByU8Json(const amo::string& sql, amo::json& json);
-        amo::string formatArgsByArr(const amo::string& sql, std::vector<amo::string>& vec);
+        amo::string formatArgsByArr(const amo::string& sql,
+                                    std::vector<amo::string>& vec);
         std::string formatPagging(amo::json& json);
         std::vector<amo::string> anyToStringVec(Any& vec);
         bool queryCountImpl(const std::string& str, amo::json& json);

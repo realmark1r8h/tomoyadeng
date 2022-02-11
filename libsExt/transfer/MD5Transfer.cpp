@@ -10,7 +10,8 @@ namespace amo {
     
     Any MD5Transfer::onCreateClass(IPCMessage::SmartType msg) {
         auto pTransfer = ClassTransfer::createTransfer<MD5Transfer>();
-        pTransfer->setTriggerEventFunc(this->getTriggerEventFunc());pTransfer->setDefaultTriggerEventFunc(this->getDefaultTriggerEventFunc());
+        pTransfer->setTriggerEventFunc(this->getTriggerEventFunc());
+        pTransfer->setDefaultTriggerEventFunc(this->getDefaultTriggerEventFunc());
         return pTransfer->getFuncMgr().toSimplifiedJson();
     }
     
@@ -45,7 +46,8 @@ namespace amo {
                 return invalidMD5;
             }
             
-            std::string strPath = dynamic_cast<PathTransfer*>(pPath)->toString(IPCMessage::Empty());
+            std::string strPath = dynamic_cast<PathTransfer*>(pPath)->toString(
+                                      IPCMessage::Empty());
             amo::string str(strPath, true);
             amo::md5::encode_file(str.c_str());
             

@@ -34,7 +34,7 @@ namespace amo {
         }
         
         virtual std::string getClass() const override {
-            return "File2";
+            return "LocalFile";
         }
         
         virtual amo::Transfer * getInterface(const std::string& name) override {
@@ -56,7 +56,8 @@ namespace amo {
             }
             
             auto pTransfer = ClassTransfer::createTransfer<FileTransfer>(fileName, nMode);
-            pTransfer->setTriggerEventFunc(this->getTriggerEventFunc());pTransfer->setDefaultTriggerEventFunc(this->getDefaultTriggerEventFunc());
+            pTransfer->setTriggerEventFunc(this->getTriggerEventFunc());
+            pTransfer->setDefaultTriggerEventFunc(this->getDefaultTriggerEventFunc());
             return pTransfer->getFuncMgr().toSimplifiedJson();
         }
         

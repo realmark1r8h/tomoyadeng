@@ -1,5 +1,13 @@
-#ifndef PathTransfer_h__
-#define PathTransfer_h__
+// Created by amoylel on 17/03/2018.
+// Copyright (c) 2018 amoylel All rights reserved.
+
+#ifndef LIBSEXT_PATHTRANSFER_F5089CC4_51A8_4448_BB3D_04242220BFA0_H__
+#define LIBSEXT_PATHTRANSFER_F5089CC4_51A8_4448_BB3D_04242220BFA0_H__
+
+
+
+
+
 
 
 #include <transfer/RunnableTransfer.hpp>
@@ -39,10 +47,13 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(toString, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(isExsit, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(append, TransferFuncNormal | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(removeFileSpec, TransferFuncNormal | TransferExecSync)
-        
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getFullAppDir, TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getFullAppName, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(removeFileSpec,
+                                      TransferFuncNormal | TransferExecSync)
+                                      
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getFullAppDir,
+                                      TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getFullAppName,
+                                      TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(fileExsit, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
@@ -52,4 +63,4 @@ namespace amo {
     };
 }
 
-#endif // PathTransfer_h__
+#endif //LIBSEXT_PATHTRANSFER_F5089CC4_51A8_4448_BB3D_04242220BFA0_H__
