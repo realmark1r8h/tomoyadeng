@@ -12,7 +12,8 @@
 class SimpleHandler : public CefClient,
     public CefDisplayHandler,
     public CefLifeSpanHandler,
-    public CefLoadHandler {
+    public CefLoadHandler,
+    public CefKeyboardHandler {
 public:
     SimpleHandler();
     ~SimpleHandler();
@@ -28,6 +29,9 @@ public:
         return this;
     }
     virtual CefRefPtr<CefLoadHandler> GetLoadHandler() OVERRIDE {
+        return this;
+    }
+    virtual CefRefPtr<CefKeyboardHandler> GetKeyboardHandler() OVERRIDE {
         return this;
     }
     
@@ -55,8 +59,14 @@ public:
     }
     
     
-    virtual void OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, int httpStatusCode) override;
-    
+    virtual void OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame,
+                           int httpStatusCode) override;
+                           
+                           
+    virtual bool OnPreKeyEvent(CefRefPtr<CefBrowser> browser,
+                               const CefKeyEvent& event, CefEventHandle os_event,
+                               bool* is_keyboard_shortcut) override;
+                               
 private:
     // List of existing browser windows. Only accessed on the CEF UI thread.
     typedef std::list<CefRefPtr<CefBrowser> > BrowserList;

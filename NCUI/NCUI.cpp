@@ -9,6 +9,7 @@
 #include "../startup/startup.h"
 #include "amo/file.hpp"
 
+
 #ifdef _DEBUG
 #pragma comment(lib, "startupUD32.lib")
 #else
@@ -73,6 +74,7 @@
 //    void* lib_handle;
 //};
 
+#include <amo/loader_lite.hpp>
 
 int APIENTRY wWinMain(HINSTANCE hInstance,
                       HINSTANCE hPrevInstance,
@@ -83,17 +85,17 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
     
-    /* LoaderLite loader;
-     amo::path p(amo::path::getExeDir());
-     p.append("libNCUI.dll");
-     loader.load(p.c_str());
-     typedef int(*fnRun)(HINSTANCE,
-    					 HINSTANCE,
-    					 LPTSTR,
-    					 int);
-     fnRun fnUpdateAppSettings = (fnRun)loader.load_symbol("runSample");
-     fnUpdateAppSettings(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
-     return 0;*/
+    amo::loader_lite loader;
+    amo::path p(amo::path::getExeDir());
+    p.append("libNCUI.dll");
+    loader.load(p.c_str());
+    typedef int(*fnRun)(HINSTANCE,
+                        HINSTANCE,
+                        LPTSTR,
+                        int);
+    fnRun fnUpdateAppSettings = (fnRun)loader.load_symbol("runSample");
+    fnUpdateAppSettings(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+    return 0;
     
     run();
     

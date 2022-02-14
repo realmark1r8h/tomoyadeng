@@ -115,21 +115,33 @@ void SimpleHandler::CloseAllBrowsers(bool force_close) {
     }
 }
 
-void SimpleHandler::OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, int httpStatusCode) {
-    std::string url = frame->GetURL();
+void SimpleHandler::OnLoadEnd(CefRefPtr<CefBrowser> browser,
+                              CefRefPtr<CefFrame> frame, int httpStatusCode) {
+    /* std::string url = frame->GetURL();
     
-    if (url.find("devtools") != -1) {
-        return;
+     if (url.find("devtools") != -1) {
+    	 return;
+     }
+    
+     CefWindowInfo windowInfo;
+     CefBrowserSettings settings;
+     windowInfo.SetAsPopup(browser->GetHost()->GetWindowHandle(),
+    					   "DevTools");
+    
+     CefPoint pt;
+     browser->GetHost()->ShowDevTools(windowInfo,
+    								  this,
+    								  settings,
+    								  pt);*/
+}
+
+bool SimpleHandler::OnPreKeyEvent(CefRefPtr<CefBrowser> browser,
+                                  const CefKeyEvent& event, CefEventHandle os_event, bool* is_keyboard_shortcut) {
+    if (event.windows_key_code == VK_F5) {
+        browser->ReloadIgnoreCache();
+        return true;
     }
     
-    CefWindowInfo windowInfo;
-    CefBrowserSettings settings;
-    windowInfo.SetAsPopup(browser->GetHost()->GetWindowHandle(),
-                          "DevTools");
-                          
-    CefPoint pt;
-    browser->GetHost()->ShowDevTools(windowInfo,
-                                     this,
-                                     settings,
-                                     pt);
+    return CefKeyboardHandler::OnPreKeyEvent(browser, event, os_event,
+            is_keyboard_shortcut);
 }

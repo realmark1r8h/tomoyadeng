@@ -44,8 +44,8 @@ void SimpleApp::OnContextInitialized() {
         url = "http://www.google.com";
     }
     
-    url = "http://www.baidu.com";
-    url = "http://127.0.0.1:8020/cropper/index.html";
+    url = "http://www.qq.com";
+    //url = "http://127.0.0.1:8020/cropper/index.html";
     // Create the first browser window.
     CefBrowserHost::CreateBrowser(window_info, handler.get(), url,
                                   browser_settings, NULL);
