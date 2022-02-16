@@ -17,11 +17,19 @@ namespace amo {
         addModule("EventEmitter");
     }
     
-    URLRequestTransfer::URLRequestTransfer(CefRefPtr<CefURLRequest> pURLRequest)
+    URLRequestTransfer::URLRequestTransfer(CefRefPtr<CefURLRequest> pURLRequest,
+                                           int32_t nTimeOut)
         : ClassTransfer("URLRequest")
-        , m_pURLRequest(pURLRequest) {
+        , m_pURLRequest(pURLRequest)
+        , m_bTimeOut(true) {
         addModule("EventEmitter");
         
+        
+        
+    }
+    
+    URLRequestTransfer::~URLRequestTransfer() {
+        m_timer.stop_timer();
     }
     
     Any URLRequestTransfer::GetRequest(IPCMessage::SmartType msg) {
@@ -33,14 +41,15 @@ namespace amo {
     }
     
     Any URLRequestTransfer::GetRequestStatus(IPCMessage::SmartType msg) {
-        return Undefined();
+        return (int)m_pURLRequest->GetRequestStatus();
     }
     
     Any URLRequestTransfer::GetRequestError(IPCMessage::SmartType msg) {
-        return Undefined();
+        return (int)m_pURLRequest->GetRequestError();
     }
     
     Any URLRequestTransfer::GetResponse(IPCMessage::SmartType msg) {
+    
         return Undefined();
     }
     
@@ -49,30 +58,44 @@ namespace amo {
     }
     
     
+    
+    
     void URLRequestTransfer::OnRequestComplete(CefRefPtr<CefURLRequest> request) {
         std::shared_ptr<UIMessageEmitter> emitter = getMessageEmitter();
-        emitter->execute("triggerEvent", "request.complete", m_downloadData);
-        
+        auto v1 = request->GetRequestStatus();
+        auto v2 = request->GetRequestError();
+        m_bTimeOut = false;
+        emitter->execute("triggerEvent", "request.complete",
+                         m_downloadData);
+                         
     }
     
     void URLRequestTransfer::OnUploadProgress(CefRefPtr<CefURLRequest> request,
             int64 current,
             int64 total) {
+        m_bTimeOut = false;
         std::shared_ptr<UIMessageEmitter> emitter = getMessageEmitter();
-        emitter->execute("triggerEvent", "request.upload.progress", current, total);
         
+        emitter->execute("triggerEvent", "request.upload.progress",
+                         current,
+                         total);
+                         
     }
     
     void URLRequestTransfer::OnDownloadProgress(CefRefPtr<CefURLRequest> request,
             int64 current,
             int64 total) {
+        m_bTimeOut = false;
         std::shared_ptr<UIMessageEmitter> emitter = getMessageEmitter();
-        emitter->execute("triggerEvent", "request.download.progress", current, total);
+        emitter->execute("triggerEvent", "request.download.progress",
+                         current,
+                         total);
     }
     
     void URLRequestTransfer::OnDownloadData(CefRefPtr<CefURLRequest> request,
                                             const void* data,
                                             size_t data_length) {
+        m_bTimeOut = false;
         m_downloadData.append((char*)data, data_length);
     }
     
@@ -100,13 +123,16 @@ namespace amo {
         return emitter;
     }
     
-    std::shared_ptr<amo::RequestSettings> URLRequestTransfer::getRequestSettings() const {
+    std::shared_ptr<amo::RequestSettings> URLRequestTransfer::getRequestSettings()
+    const {
         return m_pRequestSettings;
     }
     
-    void URLRequestTransfer::setRequestSettings(std::shared_ptr<amo::RequestSettings> val) {
+    void URLRequestTransfer::setRequestSettings(
+        std::shared_ptr<amo::RequestSettings> val) {
         m_pRequestSettings = val;
     }
+    
     
     
     
@@ -166,6 +192,10 @@ namespace amo {
         pTransfer->setFrame(pFrame);
         pTransfer->setRequestSettings(pSettings);
         
+        if (args->getValue(1).is<int>()) {
+            pTransfer->setTimeOut(args->getInt(1));
+        }
+        
         
         pClient->SetOnDownloadDataCallback(
             std::bind(&URLRequestTransfer::OnDownloadData,
@@ -204,6 +234,42 @@ namespace amo {
                       std::placeholders::_3));
                       
         return MGR::getInstance()->toSimplifiedJson(pTransfer);
+        
+    }
+    
+    bool URLRequestTransfer::onCheckTimeOut(int64_t id) {
+        if (m_bTimeOut) {
+            getMessageEmitter()->execute("triggerEvent", "request.timeout");
+            getMessageEmitter()->execute("triggerEvent", "request.complete");
+        }
+        
+        return false;
+    }
+    
+    
+    void URLRequestTransfer::setTimeOut(int32_t nTimeOut) {
+        if (nTimeOut > 0) {
+            m_timer.set_timer(nTimeOut, std::bind(&URLRequestTransfer::onCheckTimeOut, this,
+                                                  std::placeholders::_1), true);
+        }
+    }
+    
+    void URLRequestTransfer::onBeforeRelease() {
+    
+        m_timer.stop_timer();
+        
+        if (m_pURLRequest) {
+            auto rcMgr = TransferMappingMgr<URLRequestClientTransfer>::getInstance();
+            
+            if (m_pURLRequest->GetClient()) {
+                rcMgr->removeMapping(m_pURLRequest->GetClient());
+            }
+            
+            using MGR = TransferMappingMgr < URLRequestTransfer >;
+            MGR::getInstance()->removeMapping(m_pURLRequest);
+        }
+        
+        
         
     }
     

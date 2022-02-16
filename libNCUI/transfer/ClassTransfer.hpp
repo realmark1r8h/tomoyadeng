@@ -307,6 +307,41 @@ namespace amo {
             return std::shared_ptr<ClassTransfer>();
         }
         
+        /**
+         * @fn	static std::vector<std::shared_ptr<ClassTransfer> > ClassTransfer::findObjectTransferByClassName(const std::string& strClassName)
+         *
+         * @brief	通过类名查找对象.
+         *
+         * @param	strClassName	Name of the class.
+         *
+         * @return	The found object transfer by class name.
+         */
+        
+        static std::vector<std::shared_ptr<ClassTransfer> >
+        findObjectTransferByClassName(const std::string& strClassName) {
+            std::vector<std::shared_ptr<ClassTransfer> > vec;
+            std::unique_lock<std::recursive_mutex> lock(getMutex());
+            auto ptr = getTransferMap();
+            
+            if (!ptr) {
+                return vec;
+            }
+            
+            
+            for (auto& p : *getTransferMap()) {
+                if (!p.second->isClassOjbect()) {
+                    continue;
+                }
+                
+                if (p.second->transferName() == strClassName) {
+                    vec.push_back(p.second);
+                }
+            }
+            
+            return vec;
+            
+        }
+        
         /*!
          * @fn	static void ClassTransfer::addTransfer(std::shared_ptr<ClassTransfer> transfer)
          *
@@ -480,11 +515,11 @@ namespace amo {
             registerTransfer("getObjectName", std::bind(&ClassTransfer::onGetObjectName,
                              this,
                              std::placeholders::_1),
-                             TransferFuncNormal | TransferExecSync);
+                             TransferMultiDisabled | TransferFuncNormal | TransferExecSync);
             registerTransfer("setObjectName", std::bind(&ClassTransfer::onSetObjectName,
                              this,
                              std::placeholders::_1),
-                             TransferFuncNormal | TransferExecNormal);
+                             TransferMultiDisabled | TransferFuncNormal | TransferExecNormal);
             registerTransfer("release", std::bind(&ClassTransfer::onRelase, this,
                                                   std::placeholders::_1),
                              TransferMultiDisabled |  TransferFuncNormal | TransferExecNormal);
@@ -492,6 +527,15 @@ namespace amo {
             registerTransfer("notify", std::bind(&ClassTransfer::onNotify, this,
                                                  std::placeholders::_1),
                              TransferFuncNormal | TransferExecNormal);
+            registerTransfer("getUserData", std::bind(&ClassTransfer::OnGetUserData, this,
+                             std::placeholders::_1),
+                             TransferMultiDisabled | TransferFuncNormal | TransferExecSync);
+            registerTransfer("setUserData", std::bind(&ClassTransfer::OnSetUserData, this,
+                             std::placeholders::_1),
+                             TransferMultiDisabled | TransferFuncNormal | TransferExecNormal);
+            registerTransfer("All", std::bind(&ClassTransfer::OnGetAll, this,
+                                              std::placeholders::_1),
+                             TransferMultiDisabled | TransferFuncStatic | TransferExecSync);
             return Transfer::registerFunction();
         }
         
@@ -651,6 +695,84 @@ namespace amo {
             triggerEvent(info);
             return Undefined();
         }
+        
+        
+        virtual Any OnGetUserData(IPCMessage::SmartType msg) {
+            std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+            
+            Any& val = args->getValue(0);
+            
+            if (val.type() == AnyValueType<Nil>::value) {
+                // 返回所有设置
+                return userData;
+                
+            } else  if (val.type() == AnyValueType<std::string>::value) {
+                std::string strKey = args->getString(0);
+                auto& json = userData;
+                
+                if (json.is_bool(strKey)) {
+                    return json.getBool(strKey);
+                } else if (json.is_int(strKey)) {
+                    return json.getInt(strKey);
+                } else if (json.is_string(strKey)) {
+                    return json.getString(strKey);
+                } else if (json.is_double(strKey)) {
+                    return json.get<double>(strKey);
+                } else if (json.is_uint(strKey)) {
+                    return (int)json.getUint(strKey);
+                } else if (json.is_object(strKey)) {
+                    return json.getJson(strKey);
+                } else {
+                    return Undefined();
+                }
+                
+                // 返回单项设置
+            }
+            
+            return Undefined();
+        }
+        
+        virtual Any OnSetUserData(IPCMessage::SmartType msg) {
+            std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+            
+            Any& val = args->getValue(0);
+            
+            
+            if (val.type() == AnyValueType<amo::json>::value) {
+                // 更新AppSettings
+                amo::json json = args->getJson(0);
+                
+                if (json.is_object()) {
+                    userData.join(json);
+                }
+                
+                return Undefined();
+            }
+            
+            return Undefined();
+        }
+        
+        /**
+         * @fn	virtual Any OnGetAll(IPCMessage::SmartType msg)
+         *
+         * @brief	获取当前类的所有对象.
+         *
+         * @param	msg	The message.
+         *
+         * @return	Any.
+         */
+        
+        virtual Any OnGetAll(IPCMessage::SmartType msg) {
+            auto vec = ClassTransfer::findObjectTransferByClassName(transferName());
+            std::vector<Any> ret;
+            
+            for (auto& p : vec) {
+                ret.push_back(p->getFuncMgr().toSimplifiedJson());
+            }
+            
+            return ret;
+        }
+        
         /*!
          * @fn	virtual Any ClassTransfer::onMessageTransfer(
          * 		IPCMessage::SmartType message) override
@@ -711,6 +833,7 @@ namespace amo {
         std::function<void(int, std::shared_ptr<amo::ClassTransfer>)> fnCallback;
         std::shared_ptr<spdlog::logger> pLogger;
         std::string moduleName;
+        
     };
     
 }

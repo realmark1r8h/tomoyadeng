@@ -80,6 +80,8 @@ namespace amo {
         std::string makeSql(IPCMessage::SmartType msg);
         std::string getValuesFromJson(amo::json& json, const std::string& key);
         std::string makeInsertSql(IPCMessage::SmartType msg);
+        std::string makeInsertSqlFromJson(const std::string& utf8TableName,
+                                          amo::json& utf8Json);
         std::string makeRemoveSql(IPCMessage::SmartType msg);
         std::string makeUpdateSql(IPCMessage::SmartType msg);
         std::string formatArgs(IPCMessage::SmartType msg);

@@ -476,13 +476,38 @@ namespace amo {
             return "";
         }
         
-        amo::json utf8Json = args->getJson(1);
+        if (args->getValue(1).is<std::vector<Any>>()) {
+            std::vector<Any> arr = args->getValue(1);
+            std::string sql;
+            
+            for (auto & p : arr) {
+                amo::json& utf8Json = p.As<amo::json>();
+                std::string s = makeInsertSqlFromJson(utf8TableName, utf8Json);
+                
+                if (!s.empty()) {
+                    sql += s;
+                    sql += ";";
+                }
+            }
+            
+            return sql;
+        } else if (args->getValue(1).is<amo::json>()) {
+            amo::json utf8Json = args->getJson(1);
+            return makeInsertSqlFromJson(utf8TableName, utf8Json);
+        }
         
+        return "";
+    }
+    
+    
+    std::string SqliteTransfer::makeInsertSqlFromJson(const std::string&
+            utf8TableName, amo::json& utf8Json) {
         // 如果不是一个合法的JSON，返回""
         if (!utf8Json.is_valid() || utf8Json.size() <= 0) {
             return "";
         }
         
+        std::string sssb = utf8Json.to_string();
         std::vector<std::string> keys = utf8Json.keys();
         std::stringstream streamKeys;
         std::stringstream streamValues;
@@ -514,7 +539,6 @@ namespace amo {
         sql += streamValues.str();
         return sql;
     }
-    
     
     std::string SqliteTransfer::makeRemoveSql(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
@@ -1080,7 +1104,7 @@ namespace amo {
         auto& vec = getTableField(table);
         
         for (auto& p : vec) {
-            if (p == field) {
+            if (amo::string(p, true).to_upper() == amo::string(field, true).to_upper()) {
                 return true;
             }
         }

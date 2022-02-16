@@ -803,6 +803,8 @@ namespace amo {
         
         /** @brief	ËùÊôÄ£¿éÃû³Æ. */
         std::string m_strModuleName;
+        
+        amo::json userData;
     };
     
 }

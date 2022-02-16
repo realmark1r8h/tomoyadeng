@@ -4,7 +4,10 @@
 #ifndef AMO_URLREQUESTTRANSFER_H__
 #define AMO_URLREQUESTTRANSFER_H__
 
+#include <stdint.h>
+
 #include <memory>
+
 
 #include <amo/singleton.hpp>
 
@@ -14,24 +17,30 @@
 
 
 namespace amo {
+
+
     class UIMessageEmitter;
     class RequestSettings;
+    
     
     class URLRequestTransfer
         : public ClassTransfer
         , public amo::singleton < URLRequestTransfer > {
     public:
         URLRequestTransfer();
-        URLRequestTransfer(CefRefPtr<CefURLRequest> pURLRequest);
-        
+        URLRequestTransfer(CefRefPtr<CefURLRequest> pURLRequest,
+                           int32_t nTimeOut = 0);
+        ~URLRequestTransfer();
         virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
+        virtual void onBeforeRelease() override;
         Any GetRequest(IPCMessage::SmartType msg);
         Any GetClient(IPCMessage::SmartType msg);
         Any GetRequestStatus(IPCMessage::SmartType msg);
         Any GetRequestError(IPCMessage::SmartType msg);
         Any GetResponse(IPCMessage::SmartType msg);
         Any Cancel(IPCMessage::SmartType msg);
+        
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(URLRequestTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(GetRequest, TransferExecSync)
@@ -72,11 +81,19 @@ namespace amo {
         
         std::shared_ptr<amo::RequestSettings> getRequestSettings() const;
         void setRequestSettings(std::shared_ptr<amo::RequestSettings> val);
+        
+        bool onCheckTimeOut(int64_t id);
+        
+        void setTimeOut(int32_t nTimeOut);
+        
     private:
         CefRefPtr<CefURLRequest> m_pURLRequest;
         CefRefPtr<CefFrame> m_pFrame;
         std::shared_ptr<RequestSettings> m_pRequestSettings;
         std::string m_downloadData;
+        amo::timer m_timer;
+        bool  m_bTimeOut;  // ÊÇ·ñ³¬Ê±
+        
     };
 }
 
