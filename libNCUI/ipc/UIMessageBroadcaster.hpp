@@ -79,7 +79,7 @@ namespace amo {
             
             std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter());
             runner->createIPCMessage("emitEventAllFrame",
-                                     MSG_NATIVE_SYNC_EXECUTE,
+                                     MSG_NATIVE_EXECUTE,
                                      args...);
             runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
             runner->setValue(IPCArgsPosInfo::EventObjectID, m_nObjectID);

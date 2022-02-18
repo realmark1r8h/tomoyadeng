@@ -314,6 +314,8 @@ namespace amo {
     
     
     BrowserWindowManager::~BrowserWindowManager() {
+        auto context = AppContext::getInstance();
+        context->getClientHandler()->UnregisterLifeSpanHandlerDelegate(this);
         $clog(amo::cdevel << func_orient << amo::endl;);
     }
     
@@ -513,7 +515,7 @@ namespace amo {
     }
     
     void BrowserWindowManager::init() {
-        Tray::getInstance()->create();
+        //Tray::getInstance()->create();
     }
     
 }

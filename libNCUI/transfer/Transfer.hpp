@@ -185,7 +185,7 @@ namespace amo {
             setObjectID(amo::uid::generate_uid());
             m_oFuncMgr.setObjectID(getObjectID());
             setFuncRegistered(false);
-            setClassObject(false);
+            setTransferObject(true);
             m_bReleased = false;
             
         }
@@ -203,7 +203,7 @@ namespace amo {
             setObjectID(amo::uid::generate_uid());
             m_oFuncMgr.setObjectID(getObjectID());
             setFuncRegistered(false);
-            setClassObject(false);
+            setTransferObject(true);
             m_bReleased = false;
         }
         
@@ -296,15 +296,15 @@ namespace amo {
         }
         
         /**
-         * @fn	bool Transfer::isClassOjbect() const
+         * @fn	bool Transfer::isTransferOjbect() const
          *
          * @brief	判断当前Transfer是否为对象.
          *
          * @return	true if class ojbect, false if not.
          */
         
-        bool isClassOjbect() const {
-            return m_bClassObject;
+        bool isTransferOjbect() const {
+            return m_bTransferObject;
         }
         
         /**
@@ -315,8 +315,8 @@ namespace amo {
          * @param	val	true to value.
          */
         
-        void setClassObject(bool val) {
-            m_bClassObject = val;
+        void setTransferObject(bool val) {
+            m_bTransferObject = val;
         }
         
         /*!
@@ -787,7 +787,7 @@ namespace amo {
         bool m_bIsRegistered;
         
         /** @brief	判断当前transfer是类还是对象. */
-        bool m_bClassObject;
+        bool m_bTransferObject;
         
         /** @brief	Transfer中产生的默认事件触发函数，m_fnTriggerEventFunc无效时会尝试使用该函数. */
         std::function<void(IPCMessage::SmartType)> m_fnDefaultTriggerEventFunc;

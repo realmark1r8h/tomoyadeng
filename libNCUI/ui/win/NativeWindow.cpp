@@ -25,6 +25,10 @@ namespace amo {
         setTransferObjectID(getObjectID());
     }
     
+    NativeWindow::~NativeWindow() {
+        removeTransfer(getObjectID());
+    }
+    
     DuiLib::CDuiString NativeWindow::GetSkinFolder() {
         return _T("");
     }
@@ -50,6 +54,12 @@ namespace amo {
     
     std::shared_ptr<amo::NativeWindow> NativeWindow::toNativeWindow() {
         return std::dynamic_pointer_cast<NativeWindow>(shared_from_this());
+    }
+    
+    LRESULT NativeWindow::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                    BOOL& bHandled) {
+                                    
+        return LocalWindow::OnDestroy(uMsg, wParam, lParam, bHandled);
     }
     
     void NativeWindow::OnFinalMessage(HWND hWnd) {

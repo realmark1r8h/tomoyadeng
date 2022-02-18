@@ -129,8 +129,8 @@ namespace amo {
         /*! @brief	用户文档目录的路径. */
         std::string documents;
         
-        
-        
+        /** @brief	启动时间. */
+        int64_t startTime;
         
         
         

@@ -27,6 +27,7 @@ namespace amo {
     LRESULT LocalWindow::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                    BOOL& bHandled) {
                                    
+                                   
         // ÒÆ³ýÓ³Éä
         for (auto& p : m_oTransferedSet) {
             auto manager = TransferMappingMgr<ControlTransfer>::getInstance();
@@ -109,8 +110,8 @@ namespace amo {
                 
             case SC_MINIMIZE:
             case 0xf022:
-                break;
                 runner->broadcast("minimize");
+                break;
                 
             case SC_CLOSE:
                 break;

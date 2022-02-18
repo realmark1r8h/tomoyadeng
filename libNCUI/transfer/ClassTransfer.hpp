@@ -155,7 +155,7 @@ namespace amo {
         static std::shared_ptr<T> createTransfer(Args ... args) {
             std::unique_lock<std::recursive_mutex> lock(getMutex());
             std::shared_ptr<T> pTransfer(new T(args ...));
-            pTransfer->setClassObject(true); //这里创建的是对象
+            pTransfer->setTransferObject(true); //这里创建的是对象
             pTransfer->registerFunction();
             
             addTransfer(pTransfer);
@@ -183,7 +183,7 @@ namespace amo {
                 return pTransfer;
             }
             
-            pTransfer->setClassObject(false); //这里创建的是类
+            pTransfer->setTransferObject(false); //这里创建的是类
             pTransfer->registerFunction();
             
             addTransfer(pTransfer);
@@ -295,7 +295,7 @@ namespace amo {
             }
             
             for (auto& p : *getTransferMap()) {
-                if (p.second->isClassOjbect()) {
+                if (p.second->isTransferOjbect()) {
                     continue;
                 }
                 
@@ -328,10 +328,15 @@ namespace amo {
             }
             
             
-            for (auto& p : *getTransferMap()) {
-                if (!p.second->isClassOjbect()) {
+            for (auto& p : *ptr) {
+                if (!p.second->isTransferOjbect()) {
                     continue;
                 }
+                
+                if (p.second->getObjectName().find("CLASS.") != -1) {
+                    continue;
+                }
+                
                 
                 if (p.second->transferName() == strClassName) {
                     vec.push_back(p.second);

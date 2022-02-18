@@ -17,6 +17,7 @@ namespace amo {
         DelegateSet::iterator it = m_Delegates.begin();
         
         //TODO: 退出时错误，有可能在循环的时时候，窗口被移除数据，导致程序出错
+        // 好像已经改了，不知道改到没有
         for (; it != m_Delegates.end(); ++it) {
             (*it)->OnBeforeClose(browser);
         }
@@ -102,7 +103,8 @@ namespace amo {
             }
         }
         
-        return CefLifeSpanHandler::OnBeforePopup(browser, frame, target_url, target_frame_name,
+        return CefLifeSpanHandler::OnBeforePopup(browser, frame, target_url,
+                target_frame_name,
                 target_disposition, user_gesture, popupFeatures, windowInfo,
                 client, settings, no_javascript_access);
     }
@@ -130,13 +132,15 @@ namespace amo {
             }
         }
     
-        return CefLifeSpanHandler::OnBeforePopup(browser, frame, target_url, target_frame_name,
+        return CefLifeSpanHandler::OnBeforePopup(browser, frame, target_url,
+                target_frame_name,
                 popupFeatures, windowInfo, client, settings, no_javascript_access);
     }
 #endif
     
     
-    void LifeSpanHandler::SetMessageRouter(CefRefPtr<MessageRouterBrowserSide> router) {
+    void LifeSpanHandler::SetMessageRouter(CefRefPtr<MessageRouterBrowserSide>
+                                           router) {
         $clog(amo::cdevel << func_orient << amo::endl;);
         m_pMessageRouter = router;
     }

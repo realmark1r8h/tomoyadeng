@@ -17,6 +17,8 @@ namespace amo {
     public:
     
         TrayTransfer();
+        std::shared_ptr<amo::Tray> getTray()  ;
+        void setTray(std::shared_ptr<amo::Tray> val);
         
         void onTrayEvent(const std::string& event);
         /*!
@@ -88,6 +90,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(blink, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(isBlink, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
+        
     private:
         std::shared_ptr<Tray> m_pTray;
         

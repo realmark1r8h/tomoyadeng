@@ -481,6 +481,9 @@ namespace amo {
             retval = CefV8Value::CreateString(any.As<std::string>());
             break;
             
+            
+            
+            
         case  AnyValueType<amo::json>::value: {
     
             // ·µ»ØÒ»¸öJS Object
@@ -508,24 +511,36 @@ namespace amo {
             break;
         }
         
-        case AnyValueType<std::vector<Any>>::value: {
+        case AnyValueType<std::vector<Any> >::value: {
             std::vector<Any> vec = any;
             
-            if (!vec.empty()) {
-                CefRefPtr<CefV8Value> retvalArr = CefV8Value::CreateArray(vec.size());
-                
-                for (size_t i = 0; i < vec.size(); ++i) {
-                
-                    CefRefPtr<CefV8Value> object = toV8Value(vec[i]);
-                    retvalArr->SetValue(i, object);
-                }
-                
-                retval = retvalArr;
+            retval = CefV8Value::CreateArray(vec.size());
+            
+            for (size_t i = 0; i < vec.size(); ++i) {
+                retval->SetValue(i, toV8Value(vec[i]));
             }
             
+            break;
         }
-        break;
         
+        /*      case AnyValueType<std::vector<Any>>::value: {
+                  std::vector<Any> vec = any;
+    
+                  if (!vec.empty()) {
+                      CefRefPtr<CefV8Value> retvalArr = CefV8Value::CreateArray(vec.size());
+    
+                      for (size_t i = 0; i < vec.size(); ++i) {
+    
+                          CefRefPtr<CefV8Value> object = toV8Value(vec[i]);
+                          retvalArr->SetValue(i, object);
+                      }
+    
+                      retval = retvalArr;
+                  }
+    
+              }
+              break;*/
+    
         default:
             retval = CefV8Value::CreateUndefined();
             break;

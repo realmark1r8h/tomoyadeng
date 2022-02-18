@@ -12,8 +12,10 @@
 
 namespace amo {
 
-    NotifyWindow::NotifyWindow(std::shared_ptr<BrowserWindowSettings> pBrowserSettings)
+    NotifyWindow::NotifyWindow(std::shared_ptr<BrowserWindowSettings>
+                               pBrowserSettings)
         : LayeredWindow(pBrowserSettings) {
+        AMO_TIMER_ELAPSED();
     }
     
     
@@ -30,6 +32,7 @@ namespace amo {
     }
     
     CDuiString NotifyWindow::GetSkinFile() {
+        AMO_TIMER_ELAPSED();
         return amo::string(skinNotifyWindow, false).to_unicode().c_str();
     }
     
@@ -38,6 +41,7 @@ namespace amo {
     }
     
     void NotifyWindow::InitWindow() {
+        AMO_TIMER_ELAPSED();
         RECT rect = { 0 };
         RECT workRect = { 0 };
         ::SystemParametersInfo(SPI_GETWORKAREA, 0, &workRect, SPIF_SENDCHANGE);
@@ -46,10 +50,13 @@ namespace amo {
         rect.right = rect.left + SCREENRIGHTINTERVAL + BOXFRAMEWIDTH; //w
         rect.bottom = rect.top + SCREENBOTTONINTERVAL + BOXFRAMEHEIGHT; //h
         
-        ::SetWindowPos(m_hWnd, HWND_TOPMOST, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, TRUE);
+        ::SetWindowPos(m_hWnd, HWND_TOPMOST, rect.left, rect.top,
+                       rect.right - rect.left, rect.bottom - rect.top, TRUE);
         //m_nCaptureScreenKey = createHotKey();
         //registerHotKey(m_nCaptureScreenKey, MOD_CONTROL | MOD_ALT, 'O');
-        return LayeredWindow::InitWindow();
+        LayeredWindow::InitWindow();
+        AMO_TIMER_ELAPSED();
+        return;
     }
     
     
@@ -61,37 +68,44 @@ namespace amo {
     
     
     LRESULT NotifyWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
-        if (m_fnTrayMessageCallback && m_fnTrayMessageCallback(uMsg, wParam, lParam) == TRUE) {
+        if (m_fnTrayMessageCallback &&
+                m_fnTrayMessageCallback(uMsg, wParam, lParam) == TRUE) {
             return TRUE;
         }
         
-        if (m_fnClipMessageCallback && m_fnClipMessageCallback(m_hWnd, uMsg, wParam, lParam) == TRUE) {
+        if (m_fnClipMessageCallback &&
+                m_fnClipMessageCallback(m_hWnd, uMsg, wParam, lParam) == TRUE) {
             return TRUE;
         }
         
         return LayeredWindow::HandleMessage(uMsg, wParam, lParam);
     }
     
-    std::function<LRESULT(INT, WPARAM, LPARAM)> NotifyWindow::getTrayMessageCallback() const {
+    std::function<LRESULT(INT, WPARAM, LPARAM)>
+    NotifyWindow::getTrayMessageCallback() const {
         return m_fnTrayMessageCallback;
     }
     
-    void NotifyWindow::setTrayMsgCallback(std::function<LRESULT(INT, WPARAM, LPARAM)> val) {
+    void NotifyWindow::setTrayMsgCallback(
+        std::function<LRESULT(INT, WPARAM, LPARAM)> val) {
         m_fnTrayMessageCallback = val;
     }
     
     
-    std::function<LRESULT(HWND, INT, WPARAM, LPARAM)> NotifyWindow::getClipMessageCallback() const {
+    std::function<LRESULT(HWND, INT, WPARAM, LPARAM)>
+    NotifyWindow::getClipMessageCallback() const {
         return m_fnClipMessageCallback;
     }
     
-    void NotifyWindow::setClipMsgCallback(std::function<LRESULT(HWND, INT, WPARAM, LPARAM)> val) {
+    void NotifyWindow::setClipMsgCallback(
+        std::function<LRESULT(HWND, INT, WPARAM, LPARAM)> val) {
         m_fnClipMessageCallback = val;
     }
     
     
-    LRESULT NotifyWindow::OnHotKey(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
-    
+    LRESULT NotifyWindow::OnHotKey(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                   BOOL& bHandled) {
+                                   
         int32_t nKey = (int)wParam;
         auto iter = m_oHotKeyMap.find(nKey);
         
@@ -106,9 +120,11 @@ namespace amo {
         }
         
         
-        int64_t nObjectID = ClassTransfer::getUniqueTransfer<GlobalShortcutTransfer>()->getObjectID();
-        std::shared_ptr<UIMessageBroadcaster> runner(new UIMessageBroadcaster(nObjectID));
-        
+        int64_t nObjectID =
+            ClassTransfer::getUniqueTransfer<GlobalShortcutTransfer>()->getObjectID();
+        std::shared_ptr<UIMessageBroadcaster> runner(new UIMessageBroadcaster(
+                    nObjectID));
+                    
         runner->syncBroadcast("hotkeydown", nKey, iter->second->settings);
         
         return TRUE;

@@ -254,6 +254,12 @@ namespace amo {
     
     
     
+    Any AppTransfer::elapsed(IPCMessage::SmartType msg) {
+        AMO_TIMER_ELAPSED();
+        auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
+        return amo::timer::now() - appSettings->startTime;
+    }
+    
     bool AppTransfer::restart(IPCMessage::SmartType msg) {
         int nDelay = msg->getArgumentList()->getInt(0);
         amo::app app;

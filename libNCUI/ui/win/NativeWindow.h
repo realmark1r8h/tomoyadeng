@@ -12,6 +12,7 @@ namespace amo {
     class NativeWindow : public LocalWindow, virtual public NativeWindowTransfer {
     public:
         NativeWindow(std::shared_ptr<NativeWindowSettings> pBrowserSettings);
+        ~NativeWindow();
         virtual CDuiString GetSkinFolder() override;
         virtual CDuiString GetSkinFile() override;
         virtual void OnFinalMessage(HWND hWnd) override;
@@ -25,6 +26,10 @@ namespace amo {
         
         virtual std::shared_ptr<NativeWindow> toNativeWindow() override;
         
+        
+        virtual LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                  BOOL& bHandled) override;
+                                  
     private:
     
         int m_nBrowserID;

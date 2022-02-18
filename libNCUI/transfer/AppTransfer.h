@@ -179,6 +179,17 @@ namespace amo {
         Any setAutoRun(IPCMessage::SmartType msg);
         
         /**
+         * @fn	Any AppTransfer::duration(IPCMessage::SmartType msg);
+         *
+         * @brief	当前程序运行时间.
+         *
+         * @param	msg	The message.
+         *
+         * @return	Any.
+         */
+        
+        Any elapsed(IPCMessage::SmartType msg);
+        /**
          * @fn	bool AppTransfer::restart(IPCMessage::SmartType msg);
          *
          * @brief	重启当前程序.
@@ -202,20 +213,27 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setAutoRun, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getAutoRun, TransferFuncStatic | TransferExecSync)
         
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(toAbsolutePath, TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(urlToNativePath, TransferFuncStatic | TransferExecSync)
-        
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(toAbsolutePath,
+                                      TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(urlToNativePath,
+                                      TransferFuncStatic | TransferExecSync)
+                                      
         AMO_CEF_MESSAGE_TRANSFER_FUNC(addUrlMapping, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(removeUrlMapping, TransferFuncStatic)
         
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(setDragClassName, TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(setNoDragClassName, TransferFuncStatic | TransferExecSync)
-        
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(setDragClassName,
+                                      TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(setNoDragClassName,
+                                      TransferFuncStatic | TransferExecSync)
+                                      
         AMO_CEF_MESSAGE_TRANSFER_FUNC(quit, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(exit, TransferFuncStatic)
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(restart, TransferFuncStatic)
         
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(elapsed,
+                                      TransferFuncStatic | TransferExecSync)
+                                      
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     private:

@@ -27,6 +27,7 @@
 #include <tchar.h>
 #include <amo/loader.hpp>
 #include <amo/string.hpp>
+#include <amo/timer.hpp>
 
 #pragma comment(lib, "iphlpapi.lib")
 #pragma comment(lib, "shlwapi.lib")
@@ -138,6 +139,7 @@ public:
                     manifestJson = amo::json();
                 }
                 
+                
                 OutputDebugStringA(strJson.c_str());
                 
                 //$cdevel(strJson.c_str());
@@ -151,10 +153,12 @@ public:
         
         if (m_bManifest && manifestJson.is_valid() && !manifestJson.empty()) {
             amo::json appSettingsJson = manifestJson.get_child("appSettings");
-            amo::json browserWindowSettingsJson = manifestJson.get_child("browserWindowSettings");
-            
-            amo::json splashWindowSettingsJson = manifestJson.get_child("splashWindowSettings");
-            
+            amo::json browserWindowSettingsJson =
+                manifestJson.get_child("browserWindowSettings");
+                
+            amo::json splashWindowSettingsJson =
+                manifestJson.get_child("splashWindowSettings");
+                
             if (appSettingsJson.is_valid()) {
                 amo::json json(strAppSettings);
                 
@@ -190,8 +194,10 @@ public:
             
         }
         
+        amo::json appJson = amo::json(strAppSettings);
+        appJson.put("startTime", amo::timer::now());  //添加启动时间
         
-        amo::string strApp(strAppSettings, false);
+        amo::string strApp(appJson.to_string(), false);
         strAppSettings = strApp.replace(" ", "").to_ansi();
         amo::string strBrowser(strBrowserSettings, false);
         strBrowserSettings = strBrowser.replace(" ", "");
@@ -339,21 +345,27 @@ void runCefInCefProcess() {
     typedef bool(*FuncUpdateConfig)(const std::string&);
     
     // app
-    FuncUpdateConfig fnUpdateAppSettings = (FuncUpdateConfig)loader.load_symbol("updateAppSettings");
+    FuncUpdateConfig fnUpdateAppSettings = (FuncUpdateConfig)
+                                           loader.load_symbol("updateAppSettings");
     std::string strAppArgs = amo::string(args->strAppSettings, false).to_utf8();
     fnUpdateAppSettings(strAppArgs);
     
     // BrowserWindow
-    FuncUpdateConfig fnUpdateBrowserSettings = (FuncUpdateConfig)loader.load_symbol("updateBrowserSettings");
-    std::string strBrowserArgs = amo::string(args->strBrowserSettings, false).to_utf8();
+    FuncUpdateConfig fnUpdateBrowserSettings = (FuncUpdateConfig)
+            loader.load_symbol("updateBrowserSettings");
+    std::string strBrowserArgs = amo::string(args->strBrowserSettings,
+                                 false).to_utf8();
     fnUpdateBrowserSettings(strBrowserArgs);
     
     // SplashWindow
-    FuncUpdateConfig fnUpdateSplashSettings = (FuncUpdateConfig)loader.load_symbol("updateSplashSettings");
-    std::string strSplashArgs = amo::string(args->strSplashSettings, false).to_utf8();
+    FuncUpdateConfig fnUpdateSplashSettings = (FuncUpdateConfig)
+            loader.load_symbol("updateSplashSettings");
+    std::string strSplashArgs = amo::string(args->strSplashSettings,
+                                            false).to_utf8();
     fnUpdateSplashSettings(strSplashArgs);
     
-    fnSetMessageQueue setMessageQueue = (fnSetMessageQueue)loader.load_symbol("setMessageQueue");
+    fnSetMessageQueue setMessageQueue = (fnSetMessageQueue)
+                                        loader.load_symbol("setMessageQueue");
     setMessageQueue(args->strMessageQueue);
     
     typedef int(*fnRun)(HINSTANCE);
@@ -421,7 +433,8 @@ void runNodeInNodeProcess() {
                                 NULL,
                                 SW_SHOWNORMAL);
                                 
-                WaitForSingleObject(ShExecInfo.hProcess, INFINITE);					//等待完成   第二个参数是超时时间（毫秒）超时后返回超时代码
+                WaitForSingleObject(ShExecInfo.hProcess,
+                                    INFINITE);					//等待完成   第二个参数是超时时间（毫秒）超时后返回超时代码
             } else {
             
                 args->createSharedMemory();

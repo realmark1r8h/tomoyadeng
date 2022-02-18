@@ -20,6 +20,9 @@ namespace amo {
     
         Tray();
         ~Tray();
+        
+        virtual void onCreateSingleInstance() override;
+        
         void createNotifyWindow();
         
         void create();
@@ -146,6 +149,7 @@ namespace amo {
         void triggerEvent(const std::string& event);
         
         
+        
     private:
     
         /*! @brief	托盘数据. */
@@ -168,6 +172,7 @@ namespace amo {
         
         /*! @brief	托盘事件回调函数. */
         std::function<void(const std::string&)> m_fnEventCallback;
+        
     public:
     
     

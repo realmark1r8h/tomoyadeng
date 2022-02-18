@@ -91,7 +91,7 @@ namespace amo {
     }
     
     void WebkitView::DoInit() {
-    
+        AMO_TIMER_ELAPSED();
         m_hParentWnd = GetManager()->GetPaintWindow();
         //添加事件处理函数
         m_pClientHandler->RegisterLifeSpanHandlerDelegate(this);
@@ -123,9 +123,10 @@ namespace amo {
         m_pRenderWnd->Create(m_hParentWnd, NULL, UI_WNDSTYLE_CHILD,
                              NULL); //UI_WNDSTYLE_CHILD 防止闪屏
         //UpdateBrowserPos();	//设置窗口位置
-        SetPos(GetPos());
+        //SetPos(GetPos());
         m_hBrowserWnd = m_pRenderWnd->GetHWND();	//获取浏览器窗口句柄
         ::ShowWindow(m_pRenderWnd->GetHWND(),  SW_SHOW);
+        AMO_TIMER_ELAPSED();
         return CControlUI::DoInit();
     }
     
@@ -226,7 +227,7 @@ namespace amo {
     
     void WebkitView::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
         CEF_REQUIRE_UI_THREAD();
-        
+        AMO_TIMER_ELAPSED();
         
         if (m_pBrowser) {
             //m_pDevBrowser = browser;
@@ -285,7 +286,8 @@ namespace amo {
                                CefRefPtr<CefFrame> frame,
                                int httpStatusCode) {
                                
-                               
+        AMO_TIMER_ELAPSED();
+        
         if (m_nBrowserID != browser->GetIdentifier()) {
         
             return;
@@ -316,7 +318,7 @@ namespace amo {
             browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
         }
         
-        
+        AMO_TIMER_ELAPSED();
         
         
     }
@@ -755,6 +757,8 @@ namespace amo {
     
     void WebkitView::OnLoadStart(CefRefPtr<CefBrowser> browser,
                                  CefRefPtr<CefFrame> frame) {
+        AMO_TIMER_ELAPSED();
+        
         if (frame->IsMain()) {
             CefString url = frame->GetURL();
             

@@ -31,6 +31,8 @@
 #include "utility/utility.hpp"
 #include "transfer/RendererTransferMgr.h"
 
+
+
 namespace amo {
 
     bool RenderProcessHandler::OnProcessMessageReceived(CefRefPtr<CefBrowser>
@@ -475,8 +477,10 @@ namespace amo {
     }
     
     void RenderProcessHandler::OnBrowserCreated(CefRefPtr<CefBrowser> browser) {
+    
+        AMO_TIMER_ELAPSED();
         $clog(amo::cdevel << func_orient << "浏览器创建成功。" << amo::endl;);
-        
+        amo::timer t;
         int nBrowserID = browser->GetIdentifier();
         
         auto manager = RendererProcessExchangerManager::getInstance();
@@ -521,7 +525,7 @@ namespace amo {
             pExchanger->setBrowserID(browser->GetIdentifier());
             
             
-            
+            AMO_TIMER_ELAPSED();
             
             CefRefPtr<CefBrowser> pBrowser = GetAnyBrowser();
             
@@ -536,8 +540,10 @@ namespace amo {
                 
                 // 如果是当前进程的第一个Browser,，那么直接创建管道
                 createPipe(browser->GetIdentifier(), pExchanger);
+                AMO_TIMER_ELAPSED();
                 Any ret;
                 afterCreatePipe(browser, pExchanger, ret);
+                AMO_TIMER_ELAPSED();
             } else {
                 std::shared_ptr<RenderMessageEmitter> runner;
                 runner.reset(new RenderMessageEmitter(pBrowser->GetMainFrame()));
@@ -572,7 +578,11 @@ namespace amo {
             (*it)->OnBrowserCreated(browser);
         }
         
+        int64_t tt = t.elapsed();
+        AMO_TIMER_ELAPSED();
     }
+    
+    
     
     void RenderProcessHandler::OnWebKitInitialized() {
     

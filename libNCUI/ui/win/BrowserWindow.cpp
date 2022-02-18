@@ -76,6 +76,8 @@ namespace amo {
     }
     
     BrowserWindow::~BrowserWindow() {
+    
+        removeTransfer(getObjectID());
         amo::cdevel << func_orient << amo::endl;
     }
     
@@ -162,7 +164,7 @@ namespace amo {
     
     void BrowserWindow::InitWindow() {
     
-    
+        AMO_TIMER_ELAPSED();
         //获取图标，第二个参数为要获取第几个图标
         HICON hIcon = ExtractIconA(m_PaintManager.GetInstance(),
                                    amo::path::getFullExeName().c_str(), 0);
@@ -227,6 +229,7 @@ namespace amo {
         m_pCefCallbackHandler->registerHandlerDelegate(m_pWebkit->getClientHandler());
         m_pBrowserLayout->Add(m_pWebkit);//将浏览器控件加入到窗口中
         this->registerFunction();
+        AMO_TIMER_ELAPSED();
     }
     
     void BrowserWindow::OnFinalMessage(HWND hWnd) {
@@ -670,12 +673,13 @@ namespace amo {
             m_pWebkit->insertBitmap(std::shared_ptr<Gdiplus::Bitmap>());
         }
         
+        
         if (m_pWebkit) {
         
             CefRefPtr<amo::ClientHandler> pHandler = NULL;
             pHandler = m_pWebkit->getClientHandler();
             pHandler->UnregisterRenderHandlerDelegate(this);
-            //pHandler->UnregisterLifeSpanHandlerDelegate(this);
+            pHandler->UnregisterLifeSpanHandlerDelegate(this);
             
             
             /*   if (m_pBrowserLayout) {

@@ -35,7 +35,14 @@ namespace amo {
         m_pNotifyWindow = NULL;
     }
     
+    void Tray::onCreateSingleInstance() {
+        create();
+        return;
+    }
+    
     void Tray::createNotifyWindow() {
+        AMO_TIMER_ELAPSED();
+        
         if (m_pNotifyWindow == nullptr) {
             std::shared_ptr<BrowserWindowSettings> pSettings;
             pSettings.reset(new BrowserWindowSettings());
@@ -54,10 +61,15 @@ namespace amo {
                                                 std::placeholders::_2,
                                                 std::placeholders::_3));
         }
+        
+        AMO_TIMER_ELAPSED();
     }
     
     void Tray::create() {
-    
+        if (m_pNotifyWindow != NULL) {
+            return;
+        }
+        
         createNotifyWindow();
         HICON hIcon = NULL;
         HINSTANCE hInst = ::GetModuleHandle(NULL);
@@ -86,6 +98,8 @@ namespace amo {
     
     
     LRESULT Tray::OnImeMonitor(UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    
+    
         if (uMsg != WM_TRAY_MONITOR) {
             return FALSE;
         }
@@ -146,14 +160,18 @@ namespace amo {
     }
     
     void Tray::setBlink(bool isBlink) {
+    
         m_bBlink = isBlink;
     }
     
     bool Tray::isBlink() const {
+    
         return m_bBlink;
     }
     
     void Tray::triggerEvent(const std::string& event) {
+    
+    
         if (!m_fnEventCallback) {
             return;
         }
@@ -162,6 +180,8 @@ namespace amo {
     }
     
     void Tray::onMouseEnter() {
+    
+    
         if (m_pNotifyWindow == NULL) {
             return;
         }
@@ -174,6 +194,8 @@ namespace amo {
     }
     
     void Tray::onMouseHover() {
+    
+    
         if (m_pNotifyWindow == NULL) {
             return;
         }
@@ -186,6 +208,8 @@ namespace amo {
     }
     
     void Tray::onMouseLeave() {
+    
+    
         if (m_pNotifyWindow == NULL) {
             return;
         }
@@ -280,6 +304,7 @@ namespace amo {
     
     
     void Tray::updateIcon(HICON icon) {
+    
         m_notifyCondata.hIcon = icon;
         Shell_NotifyIconA(NIM_MODIFY, &m_notifyCondata);
     }

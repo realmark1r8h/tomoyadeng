@@ -185,6 +185,7 @@ namespace amo {
     }
     
     bool AppContext::needQuitWithOutNode() {
+    
         auto pAppSettings = getDefaultAppSettings();
         auto manager = BrowserWindowManager::getInstance();
         
@@ -297,28 +298,22 @@ namespace amo {
     
     
     int AppContext::executeProcess(CefMainArgs& main_args) {
-    
+        AMO_TIMER_ELAPSED();
         //   spdlog 不支持XP, 如果在XP下使用需要禁用log
         
-        if (!amo::log::initialize()) {
+        if (!amo::log::initialize(false, false)) {
             return -1;
         }
-        
-        auto sink1 = std::make_shared<spdlog::sinks::msvc_sink_mt>();
-        /*auto sink2 = std::make_shared<spdlog::sinks::daily_file_sink_mt>("logfile", "txt", 23, 59);
-        sink2->set_level(amo::log::level::trace);*/
         
         
         std::stringstream stream;
         stream << "logfile_";
         stream << amo::app().pid();
-        auto sink3 = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                         stream.str(), SPDLOG_FILENAME_T("txt"), 1048576 * 15, 3);
-                         
-                         
-        amo::log::add_sink(sink1);
-        //amo::log::add_sink(sink2);
-        amo::log::add_sink(sink3);
+        /*     auto sink3 = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+                              stream.str(), SPDLOG_FILENAME_T("txt"), 1048576 * 15, 3);*/
+        
+        
+        //amo::log::add_sink(sink3);
         amo::log::set_level(amo::log::level::trace);
         amo::log::set_pattern("[%Y-%m-%d %H:%M:%S][%l] %v");
         
@@ -343,6 +338,7 @@ namespace amo {
             m_nProcessExitCode = exit_code;
         }
         
+        AMO_TIMER_ELAPSED();
         return exit_code;
     }
     
@@ -350,7 +346,8 @@ namespace amo {
     
     void AppContext::run(CefMainArgs& main_args) {
     
-    
+        AMO_TIMER_ELAPSED();
+        
         if (!amo::log::initialize()) {
             return;
         }
@@ -383,8 +380,11 @@ namespace amo {
         auto manager = BrowserWindowManager::getInstance();
         manager->init();
         auto pAppSettings = getDefaultAppSettings();
-        
+        //
         bool bNeedQuit = needQuitWithOutNode();
+        AMO_TIMER_ELAPSED();
+        
+        //bNeedQuit = true;
         
         if (!bNeedQuit) {
             // 开启启动画面
@@ -402,6 +402,7 @@ namespace amo {
                 startNodeThread();
             }
             
+            AMO_TIMER_ELAPSED();
             // 开始消息循环
             CefRunMessageLoop();
         }
@@ -444,7 +445,7 @@ namespace amo {
         int i = 0;
         std::cout << i << std::endl;
         
-        
+        AMO_TIMER_ELAPSED(run结束);
         CefShutdown();
         
     }
@@ -470,6 +471,8 @@ namespace amo {
     }
     
     void AppContext::initialize(HINSTANCE hInstance) {
+    
+    
         if (getProcessType() == BrowserProcess) {
         
             CPaintManagerUI::SetInstance(hInstance);
@@ -477,6 +480,8 @@ namespace amo {
             amo::string strSkin(m_pAppSettings->skinDir, true);
             CPaintManagerUI::SetResourcePath(strSkin.to_unicode().c_str());
         }
+        
+        AMO_TIMER_ELAPSED();
     }
     
     

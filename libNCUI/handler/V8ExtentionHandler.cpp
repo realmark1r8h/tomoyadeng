@@ -446,6 +446,8 @@ namespace amo {
     
     bool V8ExtentionHandler::loadExternalTransfer(const std::string& strClass,
             CefRefPtr<CefBrowser> browser) {
+            
+        AMO_TIMER_ELAPSED();
         // 从磁盘中加载与所给模块同名dll
         std::shared_ptr<amo::loader> pLoader;
         pLoader = DllManager<PID_RENDERER>::getInstance()->load(strClass);
@@ -473,6 +475,7 @@ namespace amo {
             return false;
         }
         
+        AMO_TIMER_ELAPSED();
         return true;
     }
     

@@ -7,11 +7,24 @@ namespace amo {
 
     TrayTransfer::TrayTransfer()
         : ClassTransfer("tray") {
-        m_pTray = Tray::getInstance();
+        
         addModule("EventEmitter");
-        m_pTray->setEventCallback(std::bind(&TrayTransfer::onTrayEvent,
-                                            this,
-                                            std::placeholders::_1));
+        
+    }
+    
+    std::shared_ptr<amo::Tray> TrayTransfer::getTray()  {
+        if (!m_pTray) {
+            m_pTray = Tray::getInstance();
+            m_pTray->setEventCallback(std::bind(&TrayTransfer::onTrayEvent,
+                                                this,
+                                                std::placeholders::_1));
+        }
+        
+        return m_pTray;
+    }
+    
+    void TrayTransfer::setTray(std::shared_ptr<amo::Tray> val) {
+        m_pTray = val;
     }
     
     void TrayTransfer::onTrayEvent(const std::string& event) {
@@ -22,36 +35,36 @@ namespace amo {
     }
     
     Any TrayTransfer::show(IPCMessage::SmartType msg) {
-        m_pTray->show(true);
+        getTray()->show(true);
         return Undefined();
     }
     
     Any TrayTransfer::hide(IPCMessage::SmartType msg) {
-        m_pTray->show(false);
+        getTray()->show(false);
         return Undefined();
     }
     
     Any TrayTransfer::setIcon(IPCMessage::SmartType msg) {
         amo::string strPath(msg->getArgumentList()->getString(0), true);
-        m_pTray->setTrayIcon(strPath);
+        getTray()->setTrayIcon(strPath);
         return Undefined();
     }
     
     Any TrayTransfer::setTooltip(IPCMessage::SmartType msg) {
         amo::string str(msg->getArgumentList()->getString(0), true);
-        m_pTray->setToolTip(str.to_ansi());
+        getTray()->setToolTip(str.to_ansi());
         return Undefined();
     }
     
     
     Any TrayTransfer::blink(IPCMessage::SmartType msg) {
         bool bBlink = msg->getArgumentList()->getBool(0);
-        m_pTray->blink(bBlink);
+        getTray()->blink(bBlink);
         return Undefined();
     }
     
     Any TrayTransfer::isBlink(IPCMessage::SmartType msg) {
-        return m_pTray->isBlink();
+        return getTray()->isBlink();
     }
     
 }

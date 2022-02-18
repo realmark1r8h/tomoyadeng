@@ -14,6 +14,7 @@ namespace amo {
 
 
     AppSettings::AppSettings() {
+        AMO_TIMER_INIT(³ÌÐò¿ªÊ¼);
         initDefaultCefSettings();
         initDefaultAppSettings();
         std::string str = settings.to_string();
@@ -117,6 +118,9 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(documents, getSpecialFolder(CSIDL_MYDOCUMENTS));
         
         
+        DEFAULT_ARGS_SETTINGS(startTime, amo::timer::now());
+        
+        
     }
     
     amo::string AppSettings::getCachePath() {
@@ -194,6 +198,7 @@ namespace amo {
     
     
     void AppSettings::afterUpdateArgsSettings() {
+        AMO_TIMER_ELAPSED();
         updateCefAppSettings();
         
         
@@ -228,8 +233,10 @@ namespace amo {
         STRING_ARGS_SETTING(picturesDir);
         STRING_ARGS_SETTING(videosDir);
         
-        ::SetCurrentDirectoryA(amo::string(workDir, true).to_ansi().c_str());
+        INT64_ARGS_SETTING(startTime);
         
+        ::SetCurrentDirectoryA(amo::string(workDir, true).to_ansi().c_str());
+        AMO_TIMER_ELAPSED();
         return BasicSettings::afterUpdateArgsSettings();
     }
     
