@@ -36,8 +36,9 @@ namespace amo {
             // 不支持其他Native Function
             
             return m_pUtilityV8Handler->Execute(name, object, arguments, retval, exception);
-            return false;
         }
+        
+        
         
         // include 只能加载一个模块
         if ((name == "include")
@@ -451,6 +452,7 @@ namespace amo {
         // 从磁盘中加载与所给模块同名dll
         std::shared_ptr<amo::loader> pLoader;
         pLoader = DllManager<PID_RENDERER>::getInstance()->load(strClass);
+        
         
         if (!pLoader) {
             return NULL;

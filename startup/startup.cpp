@@ -140,7 +140,7 @@ public:
                 }
                 
                 
-                OutputDebugStringA(strJson.c_str());
+                //OutputDebugStringA(strJson.c_str());
                 
                 //$cdevel(strJson.c_str());
             } else {

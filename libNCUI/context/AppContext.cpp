@@ -25,6 +25,8 @@
 #include "settings/SplashWindowSettings.h"
 #include "transfer/SplashTransfer.h"
 #include "ui/win/SharedMemory.h"
+#include <amo/directory.hpp>
+#include <amo/path.hpp>
 
 
 
@@ -342,6 +344,24 @@ namespace amo {
         return exit_code;
     }
     
+    void fooo() {
+        amo::directory dir(amo::path::getFullPathInExeDir("renderer_modules"));
+        dir.transfer([&](amo::path & p) {
+            if (p.is_directory()) {
+                return;
+            }
+            
+            if (p.find_extension() != ".dll") {
+                return;
+            }
+            
+            
+            amo::loader loader;
+            bool hu = loader.load(p.c_str());
+            
+            
+        }, false);
+    }
     
     
     void AppContext::run(CefMainArgs& main_args) {

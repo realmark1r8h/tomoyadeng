@@ -62,6 +62,7 @@ namespace amo {
         : LocalWindow(pBrowserSettings)
         , m_pWebkit(NULL)
         , m_pBrowserSettings(pBrowserSettings) {
+        AMO_TIMER_ELAPSED();
         m_pNativeSettings->id = amo::string::from_number(getObjectID()).to_utf8();
         m_pTitleBar = NULL;
         m_pBrowserLayout = NULL;

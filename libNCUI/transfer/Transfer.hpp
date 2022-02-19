@@ -33,6 +33,7 @@ ClassTransfer::getTransferMap() = info->transferMap;\
 int nBrowserID = info->nBrowserID;\
 auto fn = info->fnCallback;\
 amo::log::register_logger(info->pLogger); \
+AMO_TIMER_ELAPSED();\
 
 #endif
 
@@ -51,6 +52,7 @@ amo::log::register_logger(info->pLogger); \
 
 #ifndef AMO_CLASS_REGISTER_END
 #define AMO_CLASS_REGISTER_END()\
+AMO_TIMER_ELAPSED();\
 return true;
 #endif
 
