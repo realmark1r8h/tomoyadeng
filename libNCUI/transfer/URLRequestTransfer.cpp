@@ -5,7 +5,7 @@
 #include "transfer/TransferMappingMgr.hpp"
 #include "handler/URLRequestClient.h"
 #include "handler/BrowserManager.hpp"
-#include "ipc/UIMessageEmitter.hpp"
+#include "ipc/UIMessageBroadcaster.hpp"
 #include "settings/RequestSettings.h"
 #include <amo/file.hpp>
 #include <vector>
@@ -57,39 +57,36 @@ namespace amo {
         return Undefined();
     }
     
-    
-    
-    
     void URLRequestTransfer::OnRequestComplete(CefRefPtr<CefURLRequest> request) {
-        std::shared_ptr<UIMessageEmitter> emitter = getMessageEmitter();
+        std::shared_ptr<UIMessageBroadcaster> emitter = getMessageEmitter();
         auto v1 = request->GetRequestStatus();
         auto v2 = request->GetRequestError();
         m_bTimeOut = false;
-        emitter->execute("triggerEvent", "request.complete",
-                         m_downloadData);
-                         
+        emitter->broadcast("request.complete",
+                           m_downloadData);
+                           
     }
     
     void URLRequestTransfer::OnUploadProgress(CefRefPtr<CefURLRequest> request,
             int64 current,
             int64 total) {
         m_bTimeOut = false;
-        std::shared_ptr<UIMessageEmitter> emitter = getMessageEmitter();
+        std::shared_ptr<UIMessageBroadcaster> emitter = getMessageEmitter();
         
-        emitter->execute("triggerEvent", "request.upload.progress",
-                         current,
-                         total);
-                         
+        emitter->broadcast("request.upload.progress",
+                           current,
+                           total);
+                           
     }
     
     void URLRequestTransfer::OnDownloadProgress(CefRefPtr<CefURLRequest> request,
             int64 current,
             int64 total) {
         m_bTimeOut = false;
-        std::shared_ptr<UIMessageEmitter> emitter = getMessageEmitter();
-        emitter->execute("triggerEvent", "request.download.progress",
-                         current,
-                         total);
+        std::shared_ptr<UIMessageBroadcaster> emitter = getMessageEmitter();
+        emitter->broadcast("request.download.progress",
+                           current,
+                           total);
     }
     
     void URLRequestTransfer::OnDownloadData(CefRefPtr<CefURLRequest> request,
@@ -116,11 +113,18 @@ namespace amo {
         m_pFrame = val;
     }
     
-    std::shared_ptr<amo::UIMessageEmitter> URLRequestTransfer::getMessageEmitter() {
-        std::shared_ptr<UIMessageEmitter> emitter(new UIMessageEmitter(m_pFrame));
-        emitter->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-        emitter->setValue(IPCArgsPosInfo::EventObjectID, getObjectID());
-        return emitter;
+    std::shared_ptr<amo::UIMessageBroadcaster>
+    URLRequestTransfer::getMessageEmitter() {
+    
+        std::shared_ptr<UIMessageBroadcaster> runner;
+        runner.reset(new UIMessageBroadcaster(getObjectID()));
+        return runner;
+        
+        /*  std::shared_ptr<UIMessageBroadcaster> emitter(new UIMessageBroadcaster(
+                      m_pFrame));
+          emitter->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+          emitter->setValue(IPCArgsPosInfo::EventObjectID, getObjectID());
+          return emitter;*/
     }
     
     std::shared_ptr<amo::RequestSettings> URLRequestTransfer::getRequestSettings()
@@ -149,6 +153,7 @@ namespace amo {
                                          args->getInt(IPCArgsPosInfo::FrameID));
                                          
         auto rMgr = TransferMappingMgr<RequestTransfer>::getInstance();
+        
         auto rcMgr = TransferMappingMgr<URLRequestClientTransfer>::getInstance();
         
         CefRefPtr<CefRequest> pRequest = CefRequest::Create();
@@ -239,8 +244,8 @@ namespace amo {
     
     bool URLRequestTransfer::onCheckTimeOut(int64_t id) {
         if (m_bTimeOut) {
-            getMessageEmitter()->execute("triggerEvent", "request.timeout");
-            getMessageEmitter()->execute("triggerEvent", "request.complete");
+            getMessageEmitter()->broadcast("request.timeout");
+            getMessageEmitter()->broadcast("request.complete");
         }
         
         return false;

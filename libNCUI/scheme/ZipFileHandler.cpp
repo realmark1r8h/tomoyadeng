@@ -50,7 +50,7 @@ namespace amo {
         for (auto& p : vec) {
             amo::cdevel << p.getName() << amo::endl;
         }*/
-        
+        //AMO_TIMER_ELAPSED();
         auto entry =  zf->getEntry(strFile.to_utf8(), false, false);
         /*  entry = zf->getEntry("ReactJs/images/列表01.png", false, false);
           entry = zf->getEntry(amo::string("ReactJs/images/列表01.png").to_utf8());*/
@@ -60,9 +60,13 @@ namespace amo {
             return false;
         }
         
+        
         m_strData = entry.readAsText();
         
         bool bHandled = readMimeType(p.find_extension());
+        /*   AMO_TIMER_ELAPSED();
+           OutputDebugStringA(strFile.c_str());
+           OutputDebugStringA("\n");*/
         
         if (bHandled) {
             callback->Continue();

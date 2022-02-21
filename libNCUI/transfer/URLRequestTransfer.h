@@ -19,7 +19,7 @@
 namespace amo {
 
 
-    class UIMessageEmitter;
+    class UIMessageBroadcaster;
     class RequestSettings;
     
     
@@ -77,7 +77,7 @@ namespace amo {
         CefRefPtr<CefFrame> getFrame() const;
         void setFrame(CefRefPtr<CefFrame> val);
         
-        std::shared_ptr<UIMessageEmitter>  getMessageEmitter();
+        std::shared_ptr<UIMessageBroadcaster>  getMessageEmitter();
         
         std::shared_ptr<amo::RequestSettings> getRequestSettings() const;
         void setRequestSettings(std::shared_ptr<amo::RequestSettings> val);
