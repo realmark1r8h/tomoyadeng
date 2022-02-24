@@ -119,6 +119,7 @@ namespace amo {
         
         
         DEFAULT_ARGS_SETTINGS(startTime, amo::timer::now());
+        DEFAULT_ARGS_SETTINGS(debugMode, false);
         
         
     }
@@ -234,6 +235,7 @@ namespace amo {
         STRING_ARGS_SETTING(videosDir);
         
         INT64_ARGS_SETTING(startTime);
+        BOOL_ARGS_SETTING(debugMode);
         
         ::SetCurrentDirectoryA(amo::string(workDir, true).to_ansi().c_str());
         AMO_TIMER_ELAPSED();

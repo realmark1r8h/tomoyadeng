@@ -20,7 +20,7 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(url, "chrome://version");
         DEFAULT_ARGS_SETTINGS(sizebox, "2,2,2,2");
         DEFAULT_ARGS_SETTINGS(roundcorner, 0);
-        
+        DEFAULT_ARGS_SETTINGS(windowClass, "NativeWindow");
         
         DEFAULT_ARGS_SETTINGS(modal, false);
         DEFAULT_ARGS_SETTINGS(show, true);
@@ -70,6 +70,7 @@ namespace amo {
         STRING_ARGS_SETTING(url);
         STRING_ARGS_SETTING(sizebox);
         INT_ARGS_SETTING(roundcorner);
+        STRING_ARGS_SETTING(windowClass);
         
         BOOL_ARGS_SETTING(modal);
         BOOL_ARGS_SETTING(show);

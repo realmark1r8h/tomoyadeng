@@ -39,7 +39,7 @@ namespace amo {
     }
     
     LPCTSTR NativeWindow::GetWindowClassName(void) const {
-        return _T("NativeWindow");
+        return amo::string(m_pNativeSettings->windowClass).to_unicode().c_str();
     }
     
     int NativeWindow::getBrowserID() const {

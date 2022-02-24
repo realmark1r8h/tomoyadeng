@@ -465,7 +465,7 @@ namespace amo {
         int i = 0;
         std::cout << i << std::endl;
         
-        AMO_TIMER_ELAPSED(run½áÊø);
+        AMO_TIMER_ELAPSED_TEXT(run½áÊø);
         CefShutdown();
         
     }

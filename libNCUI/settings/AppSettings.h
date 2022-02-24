@@ -46,7 +46,7 @@ namespace amo {
         std::string getSpecialFolder(int nType);
     public:
     
-        /*! @brief	是否允许外部配置文件. manifest.json 里面的内容Ansi编码， 不能用Utf8 */
+        /*! @brief	是否允许外部配置文件. manifest.json 里面的内容Ansi编码， 不能用Utf8, 程序会将编码转换为UTF8 */
         bool manifest;
         
         /*! @brief	程序唯一ID. */
@@ -132,7 +132,8 @@ namespace amo {
         /** @brief	启动时间. */
         int64_t startTime;
         
-        
+        /** @brief	是否以调试模式运行,默认false.该模式下F12可以打开调试窗口，F5可以刷新页面 */
+        bool debugMode;
         
         
     };

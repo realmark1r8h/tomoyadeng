@@ -65,7 +65,8 @@ using namespace DuiLib;
 
 
 
-
+#include "utility/utility.hpp"
+//#include "utility/libzippp.h"
 
 #include "ipc/Any.hpp"
 #include "ipc/AsyncFunctionManager.hpp"
@@ -75,6 +76,8 @@ using namespace DuiLib;
 #include "ipc/RenderMessageEmitter.hpp"
 #include "ipc/UIMessageBroadcaster.hpp"
 #include "ipc/UIMessageEmitter.hpp"
+#include "ipc/IPCEmitter.hpp"
+
 
 #include "handler/BrowserManager.hpp"
 #include "handler/BrowserProcessHandler.h"
@@ -95,10 +98,8 @@ using namespace DuiLib;
 #include "handler/KeyboardHandler.h"
 #include "handler/LifeSpanHandler.h"
 #include "handler/LoadHandler.h"
-#include "scheme/LocalSchemeHandler.h"
 #include "handler/MessageHandlerDelegate.hpp"
 #include "handler/MessageRouterBrowserSide.h"
-#include "scheme/NativeFileHandler.h"
 #include "handler/RenderHandler.h"
 #include "handler/RenderProcessHandler.h"
 #include "handler/RequestHandler.h"
@@ -110,13 +111,17 @@ using namespace DuiLib;
 #include "handler/V8ExtentionHandler.h"
 
 
-
+#include "scheme/LocalSchemeHandler.h"
+#include "scheme/NativeFileHandler.h"
+#include "scheme/UrlResourceHandlerFactory.h"
+//#include "scheme/ZipFileHandler.h"
+//#include "scheme/ZipFileMnager.h"
 
 #include "module/basic/ClassMethodMgr.hpp"
 #include "module/basic/EventFunctionManager.h"
 #include "module/basic/TypeConvertor.h"
 #include "module/basic/V8HandlerManager.h"
-#include "module/ConstantAttributeV8Handler.h"
+
 #include "module/dll/DllManager.h"
 #include "module/dll/DllRunner.h"
 #include "module/dll/DllV8Handler.h"
@@ -124,6 +129,8 @@ using namespace DuiLib;
 #include "module/dll/DllValueHandler.h"
 #include "module/dll/JsTypeMapHandler.h"
 #include "module/dll/TypeMapManager.h"
+
+#include "module/ConstantAttributeV8Handler.h"
 #include "module/DragWindowV8Handler.h"
 #include "module/EventEmitterV8Handler.h"
 #include "module/IPCRendererV8Handler.h"
@@ -161,6 +168,7 @@ using namespace DuiLib;
 #include "transfer/AppTransfer.h"
 #include "transfer/BrowserHostTransfer.h"
 #include "transfer/BrowserTransfer.h"
+#include "transfer/BrowserTransferMgr.h"
 #include "transfer/BrowserWindowTransfer.h"
 #include "transfer/ClassTransfer.hpp"
 #include "transfer/CommandLineTransfer.h"
@@ -178,6 +186,7 @@ using namespace DuiLib;
 #include "transfer/MouseTransfer.h"
 #include "transfer/NativeWindowTransfer.h"
 #include "transfer/NetTransfer.h"
+#include "transfer/ProcessTransfer.h"
 #include "transfer/RendererThreadTransfer.h"
 #include "transfer/RequestTransfer.h"
 #include "transfer/RunnableTransfer.hpp"
@@ -187,6 +196,7 @@ using namespace DuiLib;
 #include "transfer/SystemTransfer.h"
 #include "transfer/ThreadTransfer.hpp"
 #include "transfer/Transfer.hpp"
+#include "transfer/TransferEventEmitter.hpp"
 #include "transfer/TransferEventInfo.hpp"
 #include "transfer/TransferMapping.hpp"
 #include "transfer/TransferMappingMgr.hpp"
@@ -227,7 +237,8 @@ using namespace DuiLib;
 #include "ui/win/tray/TrayBase.h"
 #include "ui/win/ViewRenderer.h"
 #include "ui/win/WebkitView.h"
-#include "utility/utility.hpp"
+
+
 
 #include "context/AppContext.h"
 

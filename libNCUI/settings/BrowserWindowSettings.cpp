@@ -27,7 +27,8 @@ namespace amo {
         
         universal_access_from_file_urls = STATE_ENABLED;
         file_access_from_file_urls = STATE_ENABLED;
-        web_security = STATE_DISABLED;		//访问外网时不能disable, 否则有部分网站容易崩溃
+        web_security =
+            STATE_DISABLED;		//访问外网时不能disable, 否则有部分网站容易崩溃
         //web_security = STATE_ENABLED;
         image_loading = STATE_ENABLED;
         image_shrink_standalone_to_fit = STATE_ENABLED;
@@ -47,12 +48,18 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(offscreen, false);
         DEFAULT_ARGS_SETTINGS(transparent, false);
         DEFAULT_ARGS_SETTINGS(main, false);
+        DEFAULT_ARGS_SETTINGS(windowClass, "BrowserWindow");
+        //TODO: 改成false,默认不允许刷新
+        DEFAULT_ARGS_SETTINGS(reload, true);
     }
     
     
     void BrowserWindowSettings::afterUpdateArgsSettings() {
         NativeWindowSettings::afterUpdateArgsSettings();
         BOOL_ARGS_SETTING(main);
+        STRING_ARGS_SETTING(windowClass);
+        BOOL_ARGS_SETTING(reload);
+        
     }
     
     

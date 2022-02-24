@@ -431,6 +431,15 @@ namespace amo {
     
     
     void WebkitView::showDevTools() {
+    
+    
+        auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
+        
+        // 非调试模式下不能打开调试窗口
+        if (!appSettings->debugMode) {
+            return;
+        }
+        
         CefWindowInfo windowInfo;
         CefBrowserSettings settings;
         windowInfo.SetAsPopup(m_pBrowser->GetHost()->GetWindowHandle(),
@@ -811,14 +820,20 @@ namespace amo {
             return false;
         }
         
-        if (event.windows_key_code == VK_F12) {
-            showDevTools();
-            return true;
-        }
         
-        if (event.windows_key_code == VK_F5) {
-            m_pBrowser->ReloadIgnoreCache();
-            return true;
+        auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
+        
+        if (appSettings->debugMode) {
+            if (event.windows_key_code == VK_F12) {
+                showDevTools();
+                return true;
+            }
+            
+            if (event.windows_key_code == VK_F5) {
+                m_pBrowser->ReloadIgnoreCache();
+                return true;
+            }
+            
         }
         
         if (event.windows_key_code == VK_ESCAPE) {

@@ -319,7 +319,16 @@ namespace amo {
                     && !iter->second->back_forword) {
                 return true;
             }
+        } else    if (navigation_type == NAVIGATION_RELOAD) {
+            auto iter = m_browserSettingsMap.find(browser->GetIdentifier());
+            
+            // ÅĞ¶ÏÊÇ·ñÔÊĞíÒ³ÃæË¢ĞÂ
+            if (iter != m_browserSettingsMap.end()
+                    && !iter->second->reload) {
+                return true;
+            }
         }
+        
         
         
         DelegateSet::iterator it = m_Delegates.begin();

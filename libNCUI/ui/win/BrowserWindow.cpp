@@ -382,8 +382,8 @@ namespace amo {
     
     LPCTSTR BrowserWindow::GetWindowClassName() const {
     
-        //return amo::string(m_pBrowserSettings->title).to_unicode().c_str();
         return _T("BrowserWindow");
+        return amo::string(m_pBrowserSettings->windowClass).to_unicode().c_str();
     }
     
     

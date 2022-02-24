@@ -39,6 +39,8 @@ namespace amo {
     public:
         /*! @brief	当前窗口是否为主窗口，主窗口只能有一个，如果设置为主窗口将取消之前的主窗口设定. */
         bool main;
+        /** @brief	是否允许页面刷新. 默认false */
+        bool reload;
         
     };
 }
