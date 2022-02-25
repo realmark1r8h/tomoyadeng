@@ -34,14 +34,14 @@ void foo2() {
     zf.open(Archive::NEW);
     
     //zf.addFile("D:/test/aaa.txt", "12312/dddd/23323\\2222");
-    //zf.addFile("D:/test/bbb.txt", "1111");
+    zf.addFile("D:/test/bbb.txt", "1111");
     //zf.addFile("D:/test/bbb.txt", "1111");
     ////zf.addDirectory("D:\\ËÕÔªº£", "9527");
     //zf.commit();
     zf.addFile("D:/test/aaa.txt");
     zf.commit();
-    zf.addFile("D:/test/bbb.txt");
-    zf.commit();
+    /* zf.addFile("D:/test/bbb.txt");
+     zf.commit();*/
     //zf.addData("", )
     zf.close();
 }

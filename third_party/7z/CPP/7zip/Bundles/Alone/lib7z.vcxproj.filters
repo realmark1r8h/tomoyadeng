@@ -91,6 +91,9 @@
     <Filter Include="C\Xz">
       <UniqueIdentifier>{423a6c9c-0c2b-4827-be26-d31c9adc8184}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ext">
+      <UniqueIdentifier>{8b82dd9d-4f55-45dd-a993-10859770d3af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\UI\Console\ArError.h">
@@ -767,6 +770,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\C\Types.h">
       <Filter>C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Ext\archive.h">
+      <Filter>ext</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

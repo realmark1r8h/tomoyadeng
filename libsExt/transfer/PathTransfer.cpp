@@ -85,6 +85,16 @@ namespace amo {
         return amo::path(strPath).file_exists();
     }
     
+    Any PathTransfer::remove(IPCMessage::SmartType msg) {
+        amo::string strPath(msg->getArgumentList()->getString(0));
+        return amo::path(strPath).remove();
+    }
+    
+    Any PathTransfer::removeAll(IPCMessage::SmartType msg) {
+        amo::string strPath(msg->getArgumentList()->getString(0));
+        return amo::path(strPath).remove_all();
+    }
+    
     std::string PathTransfer::getClass() const {
         return ("Path");
     }

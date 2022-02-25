@@ -39,7 +39,8 @@ namespace amo {
         Any getFullAppName(IPCMessage::SmartType msg);
         
         Any fileExsit(IPCMessage::SmartType msg);
-        
+        Any remove(IPCMessage::SmartType msg);
+        Any removeAll(IPCMessage::SmartType msg);
         
         
     public:
@@ -55,6 +56,9 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getFullAppName,
                                       TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(fileExsit, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(remove, TransferFuncStatic | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(removeAll,
+                                      TransferFuncStatic | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     private:

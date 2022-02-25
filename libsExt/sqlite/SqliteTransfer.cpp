@@ -303,11 +303,18 @@ namespace amo {
                                 json.put(keys.at(j), (*iter).get<int>(j));
                             }
                             
+                        } else if (types.at(j) == "UNSIGNED INT"
+                                   || types.at(j) == "UNSIGNED") {
+                            if (data != NULL) {
+                                json.put(keys.at(j), (uint32_t)(*iter).get<int64_t>(j));
+                            }
                         } else if (types.at(j) == "TEXT"
                                    || types.at(j) == "VARCHAR"
                                    || types.at(j) == "CHAR"
                                    || types.at(j) == "GRAPHIC"
-                                   || types.at(j) == "VARGRAPHIC") {
+                                   || types.at(j) == "VARGRAPHIC"
+                                   || types.at(j).find("CHAR") == 0
+                                   || types.at(j).find("VARCHAR") == 0) {
                             int bytes = (*iter).column_bytes(j);
                             
                             //int len = strlen(cc);

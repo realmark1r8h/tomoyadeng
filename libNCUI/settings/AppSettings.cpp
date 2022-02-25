@@ -119,7 +119,7 @@ namespace amo {
         
         
         DEFAULT_ARGS_SETTINGS(startTime, amo::timer::now());
-        DEFAULT_ARGS_SETTINGS(debugMode, false);
+        DEFAULT_ARGS_SETTINGS(debugMode, true);
         
         
     }

@@ -149,6 +149,7 @@
     <ClInclude Include="..\..\..\..\C\Xz.h" />
     <ClInclude Include="..\..\..\..\C\XzCrc64.h" />
     <ClInclude Include="..\..\..\..\C\XzEnc.h" />
+    <ClInclude Include="..\..\..\..\Ext\archive.h" />
     <ClInclude Include="..\..\..\Common\AutoPtr.h" />
     <ClInclude Include="..\..\..\Common\Buffer.h" />
     <ClInclude Include="..\..\..\Common\CommandLineParser.h" />

@@ -23,6 +23,7 @@ namespace amo {
     
     bool ZipFileHandler::ProcessRequest(CefRefPtr<CefRequest> request,
                                         CefRefPtr<CefCallback> callback) {
+        //AMO_TIMER_ELAPSED();
         amo::string url = amo::util().getUrlFromUtf8(request->GetURL());
         
         if (url != m_strUrl) {
@@ -64,9 +65,9 @@ namespace amo {
         m_strData = entry.readAsText();
         
         bool bHandled = readMimeType(p.find_extension());
-        /*   AMO_TIMER_ELAPSED();
-           OutputDebugStringA(strFile.c_str());
-           OutputDebugStringA("\n");*/
+        //AMO_TIMER_ELAPSED();
+        /*    OutputDebugStringA(strFile.c_str());
+          OutputDebugStringA("\n");*/
         
         if (bHandled) {
             callback->Continue();
