@@ -7,7 +7,7 @@
 
 
 #include "../startup/startup.h"
-#include "amo/file.hpp"
+#include "amo/File2.hpp"
 
 
 #ifdef _DEBUG

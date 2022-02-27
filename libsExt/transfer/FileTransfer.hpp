@@ -7,7 +7,7 @@
 #include <amo/singleton.hpp>
 #include <transfer/RunnableTransfer.hpp>
 #include <string>
-#include <amo/file.hpp>
+#include <amo/File2.hpp>
 
 namespace amo {
 
@@ -23,7 +23,7 @@ namespace amo {
         FileTransfer(const amo::string& fileName, int mode = 3)
             : RunnableTransfer("LocalFile") {
             amo::path p(fileName);
-            m_pFile.reset(new amo::file(p, mode));
+            m_pFile.reset(new amo::File2(p, mode));
         }
         ~FileTransfer() {
             if (m_pFile) {
@@ -103,7 +103,7 @@ namespace amo {
               m_pFile->write((char*)fileStream.data(), fileStream.size());
               return Undefined();*/
             
-            amo::file file(p, std::ios::in | std::ios::binary);
+            amo::File2 file(p, std::ios::in | std::ios::binary);
             int nTotal = 0;
             
             while (true) {
@@ -145,7 +145,7 @@ namespace amo {
             
             amo::path p = m_pFile->get_path();
             m_pFile->close();
-            m_pFile.reset(new amo::file(p));
+            m_pFile.reset(new amo::File2(p));
             return	(int)m_pFile->size();
         }
         
@@ -154,7 +154,7 @@ namespace amo {
         Any remove(IPCMessage::SmartType msg) {
             amo::string strPath(msg->getArgumentList()->getString(0), true);
             amo::path p(strPath);
-            amo::file fi(p);
+            amo::File2 fi(p);
             fi.remove();
             return Undefined();
         }
@@ -171,7 +171,7 @@ namespace amo {
         
     public:
     
-        std::shared_ptr<amo::file> m_pFile;
+        std::shared_ptr<amo::File2> m_pFile;
     };
 }
 

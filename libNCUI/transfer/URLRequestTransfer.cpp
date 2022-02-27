@@ -7,7 +7,7 @@
 #include "handler/BrowserManager.hpp"
 #include "ipc/UIMessageBroadcaster.hpp"
 #include "settings/RequestSettings.h"
-#include <amo/file.hpp>
+#include <amo/File2.hpp>
 #include <vector>
 
 namespace amo {
