@@ -25,8 +25,8 @@ namespace amo {
             amo::path::getExeDir();						//!< 获取当前可执行文件目录
         std::string strLogFile = (strAppPath +
                                   L"\\cef.log").to_utf8();			//!< 日志文件
-        std::string strExeFullName =
-            amo::path::getFullExeName().to_utf8();		//!< 完整路径的程序名
+        std::string strExeFullName =  amo::string(
+                                          amo::path::getFullExeName()).to_utf8();		//!< 完整路径的程序名
         std::string strResourcesPath = (strAppPath + "").to_utf8();				//!< 资源目录
         std::string strLocalesPath = (strAppPath +
                                       "\\locales").to_utf8();		//!< Local目录
@@ -90,8 +90,9 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(ipcTimeout, 0ull);
         DEFAULT_ARGS_SETTINGS(main, "main.js");  // utf8;
         
-        DEFAULT_ARGS_SETTINGS(appPath, amo::path::getFullExeName().to_utf8());
-        DEFAULT_ARGS_SETTINGS(appDir, amo::path::getExeDir().to_utf8());
+        DEFAULT_ARGS_SETTINGS(appPath,
+                              amo::string(amo::path::getFullExeName()).to_utf8());
+        DEFAULT_ARGS_SETTINGS(appDir, amo::string(amo::path::getExeDir()).to_utf8());
         DEFAULT_ARGS_SETTINGS(appName, strAppName.to_utf8());
         
         DEFAULT_ARGS_SETTINGS(workDir, appDir);

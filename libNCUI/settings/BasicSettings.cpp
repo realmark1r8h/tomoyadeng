@@ -78,7 +78,7 @@ namespace amo {
                 amo::path subPath(subStr);
                 amo::path p(amo::string(ss, true));
                 
-                p.append(subStr);
+                p.append(subStr.str());
                 return toAbsolutePath(amo::string(p.c_str(), false).to_utf8());
             }
         }
@@ -87,11 +87,13 @@ namespace amo {
         
     }
     
-    std::function<void(BasicSettings*)> BasicSettings::getUpdateArgsCallback() const {
+    std::function<void(BasicSettings*)> BasicSettings::getUpdateArgsCallback()
+    const {
         return m_fnUpdateArgsCallback;
     }
     
-    void BasicSettings::setUpdateArgsCallback(std::function<void(BasicSettings*)> val) {
+    void BasicSettings::setUpdateArgsCallback(std::function<void(BasicSettings*)>
+            val) {
         m_fnUpdateArgsCallback = val;
     }
     

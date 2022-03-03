@@ -1,4 +1,6 @@
 #include <amo/config.hpp>
+#include <amo/string.hpp>
+
 #include <amo/path.hpp>
 #include "archive.hpp"
 #include "..\include/bit7zlibrary.hpp"
@@ -123,7 +125,7 @@ namespace bit7z {
         if (!entryName.empty()) {
             for (auto& p : vec) {
                 amo::path path(entryName);
-                path.append(amo::string(p.mRelativeDirectory));
+                path.append(amo::string(p.mRelativeDirectory).str());
                 p.mRelativeDirectory = amo::string(path.c_str(), false).to_wide();
             }
         }
