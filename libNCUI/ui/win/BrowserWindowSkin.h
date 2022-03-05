@@ -3,6 +3,8 @@
  
 extern const char skinBrowserWindow[];
 
+extern const char skinNativeWindow[];
+
 extern const char skinRenderView[];
 
 extern const char skinMessageBox[];

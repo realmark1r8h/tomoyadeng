@@ -159,6 +159,13 @@ namespace amo {
             break;
         }
         
+        case WM_WINDOWPOSCHANGING: {
+            $cdevel("WM_WINDOWPOSCHANGING");
+            /*WINDOWPOS * winPos = (LPWINDOWPOS)lParam;
+            ::MoveWindow(NULL, winPos->x, winPos->y, winPos->cx, winPos->cy, TRUE);*/
+            break;
+        }
+        
         case WM_SIZE: {
             int width = LOWORD(lParam);
             int height = HIWORD(lParam);

@@ -303,7 +303,7 @@ namespace amo {
         AMO_TIMER_ELAPSED();
         //   spdlog 不支持XP, 如果在XP下使用需要禁用log
         
-        if (!amo::log::initialize(false, false)) {
+        if (!amo::log::initialize(false, true)) {
             return -1;
         }
         

@@ -212,7 +212,23 @@ namespace amo {
                 }
                 
             } else {
-                return ParseJsonToObject(json);
+                if (json.contains_key("a02c2b36-3d70-44f6-9456-85dab0e0ddb5")) {
+                    int nType = json.getInt("a02c2b36-3d70-44f6-9456-85dab0e0ddb5");
+                    
+                    switch (nType) {
+                    case 0: // Undefined
+                        return CefV8Value::CreateUndefined();
+                        
+                    case 1: // NULL
+                        return CefV8Value::CreateNull();
+                        
+                    default:
+                        break;
+                    }
+                } else {
+                    return ParseJsonToObject(json);
+                }
+                
             }
             
             

@@ -63,7 +63,8 @@ namespace amo {
         return NULL;
     }
     
-    void ClientApp::OnRegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar> registrar) {
+    void ClientApp::OnRegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar>
+                                            registrar) {
         $clog(amo::cdevel << func_orient << amo::endl;);
         m_CookieableSchemes.push_back("http");
         m_CookieableSchemes.push_back("https");
@@ -153,6 +154,7 @@ namespace amo {
         //command_line->AppendSwitch("--allow-running-insecure-content");
         // 此参数解决多窗口问题
         command_line->AppendSwitch("enable-gpu");
+        command_line->AppendSwitch("enable-pdf-extension");
         // 允许调用摄像头
         command_line->AppendSwitch("enable-media-stream");
         //command_line->AppendSwitch("ppapi-out-of-process");
@@ -179,7 +181,8 @@ namespace amo {
     }
     
     void ClientApp::OnContextInitialized() {
-        $clog(amo::cdevel << func_orient << "Context初始化完成回调" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "Context初始化完成回调" << amo::endl;
+             );
 #if CHROME_VERSION_BUILD >= 2357
         CefRefPtr<CefCookieManager> manager = CefCookieManager::GetGlobalManager(NULL);
 #else
@@ -216,13 +219,15 @@ namespace amo {
     bool ClientApp::RegisterCustomSchemeFactory(const CefString& scheme_name,
             const CefString& domain_name,
             CefRefPtr<CefSchemeHandlerFactory> factory) {
-        $clog(amo::cdevel << func_orient << "注册自定义协议工厂类，协议名："
-             << amo::string(scheme_name.ToString(), true).str() << "域名："
-             << amo::string(domain_name.ToString(), true).str() << amo::endl;);
+        $clog(amo::cdevel << func_orient <<
+              "注册自定义协议工厂类，协议名："
+              << amo::string(scheme_name.ToString(), true).str() << "域名："
+              << amo::string(domain_name.ToString(), true).str() << amo::endl;);
         return CefRegisterSchemeHandlerFactory(scheme_name, domain_name, factory);
     }
     
-    bool ClientApp::RegisterRenderProcessHandlerDelegate(RenderProcessHandlerDelegate* delegate) {
+    bool ClientApp::RegisterRenderProcessHandlerDelegate(
+        RenderProcessHandlerDelegate* delegate) {
         if (!m_pRenderProcessHandler) {
             return false;
         }
@@ -230,7 +235,8 @@ namespace amo {
         return m_pRenderProcessHandler->RegisterDelegate(delegate);
     }
     
-    void ClientApp::UnregisterRenderProcessHandlerDelegate(RenderProcessHandlerDelegate* delegate) {
+    void ClientApp::UnregisterRenderProcessHandlerDelegate(
+        RenderProcessHandlerDelegate* delegate) {
         if (!m_pRenderProcessHandler) {
             return;
         }
@@ -238,7 +244,8 @@ namespace amo {
         m_pRenderProcessHandler->UnregisterDelegate(delegate);
     }
     
-    bool ClientApp::RegisterBrowserProcessHandlerDelegate(BrowserProcessHandlerDelegate* delegate) {
+    bool ClientApp::RegisterBrowserProcessHandlerDelegate(
+        BrowserProcessHandlerDelegate* delegate) {
         if (!m_pBrowserProcessHandler) {
             return false;
         }
@@ -246,7 +253,8 @@ namespace amo {
         return m_pBrowserProcessHandler->RegisterDelegate(delegate);
     }
     
-    void ClientApp::UnregisterBrowserProcessHandlerDelegate(BrowserProcessHandlerDelegate* delegate) {
+    void ClientApp::UnregisterBrowserProcessHandlerDelegate(
+        BrowserProcessHandlerDelegate* delegate) {
         if (!m_pBrowserProcessHandler) {
             return;
         }

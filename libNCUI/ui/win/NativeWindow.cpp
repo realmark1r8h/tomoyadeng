@@ -34,8 +34,16 @@ namespace amo {
     }
     
     DuiLib::CDuiString NativeWindow::GetSkinFile() {
+    
+    
         std::string skin = m_pNativeSettings->settings.getString("xml");
-        return amo::string(skin, true).to_unicode().c_str();
+        
+        if (!skin.empty()) {
+            return amo::string(skin, true).to_unicode().c_str();
+        } else {
+            return amo::string(skinNativeWindow).format(
+                       m_pNativeSettings->settings).to_unicode().c_str();
+        }
     }
     
     LPCTSTR NativeWindow::GetWindowClassName(void) const {

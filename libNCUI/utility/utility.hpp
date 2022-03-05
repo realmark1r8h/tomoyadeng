@@ -84,11 +84,21 @@ namespace amo {
         void addAnyToJson(amo::json& json, const std::string& key,
                           const Any& val) const  {
             switch (val.type()) {
-            case  AnyValueType<Undefined>::value:
-            case  AnyValueType<Nil>::value:
-                json.put(key, val.toJson());
+            case  AnyValueType<Undefined>::value: {
+                amo::json child = val.toJson();
+                child.put("a02c2b36-3d70-44f6-9456-85dab0e0ddb5", 0);
+                json.put(key, child);
                 break;
-                
+            }
+            
+            case  AnyValueType<Nil>::value: {
+                amo::json child = val.toJson();
+                child.put("a02c2b36-3d70-44f6-9456-85dab0e0ddb5", 1);
+                json.put(key, child);
+                break;
+            }
+            
+            
             case  AnyValueType<bool>::value:
                 json.put(key, val.As<bool>());
                 break;
