@@ -109,6 +109,7 @@ namespace amo {
                 CefRefPtr<CefV8Value> pValue = arguments->at(i);
                 
                 
+                std::string sssb = TypeConvertor::V8ValueType(pValue);
                 
                 if (pValue->IsFunction()) {
                 

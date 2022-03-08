@@ -73,7 +73,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(SolutionDir)third_party\cef\lib\Debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\SDK\opencv\build\x86\vc14\lib;$(SolutionDir)third_party\cef\lib\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\SDK\opencv\build\include;D:\SDK\opencv\build\include\opencv;D:\SDK\opencv\build\include\opencv\opencv;D:\SDK\opencv\build\include\opencv2;$(SDKFolder)sqlite3;$(SDKFolder)boost_1_63_0;$(ProjectDir);$(ProjectDir)header;$(ProjectDir)include;$(LibraryFolder)cef;$(ThirdPartyDir)sqlite3;$(ThirdPartyDir)node;$(SolutionDir)include;$(SolutionDir)header;$(NCUIDir)libsExt;$(ThirdPartyDir);$(ThirdPartyDir)Duilib;$(ThirdPartyDir)amo;$(ThirdPartyDir)7z\C;$(ThirdPartyDir)7z\CPP;$(ThirdPartyDir)7zpp;$(NCUIDir)libNCUI;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -81,7 +82,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(SolutionDir)third_party\cef\lib\Release;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\SDK\opencv\build\x86\vc14\lib;$(SolutionDir)third_party\cef\lib\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\SDK\opencv\build\include;D:\SDK\opencv\build\include\opencv;D:\SDK\opencv\build\include\opencv\opencv;D:\SDK\opencv\build\include\opencv2;$(SDKFolder)sqlite3;$(SDKFolder)boost_1_63_0;$(ProjectDir);$(ProjectDir)header;$(ProjectDir)include;$(LibraryFolder)cef;$(ThirdPartyDir)sqlite3;$(ThirdPartyDir)node;$(SolutionDir)include;$(SolutionDir)header;$(NCUIDir)libsExt;$(ThirdPartyDir);$(ThirdPartyDir)Duilib;$(ThirdPartyDir)amo;$(ThirdPartyDir)7z\C;$(ThirdPartyDir)7z\CPP;$(ThirdPartyDir)7zpp;$(NCUIDir)libNCUI;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -104,6 +106,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <AdditionalManifestFiles>
@@ -149,6 +152,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -273,7 +277,6 @@
     <ClCompile Include="transfer\MouseTransfer.cpp" />
     <ClCompile Include="transfer\NativeWindowTransfer.cpp" />
     <ClCompile Include="transfer\NetTransfer.cpp" />
-    <ClCompile Include="transfer\ProcessTransfer.cpp" />
     <ClCompile Include="transfer\RendererThreadTransfer.cpp" />
     <ClCompile Include="transfer\RendererTransferMgr.cpp" />
     <ClCompile Include="transfer\RequestTransfer.cpp" />
@@ -431,7 +434,6 @@
     <ClInclude Include="transfer\MouseTransfer.h" />
     <ClInclude Include="transfer\NativeWindowTransfer.h" />
     <ClInclude Include="transfer\NetTransfer.h" />
-    <ClInclude Include="transfer\ProcessTransfer.h" />
     <ClInclude Include="transfer\RendererThreadTransfer.h" />
     <ClInclude Include="transfer\RendererTransferMgr.h" />
     <ClInclude Include="transfer\RequestTransfer.h" />
@@ -471,6 +473,7 @@
     <ClInclude Include="ui\win\OffscreenDragdrop.h" />
     <ClInclude Include="ui\win\OffscreenDragdropEvents.h" />
     <ClInclude Include="ui\win\OffScreenRenderView.h" />
+    <ClInclude Include="ui\win\Overlap.hpp" />
     <ClInclude Include="ui\win\PictureView.h" />
     <ClInclude Include="ui\win\RenderView.h" />
     <ClInclude Include="ui\win\SharedMemory.h" />

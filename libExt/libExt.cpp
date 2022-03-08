@@ -10,7 +10,9 @@
 #include "transfer/FileTransfer.hpp"
 #include "transfer/Base64Transfer.h"
 #include "transfer/MD5Transfer.h"
-#include <amo/timer.hpp>
+#include "transfer/InterProcessTransfer.h"
+#include "transfer/ProcessTransfer.h"
+#include "transfer/RegistryTransfer.h"
 
 
 
@@ -22,6 +24,9 @@ AMO_CLASS_REGISTER(FileTransfer)
 AMO_CLASS_REGISTER(MD5Transfer)
 AMO_CLASS_REGISTER(UUIDTransfer)
 AMO_CLASS_REGISTER(Base64Transfer)
+AMO_CLASS_REGISTER(InterProcessTransfer)
+AMO_CLASS_REGISTER(ProcessTransfer)
+AMO_CLASS_REGISTER(RegistryTransfer)
 AMO_REGISTER_TRANSFER_END()
 
 //LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {

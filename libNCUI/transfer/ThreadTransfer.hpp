@@ -23,12 +23,12 @@ namespace amo {
     public:
         ThreadBaseTransfer()
             : ClassTransfer("ThreadBase") {
-            
+            addModule("EventEmitter");
         }
         
         ThreadBaseTransfer(const std::string& className)
             : ClassTransfer(className) {
-            
+            addModule("EventEmitter");
         }
         virtual std::string getClass() const override {
             return "ThreadBase";

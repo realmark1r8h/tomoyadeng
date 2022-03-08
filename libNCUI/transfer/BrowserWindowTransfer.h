@@ -76,10 +76,49 @@ namespace amo {
         
         virtual Any isMainWindow(IPCMessage::SmartType msg);
         
+        /**
+         * @fn	virtual Any repaint(IPCMessage::SmartType msg);
+         *
+         * @brief	强制页面重绘，或停止之前的强制重绘
+         *
+         * @param	repaint 是否重绘界面,如果为false，将移除之前的计时器.
+         * @param	delay 重绘界面的间隔时间(毫秒)，程序每隔(delay)对页面进行一次重绘。
+         * 				  如果=0，将不会添加计时器进行重绘.
+         * 				  如果<30,delay会提升到30ms.
+         *
+         * @return	Undefined.
+         */
+        
+        virtual Any repaint(IPCMessage::SmartType msg);
+        
+        /**
+         * @fn	virtual Any addOverlap(IPCMessage::SmartType msg);
+         *
+         * @brief	添加一个渲染图层，在进行页面重绘时会将该图片合并到页面原始的Bitmap中
+         *
+         * @param	name 图层名称 （该名称为一个共享内存的名称，页面重绘时将读取共享内存中的数据进行合并）.
+         *
+         * @return	Undefined.
+         */
+        
+        virtual Any addOverlap(IPCMessage::SmartType msg);
+        
+        /**
+         * @fn	virtual Any removeOverlap(IPCMessage::SmartType msg);
+         *
+         * @brief	移除一个渲染图层
+         *
+         * @param	name 图层名称.
+         *
+         * @return	Undefined.
+         */
+        
+        virtual Any removeOverlap(IPCMessage::SmartType msg);
         
         Any addBrowserWindowSettings(IPCMessage::SmartType msg);
         Any removeBrowserWindowSettings(IPCMessage::SmartType msg);
         Any getBrowserWindowSettings(IPCMessage::SmartType msg);
+        
         
         
         
@@ -189,6 +228,10 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getConfigs, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getConfig, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setConfig, TransferExecNormal)
+        
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(repaint, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(addOverlap, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(removeOverlap, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         

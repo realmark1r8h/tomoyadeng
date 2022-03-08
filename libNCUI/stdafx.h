@@ -186,7 +186,6 @@ using namespace DuiLib;
 #include "transfer/MouseTransfer.h"
 #include "transfer/NativeWindowTransfer.h"
 #include "transfer/NetTransfer.h"
-#include "transfer/ProcessTransfer.h"
 #include "transfer/RendererThreadTransfer.h"
 #include "transfer/RequestTransfer.h"
 #include "transfer/RunnableTransfer.hpp"

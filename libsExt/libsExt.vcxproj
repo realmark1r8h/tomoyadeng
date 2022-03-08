@@ -93,8 +93,11 @@
     <ClInclude Include="transfer\Base64Transfer.h" />
     <ClInclude Include="transfer\DemoTransfer.h" />
     <ClInclude Include="transfer\FileTransfer.hpp" />
+    <ClInclude Include="transfer\InterProcessTransfer.h" />
     <ClInclude Include="transfer\MD5Transfer.h" />
     <ClInclude Include="transfer\PathTransfer.h" />
+    <ClInclude Include="transfer\ProcessTransfer.h" />
+    <ClInclude Include="transfer\RegistryTransfer.h" />
     <ClInclude Include="transfer\UUIDTransfer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -115,8 +118,11 @@
     </ClCompile>
     <ClCompile Include="transfer\Base64Transfer.cpp" />
     <ClCompile Include="transfer\DemoTransfer.cpp" />
+    <ClCompile Include="transfer\InterProcessTransfer.cpp" />
     <ClCompile Include="transfer\MD5Transfer.cpp" />
     <ClCompile Include="transfer\PathTransfer.cpp" />
+    <ClCompile Include="transfer\ProcessTransfer.cpp" />
+    <ClCompile Include="transfer\RegistryTransfer.cpp" />
     <ClCompile Include="transfer\UUIDTransfer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

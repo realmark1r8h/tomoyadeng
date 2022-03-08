@@ -23,11 +23,18 @@ namespace amo {
         
         
         Any findPIDByName(IPCMessage::SmartType msg);
+        Any terminateProcessByName(IPCMessage::SmartType msg);
+        Any killProcessByName(IPCMessage::SmartType msg);
         Any start(IPCMessage::SmartType msg);
         Any getResult(IPCMessage::SmartType msg);
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(ProcessTransfer, RunnableTransfer)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(findPIDByName, TransferFuncStatic | TransferExecAsync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(findPIDByName,
+                                      TransferFuncStatic | TransferExecAsync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(terminateProcessByName,
+                                      TransferFuncStatic | TransferFuncNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(killProcessByName,
+                                      TransferFuncStatic | TransferFuncNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(start, TransferFuncNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getResult, TransferFuncNormal)
         

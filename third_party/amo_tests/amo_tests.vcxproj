@@ -163,6 +163,7 @@
     <ClCompile Include="amo_tests.cpp" />
     <ClCompile Include="archive.cpp" />
     <ClCompile Include="file.cpp" />
+    <ClCompile Include="registry.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="uuid.cpp" />
   </ItemGroup>

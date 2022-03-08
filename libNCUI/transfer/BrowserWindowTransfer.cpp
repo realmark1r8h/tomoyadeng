@@ -165,6 +165,19 @@ namespace amo {
     }
     
     
+    Any BrowserWindowTransfer::repaint(IPCMessage::SmartType msg) {
+        // 由BrowserWindow重载实现
+        return Undefined();
+    }
+    
+    Any BrowserWindowTransfer::addOverlap(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
+    Any BrowserWindowTransfer::removeOverlap(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
     Any BrowserWindowTransfer::currentWindow(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);

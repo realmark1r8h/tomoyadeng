@@ -28,7 +28,29 @@
 #include "utility/utility.hpp"
 #include "scheme/UrlResourceHandlerFactory.h"
 
+#include <opencv.hpp>
+#include <opencv2/core/core.hpp>
+#include <iostream>
+#include <amo/file_mapping.hpp>
+#include <amo/rect.hpp>
+#include <amo/utility.hpp>
+
+
+
+
 namespace amo {
+
+    void WebkitView::DoEvent(TEventUI& event) {
+        if (event.Type == UIEVENT_TIMER) {
+            if (event.wParam == REPAINT_TIMER_ID) {
+                m_pBrowser->GetHost()->Invalidate(PET_VIEW);
+                return;
+            }
+        }
+        
+        return LayerViewRender::DoEvent(event);
+    }
+    
     WebkitView::WebkitView(std::shared_ptr<BrowserWindowSettings> pBrowserSettings)
         : ClassTransfer("ipcMain") {
         m_pBrowserSettings = pBrowserSettings;
@@ -38,6 +60,7 @@ namespace amo {
         m_pClientHandler = new amo::ClientHandler();
         m_hParentWnd = NULL;
         m_pBrowser = NULL;
+        
     }
     
     WebkitView::~WebkitView() {
@@ -58,6 +81,7 @@ namespace amo {
         m_pClientHandler = NULL;
         m_pRenderWnd = NULL;
         m_pBrowser = NULL;
+        
         
     }
     
@@ -183,6 +207,9 @@ namespace amo {
         
         BrowserTransferMgr::getInstance()->removeTransfer(browser->GetIdentifier());
         PostMessage(::GetParent(m_hBrowserWnd), WM_CLOSE, 255, 0);
+        
+        m_LastBitmap.reset();  // 不能放到析构函数里面去,太晚了
+        m_paintingRes.clear();
         return;
     }
     
@@ -286,6 +313,8 @@ namespace amo {
                                CefRefPtr<CefFrame> frame,
                                int httpStatusCode) {
                                
+                               
+        //m_gThread.reset(new std::thread(std::bind(&WebkitView::foo2, this)));
         AMO_TIMER_ELAPSED();
         
         if (m_nBrowserID != browser->GetIdentifier()) {
@@ -590,6 +619,61 @@ namespace amo {
         }
     }
     
+    Any WebkitView::repaint(IPCMessage::SmartType msg) {
+        bool killPaintTimer = !msg->getArgumentList()->getBool(0);
+        int delay = msg->getArgumentList()->getInt(1);
+        
+        // 不管之前有没有计时器，先删掉再说
+        m_pManager->KillTimer(this, REPAINT_TIMER_ID);
+        
+        if (delay > 0) {
+            if (delay < 30) {
+                delay = 30;
+            }
+            
+            m_pManager->SetTimer(this, REPAINT_TIMER_ID, delay);
+        }
+        
+        if (!killPaintTimer && m_pBrowser) {
+            // 如果不是停止重绘，那么立即重绘一次
+            m_pBrowser->GetHost()->Invalidate(PET_VIEW);
+        }
+        
+        return true;
+    }
+    
+    Any WebkitView::addOverlap(IPCMessage::SmartType msg) {
+    
+    
+        amo::json settings = msg->getArgumentList()->getJson(0).to_ansi();
+        std::string name = settings.getString("name");
+        
+        if (name.empty()) {
+            return false;
+        }
+        
+        std::shared_ptr<amo::file_mapping> map(new amo::file_mapping(name, true));
+        std::shared_ptr<Overlap> overlap(new Overlap(settings));
+        
+        if (m_paintingRes.find(name) == m_paintingRes.end()) {
+            m_paintingRes[name] = { overlap, map };
+        }
+        
+        return true;
+    }
+    
+    Any WebkitView::removeOverlap(IPCMessage::SmartType msg) {
+        std::string name = amo::string(msg->getArgumentList()->getString(0),
+                                       true).str();
+                                       
+        if (name.empty()) {
+            return false;
+        }
+        
+        m_paintingRes.erase(name);
+        return true;
+    }
+    
     Any WebkitView::onMessageTransfer(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         // 还要处理调试窗口
@@ -764,12 +848,16 @@ namespace amo {
         return m_pBrowser;
     }
     
+    
     void WebkitView::OnLoadStart(CefRefPtr<CefBrowser> browser,
                                  CefRefPtr<CefFrame> frame) {
         AMO_TIMER_ELAPSED();
+        // 加载页面时
+        
         
         if (frame->IsMain()) {
             CefString url = frame->GetURL();
+            m_paintingRes.clear();
             
             if (url == "chrome-devtools://devtools/inspector.html") {
             
@@ -887,6 +975,85 @@ namespace amo {
                                         PixelFormat32bppARGB,
                                         (BYTE*)buffer));
         m_pRenderWnd->updateCaretPos(image);
+        
+        Graphics * pGraphics = NULL;
+        
+        if (m_paintingRes.size() > 0) {
+            pGraphics = Graphics::FromImage(&*image);
+        }
+        
+        for (auto& item : m_paintingRes) {
+            auto p = item.second.second;
+            std::shared_ptr<Overlap> imageDataInfo = item.second.first;
+            
+            if (!p) {
+                continue;
+            }
+            
+            if (!p->is_opened() && !p->open(true)) {
+                continue;
+            }
+            
+            
+            std::vector<unsigned char> header2(4, 0);
+            p->read((char*)header2.data(), 0, 4);
+            int buffer_size = amo::bytes_to_int<int>(header2.data());
+            
+            
+            if (buffer_size > 16) {
+                std::vector<char> buffer(buffer_size, 0);
+                p->read(buffer.data(), header2.size(), buffer_size);
+                
+                imageDataInfo->fill(buffer.data(), buffer.size());
+                m_LastBitmap = imageDataInfo->getOverlapData()->toBitmap();
+            }
+            
+            if (imageDataInfo && pGraphics != NULL && m_LastBitmap) {
+            
+                amo::rect dstRect = imageDataInfo->dstRect;
+                
+                if (dstRect.empty()) {
+                    dstRect.width(m_LastBitmap->GetWidth());
+                    dstRect.height(m_LastBitmap->GetHeight());
+                }
+                
+                Gdiplus::RectF dst(dstRect.left(),
+                                   dstRect.top(),
+                                   dstRect.width(),
+                                   dstRect.height());
+                                   
+                amo::rect srcRect = imageDataInfo->srcRect;
+                
+                if (srcRect.empty()) {
+                    srcRect.width(m_LastBitmap->GetWidth());
+                    srcRect.height(m_LastBitmap->GetHeight());
+                }
+                
+                Gdiplus::RectF src(srcRect.left(),
+                                   srcRect.top(),
+                                   srcRect.width(),
+                                   srcRect.height());
+                                   
+                                   
+                                   
+                pGraphics->DrawImage(&*m_LastBitmap,
+                                     dst,
+                                     src.GetLeft(),
+                                     src.GetTop(),
+                                     src.GetRight() - src.GetLeft(),
+                                     src.GetBottom() - src.GetTop(),
+                                     UnitPixel);
+            }
+            
+        }
+        
+        if (pGraphics != NULL) {
+            delete pGraphics;
+            pGraphics = NULL;
+        }
+        
+        
+        
         
         if (m_pBrowserSettings->transparent) {
             insertBitmap(image);

@@ -41,6 +41,9 @@ namespace amo {
         
         
         
+        
+        
+        
     public:
         // WindowImplBase
         virtual LPCTSTR GetWindowClassName() const override;
@@ -92,7 +95,9 @@ namespace amo {
         virtual Any showDevTools(IPCMessage::SmartType msg) override;
         virtual Any closeDevTools(IPCMessage::SmartType msg) override;
         virtual Any isMainWindow(IPCMessage::SmartType msg) override;
-        
+        virtual Any repaint(IPCMessage::SmartType msg) override;
+        virtual Any addOverlap(IPCMessage::SmartType msg) override;
+        virtual Any removeOverlap(IPCMessage::SmartType msg) override;
     public:
         // LocalWindow
         virtual std::shared_ptr<BrowserWindow> toBrowserWindow() override;

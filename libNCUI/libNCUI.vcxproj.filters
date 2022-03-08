@@ -468,9 +468,6 @@
     <ClCompile Include="transfer\BrowserTransferMgr.cpp">
       <Filter>transfer</Filter>
     </ClCompile>
-    <ClCompile Include="transfer\ProcessTransfer.cpp">
-      <Filter>transfer</Filter>
-    </ClCompile>
     <ClCompile Include="transfer\RendererTransferMgr.cpp">
       <Filter>transfer</Filter>
     </ClCompile>
@@ -965,9 +962,6 @@
     <ClInclude Include="utility\libzippp.h">
       <Filter>utility</Filter>
     </ClInclude>
-    <ClInclude Include="transfer\ProcessTransfer.h">
-      <Filter>transfer</Filter>
-    </ClInclude>
     <ClInclude Include="ipc\IPCEmitter.hpp">
       <Filter>ipc</Filter>
     </ClInclude>
@@ -976,6 +970,9 @@
     </ClInclude>
     <ClInclude Include="transfer\RendererTransferMgr.h">
       <Filter>transfer</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\Overlap.hpp">
+      <Filter>ui\win</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

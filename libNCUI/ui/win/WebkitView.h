@@ -27,6 +27,7 @@
 #include "transfer/ClassTransfer.hpp"
 #include "handler/DragHandler.h"
 #include "ui/win/ViewRenderer.h"
+#include "ui/win/Overlap.hpp"
 
 
 
@@ -51,6 +52,8 @@ namespace amo {
         , public DragHandlerDelegate
         , public KeyboardHandlerDelegate {
     public:
+        const static int REPAINT_TIMER_ID = 89390;
+    public:
         WebkitView(std::shared_ptr<BrowserWindowSettings> pBrowserSettings);
         
         ~WebkitView();
@@ -70,9 +73,12 @@ namespace amo {
         
         
         
+        int foo2();
         
         
         
+        
+        virtual void DoEvent(TEventUI& event) override;
         
     public:
         virtual void OnPaint(CefRefPtr<CefBrowser> browser,
@@ -156,8 +162,9 @@ namespace amo {
         Any focusedNodeChanged(IPCMessage::SmartType msg);
         Any asyncExecuteResult(IPCMessage::SmartType msg);
         
-        void registerExternalTransfer(int nBrowserID, std::shared_ptr<ClassTransfer> pTransfer);
-        
+        void registerExternalTransfer(int nBrowserID,
+                                      std::shared_ptr<ClassTransfer> pTransfer);
+                                      
         /*!
          * @fn	void triggerEventOnUIThread(IPCMessage::SmartType msg);
          *
@@ -218,6 +225,42 @@ namespace amo {
         
         Any createPipeClient(IPCMessage::SmartType msg);
         
+        /**
+         * @fn	Any repaint(IPCMessage::SmartType msg);
+         *
+         * @brief	Repaints the given message
+         *
+         * @param	msg	The message.
+         *
+         * @return	Any.
+         */
+        
+        Any repaint(IPCMessage::SmartType msg);
+        
+        /**
+         * @fn	Any addOverlap(IPCMessage::SmartType msg);
+         *
+         * @brief	Adds an overlap
+         *
+         * @param	msg	The message.
+         *
+         * @return	Any.
+         */
+        
+        Any addOverlap(IPCMessage::SmartType msg);
+        
+        /**
+         * @fn	Any removeOverlap(IPCMessage::SmartType msg);
+         *
+         * @brief	Removes the overlap described by msg
+         *
+         * @param	msg	The message.
+         *
+         * @return	Any.
+         */
+        
+        Any removeOverlap(IPCMessage::SmartType msg);
+        
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(WebkitView, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(focusedNodeChanged, 0)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(asyncExecuteResult, 0)
@@ -245,6 +288,12 @@ namespace amo {
         std::shared_ptr<BrowserWindowSettings> m_pBrowserSettings;
         /*! @brief	浏览器窗口句柄. */
         HWND m_hParentWnd;
+        
+        std::shared_ptr<Gdiplus::Bitmap> m_LastBitmap;
+        
+        /** @brief	页面绘制资源,当离屏页面发生重绘时，将重里面里面读取数据合并到页面中 */
+        std::map<std::string, std::pair<std::shared_ptr<Overlap>, std::shared_ptr<amo::file_mapping> > >
+        m_paintingRes;
         
     };
     

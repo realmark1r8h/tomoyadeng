@@ -9,7 +9,6 @@ namespace amo {
     
     Any DemoTransfer::onCreateClass(IPCMessage::SmartType msg) {
         auto pTransfer = ClassTransfer::createTransfer<DemoTransfer>();
-        pTransfer->setTriggerEventFunc(this->getTriggerEventFunc());pTransfer->setDefaultTriggerEventFunc(this->getDefaultTriggerEventFunc());
         return pTransfer->getFuncMgr().toSimplifiedJson();
     }
     

@@ -89,6 +89,9 @@ namespace amo {
         
     }
     
+    
+    
+    
     LRESULT BrowserWindow::OnLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                          BOOL& bHandled) {
         /* if (wParam == HTCAPTION) {
@@ -230,6 +233,10 @@ namespace amo {
         m_pCefCallbackHandler->registerHandlerDelegate(m_pWebkit->getClientHandler());
         m_pBrowserLayout->Add(m_pWebkit);//将浏览器控件加入到窗口中
         this->registerFunction();
+        
+        
+        
+        
         AMO_TIMER_ELAPSED();
     }
     
@@ -348,6 +355,31 @@ namespace amo {
     
     Any BrowserWindow::isMainWindow(IPCMessage::SmartType msg) {
         return m_pBrowserSettings->main;
+    }
+    
+    Any BrowserWindow::repaint(IPCMessage::SmartType msg) {
+        if (m_pWebkit) {
+            m_pWebkit->repaint(msg);
+        }
+        
+        return Undefined();
+    }
+    
+    Any BrowserWindow::addOverlap(IPCMessage::SmartType msg) {
+        if (m_pWebkit) {
+            return m_pWebkit->addOverlap(msg);
+        }
+        
+        return false;
+    }
+    
+    
+    Any BrowserWindow::removeOverlap(IPCMessage::SmartType msg) {
+        if (m_pWebkit) {
+            return	m_pWebkit->removeOverlap(msg);
+        }
+        
+        return false;
     }
     
     std::shared_ptr<amo::BrowserWindowSettings> BrowserWindow::getBrowserSettings()
@@ -778,8 +810,6 @@ namespace amo {
         
         return FALSE;
     }
-    
-    
     
     
 }

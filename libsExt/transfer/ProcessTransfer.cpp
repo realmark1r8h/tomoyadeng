@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "transfer/ProcessTransfer.h"
 #include <amo/process.hpp>
+#include <TlHelp32.h>
 
 
 namespace amo {
@@ -18,7 +19,8 @@ namespace amo {
     Any ProcessTransfer::onCreateClass(IPCMessage::SmartType msg) {
         amo::string str(msg->getArgumentList()->getString(0), true);
         auto pTransfer = ClassTransfer::createTransfer<ProcessTransfer>(str.str());
-        pTransfer->setTriggerEventFunc(this->getTriggerEventFunc());pTransfer->setDefaultTriggerEventFunc(this->getDefaultTriggerEventFunc());
+        pTransfer->setTriggerEventFunc(this->getTriggerEventFunc());
+        pTransfer->setDefaultTriggerEventFunc(this->getDefaultTriggerEventFunc());
         return pTransfer->getFuncMgr().toSimplifiedJson();
     }
     
@@ -47,6 +49,30 @@ namespace amo {
         return vec;
         
     }
+    
+    Any ProcessTransfer::terminateProcessByName(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        amo::string processName(args->getString(0), true);
+        
+        amo::process::terminate_process_by_name(processName.to_ansi());
+        return Undefined();
+    }
+    
+    
+    Any ProcessTransfer::killProcessByName(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        
+        bool killSubProcess = true;
+        amo::string processName(args->getString(0), true);
+        
+        if (args->isValid(1) && args->getValue(1).is<bool>()) {
+            killSubProcess = args->getValue(1).As<bool>();
+        }
+        
+        return  amo::process::kill_process_by_name(processName, killSubProcess);
+    }
+    
+    
     
     Any ProcessTransfer::start(IPCMessage::SmartType msg) {
         if (!m_pPorcess) {
