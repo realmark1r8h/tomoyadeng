@@ -46,6 +46,7 @@ namespace amo {
         auto args = msg->getArgumentList();
         amo::astring subKey = amo::string(args->getString(0), true);
         return m_registry->open(subKey, KEY_ALL_ACCESS);
+        
     }
     
     Any RegistryTransfer::read(IPCMessage::SmartType msg) {

@@ -42,7 +42,9 @@ namespace amo {
 
     void WebkitView::DoEvent(TEventUI& event) {
         if (event.Type == UIEVENT_TIMER) {
-            if (event.wParam == REPAINT_TIMER_ID) {
+            if (event.wParam == REPAINT_TIMER_ID
+                    && m_pBrowserSettings
+                    &&  m_pBrowserSettings->offscreen) {
                 m_pBrowser->GetHost()->Invalidate(PET_VIEW);
                 return;
             }
@@ -635,8 +637,10 @@ namespace amo {
         }
         
         if (!killPaintTimer && m_pBrowser) {
-            // 如果不是停止重绘，那么立即重绘一次
-            m_pBrowser->GetHost()->Invalidate(PET_VIEW);
+            // 如果不是停止重绘，那么立即重绘一次,只在离屏下重绘
+            if (m_pBrowserSettings->offscreen) {
+                m_pBrowser->GetHost()->Invalidate(PET_VIEW);
+            }
         }
         
         return true;
@@ -857,9 +861,14 @@ namespace amo {
         
         if (frame->IsMain()) {
             CefString url = frame->GetURL();
-            m_paintingRes.clear();
+            
+            if (browser->IsSame(m_pBrowser)) {
+                m_paintingRes.clear();
+            }
             
             if (url == "chrome-devtools://devtools/inspector.html") {
+            
+            } else {
             
             }
         }
@@ -956,6 +965,7 @@ namespace amo {
         return Undefined();
     }
     
+    
     void WebkitView::OnPaint(CefRefPtr<CefBrowser> browser,
                              CefRenderHandler::PaintElementType type,
                              const CefRenderHandler::RectList & dirtyRects,
@@ -963,6 +973,9 @@ namespace amo {
                              int width,
                              int height) {
         CEF_REQUIRE_UI_THREAD();
+        
+        amo::rect rc;
+        rc.intersect(amo::rect());
         
         if (!m_pBrowserSettings->offscreen) {
             return;    //  只画透明窗口
@@ -974,13 +987,25 @@ namespace amo {
                                         width * 4,
                                         PixelFormat32bppARGB,
                                         (BYTE*)buffer));
+                                        
+        std::shared_ptr<Gdiplus::Bitmap> bitmap;
+        bitmap.reset(new Gdiplus::Bitmap(width,
+                                         height,
+                                         width * 4,
+                                         PixelFormat32bppARGB, NULL));
+        bitmap = image;
+        /*if (m_paintingRes.empty()) {
+            bitmap = image;
+        }*/
+        
         m_pRenderWnd->updateCaretPos(image);
         
         Graphics * pGraphics = NULL;
         
         if (m_paintingRes.size() > 0) {
-            pGraphics = Graphics::FromImage(&*image);
+            pGraphics = Graphics::FromImage(&*bitmap);
         }
+        
         
         for (auto& item : m_paintingRes) {
             auto p = item.second.second;
@@ -1011,6 +1036,10 @@ namespace amo {
             if (imageDataInfo && pGraphics != NULL && m_LastBitmap) {
             
                 amo::rect dstRect = imageDataInfo->dstRect;
+                
+                amo::rect rc(0, 0, width, height);
+                
+                
                 
                 if (dstRect.empty()) {
                     dstRect.width(m_LastBitmap->GetWidth());
@@ -1043,6 +1072,41 @@ namespace amo {
                                      src.GetRight() - src.GetLeft(),
                                      src.GetBottom() - src.GetTop(),
                                      UnitPixel);
+                                     
+                std::vector<amo::rect> fvec = rc.complement(dstRect);
+                
+                
+                for (size_t i = 0; i < fvec.size(); ++i) {
+                    amo::rect r = fvec[i];
+                    
+                    if (r.empty()) {
+                        continue;
+                    }
+                    
+                    Gdiplus::RectF dst(r.left(),
+                                       r.top(),
+                                       r.width(),
+                                       r.height());
+                                       
+                    Gdiplus::RectF src(r.left(),
+                                       r.top(),
+                                       r.width(),
+                                       r.height());
+                    /*  Gdiplus::Pen pen(Gdiplus::Color(255, 0, 0), (Gdiplus::REAL)1.0);
+                      pen.SetAlignment(Gdiplus::PenAlignmentInset);
+                    
+                      pGraphics->DrawRectangle(&pen, dst);*/
+                    pGraphics->DrawImage(&*image,
+                                         dst,
+                                         src.GetLeft(),
+                                         src.GetTop(),
+                                         src.GetRight() - src.GetLeft(),
+                                         src.GetBottom() - src.GetTop(),
+                                         UnitPixel);
+                                         
+                    //pGraphics->DrawImage(&*image, 0, 0, image->GetWidth(), image->GetHeight());
+                    
+                }
             }
             
         }
@@ -1056,9 +1120,9 @@ namespace amo {
         
         
         if (m_pBrowserSettings->transparent) {
-            insertBitmap(image);
+            insertBitmap(bitmap);
         } else {
-            m_pRenderWnd->insertBitmap(image);
+            m_pRenderWnd->insertBitmap(bitmap);
         }
         
     }

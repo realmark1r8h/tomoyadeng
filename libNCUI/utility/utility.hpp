@@ -47,7 +47,7 @@ namespace amo {
         }
         
         
-        void addAnyToJsonArray(amo::json& json, const Any& val) const  {
+        static  void addAnyToJsonArray(amo::json& json, const Any& val)   {
             switch (val.type()) {
             case  AnyValueType<Undefined>::value:
             case  AnyValueType<Nil>::value:
@@ -81,8 +81,8 @@ namespace amo {
             return;
         }
         
-        void addAnyToJson(amo::json& json, const std::string& key,
-                          const Any& val) const  {
+        static  void addAnyToJson(amo::json& json, const std::string& key,
+                                  const Any& val)   {
             switch (val.type()) {
             case  AnyValueType<Undefined>::value: {
                 amo::json child = val.toJson();
@@ -139,7 +139,7 @@ namespace amo {
             
         }
         
-        Any jsonToAny(const amo::json& json)  const {
+        static Any jsonToAny(const amo::json& json)   {
             if (json.is_bool()) {
                 return json.get<bool>();
             } else if (json.is_int()) {
@@ -156,7 +156,7 @@ namespace amo {
                 return Undefined();
             }
         }
-        Any jsonToAny(const amo::json& json, const std::string& key) const {
+        static  Any jsonToAny(const amo::json& json, const std::string& key)  {
             amo::json val = json.getJson(key);
             return jsonToAny(val);
             
