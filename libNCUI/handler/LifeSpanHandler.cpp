@@ -51,21 +51,27 @@ namespace amo {
         return CefLifeSpanHandler::DoClose(browser);
     }
     
+#ifdef CHROME_VERSION_BUILD >= 2704
+    
+    
+#else
     bool LifeSpanHandler::RunModal(CefRefPtr<CefBrowser> browser) {
         $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
-        
+    
         for (; it != m_Delegates.end(); ++it) {
             bHandled = (*it)->RunModal(browser);
-            
+    
             if (bHandled) {
                 return true;
             }
         }
-        
+    
         return CefLifeSpanHandler::RunModal(browser);
     }
+#endif
+    
     
     void LifeSpanHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
         $clog(amo::cdevel << func_orient << amo::endl;);

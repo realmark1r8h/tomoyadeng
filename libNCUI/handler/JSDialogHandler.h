@@ -21,6 +21,18 @@ namespace amo {
         
         virtual ~JSDialogHandlerDelegate() {}
         
+        
+#if CHROME_VERSION_BUILD >= 2704
+        virtual bool OnJSDialog(CefRefPtr<CefBrowser> browser,
+                                const CefString& origin_url,
+                                CefJSDialogHandler::JSDialogType dialog_type,
+                                const CefString& message_text,
+                                const CefString& default_prompt_text,
+                                CefRefPtr<CefJSDialogCallback> callback,
+                                bool& suppress_message) {
+            return false;
+        }
+#else
         virtual bool OnJSDialog(CefRefPtr<CefBrowser> browser,
                                 const CefString& origin_url,
                                 const CefString& accept_lang,
@@ -31,6 +43,10 @@ namespace amo {
                                 bool& suppress_message) {
             return false;
         }
+#endif
+        
+        
+        
         
         virtual bool OnBeforeUnloadDialog(CefRefPtr<CefBrowser> browser,
                                           const CefString& message_text,
@@ -88,6 +104,15 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
+#if CHROME_VERSION_BUILD >= 2704
+        virtual bool OnJSDialog(CefRefPtr<CefBrowser> browser,
+                                const CefString& origin_url,
+                                CefJSDialogHandler::JSDialogType dialog_type,
+                                const CefString& message_text,
+                                const CefString& default_prompt_text,
+                                CefRefPtr<CefJSDialogCallback> callback,
+                                bool& suppress_message) override;
+#else
         virtual bool OnJSDialog(CefRefPtr<CefBrowser> browser,
                                 const CefString& origin_url,
                                 const CefString& accept_lang,
@@ -95,7 +120,9 @@ namespace amo {
                                 const CefString& message_text,
                                 const CefString& default_prompt_text,
                                 CefRefPtr<CefJSDialogCallback> callback,
-                                bool& suppress_message);
+                                bool& suppress_message) override;
+#endif
+                                
                                 
         /*!
          * @fn	virtual bool JSDialogHandler::OnBeforeUnloadDialog(

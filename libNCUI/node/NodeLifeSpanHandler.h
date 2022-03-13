@@ -38,7 +38,13 @@ namespace amo {
 #endif
                                    
         virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
+        
+#ifdef CHROME_VERSION_BUILD >= 2704
+        
+#else
         virtual bool RunModal(CefRefPtr<CefBrowser> browser) override;
+#endif
+        
         virtual bool DoClose(CefRefPtr<CefBrowser> browser) override;
         virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;
         

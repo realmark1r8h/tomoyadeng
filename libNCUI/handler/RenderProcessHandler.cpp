@@ -479,10 +479,17 @@ namespace amo {
     
     void RenderProcessHandler::RenderThreadActivityDetector() {
         //$clog(amo::cdevel << func_orient << "渲染进程活着" << amo::endl;);
+#if CHROME_VERSION_BUILD >=2704
+        CefPostDelayedTask(TID_RENDERER,
+                           base::Bind(&RenderProcessHandler::RenderThreadActivityDetector, this),
+                           5000);
+#else
         CefPostDelayedTask(TID_RENDERER,
                            NewCefRunnableMethod(this,
                                                 &RenderProcessHandler::RenderThreadActivityDetector),
                            5000);
+#endif
+                           
     }
     
     void RenderProcessHandler::OnBrowserCreated(CefRefPtr<CefBrowser> browser) {

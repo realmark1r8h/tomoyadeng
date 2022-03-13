@@ -17,6 +17,12 @@
 #include "libcef_dll/cef_logging.h"
 #endif
 
+
+
+#if CHROME_VERSION_BUILD <2704
+#include "include/cef_runnable.h"
+#endif
+
 #include "include/cef_cookie.h"
 #include "include/cef_base.h"
 #include "include/cef_app.h"
@@ -87,7 +93,7 @@
 #include "include/cef_client.h"
 #include "include/wrapper/cef_message_router.h"
 #include "include/cef_app.h"
-#include "include/cef_runnable.h"
+
 #include "include/cef_browser_process_handler.h"
 #include "include/cef_browser_process_handler.h"
 #include "include/internal/cef_string.h"
@@ -98,7 +104,6 @@
 #include "include/internal/cef_ptr.h"
 #include "include/cef_app.h"
 #include "include/cef_browser.h"
-#include "include/cef_runnable.h"
 #include "include/cef_browser.h"
 #include "include/cef_app.h"
 #include "include/cef_browser.h"
@@ -113,14 +118,40 @@
 #include "include/internal/cef_types.h"
 #include "include/internal/cef_ptr.h"
 #include "include/cef_frame.h"
-#include "include/cef_runnable.h"
 #include "include/cef_urlrequest.h"
-
 #include "include/cef_app.h"
-#include "include/cef_runnable.h"
 #include "include/wrapper/cef_stream_resource_handler.h"
 
 
+
+#include <functional>
+
+class ClosureHelper : public CefBase {
+public:
+    ClosureHelper(std::function < void(void)> fn) : m_fn(fn) {};
+    
+    void Execute() {
+        if (m_fn) {
+            m_fn();
+        }
+    }
+    
+    static CefRefPtr<ClosureHelper>  Create(std::function<void(void)> fn) {
+        CefRefPtr<ClosureHelper> ptr = new ClosureHelper(fn);
+        return ptr;
+    }
+    
+    IMPLEMENT_REFCOUNTING(ClosureHelper);
+    
+private:
+    std::function<void(void)> m_fn;
+    
+};
+
+#ifndef CLOSURE_HELPER
+#define CLOSUER_HELPER(fn)\
+	base::Bind(&ClosureHelper::Execute, ClosureHelper::Create(fn))
+#endif
 
 
 #endif // AMO_CEFHEADER_HPP__

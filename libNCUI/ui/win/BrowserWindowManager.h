@@ -34,6 +34,8 @@ namespace amo {
             std::shared_ptr<LocalWindow> window);
             
             
+        void createLocalWindowWithoutReturn(
+            std::shared_ptr<LocalWindow> window);
             
         std::shared_ptr<LocalWindow> findWindow(int32_t nID);
         std::shared_ptr<LocalWindow> findWindow(const std::string& strID);

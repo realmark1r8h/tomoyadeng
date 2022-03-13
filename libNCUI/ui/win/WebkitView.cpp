@@ -747,6 +747,19 @@ namespace amo {
         return;
     }
     
+#if CHROME_VERSION_BUILD >= 2704
+    bool WebkitView::OnJSDialog(CefRefPtr<CefBrowser> browser,
+                                const CefString & origin_url,
+                                CefJSDialogHandler::JSDialogType dialog_type,
+                                const CefString & message_text,
+                                const CefString & default_prompt_text,
+                                CefRefPtr<CefJSDialogCallback> callback,
+                                bool & suppress_message) {
+                                
+        return OnJSDialog2(browser, origin_url, dialog_type, message_text,
+                           default_prompt_text, callback, suppress_message);
+    }
+#else
     bool WebkitView::OnJSDialog(CefRefPtr<CefBrowser> browser,
                                 const CefString & origin_url,
                                 const CefString & accept_lang,
@@ -755,6 +768,18 @@ namespace amo {
                                 const CefString & default_prompt_text,
                                 CefRefPtr<CefJSDialogCallback> callback,
                                 bool & suppress_message) {
+    
+        return OnJSDialog2(browser, origin_url, dialog_type, message_text,
+                           default_prompt_text, callback, suppress_message);
+    }
+#endif
+    bool WebkitView::OnJSDialog2(CefRefPtr<CefBrowser> browser,
+                                 const CefString & origin_url,
+                                 CefJSDialogHandler::JSDialogType dialog_type,
+                                 const CefString & message_text,
+                                 const CefString & default_prompt_text,
+                                 CefRefPtr<CefJSDialogCallback> callback,
+                                 bool & suppress_message) {
         //接管JS 弹出框 ，显示自定义JS弹出框
         CEF_REQUIRE_UI_THREAD();
         amo::string strMessageText(message_text.ToString(), true);

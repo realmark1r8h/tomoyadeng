@@ -101,6 +101,11 @@ namespace amo {
         return window;
     }
     
+    void BrowserWindowCreator::createLocalWindowWithoutReturn(
+        std::shared_ptr<LocalWindow> window) {
+        createLocalWindow(window);
+    }
+    
     std::shared_ptr<LocalWindow> BrowserWindowCreator::createNativeWindow(
         std::shared_ptr<NativeWindowSettings> info) {
         CEF_REQUIRE_UI_THREAD();														//UI
@@ -333,11 +338,14 @@ namespace amo {
             
             Tray::getInstance()->destory();
             Tray::getInstance()->close();
-            
+#if CHROME_VERSION_BUILD >=2704
+            CefPostTask(TID_UI, base::Bind(&BrowserWindowCreator::quitMessageLoop,
+                                           m_pWindowCreator.get()));
+#else
             CefPostTask(TID_UI, NewCefRunnableMethod(m_pWindowCreator.get(),
                         &BrowserWindowCreator::quitMessageLoop));
-                        
-                        
+#endif
+                                           
         }
     }
     
@@ -352,7 +360,14 @@ namespace amo {
         CEF_REQUIRE_UI_THREAD();														//UI线程
         m_BrowserCount++;
     }
+    class task2 : public CefTask {
     
+    public:
+        virtual void Execute() override {
+        
+        }
+        
+    };
     bool BrowserWindowManager::OnBeforePopup(CefRefPtr<CefBrowser> browser,
             CefRefPtr<CefFrame> frame,
             const CefString& target_url,
@@ -379,9 +394,17 @@ namespace amo {
         pBrowserSettings->url = (target_url.ToString());
         
         // 在UI线程上创建窗口
+#if CHROME_VERSION_BUILD >= 2704
+        
+        CefPostTask(TID_UI, CLOSUER_HELPER(std::bind(
+                                               &BrowserWindowCreator::createBrowserWindow,
+                                               m_pWindowCreator.get(),
+                                               pBrowserSettings)));
+#else
         CefPostTask(TID_UI, NewCefRunnableMethod(m_pWindowCreator.get(),
                     &BrowserWindowCreator::createBrowserWindow,
                     pBrowserSettings));
+#endif
         return true;
     }
     
@@ -412,8 +435,17 @@ namespace amo {
     std::shared_ptr<LocalWindow> BrowserWindowManager::createBrowserWindow(
         std::shared_ptr<BrowserWindowSettings> info) {
         if (!CefCurrentlyOn(TID_UI)) {
+#if CHROME_VERSION_BUILD >= 2704
+        
+            CefPostTask(TID_UI, CLOSUER_HELPER(std::bind(
+                                                   &BrowserWindowCreator::createBrowserWindow,
+                                                   m_pWindowCreator.get(),
+                                                   info)));
+#else
             CefPostTask(TID_UI, NewCefRunnableMethod(m_pWindowCreator.get(),
                         &BrowserWindowCreator::createBrowserWindow, info));
+#endif
+                                                   
             return NULL;
         }
         
@@ -425,8 +457,16 @@ namespace amo {
     std::shared_ptr<LocalWindow> BrowserWindowManager::createNativeWindow(
         std::shared_ptr<NativeWindowSettings> info) {
         if (!CefCurrentlyOn(TID_UI)) {
+#if CHROME_VERSION_BUILD >= 2704
+            CefPostTask(TID_UI, CLOSUER_HELPER(std::bind(
+                                                   &BrowserWindowCreator::createNativeWindow,
+                                                   m_pWindowCreator.get(),
+                                                   info)));
+#else
             CefPostTask(TID_UI, NewCefRunnableMethod(m_pWindowCreator.get(),
                         &BrowserWindowCreator::createNativeWindow, info));
+#endif
+                                                   
             return NULL;
         }
         

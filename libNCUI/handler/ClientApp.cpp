@@ -180,6 +180,7 @@ namespace amo {
         return;
     }
     
+    
     void ClientApp::OnContextInitialized() {
         $clog(amo::cdevel << func_orient << "Context初始化完成回调" << amo::endl;
              );
@@ -201,7 +202,17 @@ namespace amo {
         cookie.expires.day_of_month = 11;
         assert(manager.get() != NULL);
         
-#if CHROME_VERSION_BUILD >= 2357
+#if CHROME_VERSION_BUILD >=2704
+        manager->SetSupportedSchemes(m_CookieableSchemes, NULL);
+        CefRefPtr<CefSetCookieCallback> callback = new SetCookieCallback();
+        
+        auto ptr = ClosureHelper::Create(std::bind(&CefCookieManager::SetCookie,
+                                         manager.get(),
+                                         CefString("chrome://version"), cookie, callback));
+        // TODO: set back callback
+        CefPostTask(TID_IO, base::Bind(&ClosureHelper::Execute,  ptr));
+        
+#elif CHROME_VERSION_BUILD >= 2357
         manager->SetSupportedSchemes(m_CookieableSchemes, NULL);
         CefRefPtr<CefSetCookieCallback> callback = new SetCookieCallback();
         CefPostTask(TID_IO,
@@ -213,7 +224,7 @@ namespace amo {
                     NewCefRunnableMethod(manager.get(), &CefCookieManager::SetCookie,
                                          CefString("chrome://version"), cookie));
 #endif
-                                         
+        
     }
     
     bool ClientApp::RegisterCustomSchemeFactory(const CefString& scheme_name,

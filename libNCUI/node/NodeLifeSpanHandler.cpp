@@ -8,7 +8,8 @@ namespace amo {
 #if CHROME_VERSION_BUILD >= 2357
 
 
-    NodeLifeSpanHandler::NodeLifeSpanHandler(std::shared_ptr<NodeHandlerHelper>& pHelper)
+    NodeLifeSpanHandler::NodeLifeSpanHandler(std::shared_ptr<NodeHandlerHelper>&
+            pHelper)
         : m_pHelper(pHelper) {
         
     }
@@ -47,12 +48,15 @@ namespace amo {
                                                m_pHelper->getJson(browser));
                                                
     }
-    
+#if CHROME_VERSION_BUILD >= 2704
+#else
     bool NodeLifeSpanHandler::RunModal(CefRefPtr<CefBrowser> browser) {
         Any ret = m_pHelper->getBroadcaster()->syncBroadcast("RunModal",
                   m_pHelper->getJson(browser));
         return ret;
     }
+#endif
+    
     
     bool NodeLifeSpanHandler::DoClose(CefRefPtr<CefBrowser> browser) {
         Any ret  = m_pHelper->getBroadcaster()->syncBroadcast("DoClose",

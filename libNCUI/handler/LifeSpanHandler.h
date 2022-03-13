@@ -57,9 +57,14 @@ namespace amo {
         virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) {
         }
         
+#if CHROME_VERSION_BUILD >= 2704
+        
+#else
         virtual bool RunModal(CefRefPtr<CefBrowser> browser) {
             return false;
         }
+#endif
+        
         
         virtual bool DoClose(CefRefPtr<CefBrowser> browser) {
             return false;
@@ -159,19 +164,23 @@ namespace amo {
         
         virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser);
         
+#if CHROME_VERSION_BUILD >= 2704
+#else
         /*!
-         * @fn	virtual bool LifeSpanHandler::RunModal(
-         * 		CefRefPtr<CefBrowser> browser);
-         *
-         * @brief	显示一个模式对话框时触发
-         * 			B UI.
-         *
-         * @param	browser	The browser.
-         *
-         * @return	true if it succeeds, false if it fails.
-         */
+        * @fn	virtual bool LifeSpanHandler::RunModal(
+        * 		CefRefPtr<CefBrowser> browser);
+        *
+        * @brief	显示一个模式对话框时触发
+        * 			B UI.
+        *
+        * @param	browser	The browser.
+        *
+        * @return	true if it succeeds, false if it fails.
+        */
         
         virtual bool RunModal(CefRefPtr<CefBrowser> browser);
+#endif
+        
         
         /*!
          * @fn	virtual bool LifeSpanHandler::DoClose(

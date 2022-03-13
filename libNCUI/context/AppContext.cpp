@@ -303,7 +303,7 @@ namespace amo {
         AMO_TIMER_ELAPSED();
         //   spdlog 不支持XP, 如果在XP下使用需要禁用log
         
-        if (!amo::log::initialize(false, true)) {
+        if (!amo::log::initialize(false, false)) {
             return -1;
         }
         
@@ -341,6 +341,11 @@ namespace amo {
         }
         
         AMO_TIMER_ELAPSED();
+        
+        if (!getDefaultAppSettings()->single_process) {
+            amo::log::finalize();
+        }
+        
         return exit_code;
     }
     
@@ -375,6 +380,7 @@ namespace amo {
         /*auto sink1 = std::make_shared<spdlog::sinks::msvc_sink_mt>();
         amo::log::add_sink(sink1);  */
         if (m_nProcessExitCode >= 0) {
+            amo::log::finalize();
             return;
         }
         
@@ -428,7 +434,7 @@ namespace amo {
         }
         
         
-        
+        amo::log::finalize();
         // 关闭钩子
         stopHook();
         
@@ -466,7 +472,9 @@ namespace amo {
         std::cout << i << std::endl;
         
         AMO_TIMER_ELAPSED_TEXT(run结束);
+        amo::log::finalize();
         CefShutdown();
+        
         
     }
     

@@ -277,6 +277,7 @@ namespace amo {
             CefRefPtr<CefV8Value> pValue = values[i].second;
             CefRefPtr<CefFrame> pFrame = pBrowser->GetFrame(values[i].first);
             
+            
             if (!pValue) {
                 continue;
             }
@@ -285,6 +286,10 @@ namespace amo {
                 continue;
             }
             
+            TypeConvertor convertor(pFrame);
+            
+            auto sstring  =
+                TypeConvertor::V8ValueType(pValue);
             CefRefPtr<CefV8Value> pListenerCount = pValue->GetValue("listenerCount");
             
             
@@ -296,7 +301,7 @@ namespace amo {
             
             if (pFunction && pFunction->IsFunction()) {
                 CefV8ValueList list;
-                TypeConvertor convertor(pFrame);
+                
                 
                 for (int i = 0; i < args->getArgsSize(); ++i) {
                 

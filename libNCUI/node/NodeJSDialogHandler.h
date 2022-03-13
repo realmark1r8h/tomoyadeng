@@ -16,6 +16,15 @@ namespace amo {
     public:
         NodeJSDialogHandler(std::shared_ptr<NodeHandlerHelper>& pHelper);
         
+#if CHROME_VERSION_BUILD >= 2704
+        virtual bool OnJSDialog(CefRefPtr<CefBrowser> browser,
+                                const CefString& origin_url,
+                                CefJSDialogHandler::JSDialogType dialog_type,
+                                const CefString& message_text,
+                                const CefString& default_prompt_text,
+                                CefRefPtr<CefJSDialogCallback> callback,
+                                bool& suppress_message) override;
+#else
         virtual bool OnJSDialog(CefRefPtr<CefBrowser> browser,
                                 const CefString& origin_url,
                                 const CefString& accept_lang,
@@ -24,6 +33,8 @@ namespace amo {
                                 const CefString& default_prompt_text,
                                 CefRefPtr<CefJSDialogCallback> callback,
                                 bool& suppress_message) override;
+#endif
+                                
                                 
                                 
         virtual bool OnBeforeUnloadDialog(CefRefPtr<CefBrowser> browser,

@@ -144,8 +144,15 @@ namespace amo {
     
     
     bool NodeMessageHandler::sendMessageToUI(IPCMessage::SmartType msg) {
+#if CHROME_VERSION_BUILD >= 2704
+        CefPostTask(TID_UI, base::Bind(&NodeMessageHandler::onNodeMessageRecv, this,
+                                       msg));
+#else
         CefPostTask(TID_UI, NewCefRunnableMethod(this,
                     &NodeMessageHandler::onNodeMessageRecv, msg));
+                                       
+#endif
+                                       
         return true;
     }
     

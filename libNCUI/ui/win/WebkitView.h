@@ -123,7 +123,15 @@ namespace amo {
                                       CefRefPtr<CefDownloadItem> download_item,
                                       const CefString& suggested_name,
                                       CefRefPtr<CefBeforeDownloadCallback> callback) override;
-                                      
+#if CHROME_VERSION_BUILD >= 2704
+        virtual bool OnJSDialog(CefRefPtr<CefBrowser> browser,
+                                const CefString& origin_url,
+                                CefJSDialogHandler::JSDialogType dialog_type,
+                                const CefString& message_text,
+                                const CefString& default_prompt_text,
+                                CefRefPtr<CefJSDialogCallback> callback,
+                                bool& suppress_message) override;
+#else
         virtual bool OnJSDialog(CefRefPtr<CefBrowser> browser,
                                 const CefString& origin_url,
                                 const CefString& accept_lang,
@@ -132,7 +140,16 @@ namespace amo {
                                 const CefString& default_prompt_text,
                                 CefRefPtr<CefJSDialogCallback> callback,
                                 bool& suppress_message) override;
+#endif
                                 
+        bool WebkitView::OnJSDialog2(CefRefPtr<CefBrowser> browser,
+                                     const CefString & origin_url,
+                                     CefJSDialogHandler::JSDialogType dialog_type,
+                                     const CefString & message_text,
+                                     const CefString & default_prompt_text,
+                                     CefRefPtr<CefJSDialogCallback> callback,
+                                     bool & suppress_message);
+                                     
         virtual bool OnBeforeUnloadDialog(CefRefPtr<CefBrowser> browser,
                                           const CefString& message_text,
                                           bool is_reload,

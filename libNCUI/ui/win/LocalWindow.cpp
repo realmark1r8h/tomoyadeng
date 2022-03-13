@@ -141,9 +141,9 @@ namespace amo {
             pTransfer = ClassTransfer::findTransfer(m_nTransferObjectID);
             
             if (pTransfer) {
-                syncBroadcastMessage(getTransferClassID(),
-                                     "create",
-                                     pTransfer->getFuncMgr().toSimplifiedJson());
+                broadcastMessage(getTransferClassID(),
+                                 "create",
+                                 pTransfer->getFuncMgr().toSimplifiedJson());
             }
             
             break;
@@ -188,7 +188,7 @@ namespace amo {
         }
         
         case WM_CLOSE: {
-            syncBroadcastMessage(getTransferObjectID(), "close");
+            broadcastMessage(getTransferObjectID(), "close");
             break;
         }
         
@@ -231,7 +231,7 @@ namespace amo {
         json.put("y", msg.ptMouse.y);
         json.put("sender", controlMgr->toSimplifiedJson(msg.pSender));
         addTransferedControl(msg.pSender);
-        syncBroadcastMessage(getTransferObjectID(), eventType, json);
+        broadcastMessage(getTransferObjectID(), eventType, json);
         
         
         return WindowImplBase::Notify(msg);
