@@ -39,7 +39,7 @@ namespace amo {
                                    
         virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
         
-#ifdef CHROME_VERSION_BUILD >= 2704
+#if CHROME_VERSION_BUILD >= 2704
         
 #else
         virtual bool RunModal(CefRefPtr<CefBrowser> browser) override;

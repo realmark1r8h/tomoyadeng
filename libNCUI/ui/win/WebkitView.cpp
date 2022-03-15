@@ -314,8 +314,8 @@ namespace amo {
     void WebkitView::OnLoadEnd(CefRefPtr<CefBrowser> browser,
                                CefRefPtr<CefFrame> frame,
                                int httpStatusCode) {
-                               
-                               
+        return;
+        
         //m_gThread.reset(new std::thread(std::bind(&WebkitView::foo2, this)));
         AMO_TIMER_ELAPSED();
         

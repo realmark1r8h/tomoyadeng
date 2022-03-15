@@ -129,7 +129,9 @@
 class ClosureHelper : public CefBase {
 public:
     ClosureHelper(std::function < void(void)> fn) : m_fn(fn) {};
+    ~ClosureHelper() {
     
+    }
     void Execute() {
         if (m_fn) {
             m_fn();

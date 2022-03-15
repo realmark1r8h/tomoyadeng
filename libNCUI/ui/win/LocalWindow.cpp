@@ -43,8 +43,8 @@ namespace amo {
         
         if (pTransfer) {
         
-            runner->syncBroadcast("closed",
-                                  pTransfer->getFuncMgr().toSimplifiedJson());
+            runner->broadcast("closed",
+                              pTransfer->getFuncMgr().toSimplifiedJson());
         }
         
         return LayeredWindow::OnDestroy(uMsg, wParam, lParam, bHandled);

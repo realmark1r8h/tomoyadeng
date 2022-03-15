@@ -51,7 +51,7 @@ namespace amo {
         return CefLifeSpanHandler::DoClose(browser);
     }
     
-#ifdef CHROME_VERSION_BUILD >= 2704
+#if CHROME_VERSION_BUILD >= 2704
     
     
 #else

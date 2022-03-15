@@ -8,6 +8,7 @@
 #include "handler/ResourceBundleHandler.h"
 #include "handler/RenderProcessHandler.h"
 #include "handler/BrowserProcessHandler.h"
+#include "../cefsimple/simple_handler.h"
 
 namespace amo {
 
@@ -37,6 +38,7 @@ namespace amo {
     ClientApp::ClientApp() {
         $clog(amo::cdevel << func_orient << "ClientApp ¹¹Ôìº¯Êý" << amo::endl;);
         m_pBrowserProcessHandler = new BrowserProcessHandler();
+        
         m_pRenderProcessHandler = new RenderProcessHandler();
         m_pResourceBundleHandler = new ResourceBundleHandler();
     }
@@ -48,7 +50,8 @@ namespace amo {
     }
     
     CefRefPtr<CefRenderProcessHandler> ClientApp::GetRenderProcessHandler() {
-        //$clog(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
+        
         return m_pRenderProcessHandler.get();
     }
     

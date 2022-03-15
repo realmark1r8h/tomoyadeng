@@ -428,11 +428,11 @@ namespace amo {
                 startNodeThread();
             }
             
+            
             AMO_TIMER_ELAPSED();
             // 开始消息循环
             CefRunMessageLoop();
         }
-        
         
         amo::log::finalize();
         // 关闭钩子

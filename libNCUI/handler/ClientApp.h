@@ -143,8 +143,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterRenderProcessHandlerDelegate(RenderProcessHandlerDelegate* delegate);
-        
+        bool RegisterRenderProcessHandlerDelegate(RenderProcessHandlerDelegate*
+                delegate);
+                
         /*!
          * @fn	void ClientApp::UnregisterRenderProcessHandlerDelegate(
          * 		RenderProcessHandlerDelegate* delegate);
@@ -155,8 +156,9 @@ namespace amo {
          * @param 	delegate	If non-null, the delegate.
          */
         
-        void UnregisterRenderProcessHandlerDelegate(RenderProcessHandlerDelegate* delegate);
-        
+        void UnregisterRenderProcessHandlerDelegate(RenderProcessHandlerDelegate*
+                delegate);
+                
         /*!
          * @fn	bool ClientApp::RegisterBrowserProcessHandlerDelegate(
          * 		BrowserProcessHandlerDelegate* delegate);
@@ -169,8 +171,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterBrowserProcessHandlerDelegate(BrowserProcessHandlerDelegate* delegate);
-        
+        bool RegisterBrowserProcessHandlerDelegate(BrowserProcessHandlerDelegate*
+                delegate);
+                
         /*!
          * @fn	void ClientApp::UnregisterBrowserProcessHandlerDelegate(
          * 		BrowserProcessHandlerDelegate* delegate);
@@ -181,9 +184,10 @@ namespace amo {
          * @param 	delegate	If non-null, the delegate.
          */
         
-        void UnregisterBrowserProcessHandlerDelegate(BrowserProcessHandlerDelegate* delegate);
-        
-        
+        void UnregisterBrowserProcessHandlerDelegate(BrowserProcessHandlerDelegate*
+                delegate);
+                
+                
     private:
     
         /*!

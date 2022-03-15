@@ -41,61 +41,6 @@ namespace amo {
             CefRefPtr<CefProcessMessage> message) {
         assert(source_process == PID_BROWSER);
         std::string strMessageName = message->GetName();
-        /* $clog(
-             amo::cdevel << func_orient << "From Browser : " << strMessageName << amo::endl;
-             amo::string message_name(message->GetName().ToString(), true);
-        
-         if (message_name != MSG_LOG_MESSAGE) {
-        
-         amo::cdevel << func_orient << message_name << "\n" << log_asterisk_separator;
-        
-         for (size_t i = 0; i < message->GetArgumentList()->GetSize(); ++i) {
-                 CefValueType value_type = message->GetArgumentList()->GetType(i);
-        
-                 switch (value_type) {
-        
-                 case 	VTYPE_NULL:
-                     amo::cdevel << i << ".\t VTYPE_NULL\t\t ( " << "NULL" << " )\n";
-                     break;
-        
-                 case 	VTYPE_BOOL:
-                     amo::cdevel << i << ".\t VTYPE_BOOL\t\t ( " << message->GetArgumentList()->GetBool(i) << " )\n";
-                     break;
-        
-                 case 	VTYPE_INT:
-                     amo::cdevel << i << ".\t VTYPE_INT\t\t ( " << message->GetArgumentList()->GetInt(i) << " )\n";
-                     break;
-        
-                 case 	VTYPE_DOUBLE:
-                     amo::cdevel << i << ".\t VTYPE_DOUBLE\t ( " << message->GetArgumentList()->GetDouble(i) << " )\n";
-                     break;
-        
-                 case 	VTYPE_STRING:
-                     amo::cdevel << i << ".\t VTYPE_STRING\t ( " << amo::string(message->GetArgumentList()->GetString(i).ToString(), true).str() << " )\n";
-                     break;
-        
-                 case 	VTYPE_BINARY:
-                     amo::cdevel << i << ".\t VTYPE_BINARY\t ( " << "NO VIEW " << " )\n";
-                     break;
-        
-                 case 	VTYPE_DICTIONARY:
-                     amo::cdevel << i << ".\t VTYPE_DICTIONARY\t ( " << "NO VIEW " << " )\n";
-                     break;
-        
-                 case 	VTYPE_LIST:
-                     amo::cdevel << i << ".\t VTYPE_LIST\t\t ( " << " NO VIEW" << " )\n";
-                     break;
-        
-                 case	VTYPE_INVALID:
-                 default:
-                     amo::cdevel << i << ".\t VTYPE_INVALID\t ( " << " NO VIEW" << " )\n";
-                     break;
-        
-                 }
-             }
-         }
-         amo::cdevel << log_asterisk_separator << amo::endl;
-         );*/
         
         
         
@@ -104,18 +49,7 @@ namespace amo {
                 || strMessageName == MSG_NATIVE_ASYNC_EXECUTE) {
             int nBrowserID = browser->GetIdentifier();
             IPCMessage::SmartType  msg = amo::createAnyProcessMessage(message);
-            //auto strings = msg->toJson().to_string();
-            //
-            //$cdevel(strings);
-            //auto name = msg->getArgumentList()->getString(IPCArgsPosInfo::FuncName);
-            //
-            //if (strings.find("move") != -1) {
-            //    return true;
-            //}
-            //
-            ///* if (name == "emitEventAllFrame") {
-            //     return true;
-            // }*/
+            
             
             if (RendererTransferMgr::getInstance()->onMessageTransfer(msg).isValid()) {
                 return true;
@@ -223,6 +157,7 @@ namespace amo {
     
     void RenderProcessHandler::OnContextReleased(CefRefPtr<CefBrowser> browser,
             CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context) {
+            
         $clog(amo::cdevel << func_orient << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
@@ -269,18 +204,7 @@ namespace amo {
         
         int nBrowserID = browser->GetIdentifier();
         
-        // 不能对调试窗口使用，调试窗口和浏览器窗口共用一个Handler,会导致死锁
-        /* IPCMessage::SmartType ipcMessage(new IPCMessage());
-         ipcMessage->setMessageName(MSG_NATIVE_EXECUTE);
-         std::shared_ptr<AnyArgsList>& args = ipcMessage->GetArgumentList();
-         args->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-         args->setValue(IPCArgsPosInfo::JsFuncName, "include(\"BrowserWindow\").currentWindow.dragable");
-         args->setValue(IPCArgsPosInfo::FrameID, frame_id);
-         args->setValue(IPCArgsPosInfo::BrowserID, nBrowserID);
-         args->setValue(IPCArgsPosInfo::ArgsLength, 0);
-         args->setValue(IPCArgsPosInfo::FuncName, "runJSFunction");
         
-         amo::RendererTransferMgr::getInstance()->onMessageTransfer(ipcMessage);*/
         
         if (m_pV8ExtensionHander) {
             std::string url = frame->GetURL().ToString();

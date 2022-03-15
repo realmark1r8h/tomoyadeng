@@ -125,7 +125,7 @@ namespace amo {
         std::shared_ptr<UIMessageBroadcaster> runner(new UIMessageBroadcaster(
                     nObjectID));
                     
-        runner->syncBroadcast("hotkeydown", nKey, iter->second->settings);
+        runner->broadcast("hotkeydown", nKey, iter->second->settings);
         
         return TRUE;
     }
