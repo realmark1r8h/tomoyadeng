@@ -80,8 +80,18 @@ namespace amo {
             return Undefined();
         }
         
+#if CHROME_VERSION_BUILD >= 2840
+        bool bOk = pFrame->GetV8Context()->Eval(js,
+                                                CefString(),
+                                                0,
+                                                retal,
+                                                exp);
+#else
         bool bOk = pFrame->GetV8Context()->Eval(js, retal, exp);
-        
+                                                
+#endif
+                                                
+                                                
         if (bOk && retal && retal->IsFunction()) {
             CefV8ValueList list;
             TypeConvertor convertor(pFrame);
@@ -115,7 +125,11 @@ namespace amo {
         
         std::string js = amo::string(args->getString(0), true).to_utf8();
         
+#if CHROME_VERSION_BUILD >= 2840
+        bool bOk = pFrame->GetV8Context()->Eval(js, CefString(), 0, retal, exp);
+#else
         bool bOk = pFrame->GetV8Context()->Eval(js, retal, exp);
+#endif
         
         if (!bOk || !retal) {
             return Undefined();
@@ -139,11 +153,13 @@ namespace amo {
             return Undefined();
         }
         
+        TypeConvertor convertor(pFrame);
+        
         CefRefPtr<CefV8Value> pFunction = pValue->GetValue("emit");
         
         if (pFunction && pFunction->IsFunction()) {
             CefV8ValueList list;
-            TypeConvertor convertor(pFrame);
+            
             
             for (int i = 0; i < args->getArgsSize(); ++i) {
                 list.push_back(convertor.toV8Value(args, i));
@@ -199,15 +215,15 @@ namespace amo {
                 continue;
             }
             
+            TypeConvertor convertor(pFrame);
+            
             CefRefPtr<CefV8Value> pListenerCount = pValue->GetValue("listenerCount");
-            
-            
             
             CefRefPtr<CefV8Value> pFunction = pValue->GetValue("emit");
             
             if (pFunction && pFunction->IsFunction()) {
                 CefV8ValueList list;
-                TypeConvertor convertor(pFrame);
+                
                 
                 for (int i = 0; i < args->getArgsSize(); ++i) {
                     list.push_back(convertor.toV8Value(args, i));

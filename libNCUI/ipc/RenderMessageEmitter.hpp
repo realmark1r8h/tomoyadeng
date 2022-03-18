@@ -113,8 +113,12 @@ namespace amo {
                 
                 if (pValue->IsFunction()) {
                 
-                
+#if CHROME_VERSION_BUILD >= 2987
+                    CefRefPtr<CefBaseRefCounted> pHandler = pValue->GetFunctionHandler();
+#else
                     CefRefPtr<CefBase> pHandler = pValue->GetFunctionHandler();
+#endif
+                    
                     
                     // 如果pHander存在，那么说明当前函数是一个C++创建的函数
                     JsClassV8Handler* pClassHandler = NULL;

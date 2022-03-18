@@ -21,7 +21,13 @@ namespace amo {
 }
 
 namespace amo {
+#if CHROME_VERSION_BUILD >= 2987
+    class BrowserWindowCreator : public CefBaseRefCounted {
+#else
     class BrowserWindowCreator : public CefBase {
+#endif
+    
+    
     public:
         BrowserWindowCreator();
         std::shared_ptr<LocalWindow> createBrowserWindow(

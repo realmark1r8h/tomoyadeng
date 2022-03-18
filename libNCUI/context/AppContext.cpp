@@ -234,6 +234,12 @@ namespace amo {
     
     void AppContext::initCommandLine(int argc, const char* const* argv) {
         m_pCommandLine = CefCommandLine::CreateCommandLine();
+        
+        if (!m_pCommandLine) {
+            $cerr("无法初始化命令行参数");
+            return;
+        }
+        
 #if defined(OS_WIN)
         m_pCommandLine->InitFromString(::GetCommandLine());
 #else

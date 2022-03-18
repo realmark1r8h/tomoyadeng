@@ -126,7 +126,12 @@
 
 #include <functional>
 
+#if CHROME_VERSION_BUILD >= 2987
+class ClosureHelper : public CefBaseRefCounted {
+#else
 class ClosureHelper : public CefBase {
+#endif
+
 public:
     ClosureHelper(std::function < void(void)> fn) : m_fn(fn) {};
     ~ClosureHelper() {

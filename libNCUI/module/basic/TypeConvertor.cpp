@@ -77,7 +77,12 @@ namespace amo {
         if (bTransfer || (!json.is_object() && !json.is_array())) {
             return ParseSingleJsonToObject(json);
         } else {
+#if CHROME_VERSION_BUILD >= 2840
+            CefRefPtr<CefV8Value> pObject = CefV8Value::CreateObject(NULL, NULL);
+#else
             CefRefPtr<CefV8Value> pObject = CefV8Value::CreateObject(NULL);
+#endif
+            
             
             // ±È¿˙JSON
             for (auto iter = json.begin(); iter != json.end(); ++iter) {
@@ -511,7 +516,12 @@ namespace amo {
                 
                 for (size_t i = 0; i < vec.size(); ++i) {
                     amo::json& p = vec[i];
+#if CHROME_VERSION_BUILD >= 2840
+                    CefRefPtr<CefV8Value> object = CefV8Value::CreateObject(NULL, NULL);
+#else
                     CefRefPtr<CefV8Value> object = CefV8Value::CreateObject(NULL);
+#endif
+                    
                     object = ParseJsonToObject(p);
                     
                     if (!object->IsUndefined()) {
@@ -672,7 +682,12 @@ namespace amo {
         CefRefPtr<CefV8Value> retal;
         CefRefPtr<CefV8Exception> exp;
         std::string js = "(function(){return objectToString;})()";
+#if CHROME_VERSION_BUILD >= 2840
+        bool bOk = pFrame->GetV8Context()->Eval(js, CefString(), 0, retal, exp);
+#else
         bool bOk = pFrame->GetV8Context()->Eval(js, retal, exp);
+#endif
+        
         
         if (bOk && retal && retal->IsFunction()) {
             CefV8ValueList list;

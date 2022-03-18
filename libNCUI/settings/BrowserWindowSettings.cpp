@@ -18,11 +18,17 @@ namespace amo {
         plugins = STATE_ENABLED;
         remote_fonts = STATE_DEFAULT;
         javascript = STATE_ENABLED;
+#if CHROME_VERSION_BUILD < 3112
         javascript_open_windows = STATE_ENABLED;
+#endif
+        
         javascript_close_windows = STATE_ENABLED;
         javascript_access_clipboard = STATE_ENABLED;
         javascript_dom_paste = STATE_ENABLED;
+#if CHROME_VERSION_BUILD < 2924
         caret_browsing = STATE_ENABLED;
+#endif
+        
         //java = STATE_ENABLED;
         
         universal_access_from_file_urls = STATE_ENABLED;

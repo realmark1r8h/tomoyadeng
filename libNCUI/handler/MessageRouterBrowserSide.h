@@ -9,7 +9,15 @@
 #include "handler/CefHeader.hpp"
 
 namespace amo {
+
+
+#if CHROME_VERSION_BUILD >= 2987
+    class MessageRouterBrowserSide : public CefBaseRefCounted {
+#else
     class MessageRouterBrowserSide : public CefBase {
+#endif
+    
+    
     public:
         typedef CefMessageRouterBrowserSide::Handler Handler;
     public:
@@ -31,8 +39,9 @@ namespace amo {
         
         virtual void OnRenderProcessTerminated(CefRefPtr<CefBrowser> browser);
         
-        virtual void OnBeforeBrowse(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame);
-        
+        virtual void OnBeforeBrowse(CefRefPtr<CefBrowser> browser,
+                                    CefRefPtr<CefFrame> frame);
+                                    
         virtual bool OnProcessMessageReceived(CefRefPtr<CefBrowser> browser,
                                               CefProcessId source_process,
                                               CefRefPtr<CefProcessMessage> message);

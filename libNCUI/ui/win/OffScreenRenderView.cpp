@@ -311,7 +311,17 @@ namespace amo {
         RECT rect;
         ::GetClientRect(m_hWnd, &rect);
         CefWindowInfo windowInfo;
+#if CHROME_VERSION_BUILD >=3071
+        windowInfo.SetAsWindowless(m_hWnd);
+        
+        if (m_oBrowserSettings->transparent) {
+            m_oBrowserSettings->background_color = CefColorSetARGB(0, 0, 0, 0);
+        }
+        
+#else
         windowInfo.SetAsWindowless(m_hWnd, m_oBrowserSettings->transparent);
+#endif
+        
         
         if (m_pClientHandler) {
             m_pClientHandler->RegisterLifeSpanHandlerDelegate(this);

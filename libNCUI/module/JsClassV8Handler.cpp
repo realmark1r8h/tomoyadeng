@@ -63,7 +63,12 @@ namespace amo {
                                  CefV8Value::CreateFunction(p.second.m_strName, this),
                                  V8_PROPERTY_ATTRIBUTE_NONE);
             } else if (p.second.functionType() == TransferFuncConstProperty) {
+#if CHROME_VERSION_BUILD >= 2840
+                CefRefPtr<CefV8Value> obj = CefV8Value::CreateObject(m_pAccessor, NULL);
+#else
                 CefRefPtr<CefV8Value> obj = CefV8Value::CreateObject(m_pAccessor);
+#endif
+                
                 // 类只能上常量属性，只能在初始化的时候被取值
                 obj->SetValue(p.second.m_strName,
                               V8_ACCESS_CONTROL_DEFAULT,

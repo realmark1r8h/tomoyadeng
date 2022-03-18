@@ -40,8 +40,16 @@ namespace amo {
          * @param 	cookiable_schemes	The cookiable schemes.
          */
         
+#if CHROME_VERSION_BUILD >= 2987
+        static void RegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar> registrar,
+                                          std::vector<CefString>& cookiable_schemes);
+#else
         static void RegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar> registrar,
                                           std::vector<CefString>& cookiable_schemes);
+                                          
+#endif
+                                          
+                                          
                                           
         /*!
          * @fn	static bool ClientApp::RegisterCustomSchemeFactory(
@@ -92,8 +100,14 @@ namespace amo {
          *
          * @param	registrar	The registrar.
          */
+#if CHROME_VERSION_BUILD
+        virtual void OnRegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar> registrar)
+        override;
+#else
+        virtual void OnRegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar> registrar)
+        override;
+#endif
         
-        virtual void OnRegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar> registrar);
         
         /*!
          * @fn	virtual CefRefPtr<CefResourceBundleHandler> ClientApp::GetResourceBundleHandler();

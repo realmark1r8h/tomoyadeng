@@ -240,9 +240,17 @@ namespace amo {
         
         CefRefPtr<CefV8Value> retal;
         CefRefPtr<CefV8Exception> exp;
-        
+#if CHROME_VERSION_BUILD >= 2840
+        bool bOk = CefV8Context::GetCurrentContext()->Eval(js,
+                   CefString(),
+                   0,
+                   retal,
+                   exp);
+#else
         bool bOk = CefV8Context::GetCurrentContext()->Eval(js, retal, exp);
-        
+#endif
+                   
+                   
         return bOk;
         
     }

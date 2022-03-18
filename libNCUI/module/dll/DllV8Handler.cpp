@@ -41,9 +41,20 @@ namespace amo {
             CefRefPtr<CefV8Value> retal;
             CefRefPtr<CefV8Exception> exp;
             
+#if CHROME_VERSION_BUILD >= 2840
+            bool bOk = pFrame->GetV8Context()->Eval(js,
+                                                    CefString(),
+                                                    0,
+                                                    retal,
+                                                    exp);
+#else
             bool bOk = pFrame->GetV8Context()->Eval(js, retal, exp);
-            
-            
+#endif
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
             if (retal && retal->IsFunction()) {
                 CefV8ValueList list;
                 list.push_back(arguments[i]);
@@ -64,7 +75,8 @@ namespace amo {
         args->setValue(IPCArgsPosInfo::ArgsLength, (int)arguments.size());
         args->setValue(IPCArgsPosInfo::DllName, m_dllName.ToString());	// dll name
         args->setValue(IPCArgsPosInfo::DllFuncName, funcName); // function name
-        args->setValue(IPCArgsPosInfo::DllRetalType, funcArgs.m_strRetal);// 返回值类型
+        args->setValue(IPCArgsPosInfo::DllRetalType,
+                       funcArgs.m_strRetal);// 返回值类型
         args->setValue(IPCArgsPosInfo::FrameID, (int)pFrame->GetIdentifier());
         return msg;
     }

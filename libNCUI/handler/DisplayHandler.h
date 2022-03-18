@@ -42,12 +42,23 @@ namespace amo {
                                      
         }
         
+#if CHROME_VERSION_BUILD >= 3282
+        virtual bool OnConsoleMessage(CefRefPtr<CefBrowser> browser,
+                                      cef_log_severity_t level,
+                                      const CefString& message,
+                                      const CefString& source,
+                                      int line) {
+            return false;
+        }
+#else
         virtual bool OnConsoleMessage(CefRefPtr<CefBrowser> browser,
                                       const CefString& message,
                                       const CefString& source,
                                       int line) {
             return false;
         }
+        
+#endif
         
         
         
@@ -148,11 +159,19 @@ namespace amo {
          *
          * @return	true if it succeeds, false if it fails.
          */
-        
+#if CHROME_VERSION_BUILD >=3282
+        virtual bool OnConsoleMessage(CefRefPtr<CefBrowser> browser,
+                                      cef_log_severity_t level,
+                                      const CefString& message,
+                                      const CefString& source,
+                                      int line) override;
+#else
+                                      
         virtual bool OnConsoleMessage(CefRefPtr<CefBrowser> browser,
                                       const CefString& message,
                                       const CefString& source,
-                                      int line);
+                                      int line) override;
+#endif
                                       
         IMPLEMENT_REFCOUNTING(DisplayHandler);
     };

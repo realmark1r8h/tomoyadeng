@@ -65,7 +65,11 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(remote_debugging_port, 8088);						//!< 调试端口
         DEFAULT_ARGS_SETTINGS(uncaught_exception_stack_size,
                               1000);				//!< 不知道该设置多少
+                              
+#if CHROME_VERSION_BUILD < 3071
         DEFAULT_ARGS_SETTINGS(context_safety_implementation, true);				//!< .
+#endif
+        
         DEFAULT_ARGS_SETTINGS(ignore_certificate_errors,
                               true);					//!< 忽略证书错误
         //DEFAULT_ARGS_SETTINGS(background_color, 0xffffffff);					//!< 页面未加载前背景色
@@ -190,7 +194,11 @@ namespace amo {
         INT_ARGS_SETTING(remote_debugging_port);								//!< 调试端口
         INT_ARGS_SETTING(
             uncaught_exception_stack_size);						//!< 不知道该设置多少
-        BOOL_ARGS_SETTING(context_safety_implementation);						//!< .
+#if CHROME_VERSION_BUILD < 3071
+        BOOL_ARGS_SETTING(context_safety_implementation); //!< .
+#endif
+        
+        
         BOOL_ARGS_SETTING(ignore_certificate_errors);							//!< 忽略证书错误
         UINT_ARGS_SETTING(background_color);									//!< 页面未加载前背景色
         

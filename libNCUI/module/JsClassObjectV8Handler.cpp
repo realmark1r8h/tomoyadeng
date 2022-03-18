@@ -58,7 +58,12 @@ namespace amo {
         
         
         // 创建JS类的构造函数
+#if CHROME_VERSION_BUILD >= 2840
+        _object = CefV8Value::CreateObject(m_pAccessor, NULL);
+#else
         _object = CefV8Value::CreateObject(m_pAccessor);
+#endif
+        
         _object->SetUserData(this);
         
         onGetV8Object(_object);

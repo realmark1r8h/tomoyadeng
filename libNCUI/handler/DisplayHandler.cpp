@@ -3,7 +3,10 @@
 #include <amo/logger.hpp>
 
 namespace amo {
+
+#if CHROME_VERSION_BUILD >=3282
     bool DisplayHandler::OnConsoleMessage(CefRefPtr<CefBrowser> browser,
+                                          cef_log_severity_t level,
                                           const CefString& message,
                                           const CefString& source,
                                           int line) {
@@ -14,15 +17,41 @@ namespace amo {
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
-            bHandled = (*it)->OnConsoleMessage(browser, message, source, line);
+            bHandled = (*it)->OnConsoleMessage(browser, level, message, source, line);
             
             if (bHandled) {
                 return true;
             }
         }
         
+        return CefDisplayHandler::OnConsoleMessage(browser, level, message, source,
+                line);
+    }
+    
+#else
+    bool DisplayHandler::OnConsoleMessage(CefRefPtr<CefBrowser> browser,
+                                          const CefString& message,
+                                          const CefString& source,
+                                          int line) {
+        $clog(amo::cdevel << func_orient << "\nmessage:\n" << amo::string(
+                  message.ToString(), true).str() << "\nsouce: \n" << amo::string(
+                  source.ToString(), true).str() << amo::endl;);
+        bool bHandled = false;
+        DelegateSet::iterator it = m_Delegates.begin();
+    
+        for (; it != m_Delegates.end(); ++it) {
+            bHandled = (*it)->OnConsoleMessage(browser, message, source, line);
+    
+            if (bHandled) {
+                return true;
+            }
+        }
+    
         return CefDisplayHandler::OnConsoleMessage(browser, message, source, line);
     }
+    
+#endif
+    
     
     void DisplayHandler::OnStatusMessage(CefRefPtr<CefBrowser> browser,
                                          const CefString& value) {

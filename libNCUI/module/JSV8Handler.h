@@ -20,6 +20,24 @@
 
 #endif
 
+
+static CefRefPtr<CefV8Value> DefCreateV8Object(CefRefPtr<CefV8Value> _object) {
+#if CHROME_VERSION_BUILD >= 2840
+
+    if (_object == NULL) {
+        _object = CefV8Value::CreateObject(NULL, NULL);
+    }
+    
+#else
+    
+    if (_object == NULL) {
+        _object = CefV8Value::CreateObject(NULL);
+    }
+    
+#endif
+    return _object;
+}
+
 // CefV8Value object对象生成
 // 生成JS对象 相当于var a = {};
 #define AMO_CEF_BEGIN_OBJECT_FACTORY(ClassName)\
@@ -30,7 +48,8 @@
 	{ \
 		typedef ClassName ClassType;\
 		CefRefPtr<CefV8Value> _object = object;\
-		if(_object == NULL) _object = CefV8Value::CreateObject(NULL);
+		_object = DefCreateV8Object(_object);
+
 // 结束对象生成，这里调用onGetV8Object将生成的Object交给其他地方处理
 #define AMO_CEF_END_OBJECT_FACTORY() \
 		onGetV8Object(_object);\

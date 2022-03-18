@@ -28,12 +28,32 @@ namespace amo {
         IMPLEMENT_REFCOUNTING(SetCookieCallback);
         
     };
+#if CHROME_VERSION_BUILD >= 3029
+    void ClientApp::RegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar> registrar,
+                                          std::vector<CefString>& cookiable_schemes) {
+        $clog(amo::cdevel << func_orient << "注册自定义协议:" << amo::endl;);
+        registrar->AddCustomScheme("local", true, false, false, false, true, false);
+        cookiable_schemes.push_back("local");
+    }
+#elif CHROME_VERSION_BUILD >= 2987
+    void ClientApp::RegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar> registrar,
+                                          std::vector<CefString>& cookiable_schemes) {
+        $clog(amo::cdevel << func_orient << "注册自定义协议:" << amo::endl;);
+        registrar->AddCustomScheme("local", true, false, false, false, true);
+        cookiable_schemes.push_back("local");
+    }
+#else
     void ClientApp::RegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar> registrar,
                                           std::vector<CefString>& cookiable_schemes) {
         $clog(amo::cdevel << func_orient << "注册自定义协议:" << amo::endl;);
         registrar->AddCustomScheme("local", true, false, false);
         cookiable_schemes.push_back("local");
     }
+    
+#endif
+    
+    
+    
     
     ClientApp::ClientApp() {
         $clog(amo::cdevel << func_orient << "ClientApp 构造函数" << amo::endl;);
@@ -66,6 +86,16 @@ namespace amo {
         return NULL;
     }
     
+    
+#if CHROME_VERSION_BUILD
+    void ClientApp::OnRegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar>
+                                            registrar) {
+        $clog(amo::cdevel << func_orient << amo::endl;);
+        m_CookieableSchemes.push_back("http");
+        m_CookieableSchemes.push_back("https");
+        RegisterCustomSchemes(registrar, m_CookieableSchemes);
+    }
+#else
     void ClientApp::OnRegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar>
                                             registrar) {
         $clog(amo::cdevel << func_orient << amo::endl;);
@@ -73,6 +103,10 @@ namespace amo {
         m_CookieableSchemes.push_back("https");
         RegisterCustomSchemes(registrar, m_CookieableSchemes);
     }
+#endif
+    
+    
+    
     
     void ClientApp::OnBeforeCommandLineProcessing(const CefString& process_type,
             CefRefPtr<CefCommandLine> command_line) {

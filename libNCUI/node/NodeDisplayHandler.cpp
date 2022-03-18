@@ -4,7 +4,8 @@
 
 namespace amo {
 
-    NodeDisplayHandler::NodeDisplayHandler(std::shared_ptr<NodeHandlerHelper>& pHelper)
+    NodeDisplayHandler::NodeDisplayHandler(std::shared_ptr<NodeHandlerHelper>&
+                                           pHelper)
         : m_pHelper(pHelper) {
         
     }
@@ -44,17 +45,27 @@ namespace amo {
         return;
     }
     
+    
+#if CHROME_VERSION_BUILD >= 3282
+    bool NodeDisplayHandler::OnConsoleMessage(CefRefPtr<CefBrowser> browser,
+            cef_log_severity_t level, const CefString& message, const CefString& source,
+            int line) {
+        return false;
+    }
+#else
     bool NodeDisplayHandler::OnConsoleMessage(CefRefPtr<CefBrowser> browser,
             const CefString& message,
             const CefString& source,
             int line) {
         /* m_pHelper->getBroadcaster()->broadcast("ConsoleMessage",
-                                                m_pHelper->getJson(browser),
-                                                source.ToString(),
-                                                source.ToString(),
-                                                line);*/
+        m_pHelper->getJson(browser),
+        source.ToString(),
+        source.ToString(),
+        line);*/
         return false;
     }
+#endif
+    
     
 }
 
