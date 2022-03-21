@@ -100,7 +100,10 @@ namespace amo {
          *
          * @param	registrar	The registrar.
          */
-#if CHROME_VERSION_BUILD
+#if CHROME_VERSION_BUILD  >= 3029
+        virtual void OnRegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar> registrar)
+        override;
+#elif CHROME_VERSION_BUILD  >= 2987
         virtual void OnRegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar> registrar)
         override;
 #else

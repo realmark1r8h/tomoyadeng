@@ -86,8 +86,15 @@ namespace amo {
         return NULL;
     }
     
-    
-#if CHROME_VERSION_BUILD
+#if  CHROME_VERSION_BUILD  >= 3029
+    void ClientApp::OnRegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar>
+                                            registrar) {
+        $clog(amo::cdevel << func_orient << amo::endl;);
+        m_CookieableSchemes.push_back("http");
+        m_CookieableSchemes.push_back("https");
+        RegisterCustomSchemes(registrar, m_CookieableSchemes);
+    }
+#elif  CHROME_VERSION_BUILD  >= 2987
     void ClientApp::OnRegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar>
                                             registrar) {
         $clog(amo::cdevel << func_orient << amo::endl;);
