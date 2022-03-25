@@ -59,8 +59,8 @@ namespace amo {
         $clog(amo::cdevel << func_orient << "ClientApp ¹¹Ôìº¯Êý" << amo::endl;);
         m_pBrowserProcessHandler = new BrowserProcessHandler();
         
-        m_pRenderProcessHandler = new RenderProcessHandler();
-        m_pResourceBundleHandler = new ResourceBundleHandler();
+        m_pRenderProcessHandler =   new RenderProcessHandler();
+        m_pResourceBundleHandler =   new ResourceBundleHandler();
     }
     
     

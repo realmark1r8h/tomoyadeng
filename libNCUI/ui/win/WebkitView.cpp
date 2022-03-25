@@ -593,18 +593,25 @@ namespace amo {
         bOK = pBrowserPipeServer->connect();
         $clog(amo::cdevel << func_orient << "主进程管道服务连接" <<
               (bOK ? "成功" : "失败") << amo::endl;);
+              
+        ClientHandler::AddExchanger(nBrowserID);
         std::shared_ptr<ProcessExchanger>
         pBrowserProcessExchanger;					//消息管道数据交换类
         pBrowserProcessExchanger =
             BrowserProcessExchangerManager::getInstance()->findExchanger(nBrowserID);
         assert(pBrowserProcessExchanger);
+        
+        
+        
         pBrowserProcessExchanger->setPipeClient(pRenderPipeClient);
         pBrowserProcessExchanger->setPipeServer(pBrowserPipeServer);
         pBrowserProcessExchanger->setBrowserID(nBrowserID);
         
+        
         BrowserTempInfo info = ClientHandler::GetBrowserInfoFromTempByID(nBrowserID);
-        int nDDD = info.pBrowser->GetIdentifier();
+        
         pBrowserProcessExchanger->setProcessSyncMessageCallback(info.m_fnExec);
+        
         
         auto manager = BrowserTransferMgr::getInstance();
         amo::json arr = manager->getTransferMap(nBrowserID).toJson();

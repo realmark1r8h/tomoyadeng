@@ -39,6 +39,7 @@ namespace amo {
             browser,
             CefProcessId source_process,
             CefRefPtr<CefProcessMessage> message) {
+            
         assert(source_process == PID_BROWSER);
         std::string strMessageName = message->GetName();
         
@@ -145,6 +146,9 @@ namespace amo {
             CefRefPtr<CefV8Context> context,
             CefRefPtr<CefV8Exception> exception,
             CefRefPtr<CefV8StackTrace> stackTrace) {
+            
+        CefString ss = exception->GetMessageW();
+        
         $clog(amo::cdevel << func_orient << amo::string(
                   exception->GetMessageW().ToString(), true).str() << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
@@ -183,6 +187,7 @@ namespace amo {
     void RenderProcessHandler::OnContextCreated(CefRefPtr<CefBrowser> browser,
             CefRefPtr<CefFrame> frame,
             CefRefPtr<CefV8Context> context) {
+            
         $clog(amo::cdevel << func_orient << frame->GetIdentifier() << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
@@ -233,6 +238,7 @@ namespace amo {
             CefRefPtr<CefRequest> request,
             CefRenderProcessHandler::NavigationType navigation_type,
             bool is_redirect) {
+            
         $clog(amo::cdevel << func_orient << amo::endl;);
         
         if (navigation_type == NAVIGATION_BACK_FORWARD) {
@@ -268,6 +274,7 @@ namespace amo {
     }
     
     CefRefPtr<CefLoadHandler> RenderProcessHandler::GetLoadHandler() {
+    
         $clog(amo::cdevel << func_orient << "GetLoadHandler。" << amo::endl;);
         CefRefPtr<CefLoadHandler> load_handler;
         DelegateSet::iterator it = m_Delegates.begin();
@@ -284,6 +291,7 @@ namespace amo {
     }
     
     void RenderProcessHandler::OnBrowserDestroyed(CefRefPtr<CefBrowser> browser) {
+    
         $clog(amo::cdevel << func_orient << "浏览器销毁。" << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
@@ -476,7 +484,8 @@ namespace amo {
                 
                 //MessageBoxA(NULL, __FUNCTION__, __FUNCTION__, MB_OK);
                 //MessageBoxA(NULL, str.str().c_str(), __FUNCTION__, MB_OK);
-                runner->execute("createPipeClient", str.str(), browser->GetIdentifier());
+                int nBrowserID = browser->GetIdentifier();
+                runner->execute("createPipeClient", str.str(), nBrowserID);
                 
                 // 如果是当前进程的第一个Browser,，那么直接创建管道
                 createPipe(browser->GetIdentifier(), pExchanger);
@@ -495,17 +504,17 @@ namespace amo {
                 						 this,
                 						 browser,
                 						 pExchanger));*/
+                int nBrowserID = browser->GetIdentifier();
                 
                 std::thread th(std::bind(&RenderProcessHandler::createPipe,
                                          this,
-                                         browser->GetIdentifier(),
+                                         nBrowserID,
                                          pExchanger));
-                                         
                                          
                                          
                 Any ret =  runner->syncExecute("createPipeClient",
                                                str.str(),
-                                               browser->GetIdentifier());
+                                               nBrowserID);
                 th.join();
                 afterCreatePipe(browser, pExchanger, ret);
             }

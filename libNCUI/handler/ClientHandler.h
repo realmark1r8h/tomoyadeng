@@ -150,8 +150,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterContextMenuHandlerDelegate(ContextMenuHandlerDelegate* delegate, int nIndex = -1);
-        
+        bool RegisterContextMenuHandlerDelegate(ContextMenuHandlerDelegate* delegate,
+                                                int nIndex = -1);
+                                                
         /*!
          * @fn	void UnregisterContextMenuHandlerDelegate(
          * 		ContextMenuHandlerDelegate* delegate);
@@ -176,8 +177,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterDialogHandlerDelegate(DialogHandlerDelegate* delegate, int nIndex = -1);
-        
+        bool RegisterDialogHandlerDelegate(DialogHandlerDelegate* delegate,
+                                           int nIndex = -1);
+                                           
         /*!
          * @fn	void UnregisterDialogHandlerDelegate(DialogHandlerDelegate* delegate);
          *
@@ -201,8 +203,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterDisplayHandlerDelegate(DisplayHandlerDelegate* delegate, int nIndex = -1);
-        
+        bool RegisterDisplayHandlerDelegate(DisplayHandlerDelegate* delegate,
+                                            int nIndex = -1);
+                                            
         /*!
          * @fn	void UnregisterDisplayHandlerDelegate(DisplayHandlerDelegate* delegate);
          *
@@ -226,8 +229,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterDownloadHandlerDelegate(DownloadHandlerDelegate* delegate, int nIndex = -1);
-        
+        bool RegisterDownloadHandlerDelegate(DownloadHandlerDelegate* delegate,
+                                             int nIndex = -1);
+                                             
         /*!
          * @fn	void UnregisterDownloadHandlerDelegate(DownloadHandlerDelegate* delegate);
          *
@@ -251,8 +255,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterDragHandlerDelegate(DragHandlerDelegate* delegate, int nIndex = -1);
-        
+        bool RegisterDragHandlerDelegate(DragHandlerDelegate* delegate,
+                                         int nIndex = -1);
+                                         
         /*!
          * @fn	void UnregisterDragHandlerDelegate(DragHandlerDelegate* delegate);
          *
@@ -276,8 +281,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterFocusHandlerDelegate(FocusHandlerDelegate* delegate, int nIndex = -1);
-        
+        bool RegisterFocusHandlerDelegate(FocusHandlerDelegate* delegate,
+                                          int nIndex = -1);
+                                          
         /*!
          * @fn	void UnregisterFocusHandlerDelegate(FocusHandlerDelegate* delegate);
          *
@@ -301,8 +307,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterGeolocationHandlerDelegate(GeolocationHandlerDelegate* delegate, int nIndex = -1);
-        
+        bool RegisterGeolocationHandlerDelegate(GeolocationHandlerDelegate* delegate,
+                                                int nIndex = -1);
+                                                
         /*!
          * @fn	void UnregisterGeolocationHandlerDelegate(GeolocationHandlerDelegate* delegate);
          *
@@ -326,8 +333,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterJSDialogHandlerDelegate(JSDialogHandlerDelegate* delegate, int nIndex = -1);
-        
+        bool RegisterJSDialogHandlerDelegate(JSDialogHandlerDelegate* delegate,
+                                             int nIndex = -1);
+                                             
         /*!
          * @fn	void UnregisterJSDialogHandlerDelegate(JSDialogHandlerDelegate* delegate);
          *
@@ -351,8 +359,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterKeyboardHandlerDelegate(KeyboardHandlerDelegate* delegate, int nIndex = -1);
-        
+        bool RegisterKeyboardHandlerDelegate(KeyboardHandlerDelegate* delegate,
+                                             int nIndex = -1);
+                                             
         /*!
          * @fn	void UnregisterKeyboardHandlerDelegate(KeyboardHandlerDelegate* delegate);
          *
@@ -376,8 +385,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterLifeSpanHandlerDelegate(LifeSpanHandlerDelegate* delegate, int nIndex = -1);
-        
+        bool RegisterLifeSpanHandlerDelegate(LifeSpanHandlerDelegate* delegate,
+                                             int nIndex = -1);
+                                             
         /*!
          * @fn	void UnregisterLifeSpanHandlerDelegate(LifeSpanHandlerDelegate* delegate);
          *
@@ -401,8 +411,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterLoadHandlerDelegate(LoadHandlerDelegate* delegate, int nIndex = -1);
-        
+        bool RegisterLoadHandlerDelegate(LoadHandlerDelegate* delegate,
+                                         int nIndex = -1);
+                                         
         /*!
          * @fn	void UnregisterLoadHandlerDelegate(LoadHandlerDelegate* delegate);
          *
@@ -427,8 +438,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterRenderHandlerDelegate(RenderHandlerDelegate* delegate, int nIndex = -1);
-        
+        bool RegisterRenderHandlerDelegate(RenderHandlerDelegate* delegate,
+                                           int nIndex = -1);
+                                           
         /*!
          * @fn	void UnregisterRenderHandlerDelegate(RenderHandlerDelegate* delegate);
          *
@@ -452,8 +464,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterRequestHandlerDelegate(RequestHandlerDelegate* delegate, int nIndex = -1);
-        
+        bool RegisterRequestHandlerDelegate(RequestHandlerDelegate* delegate,
+                                            int nIndex = -1);
+                                            
         /*!
          * @fn	void UnregisterRequestHandlerDelegate(RequestHandlerDelegate* delegate);
          *
@@ -477,8 +490,9 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool RegisterMesssageHandlerDelegate(MessageHandlerDelegate* delegate, bool first = false);
-        
+        bool RegisterMesssageHandlerDelegate(MessageHandlerDelegate* delegate,
+                                             bool first = false);
+                                             
         /*!
          * @fn	void UnregisterMesssageHandlerDelegate(MessageHandlerDelegate* delegate);
          *
@@ -549,6 +563,7 @@ namespace amo {
     public:
         static BrowserTempInfo GetBrowserInfoFromTempByID(int nBrowserID);
         static void RemoveBrowserFromTempByID(int nBrowserID);
+        static void AddExchanger(int nBrowserID);
     private:
     
         /*! @brief	菜单事件处理类. */

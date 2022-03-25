@@ -117,20 +117,23 @@ namespace amo {
         }
         
         if (message_name == MSG_PROCESS_SYNC_EXECUTE) {
-            BrowserProcessExchangerManager::getInstance()->tryProcessMessage(browser->GetIdentifier());
+            BrowserProcessExchangerManager::getInstance()->tryProcessMessage(
+                browser->GetIdentifier());
         } else if (message_name == MSG_IPC_READY) {
             RegisterBrowser(browser); //添加浏览器到管理器中
         }
         
         if (m_pMessageRouter) {
-            bHandled = m_pMessageRouter->OnProcessMessageReceived(browser, source_process, message);
-            
+            bHandled = m_pMessageRouter->OnProcessMessageReceived(browser, source_process,
+                       message);
+                       
             if (bHandled) {
                 return true;
             }
         }
         
-        for (DelegateSet::iterator it = m_Delegates.begin(); it != m_Delegates.end(); ++it) {
+        for (DelegateSet::iterator it = m_Delegates.begin(); it != m_Delegates.end();
+                ++it) {
             bHandled = (*it)->OnProcessMessageReceived(browser, source_process, message);
             
             if (bHandled) {
@@ -141,7 +144,8 @@ namespace amo {
         return CefClient::OnProcessMessageReceived(browser, source_process, message);
     }
     
-    bool ClientHandler::RegisterContextMenuHandlerDelegate(ContextMenuHandlerDelegate* delegate, int nIndex) {
+    bool ClientHandler::RegisterContextMenuHandlerDelegate(
+        ContextMenuHandlerDelegate* delegate, int nIndex) {
         if (!m_pContextMenuHandler) {
             return false;
         }
@@ -224,22 +228,37 @@ namespace amo {
         m_pRequestHandler->SetMessageRouter(m_pMessageRouter);
         
         // 从虚拟Handler复制代理对象到 各Handler中
-        std::shared_ptr<DummyClientHandler> pDummyClientHandler = DummyClientHandler::getInstance();
-        m_pContextMenuHandler->CopyDelegates(pDummyClientHandler->GetContextMenuHandler()->GetDelegates());
-        m_pDialogHandler->CopyDelegates(pDummyClientHandler->GetDialogHandler()->GetDelegates());
-        m_pDisplayHandler->CopyDelegates(pDummyClientHandler->GetDisplayHandler()->GetDelegates());
-        m_pDownloadHandler->CopyDelegates(pDummyClientHandler->GetDownloadHandler()->GetDelegates());
-        m_pDragHandler->CopyDelegates(pDummyClientHandler->GetDragHandler()->GetDelegates());
-        m_pFocusHandler->CopyDelegates(pDummyClientHandler->GetFocusHandler()->GetDelegates());
-        m_pGeolocationHandler->CopyDelegates(pDummyClientHandler->GetGeolocationHandler()->GetDelegates());
-        m_pJSDialogHandler->CopyDelegates(pDummyClientHandler->GetJSDialogHandler()->GetDelegates());
-        m_pKeyboardHandler->CopyDelegates(pDummyClientHandler->GetKeyboardHandler()->GetDelegates());
-        m_pLifeSpanHandler->CopyDelegates(pDummyClientHandler->GetLifeSpanHandler()->GetDelegates());
-        m_pLoadHandler->CopyDelegates(pDummyClientHandler->GetLoadHandler()->GetDelegates());
-        m_pRenderHandler->CopyDelegates(pDummyClientHandler->GetRenderHandler()->GetDelegates());
-        m_pRequestHandler->CopyDelegates(pDummyClientHandler->GetRequestHandler()->GetDelegates());
-        
-        MessageHandlerSet& messageHandlerSet = pDummyClientHandler->GetMessageHandlerDelegates();
+        std::shared_ptr<DummyClientHandler> pDummyClientHandler =
+            DummyClientHandler::getInstance();
+        m_pContextMenuHandler->CopyDelegates(
+            pDummyClientHandler->GetContextMenuHandler()->GetDelegates());
+        m_pDialogHandler->CopyDelegates(
+            pDummyClientHandler->GetDialogHandler()->GetDelegates());
+        m_pDisplayHandler->CopyDelegates(
+            pDummyClientHandler->GetDisplayHandler()->GetDelegates());
+        m_pDownloadHandler->CopyDelegates(
+            pDummyClientHandler->GetDownloadHandler()->GetDelegates());
+        m_pDragHandler->CopyDelegates(
+            pDummyClientHandler->GetDragHandler()->GetDelegates());
+        m_pFocusHandler->CopyDelegates(
+            pDummyClientHandler->GetFocusHandler()->GetDelegates());
+        m_pGeolocationHandler->CopyDelegates(
+            pDummyClientHandler->GetGeolocationHandler()->GetDelegates());
+        m_pJSDialogHandler->CopyDelegates(
+            pDummyClientHandler->GetJSDialogHandler()->GetDelegates());
+        m_pKeyboardHandler->CopyDelegates(
+            pDummyClientHandler->GetKeyboardHandler()->GetDelegates());
+        m_pLifeSpanHandler->CopyDelegates(
+            pDummyClientHandler->GetLifeSpanHandler()->GetDelegates());
+        m_pLoadHandler->CopyDelegates(
+            pDummyClientHandler->GetLoadHandler()->GetDelegates());
+        m_pRenderHandler->CopyDelegates(
+            pDummyClientHandler->GetRenderHandler()->GetDelegates());
+        m_pRequestHandler->CopyDelegates(
+            pDummyClientHandler->GetRequestHandler()->GetDelegates());
+            
+        MessageHandlerSet& messageHandlerSet =
+            pDummyClientHandler->GetMessageHandlerDelegates();
         MessageHandlerSet::const_iterator it = messageHandlerSet.begin();
         
         for (; it != messageHandlerSet.end(); ++it) {
@@ -255,7 +274,8 @@ namespace amo {
         m_pLifeSpanHandler->RegisterDelegate(this);
     }
     
-    CefRefPtr<MessageRouterBrowserSide> ClientHandler::GetMessageRouterBrowserSide() {
+    CefRefPtr<MessageRouterBrowserSide>
+    ClientHandler::GetMessageRouterBrowserSide() {
         return m_pMessageRouter;
     }
     
@@ -266,7 +286,7 @@ namespace amo {
                                        this,
                                        std::placeholders::_1,
                                        std::placeholders::_2));
-        int nddd = browser->GetIdentifier();
+        int nBrowserID = browser->GetIdentifier();
         m_oTempBrowserMap.insert(std::make_pair(browser->GetIdentifier(), info));
         
         
@@ -280,10 +300,11 @@ namespace amo {
             m_pMessageRouter->AddHandler(*(it), false);
         }
         
-        std::shared_ptr<ProcessExchanger> pBrowserProcessExchanger(new ProcessExchanger());
-        BrowserProcessExchangerManager::getInstance()->addExchanger(browser->GetIdentifier(),
-                pBrowserProcessExchanger);
+        AddExchanger(nBrowserID);
+        
+        
     }
+    
     
     bool ClientHandler::DoClose(CefRefPtr<CefBrowser> browser) {
         //RemoveBrowserByID(browser->GetIdentifier()); // 移除浏览器
@@ -294,7 +315,8 @@ namespace amo {
     void ClientHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
         RemoveBrowserByID(browser->GetIdentifier()); // 移除浏览器
         RemoveBrowserFromTempByID(browser->GetIdentifier());
-        BrowserProcessExchangerManager::getInstance()->removeExchanger(browser->GetIdentifier());
+        BrowserProcessExchangerManager::getInstance()->removeExchanger(
+            browser->GetIdentifier());
     }
     
     bool ClientHandler::ProcessSyncMessage(int nID, IPCMessage::SmartType msg) {
@@ -325,11 +347,28 @@ namespace amo {
         m_oTempBrowserMap.erase(nBrowserID);
     }
     
+    void ClientHandler::AddExchanger(int nBrowserID) {
+    
+        if (nBrowserID <= 0) {
+            return;
+        }
+        
+        auto manager = BrowserProcessExchangerManager::getInstance();
+        auto exchanger = manager->findExchanger(nBrowserID);
+        
+        if (!exchanger) {
+            std::shared_ptr<ProcessExchanger> pBrowserProcessExchanger(
+                new ProcessExchanger());
+            manager->addExchanger(nBrowserID, pBrowserProcessExchanger);
+        }
+    }
+    
     ClientHandler::~ClientHandler() {
         m_pLifeSpanHandler->UnregisterDelegate(this);
     }
     
-    void ClientHandler::UnregisterContextMenuHandlerDelegate(ContextMenuHandlerDelegate * delegate) {
+    void ClientHandler::UnregisterContextMenuHandlerDelegate(
+        ContextMenuHandlerDelegate * delegate) {
         if (!m_pContextMenuHandler) {
             return;
         }
@@ -337,7 +376,8 @@ namespace amo {
         m_pContextMenuHandler->UnregisterDelegate(delegate);
     }
     
-    bool ClientHandler::RegisterDialogHandlerDelegate(DialogHandlerDelegate * delegate, int nIndex) {
+    bool ClientHandler::RegisterDialogHandlerDelegate(DialogHandlerDelegate *
+            delegate, int nIndex) {
         if (!m_pDialogHandler) {
             return false;
         }
@@ -345,7 +385,8 @@ namespace amo {
         return m_pDialogHandler->RegisterDelegate(delegate, nIndex);
     }
     
-    void ClientHandler::UnregisterDialogHandlerDelegate(DialogHandlerDelegate * delegate) {
+    void ClientHandler::UnregisterDialogHandlerDelegate(DialogHandlerDelegate *
+            delegate) {
         if (!m_pDialogHandler) {
             return;
         }
@@ -353,7 +394,8 @@ namespace amo {
         m_pDialogHandler->UnregisterDelegate(delegate);
     }
     
-    bool ClientHandler::RegisterDisplayHandlerDelegate(DisplayHandlerDelegate * delegate, int nIndex) {
+    bool ClientHandler::RegisterDisplayHandlerDelegate(DisplayHandlerDelegate *
+            delegate, int nIndex) {
         if (!m_pDisplayHandler) {
             return false;
         }
@@ -361,7 +403,8 @@ namespace amo {
         return m_pDisplayHandler->RegisterDelegate(delegate, nIndex);
     }
     
-    void ClientHandler::UnregisterDisplayHandlerDelegate(DisplayHandlerDelegate * delegate) {
+    void ClientHandler::UnregisterDisplayHandlerDelegate(DisplayHandlerDelegate *
+            delegate) {
         if (!m_pDisplayHandler) {
             return;
         }
@@ -369,7 +412,8 @@ namespace amo {
         m_pDisplayHandler->UnregisterDelegate(delegate);
     }
     
-    bool ClientHandler::RegisterDownloadHandlerDelegate(DownloadHandlerDelegate * delegate, int nIndex) {
+    bool ClientHandler::RegisterDownloadHandlerDelegate(DownloadHandlerDelegate *
+            delegate, int nIndex) {
         if (!m_pDownloadHandler) {
             return false;
         }
@@ -377,7 +421,8 @@ namespace amo {
         return m_pDownloadHandler->RegisterDelegate(delegate, nIndex);
     }
     
-    void ClientHandler::UnregisterDownloadHandlerDelegate(DownloadHandlerDelegate * delegate) {
+    void ClientHandler::UnregisterDownloadHandlerDelegate(DownloadHandlerDelegate *
+            delegate) {
         if (!m_pDownloadHandler) {
             return;
         }
@@ -385,7 +430,8 @@ namespace amo {
         m_pDownloadHandler->UnregisterDelegate(delegate);
     }
     
-    bool ClientHandler::RegisterDragHandlerDelegate(DragHandlerDelegate * delegate, int nIndex) {
+    bool ClientHandler::RegisterDragHandlerDelegate(DragHandlerDelegate * delegate,
+            int nIndex) {
         if (!m_pDragHandler) {
             return false;
         }
@@ -393,7 +439,8 @@ namespace amo {
         return m_pDragHandler->RegisterDelegate(delegate, nIndex);
     }
     
-    void ClientHandler::UnregisterDragHandlerDelegate(DragHandlerDelegate * delegate) {
+    void ClientHandler::UnregisterDragHandlerDelegate(DragHandlerDelegate *
+            delegate) {
         if (!m_pDragHandler) {
             return;
         }
@@ -401,7 +448,8 @@ namespace amo {
         m_pDragHandler->UnregisterDelegate(delegate);
     }
     
-    bool ClientHandler::RegisterFocusHandlerDelegate(FocusHandlerDelegate * delegate, int nIndex) {
+    bool ClientHandler::RegisterFocusHandlerDelegate(FocusHandlerDelegate *
+            delegate, int nIndex) {
         if (!m_pFocusHandler) {
             return false;
         }
@@ -409,7 +457,8 @@ namespace amo {
         return m_pFocusHandler->RegisterDelegate(delegate, nIndex);
     }
     
-    void ClientHandler::UnregisterFocusHandlerDelegate(FocusHandlerDelegate * delegate) {
+    void ClientHandler::UnregisterFocusHandlerDelegate(FocusHandlerDelegate *
+            delegate) {
         if (!m_pFocusHandler) {
             return;
         }
@@ -417,7 +466,8 @@ namespace amo {
         m_pFocusHandler->UnregisterDelegate(delegate);
     }
     
-    bool ClientHandler::RegisterGeolocationHandlerDelegate(GeolocationHandlerDelegate * delegate, int nIndex) {
+    bool ClientHandler::RegisterGeolocationHandlerDelegate(
+        GeolocationHandlerDelegate * delegate, int nIndex) {
         if (!m_pGeolocationHandler) {
             return false;
         }
@@ -425,7 +475,8 @@ namespace amo {
         return m_pGeolocationHandler->RegisterDelegate(delegate, nIndex);
     }
     
-    void ClientHandler::UnregisterGeolocationHandlerDelegate(GeolocationHandlerDelegate * delegate) {
+    void ClientHandler::UnregisterGeolocationHandlerDelegate(
+        GeolocationHandlerDelegate * delegate) {
         if (!m_pGeolocationHandler) {
             return;
         }
@@ -433,7 +484,8 @@ namespace amo {
         m_pGeolocationHandler->UnregisterDelegate(delegate);
     }
     
-    bool ClientHandler::RegisterJSDialogHandlerDelegate(JSDialogHandlerDelegate * delegate, int nIndex) {
+    bool ClientHandler::RegisterJSDialogHandlerDelegate(JSDialogHandlerDelegate *
+            delegate, int nIndex) {
         if (!m_pJSDialogHandler) {
             return false;
         }
@@ -441,7 +493,8 @@ namespace amo {
         return m_pJSDialogHandler->RegisterDelegate(delegate, nIndex);
     }
     
-    void ClientHandler::UnregisterJSDialogHandlerDelegate(JSDialogHandlerDelegate * delegate) {
+    void ClientHandler::UnregisterJSDialogHandlerDelegate(JSDialogHandlerDelegate *
+            delegate) {
         if (!m_pJSDialogHandler) {
             return;
         }
@@ -449,7 +502,8 @@ namespace amo {
         m_pJSDialogHandler->UnregisterDelegate(delegate);
     }
     
-    bool ClientHandler::RegisterKeyboardHandlerDelegate(KeyboardHandlerDelegate * delegate, int nIndex) {
+    bool ClientHandler::RegisterKeyboardHandlerDelegate(KeyboardHandlerDelegate *
+            delegate, int nIndex) {
         if (!m_pKeyboardHandler) {
             return false;
         }
@@ -457,7 +511,8 @@ namespace amo {
         return m_pKeyboardHandler->RegisterDelegate(delegate, nIndex);
     }
     
-    void ClientHandler::UnregisterKeyboardHandlerDelegate(KeyboardHandlerDelegate * delegate) {
+    void ClientHandler::UnregisterKeyboardHandlerDelegate(KeyboardHandlerDelegate *
+            delegate) {
         if (!m_pKeyboardHandler) {
             return;
         }
@@ -465,7 +520,8 @@ namespace amo {
         m_pKeyboardHandler->UnregisterDelegate(delegate);
     }
     
-    bool ClientHandler::RegisterLifeSpanHandlerDelegate(LifeSpanHandlerDelegate * delegate, int nIndex) {
+    bool ClientHandler::RegisterLifeSpanHandlerDelegate(LifeSpanHandlerDelegate *
+            delegate, int nIndex) {
         if (!m_pLifeSpanHandler) {
             return false;
         }
@@ -473,7 +529,8 @@ namespace amo {
         return m_pLifeSpanHandler->RegisterDelegate(delegate, nIndex);
     }
     
-    void ClientHandler::UnregisterLifeSpanHandlerDelegate(LifeSpanHandlerDelegate * delegate) {
+    void ClientHandler::UnregisterLifeSpanHandlerDelegate(LifeSpanHandlerDelegate *
+            delegate) {
         if (!m_pLifeSpanHandler) {
             return;
         }
@@ -481,7 +538,8 @@ namespace amo {
         m_pLifeSpanHandler->UnregisterDelegate(delegate);
     }
     
-    bool ClientHandler::RegisterLoadHandlerDelegate(LoadHandlerDelegate * delegate, int nIndex) {
+    bool ClientHandler::RegisterLoadHandlerDelegate(LoadHandlerDelegate * delegate,
+            int nIndex) {
         if (!m_pLoadHandler) {
             return false;
         }
@@ -489,7 +547,8 @@ namespace amo {
         return m_pLoadHandler->RegisterDelegate(delegate);
     }
     
-    void ClientHandler::UnregisterLoadHandlerDelegate(LoadHandlerDelegate * delegate) {
+    void ClientHandler::UnregisterLoadHandlerDelegate(LoadHandlerDelegate *
+            delegate) {
         if (!m_pLoadHandler) {
             return;
         }
@@ -497,7 +556,8 @@ namespace amo {
         m_pLoadHandler->UnregisterDelegate(delegate);
     }
     
-    bool ClientHandler::RegisterRenderHandlerDelegate(RenderHandlerDelegate * delegate, int nIndex) {
+    bool ClientHandler::RegisterRenderHandlerDelegate(RenderHandlerDelegate *
+            delegate, int nIndex) {
         if (!m_pRenderHandler) {
             return false;
         }
@@ -505,7 +565,8 @@ namespace amo {
         return m_pRenderHandler->RegisterDelegate(delegate, nIndex);
     }
     
-    void ClientHandler::UnregisterRenderHandlerDelegate(RenderHandlerDelegate * delegate) {
+    void ClientHandler::UnregisterRenderHandlerDelegate(RenderHandlerDelegate *
+            delegate) {
         if (!m_pRenderHandler) {
             return;
         }
@@ -513,7 +574,8 @@ namespace amo {
         m_pRenderHandler->UnregisterDelegate(delegate);
     }
     
-    bool ClientHandler::RegisterRequestHandlerDelegate(RequestHandlerDelegate * delegate, int nIndex) {
+    bool ClientHandler::RegisterRequestHandlerDelegate(RequestHandlerDelegate *
+            delegate, int nIndex) {
         if (!m_pRequestHandler) {
             return false;
         }
@@ -521,7 +583,8 @@ namespace amo {
         return m_pRequestHandler->RegisterDelegate(delegate, nIndex);
     }
     
-    void ClientHandler::UnregisterRequestHandlerDelegate(RequestHandlerDelegate * delegate) {
+    void ClientHandler::UnregisterRequestHandlerDelegate(RequestHandlerDelegate *
+            delegate) {
         if (!m_pRequestHandler) {
             return;
         }
@@ -529,7 +592,8 @@ namespace amo {
         m_pRequestHandler->UnregisterDelegate(delegate);
     }
     
-    bool ClientHandler::RegisterMesssageHandlerDelegate(MessageHandlerDelegate * delegate, bool first) {
+    bool ClientHandler::RegisterMesssageHandlerDelegate(MessageHandlerDelegate *
+            delegate, bool first) {
         if (!m_pMessageRouter) {
             return false;
         }
@@ -537,7 +601,8 @@ namespace amo {
         return m_pMessageRouter->AddHandler(delegate, first);
     }
     
-    void ClientHandler::UnregisterMesssageHandlerDelegate(MessageHandlerDelegate * delegate) {
+    void ClientHandler::UnregisterMesssageHandlerDelegate(MessageHandlerDelegate *
+            delegate) {
         if (!m_pMessageRouter) {
             return;
         }
@@ -546,20 +611,34 @@ namespace amo {
     }
     
     void ClientHandler::CopyDelegates() {
-        std::shared_ptr<DummyClientHandler> pDummyClientHandler = DummyClientHandler::getInstance();
-        m_pContextMenuHandler->CopyDelegates(pDummyClientHandler->GetContextMenuHandler()->GetDelegates());
-        m_pDialogHandler->CopyDelegates(pDummyClientHandler->GetDialogHandler()->GetDelegates());
-        m_pDisplayHandler->CopyDelegates(pDummyClientHandler->GetDisplayHandler()->GetDelegates());
-        m_pDownloadHandler->CopyDelegates(pDummyClientHandler->GetDownloadHandler()->GetDelegates());
-        m_pDragHandler->CopyDelegates(pDummyClientHandler->GetDragHandler()->GetDelegates());
-        m_pFocusHandler->CopyDelegates(pDummyClientHandler->GetFocusHandler()->GetDelegates());
-        m_pGeolocationHandler->CopyDelegates(pDummyClientHandler->GetGeolocationHandler()->GetDelegates());
-        m_pJSDialogHandler->CopyDelegates(pDummyClientHandler->GetJSDialogHandler()->GetDelegates());
-        m_pKeyboardHandler->CopyDelegates(pDummyClientHandler->GetKeyboardHandler()->GetDelegates());
-        m_pLifeSpanHandler->CopyDelegates(pDummyClientHandler->GetLifeSpanHandler()->GetDelegates());
-        m_pLoadHandler->CopyDelegates(pDummyClientHandler->GetLoadHandler()->GetDelegates());
-        m_pRenderHandler->CopyDelegates(pDummyClientHandler->GetRenderHandler()->GetDelegates());
-        m_pRequestHandler->CopyDelegates(pDummyClientHandler->GetRequestHandler()->GetDelegates());
+        std::shared_ptr<DummyClientHandler> pDummyClientHandler =
+            DummyClientHandler::getInstance();
+        m_pContextMenuHandler->CopyDelegates(
+            pDummyClientHandler->GetContextMenuHandler()->GetDelegates());
+        m_pDialogHandler->CopyDelegates(
+            pDummyClientHandler->GetDialogHandler()->GetDelegates());
+        m_pDisplayHandler->CopyDelegates(
+            pDummyClientHandler->GetDisplayHandler()->GetDelegates());
+        m_pDownloadHandler->CopyDelegates(
+            pDummyClientHandler->GetDownloadHandler()->GetDelegates());
+        m_pDragHandler->CopyDelegates(
+            pDummyClientHandler->GetDragHandler()->GetDelegates());
+        m_pFocusHandler->CopyDelegates(
+            pDummyClientHandler->GetFocusHandler()->GetDelegates());
+        m_pGeolocationHandler->CopyDelegates(
+            pDummyClientHandler->GetGeolocationHandler()->GetDelegates());
+        m_pJSDialogHandler->CopyDelegates(
+            pDummyClientHandler->GetJSDialogHandler()->GetDelegates());
+        m_pKeyboardHandler->CopyDelegates(
+            pDummyClientHandler->GetKeyboardHandler()->GetDelegates());
+        m_pLifeSpanHandler->CopyDelegates(
+            pDummyClientHandler->GetLifeSpanHandler()->GetDelegates());
+        m_pLoadHandler->CopyDelegates(
+            pDummyClientHandler->GetLoadHandler()->GetDelegates());
+        m_pRenderHandler->CopyDelegates(
+            pDummyClientHandler->GetRenderHandler()->GetDelegates());
+        m_pRequestHandler->CopyDelegates(
+            pDummyClientHandler->GetRequestHandler()->GetDelegates());
     }
     
 }
