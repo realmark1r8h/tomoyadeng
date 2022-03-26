@@ -904,7 +904,6 @@ namespace amo {
             }
         }
         
-        
     }
     
     CefRefPtr<CefResourceHandler> WebkitView::GetResourceHandler(

@@ -74,6 +74,18 @@ namespace amo {
                 json.push_back(val.As<amo::json>());
                 break;
                 
+            case AnyValueType<std::vector<Any>>::value: {
+                amo::json arr;
+                arr.set_array();
+                std::vector<Any> vec = val;
+                
+                for (size_t i = 0; i < vec.size(); ++i) {
+                    addAnyToJsonArray(arr, vec[i]);
+                }
+                
+                json.push_back(arr);
+            }
+            
             default:
                 break;
             }
@@ -105,6 +117,10 @@ namespace amo {
                 
             case  AnyValueType<int>::value:
                 json.put(key, val.As<int>());
+                break;
+                
+            case  AnyValueType<int64_t>::value:
+                json.put(key, val.As<int64_t>());
                 break;
                 
             case  AnyValueType<double>::value:

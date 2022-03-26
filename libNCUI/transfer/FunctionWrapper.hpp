@@ -417,7 +417,8 @@ namespace amo {
         std::vector<Any> m_vecAttributes;
         
         
-        std::unordered_map < std::string, FunctionWrapper > m_mpJsFunc;								//JS调用C++回调处理函数集合
+        std::unordered_map < std::string, FunctionWrapper >
+        m_mpJsFunc;								//JS调用C++回调处理函数集合
         std::string m_strName;
         std::string m_strObjectName;
         bool m_bRendererClass;

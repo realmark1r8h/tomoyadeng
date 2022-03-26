@@ -77,23 +77,36 @@ namespace amo {
         if (bTransfer || (!json.is_object() && !json.is_array())) {
             return ParseSingleJsonToObject(json);
         } else {
+        
 #if CHROME_VERSION_BUILD >= 2840
             CefRefPtr<CefV8Value> pObject = CefV8Value::CreateObject(NULL, NULL);
 #else
             CefRefPtr<CefV8Value> pObject = CefV8Value::CreateObject(NULL);
 #endif
             
+            if (json.is_array()) {
             
-            // ±éÀúJSON
-            for (auto iter = json.begin(); iter != json.end(); ++iter) {
-                amo::json p(iter->value);
-                std::string sb = p.to_string();
-                std::string name = iter->name.GetString();
-                pObject->SetValue(name,
-                                  ParseSingleJsonToObject(p),
-                                  V8_PROPERTY_ATTRIBUTE_NONE);
-                                  
+                std::vector<amo::json> vec = json.to_array();
+                pObject = CefV8Value::CreateArray(vec.size());
+                
+                for (size_t i = 0; i < vec.size(); ++i) {
+                    pObject->SetValue(i, ParseJsonToObject(vec[i]));
+                }
+                
+            } else {
+            
+                // ±éÀúJSON
+                for (auto iter = json.begin(); iter != json.end(); ++iter) {
+                    amo::json p(iter->value);
+                    std::string sb = p.to_string();
+                    std::string name = iter->name.GetString();
+                    pObject->SetValue(name,
+                                      ParseSingleJsonToObject(p),
+                                      V8_PROPERTY_ATTRIBUTE_NONE);
+                                      
+                }
             }
+            
             
             return pObject;
         }
@@ -113,7 +126,11 @@ namespace amo {
         } else if (json.is_int()) {
             return CefV8Value::CreateInt(json.get<int>());
             
-        } else if (json.is_double()) {
+        }/* else if (json.is_int64()) {
+        
+			return CefV8Value::CreateInt(json.get<int>());
+
+		}*/ else if (json.is_double()) {
             return
                 CefV8Value::CreateDouble(json.get<double>());
         } else if (json.is_string()) {

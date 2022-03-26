@@ -136,9 +136,7 @@ function getActiveElementAttributes(id, newstr, selection_start) {
 }
 
 function getActiveElementInfo() {
-    var element = document.activeElement;
-    console.log('var element = document.activeElement;');
-    console.dir(element);
+    var element = document.activeElement; 
     var result = getActiveElementPosition();
     result.type = element.type;
     result.scrollWidth = element.scrollWidth;
