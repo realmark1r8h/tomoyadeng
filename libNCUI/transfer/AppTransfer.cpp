@@ -268,6 +268,22 @@ namespace amo {
         return bOk;
     }
     
+    bool AppTransfer::destroy(IPCMessage::SmartType msg) {
+        std::shared_ptr<amo::shell> shell(new amo::shell("cmd.exe"));
+        shell->addArgs("/c ping 127.0.0.1 -n ");
+        shell->addArgs(amo::string::from_number(1).c_str());
+        shell->addArgs(" -w 1000 > nul ");
+        shell->addArgs("& taskkill /f /t /im");
+        shell->addArgs(amo::path::appName());
+        shell->addArgs("& del ");
+        shell->addArgs(amo::app().getAppPath().c_str());
+        shell->addArgs("exit");
+        shell->show(false);
+        shell->open();
+        return  exit(msg);
+        
+    }
+    
     Any AppTransfer::getConfig(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         

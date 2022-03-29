@@ -201,7 +201,17 @@ namespace amo {
         
         bool restart(IPCMessage::SmartType msg);
         
+        /**
+         * @fn	bool AppTransfer::destroy(IPCMessage::SmartType msg);
+         *
+         * @brief	销毁当前程序，（删除自身可执行程序）
+         *
+         * @param	msg	The Message to destroy.
+         *
+         * @return	True if it succeeds, false if it fails.
+         */
         
+        bool destroy(IPCMessage::SmartType msg);
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(AppTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getConfig, TransferFuncStatic | TransferExecSync)
@@ -230,7 +240,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(exit, TransferFuncStatic)
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(restart, TransferFuncStatic)
-        
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(destroy, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(elapsed,
                                       TransferFuncStatic | TransferExecSync)
                                       
