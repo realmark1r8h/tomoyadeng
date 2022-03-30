@@ -210,11 +210,13 @@ namespace amo {
         int nBrowserID = browser->GetIdentifier();
         
         
+#if CHROME_VERSION_BUILD <2704
         
         if (m_pV8ExtensionHander) {
             std::string url = frame->GetURL().ToString();
             
             if (!util::isDevUrl(url)) {
+            
                 IPCMessage::SmartType ipcMessage(new IPCMessage());
                 ipcMessage->setMessageName(MSG_NATIVE_EXECUTE);
                 std::shared_ptr<AnyArgsList>& args = ipcMessage->getArgumentList();
@@ -227,9 +229,10 @@ namespace amo {
                 args->setValue(IPCArgsPosInfo::FuncName, "runJSFunction");
                 m_pV8ExtensionHander->triggerEventOnRendererThread(ipcMessage);
             }
-            
-            
         }
+        
+#endif
+        
         
     }
     

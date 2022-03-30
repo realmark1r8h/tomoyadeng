@@ -27,9 +27,12 @@ namespace amo {
             return false;
         }
         
+#if CHROME_VERSION_BUILD >= 2704
         virtual void OnDraggableRegionsChanged(
             CefRefPtr<CefBrowser> browser,
             const std::vector<CefDraggableRegion>& regions) {}
+#endif
+            
             
     };
     
@@ -64,22 +67,25 @@ namespace amo {
         
         virtual bool OnDragEnter(CefRefPtr<CefBrowser> browser,
                                  CefRefPtr<CefDragData> dragData,
-                                 DragOperationsMask mask);
+                                 DragOperationsMask mask) override;
                                  
+#if CHROME_VERSION_BUILD >= 2704
         /*!
-         * @fn	virtual void DragHandler::OnDraggableRegionsChanged(
-         * 		CefRefPtr<CefBrowser> browser,
-         * 		const std::vector<CefDraggableRegion>& regions);
-         *
-         * @brief	Executes the draggable regions changed action.
-         *
-         * @param	browser	The browser.
-         * @param	regions	The regions.
-         */
+        * @fn	virtual void DragHandler::OnDraggableRegionsChanged(
+        * 		CefRefPtr<CefBrowser> browser,
+        * 		const std::vector<CefDraggableRegion>& regions);
+        *
+        * @brief	Executes the draggable regions changed action.
+        *
+        * @param	browser	The browser.
+        * @param	regions	The regions.
+        */
         
         virtual void OnDraggableRegionsChanged(
             CefRefPtr<CefBrowser> browser,
-            const std::vector<CefDraggableRegion>& regions);
+            const std::vector<CefDraggableRegion>& regions) override;
+#endif
+            
             
         IMPLEMENT_REFCOUNTING(DragHandler);
         

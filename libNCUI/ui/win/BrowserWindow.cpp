@@ -57,6 +57,10 @@
 #endif
 
 namespace amo {
+
+    static LPCWSTR kParentWndProc = L"CefParentWndProc";
+    static LPCWSTR kDraggableRegion = L"CefDraggableRegion";
+    
     BrowserWindow::BrowserWindow(std::shared_ptr<BrowserWindowSettings>
                                  pBrowserSettings)
         : LocalWindow(pBrowserSettings)
@@ -68,6 +72,7 @@ namespace amo {
         m_pBrowserLayout = NULL;
         m_pCefCallbackHandler.reset(new CefCallbackHandler(getObjectID()));
         setNativeWindow(false);
+        draggable_region_ = ::CreateRectRgn(0, 0, 0, 0);
         
         auto pWindow = ClassTransfer::getUniqueTransfer<BrowserWindowTransfer>();
         int64_t nClassID = pWindow->getObjectID();
@@ -77,7 +82,7 @@ namespace amo {
     }
     
     BrowserWindow::~BrowserWindow() {
-    
+        ::DeleteObject(draggable_region_);
         removeTransfer(getObjectID());
         amo::cdevel << func_orient << amo::endl;
     }
@@ -88,6 +93,8 @@ namespace amo {
         clipboard.getClipboardFiles();
         
     }
+    
+    
     
     
     
@@ -153,6 +160,19 @@ namespace amo {
         return LocalWindow::OnMouseMove(uMsg, wParam, lParam, bHandled);
     }
     
+    LRESULT BrowserWindow::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                  BOOL& bHandled) {
+#if CHROME_VERSION_BUILD >= 2704
+                                  
+        if (m_pBrowser) {
+            OnDraggableRegionsChanged(m_pBrowser, {});
+        }
+        
+#endif
+        
+        return LocalWindow::OnSize(uMsg, wParam, lParam, bHandled);
+    }
+    
     void foo(std::string ss, Any val) {
         static  std::vector<Any> vec;
         amo::json json;
@@ -214,7 +234,7 @@ namespace amo {
         
         m_pWebkit->getClientHandler()->RegisterRenderHandlerDelegate(this);
         m_pWebkit->getClientHandler()->RegisterLifeSpanHandlerDelegate(this);
-        
+        m_pWebkit->getClientHandler()->RegisterDragHandlerDelegate(this);
         m_pWebkit->SetBkColor(m_pBrowserSettings->windowColor);
         
         if (!isLayered()) {
@@ -233,8 +253,6 @@ namespace amo {
         m_pCefCallbackHandler->registerHandlerDelegate(m_pWebkit->getClientHandler());
         m_pBrowserLayout->Add(m_pWebkit);//将浏览器控件加入到窗口中
         this->registerFunction();
-        
-        
         
         
         AMO_TIMER_ELAPSED();
@@ -311,6 +329,7 @@ namespace amo {
     }
     
     Any BrowserWindow::disableDrag(IPCMessage::SmartType msg) {
+    
         m_isDragable = false;
         return Undefined();
     }
@@ -398,6 +417,89 @@ namespace amo {
         return vec;
     }
     
+    LRESULT CALLBACK BrowserWindow::SubclassedWindowProc(HWND hWnd, UINT message,
+            WPARAM wParam, LPARAM lParam) {
+        ::WNDPROC hParentWndProc = reinterpret_cast<::WNDPROC>(::GetPropW(hWnd,
+                                   kParentWndProc));
+        HRGN hRegion = reinterpret_cast<HRGN>(::GetPropW(hWnd, kDraggableRegion));
+        //$cdevel("message:{}, WPARAM:{}, LPARAM{}", message, wParam, lParam);
+        
+        if (message == WM_NCHITTEST) {
+            LRESULT hit = CallWindowProc(hParentWndProc, hWnd, message, wParam, lParam);
+            //return hit;
+            //return HTTRANSPARENT;
+            
+            if (hit == HTCLIENT) {
+                POINTS points = MAKEPOINTS(lParam);
+                POINT point = { points.x, points.y };
+                ::ScreenToClient(hWnd, &point);
+                
+                /* RECT rect;
+                GetClientRect(hWnd, &rect);
+                
+                if (::PtInRect(&rect, point)) {
+                return HTTRANSPARENT;
+                }
+                */
+                if (::PtInRegion(hRegion, point.x, point.y)) {
+                    // Let the parent window handle WM_NCHITTEST by returning HTTRANSPARENT
+                    // in child windows.
+                    return HTTRANSPARENT;
+                }
+            }
+            
+            
+            return hit;
+        }
+        
+        return CallWindowProc(hParentWndProc, hWnd, message, wParam, lParam);
+    }
+    
+    void BrowserWindow::SubclassWindow2(HWND hWnd, HRGN hRegion) {
+        HANDLE hParentWndProc = ::GetPropW(hWnd, kParentWndProc);
+        
+        if (hParentWndProc) {
+            return;
+        }
+        
+        SetLastError(0);
+        LONG_PTR hOldWndProc = SetWindowLongPtr(
+                                   hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(SubclassedWindowProc));
+                                   
+        if (hOldWndProc == 0 && GetLastError() != ERROR_SUCCESS) {
+            return;
+        }
+        
+        ::SetPropW(hWnd, kParentWndProc, reinterpret_cast<HANDLE>(hOldWndProc));
+        ::SetPropW(hWnd, kDraggableRegion, reinterpret_cast<HANDLE>(hRegion));
+    }
+    
+    void BrowserWindow::UnSubclassWindow(HWND hWnd) {
+        LONG_PTR hParentWndProc =
+            reinterpret_cast<LONG_PTR>(::GetPropW(hWnd, kParentWndProc));
+            
+        if (hParentWndProc) {
+            LONG_PTR hPreviousWndProc =
+                SetWindowLongPtr(hWnd, GWLP_WNDPROC, hParentWndProc);
+            ALLOW_UNUSED_LOCAL(hPreviousWndProc);
+            DCHECK_EQ(hPreviousWndProc,
+                      reinterpret_cast<LONG_PTR>(SubclassedWindowProc));
+        }
+        
+        ::RemovePropW(hWnd, kParentWndProc);
+        ::RemovePropW(hWnd, kDraggableRegion);
+    }
+    
+    BOOL CALLBACK BrowserWindow::SubclassWindowsProc(HWND hwnd, LPARAM lParam) {
+        SubclassWindow2(hwnd, reinterpret_cast<HRGN>(lParam));
+        return TRUE;
+    }
+    
+    BOOL CALLBACK BrowserWindow::UnSubclassWindowsProc(HWND hwnd, LPARAM lParam) {
+        UnSubclassWindow(hwnd);
+        return TRUE;
+    }
+    
     WebkitView* BrowserWindow::GetWebkitView() {
         return m_pWebkit;
     }
@@ -445,6 +547,10 @@ namespace amo {
         }
         
         m_pBrowserTransfer = transferMapMgr->toTransfer(browser);
+        // 为什么在没有webkit-app-region的时候不增加一下空白regin用来改变窗口大小？
+        // 1. 如果有标题栏可以通过标题栏来改变窗口大小，
+        // 2. 如果没有标题栏，那么认为是没有改变窗口大小的需求？？
+        OnDraggableRegionsChanged(browser, {});
         
     }
     void BrowserWindow::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
@@ -467,6 +573,63 @@ namespace amo {
         return false;
         
     }
+    
+#if CHROME_VERSION_BUILD >= 2704
+    void BrowserWindow::OnDraggableRegionsChanged(CefRefPtr<CefBrowser> browser,
+            const std::vector<CefDraggableRegion>& regions) {
+        ::SetRectRgn(draggable_region_, 0, 0, 0, 0);
+        
+        RECT rect;
+        GetClientRect(m_hWnd, &rect);
+        
+        // left
+        HRGN leftRgn = ::CreateRectRgn(rect.left, rect.top,
+                                       rect.left + 4,
+                                       rect.bottom);
+        ::CombineRgn(draggable_region_, draggable_region_, leftRgn, RGN_OR);
+        
+        if (!m_pBrowserSettings->titleBar) {
+            HRGN topRgn = ::CreateRectRgn(rect.left, rect.top,
+                                          rect.right,
+                                          rect.top + 4);
+            ::CombineRgn(draggable_region_, draggable_region_, topRgn, RGN_OR);
+        }
+        
+        
+        HRGN rightRgn = ::CreateRectRgn(rect.right - 4, rect.top,
+                                        rect.right,
+                                        rect.bottom);
+        ::CombineRgn(draggable_region_, draggable_region_, rightRgn, RGN_OR);
+        
+        HRGN bottomRgn = ::CreateRectRgn(rect.left, rect.bottom - 4,
+                                         rect.right,
+                                         rect.bottom);
+        ::CombineRgn(draggable_region_, draggable_region_, bottomRgn, RGN_OR);
+        
+        // Determine new draggable region.
+        std::vector<CefDraggableRegion>::const_iterator it = regions.begin();
+        
+        for (; it != regions.end(); ++it) {
+            HRGN region = ::CreateRectRgn(it->bounds.x, it->bounds.y,
+                                          it->bounds.x + it->bounds.width,
+                                          it->bounds.y + it->bounds.height);
+            ::CombineRgn(draggable_region_, draggable_region_, region,
+                         it->draggable ? RGN_OR : RGN_DIFF);
+            ::DeleteObject(region);
+        }
+        
+        // Subclass child window procedures in order to do hit-testing.
+        // This will be a no-op, if it is already subclassed.
+        if (m_hWnd) {
+            WNDENUMPROC proc =
+                !regions.empty() ? SubclassWindowsProc : UnSubclassWindowsProc;
+            proc = SubclassWindowsProc;
+            ::EnumChildWindows(m_hWnd, proc,
+                               reinterpret_cast<LPARAM>(draggable_region_));
+        }
+    }
+#endif
+    
     
     bool BrowserWindow::preTranslateMessage(CefEventHandle os_event) {
     
@@ -685,11 +848,21 @@ namespace amo {
         
         if (pControl && (pControl->GetName() == _T("browserLayout")
                          || webkitView == pControl->GetClass())) {
+            // 2704 以上版本不在使用钩子获取鼠标消息
+#if CHROME_VERSION_BUILD >= 2704
+            return HTCAPTION;
+#else
+            
             if (m_isDragable) {
                 return HTCAPTION;
             } else {
                 return HTCLIENT;
             }
+            
+#endif
+            
+            
+            
         }
         
         return LocalWindow::OnNcHitTest(uMsg, wParam, lParam, bHandled);
@@ -713,7 +886,7 @@ namespace amo {
             pHandler = m_pWebkit->getClientHandler();
             pHandler->UnregisterRenderHandlerDelegate(this);
             pHandler->UnregisterLifeSpanHandlerDelegate(this);
-            
+            pHandler->UnregisterDragHandlerDelegate(this);
             
             /*   if (m_pBrowserLayout) {
                    m_pBrowserLayout->Remove(m_pWebkit);

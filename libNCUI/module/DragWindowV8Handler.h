@@ -88,6 +88,8 @@ namespace amo {
                        const CefV8ValueList& args,
                        CefRefPtr<CefV8Value>& retval,
                        CefString& except);
+
+		std::string getWebkitAppRegion(CefRefPtr<CefV8Value> object);
                        
         virtual CefRefPtr<JsV8Handler> createV8Handler();
         

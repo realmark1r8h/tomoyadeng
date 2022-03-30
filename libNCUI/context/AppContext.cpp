@@ -407,8 +407,13 @@ namespace amo {
         amo::ClientApp::RegisterCustomSchemeFactory("local",
                 "file",
                 new amo::LocalSchemeHandlerFactory());
-        // 开启消息钩子
+                
+#if CHROME_VERSION_BUILD < 2704
+        // 开启消息钩子,2704以上的版本可以使用cef提供的OnDraggableRegionsChanged回调函数进行界面操作
+        // 3029及以后的版本CHROMIUM不再漏消息出来了，钩子从这个版本开始失效
         startHook();
+#endif
+        
         auto manager = BrowserWindowManager::getInstance();
         manager->init();
         auto pAppSettings = getDefaultAppSettings();
@@ -441,8 +446,12 @@ namespace amo {
         }
         
         amo::log::finalize();
+#if CHROME_VERSION_BUILD < 2704
         // 关闭钩子
         stopHook();
+#endif
+        
+        
         
         // 停止监听Node消息
         if (getNodeMessageHandler()) {

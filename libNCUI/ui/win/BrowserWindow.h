@@ -14,9 +14,11 @@
 
 #include "handler/LifeSpanHandler.h"
 #include "handler/BrowserProcessHandler.h"
+#include "handler/DragHandler.h"
 #include "transfer/BrowserWindowTransfer.h"
 #include "ui/win/LayeredWindow.h"
 #include "ui/win/LocalWindow.h"
+
 
 
 namespace amo {
@@ -30,15 +32,13 @@ namespace amo {
         , public BrowserWindowTransfer
         , public RenderHandlerDelegate
         , public LifeSpanHandlerDelegate
-        , public BrowserProcessHandlerDelegate {
+        , public BrowserProcessHandlerDelegate
+        , public DragHandlerDelegate {
         
     public:
         BrowserWindow(std::shared_ptr<BrowserWindowSettings> pBrowserSettings);
         ~BrowserWindow();
         void test();
-        
-        
-        
         
         
         
@@ -77,14 +77,22 @@ namespace amo {
                                     
         virtual LRESULT OnMouseMove(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                     BOOL& bHandled);
+                                    
+                                    
+        virtual LRESULT OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                               BOOL& bHandled) override;
     public:
         // LifeSpanHandlerDelegate
         virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
         virtual bool DoClose(CefRefPtr<CefBrowser> browser) override;
         virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;
         
-        
-        
+        // DragHandlerDelegate
+#if CHROME_VERSION_BUILD >= 2704
+        virtual void OnDraggableRegionsChanged(CefRefPtr<CefBrowser> browser,
+                                               const std::vector<CefDraggableRegion>& regions) override;
+#endif
+                                               
     public:
         // BrowserWindowTransfer
         virtual Any enableDrag(IPCMessage::SmartType msg) override;
@@ -149,6 +157,22 @@ namespace amo {
         std::vector<HWND> getParents(HWND hWnd);
         
     private:
+    
+        static	LRESULT CALLBACK SubclassedWindowProc(HWND hWnd,
+                UINT message,
+                WPARAM wParam,
+                LPARAM lParam);
+                
+        static	void SubclassWindow2(HWND hWnd, HRGN hRegion);
+        
+        static	void UnSubclassWindow(HWND hWnd);
+        
+        static	BOOL CALLBACK SubclassWindowsProc(HWND hwnd, LPARAM lParam);
+        
+        static	BOOL CALLBACK UnSubclassWindowsProc(HWND hwnd, LPARAM lParam);
+        
+        
+    private:
         /*! @brief	±êÌâÀ¸¿Ø¼þ. */
         CControlUI* m_pTitleBar;
         /*! @brief	ä¯ÀÀÆ÷¿Ø¼þÈÝÆ÷. */
@@ -171,6 +195,7 @@ namespace amo {
         std::shared_ptr<BOOL> fSnapSizing;
         
         std::shared_ptr<POINT> m_pt;
+        HRGN draggable_region_;
     };
 }
 

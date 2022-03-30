@@ -7,11 +7,16 @@
 #include <functional>
 #include <shellapi.h>
 #include <future>
+#include <iostream>
+
 
 
 #include <amo/logger.hpp>
 #include <amo/loader.hpp>
 #include <amo/rect.hpp>
+#include <amo/file_mapping.hpp>
+#include <amo/rect.hpp>
+#include <amo/utility.hpp>
 
 #include "ui/win/OffScreenRenderView.h"
 #include "ui/win/MessageWindow.h"
@@ -27,13 +32,6 @@
 #include "transfer/BrowserHostTransfer.h"
 #include "utility/utility.hpp"
 #include "scheme/UrlResourceHandlerFactory.h"
-
-#include <opencv.hpp>
-#include <opencv2/core/core.hpp>
-#include <iostream>
-#include <amo/file_mapping.hpp>
-#include <amo/rect.hpp>
-#include <amo/utility.hpp>
 
 
 
@@ -325,6 +323,10 @@ namespace amo {
         
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         
+        
+        
+        
+#if CHROME_VERSION_BUILD <2704
         // RenderProcess OnContextCreated 不能正确触发，导致窗口不能拖动，
         // 这里再调用一次
         std::string url = frame->GetURL();
@@ -348,6 +350,7 @@ namespace amo {
             browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
         }
         
+#endif
         AMO_TIMER_ELAPSED();
         
         

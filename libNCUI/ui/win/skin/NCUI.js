@@ -36,6 +36,11 @@ function stringToObject(str) {
     return JSON.parse(str);
 };
 
+function getWebkitAppRegion(obj){
+	if(!obj) return 'no-drag';
+	return window.getComputedStyle(obj)['webkit-app-region']; 
+}
+
 function getParentWindowPosition(parent) {
     var result = {};
     result.objectType = "f622feb3-0b69-4b28-8cc6-57da93b7eb6a";

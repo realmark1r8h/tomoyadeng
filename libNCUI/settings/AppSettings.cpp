@@ -38,43 +38,51 @@ namespace amo {
                                         strExeFullName);	//!< 子进程路径文件，默认与当前程序文件相同
         DEFAULT_ARGS_SETTINGS(multi_threaded_message_loop,
                               false);				//!< 禁止多线程消息循环，会出问题
-        DEFAULT_ARGS_SETTINGS(command_line_args_disabled,
-                              false);				//!< 允许命令行参数
-        CEFSTRING_DEFAULT_ARGS_SETTINGS(cache_path,
-                                        getCachePath().to_utf8());	//!< 默认缓存路径
-        DEFAULT_ARGS_SETTINGS(persist_session_cookies, true);
-        
-        //CefString(&user_agent) , "chrome://version");							//!< 使用默认
-        //CefString(&product_version) , "v2.0");								//!< 不能设置该值，会出问题，使用默认。在子进程调用可能出现了问题
-        CEFSTRING_DEFAULT_ARGS_SETTINGS(locale,
-                                        "zh-CN");						//!< 语言环境默认中文
-        CEFSTRING_DEFAULT_ARGS_SETTINGS(log_file, strLogFile);					//!< 日志文件
-        
-        
-        DEFAULT_ARGS_SETTINGS(log_severity, LOGSEVERITY_VERBOSE);				//!< 日志等级
-        DEFAULT_ARGS_SETTINGS(log_severity,
-                              LOGSEVERITY_DISABLE);				//!< 关闭, 日志太多
-        //release_dcheck_enabled , true);										//!< 开启release check, 没什么用
-        
-        //CefString(&javascript_flags) , "js-flags");							//!< 不知道怎么填
+                              
         CEFSTRING_DEFAULT_ARGS_SETTINGS(resources_dir_path,
                                         strResourcesPath);	//!< 设置资源目录
         CEFSTRING_DEFAULT_ARGS_SETTINGS(locales_dir_path,
                                         strLocalesPath);		//!< local目录
-        DEFAULT_ARGS_SETTINGS(pack_loading_disabled, false);					//!< .
-        DEFAULT_ARGS_SETTINGS(remote_debugging_port, 8088);						//!< 调试端口
-        DEFAULT_ARGS_SETTINGS(uncaught_exception_stack_size,
-                              1000);				//!< 不知道该设置多少
-                              
-#if CHROME_VERSION_BUILD < 3071
-        DEFAULT_ARGS_SETTINGS(context_safety_implementation, true);				//!< .
-#endif
-        
-        DEFAULT_ARGS_SETTINGS(ignore_certificate_errors,
-                              true);					//!< 忽略证书错误
-        //DEFAULT_ARGS_SETTINGS(background_color, 0xffffffff);					//!< 页面未加载前背景色
-        DEFAULT_ARGS_SETTINGS(background_color,
-                              0x00ffffff);					//!< 页面未加载前背景色
+        CEFSTRING_DEFAULT_ARGS_SETTINGS(cache_path,
+                                        getCachePath().to_utf8());	//!< 默认缓存路径
+                                        
+                                        
+        CEFSTRING_DEFAULT_ARGS_SETTINGS(locale,
+                                        "zh-CN");						//!< 语言环境默认中文
+                                        
+                                        
+        //        DEFAULT_ARGS_SETTINGS(command_line_args_disabled,
+        //                              false);				//!< 允许命令行参数
+        //
+        //        DEFAULT_ARGS_SETTINGS(persist_session_cookies, true);
+        //
+        //        //CefString(&user_agent) , "chrome://version");							//!< 使用默认
+        //        //CefString(&product_version) , "v2.0");								//!< 不能设置该值，会出问题，使用默认。在子进程调用可能出现了问题
+        //
+        //        CEFSTRING_DEFAULT_ARGS_SETTINGS(log_file, strLogFile);					//!< 日志文件
+        //
+        //
+        //        DEFAULT_ARGS_SETTINGS(log_severity, LOGSEVERITY_VERBOSE);				//!< 日志等级
+        //        DEFAULT_ARGS_SETTINGS(log_severity,
+        //                              LOGSEVERITY_DISABLE);				//!< 关闭, 日志太多
+        //        //release_dcheck_enabled , true);										//!< 开启release check, 没什么用
+        //
+        //        //CefString(&javascript_flags) , "js-flags");							//!< 不知道怎么填
+        //
+        //        DEFAULT_ARGS_SETTINGS(pack_loading_disabled, false);					//!< .
+        //        DEFAULT_ARGS_SETTINGS(remote_debugging_port, 8088);						//!< 调试端口
+        //        DEFAULT_ARGS_SETTINGS(uncaught_exception_stack_size,
+        //                              1000);				//!< 不知道该设置多少
+        //
+        //#if CHROME_VERSION_BUILD < 3071
+        //        DEFAULT_ARGS_SETTINGS(context_safety_implementation, true);				//!< .
+        //#endif
+        //
+        //        DEFAULT_ARGS_SETTINGS(ignore_certificate_errors,
+        //                              true);					//!< 忽略证书错误
+        //        //DEFAULT_ARGS_SETTINGS(background_color, 0xffffffff);					//!< 页面未加载前背景色
+        //        DEFAULT_ARGS_SETTINGS(background_color,
+        //                              0x00ffffff);					//!< 页面未加载前背景色
     }
     
     void AppSettings::initDefaultAppSettings() {
