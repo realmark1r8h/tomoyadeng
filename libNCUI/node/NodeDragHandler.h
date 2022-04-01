@@ -22,9 +22,10 @@ namespace amo {
                                  CefRefPtr<CefDragData> dragData,
                                  CefDragHandler::DragOperationsMask mask) override;
                                  
-                                 
+#if CHROME_VERSION_BUILD >= 2704
         virtual void OnDraggableRegionsChanged(CefRefPtr<CefBrowser> browser,
                                                const std::vector<CefDraggableRegion>& regions) override;
+#endif
                                                
     private:
         std::shared_ptr<NodeHandlerHelper>& m_pHelper;

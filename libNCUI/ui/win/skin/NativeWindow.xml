@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Window size="{width},{height}" mininfo="{minWidth},{minHeight}" maxinfo="{maxWidth},{maxHeight}" sizebox="4,4,4,4" roundcorner="{roundcorner},{roundcorner}" >
-    <VerticalLayout bkcolor="{windowColor}"  dragable="true" borderround="{roundcorner},{roundcorner}" >
-        <VerticalLayout height="33" name="titleLayout"  >
-            <VerticalLayout height="33" bkcolor="#fffdfdfd" > 
-				<HorizontalLayout height="6" />
-                <HorizontalLayout height="33" >
+    <VerticalLayout bkcolor="{windowColor}"  dragable="true" borderround="{roundcorner},{roundcorner}"  >
+        <VerticalLayout height="33" name="titleLayout" bkcolor="#ff3280fc"  bkcolor2="#ff3280fc"  >
+           <VerticalLayout height="40"  >  
+                <HorizontalLayout height="40" >
                     <HorizontalLayout />
                     <HorizontalLayout />
-					<HorizontalLayout dragable="false" width="73">
-						<Button name="minbtn"  height="20" width="20" normalimage="mini.png" hotimage="mini_p.png" pushedimage="mini_p.png" />
-						<HorizontalLayout width="6" />
-						<Button name="maxbtn"  height="20" width="20" normalimage="max.png" hotimage="max_p.png" pushedimage="max_p.png" />
-						<HorizontalLayout width="4" />
-						<Button name="restorebtn" visible="false"  height="20" width="20" normalimage="restore.png" hotimage="restore_p.png" pushedimage="restore.png" />
-						<Button name="closebtn"  height="20" width="20" normalimage="close.png" hotimage="close_p.png" pushedimage="close_p.png" />
-						<HorizontalLayout width="3" />
+					<HorizontalLayout dragable="false" width="120">
+						<Button name="minbtn" height="40" width="40" normalimage="mini.png" hotimage="mini_p.png" pushedimage="mini_p.png" />  
+						<Button name="maxbtn"  height="40" width="40" normalimage="max.png" hotimage="max_p.png" pushedimage="max_p.png" /> 
+						<Button name="restorebtn" visible="false"    height="40" width="40" normalimage="restore.png" hotimage="restore_p.png" pushedimage="restore.png" />
+						<Button name="closebtn"  height="40" width="40"   normalimage="close.png" hotimage="close_p.png" pushedimage="close_p.png" /> 
 					</HorizontalLayout>
                 </HorizontalLayout>
             </VerticalLayout>

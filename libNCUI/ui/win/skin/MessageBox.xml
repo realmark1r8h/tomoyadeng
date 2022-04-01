@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Window size="360,200" minsize="360,200" >
-    <VerticalLayout name="background" bkcolor="#fffefefe" dragable="true" bordersize="1" bordercolor="#fff8f8f8" inset="1,1,1,1" >
-        <HorizontalLayout height="29" inset="0,5,7,0">
+    <VerticalLayout name="background" bkcolor="#fffefefe" dragable="true"   >
+        <HorizontalLayout height="40"   bkcolor="#ff3280fc"  bkcolor2="#ff3280fc">
             <Label name="caption" text="Tooltips" textcolor="#FF000000" textpadding="5,0,0,0" font="2" autocalcwidth="false"/>
             <Control />
-            <Button name="closebtn" tooltip="close" height="20" width="20" normalimage="close.png" hotimage="close_p.png" pushedimage="close_p.png" dragable="false" />
+            <Button name="closebtn" tooltip="close" height="40" width="40" normalimage="close.png" hotimage="close_p.png" pushedimage="close_p.png" dragable="false" />
         </HorizontalLayout>
         <VerticalLayout name="TextLayout">
             <HorizontalLayout />
@@ -15,9 +15,9 @@
             <HorizontalLayout />
             <HorizontalLayout height="34">
                 <Control />
-				<Button name="cancelbtn" width="76" height="34" text="cancel" align="center" textcolor="#FF0A67FB" font="2"  bkcolor="#FFFFFFFF" dragable="false"  bordersize="1" bordercolor="#FF0A67FB" inset="1,1,1,1" />
+				<Button name="cancelbtn" width="76" height="34" text="cancel" align="center" textcolor="#ff373777" font="2"  bkcolor="#FFFFFFFF" dragable="false"  bordersize="1" bordercolor="#ff373777" inset="1,1,1,1" />
 				<Control width="10"  />
-                 <Button name="okbtn" width="76" height="34" text="ok" align="center"  textcolor="#FFFFFFFF"  bkcolor="#FF0A67FB"  dragable="false"  />
+                 <Button name="okbtn" width="76" height="34" text="ok" align="center"  textcolor="#FFFFFFFF"  bkcolor="#ff373777"  dragable="false"  />
                 <Control width="10" />
             </HorizontalLayout>
             <HorizontalLayout height="10" />

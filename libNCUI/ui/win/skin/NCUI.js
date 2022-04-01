@@ -37,8 +37,37 @@ function stringToObject(str) {
 };
 
 function getWebkitAppRegion(obj){
-	if(!obj) return 'no-drag';
-	return window.getComputedStyle(obj)['webkit-app-region']; 
+	if(obj == document){
+		console.log('document');
+		return "no-drag";
+	}
+	console.dir(obj);
+	if(!obj) {
+		console.log('not object');
+		return 'no-drag';
+	}
+	
+	var style = window.getComputedStyle(obj);
+	
+	console.dir(style);
+	console.log(style.cssText);
+	return style.cssText;
+	var retval =  window.getComputedStyle(obj).cssText['webkit-app-region']; 
+	console.log('retval: ' + retval);
+	return retval;
+}
+
+function getCssText(obj){
+	if(obj == document){ 
+		return "no-drag";
+	} 
+	if(!obj) { 
+		return 'no-drag';
+	}
+	console.dir(window.getComputedStyle(obj));
+	console.log(window.getComputedStyle(obj).cssText);
+	console.log(window.getComputedStyle(obj)['cssText']);
+	return window.getComputedStyle(obj).cssText; 
 }
 
 function getParentWindowPosition(parent) {

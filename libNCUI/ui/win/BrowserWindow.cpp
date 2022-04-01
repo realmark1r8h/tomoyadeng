@@ -210,7 +210,7 @@ namespace amo {
         
         if (m_pBrowserSettings->titleBar) {
             m_pTitleBar->SetVisible(true);
-            RECT rcCaption = { 0, 0, 0, 33 };
+            RECT rcCaption = { 0, 0, 0, 40 };
             m_PaintManager.SetCaptionRect(rcCaption);
         } else {
             m_pTitleBar->SetVisible(false);
@@ -550,7 +550,11 @@ namespace amo {
         // 为什么在没有webkit-app-region的时候不增加一下空白regin用来改变窗口大小？
         // 1. 如果有标题栏可以通过标题栏来改变窗口大小，
         // 2. 如果没有标题栏，那么认为是没有改变窗口大小的需求？？
+        // 3.
+#if CHROME_VERSION_BUILD >= 2704
         OnDraggableRegionsChanged(browser, {});
+#endif
+        
         
     }
     void BrowserWindow::OnBeforeClose(CefRefPtr<CefBrowser> browser) {

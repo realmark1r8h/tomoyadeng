@@ -45,21 +45,83 @@ namespace amo {
             }
         }
         
-        // 使用 className 判断
-        {
-            CefRefPtr<CefV8Value> className = target->GetValue("className");
-            amo::string strClassList(className->GetStringValue().ToString(), true);
-            //$clog(amo::cdevel << strClassList.to_ansi() << amo::endl;);
-            std::vector<amo::string> vec = strClassList.split(" ");
-            
-            for (auto& str : vec) {
-                if (str == noDragClassName) {
-                    return sendDragableToBrowserProcess(false);
-                } else if (str == dragClassName) {
-                    return sendDragableToBrowserProcess(true);
-                }
-            }
-        }
+        
+        //CefRefPtr<CefV8Value> style = target->GetValue("style");
+        //
+        //if (style && style->IsObject()) {
+        //    std::vector<CefString> vecs;
+        //    style->GetKeys(vecs);
+        //
+        //    for (auto& p : vecs) {
+        //        OutputDebugStringA(p.ToString().c_str());
+        //        OutputDebugStringA("\n");
+        //
+        //        CefRefPtr<CefV8Value> appRegion = style->GetValue(p);
+        //
+        //        if (appRegion && appRegion->IsString()) {
+        //            OutputDebugStringA(appRegion->GetStringValue().ToString().c_str());
+        //            OutputDebugStringA("\n");
+        //        }
+        //    }
+        //
+        //
+        //
+        //    //CefRefPtr<CefV8Value> appRegion = style->GetValue("webkitAppRegion");
+        //    //
+        //    //if (appRegion && appRegion->IsString()) {
+        //    //    std::string str = appRegion->GetStringValue();
+        //    //
+        //    //    // 搞不定 取不到值
+        //    //    if (!str.empty()) {
+        //    //        if (str == "no-drag") {
+        //    //            return sendDragableToBrowserProcess(false);
+        //    //        } else if (str == "drag") {
+        //    //            return sendDragableToBrowserProcess(true);
+        //    //        }
+        //    //    }
+        //    //
+        //    //}
+        //
+        //}
+        
+        //// 再判断 className
+        //CefRefPtr<CefV8Value> className = target->GetValue("className");
+        //std::string strClassList = className->GetStringValue().ToString();
+        //
+        //$clog(amo::cdevel << strClassList << amo::endl;);
+        //std::regex reg(strRegex);
+        //std::smatch m;
+        //std::vector<std::string> class_list;
+        //
+        //while (std::regex_search(strClassList, m, reg)) {
+        //    for (auto x = m.begin(); x != m.end(); x++) {
+        //        $clog(amo::cdevel << x->str() << amo::endl;);
+        //
+        //        if (x->str() == noDragClassName) {
+        //            return sendDragableToBrowserProcess(false);
+        //        } else if (x->str() == dragClassName) {
+        //            return sendDragableToBrowserProcess(true);
+        //        }
+        //    }
+        //
+        //    strClassList = m.suffix().str();
+        //}
+        
+        // 旧的 class
+        //{
+        //    CefRefPtr<CefV8Value> className = target->GetValue("className");
+        //    amo::string strClassList(className->GetStringValue().ToString(), true);
+        //    //$clog(amo::cdevel << strClassList.to_ansi() << amo::endl;);
+        //    std::vector<amo::string> vec = strClassList.split(" ");
+        //
+        //    for (auto& str : vec) {
+        //        if (str == noDragClassName) {
+        //            return sendDragableToBrowserProcess(false);
+        //        } else if (str == dragClassName) {
+        //            return sendDragableToBrowserProcess(true);
+        //        }
+        //    }
+        //}
         
         
         CefRefPtr<CefV8Value> parent = target->GetValue("parentNode");
@@ -90,20 +152,27 @@ namespace amo {
         CefRefPtr<CefV8Value> stringToObject;
         
         CefRefPtr<CefV8Value> pGlobal = pContext->GetGlobal();
-        /* std::vector<CefString> keys;
-         pGlobal->GetKeys(keys);
+        std::vector<CefString> keys;
+        object->GetKeys(keys);
         
-         for (auto& p : keys) {
-             OutputDebugStringA(p.ToString().c_str());
-             OutputDebugStringA("\n");
-         }*/
         
-        stringToObject = pGlobal->GetValue("getWebkitAppRegion");
+        
+        /*for (auto& p : keys) {
+            OutputDebugStringA(p.ToString().c_str());
+            OutputDebugStringA("\n");
+        }*/
+        
+        if (object->IsSame(pGlobal)) {
+            return "no-drag";
+        }
+        
+        
+        stringToObject = pGlobal->GetValue("getCssText");
+        
         
         if (!stringToObject) {
             return "no-drag";
         }
-        
         
         CefV8ValueList list;
         list.push_back(object);
@@ -113,11 +182,19 @@ namespace amo {
                      stringToObject,
                      list);
                      
-        if (retval && retval->IsString()) {
-            return retval->GetStringValue().ToString();
+        if (!retval && !retval->IsString()) {
+            return "";
         }
         
-        return "no-drag";
+        std::string cssText = retval->GetStringValue();
+        
+        if (cssText.find("-webkit-app-region: drag;") != -1) {
+            return "drag";
+        } else if (cssText.find("-webkit-app-region: no-drag;") != -1) {
+            return "no-drag";
+        }
+        
+        return "";
     }
     
     CefRefPtr<JsV8Handler> DragWindowV8Handler::createV8Handler() {

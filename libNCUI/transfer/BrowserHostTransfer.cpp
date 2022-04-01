@@ -72,7 +72,7 @@ namespace amo {
     
     Any BrowserHostTransfer::SetWindowVisibility(IPCMessage::SmartType msg) {
         bool bVal = msg->getArgumentList()->getBool(0);
-        m_pBrowserHost->SetWindowlessFrameRate(bVal);
+        
         return Undefined();
     }
     

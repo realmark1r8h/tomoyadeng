@@ -17,11 +17,12 @@ namespace amo {
                                       
         return false;
     }
-    
+#if CHROME_VERSION_BUILD >= 2704
     void NodeDragHandler::OnDraggableRegionsChanged(CefRefPtr<CefBrowser> browser,
             const std::vector<CefDraggableRegion>& regions) {
         return;
     }
+#endif
     
 }
 

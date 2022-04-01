@@ -79,7 +79,11 @@ NCUI_EXPORT void updateSplashSettings(const std::string& str) {
 }
 
 NCUI_EXPORT int run(HINSTANCE hInstance) {
+
+#if CHROME_VERSION_BUILD >= 2526
+    // Enable High-DPI support on Windows 7 or newer.
     CefEnableHighDPISupport();
+#endif
     CefMainArgs main_args(hInstance);
     amo::AppContext::getInstance()->initialize(hInstance);
     amo::AppContext::getInstance()->executeProcess(main_args);

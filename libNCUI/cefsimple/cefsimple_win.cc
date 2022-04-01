@@ -32,8 +32,11 @@ NCUI_EXPORT int   runSample(HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
     //amo::AppContext::getInstance();
     
+#if CHROME_VERSION_BUILD >= 2526
     // Enable High-DPI support on Windows 7 or newer.
     CefEnableHighDPISupport();
+#endif
+    
     
     void* sandbox_info = NULL;
     

@@ -15,6 +15,7 @@ namespace amo {
      * @brief	拖拽事件处理类，该类中的方法会在UI线程中被调用.
      */
     
+    
     class DragHandlerDelegate {
     public:
         DragHandlerDelegate() {}
