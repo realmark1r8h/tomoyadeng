@@ -67,10 +67,15 @@ namespace amo {
     class BrowserWindowManager : public amo::singleton<BrowserWindowManager>
         , public LifeSpanHandlerDelegate {
     public:
+#if CHROME_VERSION_BUILD >= 2357
         typedef CefLifeSpanHandler::WindowOpenDisposition WindowOpenDisposition;
+#endif
     public:
         BrowserWindowManager();
         ~BrowserWindowManager();
+        
+        
+#if CHROME_VERSION_BUILD >= 2357
         virtual bool OnBeforePopup(CefRefPtr<CefBrowser> browser,
                                    CefRefPtr<CefFrame> frame,
                                    const CefString& target_url,
@@ -82,6 +87,18 @@ namespace amo {
                                    CefRefPtr<CefClient>& client,
                                    CefBrowserSettings& settings,
                                    bool* no_javascript_access) override;
+#else
+        virtual bool OnBeforePopup(CefRefPtr<CefBrowser> browser,
+                                   CefRefPtr<CefFrame> frame,
+                                   const CefString& target_url,
+                                   const CefString& target_frame_name,
+                                   const CefPopupFeatures& popupFeatures,
+                                   CefWindowInfo& windowInfo,
+                                   CefRefPtr<CefClient>& client,
+                                   CefBrowserSettings& settings,
+                                   bool* no_javascript_access);
+#endif
+                                   
                                    
         void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
         void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;

@@ -51,6 +51,35 @@ namespace amo {
                                     int height) {
         return ;
     }
+    
+    bool NodeRenderHandler::StartDragging(CefRefPtr<CefBrowser> browser,
+                                          CefRefPtr<CefDragData> drag_data,
+                                          CefRenderHandler::DragOperationsMask allowed_ops,
+                                          int x,
+                                          int y) {
+        return false;
+    }
+    void NodeRenderHandler::UpdateDragCursor(CefRefPtr<CefBrowser> browser,
+            CefRenderHandler::DragOperation operation) {
+        return;
+    }
+    
+#if CHROME_VERSION_BUILD >= 2357
+    void NodeRenderHandler::OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser,
+            double x,
+            double y) {
+        return;
+    }
+    
+#else
+    
+    
+    void NodeRenderHandler::OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser) {
+        return;
+    }
+#endif
+    
+    
 #if CHROME_VERSION_BUILD >= 2272
     void NodeRenderHandler::OnCursorChange(CefRefPtr<CefBrowser> browser,
                                            CefCursorHandle cursor,
@@ -60,37 +89,16 @@ namespace amo {
     }
     
     
-    bool NodeRenderHandler::StartDragging(CefRefPtr<CefBrowser> browser,
-                                          CefRefPtr<CefDragData> drag_data,
-                                          CefRenderHandler::DragOperationsMask allowed_ops,
-                                          int x,
-                                          int y) {
-        return false;
-    }
-    
-    void NodeRenderHandler::OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser,
-            double x,
-            double y) {
-        return ;
-    }
-    
-    void NodeRenderHandler::UpdateDragCursor(CefRefPtr<CefBrowser> browser,
-            CefRenderHandler::DragOperation operation) {
-        return ;
-    }
     
 #else
     
     
     void NodeRenderHandler::OnCursorChange(CefRefPtr<CefBrowser> browser,
                                            CefCursorHandle cursor) {
-        return false;
+        return  ;
     }
     
     
-    void NodeRenderHandler::OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser) {
-        return false;
-    }
 #endif
     
 }

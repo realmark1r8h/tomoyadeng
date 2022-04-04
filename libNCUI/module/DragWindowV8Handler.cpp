@@ -35,15 +35,15 @@ namespace amo {
         }
         
         // 优先使用 webkit-app-region
-        std::string str = getWebkitAppRegion(target);
+        /*   std::string str = getWebkitAppRegion(target);
         
-        if (!str.empty()) {
-            if (str == "no-drag") {
-                return sendDragableToBrowserProcess(false);
-            } else if (str == "drag") {
-                return sendDragableToBrowserProcess(true);
-            }
-        }
+           if (!str.empty()) {
+               if (str == "no-drag") {
+                   return sendDragableToBrowserProcess(false);
+               } else if (str == "drag") {
+                   return sendDragableToBrowserProcess(true);
+               }
+           }*/
         
         // 使用 className 判断
         {
@@ -60,6 +60,7 @@ namespace amo {
                 }
             }
         }
+        
         
         
         CefRefPtr<CefV8Value> parent = target->GetValue("parentNode");

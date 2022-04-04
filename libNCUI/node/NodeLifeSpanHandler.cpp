@@ -5,7 +5,7 @@
 #include "ipc/UIMessageEmitter.hpp"
 #include "handler/MessageRouterBrowserSide.h"
 namespace amo {
-#if CHROME_VERSION_BUILD >= 2357
+
 
 
     NodeLifeSpanHandler::NodeLifeSpanHandler(std::shared_ptr<NodeHandlerHelper>&
@@ -13,7 +13,7 @@ namespace amo {
         : m_pHelper(pHelper) {
         
     }
-    
+#if CHROME_VERSION_BUILD >= 2357
     bool NodeLifeSpanHandler::OnBeforePopup(CefRefPtr<CefBrowser> browser,
                                             CefRefPtr<CefFrame> frame,
                                             const CefString& target_url,

@@ -37,24 +37,19 @@ function stringToObject(str) {
 };
 
 function getWebkitAppRegion(obj){
-	if(obj == document){
-		console.log('document');
-		return "no-drag";
+	if(obj == document){ 
+		return '';
 	}
-	console.dir(obj);
-	if(!obj) {
-		console.log('not object');
-		return 'no-drag';
+
+	if(!obj) { 
+		return '';
 	}
-	
-	var style = window.getComputedStyle(obj);
-	
-	console.dir(style);
-	console.log(style.cssText);
-	return style.cssText;
-	var retval =  window.getComputedStyle(obj).cssText['webkit-app-region']; 
-	console.log('retval: ' + retval);
+	//console.dir(window.getComputedStyle(obj));
+	//return window.getComputedStyle(obj)['-webkit-app-region']; 
+	var retval = window.getComputedStyle(obj)['-webkit-app-region']; 
+	console.log(retval);
 	return retval;
+	 
 }
 
 function getCssText(obj){
@@ -64,9 +59,7 @@ function getCssText(obj){
 	if(!obj) { 
 		return 'no-drag';
 	}
-	console.dir(window.getComputedStyle(obj));
-	console.log(window.getComputedStyle(obj).cssText);
-	console.log(window.getComputedStyle(obj)['cssText']);
+	
 	return window.getComputedStyle(obj).cssText; 
 }
 

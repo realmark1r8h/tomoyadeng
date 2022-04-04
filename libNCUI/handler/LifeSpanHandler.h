@@ -39,6 +39,7 @@ namespace amo {
                                    bool* no_javascript_access) {
             return false;
         }
+        
 #else
         virtual bool OnBeforePopup(CefRefPtr<CefBrowser> browser,
                                    CefRefPtr<CefFrame> frame,

@@ -188,9 +188,15 @@ namespace amo {
         
         CefRefPtr<URLRequestClient> pClient = new URLRequestClient();
         CefRefPtr<CefURLRequest> pURLRequest;
+#if CHROME_VERSION_BUILD >= 2357
         pURLRequest = CefURLRequest::Create(pRequest,
                                             pClient,
                                             CefRequestContext::GetGlobalContext());
+#else
+        pURLRequest = CefURLRequest::Create(pRequest,
+                                            pClient);
+#endif
+                                            
         using MGR = TransferMappingMgr < URLRequestTransfer >;
         std::shared_ptr<URLRequestTransfer>  pTransfer;
         pTransfer = MGR::getInstance()->toTransfer(pURLRequest);

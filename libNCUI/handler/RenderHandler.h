@@ -60,13 +60,12 @@ namespace amo {
                              int height) {
         }
         
-#if CHROME_VERSION_BUILD >= 2272
-        virtual void OnCursorChange(CefRefPtr<CefBrowser> browser,
-                                    CefCursorHandle cursor,
-                                    CefRenderHandler::CursorType type,
-                                    const CefCursorInfo& custom_cursor_info) {
-        }
         
+        
+        virtual void UpdateDragCursor(CefRefPtr<CefBrowser> browser,
+                                      CefRenderHandler::DragOperation operation) {
+                                      
+        }
         
         virtual bool StartDragging(CefRefPtr<CefBrowser> browser,
                                    CefRefPtr<CefDragData> drag_data,
@@ -76,22 +75,35 @@ namespace amo {
             return false;
         }
         
-        virtual void UpdateDragCursor(CefRefPtr<CefBrowser> browser,
-                                      CefRenderHandler::DragOperation operation) {
-                                      
-        }
+#if CHROME_VERSION_BUILD >= 2357
         virtual void OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser,
                                            double x,
                                            double y) {
         }
         
 #else
+        virtual void OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser) {
+        }
+#endif
+        
+#if CHROME_VERSION_BUILD >= 2272
+        
+        virtual void OnCursorChange(CefRefPtr<CefBrowser> browser,
+                                    CefCursorHandle cursor,
+                                    CefRenderHandler::CursorType type,
+                                    const CefCursorInfo& custom_cursor_info) {
+        }
+        
+        
+#else
+        
+        
+        
         virtual void OnCursorChange(CefRefPtr<CefBrowser> browser,
                                     CefCursorHandle cursor) {
         }
         
-        virtual void OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser) {
-        }
+        
 #endif
         
         
@@ -245,8 +257,26 @@ namespace amo {
                              int height);
                              
                              
+        virtual bool StartDragging(CefRefPtr<CefBrowser> browser,
+                                   CefRefPtr<CefDragData> drag_data,
+                                   DragOperationsMask allowed_ops,
+                                   int x,
+                                   int y);
+                                   
+        virtual void UpdateDragCursor(CefRefPtr<CefBrowser> browser,
+                                      DragOperation operation);
+                                      
+#if CHROME_VERSION_BUILD >= 2357
+        virtual void OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser,
+                                           double x,
+                                           double y) override;
+#else
+        virtual void OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser);
+#endif
+                                           
+                                           
 #if CHROME_VERSION_BUILD >= 2272
-                             
+                                           
         /*!
          * @fn	virtual void RenderHandler::OnCursorChange(
          * 		CefRefPtr<CefBrowser> browser,
@@ -269,25 +299,14 @@ namespace amo {
                                     const CefCursorInfo& custom_cursor_info);
                                     
                                     
-        virtual bool StartDragging(CefRefPtr<CefBrowser> browser,
-                                   CefRefPtr<CefDragData> drag_data,
-                                   DragOperationsMask allowed_ops,
-                                   int x,
-                                   int y);
-                                   
-        virtual void UpdateDragCursor(CefRefPtr<CefBrowser> browser,
-                                      DragOperation operation);
-                                      
-        virtual void OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser,
-                                           double x,
-                                           double y) override;
+                                    
 #else
         virtual void OnCursorChange(CefRefPtr<CefBrowser> browser,
                                     CefCursorHandle cursor);
-                                           
-        virtual void OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser);
+                                    
+                                    
 #endif
-                                           
+                                    
         IMPLEMENT_REFCOUNTING(RenderHandler);
         
     };

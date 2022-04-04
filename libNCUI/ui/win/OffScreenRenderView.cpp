@@ -631,7 +631,7 @@ namespace amo {
         float scaled_val = static_cast<float>(value) / device_scale_factor;
         return static_cast<int>(std::floor(scaled_val));
     }
-    
+#if CHROME_VERSION_BUILD >= 2357
     void OffScreenRenderView::OnCursorChange(CefRefPtr<CefBrowser> browser,
             CefCursorHandle cursor,
             CefRenderHandler::CursorType type,
@@ -644,6 +644,20 @@ namespace amo {
                         static_cast<LONG>(reinterpret_cast<LONG_PTR>(cursor)));
         SetCursor(cursor);
     }
+#else
+    void OffScreenRenderView::OnCursorChange(CefRefPtr<CefBrowser> browser, CefCursorHandle cursor) {
+        if (!::IsWindow(m_hWnd)) {
+            return;
+        }
+    
+        SetClassLongPtr(m_hWnd, GCLP_HCURSOR,
+                        static_cast<LONG>(reinterpret_cast<LONG_PTR>(cursor)));
+        SetCursor(cursor);
+    }
+#endif
+    
+    
+    
     
     bool OffScreenRenderView::StartDragging(CefRefPtr<CefBrowser> browser,
                                             CefRefPtr<CefDragData> drag_data,

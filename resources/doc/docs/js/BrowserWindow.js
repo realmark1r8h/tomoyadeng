@@ -1,5 +1,5 @@
-includes('EventEmitter', 'BrowserWindow', 'app', 'dynamic', 'Menu');
-
+//includes('EventEmitter', 'BrowserWindow', 'app', 'dynamic', 'Menu');
+includes('EventEmitter', 'BrowserWindow', 'app', 'Menu');
 function foo1(val) {
 	console.log(val);
 	return val;
@@ -302,7 +302,7 @@ function foo3(val) {
 			app.exit();
 		});
 		$('#external').click(function() {
-			alert(dynamic.foo1());
+//			alert(dynamic.foo1());
 		});
 		$('#fullscreen').click(function() {
 			win.setFullScreen(true);

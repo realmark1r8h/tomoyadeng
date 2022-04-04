@@ -368,6 +368,8 @@ namespace amo {
         }
         
     };
+    
+#if CHROME_VERSION_BUILD >= 2357
     bool BrowserWindowManager::OnBeforePopup(CefRefPtr<CefBrowser> browser,
             CefRefPtr<CefFrame> frame,
             const CefString& target_url,
@@ -407,6 +409,43 @@ namespace amo {
 #endif
         return true;
     }
+#else
+    bool BrowserWindowManager::OnBeforePopup(CefRefPtr<CefBrowser> browser,
+            CefRefPtr<CefFrame> frame,
+            const CefString& target_url,
+            const CefString& target_frame_name,
+            const CefPopupFeatures& popupFeatures,
+            CefWindowInfo& windowInfo,
+            CefRefPtr<CefClient>& client,
+            CefBrowserSettings& settings,
+            bool* no_javascript_access) {
+        CEF_REQUIRE_IO_THREAD();														//运行在IO线程上
+        $clog(amo::cdevel << func_orient
+              << amo::string(target_url.ToString(), true).str()
+              << amo::endl;);
+    
+        std::shared_ptr<BrowserWindowSettings> pBrowserSettings;
+        pBrowserSettings.reset(new BrowserWindowSettings());
+        IPCMessage::SmartType msg(new IPCMessage());
+        msg->getArgumentList()->setValue(0, target_url.ToString());
+        auto pTransfer = ClassTransfer::getUniqueTransfer<BrowserWindowTransfer>();
+        amo::json defaultSettings = pTransfer->getBrowserWindowSettings(msg);
+        pBrowserSettings->updateArgsSettings(defaultSettings.to_string());
+        pBrowserSettings->url = (target_url.ToString());
+    
+        // 在UI线程上创建窗口
+    
+        CefPostTask(TID_UI, NewCefRunnableMethod(m_pWindowCreator.get(),
+                    &BrowserWindowCreator::createBrowserWindow,
+                    pBrowserSettings));
+    
+        return true;
+    }
+    
+#endif
+    
+    
+    
     
     void BrowserWindowManager::closeAllWindow(bool bFroce) {
         CEF_REQUIRE_UI_THREAD();

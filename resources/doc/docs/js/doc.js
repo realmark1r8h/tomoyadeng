@@ -14963,7 +14963,7 @@ require('./polyfill-done.js');
                 $search.removeClass('with-query-text');
             } else {
                 // query('#help');
-                openSection(['resource', 'help']);
+//              openSection(['resource', 'help']);
                 $(this).blur();
             }
             stopPropagation(e);

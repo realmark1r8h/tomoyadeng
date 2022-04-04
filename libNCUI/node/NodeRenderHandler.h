@@ -49,14 +49,6 @@ namespace amo {
                              const void* buffer,
                              int width,
                              int height) override;
-                             
-#if CHROME_VERSION_BUILD >= 2272
-        virtual void OnCursorChange(CefRefPtr<CefBrowser> browser,
-                                    CefCursorHandle cursor,
-                                    CefRenderHandler::CursorType type,
-                                    const CefCursorInfo& custom_cursor_info) override;
-                                    
-                                    
         virtual bool StartDragging(CefRefPtr<CefBrowser> browser,
                                    CefRefPtr<CefDragData> drag_data,
                                    CefRenderHandler::DragOperationsMask allowed_ops,
@@ -67,19 +59,36 @@ namespace amo {
         virtual void UpdateDragCursor(CefRefPtr<CefBrowser> browser,
                                       CefRenderHandler::DragOperation operation) override;
                                       
+#if CHROME_VERSION_BUILD >= 2357
+                                      
+                                      
                                       
         virtual void OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser,
                                            double x,
                                            double y) override;
                                            
 #else
-        virtual void OnCursorChange(CefRefPtr<CefBrowser> browser,
-                                    CefCursorHandle cursor) override;
                                            
                                            
         virtual void OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser) override;
 #endif
                                            
+#if CHROME_VERSION_BUILD >= 2272
+        virtual void OnCursorChange(CefRefPtr<CefBrowser> browser,
+                                    CefCursorHandle cursor,
+                                    CefRenderHandler::CursorType type,
+                                    const CefCursorInfo& custom_cursor_info) override;
+                                    
+                                    
+                                    
+                                    
+#else
+        virtual void OnCursorChange(CefRefPtr<CefBrowser> browser,
+                                    CefCursorHandle cursor) override;
+                                    
+                                    
+#endif
+                                    
     private:
         std::shared_ptr<NodeHandlerHelper>& m_pHelper;
     };

@@ -17,7 +17,7 @@
                 <Control />
 				<Button name="cancelbtn" width="76" height="34" text="cancel" align="center" textcolor="#ff373777" font="2"  bkcolor="#FFFFFFFF" dragable="false"  bordersize="1" bordercolor="#ff373777" inset="1,1,1,1" />
 				<Control width="10"  />
-                 <Button name="okbtn" width="76" height="34" text="ok" align="center"  textcolor="#FFFFFFFF"  bkcolor="#ff373777"  dragable="false"  />
+                 <Button name="okbtn" width="76" height="34" text="ok" align="center"  textcolor="#FFFFFFFF"  bkcolor="#ff3280fc"  dragable="false"  />
                 <Control width="10" />
             </HorizontalLayout>
             <HorizontalLayout height="10" />
