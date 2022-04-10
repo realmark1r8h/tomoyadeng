@@ -95,13 +95,15 @@ namespace amo {
     public:
         typedef std::set<MessageRouterBrowserSide::Handler*> MessageHandlerSet;
         
-        
-    public:
-    
+        static bool SingleProcessMode(bool single_instance = false);
     public:
         ClientHandler();
         
         virtual ~ClientHandler();
+        
+        static void createPipeClient(IPCMessage::SmartType msg);
+        
+        static  Any createPipeClientImpl(IPCMessage::SmartType msg);
         
         virtual CefRefPtr<CefContextMenuHandler> GetContextMenuHandler();
         virtual CefRefPtr<CefDialogHandler> GetDialogHandler();

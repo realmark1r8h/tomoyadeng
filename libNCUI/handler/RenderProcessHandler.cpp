@@ -66,7 +66,7 @@ namespace amo {
                                               
             m_browserSettingsMap[browser->GetIdentifier()] = pSettings;
             return true;
-        }
+        } 
         
         
         bool handled = false;
@@ -479,12 +479,11 @@ namespace amo {
             AMO_TIMER_ELAPSED();
             
             CefRefPtr<CefBrowser> pBrowser = GetAnyBrowser();
+            std::shared_ptr<RenderMessageEmitter> runner;
+            runner.reset(new RenderMessageEmitter(browser->GetMainFrame()));
+            runner->setValue(IPCArgsPosInfo::TransferName, "ipcMain");
             
             if (!pBrowser) {
-                std::shared_ptr<RenderMessageEmitter> runner;
-                runner.reset(new RenderMessageEmitter(browser->GetMainFrame()));
-                runner->setValue(IPCArgsPosInfo::TransferName, "ipcMain");
-                
                 //MessageBoxA(NULL, __FUNCTION__, __FUNCTION__, MB_OK);
                 //MessageBoxA(NULL, str.str().c_str(), __FUNCTION__, MB_OK);
                 int nBrowserID = browser->GetIdentifier();
@@ -497,9 +496,9 @@ namespace amo {
                 afterCreatePipe(browser, pExchanger, ret);
                 AMO_TIMER_ELAPSED();
             } else {
-                std::shared_ptr<RenderMessageEmitter> runner;
-                runner.reset(new RenderMessageEmitter(pBrowser->GetMainFrame()));
-                runner->setValue(IPCArgsPosInfo::TransferName, "ipcMain");
+                /* std::shared_ptr<RenderMessageEmitter> runner;
+                 runner.reset(new RenderMessageEmitter(pBrowser->GetMainFrame()));
+                 runner->setValue(IPCArgsPosInfo::TransferName, "ipcMain");*/
                 // 在单独的线程中连接管道
                 // 不知什么原因，std::async不能创建线程
                 /*    std::async(std::launch::async,
@@ -509,17 +508,39 @@ namespace amo {
                 						 pExchanger));*/
                 int nBrowserID = browser->GetIdentifier();
                 
-                std::thread th(std::bind(&RenderProcessHandler::createPipe,
-                                         this,
-                                         nBrowserID,
-                                         pExchanger));
-                                         
-                                         
-                Any ret =  runner->syncExecute("createPipeClient",
-                                               str.str(),
-                                               nBrowserID);
-                th.join();
-                afterCreatePipe(browser, pExchanger, ret);
+                // 再死锁,就只能两个进程都放到单独的线程里进行管道连接
+                //
+                if (ClientHandler::SingleProcessMode()) {
+                    auto emitter = RenderMessageEmitter(pBrowser->GetMainFrame());
+                    emitter.createIPCMessage("createPipeClient", MSG_NATIVE_EXECUTE, str.str(),
+                                             nBrowserID);
+                                             
+                    ClientHandler::createPipeClient(emitter.getIPCMessage());
+                    createPipe(browser->GetIdentifier(), pExchanger);
+                    AMO_TIMER_ELAPSED();
+                    Any ret;
+                    afterCreatePipe(browser, pExchanger, ret);
+                } else {
+                    //MessageBoxA(NULL, "8888", "", MB_OK);
+                    //// 从进程模式下可以发送同步消息创建管道,这里可以永远调用不到
+                    //std::thread th(std::bind(&RenderProcessHandler::createPipe,
+                    //                         this,
+                    //                         nBrowserID,
+                    //                         pExchanger));
+                    
+                    //Any ret;
+                    runner->execute("createPipeClient",
+                                    str.str(),
+                                    nBrowserID);
+                                    
+                    createPipe(browser->GetIdentifier(), pExchanger);
+                    AMO_TIMER_ELAPSED();
+                    Any ret;
+                    afterCreatePipe(browser, pExchanger, ret);
+                }
+                
+                
+                
             }
         }
         

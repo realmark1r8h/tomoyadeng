@@ -417,6 +417,8 @@ namespace amo {
         auto manager = BrowserWindowManager::getInstance();
         manager->init();
         auto pAppSettings = getDefaultAppSettings();
+        ClientHandler::SingleProcessMode(pAppSettings->single_process);
+        
         //
         bool bNeedQuit = needQuitWithOutNode();
         AMO_TIMER_ELAPSED();

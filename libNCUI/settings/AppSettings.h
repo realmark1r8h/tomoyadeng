@@ -21,6 +21,7 @@ namespace amo {
         
     private:
         void initDefaultCefSettings();
+        
         void initDefaultAppSettings();
         
         amo::string getCachePath();

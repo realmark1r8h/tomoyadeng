@@ -567,67 +567,68 @@ namespace amo {
     }
     
     Any WebkitView::createPipeClient(IPCMessage::SmartType msg) {
-    
-        $clog(amo::cdevel << func_orient << "95271" << amo::endl;);
-        
-        std::shared_ptr<amo::pipe<amo::pipe_type::server> >
-        pBrowserPipeServer;			//消息管道主进程服务端
-        std::shared_ptr<amo::pipe<amo::pipe_type::client> >
-        pRenderPipeClient;			//消息管道主进程客户端
-        
-        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        std::string strPipeClientName = RendererPipePrefix + (std::string)
-                                        args->getString(0);
-        $clog(amo::cdevel << func_orient << "连接管道：" << strPipeClientName <<
-              amo::endl;);
-        std::string strPipeServerName = BrowserPipePrefix + (std::string)
-                                        args->getString(0);
-        pRenderPipeClient.reset(new amo::pipe<amo::pipe_type::client>
-                                (strPipeClientName));
-        pBrowserPipeServer.reset(new amo::pipe<amo::pipe_type::server>
-                                 (strPipeServerName, DefaultPipeSize));
-        bool bOK = pRenderPipeClient->connect();
-        
-        int nBrowserID = args->getInt(1);
-        
-        $clog(amo::cdevel << func_orient << "管道连接" << (bOK ? "成功" :
-                "失败") << amo::endl;);
-                
-        bOK = pBrowserPipeServer->connect();
-        $clog(amo::cdevel << func_orient << "主进程管道服务连接" <<
-              (bOK ? "成功" : "失败") << amo::endl;);
-              
-        ClientHandler::AddExchanger(nBrowserID);
-        std::shared_ptr<ProcessExchanger>
-        pBrowserProcessExchanger;					//消息管道数据交换类
-        pBrowserProcessExchanger =
-            BrowserProcessExchangerManager::getInstance()->findExchanger(nBrowserID);
-        assert(pBrowserProcessExchanger);
-        
-        
-        
-        pBrowserProcessExchanger->setPipeClient(pRenderPipeClient);
-        pBrowserProcessExchanger->setPipeServer(pBrowserPipeServer);
-        pBrowserProcessExchanger->setBrowserID(nBrowserID);
-        
-        
-        BrowserTempInfo info = ClientHandler::GetBrowserInfoFromTempByID(nBrowserID);
-        
-        pBrowserProcessExchanger->setProcessSyncMessageCallback(info.m_fnExec);
-        
-        
-        auto manager = BrowserTransferMgr::getInstance();
-        amo::json arr = manager->getTransferMap(nBrowserID).toJson();
-        int nPipeID = args->getInt(IPCArgsPosInfo::BrowserID);
-        
-        if (nPipeID == nBrowserID) {
-            ClientHandler::RegisterBrowser(info.pBrowser);
-            // 两个ID相同，那么说明是渲染进程的第一个Browser,没有同步调用
-            BrowserProcessExchangerManager::getInstance()->exchange(nPipeID, arr);
-            return Undefined();
-        } else {
-            return arr;
-        }
+        return ClientHandler::createPipeClientImpl(msg);
+        //
+        //$clog(amo::cdevel << func_orient << "95271" << amo::endl;);
+        //
+        //std::shared_ptr<amo::pipe<amo::pipe_type::server> >
+        //pBrowserPipeServer;			//消息管道主进程服务端
+        //std::shared_ptr<amo::pipe<amo::pipe_type::client> >
+        //pRenderPipeClient;			//消息管道主进程客户端
+        //
+        //std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        //std::string strPipeClientName = RendererPipePrefix + (std::string)
+        //                                args->getString(0);
+        //$clog(amo::cdevel << func_orient << "连接管道：" << strPipeClientName <<
+        //      amo::endl;);
+        //std::string strPipeServerName = BrowserPipePrefix + (std::string)
+        //                                args->getString(0);
+        //pRenderPipeClient.reset(new amo::pipe<amo::pipe_type::client>
+        //                        (strPipeClientName));
+        //pBrowserPipeServer.reset(new amo::pipe<amo::pipe_type::server>
+        //                         (strPipeServerName, DefaultPipeSize));
+        //bool bOK = pRenderPipeClient->connect();
+        //
+        //int nBrowserID = args->getInt(1);
+        //
+        //$clog(amo::cdevel << func_orient << "管道连接" << (bOK ? "成功" :
+        //        "失败") << amo::endl;);
+        //
+        //bOK = pBrowserPipeServer->connect();
+        //$clog(amo::cdevel << func_orient << "主进程管道服务连接" <<
+        //      (bOK ? "成功" : "失败") << amo::endl;);
+        //
+        //ClientHandler::AddExchanger(nBrowserID);
+        //std::shared_ptr<ProcessExchanger>
+        //pBrowserProcessExchanger;					//消息管道数据交换类
+        //pBrowserProcessExchanger =
+        //    BrowserProcessExchangerManager::getInstance()->findExchanger(nBrowserID);
+        //assert(pBrowserProcessExchanger);
+        //
+        //
+        //
+        //pBrowserProcessExchanger->setPipeClient(pRenderPipeClient);
+        //pBrowserProcessExchanger->setPipeServer(pBrowserPipeServer);
+        //pBrowserProcessExchanger->setBrowserID(nBrowserID);
+        //
+        //
+        //BrowserTempInfo info = ClientHandler::GetBrowserInfoFromTempByID(nBrowserID);
+        //
+        //pBrowserProcessExchanger->setProcessSyncMessageCallback(info.m_fnExec);
+        //
+        //
+        //auto manager = BrowserTransferMgr::getInstance();
+        //amo::json arr = manager->getTransferMap(nBrowserID).toJson();
+        //int nPipeID = args->getInt(IPCArgsPosInfo::BrowserID);
+        //
+        //if (nPipeID == nBrowserID) {
+        //    ClientHandler::RegisterBrowser(info.pBrowser);
+        //    // 两个ID相同，那么说明是渲染进程的第一个Browser,没有同步调用
+        //    BrowserProcessExchangerManager::getInstance()->exchange(nPipeID, arr);
+        //    return Undefined();
+        //} else {
+        //    return arr;
+        //}
     }
     
     Any WebkitView::repaint(IPCMessage::SmartType msg) {
