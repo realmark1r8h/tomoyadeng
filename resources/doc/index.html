@@ -70,8 +70,10 @@
 							<button id="searchHelpBtn" type="button" class="btn btn-link no-drag"><i class="icon icon-question"></i></button>
 						</div>
 					</div>
-				 
+				
 					<div class="flex-item-6 flex-right " style="width: 128px;">
+						 
+				        
 						<input type="button" class="minbtn no-drag" />
 						<input type="button" class="maxbtn no-drag" />
 						<input type="button" class="restorebtn no-drag hidden" />
@@ -127,8 +129,8 @@
 
 		<!-- 新开子页面 -->
 		<div id="page">
-			<div id="pageHeader" class="hidden" style="background: #3280FC;">
-				<div class="wrapper container drag" style="max-width: none; margin: 0;">
+			<div id="pageHeader" class="" style="background: none;">
+				<div class="wrapper container no-drag" style="max-width: none; margin: 0;">
 					<i class="icon icon-star"></i>
 					<h2><a class="name" href="###">图标</a></h2>
 					<button type="button" class="btn btn-link no-drag" id="pageTogger" title="折叠/展开 章节" data-toggle="tooltip"></button>
@@ -136,7 +138,7 @@
 					<button data-toggle="tooltip" title="关闭（ESC）" type="button" style="width:40px; height: 40px; top: 10px;" class="btn btn-link path-close-btn path-btn no-drag" id="pageCloseBtn"><i class="path-1"></i></button>
 				</div>
 			</div>
-			<div id="pageBody" class="scrollbar-hover">
+			<div id="pageBody" class="scrollbar-hover" style="top: 60px;">
 				<div class="loader" id="pageLoader">
 					<i class="icon icon-spin icon-spinner-indicator"></i>
 					<span class="loading-text">加载中...</span>
