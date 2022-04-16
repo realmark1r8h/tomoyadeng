@@ -13,6 +13,12 @@
 
 namespace amo {
 
+    /*!
+     * @class	BrowserWindow
+     * @chapter api
+     * @brief	浏览器窗口创建及控制.
+     */
+    
     class BrowserWindowTransfer
         : public ClassTransfer
         , public virtual NativeWindowProxy
