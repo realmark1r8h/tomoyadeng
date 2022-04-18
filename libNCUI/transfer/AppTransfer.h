@@ -12,6 +12,13 @@
 
 namespace amo {
 
+    /*!
+     * @class	app
+     *
+     * @brief	控制程序程序的生命周期，并提供一些与程序相关的功能.<br>
+     * 			工作线程：**UI线程**。
+     */
+    
     class AppTransfer
         : public ClassTransfer
         , public amo::singleton<AppTransfer> {
@@ -20,6 +27,7 @@ namespace amo {
         AppTransfer();
         
         /*!
+         * @ignore
          * @fn	void AppTransfer::initUrlMapping(amo::json& json);
          *
          * @brief	将配置文件中的设置添加到MAP中.
@@ -29,8 +37,44 @@ namespace amo {
         
         void initUrlMapping(amo::json& json);
         
+        /*!
+         * @fn	Any AppTransfer::getConfig(IPCMessage::SmartType msg);
+         *
+         * @brief	获取应用程序的所有配置参数.
+         *
+         * @return	#JsonObject 所有配置参数.
+         */
+        
+        
+        /*!
+        * @fn	Any AppTransfer::getConfig(IPCMessage::SmartType msg);
+        *
+        * @brief	获取应用程序的指定配置参数.
+        *
+        * @param	#String 需要获取的字段名称.
+        *
+        * @return	返回字段名所对应的配置参数。返回类型视配置参数类型而定，为JS所支持的基本数据类型.
+        */
+        
         
         Any getConfig(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	Any AppTransfer::setConfig(IPCMessage::SmartType msg);
+         *
+         * @brief	设置应用程序配置参数.该函数并不要求一定要输入所支持的参数，
+         * 			你也可以设置自定义参数，并在getConfig里面获取所设置的值.
+         *
+         * @param	#JsonObject 需要设置的参数，该值为一个JSON对象.
+         *
+         * @return	无.
+         *
+         * @example
+        			```app.setConfig({
+        				   debugMode: true,
+        				   custom: 'custom'
+        			   });```
+         */
         
         Any setConfig(IPCMessage::SmartType msg);
         
@@ -39,9 +83,9 @@ namespace amo {
          *
          * @brief	将一个路径转为绝对路径如：%web%.
          *
-         * @param	msg	The message.
+         * @param	#String 需要转换的路径.
          *
-         * @return	msg as Any.
+         * @return	#String 转换后的绝对路径.
          */
         
         Any toAbsolutePath(IPCMessage::SmartType msg);
@@ -49,11 +93,10 @@ namespace amo {
         /*!
          * @fn	Any AppTransfer::quit(IPCMessage::SmartType msg);
          *
-         * @brief	尝试退出程序，可以被取消.
+         * @brief	尝试退出程序，可以用户被取消（如window.unload函数）.
          *
-         * @param	msg	The message.
          *
-         * @return	Any.
+         * @return	无.
          */
         
         Any quit(IPCMessage::SmartType msg);
@@ -63,9 +106,8 @@ namespace amo {
          *
          * @brief	强制退出程序.
          *
-         * @param	msg	The message.
          *
-         * @return	Any.
+         * @return	无.
          */
         
         Any exit(IPCMessage::SmartType msg);
@@ -73,11 +115,13 @@ namespace amo {
         /*!
          * @fn	Any AppTransfer::urlToNativePath(IPCMessage::SmartType msg);
          *
-         * @brief	这几个函数可能会被IO线程和UI线程同时调用，所以要加锁.
+         * @brief	将一个URL转换为本地路径，
+         * 			这几个函数可能会被IO线程和UI线程同时调用，所以要加锁.
          *
-         * @param	msg	The message.
+         * @param	#String 需要转换的URL.
+         * @param	#Boolean=false 是否要求所映射的文件存在 .
          *
-         * @return	Any.
+         * @return	#String 转换后的路径，如果当前所给的URL没有与之映射的本地路径，将返回该URL.
          */
         
         Any urlToNativePath(IPCMessage::SmartType msg); //IO
@@ -87,9 +131,11 @@ namespace amo {
          *
          * @brief	添加URL映射路径.
          *
-         * @param	msg	The message.
+         * @param	#String 需要添加映射的URL.
          *
-         * @return	Any.
+         * @param   #String 被映射的本地文件路径，该路径可以是一个普通的文件或文件夹，也可以是ZIP压缩包或SQLITE数据库.
+         *
+         * @return	#Boolean 成为返回true, 失败返回false.
          */
         
         Any addUrlMapping(IPCMessage::SmartType msg);	// UI
@@ -99,14 +145,15 @@ namespace amo {
          *
          * @brief	移除URL映射路径.
          *
-         * @param	msg	The message.
+         * @param	#String 需要移除的URL.
          *
-         * @return	Any.
+         * @return	无.
          */
         
         Any removeUrlMapping(IPCMessage::SmartType msg); //UI
         
         /*!
+         * @ignore
          * @fn	Any AppTransfer::setDragClassName(IPCMessage::SmartType msg);
          *
          * @brief	设置可拖动窗口控件Class名.
@@ -119,6 +166,7 @@ namespace amo {
         Any setDragClassName(IPCMessage::SmartType msg);
         
         /*!
+         * @ignore
          * @fn	Any AppTransfer::setNoDragClassName(IPCMessage::SmartType msg);
          *
          * @brief	设置不可手动窗口控件Class名.
@@ -131,6 +179,7 @@ namespace amo {
         Any setNoDragClassName(IPCMessage::SmartType msg);
         
         /*!
+         * @ignore
          * @fn	Any AppTransfer::setGlobal(IPCMessage::SmartType msg);
          *
          * @brief	设置全局数据.
@@ -143,6 +192,8 @@ namespace amo {
         Any setGlobal(IPCMessage::SmartType msg);
         
         /*!
+         * @ignore
+         *
          * @fn	Any AppTransfer::getGlobal(IPCMessage::SmartType msg);
          *
          * @brief	获取全局数据.
@@ -159,9 +210,7 @@ namespace amo {
          *
          * @brief	获取是否开机启动.
          *
-         * @param	msg	The message.
-         *
-         * @return	The automatic run.
+         * @return	#Boolean .
          */
         
         Any getAutoRun(IPCMessage::SmartType msg);
@@ -171,9 +220,9 @@ namespace amo {
          *
          * @brief	设置是否开机启动.
          *
-         * @param	msg	The message.
+         * @param	#Boolean=false true开机启动，fase取消开机启动.
          *
-         * @return	Any.
+         * @return	无.
          */
         
         Any setAutoRun(IPCMessage::SmartType msg);
@@ -181,37 +230,35 @@ namespace amo {
         /**
          * @fn	Any AppTransfer::duration(IPCMessage::SmartType msg);
          *
-         * @brief	当前程序运行时间.
+         * @brief	当前程序从启动到现在的运行时间(毫秒).
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	#Int.
          */
         
         Any elapsed(IPCMessage::SmartType msg);
-        /**
-         * @fn	bool AppTransfer::restart(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	Any AppTransfer::restart(IPCMessage::SmartType msg);
          *
          * @brief	重启当前程序.
          *
-         * @param	msg	The message.
+         * @param	#Int=0 重启延时(秒)，当前程序会立即关闭，新的程序会在延时时间到达后启动.
          *
-         * @return	true if it succeeds, false if it fails.
+         * @return	#Boolean 生成返回true, 失败返回false.
          */
         
-        bool restart(IPCMessage::SmartType msg);
+        Any restart(IPCMessage::SmartType msg);
         
         /**
          * @fn	bool AppTransfer::destroy(IPCMessage::SmartType msg);
          *
-         * @brief	销毁当前程序，（删除自身可执行程序）
+         * @brief	销毁当前程序，(从磁盘上删除当前可执行程序).
          *
-         * @param	msg	The Message to destroy.
          *
-         * @return	True if it succeeds, false if it fails.
+         * @return	无.
          */
         
-        bool destroy(IPCMessage::SmartType msg);
+        Any destroy(IPCMessage::SmartType msg);
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(AppTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getConfig, TransferFuncStatic | TransferExecSync)
