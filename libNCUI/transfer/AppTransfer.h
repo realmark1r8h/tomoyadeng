@@ -54,6 +54,8 @@ namespace amo {
         * @param	#String 需要获取的字段名称.
         *
         * @return	返回字段名所对应的配置参数。返回类型视配置参数类型而定，为JS所支持的基本数据类型.
+        *
+        * @see app.setConfig
         */
         
         
@@ -63,11 +65,13 @@ namespace amo {
          * @fn	Any AppTransfer::setConfig(IPCMessage::SmartType msg);
          *
          * @brief	设置应用程序配置参数.该函数并不要求一定要输入所支持的参数，
-         * 			你也可以设置自定义参数，并在getConfig里面获取所设置的值.
+         * 			你也可以设置自定义参数，并在getConfig里面获取所设置的值与{@link app.getConfig}相对应.
          *
          * @param	#JsonObject 需要设置的参数，该值为一个JSON对象.
          *
          * @return	无.
+         *
+         * @see app.getConfig
          *
          * @example
         			```app.setConfig({
@@ -121,7 +125,8 @@ namespace amo {
          * @param	#String 需要转换的URL.
          * @param	#Boolean=false 是否要求所映射的文件存在 .
          *
-         * @return	#String 转换后的路径，如果当前所给的URL没有与之映射的本地路径，将返回该URL.
+         * @return	#String 转换后的路径，如果当前所给的URL没有与之映射的本地路径，
+         * 			将返回该URL.
          */
         
         Any urlToNativePath(IPCMessage::SmartType msg); //IO
@@ -133,7 +138,8 @@ namespace amo {
          *
          * @param	#String 需要添加映射的URL.
          *
-         * @param   #String 被映射的本地文件路径，该路径可以是一个普通的文件或文件夹，也可以是ZIP压缩包或SQLITE数据库.
+         * @param   #String 被映射的本地文件路径，该路径可以是一个普通的文件或文件夹，
+         * 					也可以是ZIP压缩包或SQLITE数据库.
          *
          * @return	#Boolean 成为返回true, 失败返回false.
          */
