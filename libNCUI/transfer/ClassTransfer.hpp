@@ -17,7 +17,7 @@
 
 namespace amo {
     /*!
-     * @class	ClassTransfer
+     * @class	Object
      *
      * @brief	js 类 对应的C++类基类.
      */
@@ -143,6 +143,8 @@ namespace amo {
          * 		static std::shared_ptr<T>
          * 		 ClassTransfer::createTransfer(Args ... args)
          *
+         * @ignore
+         *
          * @brief	创建一个新的Transfer并注册Transfer的函数.
          *
          * @tparam	T   	Generic type parameter.
@@ -166,6 +168,8 @@ namespace amo {
         /*!
          * @fn	template<typename T>
          * 		static std::shared_ptr<T> ClassTransfer::getUniqueTransfer()
+         *
+         * @ignore
          *
          * @brief	创建一个单件类，用来实例化其他对象，
          * 			 所有能调用些函数的Transfer都必须继承自Transfer和singleton.
@@ -202,6 +206,8 @@ namespace amo {
         /*!
          * @fn	static std::shared_ptr<ClassTransfer> ClassTransfer::findTransfer(const int64_t& nID)
          *
+         * @ignore
+         *
          * @brief	通过ID查找 Transfer
          *
          * @param	nID	Transfer ID.
@@ -228,6 +234,8 @@ namespace amo {
         /**
          * @fn	static std::shared_ptr<ClassTransfer>
          * 		ClassTransfer::findTransfer(const std::string& strObjectName)
+         *
+         * @ignore
          *
          * @brief	通过对象的名称查找Transfer,返回第一个成功匹配的Transfer.
          *
@@ -258,6 +266,8 @@ namespace amo {
         /**
          * @fn	static std::vector<std::shared_ptr<ClassTransfer> >
          * 		 ClassTransfer::findAllTransfer( const std::string& strObjectName)
+         *
+         * @ignore
          *
          * @brief	通过对象的名称查找Transfer,返回所有成功匹配的Transfer..
          *
@@ -310,6 +320,8 @@ namespace amo {
         /**
          * @fn	static std::vector<std::shared_ptr<ClassTransfer> > ClassTransfer::findObjectTransferByClassName(const std::string& strClassName)
          *
+         * @ignore
+         *
          * @brief	通过类名查找对象.
          *
          * @param	strClassName	Name of the class.
@@ -350,6 +362,8 @@ namespace amo {
         /*!
          * @fn	static void ClassTransfer::addTransfer(std::shared_ptr<ClassTransfer> transfer)
          *
+         * @ignore
+         *
          * @brief	添加一个Transfer到管理器中.
          *
          * @param	transfer	The transfer.
@@ -368,6 +382,8 @@ namespace amo {
         
         /*!
          * @fn	static void ClassTransfer::removeTransfer(const int64_t& nID)
+         *
+         * @ignore
          *
          * @brief	通过ID移除一个管理器中的Transfer.
          *
@@ -484,6 +500,8 @@ namespace amo {
         /*!
          * @fn	virtual TransferType ClassTransfer::transferType()
          *
+         *@ignore
+         *
          * @brief	获取Transfer类型 .
          *
          * @return	A TransferType.
@@ -494,6 +512,8 @@ namespace amo {
         
         /*!
          * @fn	virtual void ClassTransfer::registerFunction()
+         *
+         * @ignore
          *
          * @brief	注册JS函数.
          */
@@ -547,6 +567,8 @@ namespace amo {
         /*!
          * @fn	virtual Any ClassTransfer::onCreateClass(IPCMessage::SmartType msg)
          *
+         * @ignore
+         *
          * @brief	继承 此函数 创建类对象.
          *
          * @param	msg	The message.
@@ -578,6 +600,8 @@ namespace amo {
         /**
          * @fn	virtual void ClassTransfer::onBeforeRelease()
          *
+         * @ignore
+         *
          * @brief	释放资源.
          */
         
@@ -596,6 +620,14 @@ namespace amo {
             return;
         }
         
+        /**
+         * @fn	virtual Any CLASS(IPCMessage::SmartType msg)
+         *
+         * @brief	获取当前类所对象的对象，调用该对象的函数将会作用到类上面去.
+         *
+         * @return	#Object 类所对象的CLASS对象.
+         */
+        
         virtual Any onGetClassObject(IPCMessage::SmartType msg) {
             std::string strObjectName = "CLASS.";
             strObjectName += transferName();
@@ -608,6 +640,18 @@ namespace amo {
             return Nil();
         }
         
+        /**
+         * @fn	virtual Any fromObjectName(IPCMessage::SmartType msg)
+         *
+         * @brief	通过对象名称查找对象.
+         *
+         * @param	#String 对象名称.
+         *
+         * @return	#Object 如果对象存在，返回该对象; 如果不存在，返回Undefined.
+         *
+         * @see fromObjectID=Object.fromObjectID
+         */
+        
         virtual Any onFromObjectName(IPCMessage::SmartType msg) {
             std::string objectName = msg->getArgumentList()->getString(0);
             auto transfer = findTransfer(objectName);
@@ -618,6 +662,28 @@ namespace amo {
             
             return transfer->getFuncMgr().toSimplifiedJson();
         }
+        
+        /**
+         * @fn	virtual Any fromObjectID(IPCMessage::SmartType msg)
+         *
+         * @brief	通过对象ID查找对象.
+         *
+         * @param	#Int 对象ID.
+         *
+         * @return	#Object 如果对象存在，返回该对象; 如果不存在，返回Undefined.
+         */
+        
+        /**
+        * @fn	virtual Any fromObjectID(IPCMessage::SmartType msg)
+        *
+        * @brief	通过对象ID查找对象.
+        *
+        * @param	#String 对象ID.
+        *
+        * @return	#Object 如果对象存在，返回该对象; 如果不存在，返回Undefined.
+        *
+        * @see	fromObjectName=Object.fromObjectName
+        */
         
         virtual Any onFromObjectID(IPCMessage::SmartType msg) {
             Any& val = msg->getArgumentList()->getValue(0);
@@ -649,24 +715,43 @@ namespace amo {
             return Undefined();
         }
         
+        /**
+         * @fn	virtual Any setObjectName(IPCMessage::SmartType msg)
+         *
+         * @brief	设置当前对象名称.
+         *
+         * @param	#String 对象名称.
+         *
+         * @return	无.
+         */
+        
         virtual Any onSetObjectName(IPCMessage::SmartType msg) {
             std::string strName = msg->getArgumentList()->getString(0);
             this->setObjectName(strName);
             return Undefined();
         }
         
+        /**
+         * @fn	virtual Any onGetObjectName(IPCMessage::SmartType msg)
+         *
+         * @brief	获取当前对象名称.
+         *
+         *
+         * @return	#String 对象名称.
+         */
+        
         virtual Any onGetObjectName(IPCMessage::SmartType msg) {
             return this->getObjectName();
         }
         
         /**
-         * @fn	virtual Any ClassTransfer::onNotify(IPCMessage::SmartType msg)
+         * @fn	virtual Any ClassTransfer::notify(IPCMessage::SmartType msg)
          *
          * @brief	向自己发送一个通知，可以监听这个通知得到返回结果(当transfer在单独的线程上执行时，可以通过自己定义消息来监听执行进度).
          *
-         * @param	msg	The message.
+         * @param	#Object 任务Javascript所支持的基本类型（Int Double String JsonObject Array）.
          *
-         * @return	Any.
+         * @return	无.
          */
         
         virtual Any onNotify(IPCMessage::SmartType msg) {
@@ -683,6 +768,14 @@ namespace amo {
             triggerEvent(info);
             return Undefined();
         }
+        
+        /**
+         * @fn	virtual Any relase(IPCMessage::SmartType msg) override
+         *
+         * @brief	释放当前对象所对应的C++对象，该函数调用后页面上对应的对象将无法使用
+         *
+         * @return	无.
+         */
         
         virtual Any onRelase(IPCMessage::SmartType msg) override {
         
@@ -701,6 +794,26 @@ namespace amo {
             return Undefined();
         }
         
+        
+        /*!
+        * @fn	Any AppTransfer::getUserData(IPCMessage::SmartType msg);
+        *
+        * @brief	获取用户保存的自定义数据.
+        *
+        * @return	#JsonObject 所有配置参数.
+        */
+        
+        /*!
+        * @fn	Any AppTransfer::getUserData(IPCMessage::SmartType msg);
+        *
+        * @brief	根据输入字段返回用户保存的自定义数据.
+        *
+        * @param	#String 需要获取的字段名称.
+        *
+        * @return	返回字段名所对应的数据。返回类型视配置参数类型而定，为JS所支持的基本数据类型.
+        *
+        * @see setUserData=Object.setUserData
+        */
         
         virtual Any OnGetUserData(IPCMessage::SmartType msg) {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
@@ -737,6 +850,21 @@ namespace amo {
             return Undefined();
         }
         
+        /*!
+        * @fn	Any AppTransfer::setUserData(IPCMessage::SmartType msg);
+        *
+        * @brief	保存自定义数据.该函数并不要求一定要输入所支持的参数，
+        * 			你也可以设置自定义参数，并在getUserData里面获取所设置的值与{@link getUserData=Object.getUserData}相对应.
+        *
+        * @param	#JsonObject 需要设置的参数，该值为一个JSON对象.
+        *
+        * @return	无.
+        *
+        * @see getUserData=Object.getUserData
+        *
+        */
+        
+        
         virtual Any OnSetUserData(IPCMessage::SmartType msg) {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             
@@ -758,13 +886,12 @@ namespace amo {
         }
         
         /**
-         * @fn	virtual Any OnGetAll(IPCMessage::SmartType msg)
+         * @fn	virtual Any All(IPCMessage::SmartType msg)
          *
          * @brief	获取当前类的所有对象.
          *
-         * @param	msg	The message.
          *
-         * @return	Any.
+         * @return	#Array 包含当前类的所有对象.
          */
         
         virtual Any OnGetAll(IPCMessage::SmartType msg) {
@@ -781,6 +908,8 @@ namespace amo {
         /*!
          * @fn	virtual Any ClassTransfer::onMessageTransfer(
          * 		IPCMessage::SmartType message) override
+         *
+         * @ignore
          *
          * @brief	执行消息.
          *

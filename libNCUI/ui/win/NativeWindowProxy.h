@@ -16,11 +16,15 @@ namespace amo {
     /*!
      * @class	NativeWindowSettings
      *
+     * @unexport
+     *
      * @brief	A native window settings.
      */
     class NativeWindowSettings;
     /*!
      * @class	NativeWindowProxy
+     *
+     * @unexport
      *
      * @brief	A native window proxy.
      */
