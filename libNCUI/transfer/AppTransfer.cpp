@@ -260,7 +260,7 @@ namespace amo {
         return amo::timer::now() - appSettings->startTime;
     }
     
-    bool AppTransfer::restart(IPCMessage::SmartType msg) {
+    Any AppTransfer::restart(IPCMessage::SmartType msg) {
         int nDelay = msg->getArgumentList()->getInt(0);
         amo::app app;
         bool bOk =  app.restart(nDelay);
@@ -268,7 +268,7 @@ namespace amo {
         return bOk;
     }
     
-    bool AppTransfer::destroy(IPCMessage::SmartType msg) {
+    Any AppTransfer::destroy(IPCMessage::SmartType msg) {
         std::shared_ptr<amo::shell> shell(new amo::shell("cmd.exe"));
         shell->addArgs("/c ping 127.0.0.1 -n ");
         shell->addArgs(amo::string::from_number(1).c_str());
