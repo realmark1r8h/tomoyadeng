@@ -125,11 +125,6 @@ namespace amo {
         /*! @var	#String noDragClassName	禁止窗口元素类名. */
         std::string noDragClassName;
         
-        
-        /*! @brief	当前用户的应用数据文件夹，默认对应：.
-        % APPDATA % Windows 中
-        $XDG_CONFIG_HOME or ~ / .config Linux 中
-        ~ / Library / Application Support macOS 中 */
         /*! @var	#String=%APPDATA% appDataDir 当前用户的应用数据文件夹. */
         std::string appDataDir;
         

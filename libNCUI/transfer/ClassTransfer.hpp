@@ -19,7 +19,10 @@ namespace amo {
     /*!
      * @class	Object
      *
-     * @brief	js 类 对应的C++类基类.
+     * @chapter api
+     *
+     * @brief	所有JS扩展对象所对应的C++类基类；该类不能被直接使用,
+     * 			需要编写C++扩展时继承该类，并映射成JS类使用.
      */
     class ClassTransfer
         : public Transfer {
@@ -621,7 +624,7 @@ namespace amo {
         }
         
         /**
-         * @fn	virtual Any CLASS(IPCMessage::SmartType msg)
+         * @fn	static Any CLASS(IPCMessage::SmartType msg)
          *
          * @brief	获取当前类所对象的对象，调用该对象的函数将会作用到类上面去.
          *
@@ -641,7 +644,7 @@ namespace amo {
         }
         
         /**
-         * @fn	virtual Any fromObjectName(IPCMessage::SmartType msg)
+         * @fn	static Any fromObjectName(IPCMessage::SmartType msg)
          *
          * @brief	通过对象名称查找对象.
          *
@@ -664,7 +667,7 @@ namespace amo {
         }
         
         /**
-         * @fn	virtual Any fromObjectID(IPCMessage::SmartType msg)
+         * @fn	static Any fromObjectID(IPCMessage::SmartType msg)
          *
          * @brief	通过对象ID查找对象.
          *
@@ -674,7 +677,7 @@ namespace amo {
          */
         
         /**
-        * @fn	virtual Any fromObjectID(IPCMessage::SmartType msg)
+        * @fn  static Any fromObjectID(IPCMessage::SmartType msg)
         *
         * @brief	通过对象ID查找对象.
         *
@@ -732,7 +735,7 @@ namespace amo {
         }
         
         /**
-         * @fn	virtual Any onGetObjectName(IPCMessage::SmartType msg)
+         * @fn	virtual Any getObjectName(IPCMessage::SmartType msg)
          *
          * @brief	获取当前对象名称.
          *
