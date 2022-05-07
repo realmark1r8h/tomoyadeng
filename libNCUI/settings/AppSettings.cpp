@@ -131,7 +131,7 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(documents, getSpecialFolder(CSIDL_MYDOCUMENTS));
         
         
-        DEFAULT_ARGS_SETTINGS(startTime, amo::timer::now());
+        DEFAULT_ARGS_SETTINGS(startTime, (int64_t)amo::timer::now());
         DEFAULT_ARGS_SETTINGS(debugMode, true);
         
         

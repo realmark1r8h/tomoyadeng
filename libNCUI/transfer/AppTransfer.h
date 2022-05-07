@@ -14,7 +14,9 @@ namespace amo {
 
     /*!
      * @class	app
+     *
      * @extend  Object
+     *
      * @brief	控制程序程序的生命周期，并提供一些与程序相关的功能.<br>
      * 			工作线程：**UI线程**。
      */
@@ -41,7 +43,7 @@ namespace amo {
         /*!
          * @fn	static Any AppTransfer::getConfig(IPCMessage::SmartType msg);
          *
-         * @brief	获取应用程序的所有配置参数.
+         * @brief	获取应用程序的所有配置参数,可获取的内容见{@link 启动参数=启动参数}.
          *
          * @return	#JsonObject 所有配置参数.
          */
@@ -57,6 +59,16 @@ namespace amo {
         * @return	返回字段名所对应的配置参数。返回类型视配置参数类型而定，为JS所支持的基本数据类型.
         *
         * @see setConfig=app.setConfig
+        * @example
+        			```
+        				//获取应用程序的所有配置参数
+        				var config = app.getConfig();
+        				console.log(config);
+        
+        				//获取应用程序的指定配置参数
+        				var single_process = app.getConfig('single_process');
+        				console.log('单进程模式：' + single_process);
+        			```
         */
         
         
@@ -75,10 +87,13 @@ namespace amo {
          * @see getConfig=app.getConfig
          *
          * @example
-        			```app.setConfig({
-        				   debugMode: true,
-        				   custom: 'custom'
-        			   });```
+        			```
+        			app.setConfig({
+        				debugMode: true,
+        				custom: 'custom'
+        			});
+        
+        			```
          */
         
         Any setConfig(IPCMessage::SmartType msg);

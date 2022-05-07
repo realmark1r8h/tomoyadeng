@@ -12,14 +12,18 @@
 namespace amo {
 
     /*!
-     * @class AppSettings
+     * @class 启动参数
+     *
+     * @id AppSettings
+     *
+     * @desc 启动参数
      *
      * @chapter settings
      *
-     * @brief	An application settings.
+     * @brief	应用程序启动参数，这些参数大部分不可更改，且只在程序启动前设置才能生效.<br>
+     * 			如果使用NodeJS可以在JS代码里面调用{@link app.setConfig}设置启动参数;<br>
+     * 			如果未使用NodeJS可以通过程序目录下的manifest.json文件达到同样的效果.
      *
-     * @sa	CefSettings
-     * @sa	BasicSettings
      */
     
     class AppSettings : public CefSettings, public BasicSettings {
@@ -59,76 +63,85 @@ namespace amo {
         std::string getSpecialFolder(int nType);
     public:
     
-        /*! @var	#String manifest	是否允许外部配置文件. manifest.json 里面的内容Ansi编码， 不能用Utf8, 程序会将编码转换为UTF8 */
+    
+        /*! @var	#String=%appDir%locales locales  语言文件所在目录*/
+        /*! @var	#Boolean=true single_process  是否使用单进程模式，如果程序比较复杂，应该尽量使用多进程模式*/
+        /*! @var	#String=%appDir% resources_dir_path  资源文件所在目录*/
+        /*! @var	#String cache_path  CEF缓存文件所在目录*/
+        /*! @var	#String=zh-CN locale  CEF语言环境*/
+        
+        
+        
+        /*! @var	#Boolean=true manifest	是否允许外部配置文件manifest.json；如果要使用，该文件必须与应用程序所在目录相同且只能使用Ansi编码， 不能用Utf8, 程序会将编码转换为UTF8 */
         bool manifest;
         
-        /*! @var	#String appID	程序唯一ID. */
+        /*! @var	#String=783a02fd-b493-45ad-aa7f-ddbefeec1122 appID	程序唯一ID，默认为NCUI的程序ID. 其他程序应该修改该值，否则会影响单例模式的使用（appID相同的程序会被判定为同一个程序程序）. */
         std::string appID;
         
-        /*! @var	#String singleInstance	单例模式. */
+        /*! @var	#Boolean=false singleInstance	单例模式,该模式下只允许一个实例运行，如果尝试启动多个程序将不会成功 */
         bool singleInstance;
         
-        /*! @var	#String showSplash	是否显示启动画面. */
+        /*! @var	#Boolean=false showSplash	是否显示启动画面.如果需要启动画面，需要修改配置参数{@link 启动画面} */
         bool showSplash;
         
-        /*! @var	#String useNode	是否使用NODEJS. */
+        /*! @var	#Boolean=false useNode	是否使用NodeJs. */
         bool useNode;
-        /*! @var	#String useNodeProcess	是否在单独的进程中使用NODEJS. */
+        
+        /*! @var	#Boolean=false useNodeProcess 是否在单独的进程中使用NodeJs.当useNode=true时该字段生效，如果在单独的进程中使用NodeJs,那么NCUI和Node将会在不同地进程运行，并通过通道进行消息同步 */
         bool useNodeProcess;
         
-        /** @var	#String ipcTimeout	进程通信的超时时间，如果超过这个时间没有得到返回结果，该消息将被丢弃。可以用来解决部分死锁问题。默认为0（永不超时）. */
-        uint64_t ipcTimeout;
+        /** @var	#Int=0 ipcTimeout	进程通信的超时时间，如果超过这个时间没有得到返回结果，该消息将被丢弃。可以用来解决部分死锁问题。默认为0（永不超时）. */
+        int64_t ipcTimeout;
         
-        /*! @var	#String main	main.js 文件位置. */
+        /*! @var	#String=main.js main	NodeJs所要调用的JS文件所在位置. useNode为true 时，该值有效 */
         std::string main;
         
-        /*! @var	#String debugNode	是否允许调试NODEJS. */
+        /*! @var	#Boolean=false debugNode 是否允许调试NodeJs.如果未在单进行上运行Node时要调试NodeJs 需要使用NCUI-DEV.exe,即必须在命令行模式下运行NCUI(会相对于正常的图形界面多出一个命令行窗口) */
         bool debugNode;
         
-        /*! @var	#String appPath	程序完整路径. */
+        /*! @var	#String appPath 程序在磁盘上的完整路径. */
         std::string appPath;
         
         /*! @var	#String appDir	程序所在目录. */
         std::string appDir;
         
-        /*! @var	#String appName	程序名称. */
+        /*! @var	#String appName	程序名称，不包含目录，不包含扩展名. */
         std::string appName;
         
-        /*! @var	#String skinDir	Duilib skin 目录. */
+        /*! @var	#String=%appDir%skin skinDir	Duilib skin 目录. */
         std::string skinDir;
         
-        /*! @var	#String workDir	工作目录,默认与程序所有目录相同. */
+        /*! @var	#String=%appDir% workDir	工作目录,默认与程序所有目录相同. */
         std::string workDir;
         
-        /*! @var	#String webDir	html 源代码目录. */
+        /*! @var	#String=%appDir%web webDir	html 源代码目录. */
         std::string webDir;
         
-        
-        /*! @var	#String homeDir	储存你应用程序设置文件的文件夹，默认是 appDataDir 文件夹附加应用的名称. */
+        /*! @var	#String homeDir	储存应用程序设置文件的文件夹，默认是 appDataDir 文件夹附加应用的名称. */
         std::string homeDir;
         
-        /*! @var	#String downloadsDir 用户下载目录的路径. */
+        /*! @var	#String=%homeDir%downloads downloadsDir 用户下载目录的路径. */
         std::string downloadsDir;
         
-        /*! @var	#String musicsDir	用户音乐目录的路径. */
+        /*! @var	#String=%homeDir%musics musicsDir	用户音乐目录的路径. */
         std::string musicsDir;
         
-        /*! @var	#String picturesDir	用户图片目录的路径. */
+        /*! @var	#String=%homeDir%pictures picturesDir	用户图片目录的路径. */
         std::string picturesDir;
         
-        /*! @var	#String videosDir	用户视频目录的路径. */
+        /*! @var	#String=%homeDir%videos videosDir	用户视频目录的路径. */
         std::string videosDir;
         
-        /*! @var	#String dragClassName	拖拽移动窗口的元素类名. */
+        /*! @var	#String=drag dragClassName	拖拽移动窗口的元素类名. */
         std::string dragClassName;
         
-        /*! @var	#String noDragClassName	禁止窗口元素类名. */
+        /*! @var	#String=no-drag noDragClassName	禁止窗口元素类名. */
         std::string noDragClassName;
         
         /*! @var	#String=%APPDATA% appDataDir 当前用户的应用数据文件夹. */
         std::string appDataDir;
         
-        /*!@var #String temp	临时文件夹. */
+        /*!@var #String=%TEMP% temp	临时文件夹. */
         std::string temp;
         
         /*! @var #String module  库目录. */
@@ -141,10 +154,9 @@ namespace amo {
         std::string documents;
         
         /*!
-         * @var #Int startTime  启动时间.
+         * @var #Int startTime  启动时间（本地时间戳ms）.
          */
         int64_t startTime;
-        
         
         /*!
          * @var #Boolean=false debugMode 是否以调试模式运行,默认false.该模式下F12可以打开调试窗口，F5可以刷新页面

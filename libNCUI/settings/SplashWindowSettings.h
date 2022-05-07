@@ -5,6 +5,17 @@
 #define AMO_SPLASHWINDOWSETTINGS_H__
 #include "settings/NativeWindowSettings.h"
 namespace amo {
+
+    /*!
+     * @class Æô¶¯»­Ãæ
+     *
+     * @id	SplashWindowSettings
+     *
+     * @chapter settings
+     *
+     * @brief	A splash window settings.
+     */
+    
     class SplashWindowSettings
         : public NativeWindowSettings {
     public:
