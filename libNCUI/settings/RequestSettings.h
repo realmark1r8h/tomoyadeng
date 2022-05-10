@@ -11,12 +11,26 @@
 #include "settings/BasicSettings.h"
 
 namespace amo {
+
+    /**
+     * @class	HTTP请求参数
+     *
+     * @id RequestSettings
+     *
+     * @chapter settings
+     *
+     * @brief	手动HTTP请求时需要用到的参数.
+     *
+     */
+    
     class RequestSettings : public BasicSettings {
     public:
         RequestSettings();
         
         /*!
          * @fn	void RequestSettings::InitDefaultRequestSettings();
+         *
+         * @ignore
          *
          * @brief	Init default request settings.
          */
@@ -28,17 +42,20 @@ namespace amo {
         std::vector<std::pair<std::string, std::string> > getHeaderMap();
         std::vector<amo::string> getFiles();
     public:
-        /*! @brief	type. */
+    
+        /*! @var #String=GET type HTPP请求类型，POST 或者 GET */
         std::string type;
-        /*! @brief	url. */
+        
+        /*! @var #String	url HTTP请求地址. */
         std::string url;
-        /*! @brief	数据. */
+        
+        /*! @var #JsonObject data	要发送的数据. */
         amo::json data;
         
-        /** @brief	头. */
+        /** @var #JsonObject header	HTTP请求的头部参数. */
         amo::json header;
         
-        /** @brief	要上传的文件. */
+        /** @var #Array files 	要上传的文件列表，文件以字符串表示. */
         amo::json files;
     };
 }

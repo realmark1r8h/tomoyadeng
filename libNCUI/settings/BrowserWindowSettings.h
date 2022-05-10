@@ -1,4 +1,4 @@
-ï»¿// Created by amoylel on 06/09/2017.
+// Created by amoylel on 06/09/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_BROWSERSETTINGS_H__
@@ -9,8 +9,18 @@
 
 namespace amo {
 
-
-
+    /**
+     * @class	ä¯ÀÀÆ÷´°¿Ú²ÎÊı
+     *
+     * @id settingsBrowserWindowSettings
+     *
+     * @brief	´´½¨ä¯ÀÀÆ÷´°¿ÚÊ±¿ÉÓÃµÄÊôĞÔ.
+     *
+     * @chapter settings
+     *
+     * @copy NativeWindowSettings
+     */
+    
     class BrowserWindowSettings
         : public NativeWindowSettings
         , public CefBrowserSettings {
@@ -20,15 +30,15 @@ namespace amo {
         
         /*!
          * @fn	void BrowserWindowSettings::InitDefaultCefBrowserSettings();
-         *
+         * @ignore
          * @brief	Init default cef browser settings.
          */
         
-        void initDefaultCefBrowserSettings();  // æµè§ˆå™¨é»˜è®¤å‚æ•°
+        void initDefaultCefBrowserSettings();  // ä¯ÀÀÆ÷Ä¬ÈÏ²ÎÊı
         
         /*!
          * @fn	void BrowserWindowSettings::InitDefaultBrowserSettings();
-         *
+         * @ignore
          * @brief	Init default browser settings.
          */
         
@@ -37,9 +47,10 @@ namespace amo {
         virtual void afterUpdateArgsSettings() override;
         
     public:
-        /*! @brief	å½“å‰çª—å£æ˜¯å¦ä¸ºä¸»çª—å£ï¼Œä¸»çª—å£åªèƒ½æœ‰ä¸€ä¸ªï¼Œå¦‚æœè®¾ç½®ä¸ºä¸»çª—å£å°†å–æ¶ˆä¹‹å‰çš„ä¸»çª—å£è®¾å®š. */
+        /*! @var #Boolean=false main µ±Ç°´°¿ÚÊÇ·ñÎªÖ÷´°¿Ú.Ö÷´°¿ÚÖ»ÄÜÓĞÒ»¸ö£¬Èç¹ûÉèÖÃÎªÖ÷´°¿Ú½«È¡ÏûÖ®Ç°µÄÖ÷´°¿ÚÉè¶¨. */
         bool main;
-        /** @brief	æ˜¯å¦å…è®¸é¡µé¢åˆ·æ–°. é»˜è®¤false */
+        
+        /** @var #Boolean=false relad	ÊÇ·ñÔÊĞíÒ³ÃæË¢ĞÂ. Ä¬ÈÏfalse */
         bool reload;
         
     };

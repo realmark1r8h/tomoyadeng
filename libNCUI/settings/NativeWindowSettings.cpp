@@ -31,8 +31,8 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(x, 0);
         DEFAULT_ARGS_SETTINGS(y, 0);
         
-        DEFAULT_ARGS_SETTINGS(width, 960);
-        DEFAULT_ARGS_SETTINGS(height, 650);
+        DEFAULT_ARGS_SETTINGS(width, 1280);
+        DEFAULT_ARGS_SETTINGS(height, 720);
         DEFAULT_ARGS_SETTINGS(minWidth, 0);
         DEFAULT_ARGS_SETTINGS(minHeight, 0);
         DEFAULT_ARGS_SETTINGS(maxWidth, 0);

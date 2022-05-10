@@ -13,7 +13,7 @@ namespace amo {
      *
      * @chapter settings
      *
-     * @brief	A splash window settings.
+     * @brief	启动画面相关参数.
      */
     
     class SplashWindowSettings
@@ -26,7 +26,9 @@ namespace amo {
         /*!
         * @fn	void BrowserWindowSettings::InitDefaultBrowserSettings();
         *
-        * @brief	Init default browser settings.
+        * @ignore
+        *
+        * @brief	初始化默认启动画面参数.
         */
         
         void initDefaultSplashSettings();
@@ -34,13 +36,13 @@ namespace amo {
         virtual void afterUpdateArgsSettings() override;
         
     public:
-        /*! @brief	启动窗口显示图片. */
+        /*! @var #String image 启动窗口显示图片. */
         std::string image;
         
-        /*! @brief	显示时间， ms如果为0，表示不自动关闭. */
+        /*! @var #Int=0 duration	 显示时间， ms如果为0，表示不自动关闭. */
         int duration;
         
-        /*! @brief	关闭动画持续时间. */
+        /*! @var #Int=1000 fadeout 关闭动画持续时间ms. */
         int fadeout;
         
     };

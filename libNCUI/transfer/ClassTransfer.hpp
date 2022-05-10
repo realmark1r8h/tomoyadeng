@@ -624,7 +624,7 @@ namespace amo {
         }
         
         /**
-         * @fn	static Any CLASS(IPCMessage::SmartType msg)
+         * @fn	static constexpr property single Any CLASS(IPCMessage::SmartType msg)
          *
          * @brief	获取当前类所对象的对象，调用该对象的函数将会作用到类上面去.
          *
