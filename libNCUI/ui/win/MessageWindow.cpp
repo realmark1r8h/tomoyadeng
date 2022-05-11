@@ -46,7 +46,7 @@ namespace amo {
         msgBox->setType(uType);
         msgBox->setText(lpText);
         msgBox->SetIcon(uIcon);
-        msgBox->CenterWindow();
+        ////msgBox->CenterWindow();
         msgBox->setTopmost(true);
         boxs.insert(std::pair<HWND, int64_t>(pMainWnd, (int64_t)msgBox));
         UINT uRet = msgBox->ShowModal();
@@ -101,6 +101,7 @@ namespace amo {
         m_pLabelText = NULL;
         m_pEditPrompt = NULL;
         m_pStrPrompt = NULL;
+        m_pLabelCaption = NULL;
     }
     
     MessageWindow::~MessageWindow() {
@@ -155,6 +156,63 @@ namespace amo {
         return 0;
     }
     
+    void MessageWindow::SetCenterWindow() {
+        ASSERT(::IsWindow(m_hWnd));
+        ASSERT((GetWindowStyle(m_hWnd)&WS_CHILD) == 0);
+        RECT rcDlg = { 0 };
+        ::GetWindowRect(m_hWnd, &rcDlg);
+        RECT rcArea = { 0 };
+        RECT rcCenter = { 0 };
+        HWND hWnd = *this;
+        HWND hWndParent = ::GetParent(m_hWnd);
+        HWND hWndCenter = ::GetWindowOwner(m_hWnd);
+        
+        if (hWndCenter != NULL) {
+            hWnd = hWndCenter;
+        }
+        
+        // 处理多显示器模式下屏幕居中
+        MONITORINFO oMonitor = {};
+        oMonitor.cbSize = sizeof(oMonitor);
+        ::GetMonitorInfo(::MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST), &oMonitor);
+        rcArea = oMonitor.rcWork;
+        
+        if (hWndCenter == NULL || IsIconic(hWndCenter)) {
+            rcCenter = rcArea;
+        } else {
+            ::GetWindowRect(hWndCenter, &rcCenter);
+        }
+        
+        int DlgWidth = rcDlg.right - rcDlg.left;
+        int DlgHeight = rcDlg.bottom - rcDlg.top;
+        
+        // Find dialog's upper left based on rcCenter
+        int xLeft = (rcCenter.left + rcCenter.right) / 2 - DlgWidth / 2;
+        int yTop = (rcCenter.top + rcCenter.bottom) / 2 - DlgHeight / 2;
+        
+        int top = rcCenter.top + (rcCenter.bottom - rcCenter.top) * 2 / 7;
+        
+        if (yTop > top) {
+            yTop = top;
+        }
+        
+        // The dialog is outside the screen, move it inside
+        if (xLeft < rcArea.left) {
+            xLeft = rcArea.left;
+        } else if (xLeft + DlgWidth > rcArea.right) {
+            xLeft = rcArea.right - DlgWidth;
+        }
+        
+        if (yTop < rcArea.top) {
+            yTop = rcArea.top;
+        } else if (yTop + DlgHeight > rcArea.bottom) {
+            yTop = rcArea.bottom - DlgHeight;
+        }
+        
+        
+        ::SetWindowPos(m_hWnd, NULL, xLeft, yTop, -1, -1, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
+    }
+    
     LRESULT MessageWindow::ResponseDefaultKeyEvent(WPARAM wParam) {
         if (wParam == VK_RETURN) {
             Close(IDOK);
@@ -173,14 +231,27 @@ namespace amo {
         m_pButtonCancel = static_cast<CButtonUI*>(pm.FindControl(_T("cancelbtn")));
         m_pLabelText = static_cast<CLabelUI*>(pm.FindControl(_T("text")));
         m_pEditPrompt = static_cast<CEditUI*>(pm.FindControl(_T("prompt_edit")));
+        m_pLabelCaption  = static_cast<CLabelUI*>(pm.FindControl(_T("caption")));
         ASSERT(m_pButtonOK != NULL);
         ASSERT(m_pButtonCancel != NULL);
         ASSERT(m_pLabelText != NULL);
         ASSERT(m_pEditPrompt != NULL);
+        ASSERT(m_pLabelCaption != NULL);
+        
         m_pButtonOK->SetText(_T("确定"));
+        m_pButtonOK->SetHotBkColor(0xff0A67FB);
         m_pButtonCancel->SetText(_T("取消"));
         
+        m_pButtonCancel->SetHotBkColor(0xff3280fc);
+        m_pButtonCancel->SetHotTextColor(0xffffffff);
+        m_pButtonCancel->SetPushedTextColor(0xff3280fc);
         
+        /*    m_pLabelCaption->SetText(_T("dddddddddddddd"));
+            m_pLabelCaption->SetTextColor(0xffffffff);
+            m_pLabelCaption->SetAttribute(_T("height"), _T("40"));
+            m_pLabelCaption->SetBorderSize(2);
+            m_pLabelCaption->SetBorderColor(0xff339931);
+            */
         int nCorner = m_pNativeSettings->roundcorner;
         RECT rcHoleOffset = { nCorner, nCorner, nCorner, nCorner };
         
@@ -194,7 +265,7 @@ namespace amo {
         m_Shadow.Create(&m_PaintManager);
         m_Shadow.Show(m_pNativeSettings->hasShadow);
         
-        CenterWindow();
+        SetCenterWindow();
     }
     
     
@@ -266,8 +337,7 @@ namespace amo {
             = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("caption")));
             
         if (pCaptionControl != NULL) {
-            //pCaption_control->SetText(lpCaption);
-            pCaptionControl->SetText(_T(""));
+            pCaptionControl->SetText(lpCaption);
         }
     }
     
@@ -301,6 +371,10 @@ namespace amo {
     
     void MessageWindow::setPrompt(CDuiString* prompt) {
         m_pStrPrompt = prompt;
+        
+        if (m_pLabelText != NULL) {
+            m_pLabelText->SetVisible(false);
+        }
         
         if (m_pEditPrompt != NULL && m_pStrPrompt != NULL) {
             m_pEditPrompt->SetVisible(true);

@@ -525,6 +525,15 @@ namespace amo {
             
             amo::string strSkin(m_pAppSettings->skinDir, true);
             CPaintManagerUI::SetResourcePath(strSkin.to_unicode().c_str());
+            
+            if (getDefaultAppSettings()->clearCache) {
+            
+                amo::string cachePath(CefString(getDefaultAppSettings()->cache_path.str).ToString(), true);
+                amo::path(cachePath).remove_all();
+            }
+            
+            // É¾³ý»º´æ
+            
         }
         
         AMO_TIMER_ELAPSED();

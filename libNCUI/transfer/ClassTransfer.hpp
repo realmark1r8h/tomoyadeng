@@ -624,7 +624,9 @@ namespace amo {
         }
         
         /**
-         * @fn	static constexpr property single Any CLASS(IPCMessage::SmartType msg)
+         * @fn	static constexpr property deprecated single Any CLASS(IPCMessage::SmartType msg)
+         *
+         * @tag static const property  single
          *
          * @brief	获取当前类所对象的对象，调用该对象的函数将会作用到类上面去.
          *
@@ -645,6 +647,8 @@ namespace amo {
         
         /**
          * @fn	static Any fromObjectName(IPCMessage::SmartType msg)
+         *
+         * @tag static single sync
          *
          * @brief	通过对象名称查找对象.
          *
@@ -668,6 +672,8 @@ namespace amo {
         
         /**
          * @fn	static Any fromObjectID(IPCMessage::SmartType msg)
+         *
+         * @tag static single sync
          *
          * @brief	通过对象ID查找对象.
          *
@@ -721,6 +727,8 @@ namespace amo {
         /**
          * @fn	virtual Any setObjectName(IPCMessage::SmartType msg)
          *
+         * 	@tag static
+         *
          * @brief	设置当前对象名称.
          *
          * @param	#String 对象名称.
@@ -736,6 +744,8 @@ namespace amo {
         
         /**
          * @fn	virtual Any getObjectName(IPCMessage::SmartType msg)
+         *
+         * 	@tag  single sync
          *
          * @brief	获取当前对象名称.
          *
@@ -774,7 +784,7 @@ namespace amo {
         
         /**
          * @fn	virtual Any relase(IPCMessage::SmartType msg) override
-         *
+         * @tag single
          * @brief	释放当前对象所对应的C++对象，该函数调用后页面上对应的对象将无法使用
          *
          * @return	无.
@@ -800,6 +810,8 @@ namespace amo {
         
         /*!
         * @fn	Any AppTransfer::getUserData(IPCMessage::SmartType msg);
+        *
+        * @tag single sync
         *
         * @brief	获取用户保存的自定义数据.
         *
@@ -855,7 +867,7 @@ namespace amo {
         
         /*!
         * @fn	Any AppTransfer::setUserData(IPCMessage::SmartType msg);
-        *
+        * @tag single
         * @brief	保存自定义数据.该函数并不要求一定要输入所支持的参数，
         * 			你也可以设置自定义参数，并在getUserData里面获取所设置的值与{@link getUserData=Object.getUserData}相对应.
         *
@@ -890,7 +902,7 @@ namespace amo {
         
         /**
          * @fn	virtual Any All(IPCMessage::SmartType msg)
-         *
+         * @tag single static sync
          * @brief	获取当前类的所有对象.
          *
          *

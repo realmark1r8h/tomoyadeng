@@ -803,6 +803,7 @@ namespace amo {
         CDuiString strPromptText = default_prompt_text.c_str();
         
         if (dialog_type == JSDIALOGTYPE_ALERT) { //alert
+            strOriginUrl = "提示";
             uRet = MessageWindow::Show(::GetParent(m_hBrowserWnd),
                                        strMessageText.to_unicode().c_str(),
                                        strOriginUrl.to_unicode().c_str());
@@ -810,6 +811,7 @@ namespace amo {
                                amo::string(strPromptText.GetData()).to_utf8());
             return true;
         } else if (dialog_type == JSDIALOGTYPE_CONFIRM) { //confirm
+            strOriginUrl = "询问";
             uRet = MessageWindow::Show(::GetParent(m_hBrowserWnd),
                                        strMessageText.to_unicode().c_str(),
                                        strOriginUrl.to_unicode().c_str(),
@@ -818,6 +820,7 @@ namespace amo {
                                amo::string(strPromptText.GetData()).to_utf8());
             return true;
         } else if (dialog_type == JSDIALOGTYPE_PROMPT) { //prompt
+            strOriginUrl = strMessageText;
             uRet = MessageWindow::ShowPrompt(::GetParent(m_hBrowserWnd),
                                              strMessageText.to_unicode().c_str(),
                                              &strPromptText,
@@ -854,9 +857,11 @@ namespace amo {
             return false;
         }
         
+        CDuiString strCaption = _T("询问");
+        
         UINT uRet = MessageWindow::Show(::GetParent(m_hBrowserWnd),
                                         message_text.c_str(),
-                                        message_text.c_str(),
+                                        strCaption.GetData(),
                                         MB_OKCANCEL);
         callback->Continue(uRet == 1, message_text.c_str());
         

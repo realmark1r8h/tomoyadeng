@@ -244,6 +244,11 @@ namespace amo {
         return app.isAutoRun();
     }
     
+    Any AppTransfer::isAutoRun(IPCMessage::SmartType msg) {
+        amo::app app;
+        return app.isAutoRun();
+    }
+    
     Any AppTransfer::setAutoRun(IPCMessage::SmartType msg) {
         bool bAutoRun = msg->getArgumentList()->getBool(0);
         amo::app app;
@@ -291,6 +296,7 @@ namespace amo {
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         
         if (val.type() == AnyValueType<Nil>::value) {
+        
             // 返回所有设置
             return appSettings->settings;
             

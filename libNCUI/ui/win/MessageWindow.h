@@ -53,6 +53,10 @@ namespace amo {
                                      WPARAM wParam,
                                      LPARAM lParam,
                                      BOOL& bHandled) override;
+                                     
+                                     
+        void SetCenterWindow();
+        
         /*!
          * @fn	void MessageWindow::setType(UINT uType);
          *
@@ -114,6 +118,8 @@ namespace amo {
         CLabelUI*		m_pLabelText;
         /*! @brief	The string prompt. */
         CDuiString*		m_pStrPrompt;
+        
+        CLabelUI* m_pLabelCaption;
         
         
     };

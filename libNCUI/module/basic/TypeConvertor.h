@@ -197,6 +197,17 @@ namespace amo {
         CefRefPtr<CefV8Value> JsonToObject(amo::json& json);
         
         /*!
+         * @fn	CefRefPtr<CefV8Value> TypeConvertor::Int64ToObject(int64_t nVal);
+         *
+         * @brief	将int64 转换为Object.
+         *
+         * @param	nVal	The value.
+         *
+         * @return	A CefRefPtr&lt;CefV8Value&gt;
+         */
+        
+        CefRefPtr<CefV8Value> Int64ToObject(int64_t nVal);
+        /*!
          * @fn	Any TypeConvertor::toAny(CefRefPtr<CefV8Value> pValue);
          *
          * @brief	将JS类型转换为IPCMessage可用的Any类型.

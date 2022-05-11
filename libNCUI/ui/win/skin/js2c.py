@@ -51,9 +51,9 @@ def ToCArray(filename, lines):
 
     value = ord(chr)
 
-    if value >= 128:
-      print 'non-ascii value ' + filename + ':' + str(row) + ':' + str(col)
-      sys.exit(1);
+    #if value >= 128:
+    #  print 'non-ascii value ' + filename + ':' + str(row) + ':' + str(col)
+    #  sys.exit(1);
 
     result.append(str(value))
   result.append("0")

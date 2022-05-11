@@ -390,10 +390,29 @@ namespace amo {
         pBrowserSettings.reset(new BrowserWindowSettings());
         IPCMessage::SmartType msg(new IPCMessage());
         msg->getArgumentList()->setValue(0, target_url.ToString());
+        msg->getArgumentList()->setValue(1, false);
+        
         auto pTransfer = ClassTransfer::getUniqueTransfer<BrowserWindowTransfer>();
         amo::json defaultSettings = pTransfer->getBrowserWindowSettings(msg);
         pBrowserSettings->updateArgsSettings(defaultSettings.to_string());
-        pBrowserSettings->url = (target_url.ToString());
+        
+        
+        std::shared_ptr<AppTransfer> pAppTransfer;
+        pAppTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
+        Any ret = pAppTransfer->urlToNativePath(msg);
+        
+        std::string u8Url = target_url.ToString();
+        u8Url = ret.As<std::string>();
+        
+        if (u8Url.empty()) {
+            u8Url = target_url.ToString();
+        }
+        
+        amo::path p(amo::string(u8Url, true));
+        p.canonicalize(false);
+        u8Url = amo::string(p.string(), false).to_utf8();
+        
+        pBrowserSettings->url = (u8Url);
         
         // 在UI线程上创建窗口
 #if CHROME_VERSION_BUILD >= 2704
@@ -428,10 +447,28 @@ namespace amo {
         pBrowserSettings.reset(new BrowserWindowSettings());
         IPCMessage::SmartType msg(new IPCMessage());
         msg->getArgumentList()->setValue(0, target_url.ToString());
+        msg->getArgumentList()->setValue(1, false);
         auto pTransfer = ClassTransfer::getUniqueTransfer<BrowserWindowTransfer>();
         amo::json defaultSettings = pTransfer->getBrowserWindowSettings(msg);
         pBrowserSettings->updateArgsSettings(defaultSettings.to_string());
-        pBrowserSettings->url = (target_url.ToString());
+    
+        std::shared_ptr<AppTransfer> pAppTransfer;
+        pAppTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
+        Any ret = pAppTransfer->urlToNativePath(msg);
+    
+        std::string u8Url = target_url.ToString();
+        u8Url = ret.As<std::string>();
+    
+        if (u8Url.empty()) {
+            u8Url = target_url.ToString();
+        }
+    
+        amo::path p(amo::string(u8Url, true));
+        p.canonicalize(false);
+        u8Url = amo::string(p.string(), false).to_utf8();
+    
+        pBrowserSettings->url = (u8Url);
+    
     
         // 在UI线程上创建窗口
     

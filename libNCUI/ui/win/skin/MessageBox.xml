@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Window size="360,200" minsize="360,200" >
-    <VerticalLayout name="background" bkcolor="#fffefefe" dragable="true"   >
+<Window size="350,155" minsize="350,155" roundcorner="5,5">
+	<Font id="0" name="微软雅黑" size="12" bold="true" />
+    <VerticalLayout name="background" bkcolor="#fffefefe" dragable="true" roundcorner="5,5" >
         <HorizontalLayout height="40"   bkcolor="#ff3280fc"  bkcolor2="#ff3280fc">
-            <Label name="caption" text="Tooltips" textcolor="#FF000000" textpadding="5,0,0,0" font="2" autocalcwidth="false"/>
-            <Control />
+            <Label name="caption"  textcolor="#FFFFFFFF" textpadding="10,0,0,0"  align="left" text="提示"/>
+            <Control width="10"/>
             <Button name="closebtn" tooltip="close" height="40" width="40" normalimage="close.png" hotimage="close_p.png" pushedimage="close_p.png" dragable="false" />
         </HorizontalLayout>
         <VerticalLayout name="TextLayout">
             <HorizontalLayout />
-            <VerticalLayout height="80" padding="58,0,40,0" childpadding="0,9,0,0">
-                <Label name="text" textcolor="#ff000000" font="2" align="left" />
-				<Edit name="prompt_edit"  height="33" visible="false" bordercolor="#ffe5e5e5" bordersize="1" focusbordercolor="#ff0a60fe" font="1" dragable="false" />
+            <VerticalLayout height="68" padding="58,0,40,0" childpadding="0,0,0,0">
+			  <HorizontalLayout />
+                <Label name="text" font="0" height="32" textcolor="#ff000000"  align="left" />
+				<Edit name="prompt_edit" height="32"  visible="false" bordercolor="#ff3280fc" bordersize="1" focusbordercolor="#ff0a60fe" font="1" dragable="false" />
+				  <HorizontalLayout />
             </VerticalLayout>
             <HorizontalLayout />
-            <HorizontalLayout height="34">
-                <Control />
-				<Button name="cancelbtn" width="76" height="34" text="cancel" align="center" textcolor="#ff373777" font="2"  bkcolor="#FFFFFFFF" dragable="false"  bordersize="1" bordercolor="#ff373777" inset="1,1,1,1" />
-				<Control width="10"  />
-                 <Button name="okbtn" width="76" height="34" text="ok" align="center"  textcolor="#FFFFFFFF"  bkcolor="#ff3280fc"  dragable="false"  />
-                <Control width="10" />
+            <HorizontalLayout height="32">
+                <Control />  
+				<Button name="okbtn" width="96" height="32" text="ok" align="center"  textcolor="#FFFFFFFF"  bkcolor="#ff3280fc"  dragable="false"  borderround="5,5" /> 
+				<Control width="20"  />
+               	<Button name="cancelbtn" width="96" height="32" text="cancel" align="center" textcolor="#ff3280fc" font="2"  bkcolor="#FFFFFFFF" dragable="false"  bordersize="1" bordercolor="#ff3280fc" inset="1,1,1,1"  borderround="5,5"/>
+                <Control width="" />
             </HorizontalLayout>
-            <HorizontalLayout height="10" />
+            <HorizontalLayout height="15" />
         </VerticalLayout>
     </VerticalLayout>
 </Window>

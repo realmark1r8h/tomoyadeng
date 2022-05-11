@@ -113,9 +113,9 @@ namespace amo {
         
         DEFAULT_ARGS_SETTINGS(homeDir, getUserHomeDir().to_utf8());
         DEFAULT_ARGS_SETTINGS(downloadsDir, "%homeDir%downloads");
-        DEFAULT_ARGS_SETTINGS(musicsDir, "%homeDir%musics");
-        DEFAULT_ARGS_SETTINGS(picturesDir, "%homeDir%pictures");
-        DEFAULT_ARGS_SETTINGS(videosDir, "%homeDir%videos");
+        DEFAULT_ARGS_SETTINGS(musicsDir, getSpecialFolder(CSIDL_MYMUSIC));
+        DEFAULT_ARGS_SETTINGS(picturesDir, getSpecialFolder(CSIDL_MYPICTURES));
+        DEFAULT_ARGS_SETTINGS(videosDir, getSpecialFolder(CSIDL_MYVIDEO));
         
         DEFAULT_ARGS_SETTINGS(dragClassName, "drag");
         DEFAULT_ARGS_SETTINGS(noDragClassName, "no-drag");
@@ -126,14 +126,14 @@ namespace amo {
         
         
         DEFAULT_ARGS_SETTINGS(temp, getSpecialFolder(CSIDL_TEMPLATES));
-        DEFAULT_ARGS_SETTINGS(module, getSpecialFolder(CSIDL_LOCAL_APPDATA));
+        
         DEFAULT_ARGS_SETTINGS(desktop, getSpecialFolder(CSIDL_DESKTOPDIRECTORY));
         DEFAULT_ARGS_SETTINGS(documents, getSpecialFolder(CSIDL_MYDOCUMENTS));
         
         
         DEFAULT_ARGS_SETTINGS(startTime, (int64_t)amo::timer::now());
         DEFAULT_ARGS_SETTINGS(debugMode, true);
-        
+        DEFAULT_ARGS_SETTINGS(debugMode, false);
         
     }
     
@@ -157,7 +157,7 @@ namespace amo {
     
     amo::string AppSettings::getUserHomeDir() {
     
-        amo::string strUserDir(getSpecialFolder(CSIDL_LOCAL_APPDATA), true);
+        amo::string strUserDir(getSpecialFolder(CSIDL_MYDOCUMENTS), true);
         amo::path p(amo::path::getExeName());
         p.remove_extension();
         
@@ -243,7 +243,7 @@ namespace amo {
         
         STRING_ARGS_SETTING(temp);
         
-        STRING_ARGS_SETTING(module);
+        
         STRING_ARGS_SETTING(desktop);
         STRING_ARGS_SETTING(documents);
         STRING_ARGS_SETTING(downloadsDir);
@@ -253,6 +253,7 @@ namespace amo {
         
         INT64_ARGS_SETTING(startTime);
         BOOL_ARGS_SETTING(debugMode);
+        BOOL_ARGS_SETTING(clearCache);
         
         ::SetCurrentDirectoryA(amo::string(workDir, true).to_ansi().c_str());
         AMO_TIMER_ELAPSED();

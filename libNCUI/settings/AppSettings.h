@@ -144,9 +144,6 @@ namespace amo {
         /*!@var #String=%TEMP% temp	临时文件夹. */
         std::string temp;
         
-        /*! @var #String module  库目录. */
-        std::string module;
-        
         /*! @var #String desktop 当前用户的桌面文件夹. */
         std::string desktop;
         /*!
@@ -163,6 +160,8 @@ namespace amo {
          */
         bool debugMode;
         
+        /*! @var #Boolean=false clearCache 是否在应用程序启动时清除浏览器缓存（调试用）. */
+        bool clearCache;
         
     };
 }

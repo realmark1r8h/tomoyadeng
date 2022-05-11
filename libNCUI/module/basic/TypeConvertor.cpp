@@ -126,11 +126,14 @@ namespace amo {
         } else if (json.is_int()) {
             return CefV8Value::CreateInt(json.get<int>());
             
-        }/* else if (json.is_int64()) {
-        
-			return CefV8Value::CreateInt(json.get<int>());
-
-		}*/ else if (json.is_double()) {
+        } else if (json.is_uint()) {
+            return Int64ToObject(json.get<uint32_t>());
+        } else if (json.is_uint64()) {
+            return Int64ToObject(json.get<uint64_t>());
+        } else if (json.is_int64()) {
+            return Int64ToObject(json.get<int64_t>());
+            //return CefV8Value::CreateInt(json.get<int64_t>());
+        } else if (json.is_double()) {
             return
                 CefV8Value::CreateDouble(json.get<double>());
         } else if (json.is_string()) {
@@ -738,6 +741,21 @@ namespace amo {
     CefRefPtr<CefV8Value> TypeConvertor::JsonToObject(amo::json& json) {
         std::string str = json.to_string();
         return JsonToObject(str);
+    }
+    
+    CefRefPtr<CefV8Value> TypeConvertor::Int64ToObject(int64_t nVal) {
+        CefRefPtr<CefV8Value> int64ToObject;
+        int64ToObject = pContext->GetGlobal()->GetValue("parseInt");
+        
+        if (!int64ToObject) {
+            return CefV8Value::CreateUndefined();
+        }
+        
+        std::string str = std::to_string(nVal);
+        
+        CefV8ValueList list;
+        list.push_back(CefV8Value::CreateString(str));
+        return int64ToObject->ExecuteFunction(int64ToObject, list);
     }
     
     Any TypeConvertor::toAny(CefRefPtr<CefV8Value> pValue) {
