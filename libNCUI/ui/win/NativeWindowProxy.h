@@ -36,112 +36,140 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::getName(IPCMessage::SmartType msg);
          *
+         * @tag sync
+         *
          * @brief	获取窗口名.
          *
-         * @param	msg	The message.
+         * @return	#String.
          *
-         * @return	Any.
+         * @see setName=NativeWindowProxy.setName
+         * @example
+         * 			```
+        			var win = BrowserWindow.current;
+        			console.log(win.getName());
+         * 			```
          */
         virtual Any getName(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	virtual Any NativeWindowProxy::setName(IPCMessage::SmartType msg);
          *
-         * @brief	设置窗口名.
+         * @brief	设置窗口名,这个函数暂时还没有什么用，只是把名称保留下来了.
          *
-         * @param	msg	The message.
+         * @param	#String 名称.
          *
-         * @return	Any.
+         * @return	无.
+         * @example
+         * 		   ```
+        			var win = BrowserWindow.current;
+        			win.setName('NCUI测试窗口');
+        			console.assert(win.getName() == 'NCUI测试窗口');
+         * 		   ```
          */
         virtual Any setName(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any NativeWindowProxy::destroy(IPCMessage::SmartType msg);
          *
-         * @brief	强制关闭窗口, unload and beforeunload 不会触发，并且 close 也不会触发, 但是它保证了 closed 触发.
+         * @brief	强制关闭窗口,用户不能取消该操作, 但是它保证了 closed 触发.
+         * 			{@ling isClosable=BrowserWindow.isClosable}为true,可以阻止窗口被关闭.
          *
-         * @param	msg	The message to destroy.
+         * @return	无.
          *
-         * @return	Any.
+         * @see close=NativeWindowProxy.close
+         *
+         * @example
+         * 		   ```
+        				// 窗口将被强制关闭，用户不能取消该操作
+        				var win = BrowserWindow.current;
+        				win.destroy();
+         * 		   ```
          */
         Any destroy(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::close(IPCMessage::SmartType msg);
          *
          * @brief	尝试关闭窗口，这与用户点击关闭按钮的效果一样. 虽然网页可能会取消关闭.
          *
-         * @param	msg	The message.
          *
-         * @return	Any.
+         * @return	无.
+         *
+         * @see destroy=NativeWindowProxy.destroy
+         *
+         * @example
+         * 		   ```
+         * 		   var win = BrowserWindow.current;
+         * 		   win.close();
+         * 		   ```
          */
         Any close(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::focus(IPCMessage::SmartType msg);
          *
          * @brief	窗口获得焦点.
          *
-         * @param	msg	The message.
          *
-         * @return	Any.
+         * @return	无.
          */
         Any focus(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::isFocused(IPCMessage::SmartType msg);
+         * @tag sync
          *
-         * @brief	返回 boolean, 窗口是否获得焦点.
+         * @brief	判断窗口是否获得焦点.
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	#Boolean .
          */
         Any isFocused(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::show(IPCMessage::SmartType msg);
          *
          * @brief	展示并且使窗口获得焦点.
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	无.
          */
         Any show(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::showInactive(IPCMessage::SmartType msg);
          *
          * @brief	展示窗口但是不获得焦点.
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	无.
          */
         Any showInactive(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::hide(IPCMessage::SmartType msg);
          *
          * @brief	隐藏窗口.
          *
-         * @param	msg	The message.
          *
-         * @return	Any.
+         * @return	无.
          */
         Any hide(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::isVisible(IPCMessage::SmartType msg);
+         * @tag sync
          *
-         * @brief	返回 boolean, 窗口是否可见.
+         * @brief	判断窗口是否可见.
          *
-         * @param	msg	The message.
          *
-         * @return	Any.
+         * @return	#Boolean.
          */
         Any isVisible(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::maximize(IPCMessage::SmartType msg);
          *
          * @brief	窗口最大化.
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	无.
          */
         Any maximize(IPCMessage::SmartType msg);
         /*!
@@ -149,19 +177,20 @@ namespace amo {
          *
          * @brief	取消窗口最大化.
          *
-         * @param	msg	The message.
          *
-         * @return	Any.
+         * @return	无.
          */
         Any unmaximize(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::isMaximized(IPCMessage::SmartType msg);
          *
-         * @brief	返回 boolean, 窗口是否最大化.
+         * @tag sync
          *
-         * @param	msg	The message.
+         * @brief	判断窗口是否最大化.
          *
-         * @return	Any.
+         *
+         * @return	#Boolean.
          */
         Any isMaximized(IPCMessage::SmartType msg);
         /*!
@@ -169,29 +198,25 @@ namespace amo {
          *
          * @brief	窗口最小化.
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	无.
          */
         Any minimize(IPCMessage::SmartType msg);
         /*!
          * @fn	Any NativeWindowProxy::restore(IPCMessage::SmartType msg);
          *
-         * @brief	将窗口恢复为之前的状态,作用与unmaximize相同，与electron不同.
+         * @brief	将窗口恢复为之前的状态,不管窗口之前是最小化还是最大化.
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	无.
          */
         Any restore(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::isMinimized(IPCMessage::SmartType msg);
+         * @tag sync
+         * @brief  判断窗口是否最小化.
          *
-         * @brief	返回 boolean, 窗口是否最小化.
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	#Boolean.
          */
         Any isMinimized(IPCMessage::SmartType msg);
         /*!
@@ -199,19 +224,18 @@ namespace amo {
          *
          * @brief	设置是否全屏.
          *
-         * @param	msg	The message.
+         * @param	#Boolean=false 全屏/非全屏.
          *
          * @return	Any.
          */
         virtual Any setFullScreen(IPCMessage::SmartType msg);
         /*!
          * @fn	virtual Any NativeWindowProxy::isFullScreen(IPCMessage::SmartType msg);
+         * @tag sync
+         * @brief	判断窗口是否处于全屏状态.
          *
-         * @brief	返回 boolean, 窗口是否全屏化.
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	#Boolean.
          */
         virtual Any isFullScreen(IPCMessage::SmartType msg);
         /*!
@@ -219,39 +243,83 @@ namespace amo {
          *
          * @brief	重新设置窗口的宽高值，并且移动到指定的 x, y 位置.
          *
-         * @param	msg	The message.
+         * @param	#JsonObject.
          *
-         * @return	Any.
+         * @return	无.
+         *
+         * @example
+        			 ```
+        				var win = BrowserWindow.current;
+        
+        				win.setBounds({
+        					x: 100,
+        					y: 100,
+        					width: 1000,
+        					height: 500,
+        				});
+        
+        			 ```
          */
         Any setBounds(IPCMessage::SmartType msg);
         /*!
          * @fn	Any NativeWindowProxy::getBounds(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	返回一个对象，它包含了窗口的宽，高，x坐标，y坐标.
          *
-         * @param	msg	The message.
          *
-         * @return	The bounds.
+         * @return	#JsonObject 窗口的坐标参数.
+         * @example
+        		```
+        		var win = BrowserWindow.current;
+        
+        		win.setBounds({
+        			x: 100,
+        			y: 100,
+        			width: 1000,
+        			height: 500,
+        		});
+        
+        		// 获取窗体坐标
+        		var winInfo = win.getBounds();
+        		console.assert(winInfo.x == 100);
+        		console.assert(winInfo.y == 100);
+        		console.assert(winInfo.width == 1000);
+        		console.assert(winInfo.height == 500);
+        		```
          */
         Any getBounds(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::setSize(IPCMessage::SmartType msg);
          *
-         * @brief	重新设置窗口的宽高值.
+         * @brief	重新设置窗口的宽高值,窗口的X坐标和Y坐标保持不变
          *
-         * @param	msg	The message.
+         * @param	#Int=0 宽.
          *
-         * @return	Any.
+         * @param	#Int=0 高
+         *
+         * @return	无.
          */
         Any setSize(IPCMessage::SmartType msg);
         /*!
          * @fn	Any NativeWindowProxy::getSize(IPCMessage::SmartType msg);
          *
-         * @brief	Gets a size.
+         * @brief	获取窗口宽高.
          *
-         * @param	msg	.
          *
-         * @return	The size.
+         * @return	#JsonObject 窗口的宽高数据.
+         * @example
+         * 		   ```
+        				var win = BrowserWindow.current;
+        				// 设置窗口宽高
+        				win.setSize(500,500);
+        				// 获取窗口宽高
+        				var info = win.getSize();
+        				console.log(info);
+        				console.assert(info.width == 500);
+        				console.assert(info.height == 500);
+        
+         * 		   ```
          */
         Any getSize(IPCMessage::SmartType msg);
         /*!
@@ -259,19 +327,37 @@ namespace amo {
          *
          * @brief	设置窗口最小化的宽高值.
          *
-         * @param	msg	The message.
+         * @param	#Int	最小宽度.
+         * @param	#Int	最小高度
          *
-         * @return	Any.
+         * @return	无.
+         * @example
+          		   ```
+        				// 设置最小宽高
+        				var win = BrowserWindow.current;
+        				win.setMinimumSize(1280,720);
+          		   ```
          */
         virtual Any setMinimumSize(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	virtual Any NativeWindowProxy::getMinimumSize(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	返回一个对象，它包含了窗口最小化的宽，高.{width:100, height:200}
          *
-         * @param	msg	The message.
          *
-         * @return	The minimum size.
+         * @return	#JsonObject 窗口的最小宽高信息.
+         * @example
+         * 		   ```
+        				var win = BrowserWindow.current;
+        				win.setMinimumSize(1280,720);
+        
+        				// 获取最小宽高
+        				var info = win.getMinimumSize();
+        				console.assert(info.width == 1280);
+        				console.assert(info.height == 720);
+         * 		   ```
+         *
          */
         virtual Any getMinimumSize(IPCMessage::SmartType msg);
         /*!
@@ -279,59 +365,78 @@ namespace amo {
          *
          * @brief	设置窗口最大化的宽高值.
          *
-         * @param	msg	The message.
+          * @param	#Int	最大宽度.
+         * @param	#Int	最大高度
          *
-         * @return	Any.
+         * @return	无.
+         * @example
+        		   ```
+        				// 设置最小宽高
+        				var win = BrowserWindow.current;
+        				win.setMaximumSize(1280,720);
+        		   ```
          */
+        
         virtual Any setMaximumSize(IPCMessage::SmartType msg);
         /*!
          * @fn	virtual Any NativeWindowProxy::getMaximumSize(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	返回一个对象，它包含了窗口最大化的宽，高.{width:100, height:200}
          *
          * @param	msg	The message.
          *
-         * @return	The maximum size.
+         * @return	#JsonObject 窗口的最大宽高信息.
+         * @example
+         * 		   ```
+        				var win = BrowserWindow.current;
+        				win.setMaximumSize(1280,720);
+        
+        				// 获取最大宽高
+        				var info = win.getMaximumSize();
+        				console.assert(info.width == 1280);
+        				console.assert(info.height == 720);
+         * 		   ```
          */
         virtual Any getMaximumSize(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	virtual Any NativeWindowProxy::setResizable(IPCMessage::SmartType msg);
          *
-         * @brief	设置窗口是否可以被用户改变size.
+         * @brief	设置窗口是否可以被用户改变窗口大小.
          *
-         * @param	msg	The message.
+         * @param	#Boolean=false true允许 false不允许 .
          *
-         * @return	Any.
+         * @return	无.
+         *
          */
         virtual Any setResizable(IPCMessage::SmartType msg);
         /*!
          * @fn	Any NativeWindowProxy::isResizable(IPCMessage::SmartType msg);
+         * @tag sync
          *
-         * @brief	返回 boolean,窗口是否可以被用户改变size.
+         * @brief	判断窗口是否可以被用户改变大小.
          *
-         * @param	msg	The message.
          *
-         * @return	Any.
+         * @return	#Boolean.
          */
         Any isResizable(IPCMessage::SmartType msg);
         /*!
          * @fn	Any NativeWindowProxy::setMovable(IPCMessage::SmartType msg);
          *
-         * @brief	设置窗口是否可以被用户拖动. Linux 无效.
+         * @brief	设置窗口是否可以被用户拖动.
          *
-         * @param	msg	The message.
+         * @param	#Boolean=false true可以移动，false不能移动窗口位置.
          *
-         * @return	Any.
+         * @return	无.
          */
         Any setMovable(IPCMessage::SmartType msg);
         /*!
          * @fn	Any NativeWindowProxy::isMovable(IPCMessage::SmartType msg);
          *
-         * @brief	返回 boolean,窗口是否可以被用户拖动.
+         * @brief	判断窗口是否可以被用户拖动.
          *
-         * @param	msg	The message.
          *
-         * @return	Any.
+         * @return	#Boolean.
          */
         Any isMovable(IPCMessage::SmartType msg);
         /*!
@@ -339,39 +444,38 @@ namespace amo {
          *
          * @brief	设置窗口是否可以最小化.
          *
-         * @param	msg	The message.
+         * @param	#Boolean true/false.
          *
-         * @return	Any.
+         * @return	无.
          */
         Any setMinimizable(IPCMessage::SmartType msg);
         /*!
          * @fn	Any NativeWindowProxy::isMinimizable(IPCMessage::SmartType msg);
+         * @tag sync
+         * @brief	判断窗口是否可以最小化.
          *
-         * @brief	返回 boolean,窗口是否可以最小化.
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	#Boolean.
          */
         Any isMinimizable(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::setMaximizable(IPCMessage::SmartType msg);
          *
          * @brief	设置窗口是否可以最大化.
          *
-         * @param	msg	The message.
+         * @param	#Boolean true/false.
          *
-         * @return	Any.
+         * @return	无.
          */
         Any setMaximizable(IPCMessage::SmartType msg);
         /*!
          * @fn	Any NativeWindowProxy::isMaximizable(IPCMessage::SmartType msg);
+         * @tag sync
+         * @brief	判断窗口是否可以最大化.
          *
-         * @brief	返回 boolean,窗口是否可以最大化.
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	#Boolean.
          */
         Any isMaximizable(IPCMessage::SmartType msg);
         
@@ -380,22 +484,24 @@ namespace amo {
          *
          * @brief	设置否可以全屏.
          *
-         * @param	msg	The message.
+         * @param	#Boolean=false true/false.
          *
-         * @return	Any.
+         * @return	无.
          */
         
         Any setFullScreenable(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::isFullScreenable(IPCMessage::SmartType msg);
          *
-         * @brief	返回 boolean,是否允许全屏.
+         * @tag sync
          *
-         * @param	msg	The message.
+         * @brief	判断是否允许全屏.
          *
-         * @return	Any.
+         * @return	#Boolean.
          */
         Any isFullScreenable(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::setClosable(IPCMessage::SmartType msg);
          *
@@ -406,6 +512,7 @@ namespace amo {
          * @return	Any.
          */
         Any setClosable(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::isClosable(IPCMessage::SmartType msg);
          *

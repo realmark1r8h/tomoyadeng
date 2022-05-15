@@ -127,11 +127,24 @@ namespace amo {
             return;
         }
         
+        BrowserWindow* pBrowserWindow = dynamic_cast<BrowserWindow*>(window);
+        bool needCloseAll = false;
+        
+        if (pBrowserWindow != NULL) {
+            bool mainWindow = pBrowserWindow->getBrowserSettings()->main;
+            needCloseAll = mainWindow;
+            
+            
+        }
+        
         LocalWindow* pWindow = dynamic_cast<LocalWindow*>(window);
         
         if (pWindow == NULL) {
             return;
         }
+        
+        
+        
         
         std::string  id = pWindow->getNativeSettings()->id;
         
@@ -141,10 +154,13 @@ namespace amo {
                 $clog(amo::cdevel << p.use_count() << amo::endl;);
                 m_WindowMap.remove(p);
                 
-                return;
+                break;
             }
             
-            
+        }
+        
+        if (needCloseAll) {
+            this->coseAllWindow(true);
         }
     }
     

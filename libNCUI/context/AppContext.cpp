@@ -308,6 +308,7 @@ namespace amo {
     int AppContext::executeProcess(CefMainArgs& main_args) {
         AMO_TIMER_ELAPSED();
         //   spdlog 不支持XP, 如果在XP下使用需要禁用log
+        amo::app::dump();
         
         if (!amo::log::initialize(false, true)) {
             return -1;
@@ -528,7 +529,8 @@ namespace amo {
             
             if (getDefaultAppSettings()->clearCache) {
             
-                amo::string cachePath(CefString(getDefaultAppSettings()->cache_path.str).ToString(), true);
+                amo::string cachePath(CefString(
+                                          getDefaultAppSettings()->cache_path.str).ToString(), true);
                 amo::path(cachePath).remove_all();
             }
             
