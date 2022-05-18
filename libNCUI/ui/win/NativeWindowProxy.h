@@ -68,11 +68,31 @@ namespace amo {
          */
         virtual Any setName(IPCMessage::SmartType msg);
         
+        
+        /*!
+        * @fn	Any NativeWindowProxy::close(IPCMessage::SmartType msg);
+        *
+        * @brief	尝试关闭窗口，可以被用户取消如：window.onload.<br>
+        * 			当{@link isClosable=BrowserWindow.isClosable}为true,该函数无效.
+        *
+        *
+        * @return	无.
+        *
+        * @see destroy=NativeWindowProxy.destroy
+        *
+        * @example
+        * 		   ```
+        * 		   var win = BrowserWindow.current;
+        * 		   win.close();
+        * 		   ```
+        */
+        Any close(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::destroy(IPCMessage::SmartType msg);
          *
-         * @brief	强制关闭窗口,用户不能取消该操作, 但是它保证了 closed 触发.
-         * 			{@ling isClosable=BrowserWindow.isClosable}为true,可以阻止窗口被关闭.
+         * @brief	强制关闭窗口,用户不能取消该操作, 但是它保证了 closed 触发.<br>
+         * 			当{@link isClosable=BrowserWindow.isClosable}为true,该函数无效.
          *
          * @return	无.
          *
@@ -87,59 +107,73 @@ namespace amo {
          */
         Any destroy(IPCMessage::SmartType msg);
         
-        /*!
-         * @fn	Any NativeWindowProxy::close(IPCMessage::SmartType msg);
-         *
-         * @brief	尝试关闭窗口，这与用户点击关闭按钮的效果一样. 虽然网页可能会取消关闭.
-         *
-         *
-         * @return	无.
-         *
-         * @see destroy=NativeWindowProxy.destroy
-         *
-         * @example
-         * 		   ```
-         * 		   var win = BrowserWindow.current;
-         * 		   win.close();
-         * 		   ```
-         */
-        Any close(IPCMessage::SmartType msg);
+        
         
         /*!
          * @fn	Any NativeWindowProxy::focus(IPCMessage::SmartType msg);
          *
          * @brief	窗口获得焦点.
          *
-         *
          * @return	无.
+         *
+         * @example
+         * 		   ```
+         * 		   var win = BrowserWindow.current;
+         * 		   win.focus();
+         * 		   ```
          */
         Any focus(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any NativeWindowProxy::isFocused(IPCMessage::SmartType msg);
+         *
          * @tag sync
          *
          * @brief	判断窗口是否获得焦点.
          *
          * @return	#Boolean .
+         * @example
+         * 		   ```
+         * 		   var win = BrowserWindow.current;
+         * 		   console.assert(win.isFocused() == true);
+         * 		   ```
          */
         Any isFocused(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any NativeWindowProxy::show(IPCMessage::SmartType msg);
          *
-         * @brief	展示并且使窗口获得焦点.
+         * @brief	显示并且使窗口获得焦点.
          *
          * @return	无.
+         *
+         * @see hide=BrowserWindow.hide isVisible=BrowserWindow.isVisible showInactive=BrowserWindow.showInactive
+         * @example
+         * 		   ```
+          		   var win = BrowserWindow.current;
+          		   win.show();
+          		   console.assert(win.isFocused() == true);
+         * 		   ```
          */
         Any show(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any NativeWindowProxy::showInactive(IPCMessage::SmartType msg);
          *
-         * @brief	展示窗口但是不获得焦点.
+         * @brief	显示窗口但是不获得焦点.但如果窗口本身就已经获得焦点，调用该函数后窗口依然有焦点
          *
          * @return	无.
+         *
+         * @see hide=BrowserWindow.hide isVisible=BrowserWindow.isVisible show=BrowserWindow.show
+         *
+         * @example
+         * 		   ```
+          		   var win = BrowserWindow.current;
+        		   win.show();
+        		   console.assert(win.isFocused() == true);
+          		   win.showInactive();
+          		   console.assert(win.isFocused() == true);
+         * 		   ```
          */
         Any showInactive(IPCMessage::SmartType msg);
         
@@ -148,19 +182,43 @@ namespace amo {
          *
          * @brief	隐藏窗口.
          *
-         *
          * @return	无.
+         *
+         * @see isVisible=BrowserWindow.isVisible show=BrowserWindow.show showInactive=BrowserWindow.showInactive
+         *
+         * @example
+         * 		   ```
+         * 			var win = BrowserWindow.current;
+         * 			win.hide();
+         * 			console.assert(win.isVisible() == false);
+         *			//
+         * 			win.showInactive();
+         * 			console.assert(win.isFocused() == false);
+         * 		   ```
          */
         Any hide(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any NativeWindowProxy::isVisible(IPCMessage::SmartType msg);
+         *
          * @tag sync
          *
          * @brief	判断窗口是否可见.
          *
-         *
          * @return	#Boolean.
+         *
+         * @see hide=BrowserWindow.hide show=BrowserWindow.show showInactive=BrowserWindow.showInactive
+         *
+         * @example
+         * 		   ```
+         *			var win = BrowserWindow.current;
+         * 			win.hide();
+         *			console.assert(win.isVisible() == false);
+         * 			win.showInactive();
+         * 			console.assert(win.isVisible() == true);
+         * 			win.show();
+         * 			console.assert(win.isFocused() == true);
+         * 		   ```
          */
         Any isVisible(IPCMessage::SmartType msg);
         
@@ -170,6 +228,16 @@ namespace amo {
          * @brief	窗口最大化.
          *
          * @return	无.
+         *
+         * @see unmaximize=BrowserWindow.unmaximize restore=BrowserWindow.restore
+         *		 isMaximized=BrowserWindow.isMaximized
+         * @example
+         *
+        			 ```
+        			 var win = BrowserWindow.current;
+        			 win.maximize();
+        			 console.assert(win.isMaximized()==true);
+        			 ```
          */
         Any maximize(IPCMessage::SmartType msg);
         /*!
@@ -179,6 +247,13 @@ namespace amo {
          *
          *
          * @return	无.
+         * @example
+         *
+        		 ```
+        			var win = BrowserWindow.current;
+        			win.unmaximize();
+        			console.assert(win.isMaximized() == false);
+        		 ```
          */
         Any unmaximize(IPCMessage::SmartType msg);
         
@@ -191,6 +266,16 @@ namespace amo {
          *
          *
          * @return	#Boolean.
+         *
+         * @example
+         *
+        		 ```
+        			var win = BrowserWindow.current;
+        			win.maximize();
+        			console.assert(win.isMaximized() == true);
+        			win.unmaximize();
+        			console.assert(win.isMaximized() == false);
+        		 ```
          */
         Any isMaximized(IPCMessage::SmartType msg);
         /*!
