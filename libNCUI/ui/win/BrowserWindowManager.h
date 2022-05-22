@@ -54,7 +54,9 @@ namespace amo {
         void onWindowClosed(LayeredWindow* window);
         void coseAllWindow(bool bFroce = false);
         void showAllWindow(bool bVisibed = true);
-        
+        bool hasBrowserWindow() const;
+        std::function<void()> getAllBrowserWindowClosedCallback() const;
+        void setAllBrowserWindowClosedCallback(std::function<void()> val);
         bool preTranslateMessage(CefEventHandle os_event);
         
         void quitMessageLoop();
@@ -62,6 +64,10 @@ namespace amo {
     public:
         /*! @brief	浏览器窗口集合. */
         std::list<std::shared_ptr<LocalWindow> > m_WindowMap;
+        
+        std::function<void()> m_fnAllBrowserWindowClosed;
+        
+        
     };
     
     class BrowserWindowManager : public amo::singleton<BrowserWindowManager>
@@ -124,8 +130,13 @@ namespace amo {
         
         void init();
         
+        void quit();
+        
+        
         bool preTranslateMessage(CefEventHandle os_event);
         
+        void onAllBrowserWindowClosed();
+        void onAllNativeWindowClosed();
         
     private:
         /*! @brief	浏览器计数. */

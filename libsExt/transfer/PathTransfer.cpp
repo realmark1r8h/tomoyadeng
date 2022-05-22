@@ -95,6 +95,36 @@ namespace amo {
         return amo::path(strPath).remove_all();
     }
     
+    Any PathTransfer::copyTo(IPCMessage::SmartType msg) {
+        if (!m_pPath) {
+            return false;
+        }
+        
+        amo::string p(msg->getArgumentList()->getString(0), true);
+        
+        if (p.empty()) {
+            return false;
+        }
+        
+        amo::path dstPath(p);
+        return m_pPath->copy_to(dstPath);
+    }
+    
+    Any PathTransfer::moveTo(IPCMessage::SmartType msg) {
+        if (!m_pPath) {
+            return false;
+        }
+        
+        amo::string p(msg->getArgumentList()->getString(0), true);
+        
+        if (p.empty()) {
+            return false;
+        }
+        
+        amo::path dstPath(p);
+        return m_pPath->move_to(dstPath);
+    }
+    
     std::string PathTransfer::getClass() const {
         return ("Path");
     }

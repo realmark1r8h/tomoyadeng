@@ -407,11 +407,16 @@ namespace amo {
     
     Any SqliteTransfer::containsTable(IPCMessage::SmartType msg) {
         std::string tableName = msg->getArgumentList()->getString(0);
+        
+        // 这个变量有毒， 不能直接设置到msg里面去，Clone一下就好了，为啥？
         std::string sql =
             "select count(1) from sqlite_master where type='table' and name='" + tableName +
             "';";
-        msg->getArgumentList()->setValue(0, sql);
-        int nCount =  queryCount(msg);
+            
+        auto sqlMsg = msg->clone();
+        
+        sqlMsg->getArgumentList()->setValue(0, sql);
+        int nCount = queryCount(sqlMsg);
         
         if (nCount == 0) {
             return false;

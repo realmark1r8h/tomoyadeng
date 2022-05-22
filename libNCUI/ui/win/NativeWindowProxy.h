@@ -78,7 +78,7 @@ namespace amo {
         *
         * @return	无.
         *
-        * @see destroy=NativeWindowProxy.destroy
+        * @see destroy=NativeWindowProxy.destroy setClosable=BrowserWindow.setClosable
         *
         * @example
         * 		   ```
@@ -96,7 +96,7 @@ namespace amo {
          *
          * @return	无.
          *
-         * @see close=NativeWindowProxy.close
+         * @see close=NativeWindowProxy.close setClosable=BrowserWindow.setClosable
          *
          * @example
          * 		   ```
@@ -136,6 +136,12 @@ namespace amo {
          * 		   ```
          * 		   var win = BrowserWindow.current;
          * 		   console.assert(win.isFocused() == true);
+         *
+         *		   win.minimize();
+         *		   console.assert(win.isFocused() == false);
+         *
+         *		   win.restore();
+         *		   console.assert(win.isFocused() == true);
          * 		   ```
          */
         Any isFocused(IPCMessage::SmartType msg);
@@ -148,11 +154,13 @@ namespace amo {
          * @return	无.
          *
          * @see hide=BrowserWindow.hide isVisible=BrowserWindow.isVisible showInactive=BrowserWindow.showInactive
+         *
          * @example
          * 		   ```
           		   var win = BrowserWindow.current;
           		   win.show();
           		   console.assert(win.isFocused() == true);
+        
          * 		   ```
          */
         Any show(IPCMessage::SmartType msg);
@@ -171,6 +179,7 @@ namespace amo {
           		   var win = BrowserWindow.current;
         		   win.show();
         		   console.assert(win.isFocused() == true);
+        
           		   win.showInactive();
           		   console.assert(win.isFocused() == true);
          * 		   ```
@@ -191,7 +200,9 @@ namespace amo {
          * 			var win = BrowserWindow.current;
          * 			win.hide();
          * 			console.assert(win.isVisible() == false);
-         *			//
+         *			console.assert(win.isFocused() == false);
+         *
+         *			// 显示但不激活窗口
          * 			win.showInactive();
          * 			console.assert(win.isFocused() == false);
          * 		   ```
@@ -214,9 +225,13 @@ namespace amo {
          *			var win = BrowserWindow.current;
          * 			win.hide();
          *			console.assert(win.isVisible() == false);
+         *
          * 			win.showInactive();
          * 			console.assert(win.isVisible() == true);
+         * 			console.assert(win.isFocused() == false);
+         *
          * 			win.show();
+         * 			console.assert(win.isVisible() == true);
          * 			console.assert(win.isFocused() == true);
          * 		   ```
          */
@@ -243,10 +258,12 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::unmaximize(IPCMessage::SmartType msg);
          *
-         * @brief	取消窗口最大化.
-         *
+         * @brief	取消窗口最大化，建议使用{@link restore=BrowserWindow.restore}代替
          *
          * @return	无.
+         *
+         * @see restore=BrowserWindow.restore
+         *
          * @example
          *
         		 ```
@@ -273,17 +290,22 @@ namespace amo {
         			var win = BrowserWindow.current;
         			win.maximize();
         			console.assert(win.isMaximized() == true);
+        
         			win.unmaximize();
         			console.assert(win.isMaximized() == false);
         		 ```
          */
         Any isMaximized(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::minimize(IPCMessage::SmartType msg);
          *
          * @brief	窗口最小化.
          *
          * @return	无.
+         *
+         * @see isMinimized=BrowserWindow.isMinimized restore=BrowserWindow.restore
+         *
          * @example
          *
         		```
@@ -306,6 +328,8 @@ namespace amo {
          *
          * @return	无.
          *
+         * @see  minimize=BrowserWindow.minimize maximize=BrowserWindow.maximize
+         *
          * @example
          *
         			 ```
@@ -325,9 +349,13 @@ namespace amo {
         
         /*!
          * @fn	Any NativeWindowProxy::isMinimized(IPCMessage::SmartType msg);
+         *
          * @tag sync
          *
          * @brief  判断窗口是否最小化.
+         *
+         * @see minimize=BrowserWindow.minimize
+         *
          * @example
           *
         			 ```
@@ -346,6 +374,7 @@ namespace amo {
          * @return	#Boolean.
          */
         Any isMinimized(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	virtual Any NativeWindowProxy::setFullScreen(IPCMessage::SmartType msg);
          *
@@ -354,6 +383,8 @@ namespace amo {
          * @param	#Boolean=false 全屏/非全屏.
          *
          * @return	无.
+         *
+         * @see isFullScreen=BrowserWindow.isFullScreen toggleFullScreen=BrowserWindow.toggleFullScreen
          *
          * @example
          *
@@ -365,6 +396,7 @@ namespace amo {
         		 ```
          */
         virtual Any setFullScreen(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	virtual Any NativeWindowProxy::isFullScreen(IPCMessage::SmartType msg);
          * @tag sync
@@ -399,6 +431,8 @@ namespace amo {
          *
          * @return	无.
          *
+         * @see  getBounds=BrowserWindow.getBounds
+         *
          * @example
         			 ```
         				var win = BrowserWindow.current;
@@ -413,31 +447,38 @@ namespace amo {
         			 ```
          */
         Any setBounds(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any NativeWindowProxy::getBounds(IPCMessage::SmartType msg);
+         *
          * @tag sync
+         *
          * @brief	返回一个对象，它包含了窗口的宽，高，x坐标，y坐标.
          *
          *
          * @return	#JsonObject 窗口的坐标参数.
+         *
+         * @see setBounds=BrowserWindow.setBounds
+         *
          * @example
-        		```
-        		var win = BrowserWindow.current;
+        			```
+        				var win = BrowserWindow.current;
         
-        		win.setBounds({
-        			x: 100,
-        			y: 100,
-        			width: 1000,
-        			height: 500,
-        		});
+        				win.setBounds({
+        					x: 100,
+        					y: 100,
+        					width: 1000,
+        					height: 500,
+        				});
         
-        		// 获取窗体坐标
-        		var winInfo = win.getBounds();
-        		console.assert(winInfo.x == 100);
-        		console.assert(winInfo.y == 100);
-        		console.assert(winInfo.width == 1000);
-        		console.assert(winInfo.height == 500);
-        		```
+        				// 获取窗体坐标
+        				var winInfo = win.getBounds();
+        				console.assert(winInfo.x == 100);
+        				console.assert(winInfo.y == 100);
+        				console.assert(winInfo.width == 1000);
+        				console.assert(winInfo.height == 500);
+        
+        			```
          */
         Any getBounds(IPCMessage::SmartType msg);
         
@@ -456,6 +497,14 @@ namespace amo {
          * @return	无.
          *
          * @see getSize=BrowserWindow.getSize
+         *
+         * @example
+         *
+        		 ```
+        			 var win = BrowserWindow.current;
+        			 win.setSize(1300,800);
+        		 ```
+         *
          */
         Any setSize(IPCMessage::SmartType msg);
         
@@ -467,20 +516,24 @@ namespace amo {
          *
          * @return	#JsonObject 窗口的宽高数据.
          *
+         * @see setSize=BrowserWindow.setSize
+         *
          * @example
          * 		   ```
         				var win = BrowserWindow.current;
         				// 设置窗口宽高
-        				win.setSize(500,500);
+        				win.setSize(1000,500);
+        
         				// 获取窗口宽高
         				var info = win.getSize();
         				console.log(info);
-        				console.assert(info.width == 500);
+        				console.assert(info.width == 1000);
         				console.assert(info.height == 500);
         
          * 		   ```
          */
         Any getSize(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	virtual Any NativeWindowProxy::setMinimumSize(IPCMessage::SmartType msg);
          *
@@ -796,7 +849,9 @@ namespace amo {
         			 ```
         			 var win = BrowserWindow.current;
         			 win.setClosable(false);
+        			 // 现在窗口关不掉了
         			 console.assert(win.isClosable() == false);
+        
         			 ```
          */
         Any setClosable(IPCMessage::SmartType msg);
@@ -862,7 +917,7 @@ namespace amo {
         		 console.assert(win.isAlwaysOnTop() == true);
         
         		 // 取消置顶
-        		 win.setAlwaysOnTop(true);
+        		 win.setAlwaysOnTop(false);
         		 console.assert(win.isAlwaysOnTop() == false);
         
         		 ```
@@ -996,11 +1051,12 @@ namespace amo {
          * @param	#Boolean=false  true显示窗口阴影，false不显示窗口阴影.
          *
          * @return	无.
+         *
          * @example
          *
         		 ```
         			var win = BrowserWindow.current;
-        			win.sethasShadow(false);
+        			win.setHasShadow(false);
         		 ```
          */
         virtual Any setHasShadow(IPCMessage::SmartType msg);
@@ -1008,16 +1064,20 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::hasShadow(IPCMessage::SmartType msg);
          *
+         * @tag sync
+         *
          * @brief	返回 boolean,是否显示窗口阴影
          *
          * @return	#Boolean.
+         *
          * @example
          *
         		 ```
         			 var win = BrowserWindow.current;
         			 // 不显示阴影
-        			 win.sethasShadow(false);
+        			 win.setHasShadow(false);
         			 console.assert(win.hasShadow() == false);
+        
         			 // 显示阴影
         			 win.setHasShadow(true);
         			 console.assert(win.hasShadow() == true);
@@ -1025,74 +1085,203 @@ namespace amo {
         		 ```
          */
         Any hasShadow(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	virtual Any NativeWindowProxy::topmost(IPCMessage::SmartType msg);
          *
-         * @brief	设置窗口置顶.
+         * @brief	设置窗口是否置顶.
          *
-         * @param	msg	The message.
+         * @param	#Boolean true置顶/false取消置顶.
          *
-         * @return	Any.
+         * @return	无.
+         *
+         * @see setAlwaysOnTop=BrowserWindow.setAlwaysOnTop isTopmost=BrowserWindow.isTopmost
+         *
+         * @example
+         *
+        			 ```
+        			 // 使窗口置顶
+        			 var win = BrowserWindow.current;
+        			 win.topmost(true);
+        			 console.assert(win.isTopmost() == true);
+        			 ```
          */
         virtual Any topmost(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	virtual Any NativeWindowProxy::isTopmost(IPCMessage::SmartType msg);
          *
-         * @brief	返回 boolean, 窗口是否置顶.
+         * @tag sync
          *
-         * @param	msg	The message.
+         * @brief	判断窗口是否置顶.
          *
-         * @return	Any.
+         *
+         * @return	#Boolean.
+         *
+         * @example
+         *
+        		 ```
+        		 // 使窗口置顶
+        		 var win = BrowserWindow.current;
+        		 win.topmost(true);
+        		 console.assert(win.isTopmost() == true);
+        
+        		 // 取消置顶
+        		 win.topmost(false);
+        		 console.assert(win.isTopmost() == false);
+        		 ```
          */
         virtual Any isTopmost(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	virtual Any NativeWindowProxy::toggleVisible(IPCMessage::SmartType msg);
          *
          * @brief	显示/隐藏窗口.
          *
-         * @param	msg	The message.
+         * @return	无.
          *
-         * @return	Any.
+         * @example
+         *
+        		 ```
+        		 var win= BrowserWindow.current;
+        		 win.toggleVisible();
+        		 console.assert(win.isVisible() == false);
+        		 win.toggleVisible();
+        		 console.assert(win.isVisible() == true);
+        		 ```
          */
         virtual Any toggleVisible(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	virtual Any NativeWindowProxy::toggleFullScreen(IPCMessage::SmartType msg);
          *
          * @brief	全屏/非全屏窗口.
          *
-         * @param	msg	The message.
          *
-         * @return	Any.
+         * @return	无.
+         *
+         * @example
+         *
+        		 ```
+        			 var win = BrowserWindow;
+        			 // 设置窗口可以全屏显示
+        			 win.setFullScreenable(true);
+        			 // 退出全屏
+        			 win.setFullScreen(false);
+        
+        			 // 全屏
+        			 win.toggleFullScreen();
+        			 console.assert(win.isFullScreen() == true);
+        
+        			 // 退出全屏
+        			 win.toggleFullScreen();
+        			 console.assert(win.isFullScreen() == false);
+        
+        		 ```
          */
         virtual Any toggleFullScreen(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any NativeWindowProxy::showModal(IPCMessage::SmartType msg);
          *
-         * @brief	显示模态窗口.
+         * @ignore
          *
-         * @param	msg	The message.
+         * @brief	当前接口不能正常使用，如果要显示为模态窗口必须在创建时指定.
          *
-         * @return	Any.
+         *
+         * @return	无.
          */
         
         Any showModal(IPCMessage::SmartType msg);
         
-        Any setIcon(IPCMessage::SmartType msg);
-        
         /**
-         * @fn	Any NativeWindowProxy::config(IPCMessage::SmartType msg);
+         * @fn	Any NativeWindowProxy::setIcon(IPCMessage::SmartType msg);
          *
-         * @brief	获取窗口的配置信息.
+         * @brief	设置窗口图标.
          *
-         * @param	msg	The message.
+         * @param	#String 图标路径.
          *
-         * @return	Any.
+         * @return	无.
+         *
+         * @example
+         *
+        		 ```
+        			var win = BrowserWindow.current;
+        			var icon = app.toAbsolutePath('%skinDir%logo1.ico');
+        			console.log(icon);
+        			win.setIcon(icon);
+        		 ```
          */
         
-        Any getConfigs(IPCMessage::SmartType msg);
+        Any setIcon(IPCMessage::SmartType msg);
+        
+        
+        
+        
+        /*!
+        * @fn	static Any AppTransfer::setConfig(IPCMessage::SmartType msg);
+        *
+        * @brief	设置窗口配置参数.该函数并不要求一定要输入所支持的参数，
+        * 			该函数可以影响一部分窗口行为，具体是哪些还要再确认<br>
+        * 			一般用来设置自定义参数，并在getConfig里面获取所设置的值与{@link BrowserWindow.getConfig}相对应.
+        *
+        * @param	#JsonObject 需要设置的参数，该值为一个JSON对象.
+        *
+        * @return	无.
+        *
+        * @see getConfig=BrowserWindow.getConfig
+        *
+        * @example
+        			```
+        			var win = BrowserWindow.current;
+        			win.setConfig({
+        				debugMode: true,
+        				custom: 'custom'
+        			});
+        
+        			```
+        */
         
         Any setConfig(IPCMessage::SmartType msg);
+        
+        
+        /*!
+        * @fn	static Any NativeWindowProxy::getConfig(IPCMessage::SmartType msg);
+        *
+        * @tag sync
+        *
+        * @brief	获取应用程序的所有配置参数,可获取的内容见{@link 浏览器窗口参数=浏览器窗口参数}.
+        *
+        * @return	#JsonObject 所有配置参数.
+        */
+        
+        
+        /*!
+        * @fn	static Any NativeWindowProxy::getConfig(IPCMessage::SmartType msg);
+        *
+        * @tag sync
+        *
+        * @brief	获取窗口的指定配置参数.
+        *
+        * @param	#String 需要获取的字段名称.
+        *
+        * @return	返回字段名所对应的配置参数。返回类型视配置参数类型而定，为JS所支持的基本数据类型.
+        *
+        * @see setConfig=BrowserWindow.setConfig
+        *
+        * @example
+        			```
+        
+        			//获取浏览器窗口的所有配置参数
+        			var win = BrowserWindow.current;
+        			var config = win.getConfig();
+        			console.log(config);
+        
+        			//获取浏览器窗口的指定配置参数
+        			var titleBar = win.getConfig('titleBar');
+        			console.assert(titleBar == false);
+        			```
+        */
         
         Any getConfig(IPCMessage::SmartType msg);
     public:
@@ -1108,7 +1297,7 @@ namespace amo {
         HWND getNativeHWND(std::shared_ptr<AnyArgsList> args);
         /*!
          * @fn	virtual HWND NativeWindowProxy::getNativeHWND();
-         *
+         * @ignore
          * @brief	获取窗口原生句柄.
          *
          * @return	The native hwnd.
@@ -1116,7 +1305,7 @@ namespace amo {
         virtual HWND getNativeHWND();
         /*!
          * @fn	virtual std::shared_ptr<NativeWindowSettings> NativeWindowProxy::getBrowserSettings();
-         *
+         * @ignore
          * @brief	获取窗口配置参数.
          *
          * @return	The browser settings.

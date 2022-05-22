@@ -41,7 +41,8 @@ namespace amo {
         Any fileExsit(IPCMessage::SmartType msg);
         Any remove(IPCMessage::SmartType msg);
         Any removeAll(IPCMessage::SmartType msg);
-        
+        Any copyTo(IPCMessage::SmartType msg);
+        Any moveTo(IPCMessage::SmartType msg);
         
     public:
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(PathTransfer, RunnableTransfer)
@@ -59,6 +60,10 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(remove, TransferFuncStatic | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(removeAll,
                                       TransferFuncStatic | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(copyTo,
+                                      TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(moveTo,
+                                      TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     private:

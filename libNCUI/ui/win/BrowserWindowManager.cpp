@@ -47,6 +47,10 @@ namespace amo {
         std::shared_ptr<LocalWindow> pParent;
         
         for (auto& p : m_WindowMap) {
+            if (info->parent.empty() || info->parent == "0") {
+                break;
+            }
+            
             if (p->getNativeSettings()->id == info->parent) {
                 pParent = p;
             }
@@ -162,6 +166,18 @@ namespace amo {
         if (needCloseAll) {
             this->coseAllWindow(true);
         }
+        
+        // 如果所有的浏览器窗口都被关闭，那么触发回调函数
+        
+        
+        if (hasBrowserWindow()) {
+            return;
+        }
+        
+        if (m_fnAllBrowserWindowClosed) {
+            m_fnAllBrowserWindowClosed();
+        }
+        
     }
     
     
@@ -326,9 +342,35 @@ namespace amo {
         return vec;
     }
     
+    bool BrowserWindowCreator::hasBrowserWindow() const {
+        // 判断是否还存在浏览器窗口，不包含调试窗口
+        bool hasWindow = false;
+        
+        for (auto& p : m_WindowMap) {
+            if (!p->isNativeWindow()) {
+                hasWindow = true;
+                break;
+            }
+        }
+        
+        return hasWindow;
+    }
+    
+    std::function<void()> BrowserWindowCreator::getAllBrowserWindowClosedCallback()
+    const {
+        return m_fnAllBrowserWindowClosed;
+    }
+    
+    void BrowserWindowCreator::setAllBrowserWindowClosedCallback(
+        std::function<void()> val) {
+        m_fnAllBrowserWindowClosed = val;
+    }
+    
     BrowserWindowManager::BrowserWindowManager() {
         m_BrowserCount = 0;
         m_pWindowCreator = new BrowserWindowCreator();
+        m_pWindowCreator->setAllBrowserWindowClosedCallback(std::bind(
+                    &BrowserWindowManager::onAllBrowserWindowClosed, this));
         auto context = AppContext::getInstance();
         context->getClientHandler()->RegisterLifeSpanHandlerDelegate(this);
     }
@@ -345,23 +387,8 @@ namespace amo {
         m_BrowserCount--;
         
         if (m_BrowserCount == 0) {
-            ClassTransfer::getUniqueTransfer<SplashTransfer>()->closeSplash(0);
-            std::shared_ptr<UIMessageBroadcaster> broadcaster;
-            int64_t nObjectID =
-                ClassTransfer::getUniqueTransfer<AppTransfer>()->getObjectID();
-            broadcaster.reset(new UIMessageBroadcaster(nObjectID));
-            broadcaster->syncBroadcast("window-all-closed");
+            //quit();
             
-            Tray::getInstance()->destory();
-            Tray::getInstance()->close();
-#if CHROME_VERSION_BUILD >=2704
-            CefPostTask(TID_UI, base::Bind(&BrowserWindowCreator::quitMessageLoop,
-                                           m_pWindowCreator.get()));
-#else
-            CefPostTask(TID_UI, NewCefRunnableMethod(m_pWindowCreator.get(),
-                        &BrowserWindowCreator::quitMessageLoop));
-#endif
-                                           
         }
     }
     
@@ -649,5 +676,33 @@ namespace amo {
     void BrowserWindowManager::init() {
         //Tray::getInstance()->create();
     }
+    
+    void BrowserWindowManager::quit() {
+        ClassTransfer::getUniqueTransfer<SplashTransfer>()->closeSplash(0);
+        std::shared_ptr<UIMessageBroadcaster> broadcaster;
+        int64_t nObjectID =
+            ClassTransfer::getUniqueTransfer<AppTransfer>()->getObjectID();
+        broadcaster.reset(new UIMessageBroadcaster(nObjectID));
+        broadcaster->syncBroadcast("window-all-closed");
+        
+        Tray::getInstance()->destory();
+        Tray::getInstance()->close();
+#if CHROME_VERSION_BUILD >=2704
+        CefPostTask(TID_UI, base::Bind(&BrowserWindowCreator::quitMessageLoop,
+                                       m_pWindowCreator.get()));
+#else
+        CefPostTask(TID_UI, NewCefRunnableMethod(m_pWindowCreator.get(),
+                    &BrowserWindowCreator::quitMessageLoop));
+#endif
+    }
+    
+    void BrowserWindowManager::onAllBrowserWindowClosed() {
+        quit();
+    }
+    
+    void BrowserWindowManager::onAllNativeWindowClosed() {
+    
+    }
+    
     
 }

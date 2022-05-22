@@ -37,6 +37,18 @@ namespace amo {
         Any test5(IPCMessage::SmartType msg);
         Any test6(IPCMessage::SmartType msg);
         
+        /**
+         * @fn	virtual Any BrowserWindow(IPCMessage::SmartType msg) override;
+         *
+         * @tag constructor sync
+         *
+         * @brief	Executes the create class action.
+         *
+         * @param	msg	The message.
+         *
+         * @return	Any.
+         */
+        
         virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
         // ¾²Ì¬º¯Êý
@@ -51,6 +63,7 @@ namespace amo {
          * @return	Any.
          */
         Any currentWindow(IPCMessage::SmartType msg);
+        
         Any current(IPCMessage::SmartType msg);
         /*!
          * @fn	Any BrowserWindowTransfer::getAllWindows(IPCMessage::SmartType msg);
@@ -62,8 +75,11 @@ namespace amo {
          * @return	all windows.
          */
         Any getAllWindows(IPCMessage::SmartType msg);
+        
         Any getFocusedWindow(IPCMessage::SmartType msg);
+        
         Any fromID(IPCMessage::SmartType msg);
+        
         Any fromName(IPCMessage::SmartType msg);
         
         // ÊôÐÔ
@@ -233,7 +249,6 @@ namespace amo {
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(isMainWindow, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(showModal, TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getConfigs, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getConfig, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setConfig, TransferExecNormal)
         

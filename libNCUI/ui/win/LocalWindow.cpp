@@ -463,6 +463,7 @@ namespace amo {
     
     void LocalWindow::setTransferObjectID(int64_t val) {
         m_nTransferObjectID = val;
+        m_pNativeSettings->id = std::to_string(m_nTransferObjectID);
     }
     
     void LocalWindow::addTransferedControl(CControlUI* pControl) {
