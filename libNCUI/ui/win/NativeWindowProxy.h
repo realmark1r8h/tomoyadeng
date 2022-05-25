@@ -537,12 +537,14 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::setMinimumSize(IPCMessage::SmartType msg);
          *
-         * @brief	设置窗口最小化的宽高值.
+         * @brief	设置窗口最小化的宽高值，,当输入宽高为0时，将取消最小宽高限制.
          *
          * @param	#Int	最小宽度.
-         * @param	#Int	最小高度
+         *
+         * @param	#Int	最小高度.
          *
          * @return	无.
+         *
          * @example
           		   ```
         				// 设置最小宽高
@@ -568,16 +570,23 @@ namespace amo {
         				var info = win.getMinimumSize();
         				console.assert(info.width == 1280);
         				console.assert(info.height == 720);
+        
+        				// 取消限制
+        				win..setMinimumSize(0,0);
          * 		   ```
          *
          */
         virtual Any getMinimumSize(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	virtual Any NativeWindowProxy::setMaximumSize(IPCMessage::SmartType msg);
          *
-         * @brief	设置窗口最大化的宽高值.
+         * @brief	设置窗口最大宽高值,当输入宽高为0时，将取消最大宽高限制<br>
+         * 			如果设置了最大宽高，那么窗口不能被最大化，不管所给的值是不是比屏幕窗口大<br>
+         * 			窗口全屏不受该函数影响.
          *
-          * @param	#Int	最大宽度.
+         * @param	#Int	最大宽度.
+         *
          * @param	#Int	最大高度
          *
          * @return	无.
@@ -608,6 +617,10 @@ namespace amo {
         				var info = win.getMaximumSize();
         				console.assert(info.width == 1280);
         				console.assert(info.height == 720);
+        
+        				// 取消最大化宽高限制
+        				win.setMaximumSize(0,0);
+        
          * 		   ```
          */
         virtual Any getMaximumSize(IPCMessage::SmartType msg);

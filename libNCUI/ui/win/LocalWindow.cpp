@@ -66,9 +66,14 @@ namespace amo {
             return TRUE;
         }
         
+        // 如果设置了最大宽高，那么不允许窗口最大化
+        bool hasSetMaximize =
+            (m_PaintManager.GetMaxInfo().cx > 0 || m_PaintManager.GetMaxInfo().cy > 0);
+            
         // 禁止最大化
-        if (!m_pNativeSettings->maximizable &&
+        if ((!m_pNativeSettings->maximizable || hasSetMaximize) &&
                 (wParam == SC_MAXIMIZE || wParam == 0xf032)) {
+            // || wParam == 0xf014
             // 0xf032 == SC_MAXIMIZE2
             return TRUE;
         }
@@ -84,6 +89,10 @@ namespace amo {
             if (wParam != 255) {
                 return TRUE;
             }
+        }
+        
+        if (wParam == 0xf014) {
+            $cdevel("LPARAM:0x{}", amo::string::from_number((int)wParam, 16).str());
         }
         
         BOOL bZoomed = ::IsZoomed(*this);
@@ -275,6 +284,20 @@ namespace amo {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         int width = args->getInt(0);
         int height = args->getInt(1);
+        
+        if (width <= 0 || height <= 0) {
+            width = height = 0;
+        }
+        
+        // DEBUG 模式下不能为0，会被断言
+#ifdef _DEBUG
+        
+        if (width == 0 || height == 0) {
+            return Undefined();
+        }
+        
+#endif
+        
         m_PaintManager.SetMinInfo(width, height);
         RECT rect = { 0 };
         ::GetWindowRect(m_hWnd, &rect);
@@ -300,6 +323,19 @@ namespace amo {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         int width = args->getInt(0);
         int height = args->getInt(1);
+        
+        if (width <= 0 || height <= 0) {
+            width = height = 0;
+        }
+        
+        // DEBUG 模式下不能为0，会被断言
+#ifdef _DEBUG
+        
+        if (width == 0 || height == 0) {
+            return Undefined();
+        }
+        
+#endif
         m_PaintManager.SetMaxInfo(width, height);
         RECT rect = { 0 };
         ::GetWindowRect(m_hWnd, &rect);
@@ -440,7 +476,7 @@ namespace amo {
     
     
     LRESULT LocalWindow::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam,
-                                BOOL& bHandled) {
+                                BOOL & bHandled) {
         /*if (!m_pNativeSettings->resizeable) {
             return TRUE;
         }*/
@@ -466,7 +502,7 @@ namespace amo {
         m_pNativeSettings->id = std::to_string(m_nTransferObjectID);
     }
     
-    void LocalWindow::addTransferedControl(CControlUI* pControl) {
+    void LocalWindow::addTransferedControl(CControlUI * pControl) {
         m_oTransferedSet.insert(pControl);
     }
     
@@ -474,8 +510,8 @@ namespace amo {
     
     
     void LocalWindow::syncBroadcastMessage(const int64_t& nID,
-                                           const std::string& msg,
-                                           amo::json& data) {
+                                           const std::string & msg,
+                                           amo::json & data) {
         /*     return;*/
         
         std::shared_ptr<UIMessageBroadcaster> runner;
@@ -484,7 +520,7 @@ namespace amo {
     }
     
     void LocalWindow::syncBroadcastMessage(const int64_t& nID,
-                                           const std::string& msg) {
+                                           const std::string & msg) {
         //return;
         static int i = 0;
         
@@ -501,8 +537,8 @@ namespace amo {
     }
     
     void LocalWindow::broadcastMessage(const int64_t& nID,
-                                       const std::string& msg,
-                                       amo::json& data) {
+                                       const std::string & msg,
+                                       amo::json & data) {
         /*     return;*/
         
         std::shared_ptr<UIMessageBroadcaster> runner;
@@ -511,7 +547,7 @@ namespace amo {
     }
     
     void LocalWindow::broadcastMessage(const int64_t& nID,
-                                       const std::string& msg) {
+                                       const std::string & msg) {
         //return;
         static int i = 0;
         
