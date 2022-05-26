@@ -38,12 +38,18 @@ namespace amo {
         virtual void InitWindow() override;
         virtual void OnFinalMessage(HWND hWnd) override;
         virtual LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) override;
-        virtual LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        virtual LRESULT OnHotKey(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        virtual LRESULT OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT OnGetMinMaxInfo(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
+        virtual LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                  BOOL& bHandled) override;
+        virtual LRESULT OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                BOOL& bHandled);
+        virtual LRESULT OnHotKey(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                 BOOL& bHandled);
+        virtual LRESULT OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                     BOOL& bHandled) override;
+        virtual LRESULT OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                    BOOL& bHandled) override;
+        virtual LRESULT OnGetMinMaxInfo(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                        BOOL& bHandled) override;
         virtual LRESULT ResponseDefaultKeyEvent(WPARAM wParam) override;
         
         void needUpdate();
@@ -59,10 +65,20 @@ namespace amo {
         void setTopmost(bool bTopmost);
         void setIcon(const std::string& strPath);
         
-        // 注册快捷键
-        std::shared_ptr<GlobalShortcutSettings> createSettingByString(const std::string& strKey) const;
+        // 允许拖拽标题栏最大化/还原窗口
+        void enableResizeInCaption();
+        // 禁止拖拽标题栏最大化/还原窗口
+        void disableResizeInCaption();
         
-        bool registerHotKey(const int32_t& nID, const uint32_t& nMod, const uint32_t& nKey);
+        void resizableInCaption(bool resizable = true);
+        
+        
+        // 注册快捷键
+        std::shared_ptr<GlobalShortcutSettings> createSettingByString(
+            const std::string& strKey) const;
+            
+        bool registerHotKey(const int32_t& nID, const uint32_t& nMod,
+                            const uint32_t& nKey);
         int32_t registerHotKey(const uint32_t& nMod, const uint32_t& nKey);
         int32_t registerHotKey(const std::string& strKey);
         int32_t registerHotKey(std::shared_ptr<GlobalShortcutSettings> pSettings);
@@ -132,7 +148,8 @@ namespace amo {
         std::set<int32_t> m_oHotKeyContainer;
         
         /*! @brief	The hot key map. */
-        std::unordered_map<int32_t, std::shared_ptr<GlobalShortcutSettings> > m_oHotKeyMap;
+        std::unordered_map<int32_t, std::shared_ptr<GlobalShortcutSettings> >
+        m_oHotKeyMap;
         /*! @brief	全局热键回调. */
         std::function<bool(int32_t, amo::json)> m_fnHotKeyEventCallback;
         

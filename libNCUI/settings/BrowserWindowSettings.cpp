@@ -66,6 +66,9 @@ namespace amo {
         STRING_ARGS_SETTING(windowClass);
         BOOL_ARGS_SETTING(reload);
         
+        
+        
+        
     }
     
     

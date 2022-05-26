@@ -114,7 +114,7 @@ namespace amo {
         /*! @var #Boolean=true minimizable	是否可以最小化窗口. */
         bool minimizable;
         
-        /*! @var #Boolean=true	maximizable 是否要以最大化窗口. */
+        /*! @var #Boolean=true	maximizable 是否要以最大化窗口，如果resizable==false, maximizable会被重置为true, 不管之前传入的是什么值. */
         bool maximizable;
         
         /*! @var #Boolean=true	fullscreenable 是否要以全屏窗口. */

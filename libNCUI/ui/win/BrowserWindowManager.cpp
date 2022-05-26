@@ -82,7 +82,7 @@ namespace amo {
         
         amo::string title(info->title, true);
         
-        if (info->resizable) {
+        if (info->resizable && info->maximizable) {
             window->Create(wnd,
                            title.to_unicode().c_str(),
                            UI_WNDSTYLE_FRAME,

@@ -45,6 +45,8 @@ namespace amo {
         virtual Any setMaximumSize(IPCMessage::SmartType msg) override;
         virtual Any getMaximumSize(IPCMessage::SmartType msg) override;
         virtual Any setResizable(IPCMessage::SmartType msg) override;
+        virtual Any setMaximizable(IPCMessage::SmartType msg) override;
+        
         virtual Any center(IPCMessage::SmartType msg) override;
         virtual Any setHasShadow(IPCMessage::SmartType msg) override;
         virtual Any toggleFullScreen(IPCMessage::SmartType msg) override;

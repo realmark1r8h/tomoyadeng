@@ -230,9 +230,7 @@ namespace amo {
     }
     
     Any NativeWindowProxy::setMaximizable(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        bool maximizable = args->getBool(0);
-        getNativeSettings()->maximizable = maximizable;
+        // ”…LocalWindow ºÃ≥–
         return Undefined();
     }
     

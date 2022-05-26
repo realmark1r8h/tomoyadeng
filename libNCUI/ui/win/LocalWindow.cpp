@@ -336,6 +336,15 @@ namespace amo {
         }
         
 #endif
+        
+        
+        if ((width != 0 && height != 0) || !getNativeSettings()->resizable) {
+            resizableInCaption(false);
+        } else  {
+            resizableInCaption(true);
+        }
+        
+        
         m_PaintManager.SetMaxInfo(width, height);
         RECT rect = { 0 };
         ::GetWindowRect(m_hWnd, &rect);
@@ -358,8 +367,12 @@ namespace amo {
     
     Any LocalWindow::setResizable(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        
         bool resizeable = args->getBool(0);
         m_pNativeSettings->resizable = resizeable;
+        //¸²¸ÇµômaximizableÖ®ÓÐÉèÖÃ
+        m_pNativeSettings->maximizable = true;
+        
         
         if (!resizeable) {
             RECT rcSizeBox = { 0, 0, 0, 0 };
@@ -387,6 +400,19 @@ namespace amo {
     }
     
     
+    
+    Any LocalWindow::setMaximizable(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        
+        if (!getNativeSettings()->resizable) {
+            return false;
+        }
+        
+        bool maximizable = args->getBool(0);
+        getNativeSettings()->maximizable = maximizable;
+        resizableInCaption(maximizable);
+        return Undefined();
+    }
     
     Any LocalWindow::center(IPCMessage::SmartType msg) {
         CenterWindow();

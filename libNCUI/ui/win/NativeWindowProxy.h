@@ -602,12 +602,13 @@ namespace amo {
         
         /*!
          * @fn	virtual Any NativeWindowProxy::getMaximumSize(IPCMessage::SmartType msg);
+         *
          * @tag sync
+         *
          * @brief	返回一个对象，它包含了窗口最大化的宽，高.{width:100, height:200}
          *
-         * @param	msg	The message.
-         *
          * @return	#JsonObject 窗口的最大宽高信息.
+         *
          * @example
          * 		   ```
         				var win = BrowserWindow.current;
@@ -618,8 +619,9 @@ namespace amo {
         				console.assert(info.width == 1280);
         				console.assert(info.height == 720);
         
-        				// 取消最大化宽高限制
+        				// 取消最大化宽高限制,DEBUG模块下无效
         				win.setMaximumSize(0,0);
+        
         
          * 		   ```
          */
@@ -628,11 +630,14 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::setResizable(IPCMessage::SmartType msg);
          *
-         * @brief	设置窗口是否可以被用户改变窗口大小.
+         * @brief	设置窗口是否可以被用户改变窗口大小.<br>
+         * 			该函数优先级高于setMaximizable，只要调用了这个函数，都相关于调用了一次{@link setMaximizable(true)=BrowserWindow.setMaximizable},
+         * 			maximizable会被重置为true
          *
          * @param	#Boolean=false true允许 false不允许 .
          *
          * @return	无.
+         *
          * @example
          *
         		```
@@ -753,11 +758,13 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::setMaximizable(IPCMessage::SmartType msg);
          *
-         * @brief	设置窗口是否可以最大化.
+         * @brief	设置窗口是否可以最大化. 如果{@link isResizable=BrowserWindow.isResizable}==false，此函数无效
          *
          * @param	#Boolean true/false.
          *
          * @return	无.
+         *
+         * @see setResizable=BrowserWindow.setResizable isMaximizable=BrowserWindow.isMaximizable
          *
          * @example
          *
@@ -769,7 +776,7 @@ namespace amo {
         
         			```
          */
-        Any setMaximizable(IPCMessage::SmartType msg);
+        virtual Any setMaximizable(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any NativeWindowProxy::isMaximizable(IPCMessage::SmartType msg);

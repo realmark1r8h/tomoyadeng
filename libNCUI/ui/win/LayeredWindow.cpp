@@ -567,6 +567,30 @@ namespace amo {
         
     }
     
+    void LayeredWindow::enableResizeInCaption() {
+        DWORD dwStyle = ::GetWindowLong(m_hWnd, GWL_STYLE);
+        dwStyle &= ~UI_WNDSTYLE_DIALOG;
+        dwStyle |= UI_WNDSTYLE_FRAME;
+        
+        ::SetWindowLong(m_hWnd, GWL_STYLE, dwStyle);
+    }
+    
+    void LayeredWindow::disableResizeInCaption() {
+        DWORD dwStyle = ::GetWindowLong(m_hWnd, GWL_STYLE);
+        dwStyle &= ~UI_WNDSTYLE_FRAME;
+        dwStyle |= UI_WNDSTYLE_DIALOG;
+        
+        ::SetWindowLong(m_hWnd, GWL_STYLE, dwStyle);
+    }
+    
+    void LayeredWindow::resizableInCaption(bool resizable /*= true*/) {
+        if (resizable) {
+            enableResizeInCaption();
+        } else {
+            disableResizeInCaption();
+        }
+    }
+    
     bool LayeredWindow::registerHotKey(const int32_t& nID,
                                        const uint32_t& nMod,
                                        const uint32_t& nKey) {

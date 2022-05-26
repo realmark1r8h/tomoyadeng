@@ -104,6 +104,14 @@ namespace amo {
         
         BOOL_ARGS_SETTING(esc);
         BOOL_ARGS_SETTING(back_forword);
+        
+        
+        // 如果不能改变窗口大小，那么maximizable=true;
+        if (!resizable) {
+            DEFAULT_ARGS_SETTINGS(maximizable, true);
+            
+        }
+        
         return ;
     }
     
