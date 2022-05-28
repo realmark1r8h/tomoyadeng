@@ -166,17 +166,30 @@ namespace amo {
     
     Any MouseTransfer::screenToClient(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        std::string strID = args->getString(0);
-        int x = args->getInt(1);
-        int y = args->getInt(2);
         auto manager = BrowserWindowManager::getInstance();
-        std::shared_ptr<LocalWindow> pWindow = manager->findWindow(strID);
-        amo::json json;
+        std::shared_ptr<LocalWindow> pWindow;
+        
+        int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+        
+        int x = 0;
+        int y = 0;
+        
+        if (args->getValue(0).is<int>()) {
+            pWindow = manager->findWindow(nBrowserID);
+            x = args->getInt(0);
+            y = args->getInt(1);
+        } else {
+            std::string strID = args->getString(0);
+            pWindow = manager->findWindow(strID);
+            x = args->getInt(1);
+            y = args->getInt(2);
+        }
         
         if (!pWindow) {
             return Undefined();
         }
         
+        amo::json json;
         POINT pt = { x, y };
         ::ScreenToClient(pWindow->GetHWND(), &pt);
         json.put("x", (int)pt.x);

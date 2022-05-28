@@ -130,7 +130,7 @@ namespace amo {
         return Undefined();
     }
     
-    Any NativeWindowProxy::setBounds(IPCMessage::SmartType msg) {
+    Any NativeWindowProxy::setWindowRect(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         amo::json json(args->getString(0));
         int x = json.getInt("x");
@@ -141,13 +141,15 @@ namespace amo {
         return Undefined();
     }
     
-    Any NativeWindowProxy::getBounds(IPCMessage::SmartType msg) {
+    Any NativeWindowProxy::getWindowRect(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         RECT rect = { 0 };
         ::GetWindowRect(getNativeHWND(args), &rect);
         amo::json json;
         json.put("x", rect.left);
         json.put("y", rect.top);
+        json.put("r", rect.right);
+        json.put("b", rect.bottom);
         json.put("width", rect.right - rect.left);
         json.put("height", rect.bottom - rect.top);
         return json;
@@ -289,7 +291,7 @@ namespace amo {
     }
     
     Any NativeWindowProxy::getPosition(IPCMessage::SmartType msg) {
-        return getBounds(msg);
+        return getWindowRect(msg);
     }
     
     Any NativeWindowProxy::setTitle(IPCMessage::SmartType msg) {

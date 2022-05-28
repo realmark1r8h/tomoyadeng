@@ -18,7 +18,7 @@ namespace amo {
      * @extend  Object
      *
      * @brief	控制程序程序的生命周期，并提供一些与程序相关的功能.<br>
-     * 			工作线程：**UI线程**。
+     * 			工作线程：**UI线程**.
      */
     
     class AppTransfer

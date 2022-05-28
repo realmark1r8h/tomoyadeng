@@ -420,7 +420,7 @@ namespace amo {
         virtual Any isFullScreen(IPCMessage::SmartType msg);
         
         /*!
-         * @fn	Any NativeWindowProxy::setBounds(IPCMessage::SmartType msg);
+         * @fn	Any NativeWindowProxy::setWindowRect(IPCMessage::SmartType msg);
          *
          * @brief	重新设置窗口的宽高值，并且移动到指定的 x, y 位置,<br>
          * 			当窗口处于全屏或者最大化状态时，该函数无效.<br>
@@ -431,13 +431,13 @@ namespace amo {
          *
          * @return	无.
          *
-         * @see  getBounds=BrowserWindow.getBounds
+         * @see  getWindowRect=BrowserWindow.getWindowRect
          *
          * @example
         			 ```
         				var win = BrowserWindow.current;
         
-        				win.setBounds({
+        				win.setWindowRect({
         					x: 100,
         					y: 100,
         					width: 1000,
@@ -446,10 +446,10 @@ namespace amo {
         
         			 ```
          */
-        Any setBounds(IPCMessage::SmartType msg);
+        Any setWindowRect(IPCMessage::SmartType msg);
         
         /*!
-         * @fn	Any NativeWindowProxy::getBounds(IPCMessage::SmartType msg);
+         * @fn	Any NativeWindowProxy::getWindowRect(IPCMessage::SmartType msg);
          *
          * @tag sync
          *
@@ -457,14 +457,20 @@ namespace amo {
          *
          *
          * @return	#JsonObject 窗口的坐标参数.
+         *			|#Int x 窗口左上角X坐标.
+         *			|#Int y 窗口左上角Y坐标.
+         *			|#Int r 窗口右下角X坐标.
+         *			|#Int b 窗口右下角Y坐标.
+         *			|#Int width 窗口宽度.
+         *			|#Int height 窗口高度.
          *
-         * @see setBounds=BrowserWindow.setBounds
+         * @see setWindowRect=BrowserWindow.setWindowRect
          *
          * @example
         			```
         				var win = BrowserWindow.current;
         
-        				win.setBounds({
+        				win.setWindowRect({
         					x: 100,
         					y: 100,
         					width: 1000,
@@ -472,7 +478,7 @@ namespace amo {
         				});
         
         				// 获取窗体坐标
-        				var winInfo = win.getBounds();
+        				var winInfo = win.getWindowRect();
         				console.assert(winInfo.x == 100);
         				console.assert(winInfo.y == 100);
         				console.assert(winInfo.width == 1000);
@@ -480,7 +486,7 @@ namespace amo {
         
         			```
          */
-        Any getBounds(IPCMessage::SmartType msg);
+        Any getWindowRect(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any NativeWindowProxy::setSize(IPCMessage::SmartType msg);
@@ -982,11 +988,11 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::getPosition(IPCMessage::SmartType msg);
          *
-         * @brief	 返回一个包含当前窗口位置的对象,返回内容与{@link getBounds=BrowserWindow.getBounds}相同.
+         * @brief	 返回一个包含当前窗口位置的对象,返回内容与{@link getWindowRect=BrowserWindow.getWindowRect}相同.
          *
          * @return	#JsonObject.
          *
-         * @see getBounds=BrowserWindow.getBounds
+         * @see getWindowRect=BrowserWindow.getWindowRect
          *
          * @example
          *
@@ -1183,7 +1189,7 @@ namespace amo {
          * @example
          *
         		 ```
-        			 var win = BrowserWindow;
+        			 var win = BrowserWindow.current;
         			 // 设置窗口可以全屏显示
         			 win.setFullScreenable(true);
         			 // 退出全屏
