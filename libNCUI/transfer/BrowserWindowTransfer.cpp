@@ -178,6 +178,14 @@ namespace amo {
         return Undefined();
     }
     
+    Any BrowserWindowTransfer::setDragBlackList(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
+    Any BrowserWindowTransfer::getDragBlackList(IPCMessage::SmartType msg) {
+        return Undefined();
+    }
+    
     Any BrowserWindowTransfer::currentWindow(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);

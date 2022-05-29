@@ -139,6 +139,29 @@ namespace amo {
         
         virtual Any removeOverlap(IPCMessage::SmartType msg);
         
+        /**
+         * @fn	virtual Any setDragBlackList(IPCMessage::SmartType msg);
+         *
+         * @brief	设置拖拽黑名单.
+         *
+         * @param	#Int 参数.
+         *
+         * @return	无.
+         */
+        
+        virtual Any setDragBlackList(IPCMessage::SmartType msg);
+        
+        /**
+         * @fn	virtual Any getDragBlackList(IPCMessage::SmartType msg);
+         *
+         * @brief	获取拖拽黑名单.
+         *
+         *
+         * @return	#Int 不允许拖拽的类型.
+         */
+        
+        virtual Any getDragBlackList(IPCMessage::SmartType msg);
+        
         Any addBrowserWindowSettings(IPCMessage::SmartType msg);
         Any removeBrowserWindowSettings(IPCMessage::SmartType msg);
         Any getBrowserWindowSettings(IPCMessage::SmartType msg);

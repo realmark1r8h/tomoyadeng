@@ -57,6 +57,7 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(windowClass, "BrowserWindow");
         //TODO: 改成false,默认不允许刷新
         DEFAULT_ARGS_SETTINGS(reload, true);
+        DEFAULT_ARGS_SETTINGS(dragBlacklist, 0);
     }
     
     
@@ -65,8 +66,7 @@ namespace amo {
         BOOL_ARGS_SETTING(main);
         STRING_ARGS_SETTING(windowClass);
         BOOL_ARGS_SETTING(reload);
-        
-        
+        BOOL_ARGS_SETTING(dragBlacklist);
         
         
     }

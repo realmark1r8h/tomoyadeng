@@ -99,6 +99,9 @@ namespace amo {
     
     
     
+    
+    
+    
     LRESULT BrowserWindow::OnLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                          BOOL& bHandled) {
         /* if (wParam == HTCAPTION) {
@@ -401,8 +404,18 @@ namespace amo {
         return false;
     }
     
-    std::shared_ptr<amo::BrowserWindowSettings> BrowserWindow::getBrowserSettings()
-    const {
+    
+    Any BrowserWindow::setDragBlackList(IPCMessage::SmartType msg) {
+        m_pBrowserSettings->dragBlacklist = msg->getArgumentList()->getInt(0);
+        return Undefined();
+    }
+    
+    Any BrowserWindow::getDragBlackList(IPCMessage::SmartType msg) {
+        return   m_pBrowserSettings->dragBlacklist;
+    }
+    
+    std::shared_ptr<amo::BrowserWindowSettings>
+    BrowserWindow::getBrowserSettings()  const {
         return m_pBrowserSettings;
     }
     
@@ -576,6 +589,17 @@ namespace amo {
     
         return false;
         
+    }
+    
+    bool BrowserWindow::OnDragEnter(CefRefPtr<CefBrowser> browser,
+                                    CefRefPtr<CefDragData> dragData, CefDragHandler::DragOperationsMask mask) {
+        if (m_pBrowserSettings->dragBlacklist != 0) {
+            if ((m_pBrowserSettings->dragBlacklist & mask) != 0) {
+                return true;
+            }
+        }
+        
+        return false;
     }
     
 #if CHROME_VERSION_BUILD >= 2704

@@ -11,6 +11,15 @@
 
 namespace amo {
     class Tray;
+    
+    /**
+     * @class	tray
+     *
+     * @brief	托盘操作类.<br>
+     * 			工作线程 **UI**
+     *
+     */
+    
     class TrayTransfer
         : public ClassTransfer
         , public amo::singleton<TrayTransfer> {
@@ -24,63 +33,260 @@ namespace amo {
         /*!
          * @fn	Any TrayTransfer::show(IPCMessage::SmartType msg);
          *
+         * @tag static
+         *
          * @brief	显示托盘.
          *
-         * @param	msg	The message.
+         * @return	无.
          *
-         * @return	Any.
+         * @example
+         *
+        		 ```
+        			include('tray');
+        			tray.show();
+        		 ```
          */
         Any show(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any TrayTransfer::hide(IPCMessage::SmartType msg);
          *
+         * @tag static
+         *
          * @brief	隐藏托盘.
          *
-         * @param	msg	The message.
+         * @return	无.
+         * @example
          *
-         * @return	Any.
+        			 ```
+        				include('tray');
+        				tray.hide();
+        			 ```
          */
         Any hide(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any TrayTransfer::setIcon(IPCMessage::SmartType msg);
          *
+         * @tag static
+         *
          * @brief	设置托盘图标.
          *
-         * @param	msg	The message.
+         * @param	#String 图标本地路径.
          *
-         * @return	Any.
+         * @return	无.
+         *
+         * @example
+         *
+        		 ```
+        			include('tray');
+        			tray.setIcon('skin/logo1.ico');
+        		 ```
          */
         Any setIcon(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any TrayTransfer::setTooltip(IPCMessage::SmartType msg);
          *
+         * @tag static
+         *
          * @brief	设置托盘提示文本.
          *
-         * @param	msg	The message.
+         * @param	#String 需要显示的提示文本.
          *
-         * @return	Any.
+         * @return	无.
+         *
+         * @example
+         *
+        	 ```
+        		include('tray');
+        		tray.setTooltip(new Date().toString());
+        	 ```
          */
         Any setTooltip(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any TrayTransfer::blink(IPCMessage::SmartType msg);
          *
+         * @tag static
+         *
          * @brief	闪烁托盘.
          *
-         * @param	msg	The message.
+         * @param	#Boolean=false true闪烁/false停止闪烁.
          *
-         * @return	Any.
+         * @return	无.
+         *
+         * @see isBlink=tray.isBlink
+         * @example
+         *
+        	 ```
+        		include('tray');
+        		tray.blink(true);
+        	 ```
          */
         Any blink(IPCMessage::SmartType msg);
+        
         /*!
          * @fn	Any TrayTransfer::isBlink(IPCMessage::SmartType msg);
          *
+         * @tag static
+         *
          * @brief	判断托盘是否闪烁.
          *
-         * @param	msg	The message.
+         * @return	#Boolean.
          *
-         * @return	Any.
+         * @see blink=tray.blink
+         *
+         * @example
+         *
+        		 ```
+        			include('tray');
+        			tray.blink(true);
+        			console.assert(tray.isBlink() == true);
+        			tray.blink(false);
+        			console.assert(tray.isBlink() == false);
+        		 ```
          */
         Any isBlink(IPCMessage::SmartType msg);
+        
+        
+        /*!
+        * @event	Any TrayTransfer::buttondown(IPCMessage::SmartType msg);
+        *
+        * @tag static
+        *
+        * @brief	鼠标左键按下时触发.
+        *
+        * @example
+        *
+        	```
+        	include('tray');
+        	tray.on('buttondown', function(){
+        		console.log('buttondown');
+        	});
+        	```
+        */
+        
+        /*!
+        * @event	Any TrayTransfer::buttonup(IPCMessage::SmartType msg);
+        *
+        * @tag static
+        *
+        * @brief	鼠标左键弹起时触发.
+        *
+        * @example
+        *
+        	```
+        		include('tray');
+        		tray.on('buttonup', function(){
+        			console.log('buttonup');
+        		});
+        	```
+        */
+        
+        /*!
+        * @event	Any TrayTransfer::rbuttondown(IPCMessage::SmartType msg);
+        *
+        * @tag static
+        *
+        * @brief	鼠标右键按下时触发.
+        *
+        * @example
+        *
+        	```
+        	include('tray');
+        	tray.on('rbuttondown', function(){
+        		console.log('rbuttondown');
+        	});
+        	```
+        */
+        
+        /*!
+        * @event	Any TrayTransfer::rbuttonup(IPCMessage::SmartType msg);
+        *
+        * @tag static
+        *
+        * @brief	鼠标右键弹起时触发.
+        *
+        * @example
+        *
+        		```
+        		include('tray');
+        		tray.on('rbuttonup', function(){
+        			console.log('rbuttonup');
+        		});
+        		```
+        */
+        
+        /*!
+        * @event	Any TrayTransfer::click(IPCMessage::SmartType msg);
+        *
+        * @tag static
+        *
+        * @brief	鼠标左键单击时触发.
+        *
+        * @example
+        *
+        		```
+        		include('tray');
+        		tray.on('click', function(){
+        			console.log('click');
+        		});
+        		```
+        */
+        
+        /*!
+        * @event	Any TrayTransfer::dbclick(IPCMessage::SmartType msg);
+        *
+        * @tag static
+        *
+        * @brief	鼠标左键双击时触发.
+        *
+        * @example
+        *
+        	```
+        	include('tray');
+        	tray.on('dbclick', function(){
+        		console.log('dbclick');
+        	});
+        	```
+        */
+        
+        /*!
+        * @event	Any TrayTransfer::mousehover(IPCMessage::SmartType msg);
+        *
+        * @tag static
+        *
+        * @brief	鼠标悬停时触发.
+        *
+        * @example
+        *
+        	```
+        	include('tray');
+        	tray.on('mousehover', function(){
+        		console.log('mousehover');
+        	});
+        	```
+        */
+        
+        /*!
+        * @event	Any TrayTransfer::mouseleave(IPCMessage::SmartType msg);
+        *
+        * @tag static
+        *
+        * @brief	鼠标离开时触发.
+        *
+        * @example
+        *
+        			```
+        			include('tray');
+        			tray.on('mouseleave', function(){
+        				console.log('mouseleave');
+        			});
+        			```
+        */
+        
+        
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(TrayTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(show, TransferFuncStatic)

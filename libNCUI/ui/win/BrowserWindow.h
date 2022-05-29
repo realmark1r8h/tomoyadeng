@@ -44,6 +44,8 @@ namespace amo {
         
         
         
+        
+        
     public:
         // WindowImplBase
         virtual LPCTSTR GetWindowClassName() const override;
@@ -88,6 +90,13 @@ namespace amo {
         virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;
         
         // DragHandlerDelegate
+        
+        
+        virtual bool OnDragEnter(CefRefPtr<CefBrowser> browser,
+                                 CefRefPtr<CefDragData> dragData,
+                                 CefDragHandler::DragOperationsMask mask) override;
+                                 
+                                 
 #if CHROME_VERSION_BUILD >= 2704
         virtual void OnDraggableRegionsChanged(CefRefPtr<CefBrowser> browser,
                                                const std::vector<CefDraggableRegion>& regions) override;
@@ -106,6 +115,10 @@ namespace amo {
         virtual Any repaint(IPCMessage::SmartType msg) override;
         virtual Any addOverlap(IPCMessage::SmartType msg) override;
         virtual Any removeOverlap(IPCMessage::SmartType msg) override;
+        
+        virtual Any setDragBlackList(IPCMessage::SmartType msg) override;
+        virtual Any getDragBlackList(IPCMessage::SmartType msg) override;
+        
     public:
         // LocalWindow
         virtual std::shared_ptr<BrowserWindow> toBrowserWindow() override;

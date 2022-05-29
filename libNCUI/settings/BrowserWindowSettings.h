@@ -53,6 +53,17 @@ namespace amo {
         /** @var #Boolean=false relad	是否允许页面刷新. 默认false */
         bool reload;
         
+        /** @var #Int=0	 dragBlackList	不允许的拖拽操作黑名单,以下是可以使用的值,可以组合使用<br>
+        /** @brief  DRAG_OPERATION_NONE    = 0,<br>
+        			DRAG_OPERATION_COPY    = 1,<br>
+        			DRAG_OPERATION_LINK    = 2,<br>
+        			DRAG_OPERATION_GENERIC = 4,<br>
+        			DRAG_OPERATION_PRIVATE = 8,<br>
+        			DRAG_OPERATION_MOVE    = 16,<br>
+        			DRAG_OPERATION_DELETE  = 32,<br>
+        			DRAG_OPERATION_EVERY   = 0xffffffff */
+        int dragBlacklist;
+        
     };
 }
 
