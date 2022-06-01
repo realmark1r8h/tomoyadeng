@@ -12,6 +12,12 @@ namespace amo {
     class SplashWindow;
     class SplashWindowSettings;
     
+    /*!
+     * @class	splash
+     *
+     * @brief	启动画面.
+     */
+    
     class SplashTransfer
         : public ClassTransfer
         , public amo::singleton<SplashTransfer> {
@@ -25,23 +31,62 @@ namespace amo {
         /*!
          * @fn	Any SplashTransfer::show(IPCMessage::SmartType msg);
          *
+         * @tag static
+         *
          * @brief	显示Splash.
          *
-         * @param	msg	The message.
+         * @param	#JsonObject 可支持的参数见{@link 启动画面=启动画面}.
          *
-         * @return	Any.
+         * @return	无.
+         *
+         * @see hide=splash.hide
+         * @example
+         *
+         ```
+        	 include('splash');
+        	 splash.show({
+        		image: 'images/splash.jpg',
+        		duration: 5000
+        	 });
+         ```
          */
         
         Any show(IPCMessage::SmartType msg);
         
+        
+        /*!
+        * @fn	Any SplashTransfer::hide(IPCMessage::SmartType msg);
+        *
+        * @tag static
+        *
+        * @brief	n毫秒后隐藏Splash，n由{@link show=splash.show}中设置的fadeout决定.
+        *
+        * @return	无.
+        *
+        * @example
+        
+        		```
+        				include('splash');
+        				splash.hide();
+        		```
+        */
+        
         /*!
          * @fn	Any SplashTransfer::hide(IPCMessage::SmartType msg);
          *
-         * @brief	隐藏Splash.
+         * @tag static
          *
-         * @param	msg	The message.
+         * @brief	n毫秒后隐藏Splash.
          *
-         * @return	Any.
+         * @param	#Int 指定延时时间n (毫秒).
+         *
+         * @return	无.
+         * @example
+        
+        		```
+        				include('splash');
+        				splash.hide(3000);
+        		```
          */
         
         Any hide(IPCMessage::SmartType msg);
@@ -49,11 +94,17 @@ namespace amo {
         /*!
          * @fn	Any SplashTransfer::isVisible(IPCMessage::SmartType msg);
          *
+         * @tag static sync
+         *
          * @brief	判断Splash是否可见.
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	#Boolean.
+         * @example
+        
+        		```
+        				include('splash');
+        				console.assert(splash.isVisible() == false);
+        		```
          */
         
         Any isVisible(IPCMessage::SmartType msg);

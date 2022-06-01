@@ -35,8 +35,8 @@ namespace amo {
          *
          * @param	#String 要执行的shell命令 open print 等.
          * @param	#String 要调用的程序或打开的文件路径.
-         * @param	#String=""	启动参数.
-         * @param	#String=""	工作目录,默认为当前路径.
+         * @param	#String 启动参数,默认为"".
+         * @param	#String 工作目录,默认为当前路径.
          * @param	#Int=1 显示参数
          *
          *
@@ -45,7 +45,7 @@ namespace amo {
          *
         	 ```
         	 include('shell');
-        	 shell.exec("open", "explorer", "/e, /select, images\\close_p.jpg", "", shell.SW_SHOWNORMAL);
+        	 shell.exec("open", "explorer", "/e, /select, skin\\close_p.png", "", shell.SW_SHOWNORMAL);
         	 ```
          */
         
@@ -59,8 +59,8 @@ namespace amo {
          * @brief	打开文件或程序.
          *
          * @param	#String	文件或程序路径.
-         * @param	#String=""	启动参数.
-         * @param	#String=""	工作目录,默认为当前路径.
+         * @param	#String	启动参数,默认为"".
+         * @param	#String	工作目录,默认为当前路径.
          *
          * @return	无.
          * @example
@@ -87,7 +87,7 @@ namespace amo {
         
         	 ```
         		include('shell');
-        		shell.print("images\\close_p.jpg");
+        		shell.print("skin\\close_p.png");
         	 ```
          */
         
@@ -105,7 +105,7 @@ namespace amo {
          *
         		 ```
         			include('shell');
-        			shell.showItemInFolder('skin\\close_p.jpg');
+        			shell.showItemInFolder('skin\\close_p.png');
         		 ```
          */
         

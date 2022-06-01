@@ -6,12 +6,17 @@
 #include "settings/NativeWindowSettings.h"
 namespace amo {
 
+
+
     /*!
      * @class 启动画面
      *
-     * @id	SplashWindowSettings
+     * @id	settingsSplashWindowSettings
+     *
+     * @desc 启动画面
      *
      * @chapter settings
+     *
      *
      * @brief	启动画面相关参数.
      */

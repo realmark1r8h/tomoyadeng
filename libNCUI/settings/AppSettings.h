@@ -14,7 +14,7 @@ namespace amo {
     /*!
      * @class 启动参数
      *
-     * @id AppSettings
+     * @id settingsAppSettings
      *
      * @desc 启动参数
      *
