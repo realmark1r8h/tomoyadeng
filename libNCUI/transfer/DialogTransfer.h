@@ -12,6 +12,13 @@
 
 namespace amo {
 
+    /**
+     * @class	dialog
+     *
+     * @brief	弹出框，文件选择框.
+     *
+     */
+    
     class DialogTransfer
         : public ClassTransfer
         , public amo::singleton < DialogTransfer > {
@@ -28,19 +35,25 @@ namespace amo {
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(DialogTransfer, ClassTransfer)
         
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(runFileDialog, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(runFileDialog,
+                                      TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(alert, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(confirm, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(prompt, TransferFuncStatic | TransferExecSync)
         
         AMO_CEF_MESSAGE_TRANSFER_ATTR2(FILE_DIALOG_OPEN, (int)FILE_DIALOG_OPEN)
-        AMO_CEF_MESSAGE_TRANSFER_ATTR2(FILE_DIALOG_OPEN_MULTIPLE, (int)FILE_DIALOG_OPEN_MULTIPLE)
-        AMO_CEF_MESSAGE_TRANSFER_ATTR2(FILE_DIALOG_OPEN_FOLDER, (int)FILE_DIALOG_OPEN_FOLDER)
+        AMO_CEF_MESSAGE_TRANSFER_ATTR2(FILE_DIALOG_OPEN_MULTIPLE,
+                                       (int)FILE_DIALOG_OPEN_MULTIPLE)
+        AMO_CEF_MESSAGE_TRANSFER_ATTR2(FILE_DIALOG_OPEN_FOLDER,
+                                       (int)FILE_DIALOG_OPEN_FOLDER)
         AMO_CEF_MESSAGE_TRANSFER_ATTR2(FILE_DIALOG_SAVE, (int)FILE_DIALOG_SAVE)
-        AMO_CEF_MESSAGE_TRANSFER_ATTR2(FILE_DIALOG_TYPE_MASK, (int)FILE_DIALOG_TYPE_MASK)
-        AMO_CEF_MESSAGE_TRANSFER_ATTR2(FILE_DIALOG_OVERWRITEPROMPT_FLAG, (int)FILE_DIALOG_OVERWRITEPROMPT_FLAG)
-        AMO_CEF_MESSAGE_TRANSFER_ATTR2(FILE_DIALOG_HIDEREADONLY_FLAG, (int)FILE_DIALOG_HIDEREADONLY_FLAG)
-        
+        AMO_CEF_MESSAGE_TRANSFER_ATTR2(FILE_DIALOG_TYPE_MASK,
+                                       (int)FILE_DIALOG_TYPE_MASK)
+        AMO_CEF_MESSAGE_TRANSFER_ATTR2(FILE_DIALOG_OVERWRITEPROMPT_FLAG,
+                                       (int)FILE_DIALOG_OVERWRITEPROMPT_FLAG)
+        AMO_CEF_MESSAGE_TRANSFER_ATTR2(FILE_DIALOG_HIDEREADONLY_FLAG,
+                                       (int)FILE_DIALOG_HIDEREADONLY_FLAG)
+                                       
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         

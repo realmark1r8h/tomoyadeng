@@ -57,10 +57,14 @@ namespace amo {
     
     ClientApp::ClientApp() {
         $clog(amo::cdevel << func_orient << "ClientApp ¹¹Ôìº¯Êý" << amo::endl;);
-        m_pBrowserProcessHandler = new BrowserProcessHandler();
         
-        m_pRenderProcessHandler =   new RenderProcessHandler();
-        m_pResourceBundleHandler =   new ResourceBundleHandler();
+        m_pBrowserProcessHandler = NULL;
+        m_pRenderProcessHandler = NULL;
+        m_pResourceBundleHandler = NULL;
+        
+        /* m_pBrowserProcessHandler = new BrowserProcessHandler();
+         m_pRenderProcessHandler =   new RenderProcessHandler();
+         m_pResourceBundleHandler =   new ResourceBundleHandler();*/
     }
     
     
@@ -72,18 +76,32 @@ namespace amo {
     CefRefPtr<CefRenderProcessHandler> ClientApp::GetRenderProcessHandler() {
         $clog(amo::cdevel << func_orient << amo::endl;);
         
+        if (m_pRenderProcessHandler == NULL) {
+            m_pBrowserProcessHandler = new BrowserProcessHandler();
+        }
+        
         return m_pRenderProcessHandler.get();
     }
     
     CefRefPtr<CefBrowserProcessHandler> ClientApp::GetBrowserProcessHandler() {
-        //$clog(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
+        
+        if (m_pBrowserProcessHandler == NULL) {
+            m_pBrowserProcessHandler = new BrowserProcessHandler();
+        }
+        
         return m_pBrowserProcessHandler.get();
     }
     
     CefRefPtr<CefResourceBundleHandler> ClientApp::GetResourceBundleHandler() {
         $clog(amo::cdevel << func_orient << amo::endl;);
-        //return m_pResourceBundleHandler.get();
-        return NULL;
+        
+        if (m_pResourceBundleHandler == NULL) {
+            m_pResourceBundleHandler = new ResourceBundleHandler();
+        }
+        
+        return m_pResourceBundleHandler.get();
+        //return NULL;
     }
     
 #if  CHROME_VERSION_BUILD  >= 3029
@@ -284,7 +302,7 @@ namespace amo {
     bool ClientApp::RegisterRenderProcessHandlerDelegate(
         RenderProcessHandlerDelegate* delegate) {
         if (!m_pRenderProcessHandler) {
-            return false;
+            GetRenderProcessHandler();
         }
         
         return m_pRenderProcessHandler->RegisterDelegate(delegate);
@@ -293,7 +311,7 @@ namespace amo {
     void ClientApp::UnregisterRenderProcessHandlerDelegate(
         RenderProcessHandlerDelegate* delegate) {
         if (!m_pRenderProcessHandler) {
-            return;
+            GetRenderProcessHandler();
         }
         
         m_pRenderProcessHandler->UnregisterDelegate(delegate);
@@ -302,7 +320,7 @@ namespace amo {
     bool ClientApp::RegisterBrowserProcessHandlerDelegate(
         BrowserProcessHandlerDelegate* delegate) {
         if (!m_pBrowserProcessHandler) {
-            return false;
+            GetBrowserProcessHandler();
         }
         
         return m_pBrowserProcessHandler->RegisterDelegate(delegate);
@@ -311,7 +329,7 @@ namespace amo {
     void ClientApp::UnregisterBrowserProcessHandlerDelegate(
         BrowserProcessHandlerDelegate* delegate) {
         if (!m_pBrowserProcessHandler) {
-            return;
+            GetBrowserProcessHandler();
         }
         
         m_pBrowserProcessHandler->UnregisterDelegate(delegate);

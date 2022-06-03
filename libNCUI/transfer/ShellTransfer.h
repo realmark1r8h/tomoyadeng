@@ -56,6 +56,8 @@ namespace amo {
         /**
          * @fn	Any ShellTransfer::open(IPCMessage::SmartType msg);
          *
+         * @tag static
+         *
          * @brief	打开文件或程序.
          *
          * @param	#String	文件或程序路径.
@@ -77,6 +79,8 @@ namespace amo {
         /**
          * @fn	Any ShellTransfer::print(IPCMessage::SmartType msg);
          *
+         * @tag static
+         *
          * @brief	 打印文件.
          *
          * @param	#String 文件路径.
@@ -95,6 +99,8 @@ namespace amo {
         
         /**
          * @fn	Any ShellTransfer::showItemInFolder(IPCMessage::SmartType msg);
+         *
+         * @tag static
          *
          * @brief	在文件夹中显示文件（定位文件位置）.
          *
