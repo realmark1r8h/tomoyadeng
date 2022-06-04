@@ -209,6 +209,11 @@ namespace amo {
         
         std::shared_ptr<POINT> m_pt;
         HRGN draggable_region_;
+        
+#if CHROME_VERSION_BUILD >= 2704
+        std::vector<CefDraggableRegion> m_lastDragRegions;
+#endif
+        
     };
 }
 

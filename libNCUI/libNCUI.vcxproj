@@ -397,6 +397,7 @@
     <ClInclude Include="node\NodeRenderHandler.h" />
     <ClInclude Include="node\NodeRequestHandler.h" />
     <ClInclude Include="libNCUI.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="scheme\LocalSchemeHandler.h" />
     <ClInclude Include="scheme\NativeFileHandler.h" />
     <ClInclude Include="scheme\UrlResourceHandlerFactory.h" />
@@ -491,6 +492,9 @@
     <ProjectReference Include="..\third_party\DuiLib\DuiLib.vcxproj">
       <Project>{e106acd7-4e53-4aee-942b-d0dd426db34e}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="libNCUI.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

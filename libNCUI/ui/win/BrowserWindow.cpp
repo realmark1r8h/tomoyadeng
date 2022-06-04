@@ -168,7 +168,7 @@ namespace amo {
 #if CHROME_VERSION_BUILD >= 2704
                                   
         if (m_pBrowser) {
-            OnDraggableRegionsChanged(m_pBrowser, {});
+            OnDraggableRegionsChanged(m_pBrowser, m_lastDragRegions);
         }
         
 #endif
@@ -605,6 +605,9 @@ namespace amo {
 #if CHROME_VERSION_BUILD >= 2704
     void BrowserWindow::OnDraggableRegionsChanged(CefRefPtr<CefBrowser> browser,
             const std::vector<CefDraggableRegion>& regions) {
+            
+        m_lastDragRegions = regions;
+        
         ::SetRectRgn(draggable_region_, 0, 0, 0, 0);
         
         RECT rect;

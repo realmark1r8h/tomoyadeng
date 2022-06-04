@@ -974,5 +974,11 @@
     <ClInclude Include="ui\win\Overlap.hpp">
       <Filter>ui\win</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="libNCUI.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

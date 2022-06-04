@@ -62,9 +62,9 @@ namespace amo {
         m_pRenderProcessHandler = NULL;
         m_pResourceBundleHandler = NULL;
         
-        /* m_pBrowserProcessHandler = new BrowserProcessHandler();
-         m_pRenderProcessHandler =   new RenderProcessHandler();
-         m_pResourceBundleHandler =   new ResourceBundleHandler();*/
+        m_pBrowserProcessHandler = new BrowserProcessHandler();
+        m_pRenderProcessHandler = new RenderProcessHandler();
+        m_pResourceBundleHandler = new ResourceBundleHandler();
     }
     
     
