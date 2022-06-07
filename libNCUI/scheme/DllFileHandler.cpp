@@ -1,14 +1,14 @@
 #include "stdafx.h"
-#include "scheme/ZipFileHandler.h"
-#include "utility/libzippp.h"
-#include "scheme/ZipFileManager.h"
+#include "scheme/DllFileHandler.h"
+#include "scheme/DllFileManager.h"
+
 
 
 
 namespace amo {
 
 
-    ZipFileHandler::ZipFileHandler(const std::string& url,
+    DllFileHandler::DllFileHandler(const std::string& url,
                                    const std::string& u8ZipPath,
                                    const std::string& u8File)
         : m_strUrl(url)
@@ -21,7 +21,7 @@ namespace amo {
         m_strZip = amo::util().getUrlFromUtf8(m_strZip);
     }
     
-    bool ZipFileHandler::ProcessRequest(CefRefPtr<CefRequest> request,
+    bool DllFileHandler::ProcessRequest(CefRefPtr<CefRequest> request,
                                         CefRefPtr<CefCallback> callback) {
         //AMO_TIMER_ELAPSED();
         amo::string url = amo::util().getUrlFromUtf8(request->GetURL());
@@ -30,13 +30,13 @@ namespace amo {
             return false;
         }
         
-        amo::string zipPath = m_strZip;
-        zipPath.replace("\\", "/");
+        amo::string dllPath = m_strZip;
+        dllPath.replace("\\", "/");
         //zipPath = "web/web.zip";
         
-        std::shared_ptr<libzippp::ZipArchive> zf = ZipFileManager::getInstance()->get(
-                    zipPath);
-                    
+        std::shared_ptr<amo::loader> zf = DllFileManager::getInstance()->get(
+                                              dllPath);
+                                              
         if (!zf) {
             return false;
         }
@@ -45,24 +45,19 @@ namespace amo {
         p.remove_front_backslash();
         amo::string strFile(p.c_str(), false);
         strFile.replace("\\", "/");
-        //amo::path dirPath = p.remove_file_spec_c().remove_front_backslash();
-        /*std::vector<libzippp::ZipEntry>  vec = zf->getEntries();
         
-        for (auto& p : vec) {
-            amo::cdevel << p.getName() << amo::endl;
-        }*/
-        //AMO_TIMER_ELAPSED();
-        auto entry =  zf->getEntry(strFile.to_utf8(), false, false);
-        /*  entry = zf->getEntry("ReactJs/images/列表01.png", false, false);
-          entry = zf->getEntry(amo::string("ReactJs/images/列表01.png").to_utf8());*/
-        
-        if (entry.isNull()) {
+        std::string filePath = strFile;
+        char* val = NULL;
+        amo::optional<int> retval  = zf->exec<int, const char*, char**>("readAsText",
+                                     filePath.c_str(), &val);
+                                     
+        if (!retval || *retval == 0 || val == NULL) {
             amo::cerr << "未能找到资源文件：" << strFile.to_ansi() << amo::endl;
             return false;
         }
         
-        
-        m_strData = entry.readAsText();
+        std::string ssss(val, *retval);
+        m_strData = ssss;
         
         bool bHandled = readMimeType(p.find_extension());
         //AMO_TIMER_ELAPSED();

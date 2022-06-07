@@ -1,8 +1,12 @@
-// Created by amoylel on 12/11/2017.
-// Copyright (c) 2017 amoylel All rights reserved.
+// Created by amoylel on 31/05/2018.
+// Copyright (c) 2018 amoylel All rights reserved.
 
-#ifndef AMO_ZIPFILEMNAGER_H__
-#define AMO_ZIPFILEMNAGER_H__
+#ifndef _ZIPFILEMANAGER_FC0545A3_D3E6_4654_A628_BEA17FA3ED8F_H__
+#define _ZIPFILEMANAGER_FC0545A3_D3E6_4654_A628_BEA17FA3ED8F_H__
+
+
+
+
 
 #include <amo/singleton.hpp>
 #include "utility/libzippp.h"
@@ -18,5 +22,6 @@ namespace amo {
     };
 }
 
-#endif // AMO_ZIPFILEMNAGER_H__
 
+
+#endif //_ZIPFILEMANAGER_FC0545A3_D3E6_4654_A628_BEA17FA3ED8F_H__

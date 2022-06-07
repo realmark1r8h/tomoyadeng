@@ -238,6 +238,8 @@
     <ClCompile Include="node\NodeRenderHandler.cpp" />
     <ClCompile Include="node\NodeRequestHandler.cpp" />
     <ClCompile Include="libNCUI.cpp" />
+    <ClCompile Include="scheme\DllFileHandler.cpp" />
+    <ClCompile Include="scheme\DllFileManager.cpp" />
     <ClCompile Include="scheme\LocalSchemeHandler.cpp" />
     <ClCompile Include="scheme\NativeFileHandler.cpp" />
     <ClCompile Include="scheme\UrlResourceHandlerFactory.cpp" />
@@ -398,6 +400,8 @@
     <ClInclude Include="node\NodeRequestHandler.h" />
     <ClInclude Include="libNCUI.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="scheme\DllFileHandler.h" />
+    <ClInclude Include="scheme\DllFileManager.h" />
     <ClInclude Include="scheme\LocalSchemeHandler.h" />
     <ClInclude Include="scheme\NativeFileHandler.h" />
     <ClInclude Include="scheme\UrlResourceHandlerFactory.h" />

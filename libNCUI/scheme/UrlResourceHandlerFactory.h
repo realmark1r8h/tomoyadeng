@@ -9,21 +9,28 @@
 #include "handler/CefHeader.hpp"
 
 namespace amo {
-    class UrlResourceHandlerFactory : public amo::singleton<UrlResourceHandlerFactory> {
+    class UrlResourceHandlerFactory : public
+        amo::singleton<UrlResourceHandlerFactory> {
     public:
         UrlResourceHandlerFactory();
         
         CefRefPtr<CefResourceHandler> create(const std::string& url);
         
-        CefRefPtr<CefResourceHandler> getDBResourceHandler(const std::string& url, const std::string& u8Path);
-        
-        CefRefPtr<CefResourceHandler> getZipResourceHandler(const std::string& url, const std::string& u8Path);
-        
+        CefRefPtr<CefResourceHandler> getDBResourceHandler(const std::string& url,
+                const std::string& u8Path);
+                
+        CefRefPtr<CefResourceHandler> getZipResourceHandler(const std::string& url,
+                const std::string& u8Path);
+                
+        CefRefPtr<CefResourceHandler> getDllResourceHandler(const std::string& url,
+                const std::string& u8Path);
         std::string getAbsolutePath(const std::string& u8Path);
         
         bool isZipPath(const std::string& u8Path);
         
         bool isDBPath(const std::string& u8Path);
+        
+        bool isDllPath(const std::string& u8Path);
     private:
         std::vector<CefRefPtr<CefResourceHandler> > m_handler;
     };

@@ -474,6 +474,12 @@
     <ClCompile Include="scheme\ZipFileMnager.cpp">
       <Filter>scheme</Filter>
     </ClCompile>
+    <ClCompile Include="scheme\DllFileManager.cpp">
+      <Filter>scheme</Filter>
+    </ClCompile>
+    <ClCompile Include="scheme\DllFileHandler.cpp">
+      <Filter>scheme</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context\AppContext.h">
@@ -975,6 +981,12 @@
       <Filter>ui\win</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="scheme\DllFileManager.h">
+      <Filter>scheme</Filter>
+    </ClInclude>
+    <ClInclude Include="scheme\DllFileHandler.h">
+      <Filter>scheme</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="libNCUI.rc">
