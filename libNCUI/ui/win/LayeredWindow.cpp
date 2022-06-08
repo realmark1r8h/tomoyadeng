@@ -660,7 +660,10 @@ namespace amo {
     
     int32_t LayeredWindow::registerHotKey(std::shared_ptr<GlobalShortcutSettings>
                                           pSettings) {
-                                          
+        if (!pSettings) {
+            return 0;
+        }
+        
         uint32_t uiModifiers = 0;
         uint32_t uiVk = 0;
         
