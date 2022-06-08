@@ -101,7 +101,7 @@ namespace amo {
         
         int nRet = MessageWindow::Show(hWnd,
                                        strMsg.to_unicode().c_str());
-        return nRet;
+        return nRet == 1;
     }
     
     Any DialogTransfer::confirm(IPCMessage::SmartType msg) {
@@ -125,7 +125,7 @@ namespace amo {
                                        strMsg.to_unicode().c_str(),
                                        _T("提示"),
                                        MB_OKCANCEL);
-        return nRet;
+        return nRet == 1;
     }
     
     Any DialogTransfer::prompt(IPCMessage::SmartType msg) {
@@ -152,11 +152,11 @@ namespace amo {
         int nRet = MessageWindow::ShowPrompt(hWnd,
                                              strMsg.to_unicode().c_str(),
                                              &strPromptText,
-                                             _T("提示"),
+                                             strMsg.to_unicode().c_str(),
                                              MB_OKCANCEL);
         std::string strRetval = amo::string(strPromptText.GetData()).to_utf8();
         amo::json json;
-        json.put("code", nRet);
+        json.put("code", nRet == 1);
         json.put("text", strRetval);
         return json;
     }
