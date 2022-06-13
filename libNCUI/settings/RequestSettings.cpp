@@ -36,7 +36,24 @@ namespace amo {
             auto & p = keys[i];
             std::string args = p;
             args += "=";
-            args += data.getString(p);
+            
+            if (data.is_bool(p)) {
+                args += std::to_string(data.getBool(p));
+            } else if (data.is_string(p)) {
+                args += data.getString(p);
+            } else if (data.is_int(p)) {
+                args += std::to_string(data.getInt(p));
+            } else if (data.is_int64(p)) {
+                args += std::to_string(data.getInt64(p));
+            } else if (data.is_uint(p)) {
+                args += std::to_string(data.getUint(p));
+            } else if (data.is_uint64(p)) {
+                args += std::to_string(data.getUint64(p));
+            } else if (data.is_double(p)) {
+                args += std::to_string(data.getDouble(p));
+            } else if (data.is_number(p)) {
+                args += std::to_string(data.getUint64(p));
+            }
             
             if (i < keys.size() - 1) {
                 args += "&";
@@ -48,7 +65,8 @@ namespace amo {
         return strURL;
     }
     
-    std::vector<std::pair<std::string, std::string> > RequestSettings::getHeaderMap() {
+    std::vector<std::pair<std::string, std::string> >
+    RequestSettings::getHeaderMap() {
         std::vector<std::pair<std::string, std::string> > vec;
         std::vector<std::string> keys = header.keys();
         
