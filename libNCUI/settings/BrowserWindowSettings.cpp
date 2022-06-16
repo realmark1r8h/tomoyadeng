@@ -66,7 +66,7 @@ namespace amo {
         BOOL_ARGS_SETTING(main);
         STRING_ARGS_SETTING(windowClass);
         BOOL_ARGS_SETTING(reload);
-        BOOL_ARGS_SETTING(dragBlacklist);
+        INT_ARGS_SETTING(dragBlacklist);
         
         
     }

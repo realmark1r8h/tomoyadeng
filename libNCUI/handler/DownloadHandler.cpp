@@ -42,7 +42,7 @@ namespace amo {
         m_fnBeforeDownload = val;
     }
     
-    void DownloadHandler::setDownloadUpdate(
+    void DownloadHandler::setDownloadUpdateCallback(
         std::function<bool(CefRefPtr<CefBrowser>,
                            CefRefPtr<CefDownloadItem>,
                            CefRefPtr<CefDownloadItemCallback>&)> val) {
@@ -50,6 +50,14 @@ namespace amo {
     }
     
     
+    
+    bool DownloadHandler::hasBeforeDownloadCallback() {
+        return m_fnBeforeDownload ? true : false;
+    }
+    
+    bool DownloadHandler::hasDownloadUpdateCallback() {
+        return m_fnDownloadUpdate ? true : false;
+    }
     
     void DownloadHandler::OnBeforeDownload(CefRefPtr<CefBrowser> browser,
                                            CefRefPtr<CefDownloadItem> download_item,

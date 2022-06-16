@@ -99,11 +99,15 @@ namespace amo {
                 const CefString &,
                 CefRefPtr<CefBeforeDownloadCallback>&)> val);
                 
-        static void setDownloadUpdate(std::function<bool(
-                                          CefRefPtr<CefBrowser>,
-                                          CefRefPtr<CefDownloadItem>,
-                                          CefRefPtr<CefDownloadItemCallback>&)> val);
-                                          
+        static void setDownloadUpdateCallback(std::function<bool(
+                CefRefPtr<CefBrowser>,
+                CefRefPtr<CefDownloadItem>,
+                CefRefPtr<CefDownloadItemCallback>&)> val);
+                
+        static bool hasBeforeDownloadCallback();
+        
+        static bool hasDownloadUpdateCallback();
+        
         static std::function<bool(CefRefPtr<CefBrowser>,
                                   CefRefPtr<CefDownloadItem>,
                                   const CefString&,

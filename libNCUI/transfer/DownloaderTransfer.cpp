@@ -7,19 +7,27 @@ namespace amo {
     DownloaderTransfer::DownloaderTransfer()
         : ClassTransfer("Downloader") {
         addModule("EventEmitter");
-        DownloadHandler::setBeforeDownloadCallback(
-            std::bind(&DownloaderTransfer::OnBeforeDownload,
-                      this,
-                      std::placeholders::_1,
-                      std::placeholders::_2,
-                      std::placeholders::_3,
-                      std::placeholders::_4));
-        DownloadHandler::setDownloadUpdate(
-            std::bind(&DownloaderTransfer::OnDownloadUpdated,
-                      this,
-                      std::placeholders::_1,
-                      std::placeholders::_2,
-                      std::placeholders::_3));
+        
+        if (!DownloadHandler::hasBeforeDownloadCallback()) {
+            DownloadHandler::setBeforeDownloadCallback(
+                std::bind(&DownloaderTransfer::OnBeforeDownload,
+                          this,
+                          std::placeholders::_1,
+                          std::placeholders::_2,
+                          std::placeholders::_3,
+                          std::placeholders::_4));
+        }
+        
+        if (!DownloadHandler::hasDownloadUpdateCallback()) {
+            DownloadHandler::setDownloadUpdateCallback(
+                std::bind(&DownloaderTransfer::OnDownloadUpdated,
+                          this,
+                          std::placeholders::_1,
+                          std::placeholders::_2,
+                          std::placeholders::_3));
+        }
+        
+        
         m_nCommand = DL_NORMAL;
     }
     
@@ -62,6 +70,7 @@ namespace amo {
         }
         
         m_oDownloaderMap[pSettings->url] = pTransfer;
+        
         return pTransfer->getFuncMgr().toSimplifiedJson();
     }
     
@@ -179,14 +188,19 @@ namespace amo {
         if (!m_pDownloaderSettings) {
             auto iter = m_oDownloaderMap.find(download_item->GetOriginalUrl());
             
+            // 如果没有找到这个URL,如果这个回调不是由downloader 创建的下载
             if (iter == m_oDownloaderMap.end()) {
                 return false;
             }
             
-            return iter->second->OnBeforeDownload(browser,
-                                                  download_item,
-                                                  suggested_name,
-                                                  callback);
+            bool bOk =  iter->second->OnBeforeDownload(browser,
+                        download_item,
+                        suggested_name,
+                        callback);
+                        
+            // 一定是返回true
+            return true;
+            
         } else {
             m_pDownloadCallback = callback;
             
@@ -198,7 +212,7 @@ namespace amo {
             amo::json json = downloadItemToJson(download_item);
             getMessageEmitter()->execute("triggerEvent", "start", json);
             
-            // 如果文件已经存在 ，，那么怎么办，自动生命名，覆盖？
+            // 如果文件已经存在 ，，那么怎么办，自动重命名，覆盖？
             return true;
         }
         

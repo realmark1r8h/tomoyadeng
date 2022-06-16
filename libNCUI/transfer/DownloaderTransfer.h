@@ -17,6 +17,12 @@ namespace amo {
     class UIMessageEmitter;
     class DownloaderSettings;
     
+    /*!
+     * @class	Downloader
+     *
+     * @brief	文件下载类，使用浏览器的下载功能下载文件.
+     */
+    
     class DownloaderTransfer
         : public ClassTransfer
         , public amo::singleton < DownloaderTransfer > {
@@ -37,44 +43,74 @@ namespace amo {
         };
     public:
     
-        /*!
-         * @fn	DownloaderTransfer::DownloaderTransfer();
-         *
-         * @brief	Default constructor.
-         */
-        
         DownloaderTransfer();
         
         /*!
-         * @fn	DownloaderTransfer::DownloaderTransfer(std::shared_ptr<DownloaderSettings> pSettings);
+         * @fn	DownloaderTransfer::Downloader(std::shared_ptr<DownloaderSettings> pSettings);
          *
-         * @brief	Constructor.
+         * @tag constructor
          *
-         * @param	pSettings	Options for controlling the operation.
+         * @brief	创建一下下载类，用于下载文件.
+         *
+         * @param	#JsonObject 下载参数.<br>
+         * 						[**String**]	url 下载文件的url,如果所给的URL与之前所创建的下载对象url相同反返回之前的对象，下面的参数将被忽略.<br>
+         * 						[**String**]	file 文件保存路径, 默认会根据url自动命名.<br>
+         * 						[**Boolean**]	autoDownload 是否自动开始下载,默认为true.<br>
+         * 						[**Boolean**]	forceReplace 是否强制替换已经存在的文件,默认为true.
+         *
+         * @return #Object 返回一个Downloader实例.
+         * @example
+         *
+        		 ```
+        		 include('Downloader');
+        		 window.downloader = new Downloader({
+        			url: 'https://dldir1.qq.com/qqfile/qq/TIM1.2.0/21645/TIM1.2.0.exe'
+        		 });
+        		 // 监听下载开始事件
+        		 window.downloader.on('start', function(item){
+        
+        			console.log('下载开始');
+        			console.log(item);
+        		 });
+        
+        		 window.downloader.on('resume', function(item){
+        			 console.log('下载恢复');
+        		 });
+        
+        		 window.downloader.on('pause', function(item){
+        			 console.log('下载暂停');
+        		 });
+        
+        		 window.downloader.on('cancel', function(item){
+        			console.log('下载取消');
+        		 });
+        
+        		 window.downloader.on('canceled', function(item){
+        			 console.log('下载取消完成');
+        		 });
+        
+        		 window.downloader.on('update', function(item){
+        			console.log('下载进度：' + item.percentComplete);
+        		 });
+        
+        		 window.downloader.on('complete', function(item){
+        			 console.log('下载完毕');
+        		 });
+        		 ```
+         *
          */
         
         DownloaderTransfer(std::shared_ptr<DownloaderSettings> pSettings);
         
-        /*!
-         * @fn	virtual Any DownloaderTransfer::onCreateClass(IPCMessage::SmartType msg) override;
-         *
-         * @brief	Executes the create class action.
-         *
-         * @param	msg	The message.
-         *
-         * @return	Any.
-         */
         
         virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
         /*!
          * @fn	Any DownloaderTransfer::start(IPCMessage::SmartType msg);
          *
-         * @brief	Starts the given message.
+         * @brief	开始下载.
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	无.
          */
         
         Any start(IPCMessage::SmartType msg);
@@ -82,11 +118,9 @@ namespace amo {
         /*!
          * @fn	Any DownloaderTransfer::resume(IPCMessage::SmartType msg);
          *
-         * @brief	Resumes the given message.
+         * @brief	恢复当前下载.
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	无.
          */
         
         Any resume(IPCMessage::SmartType msg);
@@ -94,11 +128,10 @@ namespace amo {
         /*!
          * @fn	Any DownloaderTransfer::pause(IPCMessage::SmartType msg);
          *
-         * @brief	Pauses the given message.
+         * @brief	暂停下载.
          *
-         * @param	msg	The message.
          *
-         * @return	Any.
+         * @return	无.
          */
         
         Any pause(IPCMessage::SmartType msg);
@@ -106,14 +139,108 @@ namespace amo {
         /*!
          * @fn	Any DownloaderTransfer::cancel(IPCMessage::SmartType msg);
          *
-         * @brief	Cancels the given message.
+         * @brief	取消下载.
          *
-         * @param	msg	The message.
-         *
-         * @return	Any.
+         * @return	无.
          */
         
         Any cancel(IPCMessage::SmartType msg);
+        
+        
+        /*!
+        * @event	Any DownloaderTransfer::start(IPCMessage::SmartType msg);
+        *
+        * @brief	开始下载时触发.
+        * @param	#JsonObject <br>
+        * 						[**Boolean**] isValid 当前下载是否有效.<br>
+        * 						[**Boolean**] isInProgress 当前下载是否有效.<br>
+        * 						[**Boolean**] isComplete 当前下载是否有效.<br>
+        * 						[**Boolean**] isCanceled 当前下载是否有效.<br>
+        * 						<br>
+        * 						[**Int**] currentSpeed 当前下载速度.<br>
+        * 						[**Int**] percentComplete 下载完成百分比，如果返回-1，表示未获取到所下载文件的大小.<br>
+        * 						[**Int**] totalBytes 总字节数.<br>
+        * 						[**Int**] receivedBytes 已接收的字节数.<br>
+        * 						<br>
+        * 						[**Double**] startTime 下载开始的时间.<br>
+        * 						[**Double**] endTime 下载结束的时间.<br>
+        *						<br>
+        * 						[**String**] fullPath 下载文件所保存的完整路径.<br>
+        * 						[**String**] id 当前下载的唯一标识符.<br>
+        * 						[**String**] url URL.<br>
+        * 						[**String**] originalUrl 重定向之前的原始URL（如果被重定向的话）.<br>
+        * 						[**String**] suggestedFileName 浏览器建议的文件名.<br>
+        * 						[**String**] contentDisposition  .<br>
+        * 						[**String**] mimeType MIME类型.<br>
+        *
+        *
+        *
+        * @return	无.
+        */
+        
+        /*!
+        * @event	Any DownloaderTransfer::resume(IPCMessage::SmartType msg);
+        *
+        * @brief	下载恢复时触发.
+        *
+        * @param #JsonObject 与start事件中的参数相同.
+        *
+        *
+        * @return	无.
+        */
+        
+        /*!
+        * @event	Any DownloaderTransfer::pause(IPCMessage::SmartType msg);
+        *
+        * @brief	暂停下载时触发.
+        *
+        * @param #JsonObject 与start事件中的参数相同.
+        *
+        * @return	无.
+        */
+        
+        /*!
+        * @event	Any DownloaderTransfer::cancel(IPCMessage::SmartType msg);
+        *
+        * @brief	取消下载时触发.
+        *
+        * @param #JsonObject 与start事件中的参数相同.
+        *
+        * @return	无.
+        */
+        
+        /*!
+        * @event	Any DownloaderTransfer::canceled(IPCMessage::SmartType msg);
+        *
+        * @brief	取消下载后时触发.
+        *
+        * @param #JsonObject 与start事件中的参数相同.
+        *
+        * @return	无.
+        */
+        
+        /*!
+        * @event	Any DownloaderTransfer::update(IPCMessage::SmartType msg);
+        *
+        * @brief	下载数据更新时触发.
+        *
+        * @param #JsonObject 与start事件中的参数相同.
+        *
+        * @return	无.
+        */
+        
+        
+        /*!
+        * @event	Any DownloaderTransfer::complete(IPCMessage::SmartType msg);
+        *
+        * @brief	下载完成时触发.
+        *
+        * @param #JsonObject 与start事件中的参数相同.
+        *
+        * @return	无.
+        */
+        
+        
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(DownloaderTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(start, TransferExecNormal)
@@ -126,7 +253,7 @@ namespace amo {
     
         /*!
          * @fn	void DownloaderTransfer::startDownload();
-         *
+         * @ignore
          * @brief	Starts a download.
          */
         
@@ -144,7 +271,7 @@ namespace amo {
         
         /*!
          * @fn	void DownloaderTransfer::setFrame(CefRefPtr<CefFrame> val);
-         *
+         * @ignore
          * @brief	Sets a frame.
          *
          * @param	val	The value.
@@ -154,7 +281,7 @@ namespace amo {
         
         /*!
          * @fn	CefRefPtr<CefBrowser> DownloaderTransfer::getBrowser() const;
-         *
+         * @ignore
          * @brief	Gets the browser.
          *
          * @return	The browser.
@@ -164,7 +291,7 @@ namespace amo {
         
         /*!
          * @fn	void DownloaderTransfer::setBrowser(CefRefPtr<CefBrowser> val);
-         *
+         * @ignore
          * @brief	Sets a browser.
          *
          * @param	val	The value.
@@ -174,7 +301,7 @@ namespace amo {
         
         /*!
          * @fn	void DownloaderTransfer::removeDownloader(const std::string& url);
-         *
+         * @ignore
          * @brief	Removes the downloader described by URL.
          *
          * @param	url	URL of the document.
@@ -184,7 +311,7 @@ namespace amo {
         
         /*!
          * @fn	std::shared_ptr<UIMessageEmitter> DownloaderTransfer::getMessageEmitter();
-         *
+         * @ignore
          * @brief	Gets message emitter.
          *
          * @return	The message emitter.
@@ -198,7 +325,7 @@ namespace amo {
          * 		CefRefPtr<CefDownloadItem> download_item,
          * 		const CefString& suggested_name,
          * 		CefRefPtr<CefBeforeDownloadCallback>& callback);
-         *
+         * @ignore
          * @brief	Executes the before download action.
          *
          * @param	browser				The browser.
@@ -219,7 +346,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		CefRefPtr<CefDownloadItem> download_item,
          * 		CefRefPtr<CefDownloadItemCallback>& callback);
-         *
+         * @ignore
          * @brief	Executes the download updated action.
          *
          * @param	browser				The browser.
@@ -235,7 +362,7 @@ namespace amo {
                                
         /*!
          * @fn	amo::json DownloaderTransfer::downloadItemToJson(CefRefPtr<CefDownloadItem>& item);
-         *
+         * @ignore
          * @brief	Downloads the item to JSON described by item.
          *
          * @param [in,out]	item	The item.
