@@ -44,6 +44,15 @@ namespace amo {
         
     };
     
+    
+    /*!
+    * @class	ThreadBase
+    *
+    * @unexport
+    *
+    * @brief	线程基类.
+    */
+    
     template<ThreadEnum>
     class ThreadTransfer : public ThreadBaseTransfer {
     public:
@@ -103,14 +112,57 @@ namespace amo {
             return std::shared_ptr< TransferMgr>();
         }
         
-        
         // 获取所有线程
         Any getAllThreads(IPCMessage::SmartType msg) {
             return Undefined();
         }
         
+        /*!
+        * @fn	Any ThreadTransfer::Exec(IPCMessage::SmartType msg)
+        *
+        * @tag static
+        *
+        * @brief	在默认线程中执行一个函数.
+        *
+        * @param	#Function 要执行的函数.
+        *
+        * @param	#Args=...	该函数需要传入的参数，具体参数及个数以需要调用的函数为准.
+        *
+        * @return	无.
+        */
         
-        // 唤醒线程
+        Any Exec(IPCMessage::SmartType msg) {
+            return execute(msg, false);
+        }
+        
+        /*!
+        * @fn	Any ThreadTransfer::Sync(IPCMessage::SmartType msg)
+        *
+        * @tag static sync
+        *
+        * @brief	在默认线程中同步执行一个函数.
+        *
+        * @param	#Function 需要执行的函数.
+        *
+        * @param	#Args=...	该函数需要传入的参数，具体参数及个数以需要调用的函数为准.
+        *
+        * @return	#Any 该函数的执行结果.
+        */
+        
+        Any Sync(IPCMessage::SmartType msg) {
+            return execute(msg, true);
+        }
+        
+        
+        
+        
+        /*!
+         * @fn	Any ThreadTransfer::weakup(IPCMessage::SmartType msg)
+         *
+         * @brief	唤醒线程.
+         *
+         * @return	无.
+         */
         
         Any weakup(IPCMessage::SmartType msg) {
             m_weakupData = msg->getArgumentList()->getValue(0);
@@ -118,7 +170,14 @@ namespace amo {
             return Undefined();
         }
         
-        // 暂停线程，不能暂停正在执行的函数，只能等当前函数结束后停止执行队列中的其他函数
+        /*!
+         * @fn	Any ThreadTransfer::suspend(IPCMessage::SmartType msg)
+         *
+         * @brief	暂停线程，但不能暂停正在执行的函数，只能等当前函数结束后停止执行队列中的其他函数.
+         *
+         * @return	无.
+         */
+        
         Any suspend(IPCMessage::SmartType msg) {
             if (!m_pLooperExecutor) {
                 return Undefined();
@@ -165,14 +224,6 @@ namespace amo {
             
             IPCMessage::SmartType ipcMsg = makeIPCMessage(msg);
             
-            if (msg->toJson().to_string().find("packet.save.complete") != -1) {
-                int i = 3;
-                ++i;
-                
-                if (i == 4) {
-                    std::cout << i << std::endl;
-                }
-            }
             
             Transfer* pTransfer = manager->findTransfer(nBrowserID, transferName);
             
@@ -218,15 +269,43 @@ namespace amo {
             
             return Undefined();
         }
+        
+        /*!
+         * @fn	Any ThreadTransfer::exec(IPCMessage::SmartType msg)
+         *
+         * @brief	执行一个函数.
+         *
+         * @param	#Function 要执行的函数.
+         *
+         * @return	无.
+         */
+        
         Any exec(IPCMessage::SmartType msg) {
             return execute(msg, false);
         }
         
+        /*!
+         * @fn	Any ThreadTransfer::sync(IPCMessage::SmartType msg)
+         *
+         * @brief	同步调用一个函数，并返回该函数的执行结果.
+         *
+         * @param	#Function 要同步调用的函数.
+         *
+         * @return	#Any.
+         */
         
         Any sync(IPCMessage::SmartType msg) {
             return execute(msg, true);
         }
         
+        /*!
+         * @fn	Any ThreadTransfer::kill(IPCMessage::SmartType msg)
+         *
+         * @brief	杀死当前线程.
+         *
+         *
+         * @return	无.
+         */
         
         Any kill(IPCMessage::SmartType msg) {
             if (m_pLooperExecutor) {
@@ -236,6 +315,15 @@ namespace amo {
             
             return Undefined();
         }
+        
+        /*!
+         * @fn	Any ThreadTransfer::start(IPCMessage::SmartType msg)
+         *
+         * @brief	启动线程，该函数一般不需要调用，线程会在创建时自动启动，除非你调用了stop.
+         *
+         *
+         * @return	#Boolean 是否启动成功.
+         */
         
         Any start(IPCMessage::SmartType msg) {
             if (m_pLooperExecutor) {
@@ -248,6 +336,15 @@ namespace amo {
             
         }
         
+        /*!
+         * @fn	Any ThreadTransfer::stop(IPCMessage::SmartType msg)
+         *
+         * @brief	停止当前线程.
+         *
+         *
+         * @return	#Boolean 是否停止成功.
+         */
+        
         Any stop(IPCMessage::SmartType msg) {
             if (m_pLooperExecutor) {
                 m_pLooperExecutor->stop();
@@ -257,13 +354,7 @@ namespace amo {
             return false;
         }
         
-        Any Exec(IPCMessage::SmartType msg) {
-            return execute(msg, false);
-        }
         
-        Any Sync(IPCMessage::SmartType msg) {
-            return execute(msg, true);
-        }
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(ThreadTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferFuncNormal | TransferExecNormal)

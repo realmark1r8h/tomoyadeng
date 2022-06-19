@@ -5,7 +5,7 @@
 namespace amo {
 
     UIThreadTransfer::UIThreadTransfer()
-        : ThreadTransfer<ThreadUI>("UIThread") {
+        : ThreadTransfer<ThreadUI>("Task") {
         
     }
     
@@ -15,6 +15,18 @@ namespace amo {
         pThread->createThread();
         addTransfer(pThread);
         return  pThread->getFuncMgr().toSimplifiedJson();
+    }
+    
+    std::string UIThreadTransfer::getClass() const {
+        return "Task";
+    }
+    
+    amo::Transfer* UIThreadTransfer::getInterface(const std::string& name) {
+        if (name == UIThreadTransfer::getClass()) {
+            return this;
+        }
+        
+        return ThreadBaseTransfer::getInterface(name);
     }
     
     std::shared_ptr< TransferMgr> UIThreadTransfer::getTransferMgr() {

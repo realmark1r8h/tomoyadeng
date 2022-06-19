@@ -88,12 +88,11 @@ namespace amo {
     }
     
     Any DownloaderTransfer::resume(IPCMessage::SmartType msg) {
-        if (m_nCommand != DL_PAUSE) {
+        if (m_nCommand == DL_RESUME) {
             return false;
         }
         
         m_nCommand = DL_RESUME;
-        getMessageEmitter()->execute("triggerEvent", "resume");
         return Undefined();
     }
     
@@ -104,7 +103,7 @@ namespace amo {
         
         m_nCommand = DL_PAUSE;
         
-        getMessageEmitter()->execute("triggerEvent", "pause");
+        
         return Undefined();
     }
     
@@ -127,6 +126,7 @@ namespace amo {
         // 如果Browser存在，那么直接下载
         if (m_pBrowser) {
             m_pBrowser->GetHost()->StartDownload(m_pDownloaderSettings->url);
+            return;
         }
         
         // 找一个可用的浏览器窗口
@@ -202,6 +202,10 @@ namespace amo {
             return true;
             
         } else {
+            if (m_pDownloadCallback != NULL) {
+                return true;
+            }
+            
             m_pDownloadCallback = callback;
             
             if (m_pDownloaderSettings->file.empty()) {
@@ -252,30 +256,29 @@ namespace amo {
                 }
                 
                 if (download_item->IsCanceled()) {
+                    getMessageEmitter()->execute("triggerEvent", "canceled", json);
+                    auto transfer = ClassTransfer::getUniqueTransfer<DownloaderTransfer>();
+                    transfer->removeDownloader(m_pDownloaderSettings->url);
                     m_nCommand = DL_NORMAL;
                 }
                 
                 return true;
             }
             
-            if (m_nCommand == DL_PAUSE) {
+            if (m_nCommand == DL_PAUSE && !download_item->IsComplete() && !download_item->IsCanceled()) {
                 callback->Pause();
+                getMessageEmitter()->execute("triggerEvent", "pause");
+                m_nCommand = DL_NORMAL;
                 return true;
             }
             
-            if (m_nCommand == DL_RESUME) {
+            if (m_nCommand == DL_RESUME && !download_item->IsComplete() && !download_item->IsCanceled()) {
                 callback->Resume();
-                //m_nCommand = DL_NORMAL;
-                
-                //return true;
+                getMessageEmitter()->execute("triggerEvent", "resume");
+                m_nCommand = DL_NORMAL;
+                return true;
             }
             
-            
-            
-            /*if (m_bCancel) {
-            	callback->Cancel();
-            	return true;
-            }*/
             
             if (download_item->IsComplete()) {
                 getMessageEmitter()->execute("triggerEvent", "complete", json);
@@ -285,7 +288,7 @@ namespace amo {
                 getMessageEmitter()->execute("triggerEvent", "canceled", json);
                 auto transfer = ClassTransfer::getUniqueTransfer<DownloaderTransfer>();
                 transfer->removeDownloader(m_pDownloaderSettings->url);
-                callback->Cancel();
+                
             } else {
                 getMessageEmitter()->execute("triggerEvent", "update", json);
             }

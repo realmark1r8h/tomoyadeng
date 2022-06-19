@@ -62,6 +62,7 @@ namespace amo {
          * @example
          *
         		 ```
+        		 // 需要先运行该示例才能运行后面的示例
         		 include('Downloader');
         		 window.downloader = new Downloader({
         			url: 'https://dldir1.qq.com/qqfile/qq/TIM1.2.0/21645/TIM1.2.0.exe'
@@ -111,9 +112,32 @@ namespace amo {
          * @brief	开始下载.
          *
          * @return	无.
+         *
+         * @example
+         *
+        			 ```
+        				window.downloader.start();
+        			 ```
          */
         
         Any start(IPCMessage::SmartType msg);
+        
+        /*!
+        * @fn	Any DownloaderTransfer::pause(IPCMessage::SmartType msg);
+        *
+        * @brief	暂停下载.
+        *
+        *
+        * @return	无.
+        *
+        * @example
+        *
+        		```
+        			window.downloader.pause();
+        		```
+        */
+        
+        Any pause(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any DownloaderTransfer::resume(IPCMessage::SmartType msg);
@@ -121,20 +145,17 @@ namespace amo {
          * @brief	恢复当前下载.
          *
          * @return	无.
+         *
+         * @example
+         *
+         ```
+        	window.downloader.resume();
+         ```
          */
         
         Any resume(IPCMessage::SmartType msg);
         
-        /*!
-         * @fn	Any DownloaderTransfer::pause(IPCMessage::SmartType msg);
-         *
-         * @brief	暂停下载.
-         *
-         *
-         * @return	无.
-         */
         
-        Any pause(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any DownloaderTransfer::cancel(IPCMessage::SmartType msg);
@@ -142,6 +163,12 @@ namespace amo {
          * @brief	取消下载.
          *
          * @return	无.
+         *
+         * @example
+         *
+         ```
+        	window.downloader.cancel();
+         ```
          */
         
         Any cancel(IPCMessage::SmartType msg);
@@ -153,9 +180,9 @@ namespace amo {
         * @brief	开始下载时触发.
         * @param	#JsonObject <br>
         * 						[**Boolean**] isValid 当前下载是否有效.<br>
-        * 						[**Boolean**] isInProgress 当前下载是否有效.<br>
-        * 						[**Boolean**] isComplete 当前下载是否有效.<br>
-        * 						[**Boolean**] isCanceled 当前下载是否有效.<br>
+        * 						[**Boolean**] isInProgress 是否正在下载（包括暂停）.<br>
+        * 						[**Boolean**] isComplete 当前下载是否已经完成.<br>
+        * 						[**Boolean**] isCanceled 当前下载是否已经被取消.<br>
         * 						<br>
         * 						[**Int**] currentSpeed 当前下载速度.<br>
         * 						[**Int**] percentComplete 下载完成百分比，如果返回-1，表示未获取到所下载文件的大小.<br>
@@ -261,7 +288,7 @@ namespace amo {
         
         /*!
          * @fn	CefRefPtr<CefFrame> DownloaderTransfer::getFrame() const;
-         *
+         * @ignore
          * @brief	Gets the frame.
          *
          * @return	The frame.
