@@ -126,7 +126,7 @@ namespace amo {
         *
         * @param	#Function 要执行的函数.
         *
-        * @param	#Args=...	该函数需要传入的参数，具体参数及个数以需要调用的函数为准.
+        * @param	#Args...	该函数需要传入的参数，具体参数及个数以需要调用的函数为准.
         *
         * @return	无.
         */

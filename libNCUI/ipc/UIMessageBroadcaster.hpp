@@ -131,13 +131,14 @@ namespace amo {
             typedef std::function<bool(IPCMessage::SmartType)> NodeSender;
             NodeSender& fn = getNodeMessageSender();
             
+            Any ret = Undefined();
             
             if (fn) {
-                Any ret = runner->syncExecute();
+                ret = runner->syncExecute();
                 
-                if (ret.is<bool>() && !ret.As<bool>()) {
-                    return Undefined();
-                }
+                /* if (ret.is<bool>() && !ret.As<bool>()) {
+                	 return Undefined();
+                 }*/
                 
             }
             
@@ -146,19 +147,20 @@ namespace amo {
                 
             int nIndex = 0;
             
+            
             // 向所有浏览器广播消息
             for (auto& p : mp) {
                 ++nIndex;
                 runner->setFrame(p.second->GetMainFrame());
-                Any ret = runner->syncExecute();
+                ret = runner->syncExecute();
                 
                 // 如果返回值是一个BOOL类型且为False，那么停止循环
-                if (ret.is<bool>() && !ret.As<bool>()) {
+                /*if (ret.is<bool>() && !ret.As<bool>()) {
                     break;
-                }
+                }*/
             }
             
-            return Undefined();
+            return ret;
         }
     protected:
         int64_t m_nObjectID;

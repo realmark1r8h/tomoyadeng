@@ -286,6 +286,7 @@ namespace amo {
             return retArr;
         }
         
+        CefRefPtr<CefV8Value> v8Value = CefV8Value::CreateUndefined();
         
         // 遍历对象，触发事件
         for (size_t i = 0; i < values.size(); ++i) {
@@ -325,19 +326,17 @@ namespace amo {
                     
                 }
                 
-                
-                CefRefPtr<CefV8Value> v8Value;
                 v8Value = pFunction->ExecuteFunctionWithContext(
                               pFrame->GetV8Context(),
                               NULL,
                               list);
                               
-                // 如果返回一个undefined，说明没有监听当前事件
-                if (!v8Value || v8Value->IsUndefined()) {
+                              
+                if (!v8Value) {
                     continue;
                 }
                 
-                
+                retArr.push_back(convertor.toAny(v8Value));
                 
                 continue;
             }
@@ -345,7 +344,11 @@ namespace amo {
             
         }
         
-        return Undefined();
+        if (retArr.empty()) {
+            return Undefined();
+        }
+        
+        return retArr[0];
     }
     
     Any IPCRendererV8Handler::releaseAllTransfer(IPCMessage::SmartType msg) {

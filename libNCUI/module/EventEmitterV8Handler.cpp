@@ -125,11 +125,11 @@ namespace amo {
             CallbackFunctionWrapper::SmartType wrapper = *iter;
             
             CefRefPtr<CefV8Value> pFunction = wrapper->m_pFunction;
-            CefRefPtr<CefV8Value> pValue = pFunction->ExecuteFunctionWithContext(
-                                               wrapper->m_pContext,
-                                               NULL,
-                                               args);
-                                               
+            retval = pFunction->ExecuteFunctionWithContext(
+                         wrapper->m_pContext,
+                         NULL,
+                         args);
+                         
             if (wrapper->m_bOnce) {
                 iter = vec.erase(iter);
             } else {
