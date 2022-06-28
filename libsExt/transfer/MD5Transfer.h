@@ -12,6 +12,13 @@
 #include <amo/singleton.hpp>
 
 namespace amo {
+
+    /*!
+     * @class	md5
+     *
+     * @brief	MD5 加密类.
+     */
+    
     class MD5Transfer
         : public RunnableTransfer
         , public amo::singleton<MD5Transfer> {
@@ -20,6 +27,18 @@ namespace amo {
         Any onCreateClass(IPCMessage::SmartType msg) override;
         virtual std::string getClass() const override;
         virtual Transfer* getInterface(const std::string& name) override;
+        
+        /*!
+         * @fn	Any MD5Transfer::encode(IPCMessage::SmartType msg);
+         *
+         * @tag static
+         *
+         * @brief	MD5 加密.
+         *
+         * @param	#String 需要加密的字符串.
+         *
+         * @return	#String 加密后的字符串.
+         */
         
         Any encode(IPCMessage::SmartType msg);
         

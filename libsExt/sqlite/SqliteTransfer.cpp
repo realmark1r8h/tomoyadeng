@@ -1,13 +1,16 @@
 #include "stdafx.h"
-#include "SqliteTransfer.h"
+#include "sqlite/SqliteTransfer.h"
 
 #include <iostream>
+#include <map>
 #include <amo/json.hpp>
 #include <amo/string.hpp>
 #include <amo/format.hpp>
 #include <amo/json.hpp>
 #include <amo/logger.hpp>
-#include <map>
+#include <amo/filestream.hpp>
+
+
 
 #pragma comment(lib, "sqlite3.lib")
 
@@ -48,6 +51,10 @@ namespace amo {
     Any SqliteTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string strPath = args->getString(0);
+        
+        if (strPath.empty()) {
+            return Undefined();
+        }
         
         std::shared_ptr<SqliteTransfer> pTransfer;
         pTransfer = ClassTransfer::createTransfer<SqliteTransfer>(strPath);
@@ -95,6 +102,22 @@ namespace amo {
         }
         
         return Undefined();
+    }
+    
+    Any SqliteTransfer::import(IPCMessage::SmartType msg) {
+        amo::string str = msg->getArgumentList()->getString(0);
+        amo::path p(str);
+        
+        if (!p.exists()) {
+            return Undefined();
+        }
+        
+        
+        amo::filestream ifs(p.c_str());
+        std::string sql = ifs.read_all();
+        msg->getArgumentList()->setValue(0, sql);
+        return execute(msg);
+        
     }
     
     Any SqliteTransfer::executeSql(const std::string& sql) {
@@ -425,6 +448,37 @@ namespace amo {
         return true;
     }
     
+    Any SqliteTransfer::containsField(IPCMessage::SmartType msg) {
+        auto args = msg->getArgumentList();
+        std::string tableName = args->getString(0);
+        std::string fieldName = args->getString(0);
+        
+        if (tableName.empty() || fieldName.empty()) {
+            return false;
+        }
+        
+        return containsFieldImpl(tableName, fieldName);
+    }
+    
+    Any SqliteTransfer::getTableFields(IPCMessage::SmartType msg) {
+        std::vector<Any> retval;
+        auto args = msg->getArgumentList();
+        std::string tableName = args->getString(0);
+        
+        if (tableName.empty()) {
+            return retval;
+            
+        }
+        
+        auto vec =  getTableFieldImpl(tableName);
+        
+        for (auto& p : vec) {
+            retval.push_back(p);
+        }
+        
+        return retval;
+    }
+    
     std::string SqliteTransfer::makeSql(IPCMessage::SmartType msg) {
         if (!msg) {
             return "";
@@ -529,7 +583,7 @@ namespace amo {
         
         for (size_t i = 0; i < keys.size(); ++i) {
             // 如果所给字段在表中不存在，那么跳过此字段，这里字符集有点乱
-            if (!containsField(utf8TableName, keys[i])) {
+            if (!containsFieldImpl(utf8TableName, keys[i])) {
                 continue;
             }
             
@@ -639,7 +693,7 @@ namespace amo {
         
         for (size_t i = 0; i < keys.size(); ++i) {
             // 如果所给字段在表中不存在，那么跳过此字段，这里字符集有点乱
-            if (!containsField(utf8TableName, keys[i])) {
+            if (!containsFieldImpl(utf8TableName, keys[i])) {
                 continue;
             }
             
@@ -1044,7 +1098,7 @@ namespace amo {
         return json;
     }
     
-    std::vector<std::string>& SqliteTransfer::getTableField(
+    std::vector<std::string>& SqliteTransfer::getTableFieldImpl(
         const std::string& table) {
         if (!m_pDB) {
             setLastError(SQLITE_INVALID_CONNECTION);
@@ -1111,9 +1165,9 @@ namespace amo {
         
     }
     
-    bool SqliteTransfer::containsField(const std::string& table,
-                                       const std::string& field) {
-        auto& vec = getTableField(table);
+    bool SqliteTransfer::containsFieldImpl(const std::string& table,
+                                           const std::string& field) {
+        auto& vec = getTableFieldImpl(table);
         
         for (auto& p : vec) {
             if (amo::string(p, true).to_upper() == amo::string(field, true).to_upper()) {
