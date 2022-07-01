@@ -376,8 +376,11 @@ namespace amo {
     }
     
     
+    
     void AppContext::run(CefMainArgs& main_args) {
     
+        // 不去掉的话打印页面的时候会触发异常处理程序，导致程序关闭
+        // ::SetUnhandledExceptionFilter(OurSetUnhandledExceptionFilter);
         AMO_TIMER_ELAPSED();
         
         if (!amo::log::initialize()) {
