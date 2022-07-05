@@ -12,6 +12,7 @@
 #include "transfer/TransferMgr.h"
 #include "transfer/TransferEventInfo.hpp"
 #include "transfer/RunnableTransfer.hpp"
+#include <amo/launch.hpp>
 
 namespace amo {
     enum ThreadEnum {

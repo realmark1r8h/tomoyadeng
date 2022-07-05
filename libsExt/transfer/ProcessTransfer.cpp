@@ -90,7 +90,7 @@ namespace amo {
         }
         
         TransferEventInfo info;
-        info.name = "result";
+        info.name = "process.result";
         info.data = m_pPorcess->getResult()->toJson();
         triggerEvent(info);
         return  Undefined();

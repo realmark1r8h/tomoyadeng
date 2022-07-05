@@ -40,7 +40,7 @@ namespace amo {
         SqliteTransfer();
         
         /*!
-         * @fn	SqliteTransfer::SqliteTransfer(const std::string& args);
+         * @fn	SqliteTransfer::Sqlite(const std::string& args);
          *
          * @tag constructor
          *

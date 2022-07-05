@@ -6,6 +6,14 @@
 
 namespace amo {
 
+    /*!
+     * @class	UUID
+     *
+     * @chapter extend
+     *
+     * @brief	UUID 生成类.
+     */
+    
     class UUIDTransfer
         : public RunnableTransfer
         , public amo::singleton<UUIDTransfer> {
@@ -17,11 +25,13 @@ namespace amo {
         /**
          * @fn	Any UUIDTransfer::fromString(IPCMessage::SmartType msg);
          *
+         * @tag static sync
+         *
          * @brief	用一个字符串构建UUID.
          *
-         * @param	msg	The message.
+         * @param	#String 字符串.
          *
-         * @return	Any.
+         * @return	#UUID 返回一个UUID对象.
          */
         
         Any fromString(IPCMessage::SmartType msg);
@@ -29,9 +39,9 @@ namespace amo {
         /**
         * @fn	Any UUIDTransfer::getString(IPCMessage::SmartType msg);
         *
-        * @brief	直接获取一个UUID的字符串，不创建新的对象.
+        * @tag static sync
         *
-        * @param	msg	The message.
+        * @brief	直接获取一个UUID的字符串，不创建新的对象.
         *
         * @return	The string.
         */
@@ -43,8 +53,6 @@ namespace amo {
          *
          * @brief	获取一个空UUID.
          *
-         * @param	msg	The message.
-         *
          * @return	Any.
          */
         
@@ -53,11 +61,12 @@ namespace amo {
         /**
          * @fn	Any UUIDTransfer::nilString(IPCMessage::SmartType msg);
          *
+         * @tag static sync
+         *
          * @brief	获取一个空UUID的字符串.
          *
-         * @param	msg	The message.
          *
-         * @return	Any.
+         * @return	#String 一个表示空UUID的字符串.
          */
         
         Any nilString(IPCMessage::SmartType msg);
@@ -67,11 +76,12 @@ namespace amo {
         /**
          * @fn	Any UUIDTransfer::toString(IPCMessage::SmartType msg);
          *
+         * @sync
+         *
          * @brief	将当前UUID转换为字符串.
          *
-         * @param	msg	The message.
          *
-         * @return	Any that represents this object.
+         * @return	#String UUID字符串.
          */
         
         Any toString(IPCMessage::SmartType msg);

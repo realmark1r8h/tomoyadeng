@@ -11,20 +11,114 @@
 
 namespace amo {
 
+    /*!
+     * @class	Registry
+     * @chapter extend
+     *
+     * @brief	注册表操作类.
+     */
+    
     class RegistryTransfer
         : public RunnableTransfer
         , public amo::singleton<RegistryTransfer> {
     public:
         RegistryTransfer();
+        
+        /*!
+         * @fn	RegistryTransfer::RegistryTransfer(int hKey);
+         *
+         * @tag constructor sync
+         *
+         * @brief	创建一个注册表操作对象.
+         *
+         * @param	#Int  .
+         *
+         * @return  #Registy 注册表操作对象
+         */
+        
         RegistryTransfer(int hKey);
         Any onCreateClass(IPCMessage::SmartType msg) override;
         virtual std::string getClass() const override;
         virtual Transfer* getInterface(const std::string& name) override;
         
+        /*!
+         * @fn	Any RegistryTransfer::create(IPCMessage::SmartType msg);
+         *
+         * @tag sync
+         *
+         * @brief	创建一个子键.
+         *
+         * @param	#String 子键路径.
+         *
+         * @return	#Boolean true成功/false失败.
+         */
+        
         Any create(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	Any RegistryTransfer::open(IPCMessage::SmartType msg);
+         *
+         * @tag sync
+         *
+         * @brief	打开子键.
+         *
+         * @param	#String 子键路径.
+         *
+         * @return	#Boolean true成功/false失败.
+         */
+        
         Any open(IPCMessage::SmartType msg);
+        
+        
+        /*!
+         * @fn	Any RegistryTransfer::read(IPCMessage::SmartType msg);
+         *
+         * @tag	sync
+         *
+         * @brief	读取键值.
+         *
+         * @param	#String 子键.
+         * @param	#String 键名.
+         *
+         * @return	#String 读取到的值.
+         */
+        
         Any read(IPCMessage::SmartType msg);
+        
+        
+        /*!
+         * @fn	Any RegistryTransfer::write(IPCMessage::SmartType msg);
+         *
+         * @tag sync
+         *
+         * @brief	写入键值.
+         *
+         * @param	#String 子键.
+         * @param	#String 键名.
+         * @param	#String 键值.
+         * @param	#Boolean=false 如果子键不存在，是否自己创建子键.
+         *
+         * @return	#Boolean true成功/false失败.
+         */
+        
         Any write(IPCMessage::SmartType msg);
+        
+        
+        
+        
+        /*!
+         * @fn	Any RegistryTransfer::remove(IPCMessage::SmartType msg);
+         *
+         * @tag sync
+         *
+         * @brief	删除键值.
+         *
+         * @param	#String 子键.
+         * @param	#String 键名.
+         *
+         * @return	#Boolean true成功/false失败.
+         */
+        
         Any remove(IPCMessage::SmartType msg);
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(RegistryTransfer, RunnableTransfer)
