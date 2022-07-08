@@ -14,12 +14,18 @@
 
 namespace amo {
 
-
-
-    // 如果一个transfer想要在ThreadTransfer中运行的话，需要继承RunableTranfer
+    /**
+     * @class	Runnable
+     *
+     * @brief	如果一个类想要在线程中运行的话，需要继承自Runable.
+     *
+     * @extend Object
+     */
+    
     class RunnableTransfer : public ClassTransfer {
     public:
-        typedef std::function<void(std::shared_ptr<RunnableTransfer>, const TransferEventInfo&)> EventCallbackFunc;
+        typedef std::function<void(std::shared_ptr<RunnableTransfer>, const TransferEventInfo&)>
+        EventCallbackFunc;
         
         
         
@@ -48,7 +54,8 @@ namespace amo {
         virtual Any onMessageTransfer(IPCMessage::SmartType msg) override {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             
-            if (multiType(args->getString(IPCArgsPosInfo::FuncName)) == TransferMultiDisabled) {
+            if (multiType(args->getString(IPCArgsPosInfo::FuncName)) ==
+                    TransferMultiDisabled) {
                 // new 不能在多线程中执行
                 // weakup 实际上是thread上的函数，这里是为了方便
                 return ClassTransfer::onMessageTransfer(msg);
@@ -70,11 +77,14 @@ namespace amo {
                 
                 std::shared_ptr<AnyArgsList> ipcArgs = ipcMessage->getArgumentList();
                 
-                ipcArgs->setValue(IPCArgsPosInfo::ThreadTransferFuncName, args->getString(IPCArgsPosInfo::FuncName));
-                ipcArgs->setValue(IPCArgsPosInfo::ThreadTransferID, args->getString(IPCArgsPosInfo::TransferID));
-                ipcArgs->setValue(IPCArgsPosInfo::ThreadTransferName, args->getString(IPCArgsPosInfo::TransferName));
-                
-                
+                ipcArgs->setValue(IPCArgsPosInfo::ThreadTransferFuncName,
+                                  args->getString(IPCArgsPosInfo::FuncName));
+                ipcArgs->setValue(IPCArgsPosInfo::ThreadTransferID,
+                                  args->getString(IPCArgsPosInfo::TransferID));
+                ipcArgs->setValue(IPCArgsPosInfo::ThreadTransferName,
+                                  args->getString(IPCArgsPosInfo::TransferName));
+                                  
+                                  
                 ipcArgs->setValue(IPCArgsPosInfo::TransferID, transfer->getObjectID());
                 ipcArgs->setValue(IPCArgsPosInfo::TransferName, transfer->transferName());
                 ipcArgs->setValue(IPCArgsPosInfo::FuncName, "exec");
@@ -83,10 +93,16 @@ namespace amo {
             }
         }
         
+        /**
+         * @fn	Any RunnableTransfer::attach(IPCMessage::SmartType msg)
+         *
+         * @brief	将当前对象附加到一个线程中.
+         *
+         * @param	#Object 需要附加的线程
+         *
+         * @return	#Boolean true成功/false失败.
+         */
         
-        
-        
-        // 将当前transfer附加到一个线程中
         Any attach(IPCMessage::SmartType msg) {
         
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
@@ -107,13 +123,27 @@ namespace amo {
             
         }
         
-        // 将当前transfer从一个线程中分离
+        /**
+         * @fn	Any RunnableTransfer::detach(IPCMessage::SmartType msg)
+         *
+         * @brief	将当前对象从一个线程中分离.
+         *
+         * @return	无.
+         */
+        
         Any detach(IPCMessage::SmartType msg) {
             m_nThreadID = 0;
             return Undefined();
         }
         
-        // 唤醒线程
+        /**
+         * @fn	Any RunnableTransfer::weakup(IPCMessage::SmartType msg)
+         *
+         * @brief	唤醒当前对象所附加的线程.
+         *
+         * @return	无.
+         */
+        
         Any weakup(IPCMessage::SmartType msg) {
             if (m_nThreadID == 0) {
                 return Undefined();
@@ -139,7 +169,14 @@ namespace amo {
             return transfer->onMessageTransfer(ipcMessage);
         }
         
-        // 挂起线程
+        /**
+         * @fn	Any RunnableTransfer::suspend(IPCMessage::SmartType msg)
+         *
+         * @brief	挂起所附加线程.
+         *
+         * @return	无.
+         */
+        
         Any suspend(IPCMessage::SmartType msg) {
             if (m_nThreadID == 0) {
                 return Undefined();
@@ -180,7 +217,8 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(RunnableTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(attach, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(detach, TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup,
+                                      TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     protected:
