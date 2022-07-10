@@ -11,7 +11,14 @@
 
 namespace amo {
 
-
+    /*!
+     * @class	BrowserHost
+     *
+     * @chapter cef
+     *
+     * @brief	CEF BrowserHost ¶ÔÏó·â×°.
+     */
+    
     class BrowserHostTransfer
         : public ClassTransfer
         , public amo::singleton < BrowserHostTransfer > {
