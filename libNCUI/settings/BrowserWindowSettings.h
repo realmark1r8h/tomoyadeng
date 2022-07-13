@@ -64,6 +64,15 @@ namespace amo {
         			DRAG_OPERATION_EVERY   = 0xffffffff */
         int dragBlacklist;
         
+        /** @var #JsonArray	cssList 需要注入到页面的样式列表，必须是一个URL 程序会在主页面加载完成后将里面的文件注入到页面中. */
+        amo::json cssList;
+        
+        /** @var #JsonArray javascriptList 需要注入到页面的Javascript列表，必须是一个URL 程序会在主页面加载完成后将里面的文件注入到页面中. */
+        amo::json javascriptList;
+        
+        
+        
+        
     };
 }
 

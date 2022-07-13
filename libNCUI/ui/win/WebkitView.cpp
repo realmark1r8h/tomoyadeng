@@ -324,6 +324,50 @@ namespace amo {
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         
         
+        if (frame->IsMain()) {
+        
+            std::vector<amo::json> cssList;
+            
+            if (m_pBrowserSettings->cssList.is_array()) {
+                cssList = m_pBrowserSettings->cssList.to_array();
+            }
+            
+            for (auto& p : cssList) {
+                std::string url = p.get<std::string>();
+                
+                if (url.empty()) {
+                    continue;
+                }
+                
+                std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(frame));
+                runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+                runner->setValue(IPCArgsPosInfo::TransferID, 0);
+                runner->setValue(IPCArgsPosInfo::JsFuncName, "loadCSS");
+                runner->execute("runJSFunction", url);
+            }
+            
+            
+            std::vector<amo::json> javascriptList;
+            
+            if (m_pBrowserSettings->javascriptList.is_array()) {
+                javascriptList = m_pBrowserSettings->javascriptList.to_array();
+            }
+            
+            for (auto& p : javascriptList) {
+                std::string url = p.get<std::string>();
+                
+                if (url.empty()) {
+                    continue;
+                }
+                
+                std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(frame));
+                runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+                runner->setValue(IPCArgsPosInfo::TransferID, 0);
+                runner->setValue(IPCArgsPosInfo::JsFuncName, "loadScript");
+                runner->execute("runJSFunction", url);
+            }
+            
+        }
         
         
 #if CHROME_VERSION_BUILD <2704

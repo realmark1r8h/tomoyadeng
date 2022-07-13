@@ -67,7 +67,8 @@ namespace amo {
         STRING_ARGS_SETTING(windowClass);
         BOOL_ARGS_SETTING(reload);
         INT_ARGS_SETTING(dragBlacklist);
-        
+        JSON_ARGS_SETTING(cssList);
+        JSON_ARGS_SETTING(javascriptList);
         
     }
     
