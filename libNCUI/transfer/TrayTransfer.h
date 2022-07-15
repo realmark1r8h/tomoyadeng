@@ -15,8 +15,10 @@ namespace amo {
     /**
      * @class	tray
      *
+     * @extend Object
+     *
      * @brief	托盘操作类.<br>
-     * 			工作线程 **UI**
+     * 			工作线程：**UI线程**.
      *
      */
     

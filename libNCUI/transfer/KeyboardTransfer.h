@@ -15,7 +15,10 @@ namespace amo {
      *
      * @script	keyboard.js
      *
-     * @brief	键盘操作类.
+     * @extend Object
+     *
+     * @brief	键盘操作类.<br>
+     * 			工作线程：**UI线程**.
      */
     
     class KeyboardTransfer

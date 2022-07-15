@@ -22,12 +22,33 @@ namespace amo {
     class UIMessageBroadcaster;
     class RequestSettings;
     
+    /*!
+     * @class	URLRequest
+     *
+     * @brief	网络请求类.<br>
+     * 			工作线程：**UI线程**.
+     */
     
     class URLRequestTransfer
         : public ClassTransfer
         , public amo::singleton < URLRequestTransfer > {
     public:
         URLRequestTransfer();
+        
+        /*!
+         * @fn	URLRequestTransfer::URLRequest(CefRefPtr<CefURLRequest> pURLRequest, int32_t nTimeOut = 0);
+         *
+         * @tag constructor
+         *
+         * @brief	创建一个网络请求对象.
+         *
+         * @param	#JsonObject	创建URLRequest所需要的参数.
+         *
+         * @param	#Int=0 网络超时时间.
+         *
+         * @return #URLRequest 一个request对象
+         */
+        
         URLRequestTransfer(CefRefPtr<CefURLRequest> pURLRequest,
                            int32_t nTimeOut = 0);
         ~URLRequestTransfer();

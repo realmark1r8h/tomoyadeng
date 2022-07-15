@@ -15,8 +15,11 @@ namespace amo {
     /*!
      * @class	ipc
      *
-     * @brief	进程间通信类，你可以通过该类发其他页面发送消息.
-     * 			但要注意的是不能在消息处理函数中调用任何导致UI阻塞的函数如(弹出窗口 alert dialog)
+     * @extend Object
+     *
+     * @brief	进程间通信类，你可以通过该类发其他页面发送消息.<br>
+     * 			但要注意的是不能在消息处理函数中调用任何导致UI阻塞的函数如(弹出窗口 alert dialog)<br>
+     * 			工作线程：**UI线程**.
      * @example
      *
     			 ```

@@ -47,13 +47,13 @@ namespace amo {
         virtual void afterUpdateArgsSettings() override;
         
     public:
-        /*! @var #Boolean=false main 当前窗口是否为主窗口.主窗口只能有一个，如果设置为主窗口将取消之前的主窗口设定. */
+        /*! @var #Boolean=false main 当前窗口是否为主窗口.主窗口只能有一个，如果设置为主窗口将取消之前的主窗口设定，新的主窗口会替代原来的主窗口. */
         bool main;
         
         /** @var #Boolean=false relad	是否允许页面刷新. 默认false */
         bool reload;
         
-        /** @var #Int=0	 dragBlackList	不允许的拖拽操作黑名单,以下是可以使用的值,可以组合使用<br>
+        /** @var #Int=0	 dragBlackList	不允许的拖拽操作黑名单,设定后对应类型的拖拽将不被允许。以下是可以使用的值,可以组合使用<br>
         /** @brief  DRAG_OPERATION_NONE    = 0,<br>
         			DRAG_OPERATION_COPY    = 1,<br>
         			DRAG_OPERATION_LINK    = 2,<br>
@@ -64,10 +64,10 @@ namespace amo {
         			DRAG_OPERATION_EVERY   = 0xffffffff */
         int dragBlacklist;
         
-        /** @var #JsonArray	cssList 需要注入到页面的样式列表，必须是一个URL 程序会在主页面加载完成后将里面的文件注入到页面中. */
+        /** @var #JsonArray	cssList 需要注入到页面的样式列表，必须是一个URL。 程序会在主页面加载完成后将里面的文件注入到页面中. */
         amo::json cssList;
         
-        /** @var #JsonArray javascriptList 需要注入到页面的Javascript列表，必须是一个URL 程序会在主页面加载完成后将里面的文件注入到页面中. */
+        /** @var #JsonArray javascriptList 需要注入到页面的Javascript列表，必须是一个URL。 程序会在主页面加载完成后将里面的文件注入到页面中. */
         amo::json javascriptList;
         
         

@@ -13,6 +13,8 @@ namespace amo {
     /*!
      * @class	mouse
      *
+     * @extend Object
+     *
      * @brief	鼠标控制类,所有函数均为静态函数.<br>
      * 			工作线程：**UI线程**.
      */

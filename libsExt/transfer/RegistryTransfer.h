@@ -13,9 +13,12 @@ namespace amo {
 
     /*!
      * @class	Registry
+     *
      * @chapter extend
      *
-     * @brief	注册表操作类.
+     * @extend Runnable
+     *
+     * @brief	注册表操作类.<br>工作线程**Renderer线程**
      */
     
     class RegistryTransfer

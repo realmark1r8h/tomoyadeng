@@ -15,10 +15,13 @@ namespace amo {
 
     /*!
      * @class	BrowserWindow
+     *
      * @copy  NativeWindowProxy
-     * @chapter api
+     *
      * @extend Object
-     * @brief	浏览器窗口创建及控制.
+     *
+     * @brief	浏览器窗口创建及控制.<br>
+     * 			工作线程：**UI线程**.
      */
     
     class BrowserWindowTransfer

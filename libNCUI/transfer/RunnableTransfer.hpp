@@ -17,7 +17,8 @@ namespace amo {
     /**
      * @class	Runnable
      *
-     * @brief	如果一个类想要在线程中运行的话，需要继承自Runable.
+     * @brief	如果一个类想要在线程中运行的话，需要继承自Runable.<br>
+     * 			工作线程：**UI线程** 或 **Renderer线程**.
      *
      * @extend Object
      */

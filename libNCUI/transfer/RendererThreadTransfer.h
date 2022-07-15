@@ -14,7 +14,11 @@ namespace amo {
     *
     * @copy  ThreadBase
     *
-    * @brief 线程类，该类构建的实例会在渲染进程上执行,可以使一个由C++编写的扩展在线程上运行.
+    * @extend Object
+    *
+    *
+    * @brief 线程类，该类构建的实例会在渲染进程上执行,可以使一个由C++编写的扩展在线程上运行.<br>
+    * 		 工作线程：**Renderer线程**.
     */
     class RendererThreadTransfer : public ThreadTransfer<ThreadRenderer>
         , public amo::singleton<RendererThreadTransfer> {

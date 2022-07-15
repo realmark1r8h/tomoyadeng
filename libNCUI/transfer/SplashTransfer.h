@@ -15,7 +15,10 @@ namespace amo {
     /*!
      * @class	splash
      *
-     * @brief	启动画面.
+     * @extend Object
+     *
+     * @brief	启动画面.<br>
+     * 			工作线程：**UI线程**.
      */
     
     class SplashTransfer

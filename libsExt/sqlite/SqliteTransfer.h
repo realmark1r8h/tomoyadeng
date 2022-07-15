@@ -20,7 +20,7 @@ namespace amo {
      * @chapter extend
      *
      * @brief	Sqlite3 数据库封装类，用于操作本地数据库文件.<br>
-     * 			工作线程**Renderer**
+     * 			工作线程**Renderer线程**
      */
     
     class SqliteTransfer

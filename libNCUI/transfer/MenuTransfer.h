@@ -15,7 +15,10 @@ namespace amo {
     /*!
      * @class	Menu
      *
-     * @brief	菜单.
+     * @extend Object
+     *
+     * @brief	弹出菜单.<br>
+     * 			工作线程：**UI线程**.
      */
     
     class MenuTransfer

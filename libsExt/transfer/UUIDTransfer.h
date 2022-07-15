@@ -11,7 +11,10 @@ namespace amo {
      *
      * @chapter extend
      *
+     * @extend Runnable
+     *
      * @brief	UUID 生成类.
+     * 			<br>工作线程**Renderer线程**
      */
     
     class UUIDTransfer

@@ -14,6 +14,18 @@
 namespace amo {
 
     class path;
+    
+    /*!
+     * @class	Path
+     *
+     * @extend Runnable
+     *
+     * @chapter extend
+     *
+     * @brief	路径库.<br>
+     * 			工作线程**Renderer线程**
+     */
+    
     class PathTransfer
         : public RunnableTransfer
         , public amo::singleton<PathTransfer> {

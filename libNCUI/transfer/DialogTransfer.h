@@ -15,7 +15,10 @@ namespace amo {
     /**
      * @class	dialog
      *
-     * @brief	弹出框，文件选择框.
+     * @extend Object
+     *
+     * @brief	弹出框，文件选择框.<br>
+     * 			工作线程：**UI线程**.
      *
      */
     

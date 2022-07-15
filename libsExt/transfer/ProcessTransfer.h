@@ -14,9 +14,12 @@ namespace amo {
     /*!
      * @class	Process
      *
+     * @extend Runnable
+     *
      * @chapter extend
      *
-     * @brief	子进程类.
+     * @brief	子进程类.<br>
+     * 			工作线程**Renderer线程**
      */
     
     class ProcessTransfer

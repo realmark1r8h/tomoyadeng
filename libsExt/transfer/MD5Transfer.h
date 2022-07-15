@@ -16,7 +16,8 @@ namespace amo {
     /*!
      * @class	md5
      *
-     * @brief	MD5 加密类.
+     * @brief	MD5 加密类.<br>
+     * 			工作线程**Renderer线程**
      */
     
     class MD5Transfer

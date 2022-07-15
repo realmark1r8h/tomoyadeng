@@ -16,7 +16,8 @@ namespace amo {
      *
      * @chapter cef
      *
-     * @brief	CEF BrowserHost 对象封装.
+     * @brief	CEF BrowserHost 对象封装.<br>
+     * 			工作线程：**UI线程**.
      */
     
     class BrowserHostTransfer

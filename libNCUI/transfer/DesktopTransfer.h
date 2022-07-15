@@ -15,7 +15,10 @@ namespace amo {
     /*!
      * @class	desktop
      *
-     * @brief	用于获取桌面的基本信息.
+     * @extend Object
+     *
+     * @brief	用于获取桌面的基本信息.<br>
+     * 			工作线程：**UI线程**.
      */
     
     class DesktopTransfer

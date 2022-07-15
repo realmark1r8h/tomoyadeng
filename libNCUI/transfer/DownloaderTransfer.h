@@ -19,8 +19,10 @@ namespace amo {
     
     /*!
      * @class	Downloader
+     * @extend  Object
      *
-     * @brief	文件下载类，使用浏览器的下载功能下载文件.
+     * @brief	文件下载类，使用浏览器的下载功能下载文件.<br>
+     * 			工作线程：**UI线程**.
      */
     
     class DownloaderTransfer

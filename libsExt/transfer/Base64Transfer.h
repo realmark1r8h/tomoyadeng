@@ -18,7 +18,11 @@ namespace amo {
      *
      * @chapter extend
      *
-     * @brief	Base64 编解码.
+     * @extend Runnable
+     *
+     * @brief	Base64 编解码.<br>
+     * 			工作线程**Renderer线程**
+     *
      */
     
     class Base64Transfer

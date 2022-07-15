@@ -13,6 +13,8 @@ namespace amo {
     /*!
      * @class	globalShortcut
      *
+     * @extend Object
+     *
      * @brief	全局快捷键.<br>
      * 			工作线程 **UI线程**
      */
