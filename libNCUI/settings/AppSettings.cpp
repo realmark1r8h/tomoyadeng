@@ -260,6 +260,45 @@ namespace amo {
         return BasicSettings::afterUpdateArgsSettings();
     }
     
+    amo::json AppSettings::toJson()   {
+    
+        UPDATE_ARGS_SETTINGS(manifest);
+        UPDATE_ARGS_SETTINGS(appID);
+        UPDATE_ARGS_SETTINGS(singleInstance);
+        UPDATE_ARGS_SETTINGS(showSplash);
+        UPDATE_ARGS_SETTINGS(useNode);
+        UPDATE_ARGS_SETTINGS(useNodeProcess);
+        UPDATE_ARGS_SETTINGS(debugNode);
+        UPDATE_ARGS_SETTINGS(ipcTimeout);
+        
+        UPDATE_ARGS_SETTINGS(main);
+        
+        UPDATE_ARGS_SETTINGS(workDir);
+        UPDATE_ARGS_SETTINGS(skinDir);
+        UPDATE_ARGS_SETTINGS(webDir);
+        
+        UPDATE_ARGS_SETTINGS(appDataDir);
+        UPDATE_ARGS_SETTINGS(homeDir);
+        
+        UPDATE_ARGS_SETTINGS(dragClassName);
+        UPDATE_ARGS_SETTINGS(noDragClassName);
+        
+        UPDATE_ARGS_SETTINGS(temp);
+        
+        
+        UPDATE_ARGS_SETTINGS(desktop);
+        UPDATE_ARGS_SETTINGS(documents);
+        UPDATE_ARGS_SETTINGS(downloadsDir);
+        UPDATE_ARGS_SETTINGS(musicsDir);
+        UPDATE_ARGS_SETTINGS(picturesDir);
+        UPDATE_ARGS_SETTINGS(videosDir);
+        
+        UPDATE_ARGS_SETTINGS(startTime);
+        UPDATE_ARGS_SETTINGS(debugMode);
+        UPDATE_ARGS_SETTINGS(clearCache);
+        return BasicSettings::toJson();
+    }
+    
 }
 
 

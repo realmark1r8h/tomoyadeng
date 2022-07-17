@@ -37,6 +37,7 @@ namespace amo {
         
         void initDefaultRequestSettings();
         virtual void afterUpdateArgsSettings() override;
+        virtual amo::json toJson() override;
         
         std::string makeUrlWithArgs();
         std::vector<std::pair<std::string, std::string> > getHeaderMap();

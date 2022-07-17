@@ -31,6 +31,16 @@ namespace amo {
     
     
     
+    amo::json GlobalShortcutSettings::toJson() {
+        UPDATE_ARGS_SETTINGS(ctrl);
+        UPDATE_ARGS_SETTINGS(win);
+        UPDATE_ARGS_SETTINGS(alt);
+        UPDATE_ARGS_SETTINGS(shift);
+        UPDATE_ARGS_SETTINGS(key);
+        UPDATE_ARGS_SETTINGS(action);
+        return BasicSettings::toJson();
+    }
+    
     bool GlobalShortcutSettings::isSameGlobalShortcut(
         std::shared_ptr<GlobalShortcutSettings> pOther) {
         if (ctrl != pOther->ctrl) {

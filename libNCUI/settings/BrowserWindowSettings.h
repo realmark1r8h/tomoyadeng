@@ -14,7 +14,8 @@ namespace amo {
      *
      * @id settingsBrowserWindowSettings
      *
-     * @brief	创建浏览器窗口时可用的属性.
+     * @brief	创建浏览器窗口时可用的属性.<br>
+     * 			说明：**配置参数不能在程序运行过程中修改，只有程序内部函数可以修改这些值。**
      *
      * @chapter settings
      *
@@ -31,6 +32,7 @@ namespace amo {
         /*!
          * @fn	void BrowserWindowSettings::InitDefaultCefBrowserSettings();
          * @ignore
+         *
          * @brief	Init default cef browser settings.
          */
         
@@ -39,6 +41,7 @@ namespace amo {
         /*!
          * @fn	void BrowserWindowSettings::InitDefaultBrowserSettings();
          * @ignore
+         *
          * @brief	Init default browser settings.
          */
         
@@ -46,8 +49,10 @@ namespace amo {
         
         virtual void afterUpdateArgsSettings() override;
         
+        virtual amo::json toJson() override;
     public:
-        /*! @var #Boolean=false main 当前窗口是否为主窗口.主窗口只能有一个，如果设置为主窗口将取消之前的主窗口设定，新的主窗口会替代原来的主窗口. */
+        /*! @var #Boolean=false main 当前窗口是否为主窗口.主窗口只能有一个，如果设置为主窗口将取消之前的主窗口设定，新的主窗口会替代原来的主窗口.
+         *	你可以在程序运行过程中修改该值，但要保证任何时候都最多只能有一个浏览器窗口被标记为main */
         bool main;
         
         /** @var #Boolean=false relad	是否允许页面刷新. 默认false */
@@ -64,10 +69,10 @@ namespace amo {
         			DRAG_OPERATION_EVERY   = 0xffffffff */
         int dragBlacklist;
         
-        /** @var #JsonArray	cssList 需要注入到页面的样式列表，必须是一个URL。 程序会在主页面加载完成后将里面的文件注入到页面中. */
+        /** @var #JsonArray=[]	cssList 需要注入到页面的样式列表，必须是一个URL。 程序会在主页面加载完成后将里面的文件注入到页面中. */
         amo::json cssList;
         
-        /** @var #JsonArray javascriptList 需要注入到页面的Javascript列表，必须是一个URL。 程序会在主页面加载完成后将里面的文件注入到页面中. */
+        /** @var #JsonArray=[] javascriptList 需要注入到页面的Javascript列表，必须是一个URL。 程序会在主页面加载完成后将里面的文件注入到页面中. */
         amo::json javascriptList;
         
         

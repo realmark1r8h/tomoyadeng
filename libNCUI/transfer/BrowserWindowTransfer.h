@@ -42,14 +42,15 @@ namespace amo {
         
         /**
          * @fn	virtual Any BrowserWindow(IPCMessage::SmartType msg) override;
+         * @index 1
          *
          * @tag constructor sync
          *
-         * @brief	Executes the create class action.
+         * @brief	创建一个浏览器窗口.
          *
-         * @param	msg	The message.
+         * @param	#Object 参见{@link 浏览器窗口参数}.
          *
-         * @return	Any.
+         * @return	#BrowserWindow 一个浏览器窗口对象.
          */
         
         virtual Any onCreateClass(IPCMessage::SmartType msg) override;
@@ -59,13 +60,23 @@ namespace amo {
         /*!
          * @fn	Any BrowserWindowTransfer::currentWindow(IPCMessage::SmartType msg);
          *
-         * @brief   获取当前窗口
+         * @tag deprecated
          *
-         * @param	msg	The message.
+         * @brief   获取当前页面所对应的窗口对象
          *
-         * @return	Any.
+         * @return	#BrowserWindow 如果不存在，返回Undefined.
+         *
+         * @see current=BrowserWindow.current
          */
         Any currentWindow(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	Any current(IPCMessage::SmartType msg);
+         *
+         * @brief	获取当前页面所对应的窗口对象.
+         *
+         * @return	#BrowserWindow 如果不存在，返回Undefined.
+         */
         
         Any current(IPCMessage::SmartType msg);
         /*!
@@ -73,9 +84,10 @@ namespace amo {
          *
          * @brief	获取所有的浏览器窗口.
          *
-         * @param	msg	The message.
          *
-         * @return	all windows.
+         * @return	#Array 所有的浏览器窗口.
+         *
+         * @see All=BrowserWindow.All
          */
         Any getAllWindows(IPCMessage::SmartType msg);
         
@@ -108,12 +120,12 @@ namespace amo {
          *
          * @brief	强制页面重绘，或停止之前的强制重绘
          *
-         * @param	repaint 是否重绘界面,如果为false，将移除之前的计时器.
-         * @param	delay 重绘界面的间隔时间(毫秒)，程序每隔(delay)对页面进行一次重绘。
+         * @param	#Boolean  是否重绘界面,如果为false，将移除之前的计时器.
+         * @param	#Int   重绘界面的间隔时间(毫秒)，程序每隔(delay)对页面进行一次重绘。
          * 				  如果=0，将不会添加计时器进行重绘.
          * 				  如果<30,delay会提升到30ms.
          *
-         * @return	Undefined.
+         * @return	#Undefined.
          */
         
         virtual Any repaint(IPCMessage::SmartType msg);
@@ -123,9 +135,9 @@ namespace amo {
          *
          * @brief	添加一个渲染图层，在进行页面重绘时会将该图片合并到页面原始的Bitmap中
          *
-         * @param	name 图层名称 （该名称为一个共享内存的名称，页面重绘时将读取共享内存中的数据进行合并）.
+         * @param	#String   图层名称 （该名称为一个共享内存的名称，页面重绘时将读取共享内存中的数据进行合并）.
          *
-         * @return	Undefined.
+         * @return	#Undefined.
          */
         
         virtual Any addOverlap(IPCMessage::SmartType msg);
@@ -135,9 +147,9 @@ namespace amo {
          *
          * @brief	移除一个渲染图层
          *
-         * @param	name 图层名称.
+         * @param	#String 图层名称.
          *
-         * @return	Undefined.
+         * @return	#Undefined.
          */
         
         virtual Any removeOverlap(IPCMessage::SmartType msg);
@@ -202,6 +214,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setName, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(id,  TransferExecSync)
         
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(showTitleBar, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(close, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(destroy, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(focus, TransferExecNormal)

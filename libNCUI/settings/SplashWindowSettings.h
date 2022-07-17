@@ -40,6 +40,7 @@ namespace amo {
         
         virtual void afterUpdateArgsSettings() override;
         
+        virtual amo::json toJson() override;
     public:
         /*! @var #String image Æô¶¯´°¿ÚÏÔÊ¾Í¼Æ¬. */
         std::string image;

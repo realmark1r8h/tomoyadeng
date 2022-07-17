@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7zpp-TestApp", "third_party
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libResource", "libResource\libResource.vcxproj", "{48E17CE6-78C7-4281-B4FD-DE3FC46F9BD1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "amo_tests", "third_party\amo_tests\amo_tests.vcxproj", "{DAC93A29-26F8-4322-A31D-9FB4B3B9D067}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -134,6 +136,14 @@ Global
 		{48E17CE6-78C7-4281-B4FD-DE3FC46F9BD1}.Release|x64.Build.0 = Release|x64
 		{48E17CE6-78C7-4281-B4FD-DE3FC46F9BD1}.Release|x86.ActiveCfg = Release|Win32
 		{48E17CE6-78C7-4281-B4FD-DE3FC46F9BD1}.Release|x86.Build.0 = Release|Win32
+		{DAC93A29-26F8-4322-A31D-9FB4B3B9D067}.Debug|x64.ActiveCfg = Debug|x64
+		{DAC93A29-26F8-4322-A31D-9FB4B3B9D067}.Debug|x64.Build.0 = Debug|x64
+		{DAC93A29-26F8-4322-A31D-9FB4B3B9D067}.Debug|x86.ActiveCfg = Debug|Win32
+		{DAC93A29-26F8-4322-A31D-9FB4B3B9D067}.Debug|x86.Build.0 = Debug|Win32
+		{DAC93A29-26F8-4322-A31D-9FB4B3B9D067}.Release|x64.ActiveCfg = Release|x64
+		{DAC93A29-26F8-4322-A31D-9FB4B3B9D067}.Release|x64.Build.0 = Release|x64
+		{DAC93A29-26F8-4322-A31D-9FB4B3B9D067}.Release|x86.ActiveCfg = Release|Win32
+		{DAC93A29-26F8-4322-A31D-9FB4B3B9D067}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,5 +156,6 @@ Global
 		{5E365D9B-518F-9DBD-1BF2-E5C1E2843AE0} = {E53D3677-D6F9-424B-9881-D16984B1712F}
 		{87675A89-D1C2-4C3D-ABA6-497E75A89962} = {9E0EC5C0-BC2E-43C0-8125-98124315CA07}
 		{221858F5-5CED-4142-BD41-5A70972F9926} = {9E0EC5C0-BC2E-43C0-8125-98124315CA07}
+		{DAC93A29-26F8-4322-A31D-9FB4B3B9D067} = {9E0EC5C0-BC2E-43C0-8125-98124315CA07}
 	EndGlobalSection
 EndGlobal

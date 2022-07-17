@@ -250,6 +250,12 @@ namespace amo {
         return false;
     }
     
+    
+    Any LocalWindow::showTitleBar(IPCMessage::SmartType msg) {
+    
+        // ÓÉBrowserWindow ¼Ì³ÐÊµÏÖ
+        return Undefined();
+    }
     Any LocalWindow::topmost(IPCMessage::SmartType msg) {
         setTopmost(msg->getArgumentList()->getBool(0));
         return Undefined();
@@ -510,6 +516,8 @@ namespace amo {
            ::GetClientRect(m_hWnd, &rt);*/
         return LayeredWindow::OnSize(uMsg, wParam, lParam, bHandled);
     }
+    
+    
     
     int64_t LocalWindow::getTransferClassID() const {
         return m_nTransferClassID;

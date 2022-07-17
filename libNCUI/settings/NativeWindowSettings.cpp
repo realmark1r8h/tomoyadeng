@@ -115,5 +115,55 @@ namespace amo {
         return ;
     }
     
+    amo::json NativeWindowSettings::toJson() {
+        UPDATE_ARGS_SETTINGS(id);
+        UPDATE_ARGS_SETTINGS(name);
+        UPDATE_ARGS_SETTINGS(parent);
+        
+        UPDATE_ARGS_SETTINGS(title);
+        UPDATE_ARGS_SETTINGS(icon);
+        UPDATE_ARGS_SETTINGS(titleBar);
+        UPDATE_ARGS_SETTINGS(url);
+        UPDATE_ARGS_SETTINGS(sizebox);
+        UPDATE_ARGS_SETTINGS(roundcorner);
+        UPDATE_ARGS_SETTINGS(windowClass);
+        
+        UPDATE_ARGS_SETTINGS(modal);
+        UPDATE_ARGS_SETTINGS(show);
+        UPDATE_ARGS_SETTINGS(center);
+        
+        UPDATE_ARGS_SETTINGS(x);
+        UPDATE_ARGS_SETTINGS(y);
+        UPDATE_ARGS_SETTINGS(width);
+        UPDATE_ARGS_SETTINGS(height);
+        UPDATE_ARGS_SETTINGS(minWidth);
+        UPDATE_ARGS_SETTINGS(minHeight);
+        UPDATE_ARGS_SETTINGS(maxWidth);
+        UPDATE_ARGS_SETTINGS(maxHeight);
+        
+        UPDATE_ARGS_SETTINGS(resizable);
+        UPDATE_ARGS_SETTINGS(moveable);
+        UPDATE_ARGS_SETTINGS(minimizable);
+        UPDATE_ARGS_SETTINGS(maximizable);
+        UPDATE_ARGS_SETTINGS(fullscreenable);
+        UPDATE_ARGS_SETTINGS(closable);
+        UPDATE_ARGS_SETTINGS(fullscreen);
+        UPDATE_ARGS_SETTINGS(skipTaskbar);
+        
+        UPDATE_ARGS_SETTINGS(alwaysOnTop);
+        UPDATE_ARGS_SETTINGS(offscreen);
+        UPDATE_ARGS_SETTINGS(accelerator);
+        UPDATE_ARGS_SETTINGS(transparent);
+        UPDATE_ARGS_SETTINGS(windowColor);
+        UPDATE_ARGS_SETTINGS(hasShadow);
+        UPDATE_ARGS_SETTINGS(focusable);
+        
+        UPDATE_ARGS_SETTINGS(esc);
+        UPDATE_ARGS_SETTINGS(back_forword);
+        
+        return BasicSettings::toJson();
+        
+    }
+    
 }
 

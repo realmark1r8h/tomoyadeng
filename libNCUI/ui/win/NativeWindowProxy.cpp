@@ -21,6 +21,11 @@ namespace amo {
         return Undefined();
     }
     
+    Any NativeWindowProxy::showTitleBar(IPCMessage::SmartType msg) {
+        // 由LocalWindow类重载
+        return Undefined();
+    }
+    
     Any NativeWindowProxy::destroy(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         // 255 强制关闭窗口
@@ -297,6 +302,8 @@ namespace amo {
     Any NativeWindowProxy::setTitle(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         amo::string str(args->getString(0), true);
+        
+        getNativeSettings()->title = str.to_utf8();
         BOOL bOk = ::SetWindowTextA(getNativeHWND(args), str.c_str());
         return bOk != FALSE;
     }
@@ -410,11 +417,12 @@ namespace amo {
         
         if (val.type() == AnyValueType<Nil>::value) {
             // 返回所有设置
-            return pSettings->settings;
+            return pSettings->toJson();
             
         } else  if (val.type() == AnyValueType<std::string>::value) {
             std::string strKey = args->getString(0);
-            auto& json = pSettings->settings;
+            
+            auto json = pSettings->toJson();
             
             if (json.is_bool(strKey)) {
                 return json.getBool(strKey);

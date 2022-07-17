@@ -298,11 +298,12 @@ namespace amo {
         if (val.type() == AnyValueType<Nil>::value) {
         
             // 返回所有设置
-            return appSettings->settings;
+            return appSettings->toJson();
             
         } else  if (val.type() == AnyValueType<std::string>::value) {
             std::string strKey = args->getString(0);
-            auto& json = appSettings->settings;
+            
+            auto json = appSettings->toJson();
             
             if (json.is_bool(strKey)) {
                 return json.getBool(strKey);

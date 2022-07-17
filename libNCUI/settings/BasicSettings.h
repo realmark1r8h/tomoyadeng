@@ -11,6 +11,7 @@
 
 
 #define DEFAULT_ARGS_SETTINGS(name, val) name = val; settings.put(#name, val);
+#define UPDATE_ARGS_SETTINGS(name)  settings.put(#name, name);
 
 #define BOOL_ARGS_SETTING(val) val = settings.getBool(#val, val);
 #define INT_ARGS_SETTING(val) val = settings.getInt(#val, val);
@@ -24,6 +25,10 @@ namespace amo {
     class BasicSettings {
     public:
         BasicSettings();
+        
+        virtual amo::json toJson()   {
+            return settings;
+        }
         
         /*!
          * @fn	bool BasicSettings::updateArgsSettings(amo::json& config);

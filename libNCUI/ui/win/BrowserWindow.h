@@ -16,8 +16,10 @@
 #include "handler/BrowserProcessHandler.h"
 #include "handler/DragHandler.h"
 #include "transfer/BrowserWindowTransfer.h"
+#include "handler/DisplayHandler.h"
 #include "ui/win/LayeredWindow.h"
 #include "ui/win/LocalWindow.h"
+
 
 
 
@@ -32,6 +34,7 @@ namespace amo {
         , public BrowserWindowTransfer
         , public RenderHandlerDelegate
         , public LifeSpanHandlerDelegate
+        , public DisplayHandlerDelegate
         , public BrowserProcessHandlerDelegate
         , public DragHandlerDelegate {
         
@@ -39,6 +42,7 @@ namespace amo {
         BrowserWindow(std::shared_ptr<BrowserWindowSettings> pBrowserSettings);
         ~BrowserWindow();
         void test();
+        
         
         
         
@@ -96,7 +100,12 @@ namespace amo {
                                  CefRefPtr<CefDragData> dragData,
                                  CefDragHandler::DragOperationsMask mask) override;
                                  
-                                 
+        // DisplayHandlerDelegate
+        
+        
+        
+        virtual void OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title) override;
+        
 #if CHROME_VERSION_BUILD >= 2704
         virtual void OnDraggableRegionsChanged(CefRefPtr<CefBrowser> browser,
                                                const std::vector<CefDraggableRegion>& regions) override;
@@ -118,6 +127,8 @@ namespace amo {
         
         virtual Any setDragBlackList(IPCMessage::SmartType msg) override;
         virtual Any getDragBlackList(IPCMessage::SmartType msg) override;
+        virtual Any showTitleBar(IPCMessage::SmartType msg) override;
+        
         
     public:
         // LocalWindow

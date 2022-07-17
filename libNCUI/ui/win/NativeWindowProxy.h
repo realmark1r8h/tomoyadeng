@@ -68,6 +68,27 @@ namespace amo {
          */
         virtual Any setName(IPCMessage::SmartType msg);
         
+        /*!
+         * @fn	Any NativeWindowProxy::showTitleBar(IPCMessage::SmartType msg);
+         *
+         * @brief	显示/隐藏标题栏.
+         *
+         * @param	#Boolean=false  true显示/false隐藏.
+         *
+         * @return	无.
+         *
+         * @example
+        
+        		 ```
+        		 var win = BrowserWindow.current;
+        		 var titleBar = win.getConfig('titleBar');
+        		 win.showTitleBar(!titleBar);
+        		```
+         */
+        
+        virtual Any showTitleBar(IPCMessage::SmartType msg);
+        
+        
         
         /*!
         * @fn	Any NativeWindowProxy::close(IPCMessage::SmartType msg);
@@ -244,8 +265,7 @@ namespace amo {
          *
          * @return	无.
          *
-         * @see unmaximize=BrowserWindow.unmaximize restore=BrowserWindow.restore
-         *		 isMaximized=BrowserWindow.isMaximized
+         * @see unmaximize=BrowserWindow.unmaximize restore=BrowserWindow.restore isMaximized=BrowserWindow.isMaximized
          * @example
          *
         			 ```
@@ -427,7 +447,7 @@ namespace amo {
          * 			当所给宽高小于限制宽高时，以最小宽高为准<br>
          * 			当所给宽高大于限制宽高时，以最大宽高为准
          *
-         * @param	#JsonObject.
+         * @param	#JsonObject .
          *
          * @return	无.
          *
@@ -1314,6 +1334,8 @@ namespace amo {
         /*!
          * @fn	HWND NativeWindowProxy::getNativeHWND(std::shared_ptr<AnyArgsList> args);
          *
+         * @ignore
+         *
          * @brief	获取窗口原生句柄.
          *
          * @param	args	The arguments.
@@ -1323,7 +1345,9 @@ namespace amo {
         HWND getNativeHWND(std::shared_ptr<AnyArgsList> args);
         /*!
          * @fn	virtual HWND NativeWindowProxy::getNativeHWND();
+         *
          * @ignore
+         *
          * @brief	获取窗口原生句柄.
          *
          * @return	The native hwnd.
@@ -1331,7 +1355,9 @@ namespace amo {
         virtual HWND getNativeHWND();
         /*!
          * @fn	virtual std::shared_ptr<NativeWindowSettings> NativeWindowProxy::getBrowserSettings();
+         *
          * @ignore
+         *
          * @brief	获取窗口配置参数.
          *
          * @return	The browser settings.

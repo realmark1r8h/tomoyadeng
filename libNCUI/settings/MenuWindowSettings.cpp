@@ -22,5 +22,12 @@ namespace amo {
         return NativeWindowSettings::afterUpdateArgsSettings();
     }
     
+    amo::json MenuWindowSettings::toJson() {
+        UPDATE_ARGS_SETTINGS(lineHeight);
+        UPDATE_ARGS_SETTINGS(windowColor);
+        UPDATE_ARGS_SETTINGS(separatorColor);
+        return BasicSettings::toJson();
+    }
+    
 }
 

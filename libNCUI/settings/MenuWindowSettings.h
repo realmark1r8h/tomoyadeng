@@ -21,6 +21,8 @@ namespace amo {
         
         virtual void afterUpdateArgsSettings() override;
         
+        virtual amo::json toJson() override;
+        
     public:
         /*! @brief	Height of the line. */
         int lineHeight;

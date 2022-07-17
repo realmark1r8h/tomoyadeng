@@ -20,7 +20,8 @@ namespace amo {
      *
      * @unexport
      *
-     * @brief	创建时原生窗口可用参数.
+     * @brief	创建时原生窗口可用参数.<br>
+     * 			说明：**配置参数不能在程序运行过程中修改，只有程序内部函数可以修改这些值。**
      *
      * @sa	BasicSettings
      */
@@ -38,17 +39,19 @@ namespace amo {
         void initDefaultNativeSettings();
         virtual void afterUpdateArgsSettings() override;
         
+        virtual amo::json toJson() override;
     public:
     
-        /*! @var #String=0 id	窗口ID. */
+        /*! @var #String=0 id	窗口ID，由程序设置该值，你不应该修改该值，当通过ID {@link fromID=BrowserWindow.fromID}查找窗口时可以使用该值 {@tag const}. */
         std::string id;
         
-        /*! @var #String name	窗口名，默认为Chromium Embedded Framework (CEF) */
+        /*! @var #String=Chromium{&nbsp;}Embedded{&nbsp;}Framework{&nbsp;}(CEF) name	窗口名，当通过名称{@link fromName=BrowserWindow.fromName}查找窗口时可以使用该值，如果想要通过名称查找窗口，那么这个值应该被设置成唯一的，默认为Chromium Embedded Framework (CEF) */
         std::string name;
-        /*! @var #String=NULL parent	当前窗口的父窗口. */
+        
+        /*! @var #String=NULL parent	当前窗口的父窗口，创建窗口时设置. {@tag const}*/
         std::string parent;
         
-        /*! @var #String title	窗口标题，默认为Chromium Embedded Framework (CEF) */
+        /*! @var #String=Chromium{&nbsp;}Embedded{&nbsp;}Framework{&nbsp;}(CEF) title	窗口标题（你可以在任何窗口预览的地方看到该值，如任务栏，任务管理器），默认为Chromium Embedded Framework (CEF),程序会根据页面的title标签内容自己修改该值. */
         std::string title;
         
         /*! @var #String="" icon	窗口图标，默认为空. */
@@ -57,25 +60,25 @@ namespace amo {
         /*! @var #Boolean=false titleBar	是否显示标题栏. */
         bool titleBar;
         
-        /*! @var #String=chrome://version url	需要打开的网页地址. */
+        /*! @var #String=chrome://version url	需要打开的网页地址.{@tag const} */
         std::string url;
         
-        /*! @var #String=2,2,2,2 sizebox	 可以被拖动改变窗口大小的边框距. */
+        /*! @var #String=2,2,2,2 sizebox	 可以被拖动改变窗口大小的边框距.{@tag const} */
         std::string sizebox;
         
-        /*! @var #Int=0 roundcorner	 窗口圆角. */
+        /*! @var #Int=0 roundcorner	 窗口圆角.{@tag const} */
         int roundcorner;
         
-        /** @var #String=BrowserWindow windowClass	窗口类名. */
+        /** @var #String=BrowserWindow windowClass	窗口类名.{@tag const} */
         std::string windowClass;
         
-        /*! @var #Boolean=false modal	当前窗口是否为模态窗口，如果是那么在当前窗口之后所创建的窗口都是模态窗口，不管有没有指定modal=true. */
+        /*! @var #Boolean=false modal	当前窗口是否为模态窗口，如果是那么在当前窗口之后所创建的窗口都是模态窗口，不管有没有指定modal=true {@tag const}. */
         bool modal;
         
         /*! @var #Boolean=true	 show 创建时是否显示窗口. */
         bool show;
         
-        /*! @var #Boolean=true	 center 创建时窗口是否居中. */
+        /*! @var #Boolean=true	 center 创建时窗口是否居中{@tag const}. */
         bool center;
         
         /*! @var #Boolean=true	adjustPos 是否允许调整窗口位置. */
@@ -126,19 +129,19 @@ namespace amo {
         /*! @var #Boolean=false fullscreen	是否以全屏的方式启动窗口. */
         bool fullscreen;
         
-        /*! @var #Boolean=false skipTaskbar	没什么用. */
+        // @var #Boolean=false skipTaskbar	没什么用.
         bool skipTaskbar;
         
         /*! @brief #Boolean=false alwaysOnTop	是否保持窗口前端显示. */
         bool alwaysOnTop;
         
-        /*! @var #Boolean=false offscreen	是否使用离屏模式创建窗口. */
+        /*! @var #Boolean=false offscreen	是否使用离屏模式创建窗口{@tag const}. */
         bool offscreen;
         
-        /*! @brief #Boolean=false accelerator 是否使用OPENGL渲染窗口，offscreen=true是有效（如果不是必需的不应该使用这项）. */
+        /*! @brief #Boolean=false accelerator 是否使用OPENGL渲染窗口，offscreen=true是有效（如果不是必需的不应该使用这项）{@tag const}. */
         bool accelerator;
         
-        /*! @var #Boolean=false transparent 是否使用透明窗口，offscreen=true时有效. */
+        /*! @var #Boolean=false transparent 是否使用透明窗口，offscreen=true时有效{@tag const}. */
         bool transparent;
         
         /*! @brief	The window color. */
@@ -153,7 +156,7 @@ namespace amo {
         /*! @var #Boolean=false esc	是否允许ESC关闭窗口. */
         bool esc;
         
-        /** @var #Boolean=false back_forword	是否允许前进后退. */
+        /** @var #Boolean=false back_forword	是否允许前进后退{@tag const}. */
         bool back_forword;
     };
 }

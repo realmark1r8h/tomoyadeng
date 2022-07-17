@@ -22,6 +22,15 @@ namespace amo {
         JSON_ARGS_SETTING(files);
     }
     
+    amo::json RequestSettings::toJson() {
+        UPDATE_ARGS_SETTINGS(type);
+        UPDATE_ARGS_SETTINGS(url);
+        UPDATE_ARGS_SETTINGS(data);
+        UPDATE_ARGS_SETTINGS(header);
+        UPDATE_ARGS_SETTINGS(files);
+        return BasicSettings::toJson();
+    }
+    
     std::string RequestSettings::makeUrlWithArgs() {
         std::vector<std::string> keys = data.keys();
         std::string strURL = url;

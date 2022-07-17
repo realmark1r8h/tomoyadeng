@@ -102,6 +102,8 @@ namespace amo {
     
     
     
+    
+    
     LRESULT BrowserWindow::OnLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                          BOOL& bHandled) {
         /* if (wParam == HTCAPTION) {
@@ -211,6 +213,7 @@ namespace amo {
                 _T("titleLayout")));
         assert(m_pTitleBar != NULL);
         
+        
         if (m_pBrowserSettings->titleBar) {
             m_pTitleBar->SetVisible(true);
             RECT rcCaption = { 0, 0, 0, 40 };
@@ -238,6 +241,7 @@ namespace amo {
         m_pWebkit->getClientHandler()->RegisterRenderHandlerDelegate(this);
         m_pWebkit->getClientHandler()->RegisterLifeSpanHandlerDelegate(this);
         m_pWebkit->getClientHandler()->RegisterDragHandlerDelegate(this);
+        m_pWebkit->getClientHandler()->RegisterDisplayHandlerDelegate(this);
         m_pWebkit->SetBkColor(m_pBrowserSettings->windowColor);
         
         if (!isLayered()) {
@@ -412,6 +416,34 @@ namespace amo {
     
     Any BrowserWindow::getDragBlackList(IPCMessage::SmartType msg) {
         return   m_pBrowserSettings->dragBlacklist;
+    }
+    
+    
+    Any BrowserWindow::showTitleBar(IPCMessage::SmartType msg) {
+    
+        if (m_pTitleBar == NULL) {
+            return Undefined();
+        }
+        
+        bool titleBar = msg->getArgumentList()->getBool(0);
+        
+        if (m_pBrowserSettings->titleBar == titleBar) {
+            return Undefined();
+            
+        }
+        
+        m_pBrowserSettings->titleBar = titleBar;
+        
+        
+        if (m_pBrowserSettings->titleBar) {
+            m_pTitleBar->SetVisible(true);
+            RECT rcCaption = { 0, 0, 0, 40 };
+            m_PaintManager.SetCaptionRect(rcCaption);
+        } else {
+            m_pTitleBar->SetVisible(false);
+        }
+        
+        return Undefined();
     }
     
     std::shared_ptr<amo::BrowserWindowSettings>
@@ -600,6 +632,14 @@ namespace amo {
         }
         
         return false;
+    }
+    
+    
+    void BrowserWindow::OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title) {
+    
+        amo::string str(title.ToString(), true);
+        m_pBrowserSettings->title = str.to_utf8();
+        SetWindowText(m_hWnd, str.to_unicode().c_str());
     }
     
 #if CHROME_VERSION_BUILD >= 2704
@@ -918,7 +958,7 @@ namespace amo {
             pHandler->UnregisterRenderHandlerDelegate(this);
             pHandler->UnregisterLifeSpanHandlerDelegate(this);
             pHandler->UnregisterDragHandlerDelegate(this);
-            
+            pHandler->UnregisterDisplayHandlerDelegate(this);
             /*   if (m_pBrowserLayout) {
                    m_pBrowserLayout->Remove(m_pWebkit);
             

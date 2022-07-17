@@ -10,6 +10,7 @@
 #include "ipc/IPCMessage.hpp"
 #include <memory>
 
+
 namespace amo {
 
     class NativeWindow;
@@ -36,6 +37,7 @@ namespace amo {
                                   
         virtual bool preTranslateMessage(CefEventHandle os_event) ;
         
+        virtual Any showTitleBar(IPCMessage::SmartType msg) override;
         virtual Any topmost(IPCMessage::SmartType msg) override;
         virtual Any isTopmost(IPCMessage::SmartType msg) override;
         virtual Any setFullScreen(IPCMessage::SmartType msg) override;
@@ -69,6 +71,9 @@ namespace amo {
         
         virtual LRESULT OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                BOOL& bHandled) override;
+                               
+                               
+                               
                                
     protected:
         int64_t getTransferClassID() const;

@@ -75,4 +75,14 @@ namespace amo {
     
     
     
+    amo::json BrowserWindowSettings::toJson() {
+        UPDATE_ARGS_SETTINGS(main);
+        UPDATE_ARGS_SETTINGS(windowClass);
+        UPDATE_ARGS_SETTINGS(reload);
+        UPDATE_ARGS_SETTINGS(dragBlacklist);
+        UPDATE_ARGS_SETTINGS(cssList);
+        UPDATE_ARGS_SETTINGS(javascriptList);
+        return NativeWindowSettings::toJson();
+    }
+    
 }
