@@ -120,7 +120,7 @@ namespace amo {
         /*! @var	#String=%appDir%web webDir	html 源代码目录.{@tag const} */
         std::string webDir;
         
-        /*! @var	#String homeDir	储存应用程序设置文件的文件夹，默认是 appDataDir 文件夹附加应用的名称. */
+        /*! @var	#String homeDir	储存应用程序设置文件的文件夹，默认是 "我的文档" 文件夹附加应用的名称. */
         std::string homeDir;
         
         /*! @var	#String=%homeDir%downloads downloadsDir 用户下载目录的路径. */

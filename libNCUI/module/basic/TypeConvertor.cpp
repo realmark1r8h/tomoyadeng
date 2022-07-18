@@ -511,7 +511,7 @@ namespace amo {
             break;
             
         case AnyValueType<int64_t>::value:
-            retval = CefV8Value::CreateInt((int)any);
+            retval =   Int64ToObject(any.As<int64_t>());
             break;
             
         case AnyValueType<double>::value:
