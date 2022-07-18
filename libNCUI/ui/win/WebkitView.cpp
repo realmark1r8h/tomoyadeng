@@ -435,7 +435,23 @@ namespace amo {
            "<h2>Failed to load URL " << std::string(failedUrl) <<
            " with error " << std::string(errorText) << " (" << errorCode <<
            ").</h2></body></html>";
-        frame->LoadString(ss.str(), failedUrl);
+           
+        std::string strErrorCode = std::to_string(errorCode);
+        amo::string str(skin404, true);
+        std::string errorStr = "";
+        
+        for (size_t i = 0; i < strErrorCode.size(); ++i) {
+            errorStr += "<span>";
+            errorStr += strErrorCode[i];
+            errorStr += "</span>";
+        }
+        
+        amo::json json;
+        json.put("errorCode", errorStr);
+        str = str.format(json);
+        
+        frame->LoadString(str.to_utf8(), failedUrl);
+        //frame->LoadString(ss.str(), failedUrl);
         return;
     }
     

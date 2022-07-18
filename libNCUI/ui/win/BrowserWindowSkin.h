@@ -21,5 +21,7 @@ extern const char skinSplashWindow[];
 
 extern const char skinNCUI[];
 
+extern const char skin404[];
+
 
 #endif

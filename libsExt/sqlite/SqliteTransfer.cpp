@@ -323,7 +323,14 @@ namespace amo {
                                    || types.at(j) == "SMALLINT"
                                    || types.at(j) == "DECIMAL") {
                             if (data != NULL) {
-                                json.put(keys.at(j), (*iter).get<int>(j));
+                                int val32 = (*iter).get<int>(j);
+                                int64_t val64 = (*iter).get<int64_t>(j);
+                                
+                                if (val32 == val64) {
+                                    json.put(keys.at(j), val32);
+                                } else {
+                                    json.put(keys.at(j), val64);
+                                }
                             }
                             
                         } else if (types.at(j) == "UNSIGNED INT"
