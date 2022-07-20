@@ -448,6 +448,7 @@ namespace amo {
         
         amo::json json;
         json.put("errorCode", errorStr);
+        json.put("errorText", errorText.ToString());
         str = str.format(json);
         
         frame->LoadString(str.to_utf8(), failedUrl);
