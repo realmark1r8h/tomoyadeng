@@ -263,7 +263,14 @@ namespace amo {
                         return Undefined();
                     }
                     
-                    pTransfer->onMessageTransfer(ipcMsg);
+                    Any ret =    pTransfer->onMessageTransfer(ipcMsg);
+                    std::string funcName = ipcMsg->getArgumentList()->getString(
+                                               IPCArgsPosInfo::FuncName);
+                    TransferEventInfo info;
+                    info.name = transferName + "." + funcName;
+                    info.toAll = true;
+                    info.setData(ret);
+                    pTransfer->triggerEvent(info);
                     return Undefined();
                 });
             }

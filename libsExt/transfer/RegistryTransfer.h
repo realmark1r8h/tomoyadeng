@@ -34,9 +34,17 @@ namespace amo {
          *
          * @brief	创建一个注册表操作对象.
          *
-         * @param	#Int  .
+         * @param	#Int 根键 .
          *
          * @return  #Registy 注册表操作对象
+         *
+         * @example
+         *
+        		 ```
+        		 include('Registry');
+        		 window.registry = new Registry(Registry.HKEY_CURRENT_USER);
+        
+        		 ```
          */
         
         RegistryTransfer(int hKey);
@@ -54,6 +62,13 @@ namespace amo {
          * @param	#String 子键路径.
          *
          * @return	#Boolean true成功/false失败.
+         * @example
+         *
+         ```
+        	// 需要先运行构造函数里面的例子
+        	// 创建一个子键
+        	console.assert(registry.create('Software\\NCUI') == true);
+         ```
          */
         
         Any create(IPCMessage::SmartType msg);
@@ -68,6 +83,13 @@ namespace amo {
          * @param	#String 子键路径.
          *
          * @return	#Boolean true成功/false失败.
+         * @example
+         *
+         ```
+        	// 需要先运行构造函数里面的例子
+        	// 打开一个子键
+        	console.assert(registry.create('Software\\NCUI') == true);
+         ```
          */
         
         Any open(IPCMessage::SmartType msg);
@@ -84,6 +106,15 @@ namespace amo {
          * @param	#String 键名.
          *
          * @return	#String 读取到的值.
+         * @example
+         *
+         ```
+        	// 需要先运行构造函数里面的例子
+        	// 写入值
+        	console.assert(registry.write('Software\\NCUI', 'version', '1.0.0.0', true) == true);
+        	// 读取值
+        	console.assert(registry.read('Software\\NCUI', 'version') ==  '1.0.0.0');
+         ```
          */
         
         Any read(IPCMessage::SmartType msg);
@@ -102,6 +133,15 @@ namespace amo {
          * @param	#Boolean=false 如果子键不存在，是否自己创建子键.
          *
          * @return	#Boolean true成功/false失败.
+         * @example
+         *
+        		```
+        		// 需要先运行构造函数里面的例子
+        		// 写入值
+        		console.assert(registry.write('Software\\NCUI', 'remark', 'Chromium Embedded Framework (CEF)', true) == true);
+        		// 读取值
+        		console.assert(registry.read('Software\\NCUI', 'remark') ==  'Chromium Embedded Framework (CEF)');
+        		```
          */
         
         Any write(IPCMessage::SmartType msg);
@@ -114,12 +154,23 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	删除键值.
+         * @brief	删除子键或键值.
          *
          * @param	#String 子键.
-         * @param	#String 键名.
+         * @param	#String 键名，如果不输入该值，那么将删除整个子键.
          *
          * @return	#Boolean true成功/false失败.
+         * @example
+         *
+        		 ```
+        		 // 需要先运行构造函数里面的例子
+        		 // 删除单个键值
+        		 console.assert(registry.remove('Software\\NCUI', 'version') ==true);
+        		 registry.create('Software\\NCUI\\NCUI');
+        		 // 删除整个子键，
+        		 console.assert(registry.remove('Software\\NCUI') == true);
+        
+        		 ```
          */
         
         Any remove(IPCMessage::SmartType msg);

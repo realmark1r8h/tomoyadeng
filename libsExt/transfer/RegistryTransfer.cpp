@@ -70,7 +70,12 @@ namespace amo {
         auto args = msg->getArgumentList();
         amo::astring subKey = amo::string(args->getString(0), true);
         amo::astring valueKey = amo::string(args->getString(1), true);
-        return m_registry->remove(subKey, valueKey);
+        
+        if (valueKey.empty()) {
+            return m_registry->remove(subKey);
+        } else {
+            return m_registry->remove(subKey, valueKey);
+        }
     }
     
 }
