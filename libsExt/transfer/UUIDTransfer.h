@@ -23,6 +23,7 @@ namespace amo {
     public:
     
         UUIDTransfer();
+        
         ~UUIDTransfer();
         
         /**
@@ -54,6 +55,8 @@ namespace amo {
         /**
          * @fn	Any UUIDTransfer::nil(IPCMessage::SmartType msg);
          *
+         * @tag static sync
+         *
          * @brief	获取一个空UUID.
          *
          * @return	Any.
@@ -79,7 +82,7 @@ namespace amo {
         /**
          * @fn	Any UUIDTransfer::toString(IPCMessage::SmartType msg);
          *
-         * @sync
+         * @tag sync
          *
          * @brief	将当前UUID转换为字符串.
          *

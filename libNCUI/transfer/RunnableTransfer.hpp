@@ -139,7 +139,7 @@ namespace amo {
         
         /**
          * @fn	Any RunnableTransfer::weakup(IPCMessage::SmartType msg)
-         *
+         * @tag single
          * @brief	唤醒当前对象所附加的线程.
          *
          * @return	无.
@@ -173,7 +173,7 @@ namespace amo {
         /**
          * @fn	Any RunnableTransfer::suspend(IPCMessage::SmartType msg)
          *
-         * @brief	挂起所附加线程.
+         * @brief	挂起所附加线程，不能在浏览器线程（UI/Renderer）上执行.
          *
          * @return	无.
          */
@@ -204,6 +204,18 @@ namespace amo {
             return transfer->onMessageTransfer(ipcMessage);
             
         }
+        
+        /*!
+         * @fn	Any RunnableTransfer::sendEvent(const TransferEventInfo& info)
+         *
+         * @ignore
+         *
+         * @brief	向页面发送数据，如果要求线程挂起的话，暂停当前线程.
+         *
+         * @param	info	The information.
+         *
+         * @return	Any.
+         */
         
         Any sendEvent(const TransferEventInfo& info) {
             triggerEvent(info);

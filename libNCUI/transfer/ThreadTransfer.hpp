@@ -121,7 +121,7 @@ namespace amo {
         /*!
         * @fn	Any ThreadTransfer::Exec(IPCMessage::SmartType msg)
         *
-        * @tag static
+        * @tag static single
         *
         * @brief	在默认线程中执行一个函数.
         *
@@ -139,7 +139,7 @@ namespace amo {
         /*!
         * @fn	Any ThreadTransfer::Sync(IPCMessage::SmartType msg)
         *
-        * @tag static sync
+        * @tag static sync single
         *
         * @brief	在默认线程中同步执行一个函数.
         *
@@ -159,8 +159,8 @@ namespace amo {
         
         /*!
          * @fn	Any ThreadTransfer::weakup(IPCMessage::SmartType msg)
-         *
-         * @brief	唤醒线程.
+         * @tag single
+         * @brief	唤醒线程，只能在浏览器线程（UI/Renderer）上执行.
          *
          * @return	无.
          */
@@ -173,8 +173,9 @@ namespace amo {
         
         /*!
          * @fn	Any ThreadTransfer::suspend(IPCMessage::SmartType msg)
+         * @tag
+         * @brief	暂停线程，不能在浏览器线程（UI/Renderer）上执行.
          *
-         * @brief	暂停线程，但不能暂停正在执行的函数，只能等当前函数结束后停止执行队列中的其他函数.
          *
          * @return	无.
          */
@@ -280,6 +281,7 @@ namespace amo {
         
         /*!
          * @fn	Any ThreadTransfer::exec(IPCMessage::SmartType msg)
+         * @tag single
          *
          * @brief	执行一个函数.
          *
@@ -294,6 +296,7 @@ namespace amo {
         
         /*!
          * @fn	Any ThreadTransfer::sync(IPCMessage::SmartType msg)
+         * @tag sync single
          *
          * @brief	同步调用一个函数，并返回该函数的执行结果.
          *
@@ -308,6 +311,7 @@ namespace amo {
         
         /*!
          * @fn	Any ThreadTransfer::kill(IPCMessage::SmartType msg)
+         * @tag single
          *
          * @brief	杀死当前线程.
          *
@@ -326,6 +330,7 @@ namespace amo {
         
         /*!
          * @fn	Any ThreadTransfer::start(IPCMessage::SmartType msg)
+         * @tag single
          *
          * @brief	启动线程，该函数一般不需要调用，线程会在创建时自动启动，除非你调用了stop.
          *
@@ -346,7 +351,7 @@ namespace amo {
         
         /*!
          * @fn	Any ThreadTransfer::stop(IPCMessage::SmartType msg)
-         *
+         * @tag single
          * @brief	停止当前线程.
          *
          *
@@ -365,15 +370,15 @@ namespace amo {
         
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(ThreadTransfer, ClassTransfer)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(suspend, TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(exec, TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(sync, TransferFuncNormal | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(start, TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(stop, TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(kill, TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(Exec, TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(Sync, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(exec, TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(sync, TransferMultiDisabled | TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(start, TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(stop, TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(kill, TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(Exec, TransferMultiDisabled | TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(Sync, TransferMultiDisabled | TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         
