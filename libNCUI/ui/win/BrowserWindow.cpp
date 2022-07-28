@@ -242,6 +242,7 @@ namespace amo {
         m_pWebkit->getClientHandler()->RegisterLifeSpanHandlerDelegate(this);
         m_pWebkit->getClientHandler()->RegisterDragHandlerDelegate(this);
         m_pWebkit->getClientHandler()->RegisterDisplayHandlerDelegate(this);
+        m_pWebkit->getClientHandler()->RegisterLoadHandlerDelegate(this);
         m_pWebkit->SetBkColor(m_pBrowserSettings->windowColor);
         
         if (!isLayered()) {
@@ -635,11 +636,25 @@ namespace amo {
     }
     
     
-    void BrowserWindow::OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title) {
-    
+    void BrowserWindow::OnTitleChange(CefRefPtr<CefBrowser> browser,
+                                      const CefString& title) {
+                                      
         amo::string str(title.ToString(), true);
         m_pBrowserSettings->title = str.to_utf8();
         SetWindowText(m_hWnd, str.to_unicode().c_str());
+    }
+    
+    void BrowserWindow::OnLoadStart(CefRefPtr<CefBrowser> browser,
+                                    CefRefPtr<CefFrame> frame) {
+        if (!frame->IsMain()) {
+            return;
+        }
+        
+#if CHROME_VERSION_BUILD >= 2704
+        // 清除所有拖拽区域，用于修复当前页面跳转到其他页面时，如果该页面未设置，拖拽区域；
+        // 那么将不会触发OnDraggableRegionsChanged回调函数，导致原有的拖拽区域仍然可用。
+        OnDraggableRegionsChanged(browser, {});
+#endif
     }
     
 #if CHROME_VERSION_BUILD >= 2704
@@ -959,6 +974,7 @@ namespace amo {
             pHandler->UnregisterLifeSpanHandlerDelegate(this);
             pHandler->UnregisterDragHandlerDelegate(this);
             pHandler->UnregisterDisplayHandlerDelegate(this);
+            pHandler->UnregisterLoadHandlerDelegate(this);
             /*   if (m_pBrowserLayout) {
                    m_pBrowserLayout->Remove(m_pWebkit);
             

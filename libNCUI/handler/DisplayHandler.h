@@ -93,7 +93,7 @@ namespace amo {
         
         virtual void OnAddressChange(CefRefPtr<CefBrowser> browser,
                                      CefRefPtr<CefFrame> frame,
-                                     const CefString& url);
+                                     const CefString& url) override;
                                      
         /*!
          * @fn	virtual void DisplayHandler::OnTitleChange(
@@ -108,7 +108,7 @@ namespace amo {
          */
         
         virtual void OnTitleChange(CefRefPtr<CefBrowser> browser,
-                                   const CefString& title);
+                                   const CefString& title) override;
                                    
         /*!
          * @fn	virtual bool DisplayHandler::OnTooltip(
@@ -125,7 +125,7 @@ namespace amo {
          */
         
         virtual bool OnTooltip(CefRefPtr<CefBrowser> browser,
-                               CefString& text);
+                               CefString& text) override;
                                
         /*!
          * @fn	virtual void DisplayHandler::OnStatusMessage(
@@ -140,7 +140,7 @@ namespace amo {
          */
         
         virtual void OnStatusMessage(CefRefPtr<CefBrowser> browser,
-                                     const CefString& value);
+                                     const CefString& value) override;
                                      
         /*!
          * @fn	virtual bool DisplayHandler::OnConsoleMessage(

@@ -145,7 +145,7 @@ namespace amo {
         virtual bool OnBeforeUnloadDialog(CefRefPtr<CefBrowser> browser,
                                           const CefString& message_text,
                                           bool is_reload,
-                                          CefRefPtr<CefJSDialogCallback> callback);
+                                          CefRefPtr<CefJSDialogCallback> callback) override;
                                           
         /*!
          * @fn	virtual void JSDialogHandler::OnResetDialogState(
@@ -157,7 +157,7 @@ namespace amo {
          * @param	browser	The browser.
          */
         
-        virtual void OnResetDialogState(CefRefPtr<CefBrowser> browser);
+        virtual void OnResetDialogState(CefRefPtr<CefBrowser> browser) override;
         
         /*!
          * @fn	virtual void JSDialogHandler::OnDialogClosed(
@@ -169,7 +169,7 @@ namespace amo {
          * @param	browser	The browser.
          */
         
-        virtual void OnDialogClosed(CefRefPtr<CefBrowser> browser);
+        virtual void OnDialogClosed(CefRefPtr<CefBrowser> browser) override;
         
         IMPLEMENT_REFCOUNTING(JSDialogHandler);
     };

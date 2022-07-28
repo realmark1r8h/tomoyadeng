@@ -140,7 +140,7 @@ namespace amo {
                                    CefWindowInfo& windowInfo,
                                    CefRefPtr<CefClient>& client,
                                    CefBrowserSettings& settings,
-                                   bool* no_javascript_access);
+                                   bool* no_javascript_access) override;
 #else
         virtual bool OnBeforePopup(CefRefPtr<CefBrowser> browser,
                                    CefRefPtr<CefFrame> frame,
@@ -150,7 +150,7 @@ namespace amo {
                                    CefWindowInfo& windowInfo,
                                    CefRefPtr<CefClient>& client,
                                    CefBrowserSettings& settings,
-                                   bool* no_javascript_access);
+                                   bool* no_javascript_access) override;
 #endif
                                    
         /*!
@@ -163,7 +163,7 @@ namespace amo {
          * @param	browser	The browser.
          */
         
-        virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser);
+        virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
         
 #if CHROME_VERSION_BUILD >= 2704
 #else
@@ -179,7 +179,7 @@ namespace amo {
         * @return	true if it succeeds, false if it fails.
         */
         
-        virtual bool RunModal(CefRefPtr<CefBrowser> browser);
+        virtual bool RunModal(CefRefPtr<CefBrowser> browser) override;
 #endif
         
         
@@ -195,7 +195,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        virtual bool DoClose(CefRefPtr<CefBrowser> browser);
+        virtual bool DoClose(CefRefPtr<CefBrowser> browser) override;
         
         /*!
          * @fn	virtual void LifeSpanHandler::OnBeforeClose(
@@ -207,7 +207,7 @@ namespace amo {
          * @param	browser	The browser.
          */
         
-        virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser);
+        virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;
         
         /*!
          * @fn	virtual void LifeSpanHandler::SetMessageRouter(
@@ -219,7 +219,7 @@ namespace amo {
          * @param	router	The router.
          */
         
-        virtual void SetMessageRouter(CefRefPtr<MessageRouterBrowserSide> router);
+        virtual void SetMessageRouter(CefRefPtr<MessageRouterBrowserSide> router) ;
         
         IMPLEMENT_REFCOUNTING(LifeSpanHandler);
         

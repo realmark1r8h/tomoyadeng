@@ -23,19 +23,8 @@ namespace amo {
         }
         
         
+#if CHROME_VERSION_BUILD >= 2704
         
-        virtual void OnFileDialogDismissed(CefRefPtr<CefBrowserHost> browser_host,
-                                           const std::vector<CefString>& file_paths) {
-            for (auto& p : file_paths) {
-                m_vecFilePaths.push_back(p.ToString());
-            }
-            
-            Any ret = m_vecFilePaths;
-            BrowserTransferMgr::getInstance()->returnAsyncResult(m_nBrowserID,
-                    ret,
-                    m_nCallbackID,
-                    m_nFrameID);
-        }
         
         virtual void OnFileDialogDismissed(int selected_accept_filter,
                                            const std::vector<CefString>& file_paths) override {
@@ -49,6 +38,26 @@ namespace amo {
                     m_nCallbackID,
                     m_nFrameID);
         }
+        
+#else
+        virtual void OnFileDialogDismissed(CefRefPtr<CefBrowserHost> browser_host,
+                                           const std::vector<CefString>& file_paths)  override {
+            for (auto& p : file_paths) {
+                m_vecFilePaths.push_back(p.ToString());
+            }
+        
+            Any ret = m_vecFilePaths;
+            BrowserTransferMgr::getInstance()->returnAsyncResult(m_nBrowserID,
+                    ret,
+                    m_nCallbackID,
+                    m_nFrameID);
+        }
+#endif
+        
+        
+        
+        
+        
         
         IMPLEMENT_REFCOUNTING(RunFileDialogCalllback);
         

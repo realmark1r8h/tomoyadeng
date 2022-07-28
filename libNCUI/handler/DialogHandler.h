@@ -95,14 +95,14 @@ namespace amo {
                                   const CefString& default_file_path,
                                   const std::vector<CefString>& accept_filters,
                                   int selected_accept_filter,
-                                  CefRefPtr<CefFileDialogCallback> callback);
+                                  CefRefPtr<CefFileDialogCallback> callback) override;
 #else
         virtual bool OnFileDialog(CefRefPtr<CefBrowser> browser,
                                   FileDialogMode mode,
                                   const CefString& title,
                                   const CefString& default_file_name,
                                   const std::vector<CefString>& accept_types,
-                                  CefRefPtr<CefFileDialogCallback> callback);
+                                  CefRefPtr<CefFileDialogCallback> callback) override;
 #endif
                                   
                                   

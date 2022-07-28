@@ -23,7 +23,7 @@ namespace amo {
          */
         
         virtual bool ProcessRequest(CefRefPtr<CefRequest> request,
-                                    CefRefPtr<CefCallback> callback);
+                                    CefRefPtr<CefCallback> callback) override;
                                     
         /*!
          * @fn	virtual void ResourceHandler::GetResponseHeaders(
@@ -40,7 +40,7 @@ namespace amo {
         
         virtual void GetResponseHeaders(CefRefPtr<CefResponse> response,
                                         int64& response_length,
-                                        CefString& redirectUrl);
+                                        CefString& redirectUrl) override;
                                         
         /*!
          * @fn	virtual bool ResourceHandler::ReadResponse(
@@ -62,7 +62,7 @@ namespace amo {
         virtual bool ReadResponse(void* data_out,
                                   int bytes_to_read,
                                   int& bytes_read,
-                                  CefRefPtr<CefCallback> callback);
+                                  CefRefPtr<CefCallback> callback) override;
                                   
         /*!
          * @fn	virtual bool ResourceHandler::CanGetCookie(const CefCookie& cookie);
@@ -74,7 +74,7 @@ namespace amo {
          * @return	true if we can get cookie, false if not.
          */
         
-        virtual bool CanGetCookie(const CefCookie& cookie);
+        virtual bool CanGetCookie(const CefCookie& cookie) override;
         
         /*!
          * @fn	virtual bool ResourceHandler::CanSetCookie(const CefCookie& cookie);
@@ -86,7 +86,7 @@ namespace amo {
          * @return	true if we can set cookie, false if not.
          */
         
-        virtual bool CanSetCookie(const CefCookie& cookie);
+        virtual bool CanSetCookie(const CefCookie& cookie) override;
         
         /*!
          * @fn	virtual void ResourceHandler::Cancel();
@@ -94,7 +94,7 @@ namespace amo {
          * @brief	Cancels this object.
          */
         
-        virtual void Cancel();
+        virtual void Cancel() override;
         
         /*!
          * @fn	ResourceHandler::IMPLEMENT_REFCOUNTING(ResourceHandler);

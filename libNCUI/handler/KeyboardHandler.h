@@ -74,7 +74,7 @@ namespace amo {
         virtual bool OnPreKeyEvent(CefRefPtr<CefBrowser> browser,
                                    const CefKeyEvent& event,
                                    CefEventHandle os_event,
-                                   bool* is_keyboard_shortcut);
+                                   bool* is_keyboard_shortcut) override;
                                    
         /*!
          * @fn	virtual bool KeyboardHandler::OnKeyEvent(
@@ -94,7 +94,7 @@ namespace amo {
         
         virtual bool OnKeyEvent(CefRefPtr<CefBrowser> browser,
                                 const CefKeyEvent& event,
-                                CefEventHandle os_event);
+                                CefEventHandle os_event) override;
                                 
         /*!
          * @fn	bool KeyboardHandler::OnHotkeyPro(
@@ -110,7 +110,7 @@ namespace amo {
          */
         
         bool OnHotkeyPro(CefRefPtr<CefBrowser> browser,
-                         const CefKeyEvent& event);
+                         const CefKeyEvent& event) ;
                          
         /*!
          * @fn	void KeyboardHandler::BuildHotkey(
@@ -130,7 +130,7 @@ namespace amo {
         void  BuildHotkey(std::string& strTotalHotkey,
                           const std::string& strCurHotkey,
                           int& iVirtualKey,
-                          int iKey = 0);
+                          int iKey = 0) ;
                           
         IMPLEMENT_REFCOUNTING(KeyboardHandler);
     };

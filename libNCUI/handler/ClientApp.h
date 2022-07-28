@@ -88,7 +88,7 @@ namespace amo {
          */
         
         virtual void OnBeforeCommandLineProcessing(const CefString& process_type,
-                CefRefPtr<CefCommandLine> command_line);
+                CefRefPtr<CefCommandLine> command_line) override;
                 
         /*!
          * @fn	virtual void ClientApp::OnRegisterCustomSchemes(
@@ -122,7 +122,7 @@ namespace amo {
          * @return	The resource bundle handler.
          */
         
-        virtual CefRefPtr<CefResourceBundleHandler> GetResourceBundleHandler();
+        virtual CefRefPtr<CefResourceBundleHandler> GetResourceBundleHandler() override;
         
         /*!
          * @fn	virtual CefRefPtr<CefBrowserProcessHandler> ClientApp::GetBrowserProcessHandler();
@@ -134,7 +134,7 @@ namespace amo {
          * @return	The browser process handler.
          */
         
-        virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler();
+        virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() override;
         
         /*!
          * @fn	virtual CefRefPtr<CefRenderProcessHandler> ClientApp::GetRenderProcessHandler();
@@ -145,7 +145,7 @@ namespace amo {
          * @return	The render process handler.
          */
         
-        virtual CefRefPtr<CefRenderProcessHandler> GetRenderProcessHandler();
+        virtual CefRefPtr<CefRenderProcessHandler> GetRenderProcessHandler() override;
         
         /*!
          * @fn	bool ClientApp::RegisterRenderProcessHandlerDelegate(
@@ -213,7 +213,7 @@ namespace amo {
          * @brief	Executes the context initialized action.
          */
         
-        virtual void OnContextInitialized();
+        virtual void OnContextInitialized()  override;
         
         IMPLEMENT_REFCOUNTING(ClientApp);
         

@@ -26,7 +26,8 @@ namespace amo {
                                           bool isLoading, bool canGoBack, bool canGoForward) {
         }
         
-        virtual void OnLoadStart(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame) {
+        virtual void OnLoadStart(CefRefPtr<CefBrowser> browser,
+                                 CefRefPtr<CefFrame> frame) {
         }
         
         virtual void OnLoadEnd(CefRefPtr<CefBrowser> browser,
@@ -74,7 +75,8 @@ namespace amo {
         virtual void OnLoadingStateChange(CefRefPtr<CefBrowser> browser,
                                           bool isLoading,
                                           bool canGoBack,
-                                          bool canGoForward);
+                                          bool canGoForward) override;
+                                          
                                           
         /*!
          * @fn	virtual void LoadHandler::OnLoadStart(
@@ -88,8 +90,16 @@ namespace amo {
          * @param	frame  	The frame.
          */
         
-        virtual void OnLoadStart(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame);
-        
+#if CHROME_VERSION_BUILD >= 2704
+        virtual void OnLoadStart(CefRefPtr<CefBrowser> browser,
+                                 CefRefPtr<CefFrame> frame,
+                                 TransitionType transition_type)override;
+#else
+        virtual void OnLoadStart(CefRefPtr<CefBrowser> browser,
+                                 CefRefPtr<CefFrame> frame) override;
+#endif
+                                 
+                                 
         /*!
          * @fn	virtual void LoadHandler::OnLoadEnd(
          * 		CefRefPtr<CefBrowser> browser,
@@ -105,7 +115,7 @@ namespace amo {
          */
         
         virtual void OnLoadEnd(CefRefPtr<CefBrowser> browser,
-                               CefRefPtr<CefFrame> frame, int httpStatusCode);
+                               CefRefPtr<CefFrame> frame, int httpStatusCode)override;
                                
         /*!
          * @fn	virtual void LoadHandler::OnLoadError(
@@ -127,7 +137,7 @@ namespace amo {
         
         virtual void OnLoadError(CefRefPtr<CefBrowser> browser,
                                  CefRefPtr<CefFrame> frame, ErrorCode errorCode,
-                                 const CefString& errorText, const CefString& failedUrl);
+                                 const CefString& errorText, const CefString& failedUrl)override;
                                  
         IMPLEMENT_REFCOUNTING(LoadHandler);
     };

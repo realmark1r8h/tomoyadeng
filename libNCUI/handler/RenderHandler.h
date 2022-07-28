@@ -137,7 +137,7 @@ namespace amo {
          */
         
         virtual bool GetRootScreenRect(CefRefPtr<CefBrowser> browser,
-                                       CefRect& rect);
+                                       CefRect& rect) override;
                                        
         /*!
          * @fn	virtual bool RenderHandler::GetViewRect(
@@ -154,7 +154,7 @@ namespace amo {
          */
         
         virtual bool GetViewRect(CefRefPtr<CefBrowser> browser,
-                                 CefRect& rect);
+                                 CefRect& rect) override;
                                  
         /*!
          * @fn	virtual bool RenderHandler::GetScreenPoint(
@@ -180,7 +180,7 @@ namespace amo {
                                     int viewX,
                                     int viewY,
                                     int& screenX,
-                                    int& screenY);
+                                    int& screenY) override;
                                     
         /*!
          * @fn	virtual bool RenderHandler::GetScreenInfo(
@@ -197,7 +197,7 @@ namespace amo {
          */
         
         virtual bool GetScreenInfo(CefRefPtr<CefBrowser> browser,
-                                   CefScreenInfo& screen_info);
+                                   CefScreenInfo& screen_info) override;
                                    
         /*!
          * @fn	virtual void RenderHandler::OnPopupShow(
@@ -212,7 +212,7 @@ namespace amo {
          */
         
         virtual void OnPopupShow(CefRefPtr<CefBrowser> browser,
-                                 bool show);
+                                 bool show) override;
                                  
         /*!
          * @fn	virtual void RenderHandler::OnPopupSize(
@@ -227,7 +227,7 @@ namespace amo {
          */
         
         virtual void OnPopupSize(CefRefPtr<CefBrowser> browser,
-                                 const CefRect& rect);
+                                 const CefRect& rect) override;
                                  
         /*!
          * @fn	virtual void RenderHandler::OnPaint(
@@ -254,14 +254,14 @@ namespace amo {
                              const RectList& dirtyRects,
                              const void* buffer,
                              int width,
-                             int height);
+                             int height) override;
                              
                              
         virtual bool StartDragging(CefRefPtr<CefBrowser> browser,
                                    CefRefPtr<CefDragData> drag_data,
                                    DragOperationsMask allowed_ops,
                                    int x,
-                                   int y);
+                                   int y) override;
                                    
         virtual void UpdateDragCursor(CefRefPtr<CefBrowser> browser,
                                       DragOperation operation);
@@ -271,7 +271,7 @@ namespace amo {
                                            double x,
                                            double y) override;
 #else
-        virtual void OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser);
+        virtual void OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser) override;
 #endif
                                            
                                            
@@ -296,13 +296,13 @@ namespace amo {
         virtual void OnCursorChange(CefRefPtr<CefBrowser> browser,
                                     CefCursorHandle cursor,
                                     CursorType type,
-                                    const CefCursorInfo& custom_cursor_info);
+                                    const CefCursorInfo& custom_cursor_info) override;
                                     
                                     
                                     
 #else
         virtual void OnCursorChange(CefRefPtr<CefBrowser> browser,
-                                    CefCursorHandle cursor);
+                                    CefCursorHandle cursor) override;
                                     
                                     
 #endif

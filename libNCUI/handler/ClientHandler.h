@@ -105,20 +105,20 @@ namespace amo {
         
         static  Any createPipeClientImpl(IPCMessage::SmartType msg);
         
-        virtual CefRefPtr<CefContextMenuHandler> GetContextMenuHandler();
-        virtual CefRefPtr<CefDialogHandler> GetDialogHandler();
-        virtual CefRefPtr<CefDisplayHandler> GetDisplayHandler();
-        virtual CefRefPtr<CefDownloadHandler> GetDownloadHandler();
-        virtual CefRefPtr<CefDragHandler> GetDragHandler();
-        virtual CefRefPtr<CefFocusHandler> GetFocusHandler();
-        virtual CefRefPtr<CefGeolocationHandler> GetGeolocationHandler();
-        virtual CefRefPtr<CefJSDialogHandler> GetJSDialogHandler();
-        virtual CefRefPtr<CefKeyboardHandler> GetKeyboardHandler();
-        virtual CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler();
-        virtual CefRefPtr<CefLoadHandler> GetLoadHandler();
-        virtual CefRefPtr<CefRenderHandler> GetRenderHandler();
-        virtual CefRefPtr<CefRequestHandler> GetRequestHandler();
-        virtual CefRefPtr<MessageRouterBrowserSide> GetMessageRouterBrowserSide();
+        virtual CefRefPtr<CefContextMenuHandler> GetContextMenuHandler() override;
+        virtual CefRefPtr<CefDialogHandler> GetDialogHandler() override;
+        virtual CefRefPtr<CefDisplayHandler> GetDisplayHandler() override;
+        virtual CefRefPtr<CefDownloadHandler> GetDownloadHandler() override;
+        virtual CefRefPtr<CefDragHandler> GetDragHandler() override;
+        virtual CefRefPtr<CefFocusHandler> GetFocusHandler() override;
+        virtual CefRefPtr<CefGeolocationHandler> GetGeolocationHandler() override;
+        virtual CefRefPtr<CefJSDialogHandler> GetJSDialogHandler() override;
+        virtual CefRefPtr<CefKeyboardHandler> GetKeyboardHandler() override;
+        virtual CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() override;
+        virtual CefRefPtr<CefLoadHandler> GetLoadHandler() override;
+        virtual CefRefPtr<CefRenderHandler> GetRenderHandler() override;
+        virtual CefRefPtr<CefRequestHandler> GetRequestHandler() override;
+        virtual CefRefPtr<MessageRouterBrowserSide> GetMessageRouterBrowserSide() ;
         
         /*!
          * @fn	virtual bool OnProcessMessageReceived(
@@ -137,7 +137,7 @@ namespace amo {
         
         virtual bool OnProcessMessageReceived(CefRefPtr<CefBrowser> browser,
                                               CefProcessId source_process,
-                                              CefRefPtr<CefProcessMessage> message);
+                                              CefRefPtr<CefProcessMessage> message) override;
                                               
         /*!
          * @fn	bool RegisterContextMenuHandlerDelegate(

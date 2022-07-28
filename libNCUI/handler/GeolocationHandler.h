@@ -96,12 +96,12 @@ namespace amo {
             CefRefPtr<CefBrowser> browser,
             const CefString& requesting_url,
             int request_id,
-            CefRefPtr<CefGeolocationCallback> callback);
+            CefRefPtr<CefGeolocationCallback> callback) override;
 #else
         virtual void OnRequestGeolocationPermission(CefRefPtr<CefBrowser> browser,
                 const CefString& requesting_url,
                 int request_id,
-                CefRefPtr<CefGeolocationCallback> callback);
+                CefRefPtr<CefGeolocationCallback> callback) override;
 #endif
             
             
@@ -121,12 +121,12 @@ namespace amo {
          */
         
         virtual void OnCancelGeolocationPermission(CefRefPtr<CefBrowser> browser,
-                int request_id);
+                int request_id) override;
 #else
                 
         virtual void OnCancelGeolocationPermission(CefRefPtr<CefBrowser> browser,
                 const CefString& requesting_url,
-                int request_id);
+                int request_id) override;
 #endif
                 
         IMPLEMENT_REFCOUNTING(GeolocationHandler);

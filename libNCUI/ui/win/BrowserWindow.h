@@ -16,9 +16,11 @@
 #include "handler/BrowserProcessHandler.h"
 #include "handler/DragHandler.h"
 #include "transfer/BrowserWindowTransfer.h"
+#include "handler/LoadHandler.h"
 #include "handler/DisplayHandler.h"
 #include "ui/win/LayeredWindow.h"
 #include "ui/win/LocalWindow.h"
+
 
 
 
@@ -36,7 +38,8 @@ namespace amo {
         , public LifeSpanHandlerDelegate
         , public DisplayHandlerDelegate
         , public BrowserProcessHandlerDelegate
-        , public DragHandlerDelegate {
+        , public DragHandlerDelegate
+        , public LoadHandlerDelegate {
         
     public:
         BrowserWindow(std::shared_ptr<BrowserWindowSettings> pBrowserSettings);
@@ -104,8 +107,14 @@ namespace amo {
         
         
         
-        virtual void OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title) override;
+        virtual void OnTitleChange(CefRefPtr<CefBrowser> browser,
+                                   const CefString& title) override;
+                                   
+        //LoadHandlerDelegate
         
+        virtual void OnLoadStart(CefRefPtr<CefBrowser> browser,
+                                 CefRefPtr<CefFrame> frame);
+                                 
 #if CHROME_VERSION_BUILD >= 2704
         virtual void OnDraggableRegionsChanged(CefRefPtr<CefBrowser> browser,
                                                const std::vector<CefDraggableRegion>& regions) override;

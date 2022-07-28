@@ -71,7 +71,7 @@ namespace amo {
         virtual void OnBeforeDownload(CefRefPtr<CefBrowser> browser,
                                       CefRefPtr<CefDownloadItem> download_item,
                                       const CefString& suggested_name,
-                                      CefRefPtr<CefBeforeDownloadCallback> callback);
+                                      CefRefPtr<CefBeforeDownloadCallback> callback) override;
                                       
         /*!
          * @fn	virtual void DownloadHandler::OnDownloadUpdated(
@@ -90,7 +90,7 @@ namespace amo {
         
         virtual void OnDownloadUpdated(CefRefPtr<CefBrowser> browser,
                                        CefRefPtr<CefDownloadItem> download_item,
-                                       CefRefPtr<CefDownloadItemCallback> callback);
+                                       CefRefPtr<CefDownloadItemCallback> callback) override;
     public:
     
         static void setBeforeDownloadCallback(std::function<bool(

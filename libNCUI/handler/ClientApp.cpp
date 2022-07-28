@@ -224,6 +224,23 @@ namespace amo {
         // 使用npapi flash 插件 部分网页会导致程序无响应死掉 百度音乐
         command_line->AppendSwitch("enable-npapi");		// http://blog.csdn.net/sp_daiyq/article/details/50187737 原因是chromium从42之后就不默认支持NPAPI了（3.2357使用的chromium是43）
         
+        // 允许使用Flash，2704以下版本本身可以自动加载flash插件，高版本需要手动指定flash路径，但是程序启动时会弹个黑框
+        command_line->AppendSwitchWithValue("ppapi-flash-path",
+                                            "plugins/pepflashplayer.dll");
+                                            
+        //command_line->AppendSwitch("--disable-web-security");//关闭同源策略
+        //command_line->AppendSwitchWithValue("ppapi-flash-version",
+        //                                    "30.0.0.113");//PepperFlash\manifest.json中的version
+        /*command_line->AppendSwitchWithValue("ppapi-flash-path",
+        									"plugins/pepflashplayer.dll");*/
+        //command_line->AppendSwitch("--disable-web-security");//关闭同源策略
+        //command_line->AppendSwitchWithValue("ppapi-flash-version",
+        //                                    "19.0.0.226");//PepperFlash\manifest.json中的version
+        //command_line->AppendSwitchWithValue("ppapi-flash-path",
+        //                                    "plugins/NPSWF32_19_0_0_226.dll");
+        //command_line->AppendSwitch("--disable-web-security");//关闭同源策略
+        //command_line->AppendSwitch("--enable-system-flash");
+        
         //      /*command_line->AppendSwitchWithValue("register-netscape-plugins", "E:\\test2\\firebreath-dev\\build\\bin\\xdemocef\\Debug\\npxdemocef.dll;application/x-xdemocef");
         //      command_line->AppendSwitchWithValue("register-netscape-plugins", "E:\\amoylel-Out\\Binary.UR32\\plugins\\npaemo.dll;application/x-demo-a");
         //      command_line->AppendSwitchWithValue("register-netscape-plugins", "E:\\test2\\FireBreath-master\\build\\bin\\amoplugin\\Debug\\npamoplugin.dll;application/x-amoplugin");*/

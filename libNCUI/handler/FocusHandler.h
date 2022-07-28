@@ -65,7 +65,7 @@ namespace amo {
         */
         
         virtual void OnTakeFocus(CefRefPtr<CefBrowser> browser,
-                                 bool next);
+                                 bool next) override;
                                  
         /*!
         * @fn	virtual bool FocusHandler::OnSetFocus(
@@ -82,7 +82,7 @@ namespace amo {
         */
         
         virtual bool OnSetFocus(CefRefPtr<CefBrowser> browser,
-                                FocusSource source);
+                                FocusSource source) override;
                                 
         /*!
         * @fn	virtual void FocusHandler::OnGotFocus(CefRefPtr<CefBrowser> browser);
@@ -93,7 +93,7 @@ namespace amo {
         * @param	browser	The browser.
         */
         
-        virtual void OnGotFocus(CefRefPtr<CefBrowser> browser);
+        virtual void OnGotFocus(CefRefPtr<CefBrowser> browser) override;
         
         IMPLEMENT_REFCOUNTING(FocusHandler);
     };

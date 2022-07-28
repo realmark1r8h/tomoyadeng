@@ -63,7 +63,7 @@ namespace amo {
          */
         
         virtual bool GetLocalizedString(int message_id,
-                                        CefString& string);
+                                        CefString& string) override;
                                         
         /*!
          * @fn	virtual bool ResourceBundleHandler::GetDataResource(
@@ -82,7 +82,7 @@ namespace amo {
         
         virtual bool GetDataResource(int resource_id,
                                      void*& data,
-                                     size_t& data_size);
+                                     size_t& data_size) override;
                                      
                                      
 #if CHROME_VERSION_BUILD >= 2454
@@ -106,7 +106,7 @@ namespace amo {
         virtual bool GetDataResourceForScale(int resource_id,
                                              ScaleFactor scale_factor,
                                              void*& data,
-                                             size_t& data_size);
+                                             size_t& data_size) override;
 #else
 #endif
                                              

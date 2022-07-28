@@ -44,7 +44,7 @@ namespace amo {
          * @brief	Executes the context initialized action.
          */
         
-        virtual void OnContextInitialized();
+        virtual void OnContextInitialized() override;
         
         /*!
          * @fn	virtual void BrowserProcessHandler::OnBeforeChildProcessLaunch(
@@ -56,7 +56,7 @@ namespace amo {
          */
         
         virtual void OnBeforeChildProcessLaunch(
-            CefRefPtr<CefCommandLine> command_line);
+            CefRefPtr<CefCommandLine> command_line) override;
             
         /*!
          * @fn	virtual void BrowserProcessHandler::OnRenderProcessThreadCreated(
@@ -68,11 +68,11 @@ namespace amo {
          */
         
         virtual void OnRenderProcessThreadCreated(
-            CefRefPtr<CefListValue> extra_info);
+            CefRefPtr<CefListValue> extra_info) override;
             
             
 #if CHROME_VERSION_BUILD >= 2272
-        virtual CefRefPtr<CefPrintHandler> GetPrintHandler();
+        virtual CefRefPtr<CefPrintHandler> GetPrintHandler() override;
 #endif
         
         

@@ -78,7 +78,7 @@ namespace amo {
         virtual void OnBeforeContextMenu(CefRefPtr<CefBrowser> browser,
                                          CefRefPtr<CefFrame> frame,
                                          CefRefPtr<CefContextMenuParams> params,
-                                         CefRefPtr<CefMenuModel> model);
+                                         CefRefPtr<CefMenuModel> model) override;
                                          
         /*!
          * @fn	virtual bool ContextMenuHandler::OnContextMenuCommand(
@@ -104,7 +104,7 @@ namespace amo {
                                           CefRefPtr<CefFrame> frame,
                                           CefRefPtr<CefContextMenuParams> params,
                                           int command_id,
-                                          EventFlags event_flags);
+                                          EventFlags event_flags) override;
                                           
         /*!
          * @fn	virtual void ContextMenuHandler::OnContextMenuDismissed(
@@ -119,7 +119,7 @@ namespace amo {
          */
         
         virtual void OnContextMenuDismissed(CefRefPtr<CefBrowser> browser,
-                                            CefRefPtr<CefFrame> frame);
+                                            CefRefPtr<CefFrame> frame) override;
                                             
     };
 }

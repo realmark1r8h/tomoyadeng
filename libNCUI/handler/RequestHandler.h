@@ -37,9 +37,10 @@ namespace amo {
         
         
         
-        virtual CefRefPtr<CefResourceHandler> GetResourceHandler(CefRefPtr<CefBrowser> browser,
-                CefRefPtr<CefFrame> frame,
-                CefRefPtr<CefRequest> request) {
+        virtual CefRefPtr<CefResourceHandler> GetResourceHandler(
+            CefRefPtr<CefBrowser> browser,
+            CefRefPtr<CefFrame> frame,
+            CefRefPtr<CefRequest> request) {
             return NULL;
         }
         
@@ -179,7 +180,7 @@ namespace amo {
         virtual bool OnBeforeBrowse(CefRefPtr<CefBrowser> browser,
                                     CefRefPtr<CefFrame> frame,
                                     CefRefPtr<CefRequest> request,
-                                    bool is_redirect);
+                                    bool is_redirect) override;
                                     
                                     
 #if CHROME_VERSION_BUILD >= 2272
@@ -210,7 +211,7 @@ namespace amo {
 #else
         virtual bool OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser,
                                           CefRefPtr<CefFrame> frame,
-                                          CefRefPtr<CefRequest> request);
+                                          CefRefPtr<CefRequest> request) override;
 #endif
             
         /*!
@@ -229,10 +230,11 @@ namespace amo {
          * @return	The resource handler.
          */
         
-        virtual CefRefPtr<CefResourceHandler> GetResourceHandler(CefRefPtr<CefBrowser> browser,
-                CefRefPtr<CefFrame> frame,
-                CefRefPtr<CefRequest> request);
-                
+        virtual CefRefPtr<CefResourceHandler> GetResourceHandler(
+            CefRefPtr<CefBrowser> browser,
+            CefRefPtr<CefFrame> frame,
+            CefRefPtr<CefRequest> request) override;
+            
         /*!
          * @fn	virtual void RequestHandler::OnResourceRedirect(
          * 		CefRefPtr<CefBrowser> browser,
@@ -249,10 +251,19 @@ namespace amo {
          * @param 	new_url	URL of the new.
          */
         
+#if CHROME_VERSION_BUILD >= 2704
+        virtual void OnResourceRedirect(CefRefPtr<CefBrowser> browser,
+                                        CefRefPtr<CefFrame> frame,
+                                        CefRefPtr<CefRequest> request,
+                                        CefRefPtr<CefResponse> response,
+                                        CefString& new_url) override;
+#else
         virtual void OnResourceRedirect(CefRefPtr<CefBrowser> browser,
                                         CefRefPtr<CefFrame> frame,
                                         const CefString& old_url,
-                                        CefString& new_url);
+                                        CefString& new_url) override;
+#endif
+                                        
                                         
         /*!
          * @fn	virtual bool RequestHandler::GetAuthCredentials(
@@ -287,7 +298,7 @@ namespace amo {
                                         int port,
                                         const CefString& realm,
                                         const CefString& scheme,
-                                        CefRefPtr<CefAuthCallback> callback);
+                                        CefRefPtr<CefAuthCallback> callback) override;
                                         
                                         
 #if CHROME_VERSION_BUILD >= 2272
@@ -313,12 +324,12 @@ namespace amo {
         virtual bool OnQuotaRequest(CefRefPtr<CefBrowser> browser,
                                     const CefString& origin_url,
                                     int64 new_size,
-                                    CefRefPtr<CefRequestCallback> callback);
+                                    CefRefPtr<CefRequestCallback> callback) override;
 #else
         virtual bool OnQuotaRequest(CefRefPtr<CefBrowser> browser,
                                     const CefString& origin_url,
                                     int64 new_size,
-                                    CefRefPtr<CefQuotaCallback> callback);
+                                    CefRefPtr<CefQuotaCallback> callback) override;
 #endif
                                     
         /*!
@@ -337,7 +348,7 @@ namespace amo {
         
         virtual void OnProtocolExecution(CefRefPtr<CefBrowser> browser,
                                          const CefString& url,
-                                         bool& allow_os_execution);
+                                         bool& allow_os_execution) override;
                                          
                                          
 #if CHROME_VERSION_BUILD >= 2272
@@ -367,15 +378,16 @@ namespace amo {
             cef_errorcode_t cert_error,
             const CefString& request_url,
             CefRefPtr<CefSSLInfo> ssl_info,
-            CefRefPtr<CefRequestCallback> callback);
+            CefRefPtr<CefRequestCallback> callback) override;
 #else
         virtual bool OnCertificateError(cef_errorcode_t cert_error,
                                         const CefString& request_url,
-                                        CefRefPtr<CefAllowCertificateErrorCallback> callback);
+                                        CefRefPtr<CefAllowCertificateErrorCallback> callback) override;
 #endif
             
+#if CHROME_VERSION_BUILD >= 2704
             
-#if CHROME_VERSION_BUILD >= 2454
+#elif CHROME_VERSION_BUILD >= 2454
             
         /*!
          * @fn	virtual bool RequestHandler::OnBeforePluginLoad(
@@ -394,17 +406,17 @@ namespace amo {
          *
          * @return	true if it succeeds, false if it fails.
          */
-        
+            
         virtual bool OnBeforePluginLoad(CefRefPtr<CefBrowser> browser,
                                         const CefString& url,
                                         const CefString& policy_url,
-                                        CefRefPtr<CefWebPluginInfo> info);
+                                        CefRefPtr<CefWebPluginInfo> info) override;
 #else
         virtual bool OnBeforePluginLoad(CefRefPtr<CefBrowser> browser,
                                         const CefString& url, const CefString& policy_url,
-                                        CefRefPtr<CefWebPluginInfo> info);
+                                        CefRefPtr<CefWebPluginInfo> info) override;
 #endif
-                                        
+            
         /*!
          * @fn	virtual void RequestHandler::OnPluginCrashed(
          * 		CefRefPtr<CefBrowser> browser,
@@ -418,7 +430,7 @@ namespace amo {
          */
         
         virtual void OnPluginCrashed(CefRefPtr<CefBrowser> browser,
-                                     const CefString& plugin_path);
+                                     const CefString& plugin_path) override;
                                      
         /*!
          * @fn	virtual void RequestHandler::OnRenderProcessTerminated(
@@ -433,7 +445,7 @@ namespace amo {
          */
         
         virtual void OnRenderProcessTerminated(CefRefPtr<CefBrowser> browser,
-                                               TerminationStatus status);
+                                               TerminationStatus status) override;
                                                
         /*!
          * @fn	void RequestHandler::SetMessageRouter(
