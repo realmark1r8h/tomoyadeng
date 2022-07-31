@@ -257,10 +257,15 @@ namespace amo {
                                         CefRefPtr<CefRequest> request,
                                         CefRefPtr<CefResponse> response,
                                         CefString& new_url) override;
-#else
+#elif CHROME_VERSION_BUILD >= 2623
         virtual void OnResourceRedirect(CefRefPtr<CefBrowser> browser,
                                         CefRefPtr<CefFrame> frame,
                                         const CefString& old_url,
+                                        CefString& new_url) override;
+#else
+        virtual void OnResourceRedirect(CefRefPtr<CefBrowser> browser,
+                                        CefRefPtr<CefFrame> frame,
+                                        CefRefPtr<CefRequest> request,
                                         CefString& new_url) override;
 #endif
                                         
@@ -385,9 +390,8 @@ namespace amo {
                                         CefRefPtr<CefAllowCertificateErrorCallback> callback) override;
 #endif
             
-#if CHROME_VERSION_BUILD >= 2704
+#if CHROME_VERSION_BUILD > 2526
             
-#elif CHROME_VERSION_BUILD >= 2454
             
         /*!
          * @fn	virtual bool RequestHandler::OnBeforePluginLoad(
@@ -406,17 +410,19 @@ namespace amo {
          *
          * @return	true if it succeeds, false if it fails.
          */
-            
+        
+        /* virtual bool OnBeforePluginLoad(CefRefPtr<CefBrowser> browser,
+                                         const CefString& url,
+                                         const CefString& policy_url,
+                                         CefRefPtr<CefWebPluginInfo> info) override;*/
         virtual bool OnBeforePluginLoad(CefRefPtr<CefBrowser> browser,
                                         const CefString& url,
                                         const CefString& policy_url,
                                         CefRefPtr<CefWebPluginInfo> info) override;
 #else
-        virtual bool OnBeforePluginLoad(CefRefPtr<CefBrowser> browser,
-                                        const CefString& url, const CefString& policy_url,
-                                        CefRefPtr<CefWebPluginInfo> info) override;
+                                        
 #endif
-            
+                                        
         /*!
          * @fn	virtual void RequestHandler::OnPluginCrashed(
          * 		CefRefPtr<CefBrowser> browser,

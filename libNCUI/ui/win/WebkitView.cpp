@@ -34,7 +34,78 @@
 #include "scheme/UrlResourceHandlerFactory.h"
 
 
+namespace {
+#define  MAKE_ERROR_CODE_STR(val) {val, #val}
 
+    static std::unordered_map<int, std::string> CefErrorCodeMap = {
+        MAKE_ERROR_CODE_STR(ERR_NONE),
+        MAKE_ERROR_CODE_STR(ERR_FAILED),
+        MAKE_ERROR_CODE_STR(ERR_ABORTED),
+        MAKE_ERROR_CODE_STR(ERR_INVALID_ARGUMENT),
+        MAKE_ERROR_CODE_STR(ERR_INVALID_HANDLE),
+        MAKE_ERROR_CODE_STR(ERR_FILE_NOT_FOUND),
+        MAKE_ERROR_CODE_STR(ERR_TIMED_OUT),
+        MAKE_ERROR_CODE_STR(ERR_FILE_TOO_BIG),
+        MAKE_ERROR_CODE_STR(ERR_UNEXPECTED),
+        MAKE_ERROR_CODE_STR(ERR_ACCESS_DENIED),
+        MAKE_ERROR_CODE_STR(ERR_NOT_IMPLEMENTED),
+        MAKE_ERROR_CODE_STR(ERR_CONNECTION_CLOSED),
+        MAKE_ERROR_CODE_STR(ERR_CONNECTION_RESET),
+        MAKE_ERROR_CODE_STR(ERR_CONNECTION_REFUSED),
+        MAKE_ERROR_CODE_STR(ERR_CONNECTION_ABORTED),
+        MAKE_ERROR_CODE_STR(ERR_CONNECTION_FAILED),
+        MAKE_ERROR_CODE_STR(ERR_NAME_NOT_RESOLVED),
+        MAKE_ERROR_CODE_STR(ERR_INTERNET_DISCONNECTED),
+        MAKE_ERROR_CODE_STR(ERR_SSL_PROTOCOL_ERROR),
+        MAKE_ERROR_CODE_STR(ERR_ADDRESS_INVALID),
+        MAKE_ERROR_CODE_STR(ERR_ADDRESS_UNREACHABLE),
+        MAKE_ERROR_CODE_STR(ERR_SSL_CLIENT_AUTH_CERT_NEEDED),
+        MAKE_ERROR_CODE_STR(ERR_TUNNEL_CONNECTION_FAILED),
+        MAKE_ERROR_CODE_STR(ERR_NO_SSL_VERSIONS_ENABLED),
+        MAKE_ERROR_CODE_STR(ERR_SSL_VERSION_OR_CIPHER_MISMATCH),
+        MAKE_ERROR_CODE_STR(ERR_SSL_RENEGOTIATION_REQUESTED),
+        MAKE_ERROR_CODE_STR(ERR_CERT_COMMON_NAME_INVALID),
+        MAKE_ERROR_CODE_STR(ERR_CERT_BEGIN),
+        MAKE_ERROR_CODE_STR(ERR_CERT_DATE_INVALID),
+        MAKE_ERROR_CODE_STR(ERR_CERT_AUTHORITY_INVALID),
+        MAKE_ERROR_CODE_STR(ERR_CERT_CONTAINS_ERRORS),
+        MAKE_ERROR_CODE_STR(ERR_CERT_NO_REVOCATION_MECHANISM),
+        MAKE_ERROR_CODE_STR(ERR_CERT_UNABLE_TO_CHECK_REVOCATION),
+        MAKE_ERROR_CODE_STR(ERR_CERT_REVOKED),
+        MAKE_ERROR_CODE_STR(ERR_CERT_INVALID),
+        MAKE_ERROR_CODE_STR(ERR_CERT_WEAK_SIGNATURE_ALGORITHM),
+        // -209 is available: was ERR_CERT_NOT_IN_DNS.
+        MAKE_ERROR_CODE_STR(ERR_CERT_NON_UNIQUE_NAME),
+        MAKE_ERROR_CODE_STR(ERR_CERT_WEAK_KEY),
+        MAKE_ERROR_CODE_STR(ERR_CERT_NAME_CONSTRAINT_VIOLATION),
+        MAKE_ERROR_CODE_STR(ERR_CERT_VALIDITY_TOO_LONG),
+        MAKE_ERROR_CODE_STR(ERR_CERT_END),
+        MAKE_ERROR_CODE_STR(ERR_INVALID_URL),
+        MAKE_ERROR_CODE_STR(ERR_DISALLOWED_URL_SCHEME),
+        MAKE_ERROR_CODE_STR(ERR_UNKNOWN_URL_SCHEME),
+        MAKE_ERROR_CODE_STR(ERR_TOO_MANY_REDIRECTS),
+        MAKE_ERROR_CODE_STR(ERR_UNSAFE_REDIRECT),
+        MAKE_ERROR_CODE_STR(ERR_UNSAFE_PORT),
+        MAKE_ERROR_CODE_STR(ERR_INVALID_RESPONSE),
+        MAKE_ERROR_CODE_STR(ERR_INVALID_CHUNKED_ENCODING),
+        MAKE_ERROR_CODE_STR(ERR_METHOD_NOT_SUPPORTED),
+        MAKE_ERROR_CODE_STR(ERR_UNEXPECTED_PROXY_AUTH),
+        MAKE_ERROR_CODE_STR(ERR_EMPTY_RESPONSE),
+        MAKE_ERROR_CODE_STR(ERR_RESPONSE_HEADERS_TOO_BIG),
+        MAKE_ERROR_CODE_STR(ERR_CACHE_MISS),
+        MAKE_ERROR_CODE_STR(ERR_INSECURE_RESPONSE)
+    };
+    
+    std::string getErrorStringByErrorCode(int code) {
+        auto iter = CefErrorCodeMap.find(code);
+        
+        if (iter == CefErrorCodeMap.end()) {
+            return "";
+        }
+        
+        return iter->second;
+    }
+}
 
 namespace amo {
 
@@ -427,15 +498,8 @@ namespace amo {
         std::wstring url = failedUrl;
         std::transform(url.begin(), url.end(), url.begin(), ::towlower);
         
-        // Display a load error message.
-        std::stringstream ss;
-        std::string ss1 = "chrome://version";
         
-        ss << "<html><body bgcolor=\"white\">"
-           "<h2>Failed to load URL " << std::string(failedUrl) <<
-           " with error " << std::string(errorText) << " (" << errorCode <<
-           ").</h2></body></html>";
-           
+        
         std::string strErrorCode = std::to_string(errorCode);
         amo::string str(skin404, true);
         std::string errorStr = "";
@@ -448,7 +512,7 @@ namespace amo {
         
         amo::json json;
         json.put("errorCode", errorStr);
-        json.put("errorText", errorText.ToString());
+        json.put("errorText", getErrorStringByErrorCode(errorCode));
         str = str.format(json);
         
         frame->LoadString(str.to_utf8(), failedUrl);

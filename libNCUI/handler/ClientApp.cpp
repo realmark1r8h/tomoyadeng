@@ -219,20 +219,21 @@ namespace amo {
         command_line->AppendSwitch("enable-pdf-extension");
         // 允许调用摄像头
         command_line->AppendSwitch("enable-media-stream");
-        //command_line->AppendSwitch("ppapi-out-of-process");
+        
         command_line->AppendSwitch("process-per-site");
         // 使用npapi flash 插件 部分网页会导致程序无响应死掉 百度音乐
         command_line->AppendSwitch("enable-npapi");		// http://blog.csdn.net/sp_daiyq/article/details/50187737 原因是chromium从42之后就不默认支持NPAPI了（3.2357使用的chromium是43）
         
         // 允许使用Flash，2704以下版本本身可以自动加载flash插件，高版本需要手动指定flash路径，但是程序启动时会弹个黑框
-        command_line->AppendSwitchWithValue("ppapi-flash-path",
-                                            "plugins/pepflashplayer.dll");
-                                            
+        /*      command_line->AppendSwitchWithValue("ppapi-flash-path",
+                                                  "plugins/pepflashplayer.dll");*/
+        
         //command_line->AppendSwitch("--disable-web-security");//关闭同源策略
         //command_line->AppendSwitchWithValue("ppapi-flash-version",
         //                                    "30.0.0.113");//PepperFlash\manifest.json中的version
-        /*command_line->AppendSwitchWithValue("ppapi-flash-path",
-        									"plugins/pepflashplayer.dll");*/
+        //command_line->AppendSwitch("ppapi-out-of-process");
+        command_line->AppendSwitchWithValue("ppapi-flash-path",
+                                            "plugins/pepflashplayer.dll");
         //command_line->AppendSwitch("--disable-web-security");//关闭同源策略
         //command_line->AppendSwitchWithValue("ppapi-flash-version",
         //                                    "19.0.0.226");//PepperFlash\manifest.json中的version

@@ -23,9 +23,6 @@ namespace amo {
         }
         
         
-#if CHROME_VERSION_BUILD >= 2704
-        
-        
         virtual void OnFileDialogDismissed(int selected_accept_filter,
                                            const std::vector<CefString>& file_paths) override {
             for (auto& p : file_paths) {
@@ -39,20 +36,37 @@ namespace amo {
                     m_nFrameID);
         }
         
-#else
-        virtual void OnFileDialogDismissed(CefRefPtr<CefBrowserHost> browser_host,
-                                           const std::vector<CefString>& file_paths)  override {
-            for (auto& p : file_paths) {
-                m_vecFilePaths.push_back(p.ToString());
-            }
+        /*
+        #if CHROME_VERSION_BUILD >= 2704
         
-            Any ret = m_vecFilePaths;
-            BrowserTransferMgr::getInstance()->returnAsyncResult(m_nBrowserID,
-                    ret,
-                    m_nCallbackID,
-                    m_nFrameID);
-        }
-#endif
+        
+        		virtual void OnFileDialogDismissed(int selected_accept_filter,
+        			const std::vector<CefString>& file_paths) override {
+        			for (auto& p : file_paths) {
+        				m_vecFilePaths.push_back(p.ToString());
+        			}
+        
+        			Any ret = m_vecFilePaths;
+        			BrowserTransferMgr::getInstance()->returnAsyncResult(m_nBrowserID,
+        				ret,
+        				m_nCallbackID,
+        				m_nFrameID);
+        		}
+        
+        #else
+                virtual void OnFileDialogDismissed(CefRefPtr<CefBrowserHost> browser_host,
+                                                   const std::vector<CefString>& file_paths)  override {
+                    for (auto& p : file_paths) {
+                        m_vecFilePaths.push_back(p.ToString());
+                    }
+        
+                    Any ret = m_vecFilePaths;
+                    BrowserTransferMgr::getInstance()->returnAsyncResult(m_nBrowserID,
+                            ret,
+                            m_nCallbackID,
+                            m_nFrameID);
+                }
+        #endif*/
         
         
         

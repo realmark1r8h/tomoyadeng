@@ -52,9 +52,8 @@ namespace amo {
         }
     }
     
-#if CHROME_VERSION_BUILD >= 2704
+#if CHROME_VERSION_BUILD > 2526
     
-#elif CHROME_VERSION_BUILD >= 2454
     bool RequestHandler::OnBeforePluginLoad(CefRefPtr<CefBrowser> browser,
                                             const CefString& url,
                                             const CefString& policy_url,
@@ -62,36 +61,19 @@ namespace amo {
         $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
-    
+        
         for (; it != m_Delegates.end(); ++it) {
             bHandled = (*it)->OnBeforePluginLoad(browser, url, policy_url, info);
-    
+            
             if (bHandled) {
                 return true;
             }
         }
-    
-        return false;
-    }
-#else
-    bool RequestHandler::OnBeforePluginLoad(CefRefPtr<CefBrowser> browser,
-                                            const CefString& url,
-                                            const CefString& policy_url,
-                                            CefRefPtr<CefWebPluginInfo> info) {
-        $clog(amo::cdevel << func_orient << amo::endl;);
-        bool bHandled = false;
-        DelegateSet::iterator it = m_Delegates.begin();
-    
-        for (; it != m_Delegates.end(); ++it) {
-            bHandled = (*it)->OnBeforePluginLoad(browser, url, policy_url, info);
-    
-            if (bHandled) {
-                return true;
-            }
-        }
-    
+        
         return CefRequestHandler::OnBeforePluginLoad(browser, url, policy_url, info);
     }
+#else
+    
 #endif
     
     
@@ -255,7 +237,7 @@ namespace amo {
             (*it)->OnResourceRedirect(browser, frame, old_url, new_url);
         }
     }
-#else
+#elif CHROME_VERSION_BUILD >= 2623
     void RequestHandler::OnResourceRedirect(CefRefPtr<CefBrowser> browser,
                                             CefRefPtr<CefFrame> frame,
                                             const CefString& old_url,
@@ -269,6 +251,23 @@ namespace amo {
             (*it)->OnResourceRedirect(browser, frame, old_url, new_url);
         }
     }
+#else
+    void RequestHandler::OnResourceRedirect(CefRefPtr<CefBrowser> browser,
+                                            CefRefPtr<CefFrame> frame,
+                                            CefRefPtr<CefRequest> request,
+                                            CefString& new_url) {
+        CefString old_url = request->GetURL();
+        $clog(amo::cdevel << func_orient << amo::string(old_url.ToString(),
+                true).str() << ":" << amo::string(new_url.ToString(), true).str() << amo::endl;
+             );
+    
+        DelegateSet::iterator it = m_Delegates.begin();
+    
+        for (; it != m_Delegates.end(); ++it) {
+            (*it)->OnResourceRedirect(browser, frame, old_url, new_url);
+        }
+    }
+    
 #endif
     
     
