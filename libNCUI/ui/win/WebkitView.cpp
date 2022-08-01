@@ -395,6 +395,7 @@ namespace amo {
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         
         
+        
         if (frame->IsMain()) {
         
             std::vector<amo::json> cssList;
