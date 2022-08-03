@@ -1,5 +1,5 @@
 {
-	"output_path": "E:\\中文目录2\\aDoc\\resource\\adoc",
+	"output_path": "doc",
 	"files": [
 		"libNCUI/settings/AppSettings.h",
 		"libNCUI/settings/SplashWindowSettings.h",
@@ -40,5 +40,78 @@
 		"libsExt/transfer/RegistryTransfer.h",
 		"libsExt/transfer/Base64Transfer.h",
 		"libsExt/transfer/ProcessTransfer.h"
-	]
+	],
+	"version": "0.0.0.1",
+	"updateTime": "2017-09-09 09:26:10",
+	"chapters": {
+		"basic": {
+			"name": "基础",
+			"accent": "green",
+			"sections": [
+				{
+					"id": "ncStart",
+					"name": "快速开始",
+					"icon": "icon-star",
+					"desc": "快速开始",
+					"topics": [
+						{
+							"name": "配置文件"
+						}, {
+							"name": "创建窗口"
+						}
+					],
+					"filter": "browser browser"
+				}, {
+					"id": "ncNodeJs",
+					"name": "使用NodeJs",
+					"icon": "icon-star",
+					"desc": "使用NodeJs",
+					"topics": [
+						{
+							"name": "接口说明"
+						}, {
+							"name": "调试NodeJs"
+						}
+					],
+					"filter": "morencanshu mrcs"
+				}, {
+					"id": "ncCreateApp",
+					"name": "生成应用",
+					"icon": "icon-star",
+					"desc": "生成应用",
+					"topics": [
+						{
+							"name": "接口说明"
+						}, {
+							"name": "生成应用"
+						}
+					],
+					"filter": "morencanshu mrcs"
+				}, {
+					"id": "ncDemo",
+					"name": "演示程序",
+					"icon": "icon-star",
+					"desc": "演示程序",
+					"topics": [
+						{
+							"name": "QQ12"
+						}, {
+							"name": "有道词典"
+						}, {
+							"name": "百度音乐"
+						} , {
+							"name": "应用生成"
+						} , {
+							"name": "图片查看器"
+						} , {
+							"name": "音乐播放器"
+						}
+					],
+					"filter": "morencanshu mrcs"
+				}
+			],
+			"filter": "kongjian kj"
+		}
+		
+	}
 }

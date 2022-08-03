@@ -390,7 +390,7 @@ namespace amo {
                                         CefRefPtr<CefAllowCertificateErrorCallback> callback) override;
 #endif
             
-#if CHROME_VERSION_BUILD > 2526
+#if CHROME_VERSION_BUILD >= 2526
             
             
         /*!
@@ -415,14 +415,14 @@ namespace amo {
                                          const CefString& url,
                                          const CefString& policy_url,
                                          CefRefPtr<CefWebPluginInfo> info) override;*/
+        
+#else
         virtual bool OnBeforePluginLoad(CefRefPtr<CefBrowser> browser,
                                         const CefString& url,
                                         const CefString& policy_url,
                                         CefRefPtr<CefWebPluginInfo> info) override;
-#else
-                                        
 #endif
-                                        
+        
         /*!
          * @fn	virtual void RequestHandler::OnPluginCrashed(
          * 		CefRefPtr<CefBrowser> browser,

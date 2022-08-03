@@ -52,8 +52,10 @@ namespace amo {
         }
     }
     
-#if CHROME_VERSION_BUILD > 2526
+#if CHROME_VERSION_BUILD >= 2526
     
+    
+#else
     bool RequestHandler::OnBeforePluginLoad(CefRefPtr<CefBrowser> browser,
                                             const CefString& url,
                                             const CefString& policy_url,
@@ -61,19 +63,17 @@ namespace amo {
         $clog(amo::cdevel << func_orient << amo::endl;);
         bool bHandled = false;
         DelegateSet::iterator it = m_Delegates.begin();
-        
+    
         for (; it != m_Delegates.end(); ++it) {
             bHandled = (*it)->OnBeforePluginLoad(browser, url, policy_url, info);
-            
+    
             if (bHandled) {
                 return true;
             }
         }
-        
+    
         return CefRequestHandler::OnBeforePluginLoad(browser, url, policy_url, info);
     }
-#else
-    
 #endif
     
     
