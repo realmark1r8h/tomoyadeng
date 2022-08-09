@@ -29,7 +29,8 @@
 		"libNCUI/transfer/URLRequestTransfer.h",
 		"libNCUI/transfer/NetTransfer.h",
 		"libNCUI/transfer/RunnableTransfer.hpp",
-
+		"libNCUI/transfer/ActionTransfer.h",
+		
 		"libNCUI/transfer/BrowserTransfer.h",
 		"libNCUI/transfer/FrameTransfer.h",
 		"libNCUI/transfer/BrowserHostTransfer.h",
@@ -39,7 +40,9 @@
 		"libsExt/transfer/UUIDTransfer.h",
 		"libsExt/transfer/RegistryTransfer.h",
 		"libsExt/transfer/Base64Transfer.h",
-		"libsExt/transfer/ProcessTransfer.h"
+		"libsExt/transfer/ProcessTransfer.h",
+		"libsExt/transfer/PathTransfer.h",
+		"libsExt/rcedit/RceditTransfer.h"
 	],
 	"version": "0.0.0.1",
 	"updateTime": "2017-09-09 09:26:10",

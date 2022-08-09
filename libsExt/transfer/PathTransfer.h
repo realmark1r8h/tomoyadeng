@@ -17,6 +17,7 @@ namespace amo {
     
     /*!
      * @class	Path
+     * @chapter extend
      *
      * @extend Runnable
      *

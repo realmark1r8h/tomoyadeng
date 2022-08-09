@@ -192,7 +192,7 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
     std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
     
     if (args->getArgsSize() < 4) {
-        return Undefined();
+        return false;
     }
     
     amo::string strConfigFile = amo::string(args->getString(0), true);
@@ -204,11 +204,11 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
     amo::json oConfig(strConfig.str());
     
     if (!oConfig.is_valid()) {
-        return Undefined();
+        return false;
     }
     
     if (oConfig.find_member("OriginalFileName") == oConfig.end()) {
-        return Undefined();
+        return false;
     }
     
     std::set<std::string> oVersionSet;
@@ -260,7 +260,7 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
                              strConfigSplashSettinggs.to_unicode().c_str());
     m_pUpdater->Commit();
     
-    return Undefined();
+    return true;
 }
 
 
@@ -281,7 +281,7 @@ amo::Any amo::RceditTransfer::loadDiskSettings(IPCMessage::SmartType msg) {
     std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
     
     if (args->getArgsSize() == 0) {
-        return Undefined();
+        return false;
     }
     
     amo::string strPath(args->getString(0), true);
@@ -296,10 +296,11 @@ amo::Any amo::RceditTransfer::loadDiskSettings(IPCMessage::SmartType msg) {
         
         if (!m_oSettings.is_valid()) {
             m_oSettings = amo::json();
+            return false;
         }
     }
     
-    return Undefined();
+    return true;
 }
 
 amo::Any amo::RceditTransfer::getDefaultFileSettings(IPCMessage::SmartType msg) {
