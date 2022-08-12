@@ -480,6 +480,7 @@
     <ClCompile Include="scheme\DllFileHandler.cpp">
       <Filter>scheme</Filter>
     </ClCompile>
+    <ClCompile Include="transfer\ActionTransfer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context\AppContext.h">
@@ -986,6 +987,9 @@
     </ClInclude>
     <ClInclude Include="scheme\DllFileHandler.h">
       <Filter>scheme</Filter>
+    </ClInclude>
+    <ClInclude Include="transfer\ActionTransfer.h">
+      <Filter>transfer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -15,8 +15,9 @@ namespace amo {
 
     /*!
      * @class	md5
+     * @chapter extend
      *
-     * @brief	MD5 加密类.<br>
+     * @brief	MD5加密类.<br>
      * 			工作线程**Renderer线程**
      */
     
@@ -32,7 +33,7 @@ namespace amo {
         /*!
          * @fn	Any MD5Transfer::encode(IPCMessage::SmartType msg);
          *
-         * @tag static
+         * @tag static sync
          *
          * @brief	MD5 加密.
          *

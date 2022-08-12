@@ -19,6 +19,12 @@
 
 namespace amo {
 
+    /*!
+     * @class	InterProcess
+     * @chapter extend
+     * @brief	进程间通信类.
+     */
+    
     class InterProcessTransfer
         : public RunnableTransfer
         , public amo::singleton<InterProcessTransfer> {
