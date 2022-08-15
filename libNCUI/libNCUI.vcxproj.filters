@@ -61,6 +61,9 @@
     <Filter Include="ipc">
       <UniqueIdentifier>{1518d5ed-61be-4952-b9e8-93a8eb506dad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="docs">
+      <UniqueIdentifier>{189fc675-3203-4b42-ad9b-e1f6a41bde3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="context\AppContext.cpp">
@@ -480,7 +483,9 @@
     <ClCompile Include="scheme\DllFileHandler.cpp">
       <Filter>scheme</Filter>
     </ClCompile>
-    <ClCompile Include="transfer\ActionTransfer.cpp" />
+    <ClCompile Include="transfer\ActionTransfer.cpp">
+      <Filter>transfer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context\AppContext.h">
@@ -990,6 +995,9 @@
     </ClInclude>
     <ClInclude Include="transfer\ActionTransfer.h">
       <Filter>transfer</Filter>
+    </ClInclude>
+    <ClInclude Include="docs\QuickStart.hpp">
+      <Filter>docs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
