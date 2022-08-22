@@ -39,7 +39,7 @@ globalShortcut.on('hotkeydown', function(hotkey){
 });
 
 ```
-## registerShortcut <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## registerShortcut &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   通过组合键注册快捷键.
   
@@ -116,7 +116,7 @@ console.assert(hotkey != 0);
 <div class="adoc" id="div_registerShortcut"></div>
 
 
-## isRegistered <span class="label label-static">静态</span> 
+## isRegistered &nbsp;<span class="label label-static">静态</span> 
 
   通过ID判断快捷键是否注册.
   
@@ -189,7 +189,7 @@ console.assert(globalShortcut.isRegistered('MOD_CONTROL+MOD_ALT+M') == true);
 <div class="adoc" id="div_isRegistered"></div>
 
 
-## unregisterShortcut <span class="label label-static">静态</span> 
+## unregisterShortcut &nbsp;<span class="label label-static">静态</span> 
 
   通过ID注销快捷键.
   
@@ -257,7 +257,7 @@ console.assert(globalShortcut.isRegistered('MOD_CONTROL+MOD_ALT+N') == false);
 <div class="adoc" id="div_unregisterShortcut"></div>
 
 
-## unregisterAll <span class="label label-static">静态</span> 
+## unregisterAll &nbsp;<span class="label label-static">静态</span> 
 
   注销所有快捷键.
   

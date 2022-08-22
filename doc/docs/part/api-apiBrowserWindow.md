@@ -5,7 +5,7 @@
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
 
-## getName <span class="label label-sync">同步</span> 
+## getName &nbsp;<span class="label label-sync">同步</span> 
 
   获取窗口名.
   
@@ -29,8 +29,7 @@ console.log(win.getName());
 <div class="adoc" id="div_getName"></div>
 
 
-## setName 
-
+## setName &nbsp;
   设置窗口名,这个函数暂时还没有什么用，只是把名称保留下来了.
   
 * **函数参数**
@@ -68,8 +67,7 @@ console.assert(win.getName() == 'NCUI测试窗口');
 <div class="adoc" id="div_setName"></div>
 
 
-## showTitleBar 
-
+## showTitleBar &nbsp;
   显示/隐藏标题栏.
   
 * **函数参数**
@@ -107,8 +105,7 @@ win.showTitleBar(!titleBar);
 <div class="adoc" id="div_showTitleBar"></div>
 
 
-## close 
-
+## close &nbsp;
   尝试关闭窗口，可以被用户取消如：window.onload.<br>当<a href="#api/apiBrowserWindow/38">isClosable</a>为true,该函数无效.
   
 * **函数参数**  无
@@ -131,8 +128,7 @@ win.close();
 <div class="adoc" id="div_close"></div>
 
 
-## destroy 
-
+## destroy &nbsp;
   强制关闭窗口,用户不能取消该操作, 但是它保证了 closed 触发.<br>当<a href="#api/apiBrowserWindow/38">isClosable</a>为true,该函数无效.
   
 * **函数参数**  无
@@ -156,8 +152,7 @@ win.destroy();
 <div class="adoc" id="div_destroy"></div>
 
 
-## focus 
-
+## focus &nbsp;
   窗口获得焦点.
   
 * **函数参数**  无
@@ -177,7 +172,7 @@ win.focus();
 <div class="adoc" id="div_focus"></div>
 
 
-## isFocused <span class="label label-sync">同步</span> 
+## isFocused &nbsp;<span class="label label-sync">同步</span> 
 
   判断窗口是否获得焦点.
   
@@ -204,8 +199,7 @@ console.assert(win.isFocused() == true);
 <div class="adoc" id="div_isFocused"></div>
 
 
-## show 
-
+## show &nbsp;
   显示并且使窗口获得焦点.
   
 * **函数参数**  无
@@ -230,8 +224,7 @@ console.assert(win.isFocused() == true);
 <div class="adoc" id="div_show"></div>
 
 
-## showInactive 
-
+## showInactive &nbsp;
   显示窗口但是不获得焦点.但如果窗口本身就已经获得焦点，调用该函数后窗口依然有焦点
   
 * **函数参数**  无
@@ -258,8 +251,7 @@ console.assert(win.isFocused() == true);
 <div class="adoc" id="div_showInactive"></div>
 
 
-## hide 
-
+## hide &nbsp;
   隐藏窗口.
   
 * **函数参数**  无
@@ -288,7 +280,7 @@ console.assert(win.isFocused() == false);
 <div class="adoc" id="div_hide"></div>
 
 
-## isVisible <span class="label label-sync">同步</span> 
+## isVisible &nbsp;<span class="label label-sync">同步</span> 
 
   判断窗口是否可见.
   
@@ -321,8 +313,7 @@ console.assert(win.isVisible() == false);
 <div class="adoc" id="div_isVisible"></div>
 
 
-## maximize 
-
+## maximize &nbsp;
   窗口最大化.
   
 * **函数参数**  无
@@ -346,8 +337,7 @@ console.assert(win.isMaximized()==true);
 <div class="adoc" id="div_maximize"></div>
 
 
-## unmaximize 
-
+## unmaximize &nbsp;
   取消窗口最大化，建议使用<a href="#api/apiBrowserWindow/15">restore</a>代替
   
 * **函数参数**  无
@@ -371,7 +361,7 @@ console.assert(win.isMaximized() == false);
 <div class="adoc" id="div_unmaximize"></div>
 
 
-## isMaximized <span class="label label-sync">同步</span> 
+## isMaximized &nbsp;<span class="label label-sync">同步</span> 
 
   判断窗口是否最大化.
   
@@ -396,8 +386,7 @@ console.assert(win.isMaximized() == false);
 <div class="adoc" id="div_isMaximized"></div>
 
 
-## minimize 
-
+## minimize &nbsp;
   窗口最小化.
   
 * **函数参数**  无
@@ -426,8 +415,7 @@ console.assert(win.isMinimized() == false);
 <div class="adoc" id="div_minimize"></div>
 
 
-## restore 
-
+## restore &nbsp;
   将窗口恢复为之前的状态,不管窗口之前是最小化还是最大化.
   
 * **函数参数**  无
@@ -457,7 +445,7 @@ console.assert(win.isMinimized() == false);
 <div class="adoc" id="div_restore"></div>
 
 
-## isMinimized <span class="label label-sync">同步</span> 
+## isMinimized &nbsp;<span class="label label-sync">同步</span> 
 
   判断窗口是否最小化.
   
@@ -488,8 +476,7 @@ console.assert(win.isMinimized() == false);
 <div class="adoc" id="div_isMinimized"></div>
 
 
-## setFullScreen 
-
+## setFullScreen &nbsp;
   设置是否全屏.
   
 * **函数参数**
@@ -531,7 +518,7 @@ console.assert(win.isFullScreen() == true);
 <div class="adoc" id="div_setFullScreen"></div>
 
 
-## isFullScreen <span class="label label-sync">同步</span> 
+## isFullScreen &nbsp;<span class="label label-sync">同步</span> 
 
   判断窗口是否处于全屏状态.
   
@@ -557,8 +544,7 @@ console.assert(win.isFullScreen() == false);
 <div class="adoc" id="div_isFullScreen"></div>
 
 
-## setWindowRect 
-
+## setWindowRect &nbsp;
   重新设置窗口的宽高值，并且移动到指定的 x, y 位置,<br>当窗口处于全屏或者最大化状态时，该函数无效.<br>当所给宽高小于限制宽高时，以最小宽高为准<br>当所给宽高大于限制宽高时，以最大宽高为准
   
 * **函数参数**
@@ -605,7 +591,7 @@ win.setWindowRect({
 <div class="adoc" id="div_setWindowRect"></div>
 
 
-## getWindowRect <span class="label label-sync">同步</span> 
+## getWindowRect &nbsp;<span class="label label-sync">同步</span> 
 
   返回一个对象，它包含了窗口的宽，高，x坐标，y坐标.
   
@@ -650,8 +636,7 @@ console.assert(winInfo.height == 500);
 <div class="adoc" id="div_getWindowRect"></div>
 
 
-## setSize 
-
+## setSize &nbsp;
   重新设置窗口的宽高值,窗口的X坐标和Y坐标保持不变,<br>当窗口处于全屏或者最大化状态时，该函数无效<br>当所给宽高小于限制宽高时，以最小宽高为准<br>当所给宽高大于限制宽高时，以最大宽高为准.
   
 * **函数参数**
@@ -695,8 +680,7 @@ win.setSize(1300,800);
 <div class="adoc" id="div_setSize"></div>
 
 
-## getSize 
-
+## getSize &nbsp;
   获取窗口宽高.
   
 * **函数参数**  无
@@ -727,8 +711,7 @@ console.assert(info.height == 500);
 <div class="adoc" id="div_getSize"></div>
 
 
-## setMinimumSize 
-
+## setMinimumSize &nbsp;
   设置窗口最小化的宽高值，,当输入宽高为0时，将取消最小宽高限制.
   
 * **函数参数**
@@ -770,7 +753,7 @@ win.setMinimumSize(1280,720);
 <div class="adoc" id="div_setMinimumSize"></div>
 
 
-## getMinimumSize <span class="label label-sync">同步</span> 
+## getMinimumSize &nbsp;<span class="label label-sync">同步</span> 
 
   返回一个对象，它包含了窗口最小化的宽，高.{width:100, height:200}
   
@@ -799,8 +782,7 @@ win..setMinimumSize(0,0);
 <div class="adoc" id="div_getMinimumSize"></div>
 
 
-## setMaximumSize 
-
+## setMaximumSize &nbsp;
   设置窗口最大宽高值,当输入宽高为0时，将取消最大宽高限制<br>如果设置了最大宽高，那么窗口不能被最大化，不管所给的值是不是比屏幕窗口大<br>窗口全屏不受该函数影响.
   
 * **函数参数**
@@ -842,7 +824,7 @@ win.setMaximumSize(1280,720);
 <div class="adoc" id="div_setMaximumSize"></div>
 
 
-## getMaximumSize <span class="label label-sync">同步</span> 
+## getMaximumSize &nbsp;<span class="label label-sync">同步</span> 
 
   返回一个对象，它包含了窗口最大化的宽，高.{width:100, height:200}
   
@@ -873,8 +855,7 @@ win.setMaximumSize(0,0);
 <div class="adoc" id="div_getMaximumSize"></div>
 
 
-## setResizable 
-
+## setResizable &nbsp;
   设置窗口是否可以被用户改变窗口大小.<br>该函数优先级高于setMaximizable，只要调用了这个函数，都相关于调用了一次<a href="#api/apiBrowserWindow/33">setMaximizable(true)</a>,maximizable会被重置为true
   
 * **函数参数**
@@ -913,7 +894,7 @@ console.assert(win.isResizable() == false);
 <div class="adoc" id="div_setResizable"></div>
 
 
-## isResizable <span class="label label-sync">同步</span> 
+## isResizable &nbsp;<span class="label label-sync">同步</span> 
 
   判断窗口是否可以被用户改变大小.
   
@@ -938,8 +919,7 @@ console.assert(win.isResizable() == true);
 <div class="adoc" id="div_isResizable"></div>
 
 
-## setMovable 
-
+## setMovable &nbsp;
   设置窗口是否可以被用户拖动.
   
 * **函数参数**
@@ -978,7 +958,7 @@ win.setMovable(false);
 <div class="adoc" id="div_setMovable"></div>
 
 
-## isMovable <span class="label label-sync">同步</span> 
+## isMovable &nbsp;<span class="label label-sync">同步</span> 
 
   判断窗口是否可以被用户拖动.
   
@@ -1004,8 +984,7 @@ console.assert(win.isMovable() == true);
 <div class="adoc" id="div_isMovable"></div>
 
 
-## setMinimizable 
-
+## setMinimizable &nbsp;
   设置窗口是否可以最小化.
   
 * **函数参数**
@@ -1044,7 +1023,7 @@ console.assert(win.isMinimizable()== false);
 <div class="adoc" id="div_setMinimizable"></div>
 
 
-## isMinimizable <span class="label label-sync">同步</span> 
+## isMinimizable &nbsp;<span class="label label-sync">同步</span> 
 
   判断窗口是否可以最小化.
   
@@ -1071,8 +1050,7 @@ console.assert(win.isMinimizable() == true);
 <div class="adoc" id="div_isMinimizable"></div>
 
 
-## setMaximizable 
-
+## setMaximizable &nbsp;
   设置窗口是否可以最大化. 如果<a href="#api/apiBrowserWindow/28">isResizable</a>==false，此函数无效
   
 * **函数参数**
@@ -1115,7 +1093,7 @@ console.assert(win.isMaximizable() == false);
 <div class="adoc" id="div_setMaximizable"></div>
 
 
-## isMaximizable <span class="label label-sync">同步</span> 
+## isMaximizable &nbsp;<span class="label label-sync">同步</span> 
 
   判断窗口是否可以最大化.
   
@@ -1142,8 +1120,7 @@ console.assert(win.isMaximizable() == true);
 <div class="adoc" id="div_isMaximizable"></div>
 
 
-## setFullScreenable 
-
+## setFullScreenable &nbsp;
   设置否可以全屏.
   
 * **函数参数**
@@ -1185,7 +1162,7 @@ console.assert(win.isFullScreen() == false);
 <div class="adoc" id="div_setFullScreenable"></div>
 
 
-## isFullScreenable <span class="label label-sync">同步</span> 
+## isFullScreenable &nbsp;<span class="label label-sync">同步</span> 
 
   判断是否允许全屏.
   
@@ -1219,8 +1196,7 @@ console.assert(win.isFullScreen() == true);
 <div class="adoc" id="div_isFullScreenable"></div>
 
 
-## setClosable 
-
+## setClosable &nbsp;
   设置窗口是否可以人为关闭.
   
 * **函数参数**
@@ -1260,7 +1236,7 @@ console.assert(win.isClosable() == false);
 <div class="adoc" id="div_setClosable"></div>
 
 
-## isClosable <span class="label label-sync">同步</span> 
+## isClosable &nbsp;<span class="label label-sync">同步</span> 
 
   判断窗口是否可以关闭.
   
@@ -1286,8 +1262,7 @@ console.assert(win.isClosable() == true);
 <div class="adoc" id="div_isClosable"></div>
 
 
-## setAlwaysOnTop 
-
+## setAlwaysOnTop &nbsp;
   是否设置这个窗口始终在其他窗口之上.
   
 * **函数参数**
@@ -1326,7 +1301,7 @@ console.assert(win.isAlwaysOnTop() == true);
 <div class="adoc" id="div_setAlwaysOnTop"></div>
 
 
-## isAlwaysOnTop <span class="label label-sync">同步</span> 
+## isAlwaysOnTop &nbsp;<span class="label label-sync">同步</span> 
 
   返回 boolean,当前窗口是否始终在其它窗口之前.
   
@@ -1354,8 +1329,7 @@ console.assert(win.isAlwaysOnTop() == false);
 <div class="adoc" id="div_isAlwaysOnTop"></div>
 
 
-## center 
-
+## center &nbsp;
   窗口居中.
   
 * **函数参数**  无
@@ -1375,8 +1349,7 @@ win.center();
 <div class="adoc" id="div_center"></div>
 
 
-## setPosition 
-
+## setPosition &nbsp;
   移动窗口到对应的 x and y 坐标.
   
 * **函数参数**
@@ -1417,8 +1390,7 @@ win.setPosition( 300,200);
 <div class="adoc" id="div_setPosition"></div>
 
 
-## getPosition 
-
+## getPosition &nbsp;
   返回一个包含当前窗口位置的对象,返回内容与<a href="#api/apiBrowserWindow/20">getWindowRect</a>相同.
   
 * **函数参数**  无
@@ -1448,8 +1420,7 @@ console.assert(winInfo.y == 200);
 <div class="adoc" id="div_getPosition"></div>
 
 
-## setTitle 
-
+## setTitle &nbsp;
   改变原窗口的title.
   
 * **函数参数**
@@ -1486,7 +1457,7 @@ win.setTitle("NCUI测试窗口");
 <div class="adoc" id="div_setTitle"></div>
 
 
-## getTitle <span class="label label-sync">同步</span> 
+## getTitle &nbsp;<span class="label label-sync">同步</span> 
 
   返回原窗口的title.
   
@@ -1511,8 +1482,7 @@ console.assert(win.getTitle() == 'NCUI测试窗口');
 <div class="adoc" id="div_getTitle"></div>
 
 
-## flashFrame 
-
+## flashFrame &nbsp;
   开始或停止闪烁窗口来获得用户的关注.
   
 * **函数参数**
@@ -1551,8 +1521,7 @@ win.flashFrame(false);
 <div class="adoc" id="div_flashFrame"></div>
 
 
-## setHasShadow 
-
+## setHasShadow &nbsp;
   设置是否显示窗口阴影
   
 * **函数参数**
@@ -1589,7 +1558,7 @@ win.setHasShadow(false);
 <div class="adoc" id="div_setHasShadow"></div>
 
 
-## hasShadow <span class="label label-sync">同步</span> 
+## hasShadow &nbsp;<span class="label label-sync">同步</span> 
 
   返回 boolean,是否显示窗口阴影
   
@@ -1617,8 +1586,7 @@ console.assert(win.hasShadow() == true);
 <div class="adoc" id="div_hasShadow"></div>
 
 
-## topmost 
-
+## topmost &nbsp;
   设置窗口是否置顶.
   
 * **函数参数**
@@ -1660,7 +1628,7 @@ console.assert(win.isTopmost() == true);
 <div class="adoc" id="div_topmost"></div>
 
 
-## isTopmost <span class="label label-sync">同步</span> 
+## isTopmost &nbsp;<span class="label label-sync">同步</span> 
 
   判断窗口是否置顶.
   
@@ -1687,8 +1655,7 @@ console.assert(win.isTopmost() == false);
 <div class="adoc" id="div_isTopmost"></div>
 
 
-## toggleVisible 
-
+## toggleVisible &nbsp;
   显示/隐藏窗口.
   
 * **函数参数**  无
@@ -1711,8 +1678,7 @@ console.assert(win.isVisible() == true);
 <div class="adoc" id="div_toggleVisible"></div>
 
 
-## toggleFullScreen 
-
+## toggleFullScreen &nbsp;
   全屏/非全屏窗口.
   
 * **函数参数**  无
@@ -1744,8 +1710,7 @@ console.assert(win.isFullScreen() == false);
 <div class="adoc" id="div_toggleFullScreen"></div>
 
 
-## setIcon 
-
+## setIcon &nbsp;
   设置窗口图标.
   
 * **函数参数**
@@ -1784,8 +1749,7 @@ win.setIcon(icon);
 <div class="adoc" id="div_setIcon"></div>
 
 
-## setConfig 
-
+## setConfig &nbsp;
   设置窗口配置参数.该函数并不要求一定要输入所支持的参数，该函数可以影响一部分窗口行为，具体是哪些还要再确认<br>一般用来设置自定义参数，并在getConfig里面获取所设置的值与<a href="#api/apiBrowserWindow/55">BrowserWindow.getConfig</a>相对应.
   
 * **函数参数**
@@ -1829,7 +1793,7 @@ win.setConfig({
 <div class="adoc" id="div_setConfig"></div>
 
 
-## getConfig <span class="label label-sync">同步</span> 
+## getConfig &nbsp;<span class="label label-sync">同步</span> 
 
   获取应用程序的所有配置参数,可获取的内容见<a href="#settings/settingsBrowserWindowSettings">浏览器窗口参数</a>.
   
@@ -1884,7 +1848,7 @@ console.assert(titleBar == false);
 <div class="adoc" id="div_getConfig"></div>
 
 
-## BrowserWindow <span class="label label-constructor">构造</span> <span class="label label-sync">同步</span> 
+## BrowserWindow &nbsp;<span class="label label-constructor">构造</span> <span class="label label-sync">同步</span> 
 
   创建一个浏览器窗口.
   
@@ -1915,7 +1879,7 @@ console.assert(titleBar == false);
 <div class="adoc" id="div_BrowserWindow"></div>
 
 
-## currentWindow <span class="label label-deprecated">废弃</span> 
+## currentWindow &nbsp;<span class="label label-deprecated">废弃</span> 
 
   获取当前页面所对应的窗口对象
   
@@ -1932,8 +1896,7 @@ console.assert(titleBar == false);
 <div class="adoc" id="div_currentWindow"></div>
 
 
-## current 
-
+## current &nbsp;
   获取当前页面所对应的窗口对象.
   
 * **函数参数**  无
@@ -1946,8 +1909,7 @@ console.assert(titleBar == false);
 <div class="adoc" id="div_current"></div>
 
 
-## getAllWindows 
-
+## getAllWindows &nbsp;
   获取所有的浏览器窗口.
   
 * **函数参数**  无
@@ -1963,8 +1925,7 @@ console.assert(titleBar == false);
 <div class="adoc" id="div_getAllWindows"></div>
 
 
-## repaint 
-
+## repaint &nbsp;
   强制页面重绘，或停止之前的强制重绘
   
 * **函数参数**
@@ -1998,8 +1959,7 @@ console.assert(titleBar == false);
 <div class="adoc" id="div_repaint"></div>
 
 
-## addOverlap 
-
+## addOverlap &nbsp;
   添加一个渲染图层，在进行页面重绘时会将该图片合并到页面原始的Bitmap中
   
 * **函数参数**
@@ -2029,8 +1989,7 @@ console.assert(titleBar == false);
 <div class="adoc" id="div_addOverlap"></div>
 
 
-## removeOverlap 
-
+## removeOverlap &nbsp;
   移除一个渲染图层
   
 * **函数参数**
@@ -2060,8 +2019,7 @@ console.assert(titleBar == false);
 <div class="adoc" id="div_removeOverlap"></div>
 
 
-## setDragBlackList 
-
+## setDragBlackList &nbsp;
   设置拖拽黑名单.
   
 * **函数参数**
@@ -2091,12 +2049,133 @@ console.assert(titleBar == false);
 <div class="adoc" id="div_setDragBlackList"></div>
 
 
-## getDragBlackList 
-
+## getDragBlackList &nbsp;
   获取拖拽黑名单.
   
 * **函数参数**  无
 
 * **返回值**
   Int 不允许拖拽的类型. 
+
+
+
+<div class="adoc" id="div_getDragBlackList"></div>
+
+
+## addBrowserWindowSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+
+  为一个URL预设置窗口参数，当这个URL对应及其子路径的浏览器窗口由浏览器触发创建时，将使用该方法预设置的参数.<br>说明：**该方法并不能影响new BrowserWindow() 创建的浏览器窗口**
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String </td>
+	<td></td>
+	<td>需要预设置窗口参数的url.</td>
+</tr><tr>
+	<td>JsonObject </td>
+	<td></td>
+	<td>可以支持的<a href="#settings/settingsBrowserWindowSettings">浏览器窗口参数</a></td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+   无. 
+
+* **参考** 
+<a href="#settings/settingsBrowserWindowSettings">浏览器窗口参数</a>
+
+* **示例**
+
+```html
+include('BrowserWindow');
+BrowserWindow.addBrowserWindowSettings('https://www.baidu.com',{titleBar: true});
+window.open('https://www.baidu.com');
+window.open('https://www.baidu.com/more');
+
+
+```
+
+
+<div class="adoc" id="div_addBrowserWindowSettings"></div>
+
+
+## removeBrowserWindowSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+
+  移除一个URL的默认窗口参数.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String </td>
+	<td></td>
+	<td>需要移除浏览器窗口参数的URL.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+   无. 
+
+* **参考** 
+
+
+* **示例**
+
+```html
+include('BrowserWindow');
+BrowserWindow.removeBrowserWindowSettings('https://www.baidu.com');
+window.open('https://www.baidu.com');
+window.open('https://www.baidu.com/more');
+
+```
+
+
+<div class="adoc" id="div_removeBrowserWindowSettings"></div>
+
+
+## getBrowserWindowSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+
+  获取指定URL的默认窗口参数.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String </td>
+	<td></td>
+	<td>URL.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+  JsonObject . 
 

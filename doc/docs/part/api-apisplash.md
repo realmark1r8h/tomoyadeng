@@ -5,7 +5,7 @@
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
 
-## show <span class="label label-static">静态</span> 
+## show &nbsp;<span class="label label-static">静态</span> 
 
   显示Splash.
   
@@ -49,7 +49,7 @@ splash.show({
 <div class="adoc" id="div_show"></div>
 
 
-## hide <span class="label label-static">静态</span> 
+## hide &nbsp;<span class="label label-static">静态</span> 
 
   n毫秒后隐藏Splash，n由<a href="#api/apisplash/0">show</a>中设置的fadeout决定.
   
@@ -102,7 +102,7 @@ splash.hide(3000);
 <div class="adoc" id="div_hide"></div>
 
 
-## isVisible <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## isVisible &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   判断Splash是否可见.
   

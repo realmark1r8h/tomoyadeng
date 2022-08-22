@@ -2,7 +2,7 @@
 
   网络相关类.<br>工作线程：**UI线程**.
   
-## download <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## download &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   创建一个Downloader对象.
   
@@ -36,7 +36,7 @@
 <div class="adoc" id="div_download"></div>
 
 
-## request <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## request &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   创建一个URLRequest对象.
   

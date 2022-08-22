@@ -5,8 +5,7 @@
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
 
-## injectSrcipt 
-
+## injectSrcipt &nbsp;
   向页面注入JS代码.
   
 * **函数参数**
@@ -36,8 +35,7 @@
 <div class="adoc" id="div_injectSrcipt"></div>
 
 
-## injectCSS 
-
+## injectCSS &nbsp;
   向页面注入CSS代码.
   
 * **函数参数**
@@ -67,8 +65,7 @@
 <div class="adoc" id="div_injectCSS"></div>
 
 
-## IsValid 
-
+## IsValid &nbsp;
   当前页面是否有效.
   
 * **函数参数**  无
@@ -81,8 +78,7 @@
 <div class="adoc" id="div_IsValid"></div>
 
 
-## Undo 
-
+## Undo &nbsp;
   撤消.
   
 * **函数参数**  无
@@ -95,8 +91,7 @@
 <div class="adoc" id="div_Undo"></div>
 
 
-## Redo 
-
+## Redo &nbsp;
   重做.
   
 * **函数参数**  无
@@ -109,8 +104,7 @@
 <div class="adoc" id="div_Redo"></div>
 
 
-## Cut 
-
+## Cut &nbsp;
   剪切.
   
 * **函数参数**  无
@@ -123,8 +117,7 @@
 <div class="adoc" id="div_Cut"></div>
 
 
-## Copy 
-
+## Copy &nbsp;
   复制.
   
 * **函数参数**  无
@@ -137,8 +130,7 @@
 <div class="adoc" id="div_Copy"></div>
 
 
-## Paste 
-
+## Paste &nbsp;
   粘贴.
   
 * **函数参数**  无
@@ -151,8 +143,7 @@
 <div class="adoc" id="div_Paste"></div>
 
 
-## Delete 
-
+## Delete &nbsp;
   删除.
   
 * **函数参数**  无
@@ -165,8 +156,7 @@
 <div class="adoc" id="div_Delete"></div>
 
 
-## SelectAll 
-
+## SelectAll &nbsp;
   全选.
   
 * **函数参数**  无
@@ -179,8 +169,7 @@
 <div class="adoc" id="div_SelectAll"></div>
 
 
-## ViewSource 
-
+## ViewSource &nbsp;
   查看网页源代码.
   
 * **函数参数**  无
@@ -193,8 +182,7 @@
 <div class="adoc" id="div_ViewSource"></div>
 
 
-## LoadURL 
-
+## LoadURL &nbsp;
   加载URL.
   
 * **函数参数**
@@ -224,8 +212,7 @@
 <div class="adoc" id="div_LoadURL"></div>
 
 
-## IsMain 
-
+## IsMain &nbsp;
   当前页面是否为主页面.
   
 * **函数参数**  无
@@ -238,8 +225,7 @@
 <div class="adoc" id="div_IsMain"></div>
 
 
-## IsFocused 
-
+## IsFocused &nbsp;
   当前页面是否获得焦点.
   
 * **函数参数**  无
@@ -252,8 +238,7 @@
 <div class="adoc" id="div_IsFocused"></div>
 
 
-## GetName 
-
+## GetName &nbsp;
   获取当前页面的名称.
   
 * **函数参数**  无
@@ -266,8 +251,7 @@
 <div class="adoc" id="div_GetName"></div>
 
 
-## GetIdentifier 
-
+## GetIdentifier &nbsp;
   获取当前页面的ID.
   
 * **函数参数**  无
@@ -280,8 +264,7 @@
 <div class="adoc" id="div_GetIdentifier"></div>
 
 
-## GetParent 
-
+## GetParent &nbsp;
   获取当前页面的父页面.
   
 * **函数参数**  无
@@ -294,8 +277,7 @@
 <div class="adoc" id="div_GetParent"></div>
 
 
-## GetURL 
-
+## GetURL &nbsp;
   获取当前页面的URL.
   
 * **函数参数**  无
@@ -308,8 +290,7 @@
 <div class="adoc" id="div_GetURL"></div>
 
 
-## GetBrowser 
-
+## GetBrowser &nbsp;
   获取当前页面所属的Browser对象.
   
 * **函数参数**  无

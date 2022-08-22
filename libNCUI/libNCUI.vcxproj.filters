@@ -986,7 +986,6 @@
     <ClInclude Include="ui\win\Overlap.hpp">
       <Filter>ui\win</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="scheme\DllFileManager.h">
       <Filter>scheme</Filter>
     </ClInclude>
@@ -997,6 +996,15 @@
       <Filter>transfer</Filter>
     </ClInclude>
     <ClInclude Include="docs\QuickStart.hpp">
+      <Filter>docs</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="docs\AdvancedUsage.hpp">
+      <Filter>docs</Filter>
+    </ClInclude>
+    <ClInclude Include="docs\Demos.hpp">
       <Filter>docs</Filter>
     </ClInclude>
   </ItemGroup>

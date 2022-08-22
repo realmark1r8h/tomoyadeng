@@ -2,8 +2,7 @@
 
   CEF提供的浏览器类封装.<br>工作线程：**UI线程**.
   
-## GetHost 
-
+## GetHost &nbsp;
   获取浏览器的Host对象.
   
 * **函数参数**  无
@@ -16,8 +15,7 @@
 <div class="adoc" id="div_GetHost"></div>
 
 
-## CanGoBack 
-
+## CanGoBack &nbsp;
   判断当前浏览器是否可以后退.
   
 * **函数参数**  无
@@ -30,8 +28,7 @@
 <div class="adoc" id="div_CanGoBack"></div>
 
 
-## GoBack 
-
+## GoBack &nbsp;
   后退.
   
 * **函数参数**  无
@@ -44,8 +41,7 @@
 <div class="adoc" id="div_GoBack"></div>
 
 
-## CanGoForward 
-
+## CanGoForward &nbsp;
   判断当前浏览器是否可以前进.
   
 * **函数参数**  无
@@ -58,8 +54,7 @@
 <div class="adoc" id="div_CanGoForward"></div>
 
 
-## GoForward 
-
+## GoForward &nbsp;
   前进.
   
 * **函数参数**  无
@@ -72,8 +67,7 @@
 <div class="adoc" id="div_GoForward"></div>
 
 
-## IsLoading 
-
+## IsLoading &nbsp;
   是否正在加载页面.
   
 * **函数参数**  无
@@ -86,8 +80,7 @@
 <div class="adoc" id="div_IsLoading"></div>
 
 
-## Reload 
-
+## Reload &nbsp;
   重新加载页面.
   
 * **函数参数**  无
@@ -100,8 +93,7 @@
 <div class="adoc" id="div_Reload"></div>
 
 
-## ReloadIgnoreCache 
-
+## ReloadIgnoreCache &nbsp;
   重新加载页面，无视任何缓存数据.
   
 * **函数参数**  无
@@ -114,8 +106,7 @@
 <div class="adoc" id="div_ReloadIgnoreCache"></div>
 
 
-## StopLoad 
-
+## StopLoad &nbsp;
   停止加载页面.
   
 * **函数参数**  无
@@ -128,8 +119,7 @@
 <div class="adoc" id="div_StopLoad"></div>
 
 
-## GetIdentifier 
-
+## GetIdentifier &nbsp;
   获取浏览器ID.
   
 * **函数参数**  无
@@ -142,8 +132,7 @@
 <div class="adoc" id="div_GetIdentifier"></div>
 
 
-## IsSame 
-
+## IsSame &nbsp;
   与另一个Borwser对象比较是否相等.
   
 * **函数参数**
@@ -173,8 +162,7 @@
 <div class="adoc" id="div_IsSame"></div>
 
 
-## IsPopup 
-
+## IsPopup &nbsp;
   是否为一个弹出窗口.
   
 * **函数参数**  无
@@ -187,8 +175,7 @@
 <div class="adoc" id="div_IsPopup"></div>
 
 
-## HasDocument 
-
+## HasDocument &nbsp;
   是否在浏览器中加载了文档.
   
 * **函数参数**  无
@@ -201,8 +188,7 @@
 <div class="adoc" id="div_HasDocument"></div>
 
 
-## GetMainFrame 
-
+## GetMainFrame &nbsp;
   返回浏览器窗口的主（顶层）框架Frame.
   
 * **函数参数**  无
@@ -215,8 +201,7 @@
 <div class="adoc" id="div_GetMainFrame"></div>
 
 
-## GetFocusedFrame 
-
+## GetFocusedFrame &nbsp;
   返回浏览器窗口的焦点框架Frame.
   
 * **函数参数**  无
@@ -229,8 +214,7 @@
 <div class="adoc" id="div_GetFocusedFrame"></div>
 
 
-## GetFrame 
-
+## GetFrame &nbsp;
   通过名称或ID获取Frame.
   
 * **函数参数**
@@ -260,8 +244,7 @@
 <div class="adoc" id="div_GetFrame"></div>
 
 
-## GetFrameCount 
-
+## GetFrameCount &nbsp;
   获取Frame个数.
   
 * **函数参数**  无
@@ -274,8 +257,7 @@
 <div class="adoc" id="div_GetFrameCount"></div>
 
 
-## GetFrameIdentifiers 
-
+## GetFrameIdentifiers &nbsp;
   获取所有Frame的ID，返回一个数组[].
   
 * **函数参数**  无
@@ -288,8 +270,7 @@
 <div class="adoc" id="div_GetFrameIdentifiers"></div>
 
 
-## GetFrameNames 
-
+## GetFrameNames &nbsp;
   获取所有Frame的名称，返回一个数组[].
   
 * **函数参数**  无
@@ -302,8 +283,7 @@
 <div class="adoc" id="div_GetFrameNames"></div>
 
 
-## currentFrame 
-
+## currentFrame &nbsp;
   获取当前Frame.
   
 * **函数参数**  无

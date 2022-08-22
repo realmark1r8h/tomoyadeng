@@ -197,8 +197,8 @@
 </tr><tr>
 	<td>Boolean</td>
 	<td>debugMode</td>
-	<td>false </td>
-	<td>是否以调试模式运行,默认false.该模式下F12可以打开调试窗口，F5可以刷新页面 </td>
+	<td>true </td>
+	<td>是否以调试模式运行,默认true.该模式下F12可以打开调试窗口，F5可以刷新页面 </td>
 </tr><tr>
 	<td>Boolean</td>
 	<td>clearCache</td>

@@ -326,6 +326,8 @@
     <ClInclude Include="cefsimple\simple_app.h" />
     <ClInclude Include="cefsimple\simple_handler.h" />
     <ClInclude Include="context\AppContext.h" />
+    <ClInclude Include="docs\AdvancedUsage.hpp" />
+    <ClInclude Include="docs\Demos.hpp" />
     <ClInclude Include="docs\QuickStart.hpp" />
     <ClInclude Include="handler\BrowserManager.hpp" />
     <ClInclude Include="handler\BrowserProcessHandler.h" />

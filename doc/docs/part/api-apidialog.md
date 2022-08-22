@@ -64,7 +64,7 @@
 </table>
 
 
-## runFileDialog <span class="label label-static">静态</span> <span class="label label-async">异步</span> 
+## runFileDialog &nbsp;<span class="label label-static">静态</span> <span class="label label-async">异步</span> 
 
   打开文件选择对话框.
   
@@ -147,7 +147,7 @@ console.log(arr);
 <div class="adoc" id="div_runFileDialog"></div>
 
 
-## alert <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## alert &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   弹出提示框，相关于js的alert函数.
   
@@ -185,7 +185,7 @@ dialog.alert('我是一个弹出框');
 <div class="adoc" id="div_alert"></div>
 
 
-## confirm <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## confirm &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   选择对话框，相当于js的confirm函数.
   
@@ -224,7 +224,7 @@ console.log(retval);
 <div class="adoc" id="div_confirm"></div>
 
 
-## prompt <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## prompt &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   获取用户输入值，相当于js的prompt函数.
   

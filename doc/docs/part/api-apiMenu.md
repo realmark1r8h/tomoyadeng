@@ -46,7 +46,7 @@ menu.on('select', function(){
 });
 
 ```
-## Menu <span class="label label-constructor">构造</span> 
+## Menu &nbsp;<span class="label label-constructor">构造</span> 
 
   创建一个菜单.菜单创建的位置默认为鼠标所在位置，菜单失去焦点会自动关闭.
   
@@ -239,8 +239,7 @@ example.oncontextmenu = function() {
 <div class="adoc" id="div_Menu"><div id="example" class="example code" contenteditable="true"> 右键点我</div></div>
 
 
-## close 
-
+## close &nbsp;
   关闭菜单.
   
 * **函数参数**  无

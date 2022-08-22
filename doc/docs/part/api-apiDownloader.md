@@ -183,7 +183,7 @@
 	</tbody>
 </table>
 
-## Downloader <span class="label label-constructor">构造</span> 
+## Downloader &nbsp;<span class="label label-constructor">构造</span> 
 
   创建一下下载类，用于下载文件.
   
@@ -254,8 +254,7 @@ window.downloader.on('complete', function(item){
 <div class="adoc" id="div_Downloader"></div>
 
 
-## start 
-
+## start &nbsp;
   开始下载.
   
 * **函数参数**  无
@@ -274,8 +273,7 @@ window.downloader.start();
 <div class="adoc" id="div_start"></div>
 
 
-## pause 
-
+## pause &nbsp;
   暂停下载.
   
 * **函数参数**  无
@@ -294,8 +292,7 @@ window.downloader.pause();
 <div class="adoc" id="div_pause"></div>
 
 
-## resume 
-
+## resume &nbsp;
   恢复当前下载.
   
 * **函数参数**  无
@@ -314,8 +311,7 @@ window.downloader.resume();
 <div class="adoc" id="div_resume"></div>
 
 
-## cancel 
-
+## cancel &nbsp;
   取消下载.
   
 * **函数参数**  无

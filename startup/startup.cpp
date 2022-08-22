@@ -495,6 +495,7 @@ STARTUP_API int run(void) {
 
     HINSTANCE hInstance = ::GetModuleHandle(NULL);
     ::SetCurrentDirectoryA(amo::path::getExeDir().c_str());
+    
     args.reset(new ArgsSettings(hInstance));
     
     if (args->bUseNode && args->bNodeProcess) {

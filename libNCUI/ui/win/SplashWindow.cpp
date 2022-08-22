@@ -55,7 +55,10 @@ namespace amo {
                              m_PaintManager.FindControl(_T("pictureView")));
         ASSERT(m_pPictureView);
         m_pPictureView->SetVisible(false);
-        amo::string file(getSplashSettings()->image, true);
+        RECT rc = {0};
+        ::GetClientRect(m_hWnd, &rc);
+        std::string imagePath = AppSettings::getInstance()->toAbsolutePath(getSplashSettings()->image);
+        amo::string file(imagePath, true);
         m_pPictureView->setPicture(file.to_wide());
         
     }

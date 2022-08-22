@@ -161,7 +161,7 @@ tray.on('mouseleave', function(){
 });
 
 ```
-## show <span class="label label-static">静态</span> 
+## show &nbsp;<span class="label label-static">静态</span> 
 
   显示托盘.
   
@@ -182,7 +182,7 @@ tray.show();
 <div class="adoc" id="div_show"></div>
 
 
-## hide <span class="label label-static">静态</span> 
+## hide &nbsp;<span class="label label-static">静态</span> 
 
   隐藏托盘.
   
@@ -203,7 +203,7 @@ tray.hide();
 <div class="adoc" id="div_hide"></div>
 
 
-## setIcon <span class="label label-static">静态</span> 
+## setIcon &nbsp;<span class="label label-static">静态</span> 
 
   设置托盘图标.
   
@@ -241,7 +241,7 @@ tray.setIcon('skin/logo1.ico');
 <div class="adoc" id="div_setIcon"></div>
 
 
-## setTooltip <span class="label label-static">静态</span> 
+## setTooltip &nbsp;<span class="label label-static">静态</span> 
 
   设置托盘提示文本.
   
@@ -279,7 +279,7 @@ tray.setTooltip(new Date().toString());
 <div class="adoc" id="div_setTooltip"></div>
 
 
-## blink <span class="label label-static">静态</span> 
+## blink &nbsp;<span class="label label-static">静态</span> 
 
   闪烁托盘.
   
@@ -320,7 +320,7 @@ tray.blink(true);
 <div class="adoc" id="div_blink"></div>
 
 
-## isBlink <span class="label label-static">静态</span> 
+## isBlink &nbsp;<span class="label label-static">静态</span> 
 
   判断托盘是否闪烁.
   

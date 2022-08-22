@@ -2,7 +2,7 @@
 
   内置事件.
   
-## execute <span class="label label-static">静态</span> 
+## execute &nbsp;<span class="label label-static">静态</span> 
 
   执行一个内置动作，可以支持.
   

@@ -5,7 +5,7 @@
 * **父类** 
 <a href="#api/apiRunnable">Runnable</a>&nbsp;
 
-## RegistryTransfer <span class="label label-constructor">构造</span> <span class="label label-sync">同步</span> 
+## RegistryTransfer &nbsp;<span class="label label-constructor">构造</span> <span class="label label-sync">同步</span> 
 
   创建一个注册表操作对象.
   
@@ -44,7 +44,7 @@ window.registry = new Registry(Registry.HKEY_CURRENT_USER);
 <div class="adoc" id="div_RegistryTransfer"></div>
 
 
-## create <span class="label label-sync">同步</span> 
+## create &nbsp;<span class="label label-sync">同步</span> 
 
   创建一个子键.
   
@@ -83,7 +83,7 @@ console.assert(registry.create('Software\\NCUI') == true);
 <div class="adoc" id="div_create"></div>
 
 
-## open <span class="label label-sync">同步</span> 
+## open &nbsp;<span class="label label-sync">同步</span> 
 
   打开子键.
   
@@ -122,7 +122,7 @@ console.assert(registry.create('Software\\NCUI') == true);
 <div class="adoc" id="div_open"></div>
 
 
-## read <span class="label label-sync">同步</span> 
+## read &nbsp;<span class="label label-sync">同步</span> 
 
   读取键值.
   
@@ -167,7 +167,7 @@ console.assert(registry.read('Software\\NCUI', 'version') ==  '1.0.0.0');
 <div class="adoc" id="div_read"></div>
 
 
-## write <span class="label label-sync">同步</span> 
+## write &nbsp;<span class="label label-sync">同步</span> 
 
   写入键值.
   
@@ -220,7 +220,7 @@ console.assert(registry.read('Software\\NCUI', 'remark') ==  'Chromium Embedded 
 <div class="adoc" id="div_write"></div>
 
 
-## remove <span class="label label-sync">同步</span> 
+## remove &nbsp;<span class="label label-sync">同步</span> 
 
   删除子键或键值.
   

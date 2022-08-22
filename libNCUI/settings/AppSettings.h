@@ -5,6 +5,7 @@
 #define AMO_APPSETTINGS_H__
 
 #include <amo/json.hpp>
+#include <amo/singleton.hpp>
 #include <amo/string.hpp>
 #include "handler/CefHeader.hpp"
 #include "BasicSettings.h"
@@ -28,7 +29,7 @@ namespace amo {
      *
      */
     
-    class AppSettings : public CefSettings, public BasicSettings {
+    class AppSettings : public CefSettings, public BasicSettings, public amo::singleton<AppSettings> {
     public:
         AppSettings();
         
@@ -159,7 +160,7 @@ namespace amo {
         int64_t startTime;
         
         /*!
-         * @var #Boolean=false debugMode 是否以调试模式运行,默认false.该模式下F12可以打开调试窗口，F5可以刷新页面
+         * @var #Boolean=true debugMode 是否以调试模式运行,默认true.该模式下F12可以打开调试窗口，F5可以刷新页面
          */
         bool debugMode;
         

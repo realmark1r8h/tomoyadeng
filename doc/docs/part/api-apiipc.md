@@ -28,7 +28,7 @@ ipc.unique('ipc.test', function(){
 
 
 ```
-## exec <span class="label label-static">静态</span> 
+## exec &nbsp;<span class="label label-static">静态</span> 
 
   发送一条消息.
   
@@ -66,7 +66,7 @@ ipc.exec('ipc.exec', 12, '88', 12.33);
 <div class="adoc" id="div_exec"></div>
 
 
-## sync <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## sync &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   发送一条同步消息.
   
@@ -108,7 +108,7 @@ console.assert(ipc.sync('ipc.async', 'test') == 'ipc.async');
 <div class="adoc" id="div_sync"></div>
 
 
-## async <span class="label label-static">静态</span> 
+## async &nbsp;<span class="label label-static">静态</span> 
 
   发送一条异步消息，可以通过回调函数获取结果.
   

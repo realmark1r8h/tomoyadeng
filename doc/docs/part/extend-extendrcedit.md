@@ -2,7 +2,7 @@
 
   资源编辑器，用来生成exe程序.
   
-## loadDiskSettings <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## loadDiskSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   从磁盘中加载配置文件.
   
@@ -33,7 +33,7 @@
 <div class="adoc" id="div_loadDiskSettings"></div>
 
 
-## getDefaultFileSettings <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## getDefaultFileSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   获取默认的文件参数.
   
@@ -47,7 +47,7 @@
 <div class="adoc" id="div_getDefaultFileSettings"></div>
 
 
-## getDefaultAppSettings <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## getDefaultAppSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   获取默认的APP启动参数.
   
@@ -61,8 +61,7 @@
 <div class="adoc" id="div_getDefaultAppSettings"></div>
 
 
-## getDefaultBrowserSettings 
-
+## getDefaultBrowserSettings &nbsp;
   获取默认的浏览器窗口启动参数.
   
 * **函数参数**  无
@@ -75,7 +74,7 @@
 <div class="adoc" id="div_getDefaultBrowserSettings"></div>
 
 
-## getDefaultSplashSettings <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## getDefaultSplashSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   获取默认的启动画面.
   
@@ -89,7 +88,7 @@
 <div class="adoc" id="div_getDefaultSplashSettings"></div>
 
 
-## commit <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## commit &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   生成EXE文件，这个函数将把配置好的参数写入EXE文件中.
   

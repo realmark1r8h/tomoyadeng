@@ -60,8 +60,7 @@ var pos = mouse.clientToScreen(win, 100, 100);
 console.log(pos);
 
 ```
-## click 
-
+## click &nbsp;
   单击鼠标左键.
   
 * **函数参数**
@@ -111,7 +110,7 @@ mouse.click(x,y);
 <div class="adoc" id="div_click"></div>
 
 
-## leftClick <span class="label label-static">静态</span> 
+## leftClick &nbsp;<span class="label label-static">静态</span> 
 
   单击左键.
   
@@ -149,7 +148,7 @@ mouse.click(x,y);
 <div class="adoc" id="div_leftClick"></div>
 
 
-## leftDown <span class="label label-static">静态</span> 
+## leftDown &nbsp;<span class="label label-static">静态</span> 
 
   按下左键.
   
@@ -200,7 +199,7 @@ mouse.leftDown(x,y);
 <div class="adoc" id="div_leftDown"></div>
 
 
-## leftUp <span class="label label-static">静态</span> 
+## leftUp &nbsp;<span class="label label-static">静态</span> 
 
   弹起左键.
   
@@ -235,7 +234,7 @@ mouse.leftDown(x,y);
 <div class="adoc" id="div_leftUp"></div>
 
 
-## leftDoubleClick <span class="label label-static">静态</span> 
+## leftDoubleClick &nbsp;<span class="label label-static">静态</span> 
 
   双击左键.
   
@@ -286,7 +285,7 @@ mouse.leftDoubleClick(x, y);
 <div class="adoc" id="div_leftDoubleClick"></div>
 
 
-## rightClick <span class="label label-static">静态</span> 
+## rightClick &nbsp;<span class="label label-static">静态</span> 
 
   单击右键.
   
@@ -336,7 +335,7 @@ mouse.rightClick(x,y);
 <div class="adoc" id="div_rightClick"></div>
 
 
-## rightDown <span class="label label-static">静态</span> 
+## rightDown &nbsp;<span class="label label-static">静态</span> 
 
   按下右键.
   
@@ -371,7 +370,7 @@ mouse.rightClick(x,y);
 <div class="adoc" id="div_rightDown"></div>
 
 
-## rightUp <span class="label label-static">静态</span> 
+## rightUp &nbsp;<span class="label label-static">静态</span> 
 
   弹起右键.
   
@@ -406,7 +405,7 @@ mouse.rightClick(x,y);
 <div class="adoc" id="div_rightUp"></div>
 
 
-## middleClick <span class="label label-static">静态</span> 
+## middleClick &nbsp;<span class="label label-static">静态</span> 
 
   单击中键.
   
@@ -457,7 +456,7 @@ mouse.middleClick(x, y);
 <div class="adoc" id="div_middleClick"></div>
 
 
-## moveTo <span class="label label-static">静态</span> 
+## moveTo &nbsp;<span class="label label-static">静态</span> 
 
   移动鼠标到指定位置.
   
@@ -507,7 +506,7 @@ mouse.moveTo(x, y);
 <div class="adoc" id="div_moveTo"></div>
 
 
-## moveR <span class="label label-static">静态</span> 
+## moveR &nbsp;<span class="label label-static">静态</span> 
 
   移动鼠标到当前位置的相对位置.
   
@@ -557,7 +556,7 @@ mouse.moveR(x, y);
 <div class="adoc" id="div_moveR"></div>
 
 
-## mouseWheel <span class="label label-static">静态</span> 
+## mouseWheel &nbsp;<span class="label label-static">静态</span> 
 
   鼠标滚轮.
   
@@ -595,7 +594,7 @@ mouse.mouseWheel(100);
 <div class="adoc" id="div_mouseWheel"></div>
 
 
-## saveMousePos <span class="label label-static">静态</span> 
+## saveMousePos &nbsp;<span class="label label-static">静态</span> 
 
   保存当前鼠标位置.
   
@@ -652,7 +651,7 @@ mouse.saveMousePos(100, 100);
 <div class="adoc" id="div_saveMousePos"></div>
 
 
-## restoreMousePos <span class="label label-static">静态</span> 
+## restoreMousePos &nbsp;<span class="label label-static">静态</span> 
 
   移动鼠标到上次保存的鼠标位置.
   
@@ -673,8 +672,7 @@ mouse.restoreMousePos();
 <div class="adoc" id="div_restoreMousePos"></div>
 
 
-## lockMouse 
-
+## lockMouse &nbsp;
   锁定鼠标，禁止所有鼠标功能（未实现）.
   
 * **函数参数**  无
@@ -687,7 +685,7 @@ mouse.restoreMousePos();
 <div class="adoc" id="div_lockMouse"></div>
 
 
-## unlockMouse <span class="label label-static">静态</span> 
+## unlockMouse &nbsp;<span class="label label-static">静态</span> 
 
   解锁鼠标（未实现）.s
   
@@ -701,8 +699,7 @@ mouse.restoreMousePos();
 <div class="adoc" id="div_unlockMouse"></div>
 
 
-## waitClick 
-
+## waitClick &nbsp;
   等待一下鼠标事件（未实现）.
   
 * **函数参数**  无
@@ -715,8 +712,7 @@ mouse.restoreMousePos();
 <div class="adoc" id="div_waitClick"></div>
 
 
-## getLastClick 
-
+## getLastClick &nbsp;
   获取上一次按过的鼠标按键（未实现）.
   
 * **函数参数**  无
@@ -729,8 +725,7 @@ mouse.restoreMousePos();
 <div class="adoc" id="div_getLastClick"></div>
 
 
-## getCursorPos 
-
+## getCursorPos &nbsp;
   获取当前鼠标在屏幕上的位置.
   
 * **函数参数**  无
@@ -754,8 +749,7 @@ console.log(pos);
 <div class="adoc" id="div_getCursorPos"></div>
 
 
-## setCursorPos 
-
+## setCursorPos &nbsp;
   设置鼠标位置.
   
 * **函数参数**
@@ -799,8 +793,7 @@ mouse.setCursorPos(100,100);
 <div class="adoc" id="div_setCursorPos"></div>
 
 
-## screenToClient 
-
+## screenToClient &nbsp;
   将一个屏幕坐标转换为当前窗口坐标.
   
 * **函数参数**
@@ -890,8 +883,7 @@ console.log(pos);
 <div class="adoc" id="div_screenToClient"></div>
 
 
-## clientToScreen 
-
+## clientToScreen &nbsp;
   将当前窗口坐标转换为屏幕坐标.
   
 * **函数参数**
@@ -981,8 +973,7 @@ console.log(pos);
 <div class="adoc" id="div_clientToScreen"></div>
 
 
-## hideCursor 
-
+## hideCursor &nbsp;
   隐藏鼠标，只对当前程序窗口有效.
   
 * **函数参数**  无
@@ -1005,8 +996,7 @@ setTimeout(function(){
 <div class="adoc" id="div_hideCursor"></div>
 
 
-## showCursor 
-
+## showCursor &nbsp;
   显示鼠标.
   
 * **函数参数**  无

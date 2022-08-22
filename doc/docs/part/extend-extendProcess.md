@@ -5,7 +5,7 @@
 * **父类** 
 <a href="#api/apiRunnable">Runnable</a>&nbsp;
 
-## ProcessTransfer <span class="label label-constructor">构造</span> <span class="label label-sync">同步</span> 
+## ProcessTransfer &nbsp;<span class="label label-constructor">构造</span> <span class="label label-sync">同步</span> 
 
   创建一个进程类.
   
@@ -36,7 +36,7 @@
 <div class="adoc" id="div_ProcessTransfer"></div>
 
 
-## findPIDByName <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## findPIDByName &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   通过程序名称查找进程.
   
@@ -67,8 +67,7 @@
 <div class="adoc" id="div_findPIDByName"></div>
 
 
-## terminateProcessByName 
-
+## terminateProcessByName &nbsp;
   通过程序名称结束进程.
   
 * **函数参数**
@@ -98,8 +97,7 @@
 <div class="adoc" id="div_terminateProcessByName"></div>
 
 
-## killProcessByName 
-
+## killProcessByName &nbsp;
   通过程序名杀死进程.
   
 * **函数参数**
@@ -133,8 +131,7 @@
 <div class="adoc" id="div_killProcessByName"></div>
 
 
-## start 
-
+## start &nbsp;
   运行子程序.
   
 * **函数参数**
@@ -164,8 +161,7 @@
 <div class="adoc" id="div_start"></div>
 
 
-## getResult 
-
+## getResult &nbsp;
   获取子进程执行结果，该函数应该放到线程里面去执行，不然会将渲染进程阻塞.
   
 * **函数参数**  无

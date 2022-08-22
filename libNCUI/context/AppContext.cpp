@@ -264,7 +264,7 @@ namespace amo {
         initCommandLine(0, NULL);
         
         m_pClientApp = new ClientApp();
-        m_pAppSettings.reset(new AppSettings());
+        m_pAppSettings = AppSettings::getInstance();
         m_pClientHandler = DummyClientHandler::getInstance();
         m_pNodeMessageHandler.reset(new NodeMessageHandler());
         
@@ -451,6 +451,7 @@ namespace amo {
             CefRunMessageLoop();
         }
         
+        ::CoUninitialize();
         amo::log::finalize();
 #if CHROME_VERSION_BUILD < 2704
         // ¹Ø±Õ¹³×Ó
@@ -530,6 +531,8 @@ namespace amo {
             amo::string strSkin(m_pAppSettings->skinDir, true);
             CPaintManagerUI::SetResourcePath(strSkin.to_unicode().c_str());
             
+            
+            // É¾³ý»º´æ
             if (getDefaultAppSettings()->clearCache) {
             
                 amo::string cachePath(CefString(
@@ -537,7 +540,13 @@ namespace amo {
                 amo::path(cachePath).remove_all();
             }
             
-            // É¾³ý»º´æ
+            HRESULT Hr = ::CoInitialize(NULL);
+            
+            if (FAILED(Hr)) {
+                return;
+            }
+            
+            
             
         }
         

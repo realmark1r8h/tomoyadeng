@@ -177,8 +177,73 @@ namespace amo {
         
         virtual Any getDragBlackList(IPCMessage::SmartType msg);
         
+        /*!
+         * @fn	Any addBrowserWindowSettings(IPCMessage::SmartType msg);
+         *
+         * @tag static sync
+         *
+         * @brief	为一个URL预设置窗口参数，当这个URL对应及其子路径的浏览器窗口由浏览器触发创建时，将使用该方法预设置的参数.<br>
+         * 			说明：**该方法并不能影响new BrowserWindow() 创建的浏览器窗口**
+         *
+         * @param	#String 需要预设置窗口参数的url.
+         *
+         * @param	#JsonObject 可以支持的{@link 浏览器窗口参数}
+         *
+         * @return	无.
+         *
+         * @see removeBrowserWindowSettings 浏览器窗口参数
+         * @example
+         *
+         ```
+        	 include('BrowserWindow');
+        	 BrowserWindow.addBrowserWindowSettings('https://www.baidu.com',{titleBar: true});
+        	 window.open('https://www.baidu.com');
+        	 window.open('https://www.baidu.com/more');
+        
+         ```
+         */
+        
         Any addBrowserWindowSettings(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	Any removeBrowserWindowSettings(IPCMessage::SmartType msg);
+         *
+         * @tag static sync
+         *
+         * @brief	移除一个URL的默认窗口参数.
+         *
+         * @param	#String 需要移除浏览器窗口参数的URL.
+         *
+         * @return	无.
+         *
+         * @see addBrowserWindowSettings
+         * @example
+         *
+         ```
+        	 include('BrowserWindow');
+        	 BrowserWindow.removeBrowserWindowSettings('https://www.baidu.com');
+        	 window.open('https://www.baidu.com');
+        	 window.open('https://www.baidu.com/more');
+         ```
+         */
+        
         Any removeBrowserWindowSettings(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	Any getBrowserWindowSettings(IPCMessage::SmartType msg);
+         *
+         * @tag static sync
+         *
+         * @brief	获取指定URL的默认窗口参数.
+         *
+         * @param	#String URL.
+         *
+         * @return	#JsonObject.
+         *
+         * @example
+         *
+         */
+        
         Any getBrowserWindowSettings(IPCMessage::SmartType msg);
         
         
@@ -196,9 +261,9 @@ namespace amo {
         //AMO_CEF_MESSAGE_TRANSFER_FUNC(test6, TransferExecSync)
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(addBrowserWindowSettings,
-                                      TransferFuncStatic | TransferExecNormal)
+                                      TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(removeBrowserWindowSettings,
-                                      TransferFuncStatic | TransferExecNormal)
+                                      TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getBrowserWindowSettings,
                                       TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(current,

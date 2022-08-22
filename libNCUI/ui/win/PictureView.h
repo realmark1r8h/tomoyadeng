@@ -26,6 +26,10 @@ namespace amo {
         std::shared_ptr<Gdiplus::Bitmap> m_pBitmap;
         Gdiplus::RectF m_dstRect;
         std::shared_ptr<Gdiplus::Bitmap> m_pBkImage;
+        
+        ULONG_PTR				m_gdiplusToken;
+        GdiplusStartupInput		m_gdiplusStartupInput;
+        
     };
     
     

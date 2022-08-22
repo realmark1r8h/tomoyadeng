@@ -2,7 +2,7 @@
 
   所有JS扩展对象所对应的C++类基类；该类不能被直接使用,需要编写C++扩展时继承该类，并映射成JS类使用.
   
-## CLASS <span class="label label-static">静态</span> <span class="label label-const">常量</span> <span class="label label-property">属性</span> <span class="label label-single">单线程</span> 
+## CLASS &nbsp;<span class="label label-static">静态</span> <span class="label label-const">常量</span> <span class="label label-property">属性</span> <span class="label label-single">单线程</span> 
 
   获取当前类所对象的对象，调用该对象的函数将会作用到类上面去.
   
@@ -16,7 +16,7 @@
 <div class="adoc" id="div_CLASS"></div>
 
 
-## fromObjectName <span class="label label-static">静态</span> <span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
+## fromObjectName &nbsp;<span class="label label-static">静态</span> <span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
 
   通过对象名称查找对象.
   
@@ -50,7 +50,7 @@
 <div class="adoc" id="div_fromObjectName"></div>
 
 
-## fromObjectID <span class="label label-static">静态</span> <span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
+## fromObjectID &nbsp;<span class="label label-static">静态</span> <span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
 
   通过对象ID查找对象.
   
@@ -109,7 +109,7 @@
 <div class="adoc" id="div_fromObjectID"></div>
 
 
-## setObjectName <span class="label label-static">静态</span> 
+## setObjectName &nbsp;<span class="label label-static">静态</span> 
 
   设置当前对象名称.
   
@@ -140,7 +140,7 @@
 <div class="adoc" id="div_setObjectName"></div>
 
 
-## getObjectName <span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
+## getObjectName &nbsp;<span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
 
   获取当前对象名称.
   
@@ -154,8 +154,7 @@
 <div class="adoc" id="div_getObjectName"></div>
 
 
-## notify 
-
+## notify &nbsp;
   向自己发送一个通知，可以监听这个通知得到返回结果(当transfer在单独的线程上执行时，可以通过自己定义消息来监听执行进度).
   
 * **函数参数**
@@ -185,7 +184,7 @@
 <div class="adoc" id="div_notify"></div>
 
 
-## relase <span class="label label-single">单线程</span> 
+## relase &nbsp;<span class="label label-single">单线程</span> 
 
   释放当前对象所对应的C++对象，该函数调用后页面上对应的对象将无法使用
   
@@ -199,7 +198,7 @@
 <div class="adoc" id="div_relase"></div>
 
 
-## getUserData <span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
+## getUserData &nbsp;<span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
 
   获取用户保存的自定义数据.
   
@@ -241,7 +240,7 @@
 <div class="adoc" id="div_getUserData"></div>
 
 
-## setUserData <span class="label label-single">单线程</span> 
+## setUserData &nbsp;<span class="label label-single">单线程</span> 
 
   保存自定义数据.该函数并不要求一定要输入所支持的参数，你也可以设置自定义参数，并在getUserData里面获取所设置的值与<a href="#api/apiObject/7">getUserData</a>相对应.
   
@@ -275,7 +274,7 @@
 <div class="adoc" id="div_setUserData"></div>
 
 
-## All <span class="label label-static">静态</span> <span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
+## All &nbsp;<span class="label label-static">静态</span> <span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
 
   获取当前类的所有对象.
   

@@ -5,7 +5,7 @@
 * **父类** 
 <a href="#api/apiRunnable">Runnable</a>&nbsp;
 
-## fromString <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## fromString &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   用一个字符串构建UUID.
   
@@ -36,7 +36,7 @@
 <div class="adoc" id="div_fromString"></div>
 
 
-## getString <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## getString &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   直接获取一个UUID的字符串，不创建新的对象.
   
@@ -50,7 +50,7 @@
 <div class="adoc" id="div_getString"></div>
 
 
-## nil <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## nil &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   获取一个空UUID.
   
@@ -64,7 +64,7 @@
 <div class="adoc" id="div_nil"></div>
 
 
-## nilString <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## nilString &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   获取一个空UUID的字符串.
   
@@ -78,7 +78,7 @@
 <div class="adoc" id="div_nilString"></div>
 
 
-## toString <span class="label label-sync">同步</span> 
+## toString &nbsp;<span class="label label-sync">同步</span> 
 
   将当前UUID转换为字符串.
   

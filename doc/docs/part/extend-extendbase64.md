@@ -5,7 +5,7 @@
 * **父类** 
 <a href="#api/apiRunnable">Runnable</a>&nbsp;
 
-## decode <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## decode &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   Base64 解码.
   
@@ -43,7 +43,7 @@ console.assert(base64.decode('TkNVSQ==') == 'NCUI');
 <div class="adoc" id="div_decode"></div>
 
 
-## encode <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## encode &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   Base64 编码.
   

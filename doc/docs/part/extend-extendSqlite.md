@@ -2,7 +2,7 @@
 
   Sqlite3 数据库封装类，用于操作本地数据库文件.<br>工作线程**Renderer线程**
   
-## Sqlite <span class="label label-constructor">构造</span> 
+## Sqlite &nbsp;<span class="label label-constructor">构造</span> 
 
   创建一个Sqlite对象.
   
@@ -40,8 +40,7 @@ window.db = new Sqlite('test.db');
 <div class="adoc" id="div_Sqlite"></div>
 
 
-## import 
-
+## import &nbsp;
   从文件中执行SQL语句.
   
 * **函数参数**
@@ -78,8 +77,7 @@ console.assert(db.import('test.sql') == 0);
 <div class="adoc" id="div_import"></div>
 
 
-## execute 
-
+## execute &nbsp;
   执行原生sql.
   
 * **函数参数**
@@ -115,8 +113,7 @@ console.assert(db.execute('SELECT count(1) FROM table1') == 0);
 <div class="adoc" id="div_execute"></div>
 
 
-## insert 
-
+## insert &nbsp;
   插入数据.
   
 * **函数参数**
@@ -164,8 +161,7 @@ console.assert(db.insert('table1', {name:'李四'}) ==1);
 <div class="adoc" id="div_insert"></div>
 
 
-## update 
-
+## update &nbsp;
   更新数据.
   
 * **函数参数**
@@ -221,8 +217,7 @@ console.log(retval);
 <div class="adoc" id="div_update"></div>
 
 
-## backup 
-
+## backup &nbsp;
   备份数据库.
   
 * **函数参数**
@@ -252,8 +247,7 @@ console.log(retval);
 <div class="adoc" id="div_backup"></div>
 
 
-## query 
-
+## query &nbsp;
   查询数据.
   
 * **函数参数**
@@ -299,8 +293,7 @@ console.log(retval);
 <div class="adoc" id="div_query"></div>
 
 
-## remove 
-
+## remove &nbsp;
   删除数据.
   
 * **函数参数**
@@ -338,8 +331,7 @@ console.log(retval);
 <div class="adoc" id="div_remove"></div>
 
 
-## queryCount 
-
+## queryCount &nbsp;
   查询数据条数.
   
 * **函数参数**
@@ -373,8 +365,7 @@ console.log(retval);
 <div class="adoc" id="div_queryCount"></div>
 
 
-## getLastInsertRowID 
-
+## getLastInsertRowID &nbsp;
   返回最近一次SQL语句所影响的行数，如插入、删除、更新等操作后可以调用该函数获取数据.
   
 * **函数参数**  无
@@ -387,8 +378,7 @@ console.log(retval);
 <div class="adoc" id="div_getLastInsertRowID"></div>
 
 
-## containsTable 
-
+## containsTable &nbsp;
   数据库中是否存在指定的表.
   
 * **函数参数**
@@ -418,8 +408,7 @@ console.log(retval);
 <div class="adoc" id="div_containsTable"></div>
 
 
-## containsField 
-
+## containsField &nbsp;
   指定表中是否包含某字段.
   
 * **函数参数**
@@ -453,8 +442,7 @@ console.log(retval);
 <div class="adoc" id="div_containsField"></div>
 
 
-## getTableFields 
-
+## getTableFields &nbsp;
   获取指定表中的所有字段.
   
 * **函数参数**

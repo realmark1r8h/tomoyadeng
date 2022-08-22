@@ -2,9 +2,7 @@
     "output_path": "doc",
     "files": [
         "libNCUI/docs/QuickStart.hpp",
-		"libNCUI/docs/AdvancedUsage.hpp",
-		"libNCUI/docs/Demos.hpp",
-		
+    
         "libNCUI/settings/AppSettings.h",
         "libNCUI/settings/SplashWindowSettings.h",
         "libNCUI/settings/RequestSettings.h",

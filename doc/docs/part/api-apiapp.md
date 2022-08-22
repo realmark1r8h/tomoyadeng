@@ -5,7 +5,7 @@
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
 
-## getConfig <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## getConfig &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   获取应用程序的所有配置参数,可获取的内容见<a href="#settings/settingsAppSettings">启动参数</a>.
   
@@ -59,7 +59,7 @@ console.log('单进程模式：' + single_process);
 <div class="adoc" id="div_getConfig"></div>
 
 
-## setConfig <span class="label label-static">静态</span> 
+## setConfig &nbsp;<span class="label label-static">静态</span> 
 
   设置应用程序配置参数.该函数并不要求一定要输入所支持的参数，你也可以设置自定义参数，并在getConfig里面获取所设置的值与<a href="#api/apiapp/0">app.getConfig</a>相对应.
   
@@ -103,7 +103,7 @@ app.setConfig({
 <div class="adoc" id="div_setConfig"></div>
 
 
-## toAbsolutePath <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## toAbsolutePath &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   将一个路径转为绝对路径如：%web%.
   
@@ -148,7 +148,7 @@ console.log(picturesDir);
 <div class="adoc" id="div_toAbsolutePath"></div>
 
 
-## quit <span class="label label-static">静态</span> 
+## quit &nbsp;<span class="label label-static">静态</span> 
 
   尝试退出程序，可以用户被取消（如window.unload函数）.
   
@@ -168,7 +168,7 @@ app.quit();
 <div class="adoc" id="div_quit"></div>
 
 
-## exit <span class="label label-static">静态</span> 
+## exit &nbsp;<span class="label label-static">静态</span> 
 
   强制退出程序.
   
@@ -189,7 +189,7 @@ app.exit();
 <div class="adoc" id="div_exit"></div>
 
 
-## addUrlMapping <span class="label label-static">静态</span> 
+## addUrlMapping &nbsp;<span class="label label-static">静态</span> 
 
   添加URL映射路径.
   
@@ -236,7 +236,7 @@ window.open('http://www.baidu.com/more');
 <div class="adoc" id="div_addUrlMapping"></div>
 
 
-## removeUrlMapping <span class="label label-static">静态</span> 
+## removeUrlMapping &nbsp;<span class="label label-static">静态</span> 
 
   移除URL映射路径.
   
@@ -275,7 +275,7 @@ window.open('http://www.baidu.com');
 <div class="adoc" id="div_removeUrlMapping"></div>
 
 
-## urlToNativePath <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## urlToNativePath &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   将一个URL转换为本地路径，这几个函数可能会被IO线程和UI线程同时调用，所以要加锁.
   
@@ -323,7 +323,7 @@ console.assert(app.urlToNativePath('http://www.github.com', false)  == '');
 <div class="adoc" id="div_urlToNativePath"></div>
 
 
-## getAutoRun <span class="label label-static">静态</span> <span class="label label-sync">同步</span> <span class="label label-deprecated">废弃</span> 
+## getAutoRun &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> <span class="label label-deprecated">废弃</span> 
 
   获取是否开机启动，使用<a href="#api/apiapp/9">isAutoRun</a>代替.
   
@@ -340,7 +340,7 @@ console.assert(app.urlToNativePath('http://www.github.com', false)  == '');
 <div class="adoc" id="div_getAutoRun"></div>
 
 
-## isAutoRun <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## isAutoRun &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   获取是否开机启动.
   
@@ -357,7 +357,7 @@ console.assert(app.urlToNativePath('http://www.github.com', false)  == '');
 <div class="adoc" id="div_isAutoRun"></div>
 
 
-## setAutoRun <span class="label label-static">静态</span> 
+## setAutoRun &nbsp;<span class="label label-static">静态</span> 
 
   设置是否开机启动.
   
@@ -403,7 +403,7 @@ console.assert(app.isAutoRun() == false);
 <div class="adoc" id="div_setAutoRun"></div>
 
 
-## elapsed <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## elapsed &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   当前程序从启动到现在的运行时间(毫秒).
   
@@ -424,7 +424,7 @@ console.log('程序已运行：' + elapsed + ' ms');
 <div class="adoc" id="div_elapsed"></div>
 
 
-## restart <span class="label label-static">静态</span> 
+## restart &nbsp;<span class="label label-static">静态</span> 
 
   重启当前程序.
   
@@ -462,7 +462,7 @@ app.restart(5);
 <div class="adoc" id="div_restart"></div>
 
 
-## destroy <span class="label label-static">静态</span> 
+## destroy &nbsp;<span class="label label-static">静态</span> 
 
   销毁当前程序，(从磁盘上删除当前可执行程序).
   

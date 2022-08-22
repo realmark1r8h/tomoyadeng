@@ -3,7 +3,11 @@
 #include "ui/win/PictureView.h"
 
 namespace amo {
+
     void PictureView::setPicture(const std::wstring& file) {
+    
+    
+    
         m_pBitmap.reset(new Bitmap(file.c_str()));
     }
     
@@ -57,8 +61,8 @@ namespace amo {
         return CDuiRect(x, y, x2, y2);
     }
     
-    PictureView::PictureView() {
-    
+    PictureView::PictureView() : m_gdiplusToken(0) {
+        ::GdiplusStartup(&m_gdiplusToken, &m_gdiplusStartupInput, NULL);
         m_pBkImage.reset(new Bitmap(100, 100, PixelFormat32bppARGB));
         Graphics g(&*m_pBkImage);
         Gdiplus::Color   myColor(100, 0, 0, 0);
@@ -66,7 +70,10 @@ namespace amo {
     }
     
     PictureView::~PictureView() {
+    
         m_pBitmap.reset();
+        m_pBkImage.reset();
+        ::GdiplusShutdown(m_gdiplusToken);
     }
     
     LPCTSTR PictureView::GetClass() const {

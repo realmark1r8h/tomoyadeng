@@ -69,11 +69,19 @@ NCUI_EXPORT void updateAppSettings(const std::string& str) {
 }
 
 NCUI_EXPORT void updateBrowserSettings(const std::string& str) {
+    if (!amo::AppContext::getInstance()->getDefaultAppSettings()->manifest) {
+        return;
+    }
+    
     amo::AppContext::getInstance()->getDefaultBrowserSettings()->updateArgsSettings(
         str);
 }
 
 NCUI_EXPORT void updateSplashSettings(const std::string& str) {
+    if (!amo::AppContext::getInstance()->getDefaultAppSettings()->manifest) {
+        return;
+    }
+    
     amo::AppContext::getInstance()->getDefaultSplashSettings()->updateArgsSettings(
         str);
 }

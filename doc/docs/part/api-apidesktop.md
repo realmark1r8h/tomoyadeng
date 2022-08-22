@@ -5,7 +5,7 @@
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
 
-## getScreenInfo <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## getScreenInfo &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   获取屏幕信息,包括屏幕大小和工作区域大小.
   

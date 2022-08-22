@@ -5,8 +5,7 @@
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
 
-## attach 
-
+## attach &nbsp;
   将当前对象附加到一个线程中.
   
 * **函数参数**
@@ -36,8 +35,7 @@
 <div class="adoc" id="div_attach"></div>
 
 
-## detach 
-
+## detach &nbsp;
   将当前对象从一个线程中分离.
   
 * **函数参数**  无
@@ -50,7 +48,7 @@
 <div class="adoc" id="div_detach"></div>
 
 
-## weakup <span class="label label-single">单线程</span> 
+## weakup &nbsp;<span class="label label-single">单线程</span> 
 
   唤醒当前对象所附加的线程.
   
@@ -64,8 +62,7 @@
 <div class="adoc" id="div_weakup"></div>
 
 
-## suspend 
-
+## suspend &nbsp;
   挂起所附加线程，不能在浏览器线程（UI/Renderer）上执行.
   
 * **函数参数**  无

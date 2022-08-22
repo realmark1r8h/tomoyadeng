@@ -2,7 +2,7 @@
 
   网络请求类.<br>工作线程：**UI线程**.
   
-## URLRequest <span class="label label-constructor">构造</span> 
+## URLRequest &nbsp;<span class="label label-constructor">构造</span> 
 
   创建一个网络请求对象.
   

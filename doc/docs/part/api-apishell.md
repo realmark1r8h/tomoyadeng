@@ -82,7 +82,7 @@
 </table>
 
 
-## exec <span class="label label-static">静态</span> 
+## exec &nbsp;<span class="label label-static">静态</span> 
 
   执行一下shell命令.
   
@@ -136,7 +136,7 @@ shell.exec("open", "explorer", "/e, /select, skin\\close_p.png", "", shell.SW_SH
 <div class="adoc" id="div_exec"></div>
 
 
-## open <span class="label label-static">静态</span> 
+## open &nbsp;<span class="label label-static">静态</span> 
 
   打开文件或程序.
   
@@ -183,7 +183,7 @@ shell.open("www.baidu.com");
 <div class="adoc" id="div_open"></div>
 
 
-## print <span class="label label-static">静态</span> 
+## print &nbsp;<span class="label label-static">静态</span> 
 
   打印文件.
   
@@ -221,7 +221,7 @@ shell.print("skin\\close_p.png");
 <div class="adoc" id="div_print"></div>
 
 
-## showItemInFolder <span class="label label-static">静态</span> 
+## showItemInFolder &nbsp;<span class="label label-static">静态</span> 
 
   在文件夹中显示文件（定位文件位置）.
   

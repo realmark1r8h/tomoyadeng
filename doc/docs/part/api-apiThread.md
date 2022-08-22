@@ -5,7 +5,7 @@
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
 
-## Exec <span class="label label-static">静态</span> <span class="label label-single">单线程</span> 
+## Exec &nbsp;<span class="label label-static">静态</span> <span class="label label-single">单线程</span> 
 
   在默认线程中执行一个函数.
   
@@ -40,7 +40,7 @@
 <div class="adoc" id="div_Exec"></div>
 
 
-## Sync <span class="label label-static">静态</span> <span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
+## Sync &nbsp;<span class="label label-static">静态</span> <span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
 
   在默认线程中同步执行一个函数.
   
@@ -75,7 +75,7 @@
 <div class="adoc" id="div_Sync"></div>
 
 
-## weakup <span class="label label-single">单线程</span> 
+## weakup &nbsp;<span class="label label-single">单线程</span> 
 
   唤醒线程，只能在浏览器线程（UI/Renderer）上执行.
   
@@ -89,8 +89,7 @@
 <div class="adoc" id="div_weakup"></div>
 
 
-## suspend 
-
+## suspend &nbsp;
   暂停线程，不能在浏览器线程（UI/Renderer）上执行.
   
 * **函数参数**  无
@@ -103,7 +102,7 @@
 <div class="adoc" id="div_suspend"></div>
 
 
-## exec <span class="label label-single">单线程</span> 
+## exec &nbsp;<span class="label label-single">单线程</span> 
 
   执行一个函数.
   
@@ -134,7 +133,7 @@
 <div class="adoc" id="div_exec"></div>
 
 
-## sync <span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
+## sync &nbsp;<span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
 
   同步调用一个函数，并返回该函数的执行结果.
   
@@ -165,7 +164,7 @@
 <div class="adoc" id="div_sync"></div>
 
 
-## kill <span class="label label-single">单线程</span> 
+## kill &nbsp;<span class="label label-single">单线程</span> 
 
   杀死当前线程.
   
@@ -179,7 +178,7 @@
 <div class="adoc" id="div_kill"></div>
 
 
-## start <span class="label label-single">单线程</span> 
+## start &nbsp;<span class="label label-single">单线程</span> 
 
   启动线程，该函数一般不需要调用，线程会在创建时自动启动，除非你调用了stop.
   
@@ -193,7 +192,7 @@
 <div class="adoc" id="div_start"></div>
 
 
-## stop <span class="label label-single">单线程</span> 
+## stop &nbsp;<span class="label label-single">单线程</span> 
 
   停止当前线程.
   

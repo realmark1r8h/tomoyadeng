@@ -174,7 +174,7 @@
 </table>
 
 
-## sayString <span class="label label-static">静态</span> 
+## sayString &nbsp;<span class="label label-static">静态</span> 
 
   输入一段文本.
   
@@ -213,7 +213,7 @@ keyboard.sayString('NCUI测试字符串');
 <div class="adoc" id="div_sayString"></div>
 
 
-## keyPress <span class="label label-static">静态</span> 
+## keyPress &nbsp;<span class="label label-static">静态</span> 
 
   单击按键.
   
@@ -254,7 +254,7 @@ keyboard.keyPress(keyboard.VK_MENU, keyboard.VK_F4);
 <div class="adoc" id="div_keyPress"></div>
 
 
-## keyDown <span class="label label-static">静态</span> 
+## keyDown &nbsp;<span class="label label-static">静态</span> 
 
   按下按键.
   
@@ -294,7 +294,7 @@ keyboard.keyUp('1');
 <div class="adoc" id="div_keyDown"></div>
 
 
-## keyUp <span class="label label-static">静态</span> 
+## keyUp &nbsp;<span class="label label-static">静态</span> 
 
   弹起按键.
   
@@ -334,7 +334,7 @@ keyboard.keyUp('2');
 <div class="adoc" id="div_keyUp"></div>
 
 
-## waitKey <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## waitKey &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   等待按任意键.
   
@@ -348,7 +348,7 @@ keyboard.keyUp('2');
 <div class="adoc" id="div_waitKey"></div>
 
 
-## getLastKey <span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+## getLastKey &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   检测上次按键.
   
