@@ -183,12 +183,19 @@ namespace amo {
         bool bHandled = false;
         
         amo::string strUrl = util::getUrlFromUtf8(request->GetURL());
-        
-        int nIndex = strUrl.find("local://file/localfile/");
+        strUrl.replace("\\", "/");
+        int nIndex = strUrl.find("local://file/");
         
         if (nIndex != -1) {
-            strUrl = strUrl.substr(nIndex + 23);
+            strUrl = strUrl.substr(nIndex + 13);
         }
+        
+        if (!amo::path(strUrl).is_absolute()) {
+            strUrl = amo::string(AppSettings::getInstance()->toAbsolutePath(
+                                     std::string("%webDir%") + strUrl.to_utf8()), true);
+        }
+        
+        strUrl.replace("\\", "/");
         
         nIndex = strUrl.find("@file:///");
         
@@ -196,13 +203,19 @@ namespace amo {
             strUrl = strUrl.substr(nIndex + 9);
         }
         
+        if (!amo::path(strUrl).is_absolute()) {
+            strUrl = amo::string(AppSettings::getInstance()->toAbsolutePath(
+                                     std::string("%webDir%") + strUrl.to_utf8()), true);
+        }
+        
         return ReadNativeFile(strUrl, callback);
         
     }
     
     
-    bool LocalSchemeHandler::ReadNativeFile(const amo::string& strPath, CefRefPtr<CefCallback> callback) {
-    
+    bool LocalSchemeHandler::ReadNativeFile(const amo::string& strPath,
+                                            CefRefPtr<CefCallback> callback) {
+                                            
         //获取文件扩展名
         std::string ext = amo::path(strPath.c_str()).find_extension();
         
@@ -212,8 +225,9 @@ namespace amo {
         }
         
         //读取文件
-        std::ifstream tail_ifs(strPath.to_ansi(), std::ios::ios_base::binary | std::ios::ios_base::in);
-        
+        std::ifstream tail_ifs(strPath.to_ansi(),
+                               std::ios::ios_base::binary | std::ios::ios_base::in);
+                               
         if (!tail_ifs.is_open()) {
             return false;	//文件不存在
         }
@@ -269,10 +283,11 @@ namespace amo {
     
     }
     
-    CefRefPtr<CefResourceHandler> LocalSchemeHandlerFactory::Create(CefRefPtr<CefBrowser> browser,
-            CefRefPtr<CefFrame> frame,
-            const CefString& scheme_name,
-            CefRefPtr<CefRequest> request) {
+    CefRefPtr<CefResourceHandler> LocalSchemeHandlerFactory::Create(
+        CefRefPtr<CefBrowser> browser,
+        CefRefPtr<CefFrame> frame,
+        const CefString& scheme_name,
+        CefRefPtr<CefRequest> request) {
         CEF_REQUIRE_IO_THREAD();
         return new LocalSchemeHandler();
     }

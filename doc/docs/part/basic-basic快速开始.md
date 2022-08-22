@@ -52,7 +52,7 @@
 
 
 ## 导入模块 &nbsp;
-  如果要使用NCUI提供的模块，那么必须在使用之间前将需要的模块导入到页面中，你可以通过以下两个接口导入需要的模块。<br>使用**include**导入单个模块，模块会被注入到页面的全局变量中.<br>使用**includes**导入多个模块，所有模块都会被注入到页面的全局变量中.<br>如果内置模块不存在，将会导入renderer_modules文件夹下模块，如果还是不存在会导入browser_modules文件夹下模块.renderer_modules文件夹下的扩展在Renderer线程上运行，browser_modules文件夹下的扩展在UI线程上运行.
+  如果要使用NCUI提供的模块，那么必须在使用之间前将需要的模块导入到页面中，你可以通过以下两个接口导入需要的模块。<br>使用**include**导入单个模块，模块会被注入到页面的全局变量中.<br>使用**includes**导入多个模块，所有模块都会被注入到页面的全局变量中.<br>如果内置模块不存在，将会导入renderer_modules文件夹下模块，如果还是不存在会导入browser_modules文件夹下模块.renderer_modules文件夹下的扩展在Renderer线程上运行，browser_modules文件夹下的扩展在UI线程上运行.<br>说明：**一个iframe中同一个模块只需要加载一次即可在任意地方使用**
   
 * **示例**
 
