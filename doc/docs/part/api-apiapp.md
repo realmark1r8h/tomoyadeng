@@ -211,7 +211,7 @@ app.exit();
 </tr><tr>
 	<td>String </td>
 	<td></td>
-	<td>被映射的本地文件路径，该路径可以是一个普通的文件或文件夹，也可以是ZIP压缩包或SQLITE数据库.</td>
+	<td>被映射的本地文件路径，该路径可以是一个普通的文件或文件夹，也可以是ZIP压缩包或DLL动态库.</td>
 </tr>
 	</tbody>
 </table>

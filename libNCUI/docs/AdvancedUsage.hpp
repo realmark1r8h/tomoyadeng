@@ -120,7 +120,12 @@ namespace amo {
         /*!
          * @section 地址映射
          *
-         * @brief	Foo 4.
+         * @brief	该功能可以将一个URL映射到本地文件.目前支持的映射方式有文件、目录、ZIP格式压缩文件、DLL动态库、SQLITE数据库文件、RES资源文件<br>
+         * 			可以编辑manifest.json指定映射路径，也可以在程序运行后{@link 手动指定=app.addUrlMapping}映射路径.<br>
+         * 			当前程序就是采用URL到文件夹的方式访问页面的.
+         *
+         * @see app.addUrlMapping
+         *
          */
         
         void foo4() {
@@ -130,7 +135,14 @@ namespace amo {
         /*!
          * @section	源代码管理
          *
-         * @brief	Foo 5.
+         * @brief	NCUI支持读取本地文件、ZIP格式压缩文件、DLL动态库中的HTML源代码，你可以通过这些方式为NCUI提供源代码.<br>
+         * 			1. **从本地目录中读取HTML:**<br>
+         * 			2. **从ZIP文件中读取HTML:**<br>
+         * 			3. **从DLL中读取HTML:**<br>
+         * 			4. **从SQLITE数据库中读取HTML:**<br>
+         * 			5. **从程序的资源文件中读取HTML:**<br>
+         * 			NCUI不直接提供源代码加密功能，但支持读取加密的ZIP文件、加载的SQLITE数据库，你可以通过修改源代码的方式提供对应的加密文件密码供程序使用.
+         *
          */
         
         void foo5() {
@@ -140,20 +152,36 @@ namespace amo {
         /*!
          * @section	C++扩展
          *
-         * @brief	Foo 6.
+         * @brief	NCUI提供更加简单的扩展编写方式，只需要将扩展项目生成的动态库文件放到renderer_modules或者browser_modules目录即可在页面中调用.<br>
+         * 			如果你是C++程序员，请参考libDemo项目的源代码.
          */
         
         void foo6() {
         
         }
         
+        
         /*!
         * @section	外部渲染层
         *
         * @brief	仅离屏模式下支持使用外部数据渲染界面.
+        *
+        * @see BrowserWindow.addOverlap
+        *
         */
         
         void foo7() {
+        
+        }
+        
+        /*!
+        * @section	DLL调用
+        *
+        * @brief	NCUI直接调用C导出的DLL接口,但限制比较多，还不如直接写C++扩展快，暂未开放.
+        *
+        */
+        
+        void foo8() {
         
         }
     };

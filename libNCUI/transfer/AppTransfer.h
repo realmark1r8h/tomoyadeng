@@ -175,7 +175,7 @@ namespace amo {
         * @param	#String 需要添加映射的URL.
         *
         * @param   #String 被映射的本地文件路径，该路径可以是一个普通的文件或文件夹，
-        * 					也可以是ZIP压缩包或SQLITE数据库.
+        * 					也可以是ZIP压缩包或DLL动态库.
         *
         * @return	#Boolean 成为返回true, 失败返回false.
         * @example

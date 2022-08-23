@@ -1330,6 +1330,57 @@ namespace amo {
         */
         
         Any getConfig(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	virtual Any NativeWindowProxy::setOpacity(IPCMessage::SmartType msg);
+         *
+         * @brief	设置窗口不透明度, 该方法会作用在整个窗口窗口上，如果想部分透明，那么应当使用离屏渲染功能来实现.
+         *
+         * @param	#Int=255 不透明度，取值范围[0,255],值越大越不透明 0表示完全透明，255表示完全不透明.
+         *
+         * @return	无.
+         *
+         * @see getOpacity=BrowserWindow.getOpacity
+         *
+         * @example
+         *
+         *
+        	 ```
+        		include('BrowserWindow');
+        		BrowserWindow.current.setOpacity(200);
+        	 ```
+         *
+         */
+        
+        virtual Any setOpacity(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	virtual Any NativeWindowProxy::getOpacity(IPCMessage::SmartType msg);
+         *
+         * @tag sync
+         *
+         * @brief	获取当前窗口的不透明度.
+         *
+         *
+         * @return	#Int 不透明度.
+         *
+         * @see setOpacity=BrowserWindow.setOpacity
+         *
+         * @example
+         *
+         ```
+        	 include('BrowserWindow');
+        	 BrowserWindow.current.setOpacity(100);
+        	 console.assert(BrowserWindow.current.getOpacity() == 100);
+        
+        	 BrowserWindow.current.setOpacity(255);
+        	 console.assert(BrowserWindow.current.getOpacity() == 255);
+         ```
+         *
+         */
+        
+        virtual Any getOpacity(IPCMessage::SmartType msg);
+        
     public:
         /*!
          * @fn	HWND NativeWindowProxy::getNativeHWND(std::shared_ptr<AnyArgsList> args);

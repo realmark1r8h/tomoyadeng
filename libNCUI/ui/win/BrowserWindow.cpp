@@ -263,6 +263,8 @@ namespace amo {
         this->registerFunction();
         
         
+        
+        
         AMO_TIMER_ELAPSED();
     }
     

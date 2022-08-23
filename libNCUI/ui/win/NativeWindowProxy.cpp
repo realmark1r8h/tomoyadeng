@@ -446,6 +446,16 @@ namespace amo {
         return Undefined();
     }
     
+    Any NativeWindowProxy::setOpacity(IPCMessage::SmartType msg) {
+        // 由LocalWindow类重载
+        return Undefined();
+    }
+    
+    Any NativeWindowProxy::getOpacity(IPCMessage::SmartType msg) {
+        // 由LocalWindow类重载
+        return 255;
+    }
+    
     HWND NativeWindowProxy::getNativeHWND(std::shared_ptr<AnyArgsList> args) {
         return getNativeHWND();
     }

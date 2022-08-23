@@ -1848,6 +1848,74 @@ console.assert(titleBar == false);
 <div class="adoc" id="div_getConfig"></div>
 
 
+## setOpacity &nbsp;
+  设置窗口不透明度, 该方法会作用在整个窗口窗口上，如果想部分透明，那么应当使用离屏渲染功能来实现.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>Int</td>
+	<td>255 </td>
+	<td>不透明度，取值范围[0,255],值越大越不透明 0表示完全透明，255表示完全不透明.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+   无. 
+
+* **参考** 
+<a href="#api/apiBrowserWindow/57">getOpacity</a>
+
+* **示例**
+
+```html
+include('BrowserWindow');
+BrowserWindow.current.setOpacity(200);
+
+```
+
+
+<div class="adoc" id="div_setOpacity"></div>
+
+
+## getOpacity &nbsp;<span class="label label-sync">同步</span> 
+
+  获取当前窗口的不透明度.
+  
+* **函数参数**  无
+
+* **返回值**
+  Int 不透明度. 
+
+* **参考** 
+<a href="#api/apiBrowserWindow/56">setOpacity</a>
+
+* **示例**
+
+```html
+include('BrowserWindow');
+BrowserWindow.current.setOpacity(100);
+console.assert(BrowserWindow.current.getOpacity() == 100);
+
+BrowserWindow.current.setOpacity(255);
+console.assert(BrowserWindow.current.getOpacity() == 255);
+
+```
+
+
+<div class="adoc" id="div_getOpacity"></div>
+
+
 ## BrowserWindow &nbsp;<span class="label label-constructor">构造</span> <span class="label label-sync">同步</span> 
 
   创建一个浏览器窗口.
@@ -1889,7 +1957,7 @@ console.assert(titleBar == false);
   BrowserWindow 如果不存在，返回Undefined. 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/58">current</a>
+<a href="#api/apiBrowserWindow/60">current</a>
 
 
 

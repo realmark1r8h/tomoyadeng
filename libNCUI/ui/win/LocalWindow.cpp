@@ -474,6 +474,31 @@ namespace amo {
         return Undefined();
     }
     
+    Any LocalWindow::setOpacity(IPCMessage::SmartType msg) {
+        int opacity = 255;
+        Any& val = msg->getArgumentList()->getValue(0);
+        
+        if (val.isValid()) {
+            opacity = val.As<int>();
+        }
+        
+        if (opacity > 255) {
+            opacity = 255;
+        }
+        
+        if (opacity < 0) {
+            opacity = 0;
+        }
+        
+        m_PaintManager.SetOpacity((int8_t)opacity);
+        return Undefined();
+    }
+    
+    Any LocalWindow::getOpacity(IPCMessage::SmartType msg) {
+        return (int)m_PaintManager.GetOpacity();
+    }
+    
+    
     bool LocalWindow::isFocusedWindow() {
         HWND hWnd = m_hWnd;
         HWND hFocusWnd = ::GetFocus();
@@ -516,6 +541,8 @@ namespace amo {
            ::GetClientRect(m_hWnd, &rt);*/
         return LayeredWindow::OnSize(uMsg, wParam, lParam, bHandled);
     }
+    
+    
     
     
     

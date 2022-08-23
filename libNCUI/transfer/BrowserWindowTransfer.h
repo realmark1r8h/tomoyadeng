@@ -249,6 +249,7 @@ namespace amo {
         
         
         
+        
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(BrowserWindowTransfer, ClassTransfer)
         
         // ≤‚ ‘”√
@@ -359,6 +360,10 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(repaint, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(addOverlap, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(removeOverlap, TransferExecNormal)
+        
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getOpacity, TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(setOpacity, TransferExecNormal)
+        
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         

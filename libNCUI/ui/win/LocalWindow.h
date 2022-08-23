@@ -54,6 +54,8 @@ namespace amo {
         virtual Any toggleFullScreen(IPCMessage::SmartType msg) override;
         virtual Any toggleVisible(IPCMessage::SmartType msg) override;
         virtual Any showModal(IPCMessage::SmartType msg);
+        virtual Any setOpacity(IPCMessage::SmartType msg) override;
+        virtual Any getOpacity(IPCMessage::SmartType msg) override;
         
         virtual HWND getNativeHWND() override;
         virtual std::shared_ptr<NativeWindowSettings> getNativeSettings() override;
@@ -71,6 +73,9 @@ namespace amo {
         
         virtual LRESULT OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                BOOL& bHandled) override;
+                               
+                               
+                               
                                
                                
                                
