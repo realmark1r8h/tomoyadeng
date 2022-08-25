@@ -191,14 +191,28 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
     m_pUpdater.reset(new amo::ResourceUpdater());
     std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
     
-    if (args->getArgsSize() < 4) {
+    
+    // 如果没有输入参数，那么直接使用默认参数生成文件
+    amo::string strConfigFile(getDefaultFileSettings(msg).As<std::string>(), true);
+    amo::string strConfigAppSettings(getDefaultAppSettings(msg).As<std::string>(), true);
+    amo::string strConfigBrowserSettinggs(getDefaultBrowserSettings(msg).As<std::string>(), true);
+    amo::string strConfigSplashSettinggs(getDefaultSplashSettings(msg).As<std::string>(), true);
+    
+    
+    int argsSize = args->getArgsSize();
+    
+    if (argsSize == 4) {
+        strConfigFile = amo::string(args->getString(0), true);
+        strConfigAppSettings = amo::string(args->getString(1), true);
+        strConfigBrowserSettinggs = amo::string(args->getString(2), true);
+        strConfigSplashSettinggs = amo::string(args->getString(3), true);
+    }
+    
+    if (argsSize > 0 && argsSize < 4) {
         return false;
     }
     
-    amo::string strConfigFile = amo::string(args->getString(0), true);
-    amo::string strConfigAppSettings = amo::string(args->getString(1), true);
-    amo::string strConfigBrowserSettinggs = amo::string(args->getString(2), true);
-    amo::string strConfigSplashSettinggs = amo::string(args->getString(3), true);
+    
     
     amo::string strConfig = strConfigFile;
     amo::json oConfig(strConfig.str());
@@ -233,7 +247,7 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
     m_pUpdater->Load(amo::string(dist.c_str()).to_unicode().c_str());
     
     
-    amo::string strIcon(oConfig.getString("icon"), true);
+    amo::string strIcon(oConfig.getString("Icon"), true);
     m_pUpdater->SetIcon(strIcon.to_unicode().c_str());
     
     // 设置版本信息
@@ -315,14 +329,14 @@ amo::Any amo::RceditTransfer::getDefaultFileSettings(IPCMessage::SmartType msg) 
     oVersionSet.insert("ProductVersion");
     amo::json json;
     json.put("CompanyName", "NCUI");
-    json.put("FileDescription", "NCUI实例程序");
-    json.put("FileVersion", "1.0.0.1");
+    json.put("FileDescription", "NCUI演示程序");
+    json.put("FileVersion", "1.0.0.0");
     json.put("InternalName", "NCUIDemo.exe");
     json.put("LegalCopyright", "Copyright (C) 2017");
     json.put("OriginalFileName", "NCUIDemo.exe");
-    json.put("ProductName", "NCUI实例程序");
+    json.put("ProductName", "NCUI演示程序");
     json.put("ProductVersion", "1.0.0.0");
-    json.put("icon", "");
+    json.put("Icon", "");
     amo::json fileJson = m_oSettings.get_child("fileSettings");
     
     if (fileJson.is_valid()) {

@@ -4,7 +4,7 @@
   
 ## execute &nbsp;<span class="label label-static">静态</span> 
 
-  执行一个内置动作，可以支持.
+  执行一个内置动作，可以支持事件参考<a href="#settings/settingsActionPreprocessor">预置事件</a>.
   
 * **函数参数**
 

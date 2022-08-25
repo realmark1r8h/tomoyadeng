@@ -112,7 +112,7 @@ new BrowserWindow({
 
 
 ## C++扩展 &nbsp;
-  NCUI提供更加简单的扩展编写方式，只需要将扩展项目生成的动态库文件放到renderer_modules或者browser_modules目录即可在页面中调用.如果你是C++程序员，请参考libDemo项目的源代码.
+  NCUI提供更加简单的扩展编写方式，只需要将扩展项目生成的动态库文件放到renderer_modules或者browser_modules目录即可在页面中调用.<br>如果你是C++程序员，请参考libDemo项目的源代码.
   
 
 

@@ -26,7 +26,7 @@ namespace amo {
         /*!
          * @fn	Any ActionTransfer::execute(IPCMessage::SmartType msg);
          * @tag static
-         * @brief	执行一个内置动作，可以支持.
+         * @brief	执行一个内置动作，可以支持事件参考{@link 预置事件}.
          *
          * @param	#String 动作.
          *
