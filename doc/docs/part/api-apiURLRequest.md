@@ -32,3 +32,8 @@
 * **返回值**
   URLRequest 一个request对象 
 
+
+
+<div class="adoc" id="div_URLRequest"></div>
+
+

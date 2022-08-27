@@ -357,3 +357,8 @@ keyboard.keyUp('2');
 * **返回值**
   String . 
 
+
+
+<div class="adoc" id="div_getLastKey"></div>
+
+

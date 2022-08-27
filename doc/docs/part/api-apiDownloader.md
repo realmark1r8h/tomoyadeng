@@ -325,3 +325,8 @@ window.downloader.resume();
 window.downloader.cancel();
 
 ```
+
+
+<div class="adoc" id="div_cancel"></div>
+
+

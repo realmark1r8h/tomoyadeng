@@ -291,3 +291,8 @@
 * **返回值**
   Frame Frame 对象. 
 
+
+
+<div class="adoc" id="div_currentFrame"></div>
+
+

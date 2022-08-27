@@ -342,3 +342,8 @@ tray.blink(false);
 console.assert(tray.isBlink() == false);
 
 ```
+
+
+<div class="adoc" id="div_isBlink"></div>
+
+

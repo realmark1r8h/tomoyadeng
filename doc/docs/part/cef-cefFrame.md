@@ -298,3 +298,8 @@
 * **返回值**
   Browser . 
 
+
+
+<div class="adoc" id="div_GetBrowser"></div>
+
+

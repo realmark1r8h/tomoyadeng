@@ -265,3 +265,8 @@ var retval = dialog.prompt('请输入你的姓名', '张三');
 console.log(retval);
 
 ```
+
+
+<div class="adoc" id="div_prompt"></div>
+
+

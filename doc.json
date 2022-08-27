@@ -3,6 +3,7 @@
     "files": [
         "libNCUI/docs/QuickStart.hpp",
 		"libNCUI/docs/AdvancedUsage.hpp",
+		"libNCUI/docs/AppGen.hpp",
 		"libNCUI/docs/Demos.hpp",
 		
         "libNCUI/settings/AppSettings.h",

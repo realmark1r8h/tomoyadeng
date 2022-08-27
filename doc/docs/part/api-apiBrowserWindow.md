@@ -1942,6 +1942,27 @@ console.assert(BrowserWindow.current.getOpacity() == 255);
 * **返回值**
   BrowserWindow 一个浏览器窗口对象. 
 
+* **示例**
+
+```html
+include('BrowserWindow');
+// 创建一个普通窗口
+var win = new BrowserWindow({titleBar:true, url: 'www.baidu.com'});
+// 创建一个离屏窗口
+new BrowserWindow({
+        titleBar:true,
+        url: 'www.baidu.com/more',
+        offscreen: true
+    }).minimize();
+// 创建一个透明窗口
+new BrowserWindow({
+        titleBar:true,
+        url: 'www.baidu.com/more',
+        offscreen: true,
+        transparent: true
+    });
+
+```
 
 
 <div class="adoc" id="div_BrowserWindow"></div>
@@ -2246,4 +2267,9 @@ window.open('https://www.baidu.com/more');
 
 * **返回值**
   JsonObject . 
+
+
+
+<div class="adoc" id="div_getBrowserWindowSettings"></div>
+
 

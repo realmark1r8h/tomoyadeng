@@ -133,3 +133,8 @@ new BrowserWindow({
 ## DLL调用 &nbsp;
   NCUI直接调用C导出的DLL接口,但限制比较多，还不如直接写C++扩展快，暂未开放.
   
+
+
+<div class="adoc" id="div_DLL调用"></div>
+
+

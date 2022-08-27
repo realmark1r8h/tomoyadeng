@@ -28,3 +28,8 @@
 * **返回值**
   String 加密后的字符串. 
 
+
+
+<div class="adoc" id="div_encode"></div>
+
+

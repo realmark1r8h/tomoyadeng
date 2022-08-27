@@ -467,3 +467,8 @@ console.log(retval);
 * **返回值**
   Array 包含所有字段名的数组. 
 
+
+
+<div class="adoc" id="div_getTableFields"></div>
+
+

@@ -118,3 +118,8 @@ include('splash');
 console.assert(splash.isVisible() == false);
 
 ```
+
+
+<div class="adoc" id="div_isVisible"></div>
+
+

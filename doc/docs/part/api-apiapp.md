@@ -478,3 +478,8 @@ app.restart(5);
 app.destroy();
 
 ```
+
+
+<div class="adoc" id="div_destroy"></div>
+
+

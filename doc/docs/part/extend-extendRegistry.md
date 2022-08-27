@@ -262,3 +262,8 @@ console.assert(registry.remove('Software\\NCUI') == true);
 
 
 ```
+
+
+<div class="adoc" id="div_remove"></div>
+
+

@@ -76,3 +76,8 @@ include('base64');
 console.assert(base64.encode('NCUI') == 'TkNVSQ==');
 
 ```
+
+
+<div class="adoc" id="div_encode"></div>
+
+

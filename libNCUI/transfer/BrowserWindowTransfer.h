@@ -51,6 +51,26 @@ namespace amo {
          * @param	#Object 参见{@link 浏览器窗口参数}.
          *
          * @return	#BrowserWindow 一个浏览器窗口对象.
+         * @example
+         *
+         ```
+        	include('BrowserWindow');
+        	// 创建一个普通窗口
+        	var win = new BrowserWindow({titleBar:true, url: 'www.baidu.com'});
+        	// 创建一个离屏窗口
+        	new BrowserWindow({
+        			titleBar:true,
+        			url: 'www.baidu.com/more',
+        			offscreen: true
+        		}).minimize();
+        	// 创建一个透明窗口
+        	new BrowserWindow({
+        			titleBar:true,
+        			url: 'www.baidu.com/more',
+        			offscreen: true,
+        			transparent: true
+        		});
+         ```
          */
         
         virtual Any onCreateClass(IPCMessage::SmartType msg) override;

@@ -1011,3 +1011,8 @@ includes('mouse');
 mouse.showCursor();
 
 ```
+
+
+<div class="adoc" id="div_showCursor"></div>
+
+

@@ -106,7 +106,7 @@
 		<tr>
 	<td>String </td>
 	<td></td>
-	<td>EXE文件信息，JSON字符串，可用见.</td>
+	<td>EXE文件信息，JSON字符串，可用见<a href="#extend/extendrcedit/0">loadDiskSettings</a>.</td>
 </tr><tr>
 	<td>String </td>
 	<td></td>
@@ -157,3 +157,8 @@ include('rcedit');
 rcedit.commit();
 
 ```
+
+
+<div class="adoc" id="div_commit"></div>
+
+

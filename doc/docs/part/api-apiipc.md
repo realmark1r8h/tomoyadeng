@@ -146,3 +146,8 @@ ipc.async('ipc.sync', function(val){console.assert(val == 'ipc.sync');});
 ipc.async('ipc.async', function(val){console.assert(val == 'ipc.async');}, '2382934', 888);
 
 ```
+
+
+<div class="adoc" id="div_async"></div>
+
+

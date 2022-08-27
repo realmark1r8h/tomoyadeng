@@ -32,3 +32,8 @@ var desktopInfo = desktop.getScreenInfo();
 console.log(desktopInfo);
 
 ```
+
+
+<div class="adoc" id="div_getScreenInfo"></div>
+
+

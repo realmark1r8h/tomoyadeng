@@ -254,3 +254,8 @@ include('shell');
 shell.showItemInFolder('skin\\close_p.png');
 
 ```
+
+
+<div class="adoc" id="div_showItemInFolder"></div>
+
+

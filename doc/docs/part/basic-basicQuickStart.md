@@ -1,4 +1,0 @@
-# QuickStart
-
-  A quick start.
-  

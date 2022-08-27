@@ -273,3 +273,8 @@ include('globalShortcut');
 globalShortcut.unregisterAll();
 
 ```
+
+
+<div class="adoc" id="div_unregisterAll"></div>
+
+
