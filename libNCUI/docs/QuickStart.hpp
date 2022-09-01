@@ -83,15 +83,21 @@ namespace amo {
          * 			使用**includes**导入多个模块，所有模块都会被注入到页面的全局变量中.<br>
          * 			如果内置模块不存在，将会导入renderer_modules文件夹下模块，如果还是不存在会导入browser_modules文件夹下模块.
          * 			renderer_modules文件夹下的扩展在Renderer线程上运行，browser_modules文件夹下的扩展在UI线程上运行.<br>
-         * 			说明：**一个iframe中同一个模块只需要加载一次即可在任意地方使用**
-         * @example
+         * 			使用**renderer_modules**导入renderer_modules文件夹下的模块，如果模块存在依赖那么，会使用includes加载依赖模块<br>
+         * 			使用**browser_modules**可以跳过renderer_modules文件夹下的模块，直接导入browser_modules文件夹下的模块，如果模块存在依赖那么，会使用includes加载依赖模块<br>
+         * 			说明：<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;**一个iframe中同一个模块只需要加载一次即可在任意地方使用**<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;**如无特殊需求，都应该使用include 或 inclcudes 加载模块**<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;**尽量不要编写与其他模块名相同的C++扩展模块**<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;**renderer_modules和browser_modules同样可以导入内置模块，但不建议用这两个函数来导入内置模块**<br>
+         * @example 导入单个模块
          *
          ```
         		// 导入单个模块
         		include('BrowserWindow');
         		BrowserWindow.current.maximize();
          ```
-         * @example
+         * @example 导入多个个模块
          *
          ```
         		// 导入多个个模块
@@ -100,6 +106,20 @@ namespace amo {
         		BrowserWindow.current.restore();
         		// 尝试退出程序
         		app.quit();
+         ```
+         * @example renderer_modules
+         *
+         ```
+        	 // 导入多个个模块
+        	 renderer_modules('BrowserWindow', 'md5');
+        
+         ```
+         * @example browser_modules
+         *
+         ```
+        	 // 导入多个个模块
+        	 browser_modules('BrowserWindow', 'Path');
+        
          ```
          */
         

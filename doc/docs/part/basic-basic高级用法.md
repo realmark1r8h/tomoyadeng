@@ -5,7 +5,7 @@
 ## 使用Node.js &nbsp;
   NCUI支持使用Node.js控制程序，但目前只针对4.7.3进行过开发，更高或更低的版本可能并不支持.你可以在Node.js中使用文档api部分所提供的绝大部分接口，其他类型的接口不被支持.<br>你可以编辑manifest.json文件(useNode=true)来获取Node.js支持.默认情况下Node.js会注入到NCUI中，并在单独的线程中运行.<br>你可以编辑manifest.json文件(useNodeProcess=true)使Node.js在单独的进程中执行,该模式下Node.js会以调试模式启动，你可以使用node-inspector或其他调试工作调试Node.js代码.
   
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 直接在NCUI中使用Node.js
@@ -41,7 +41,7 @@
 ## local协议 &nbsp;
   NCUI注册了自定义协议local://file来支持本地文件的访问.具体为"local://file/文件路径",文件路径如果为相对路径的话，将以%webDir%所在目录进行查找.
   
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('BrowserWindow', 'app');
@@ -68,7 +68,7 @@ new BrowserWindow({
 ## @file协议 &nbsp;
   NCUI支持自定义协议@file:///来支持本地文件的访问.具体为"@file:///文件路径",文件路径如果为相对路径的话，将以%webDir%所在目录进行查找.<br>@file协议更加强大,你可以在任意url中注入@file协议将url指向本地文件，且不存在跨域等问题.
   
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('BrowserWindow', 'app');

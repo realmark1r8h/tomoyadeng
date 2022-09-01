@@ -94,7 +94,7 @@
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('dialog');
@@ -110,7 +110,7 @@ dialog.runFileDialog({
 });
 
 ```
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('dialog');
@@ -126,7 +126,7 @@ dialog.runFileDialog({
 });
 
 ```
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('dialog');
@@ -173,7 +173,7 @@ console.log(arr);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('dialog');
@@ -211,7 +211,7 @@ dialog.alert('我是一个弹出框');
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('dialog');
@@ -257,7 +257,7 @@ console.log(retval);
 	* **String** text  用户的输入文本.
  
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('dialog');

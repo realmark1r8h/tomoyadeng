@@ -209,7 +209,7 @@
 * **返回值**
   Object 返回一个Downloader实例. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 需要先运行该示例才能运行后面的示例
@@ -262,7 +262,7 @@ window.downloader.on('complete', function(item){
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 window.downloader.start();
@@ -281,7 +281,7 @@ window.downloader.start();
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 window.downloader.pause();
@@ -300,7 +300,7 @@ window.downloader.pause();
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 window.downloader.resume();
@@ -319,7 +319,7 @@ window.downloader.resume();
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 window.downloader.cancel();

@@ -31,7 +31,7 @@
 * **返回值**
   String 解码后的字符串. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('base64');
@@ -69,7 +69,7 @@ console.assert(base64.decode('TkNVSQ==') == 'NCUI');
 * **返回值**
   String 编码后的字符串. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('base64');

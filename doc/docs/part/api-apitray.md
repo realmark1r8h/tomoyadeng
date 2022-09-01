@@ -12,7 +12,7 @@
 
 * **事件参数**  无
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('tray');
@@ -32,7 +32,7 @@ tray.on('buttondown', function(){
 
 * **事件参数**  无
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('tray');
@@ -52,7 +52,7 @@ tray.on('buttonup', function(){
 
 * **事件参数**  无
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('tray');
@@ -72,7 +72,7 @@ tray.on('rbuttondown', function(){
 
 * **事件参数**  无
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('tray');
@@ -92,7 +92,7 @@ tray.on('rbuttonup', function(){
 
 * **事件参数**  无
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('tray');
@@ -112,7 +112,7 @@ tray.on('click', function(){
 
 * **事件参数**  无
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('tray');
@@ -132,7 +132,7 @@ tray.on('dbclick', function(){
 
 * **事件参数**  无
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('tray');
@@ -152,7 +152,7 @@ tray.on('mousehover', function(){
 
 * **事件参数**  无
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('tray');
@@ -170,7 +170,7 @@ tray.on('mouseleave', function(){
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('tray');
@@ -191,7 +191,7 @@ tray.show();
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('tray');
@@ -229,7 +229,7 @@ tray.hide();
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('tray');
@@ -267,7 +267,7 @@ tray.setIcon('skin/logo1.ico');
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('tray');
@@ -308,7 +308,7 @@ tray.setTooltip(new Date().toString());
 * **参考** 
 <a href="#api/apitray/6">isBlink</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('tray');
@@ -332,7 +332,7 @@ tray.blink(true);
 * **参考** 
 <a href="#api/apitray/5">blink</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('tray');

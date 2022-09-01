@@ -88,6 +88,20 @@
 <div class="adoc" id="div_getDefaultSplashSettings"></div>
 
 
+## getDefaultSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+
+  获取默认的程序配置.
+  
+* **函数参数**  无
+
+* **返回值**
+  JsonObject . 
+
+
+
+<div class="adoc" id="div_getDefaultSettings"></div>
+
+
 ## commit &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   生成EXE文件，这个函数将把配置好的参数写入EXE文件中.注意:**输入的参数都是JSON格式的字符串，不是JSON对象**
@@ -126,7 +140,7 @@
 * **返回值**
   Boolean true/false. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('rcedit');
@@ -150,7 +164,7 @@ rcedit.commit(fileSettings, appSettings, browserWindowSettings, splashWindowSett
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('rcedit');

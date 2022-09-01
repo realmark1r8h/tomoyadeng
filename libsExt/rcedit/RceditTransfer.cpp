@@ -28,7 +28,8 @@ namespace {
         return 1;
     }
     
-    bool parse_version_string(const wchar_t* str, unsigned short *v1, unsigned short *v2, unsigned short *v3, unsigned short *v4) {
+    bool parse_version_string(const wchar_t* str, unsigned short *v1,
+                              unsigned short *v2, unsigned short *v3, unsigned short *v4) {
         *v1 = *v2 = *v3 = *v4 = 0;
         
         if (swscanf_s(str, L"%hu.%hu.%hu.%hu", v1, v2, v3, v4) == 4) {
@@ -194,11 +195,14 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
     
     // 如果没有输入参数，那么直接使用默认参数生成文件
     amo::string strConfigFile(getDefaultFileSettings(msg).As<std::string>(), true);
-    amo::string strConfigAppSettings(getDefaultAppSettings(msg).As<std::string>(), true);
-    amo::string strConfigBrowserSettinggs(getDefaultBrowserSettings(msg).As<std::string>(), true);
-    amo::string strConfigSplashSettinggs(getDefaultSplashSettings(msg).As<std::string>(), true);
-    
-    
+    amo::string strConfigAppSettings(getDefaultAppSettings(msg).As<std::string>(),
+                                     true);
+    amo::string strConfigBrowserSettinggs(getDefaultBrowserSettings(
+            msg).As<std::string>(), true);
+    amo::string strConfigSplashSettinggs(getDefaultSplashSettings(
+            msg).As<std::string>(), true);
+            
+            
     int argsSize = args->getArgsSize();
     
     if (argsSize == 4) {
@@ -248,7 +252,11 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
     
     
     amo::string strIcon(oConfig.getString("Icon"), true);
-    m_pUpdater->SetIcon(strIcon.to_unicode().c_str());
+    amo::path iconPath(strIcon);
+    
+    if (iconPath.exists() && iconPath.is_file()) {
+        m_pUpdater->SetIcon(strIcon.to_unicode().c_str());
+    }
     
     // 设置版本信息
     for (auto iter = oConfig.begin(); iter != oConfig.end(); ++iter) {
@@ -317,7 +325,8 @@ amo::Any amo::RceditTransfer::loadDiskSettings(IPCMessage::SmartType msg) {
     return true;
 }
 
-amo::Any amo::RceditTransfer::getDefaultFileSettings(IPCMessage::SmartType msg) {
+amo::Any amo::RceditTransfer::getDefaultFileSettings(IPCMessage::SmartType
+        msg) {
     std::set<std::string> oVersionSet;
     oVersionSet.insert("CompanyName");
     oVersionSet.insert("FileDescription");
@@ -343,7 +352,7 @@ amo::Any amo::RceditTransfer::getDefaultFileSettings(IPCMessage::SmartType msg) 
         json.join(fileJson);
     }
     
-    return amo::string(json.to_string(), false).to_utf8();
+    return json.to_utf8();
 }
 
 amo::Any amo::RceditTransfer::getDefaultAppSettings(IPCMessage::SmartType msg) {
@@ -360,10 +369,11 @@ amo::Any amo::RceditTransfer::getDefaultAppSettings(IPCMessage::SmartType msg) {
         }
     }
     
-    return amo::string(json.to_string(), false).to_utf8();
+    return json.to_utf8();
 }
 
-amo::Any amo::RceditTransfer::getDefaultBrowserSettings(IPCMessage::SmartType msg) {
+amo::Any amo::RceditTransfer::getDefaultBrowserSettings(
+    IPCMessage::SmartType msg) {
     HINSTANCE hInst = ::GetModuleHandle(NULL);
     StringLoader strLoader(hInst);
     std::string strBrowserSettings = strLoader.load(IDS_BROWSER_SETTINGS);
@@ -377,10 +387,11 @@ amo::Any amo::RceditTransfer::getDefaultBrowserSettings(IPCMessage::SmartType ms
         }
     }
     
-    return amo::string(json.to_string(), false).to_utf8();
+    return json.to_utf8();
 }
 
-amo::Any amo::RceditTransfer::getDefaultSplashSettings(IPCMessage::SmartType msg) {
+amo::Any amo::RceditTransfer::getDefaultSplashSettings(IPCMessage::SmartType
+        msg) {
     HINSTANCE hInst = ::GetModuleHandle(NULL);
     StringLoader strLoader(hInst);
     std::string strsplashSettings = strLoader.load(IDS_SPLASH_SETTINGS);
@@ -394,5 +405,15 @@ amo::Any amo::RceditTransfer::getDefaultSplashSettings(IPCMessage::SmartType msg
         }
     }
     
-    return amo::string(json.to_string(), false).to_utf8();
+    return json.to_utf8();
+}
+
+amo::Any amo::RceditTransfer::getDefaultSettings(IPCMessage::SmartType msg) {
+    amo::json json;
+    json.put("fileSettings", getDefaultFileSettings(msg).As<amo::json>());
+    json.put("appSettings", getDefaultAppSettings(msg).As<amo::json>());
+    json.put("browserWindowSettings",
+             getDefaultBrowserSettings(msg).As<amo::json>());
+    json.put("splashWindowSettings", getDefaultSplashSettings(msg).As<amo::json>());
+    return json;
 }

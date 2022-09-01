@@ -197,6 +197,12 @@ public:
         amo::json appJson = amo::json(strAppSettings);
         appJson.put("startTime", amo::timer::now());  //添加启动时间
         
+        if (!m_bManifest) {
+            // 将manifest改为true,以防止程序不加载res里面的配置
+            appJson.put("manifest", true);
+            //m_bManifest = true;
+        }
+        
         amo::string strApp(appJson.to_string(), false);
         strAppSettings = strApp.replace(" ", "").to_ansi();
         amo::string strBrowser(strBrowserSettings, false);

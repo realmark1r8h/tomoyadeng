@@ -97,6 +97,15 @@ namespace amo {
         
         amo::Any getDefaultSplashSettings(IPCMessage::SmartType msg);
         
+        /**
+         * @fn	amo::Any RceditTransfer::getDefaultSettings(IPCMessage::SmartType msg);
+         * @tag static sync
+         * @brief	获取默认的程序配置.
+         *
+         * @return	#JsonObject.
+         */
+        
+        amo::Any getDefaultSettings(IPCMessage::SmartType msg);
         
         /*!
          * @fn	amo::Any RceditTransfer::commit(IPCMessage::SmartType msg);
@@ -144,11 +153,18 @@ namespace amo {
         amo::Any commit(IPCMessage::SmartType msg);
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(RceditTransfer, ClassTransfer)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(loadDiskSettings, TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getDefaultFileSettings, TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getDefaultAppSettings, TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getDefaultBrowserSettings, TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getDefaultSplashSettings, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(loadDiskSettings,
+                                      TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getDefaultFileSettings,
+                                      TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getDefaultAppSettings,
+                                      TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getDefaultBrowserSettings,
+                                      TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getDefaultSplashSettings,
+                                      TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getDefaultSettings,
+                                      TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(commit, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         

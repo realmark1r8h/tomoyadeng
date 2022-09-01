@@ -30,7 +30,7 @@
 	</tbody>
 </table>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('globalShortcut');
@@ -65,7 +65,7 @@ globalShortcut.on('hotkeydown', function(hotkey){
 * **返回值**
   Int 快捷键ID ， 当返回值为0时表示注册失败. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('globalShortcut');
@@ -100,7 +100,7 @@ console.assert(hotkey != 0);
 * **返回值**
   Int 快捷键ID， 当返回值为0时表示注册失败. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('globalShortcut');
@@ -142,7 +142,7 @@ console.assert(hotkey != 0);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('globalShortcut');
@@ -176,7 +176,7 @@ console.assert(globalShortcut.isRegistered(hotkey) == true);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('globalShortcut');
@@ -240,7 +240,7 @@ console.assert(globalShortcut.isRegistered('MOD_CONTROL+MOD_ALT+M') == true);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('globalShortcut');
@@ -266,7 +266,7 @@ console.assert(globalShortcut.isRegistered('MOD_CONTROL+MOD_ALT+N') == false);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('globalShortcut');

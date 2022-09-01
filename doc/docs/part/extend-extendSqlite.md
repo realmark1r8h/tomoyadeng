@@ -28,7 +28,7 @@
 * **返回值**
   Object Sqlite 实例对象. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('Sqlite');
@@ -65,7 +65,7 @@ window.db = new Sqlite('test.db');
 * **返回值**
   Int /Undefined 如果成为返回受影响的行数，否则返回Undefined. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 console.assert(db.import('test.sql') == 0);
@@ -102,7 +102,7 @@ console.assert(db.import('test.sql') == 0);
 * **返回值**
   Int /Undefined 如果成为返回受影响的行数，否则返回Undefined. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 console.assert(db.execute('SELECT count(1) FROM table1') == 0);
@@ -142,7 +142,7 @@ console.assert(db.execute('SELECT count(1) FROM table1') == 0);
 * **返回值**
   Int /Undefined 如果成为返回受影响的行数，否则返回Undefined. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var val = {
@@ -198,7 +198,7 @@ console.assert(db.insert('table1', {name:'李四'}) ==1);
 * **返回值**
   Int /Undefined 如果成为返回受影响的行数，否则返回Undefined. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 直接指定条件语句

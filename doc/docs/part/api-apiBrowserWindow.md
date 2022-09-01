@@ -17,7 +17,7 @@
 * **参考** 
 <a href="#api/apiBrowserWindow/1">setName</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -54,7 +54,7 @@ console.log(win.getName());
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -92,7 +92,7 @@ console.assert(win.getName() == 'NCUI测试窗口');
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -116,7 +116,7 @@ win.showTitleBar(!titleBar);
 * **参考** 
 <a href="#api/apiBrowserWindow/4">destroy</a>, <a href="#api/apiBrowserWindow/37">setClosable</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -139,7 +139,7 @@ win.close();
 * **参考** 
 <a href="#api/apiBrowserWindow/3">close</a>, <a href="#api/apiBrowserWindow/37">setClosable</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 窗口将被强制关闭，用户不能取消该操作
@@ -160,7 +160,7 @@ win.destroy();
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -181,7 +181,7 @@ win.focus();
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -210,7 +210,7 @@ console.assert(win.isFocused() == true);
 * **参考** 
 <a href="#api/apiBrowserWindow/9">hide</a>, <a href="#api/apiBrowserWindow/10">isVisible</a>, <a href="#api/apiBrowserWindow/8">showInactive</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -235,7 +235,7 @@ console.assert(win.isFocused() == true);
 * **参考** 
 <a href="#api/apiBrowserWindow/9">hide</a>, <a href="#api/apiBrowserWindow/10">isVisible</a>, <a href="#api/apiBrowserWindow/7">show</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -262,7 +262,7 @@ console.assert(win.isFocused() == true);
 * **参考** 
 <a href="#api/apiBrowserWindow/10">isVisible</a>, <a href="#api/apiBrowserWindow/7">show</a>, <a href="#api/apiBrowserWindow/8">showInactive</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -292,7 +292,7 @@ console.assert(win.isFocused() == false);
 * **参考** 
 <a href="#api/apiBrowserWindow/9">hide</a>, <a href="#api/apiBrowserWindow/7">show</a>, <a href="#api/apiBrowserWindow/8">showInactive</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -324,7 +324,7 @@ console.assert(win.isVisible() == false);
 * **参考** 
 <a href="#api/apiBrowserWindow/12">unmaximize</a>, <a href="#api/apiBrowserWindow/15">restore</a>, <a href="#api/apiBrowserWindow/13">isMaximized</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -348,7 +348,7 @@ console.assert(win.isMaximized()==true);
 * **参考** 
 <a href="#api/apiBrowserWindow/15">restore</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -370,7 +370,7 @@ console.assert(win.isMaximized() == false);
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -397,7 +397,7 @@ console.assert(win.isMaximized() == false);
 * **参考** 
 <a href="#api/apiBrowserWindow/16">isMinimized</a>, <a href="#api/apiBrowserWindow/15">restore</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -426,7 +426,7 @@ console.assert(win.isMinimized() == false);
 * **参考** 
 <a href="#api/apiBrowserWindow/14">minimize</a>, <a href="#api/apiBrowserWindow/11">maximize</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -457,7 +457,7 @@ console.assert(win.isMinimized() == false);
 * **参考** 
 <a href="#api/apiBrowserWindow/14">minimize</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -504,7 +504,7 @@ console.assert(win.isMinimized() == false);
 * **参考** 
 <a href="#api/apiBrowserWindow/18">isFullScreen</a>, <a href="#api/apiBrowserWindow/52">toggleFullScreen</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -527,7 +527,7 @@ console.assert(win.isFullScreen() == true);
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -572,7 +572,7 @@ console.assert(win.isFullScreen() == false);
 * **参考** 
 <a href="#api/apiBrowserWindow/20">getWindowRect</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -610,7 +610,7 @@ win.setWindowRect({
 * **参考** 
 <a href="#api/apiBrowserWindow/19">setWindowRect</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -668,7 +668,7 @@ console.assert(winInfo.height == 500);
 * **参考** 
 <a href="#api/apiBrowserWindow/22">getSize</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -691,7 +691,7 @@ win.setSize(1300,800);
 * **参考** 
 <a href="#api/apiBrowserWindow/21">setSize</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -740,7 +740,7 @@ console.assert(info.height == 500);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 设置最小宽高
@@ -762,7 +762,7 @@ win.setMinimumSize(1280,720);
 * **返回值**
   JsonObject 窗口的最小宽高信息. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -811,7 +811,7 @@ win..setMinimumSize(0,0);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 设置最小宽高
@@ -833,7 +833,7 @@ win.setMaximumSize(1280,720);
 * **返回值**
   JsonObject 窗口的最大宽高信息. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -880,7 +880,7 @@ win.setMaximumSize(0,0);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 不允许窗口改变大小
@@ -903,7 +903,7 @@ console.assert(win.isResizable() == false);
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -944,7 +944,7 @@ console.assert(win.isResizable() == true);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 拖动窗口试试
@@ -967,7 +967,7 @@ win.setMovable(false);
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -1009,7 +1009,7 @@ console.assert(win.isMovable() == true);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 设置窗口不能被最小化
@@ -1032,7 +1032,7 @@ console.assert(win.isMinimizable()== false);
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 设置窗口不能被最小化
@@ -1078,7 +1078,7 @@ console.assert(win.isMinimizable() == true);
 * **参考** 
 <a href="#api/apiBrowserWindow/27">setResizable</a>, <a href="#api/apiBrowserWindow/34">isMaximizable</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 不允许窗口最大化
@@ -1102,7 +1102,7 @@ console.assert(win.isMaximizable() == false);
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 不允许窗口最大化
@@ -1145,7 +1145,7 @@ console.assert(win.isMaximizable() == true);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 不允许窗口全屏
@@ -1171,7 +1171,7 @@ console.assert(win.isFullScreen() == false);
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 不允许窗口全屏
@@ -1221,7 +1221,7 @@ console.assert(win.isFullScreen() == true);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -1245,7 +1245,7 @@ console.assert(win.isClosable() == false);
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -1287,7 +1287,7 @@ console.assert(win.isClosable() == true);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 使窗口置顶
@@ -1310,7 +1310,7 @@ console.assert(win.isAlwaysOnTop() == true);
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 使窗口置顶
@@ -1337,7 +1337,7 @@ console.assert(win.isAlwaysOnTop() == false);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -1378,7 +1378,7 @@ win.center();
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -1401,7 +1401,7 @@ win.setPosition( 300,200);
 * **参考** 
 <a href="#api/apiBrowserWindow/20">getWindowRect</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -1445,7 +1445,7 @@ console.assert(winInfo.y == 200);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -1469,7 +1469,7 @@ win.setTitle("NCUI测试窗口");
 * **参考** 
 <a href="#api/apiBrowserWindow/44">setTitle</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -1507,7 +1507,7 @@ console.assert(win.getTitle() == 'NCUI测试窗口');
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -1546,7 +1546,7 @@ win.flashFrame(false);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -1567,7 +1567,7 @@ win.setHasShadow(false);
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -1614,7 +1614,7 @@ console.assert(win.hasShadow() == true);
 * **参考** 
 <a href="#api/apiBrowserWindow/39">setAlwaysOnTop</a>, <a href="#api/apiBrowserWindow/50">isTopmost</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 使窗口置顶
@@ -1637,7 +1637,7 @@ console.assert(win.isTopmost() == true);
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 使窗口置顶
@@ -1663,7 +1663,7 @@ console.assert(win.isTopmost() == false);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win= BrowserWindow.current;
@@ -1686,7 +1686,7 @@ console.assert(win.isVisible() == true);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -1735,7 +1735,7 @@ console.assert(win.isFullScreen() == false);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -1777,7 +1777,7 @@ win.setIcon(icon);
 * **参考** 
 <a href="#api/apiBrowserWindow/55">getConfig</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
@@ -1830,7 +1830,7 @@ win.setConfig({
 * **参考** 
 <a href="#api/apiBrowserWindow/54">setConfig</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 //获取浏览器窗口的所有配置参数
@@ -1876,7 +1876,7 @@ console.assert(titleBar == false);
 * **参考** 
 <a href="#api/apiBrowserWindow/57">getOpacity</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('BrowserWindow');
@@ -1900,7 +1900,7 @@ BrowserWindow.current.setOpacity(200);
 * **参考** 
 <a href="#api/apiBrowserWindow/56">setOpacity</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('BrowserWindow');
@@ -1942,7 +1942,7 @@ console.assert(BrowserWindow.current.getOpacity() == 255);
 * **返回值**
   BrowserWindow 一个浏览器窗口对象. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('BrowserWindow');
@@ -2184,7 +2184,7 @@ new BrowserWindow({
 * **参考** 
 <a href="#settings/settingsBrowserWindowSettings">浏览器窗口参数</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('BrowserWindow');
@@ -2228,7 +2228,7 @@ window.open('https://www.baidu.com/more');
 * **参考** 
 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('BrowserWindow');

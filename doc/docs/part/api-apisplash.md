@@ -34,7 +34,7 @@
 * **参考** 
 <a href="#api/apisplash/1">hide</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('splash');
@@ -58,7 +58,7 @@ splash.show({
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('splash');
@@ -90,7 +90,7 @@ splash.hide();
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('splash');
@@ -111,7 +111,7 @@ splash.hide(3000);
 * **返回值**
   Boolean . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('splash');

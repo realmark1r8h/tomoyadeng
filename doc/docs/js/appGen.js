@@ -16,8 +16,8 @@ var formatJson = function(json, options) {
 	json = json.replace(reg, '\r\n$1\r\n');
 	reg = /([\[\]])/g;
 	json = json.replace(reg, '\r\n$1\r\n');
-	reg = /(\,)/g;
-	json = json.replace(reg, '$1\r\n');
+	reg = /(\,")/g;
+	json = json.replace(reg, ',\r\n"');
 	reg = /(\r\n\r\n)/g;
 	json = json.replace(reg, '\r\n');
 	reg = /\r\n\,/g;
@@ -58,42 +58,54 @@ var formatJson = function(json, options) {
 };
 
 (function() {
+
+	include('rcedit');
+	var settings = rcedit.getDefaultSettings();
+	var strSettings = JSON.stringify(settings);
+	var resultJson = formatJson(strSettings);
+	$('#appGenExample').empty().append('<pre style="background: none; border: none; padding: 0;font-size: 14px; line-height: 20px; color:#d14; ">' + resultJson + '</pre>');
 	// 右键菜单
 	include('Menu');
-	var example = $('#appGenExample');//document.getElementById('appGenExample');
+	var example = $('#appGenExample'); //document.getElementById('appGenExample');
 	console.dir(example);
-	
+
 	example[0].oncontextmenu = function() {
 		var menu = new Menu({
-			menu: [
-				{ id: '1', text: '格式化', shortcut: 'F' },
-				{ id: '2', text: '生成应用', shortcut: 'R' }
+			menu: [{
+					id: '1',
+					text: '格式化',
+					shortcut: 'F'
+				},
+				{
+					id: '2',
+					text: '生成应用',
+					shortcut: 'R'
+				}
 			]
 		});
 		menu.on('select', function(item) {
-			if(item.id == '1') {
-				var txt = $('#appGenExample').text();
-				
-				console.log(txt);
- 
-				var resultJson = formatJson(txt);
-				$('#appGenExample').empty().append( '<pre style="background: none; border: none; padding: 0;font-size: 14px; line-height: 20px;">' +resultJson + '</pre>');
-			//	 example.innerHTML = '<pre>' +resultJson + '<pre/>';
-			
-//				//引用示例部分
-//  //(1)创建json格式或者从后台拿到对应的json格式
-//  var originalJson = {"manifest":true,"showSplash":true,"useNode":true,"main":"main.js","useNodeProcess":false,"debugNode":false,"debugMode":true,"clearCache":false,"skinDir":"%appDir%skin","webDir":"%appDir%web","single_process":false,"locale":"zh-CN","urlMappings":[{"url":"http://127.0.0.1:8020/doc/","path":"%webDir%doc"}]};
-//  //(2)调用formatJson函数,将json格式进行格式化
-//  var resultJson = formatJson(originalJson);
-//  //(3)将格式化好后的json写入页面中
-//  document.getElementById("appGenExample").innerHTML = '<pre>' +resultJson + '<pre/>';
-    
+			if(item.id == '1') { 
+				var txt = $('#appGenExample').text(); 
+				var resultJson = formatJson(txt); 
+				$('#appGenExample').empty().append('<pre style="background: none; border: none; padding: 0;font-size: 14px; line-height: 20px; color:#d14; ">' + resultJson + '</pre>');
+				  
 			} else if(item.id == '2') {
-
+				var txt = $('#appGenExample').text();
+				console.log(txt);
+				var json = JSON.parse(txt);
+				console.log(json);
+				var fileSettings = json['fileSettings'];
+				var appSettings = json['appSettings'];
+				var browserWindowSettings = json['browserWindowSettings'];
+				var splashWindowSettings = json['splashWindowSettings'];
+				console.log(fileSettings);
+				console.log(appSettings);
+				console.log(browserWindowSettings);
+				console.log(splashWindowSettings);
+				rcedit.commit(fileSettings, appSettings, browserWindowSettings, splashWindowSettings);
 			}
 		})
-		
-	
+
 		return false;
 	};
 })();

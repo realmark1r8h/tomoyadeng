@@ -5,7 +5,7 @@
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('ipc');
@@ -54,7 +54,7 @@ ipc.unique('ipc.test', function(){
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('ipc');
@@ -92,7 +92,7 @@ ipc.exec('ipc.exec', 12, '88', 12.33);
 * **返回值**
   Any 消息返回的结果,只会返回第一个监听函数的返回值. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('ipc');
@@ -138,7 +138,7 @@ console.assert(ipc.sync('ipc.async', 'test') == 'ipc.async');
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('ipc');

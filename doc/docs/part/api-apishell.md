@@ -124,7 +124,7 @@
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('shell');
@@ -170,7 +170,7 @@ shell.exec("open", "explorer", "/e, /select, skin\\close_p.png", "", shell.SW_SH
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('shell');
@@ -209,7 +209,7 @@ shell.open("www.baidu.com");
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('shell');
@@ -247,7 +247,7 @@ shell.print("skin\\close_p.png");
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('shell');

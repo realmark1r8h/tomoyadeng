@@ -5,7 +5,7 @@
 ## 配置文件 &nbsp;
   编辑程序所在目录下的manifest.json文件可以自定义设置程序的启动方式。<br>完整的manifest包含三个段，分别为 appSettings， browserWindowSettings， splashWindowSettings;<br>对应可以设置<a href="#settings/settingsAppSettings">启动参数</a>，<a href="#settings/settingsBrowserWindowSettings">启动浏览器窗口参数</a>，<a href="#settings/settingsSplashWindowSettings">程序启动画面</a><br>manifest不是必须的，如果不存在，那么程序将使用默认配置.
   
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 一个简单的配置文件,只包含启动窗口的参数配置段， 设置程序启时要打开的URL
@@ -17,7 +17,7 @@
 }
 
 ```
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 一个包含所有段的的配置文件
@@ -52,9 +52,9 @@
 
 
 ## 导入模块 &nbsp;
-  如果要使用NCUI提供的模块，那么必须在使用之间前将需要的模块导入到页面中，你可以通过以下两个接口导入需要的模块。<br>使用**include**导入单个模块，模块会被注入到页面的全局变量中.<br>使用**includes**导入多个模块，所有模块都会被注入到页面的全局变量中.<br>如果内置模块不存在，将会导入renderer_modules文件夹下模块，如果还是不存在会导入browser_modules文件夹下模块.renderer_modules文件夹下的扩展在Renderer线程上运行，browser_modules文件夹下的扩展在UI线程上运行.<br>说明：**一个iframe中同一个模块只需要加载一次即可在任意地方使用**
+  如果要使用NCUI提供的模块，那么必须在使用之间前将需要的模块导入到页面中，你可以通过以下两个接口导入需要的模块。<br>使用**include**导入单个模块，模块会被注入到页面的全局变量中.<br>使用**includes**导入多个模块，所有模块都会被注入到页面的全局变量中.<br>如果内置模块不存在，将会导入renderer_modules文件夹下模块，如果还是不存在会导入browser_modules文件夹下模块.renderer_modules文件夹下的扩展在Renderer线程上运行，browser_modules文件夹下的扩展在UI线程上运行.<br>使用**renderer_modules**导入renderer_modules文件夹下的模块，如果模块存在依赖那么，会使用includes加载依赖模块<br>使用**browser_modules**可以跳过renderer_modules文件夹下的模块，直接导入browser_modules文件夹下的模块，如果模块存在依赖那么，会使用includes加载依赖模块<br>说明：<br>&nbsp;&nbsp;&nbsp;&nbsp;**一个iframe中同一个模块只需要加载一次即可在任意地方使用**<br>&nbsp;&nbsp;&nbsp;&nbsp;**如无特殊需求，都应该使用include 或 inclcudes 加载模块**<br>&nbsp;&nbsp;&nbsp;&nbsp;**尽量不要编写与其他模块名相同的C++扩展模块**<br>&nbsp;&nbsp;&nbsp;&nbsp;**renderer_modules和browser_modules同样可以导入内置模块，但不建议用这两个函数来导入内置模块**<br>
   
-* **示例**
+* **示例&nbsp;&nbsp;--&nbsp;&nbsp;导入单个模块**
 
 ```html
 // 导入单个模块
@@ -62,7 +62,7 @@ include('BrowserWindow');
 BrowserWindow.current.maximize();
 
 ```
-* **示例**
+* **示例&nbsp;&nbsp;--&nbsp;&nbsp;导入多个个模块**
 
 ```html
 // 导入多个个模块
@@ -71,6 +71,22 @@ BrowserWindow.current.maximize();
 BrowserWindow.current.restore();
 // 尝试退出程序
 app.quit();
+
+```
+* **示例&nbsp;&nbsp;--&nbsp;&nbsp;renderer_modules**
+
+```html
+// 导入多个个模块
+renderer_modules('BrowserWindow', 'md5');
+
+
+```
+* **示例&nbsp;&nbsp;--&nbsp;&nbsp;browser_modules**
+
+```html
+// 导入多个个模块
+browser_modules('BrowserWindow', 'Path');
+
 
 ```
 

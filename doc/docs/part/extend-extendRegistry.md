@@ -31,7 +31,7 @@
 * **返回值**
   Registy 注册表操作对象 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('Registry');
@@ -70,7 +70,7 @@ window.registry = new Registry(Registry.HKEY_CURRENT_USER);
 * **返回值**
   Boolean true成功/false失败. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 需要先运行构造函数里面的例子
@@ -109,7 +109,7 @@ console.assert(registry.create('Software\\NCUI') == true);
 * **返回值**
   Boolean true成功/false失败. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 需要先运行构造函数里面的例子
@@ -152,7 +152,7 @@ console.assert(registry.create('Software\\NCUI') == true);
 * **返回值**
   String 读取到的值. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 需要先运行构造函数里面的例子
@@ -205,7 +205,7 @@ console.assert(registry.read('Software\\NCUI', 'version') ==  '1.0.0.0');
 * **返回值**
   Boolean true成功/false失败. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 需要先运行构造函数里面的例子
@@ -250,7 +250,7 @@ console.assert(registry.read('Software\\NCUI', 'remark') ==  'Chromium Embedded 
 * **返回值**
   Boolean true成功/false失败. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 需要先运行构造函数里面的例子

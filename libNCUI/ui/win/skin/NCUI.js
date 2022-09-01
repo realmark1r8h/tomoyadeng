@@ -18,6 +18,16 @@ function includes() {
     return includes(arguments);
 };
 
+function renderer_modules() {
+    native function renderer_modules(arguments);
+    return renderer_modules(arguments);
+};
+
+function browser_modules() {
+    native function browser_modules(arguments);
+    return browser_modules(arguments);
+};
+
 function sleep(ms) {
     native function sleep(ms);
     return sleep(ms);

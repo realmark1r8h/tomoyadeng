@@ -12,7 +12,7 @@
 
 * **事件参数**  无
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('mouse');
@@ -51,7 +51,7 @@ mouse.showCursor();
 	</tbody>
 </table>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('BrowserWindow', 'mouse');
@@ -92,7 +92,7 @@ console.log(pos);
 * **参考** 
 <a href="#api/apimouse/2">leftClick</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('BrowserWindow','mouse');
@@ -178,7 +178,7 @@ mouse.click(x,y);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('BrowserWindow','mouse');
@@ -264,7 +264,7 @@ mouse.leftDown(x,y);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('BrowserWindow','mouse');
@@ -315,7 +315,7 @@ mouse.leftDoubleClick(x, y);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('BrowserWindow','mouse');
@@ -435,7 +435,7 @@ mouse.rightClick(x,y);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('BrowserWindow','mouse');
@@ -486,7 +486,7 @@ mouse.middleClick(x, y);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('BrowserWindow','mouse');
@@ -536,7 +536,7 @@ mouse.moveTo(x, y);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('BrowserWindow','mouse');
@@ -582,7 +582,7 @@ mouse.moveR(x, y);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('mouse');
@@ -603,7 +603,7 @@ mouse.mouseWheel(100);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('mouse');
@@ -639,7 +639,7 @@ mouse.saveMousePos();
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('mouse');
@@ -660,7 +660,7 @@ mouse.saveMousePos(100, 100);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('mouse');
@@ -736,7 +736,7 @@ mouse.restoreMousePos();
 	* **Int** y  鼠标y轴坐标.
  
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('mouse');
@@ -781,7 +781,7 @@ console.log(pos);
 * **参考** 
 <a href="#api/apimouse/10">moveTo</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('mouse');
@@ -825,7 +825,7 @@ mouse.setCursorPos(100,100);
 	* **Int** y  转换后的y坐标
  
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('mouse');
@@ -869,7 +869,7 @@ console.log(pos);
 	* **Int** y  转换后的y坐标
  
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('BrowserWindow', 'mouse');
@@ -915,7 +915,7 @@ console.log(pos);
 	* **Int** y  转换后的y坐标
  
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('mouse');
@@ -959,7 +959,7 @@ console.log(pos);
 	* **Int** y  转换后的y坐标
  
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('BrowserWindow', 'mouse');
@@ -981,7 +981,7 @@ console.log(pos);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('mouse');
@@ -1004,7 +1004,7 @@ setTimeout(function(){
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 includes('mouse');

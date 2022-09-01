@@ -200,7 +200,7 @@
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('keyboard');
@@ -239,7 +239,7 @@ keyboard.sayString('NCUI测试字符串');
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('keyboard');
@@ -280,7 +280,7 @@ keyboard.keyPress(keyboard.VK_MENU, keyboard.VK_F4);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('keyboard');
@@ -320,7 +320,7 @@ keyboard.keyUp('1');
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('keyboard');

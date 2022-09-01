@@ -42,7 +42,7 @@
 * **参考** 
 <a href="#api/apiapp/1">setConfig</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 //获取应用程序的所有配置参数
@@ -88,7 +88,7 @@ console.log('单进程模式：' + single_process);
 * **参考** 
 <a href="#api/apiapp/0">getConfig</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 app.setConfig({
@@ -129,7 +129,7 @@ app.setConfig({
 * **返回值**
   String 转换后的绝对路径. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 获取web资源文件目录
@@ -157,7 +157,7 @@ console.log(picturesDir);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 app.quit();
@@ -177,7 +177,7 @@ app.quit();
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 直接退出程序，不会有任何提示
@@ -219,7 +219,7 @@ app.exit();
 * **返回值**
   Boolean 成为返回true, 失败返回false. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 增加映射
@@ -262,7 +262,7 @@ window.open('http://www.baidu.com/more');
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 删除映射
@@ -305,7 +305,7 @@ window.open('http://www.baidu.com');
 * **返回值**
   String 转换后的路径，如果当前所给的URL没有与之映射的本地路径，将返回该URL. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 app.addUrlMapping('http://test/test.html', '%webDir%/test.html');
@@ -386,7 +386,7 @@ console.assert(app.urlToNativePath('http://www.github.com', false)  == '');
 * **参考** 
 <a href="#api/apiapp/9">isAutoRun</a>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 设置开机启动
@@ -412,7 +412,7 @@ console.assert(app.isAutoRun() == false);
 * **返回值**
   Int . 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var elapsed = app.elapsed();
@@ -450,7 +450,7 @@ console.log('程序已运行：' + elapsed + ' ms');
 * **返回值**
   Boolean 生成返回true, 失败返回false. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 5秒后重启运行当前程序
@@ -471,7 +471,7 @@ app.restart(5);
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 不要试！！！

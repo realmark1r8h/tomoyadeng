@@ -27,7 +27,7 @@
 	</tbody>
 </table>
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('Menu');
@@ -72,7 +72,7 @@ menu.on('select', function(){
 * **返回值**
   MenuObject Menu对象 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 创建一个普通菜单
@@ -90,7 +90,7 @@ var menu = new Menu({
 });
 
 ```
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 可以使用快捷键的菜单
@@ -108,7 +108,7 @@ var menu = new Menu({
 });
 
 ```
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 带action的菜单
@@ -129,7 +129,7 @@ menu.on('select', function(item) {
 })
 
 ```
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 多层级菜单
@@ -175,7 +175,7 @@ menu.on('select', function(item) {
 })
 
 ```
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 右键菜单
@@ -205,7 +205,7 @@ document.oncontextmenu = function() {
 };
 
 ```
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 // 右键菜单
@@ -247,7 +247,7 @@ example.oncontextmenu = function() {
 * **返回值**
    无. 
 
-* **示例**
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 include('Menu');

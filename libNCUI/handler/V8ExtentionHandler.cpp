@@ -32,7 +32,10 @@ namespace amo {
                                      CefRefPtr<CefV8Value>& retval,
                                      CefString& exception) {
                                      
-        if (name != "include" && name != "includes") {
+        if (name != "include"
+                && name != "includes"
+                && name != "renderer_modules"
+                && name != "browser_modules") {
             // 不支持其他Native Function
             
             return m_pUtilityV8Handler->Execute(name, object, arguments, retval, exception);
@@ -82,17 +85,7 @@ namespace amo {
                     return ;
                 }
                 
-                /*  amo::path p2("E:\\中文目录\\Collection-Out\\Binary.UD32\\libNCUI.dll");
-                  amo::path p2("E:\\中文目录\\Collection-Out\\Binary.UD32\\sqlite3.dll");*/
-                /*    amo::path p2("E:\\中文目录\\Collection-Out\\Binary.UD32\\libExt.dll");
-                  amo::loader loader;
-                  bool hu = loader.load(p2.c_str());
                 
-                  if (p2.file_exists()) {
-                	  int cdd = 34;
-                	  ++cdd;
-                  }
-                  */
                 amo::string module = p.strip_path().remove_extension();
                 loadExternalTransfer(module, pBrowser);
             }, false);
@@ -182,22 +175,32 @@ namespace amo {
                     break;
                 }
                 
-                pCache = includeFromRendererThread(module.ToString());
-                
-                if (pCache) {
-                    break;
+                if (name != "browser_modules") {
+                    pCache = includeFromRendererThread(module.ToString());
+                    
+                    if (pCache) {
+                        break;
+                    }
                 }
                 
-                pCache = includeFromBrowserThread(module.ToString());
                 
-                if (!pCache) {
-                    exception = module.ToWString() + L" 加载失败";
-                    return true;
+                if (name != "renderer_modules") {
+                    pCache = includeFromBrowserThread(module.ToString());
+                    
+                    if (!pCache) {
+                        break;
+                    }
                 }
+                
                 
                 
             } while (false);
             
+            
+            if (!pCache) {
+                exception = module.ToWString() + L": 导入模块失败";
+                return true;
+            }
             
             // 将模块设置为全局变量
             bool bOK = pGlobal->SetValue(module,
@@ -205,7 +208,7 @@ namespace amo {
                                          V8_PROPERTY_ATTRIBUTE_NONE);
                                          
             if (!bOK) {
-                exception = module.ToWString() + L" 导入模块失败";
+                exception = module.ToWString() + L": 导入模块失败";
                 return false;
             }
             

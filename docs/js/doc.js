@@ -12779,7 +12779,7 @@ require('./polyfill-done.js');
     }
 
     var chapters = {
-        
+        {chapters}
     };
     var isTouchScreen = 'ontouchstart' in document.documentElement;
     var LAST_RELOAD_ANIMATE_ID = 'lastReloadAnimate',
