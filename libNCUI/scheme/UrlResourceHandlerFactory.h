@@ -22,11 +22,16 @@ namespace amo {
         CefRefPtr<CefResourceHandler> getZipResourceHandler(const std::string& url,
                 const std::string& u8Path);
                 
+        CefRefPtr<CefResourceHandler> getZResResourceHandler(const std::string& url,
+                const std::string& u8Path);
+                
         CefRefPtr<CefResourceHandler> getDllResourceHandler(const std::string& url,
                 const std::string& u8Path);
         std::string getAbsolutePath(const std::string& u8Path);
         
         bool isZipPath(const std::string& u8Path);
+        
+        bool isResPath(const std::string& u8Path);
         
         bool isDBPath(const std::string& u8Path);
         

@@ -167,6 +167,8 @@ namespace amo {
         /*! @var #Boolean=false clearCache 是否在应用程序启动时清除浏览器缓存（调试用）. {@tag const}*/
         bool clearCache;
         
+        
+        
     };
 }
 

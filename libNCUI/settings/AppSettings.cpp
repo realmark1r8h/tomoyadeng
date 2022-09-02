@@ -133,6 +133,8 @@ namespace amo {
         
         DEFAULT_ARGS_SETTINGS(startTime, (int64_t)amo::timer::now());
         DEFAULT_ARGS_SETTINGS(debugMode, true);
+        
+        
         //DEFAULT_ARGS_SETTINGS(debugMode, false);
         
     }
@@ -267,7 +269,6 @@ namespace amo {
         INT64_ARGS_SETTING(startTime);
         BOOL_ARGS_SETTING(debugMode);
         BOOL_ARGS_SETTING(clearCache);
-        
         
         ::SetCurrentDirectoryA(amo::string(workDir, true).to_ansi().c_str());
         AMO_TIMER_ELAPSED();

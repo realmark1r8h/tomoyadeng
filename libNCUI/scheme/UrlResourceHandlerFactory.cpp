@@ -25,7 +25,15 @@ namespace amo {
             return NULL;
         }
         
-        CefRefPtr<CefResourceHandler> pHandler = getZipResourceHandler(url, u8File);
+        CefRefPtr<CefResourceHandler> pHandler = NULL;
+        
+        pHandler = getZipResourceHandler(url, u8File);
+        
+        if (pHandler) {
+            return pHandler;
+        }
+        
+        pHandler = getZResResourceHandler(url, u8File);
         
         if (pHandler) {
             return pHandler;
@@ -82,6 +90,29 @@ namespace amo {
         
     }
     
+    CefRefPtr<CefResourceHandler> UrlResourceHandlerFactory::getZResResourceHandler(
+        const std::string& url, const std::string& u8Path) {
+        if (!isResPath(u8Path)) {
+            return NULL;
+        }
+        
+        
+        std::string dbFile = u8Path.substr(7);
+        
+        int  nIndex = dbFile.find(".res");
+        
+        if (nIndex == -1) {
+            return NULL;
+        }
+        
+        std::string u8DBPath = dbFile.substr(0, nIndex + 4);
+        std::string u8File = dbFile.substr(nIndex + 4);
+        
+        return new ZipFileHandler(url, u8DBPath, u8File);
+        
+        
+    }
+    
     CefRefPtr<CefResourceHandler> UrlResourceHandlerFactory::getDllResourceHandler(
         const std::string& url, const std::string& u8Path) {
         
@@ -114,6 +145,10 @@ namespace amo {
             std::string retval = "zip:///";
             std::string u8SubPath = u8Path.substr(retval.size());
             return retval + appSettings->toAbsolutePath(u8SubPath);
+        } else if (isResPath(u8Path)) {
+            std::string retval = "res:///";
+            std::string u8SubPath = u8Path.substr(retval.size());
+            return retval + appSettings->toAbsolutePath(u8SubPath);
         } else if (isDBPath(u8Path)) {
             std::string retval = "db:///";
             std::string u8SubPath = u8Path.substr(retval.size());
@@ -135,6 +170,17 @@ namespace amo {
         }
         
         nIndex = u8Path.find("zip:\\\\\\");
+        return nIndex == 0;
+    }
+    
+    bool UrlResourceHandlerFactory::isResPath(const std::string& u8Path) {
+        int nIndex = u8Path.find("res:///");
+        
+        if (nIndex == 0) {
+            return true;
+        }
+        
+        nIndex = u8Path.find("res:\\\\\\");
         return nIndex == 0;
     }
     

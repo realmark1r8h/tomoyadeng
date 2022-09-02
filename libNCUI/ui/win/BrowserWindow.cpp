@@ -40,6 +40,7 @@
 
 #include <amo/adb.hpp>
 
+
 #ifndef SPI_GETWINARRANGING
 #define SPI_GETWINARRANGING 0x0082
 #endif
@@ -55,6 +56,13 @@
 #ifndef SPI_SETSNAPSIZING
 #define SPI_SETSNAPSIZING   0x008F
 #endif
+
+#include <zip.h>
+#include "utility/libzippp.h"
+
+#include <amo/filestream.hpp>
+#include <amo/file.hpp>
+
 
 namespace amo {
 
@@ -178,20 +186,11 @@ namespace amo {
         return LocalWindow::OnSize(uMsg, wParam, lParam, bHandled);
     }
     
-    void foo(std::string ss, Any val) {
-        static  std::vector<Any> vec;
-        amo::json json;
-        json.put("name", ss);
-        
-        Any aa;
-        aa.toJson();
-        json.put("value", aa.toJson());
-        vec.push_back(json);
-    }
-    
     
     
     void BrowserWindow::InitWindow() {
+    
+    
     
         AMO_TIMER_ELAPSED();
         //获取图标，第二个参数为要获取第几个图标

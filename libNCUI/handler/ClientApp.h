@@ -70,6 +70,7 @@ namespace amo {
         static bool RegisterCustomSchemeFactory(const CefString& scheme_name,
                                                 const CefString& domain_name,
                                                 CefRefPtr<CefSchemeHandlerFactory> factory);
+                                                
     public:
         ClientApp();
         
@@ -204,7 +205,9 @@ namespace amo {
         void UnregisterBrowserProcessHandlerDelegate(BrowserProcessHandlerDelegate*
                 delegate);
                 
-                
+    public:
+    
+    
     private:
     
         /*!
@@ -227,6 +230,7 @@ namespace amo {
         CefRefPtr<ResourceBundleHandler> m_pResourceBundleHandler;
         /*! @brief	允许Cookie的协议. */
         std::vector<CefString> m_CookieableSchemes;
+        
         
     };
 }

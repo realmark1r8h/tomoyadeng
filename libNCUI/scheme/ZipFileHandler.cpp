@@ -46,11 +46,12 @@ namespace amo {
         amo::string strFile(p.c_str(), false);
         strFile.replace("\\", "/");
         //amo::path dirPath = p.remove_file_spec_c().remove_front_backslash();
-        /*std::vector<libzippp::ZipEntry>  vec = zf->getEntries();
+        std::vector<libzippp::ZipEntry>  vec = zf->getEntries();
         
         for (auto& p : vec) {
             amo::cdevel << p.getName() << amo::endl;
-        }*/
+        }
+        
         //AMO_TIMER_ELAPSED();
         auto entry =  zf->getEntry(strFile.to_utf8(), false, false);
         /*  entry = zf->getEntry("ReactJs/images/ап╠М01.png", false, false);

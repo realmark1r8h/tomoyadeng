@@ -39,6 +39,8 @@
 #include <cstdio>
 #include <string>
 #include <vector>
+#include <zip.h>
+#include <memory>
 
 //defined in libzip
 struct zip;
@@ -93,6 +95,63 @@ typedef unsigned short libzippp_uint16;
 #define LIBZIPPP_ERROR_OWRITE_INDEX_FAILURE -36
 #define LIBZIPPP_ERROR_UNKNOWN -99
 
+class ZipMemoryResource {
+public:
+    ZipMemoryResource(const std::vector<char>& vec): buffer(vec) {
+        za = NULL;
+        src = NULL;
+        void* data = buffer.data();
+        
+        zip_error_init(&error);
+        
+        if ((src = zip_source_buffer_create(data, buffer.size(), 1, &error)) == NULL) {
+            fprintf(stderr, "can't create source: %s\n", zip_error_strerror(&error));
+            src = NULL;
+            return;
+            
+        }
+        
+        
+        
+        
+        if ((za = zip_open_from_source(src, 0, &error)) == NULL) {
+            fprintf(stderr, "can't open zip from source: %s\n", zip_error_strerror(&error));
+            
+            
+        }
+        
+        zip_source_keep(src);
+        zip_error_fini(&error);
+        
+        /*   zip_close(za);
+           zip_source_close(src);
+           zip_source_free(src);
+           zip_error_fini(&error);*/
+        //zip_source_keep(src);
+    }
+    
+    ~ZipMemoryResource() {
+        if (src != NULL) {
+            zip_source_close(src);
+            //zip_source_free(src);
+            src = NULL;
+        }
+        
+        
+    }
+    
+    zip_t * open() {
+        return za;
+        
+    }
+public:
+    zip_error_t error;
+    zip_source_t *src;
+    zip_t * za;
+    std::vector<char> buffer;
+    
+};
+
 namespace libzippp {
     class ZipEntry;
     
@@ -135,6 +194,8 @@ namespace libzippp {
          * http://nih.at/listarchive/libzip-discuss/msg00219.html
          */
         explicit ZipArchive(const std::string& zipPath, const std::string& password = "");
+        
+        explicit ZipArchive(std::shared_ptr<ZipMemoryResource> resource_, const std::string& password = "");
         virtual ~ZipArchive(void); //commit all the changes if open
         
         /**
@@ -395,6 +456,7 @@ namespace libzippp {
         
     private:
         std::string path;
+        std::shared_ptr<ZipMemoryResource> resource;
         zip* zipHandle;
         OpenMode mode;
         std::string password;

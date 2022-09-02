@@ -90,6 +90,7 @@ namespace amo {
                                     
         virtual LRESULT OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                BOOL& bHandled) override;
+        int foo3();
     public:
         // LifeSpanHandlerDelegate
         virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;

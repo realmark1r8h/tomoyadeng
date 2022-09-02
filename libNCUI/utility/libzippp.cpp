@@ -84,8 +84,17 @@ int ZipEntry::readContent(std::ofstream& ofOutput, ZipArchive::State state, libz
 ZipArchive::ZipArchive(const string& zipPath, const string& password) : path(zipPath), zipHandle(NULL), mode(NOT_OPEN), password(password) {
 }
 
+libzippp::ZipArchive::ZipArchive(std::shared_ptr<ZipMemoryResource> resource_, const std::string& password /*= ""*/)
+    : path(""), zipHandle(NULL)
+    , mode(NOT_OPEN)
+    , password(password)
+    , resource(resource_) {
+    
+}
+
 ZipArchive::~ZipArchive(void) {
     close(); /* discard ??? */
+    resource.reset();
 }
 
 bool ZipArchive::open(OpenMode om, bool checkConsistency) {
@@ -110,7 +119,14 @@ bool ZipArchive::open(OpenMode om, bool checkConsistency) {
     }
     
     int errorFlag = 0;
-    zipHandle = zip_open(path.c_str(), zipFlag, &errorFlag);
+    
+    
+    if (resource) {
+        zipHandle = resource->open();
+    } else {
+        zipHandle = zip_open(path.c_str(), zipFlag, &errorFlag);
+    }
+    
     
     //error during opening of the file
     if (errorFlag != ZIP_ER_OK) {
