@@ -85,12 +85,12 @@ namespace amo {
         return amo::path(strPath).file_exists();
     }
     
-    Any PathTransfer::remove(IPCMessage::SmartType msg) {
+    Any PathTransfer::Remove(IPCMessage::SmartType msg) {
         amo::string strPath(msg->getArgumentList()->getString(0));
         return amo::path(strPath).remove();
     }
     
-    Any PathTransfer::removeAll(IPCMessage::SmartType msg) {
+    Any PathTransfer::RemoveAll(IPCMessage::SmartType msg) {
         amo::string strPath(msg->getArgumentList()->getString(0));
         return amo::path(strPath).remove_all();
     }
@@ -123,6 +123,14 @@ namespace amo {
         
         amo::path dstPath(p);
         return m_pPath->move_to(dstPath);
+    }
+    
+    Any PathTransfer::remove(IPCMessage::SmartType msg) {
+        return m_pPath->remove();
+    }
+    
+    Any PathTransfer::removeAll(IPCMessage::SmartType msg) {
+        return m_pPath->remove_all();
     }
     
     std::string PathTransfer::getClass() const {

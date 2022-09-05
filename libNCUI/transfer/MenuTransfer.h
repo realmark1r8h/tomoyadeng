@@ -44,6 +44,8 @@ namespace amo {
          * 							&nbsp;&nbsp;&nbsp;&nbsp;[**Boolean**]	visible 当前菜单项是否可见，默认true<br>
          * 							&nbsp;&nbsp;&nbsp;&nbsp;[**Boolean**]	enabled 当前菜单项是否可用，默认true<br>
          * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	shortcut 当前菜单项快捷键，默认无快捷键<br>
+         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	icon 当前菜单项图标，显示在文字前面，默认无，必须为skin目录下的文件<br>
+         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	selected 当前菜单项选中状态，支持"checkbox"和"radio",**该字段与上面的icon字段冲突，并且优先级高于icon字段**，默认无<br>
          * 							&nbsp;&nbsp;&nbsp;&nbsp;[**JsonObject**] menu 子菜单，与上面的内容一样，可以不填
          *
          *
@@ -79,10 +81,11 @@ namespace amo {
         				backgroundColor: 0xFFFFFFFF,
         				roundcorner: 3,
         				menu: [
-        					{ id: '1', text: '中文', 'separator': true },
-        					{ id: '2', text: '英文', 'shortcut': 'D' },
-        					{ id: '3', text: '法文', 'shortcut': 'E'  },
-        					{ id: '4', text: '德文', 'shortcut': 'F'  }
+        					{ id: '1', text: '中文', 'separator': true, icon: 'huiyuan.png' },
+        					{ id: '2', text: '英文', 'shortcut': 'D', selected: 'checkbox' },
+        					{ id: '3', text: '法文', 'shortcut': 'E', selected: true  },
+        					{ id: '4', text: '德文', 'shortcut': 'F', selected: 'radio' },
+        					{ id: '5', text: '俄文', 'shortcut': 'G', icon: 'pick.png' }
         				]
         			});
         		 ```

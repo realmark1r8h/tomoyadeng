@@ -24,6 +24,7 @@ namespace amo {
         , m_nBrowserID(0)
         , m_nFrameID(0) {
         m_bClosed = false;
+        m_nObjectID = getObjectID();
     }
     
     ContextMenuWindow::~ContextMenuWindow() {
@@ -50,7 +51,7 @@ namespace amo {
         }
         
         LayeredWindow::OnFinalMessage(hWnd);
-        removeTransfer(this->getObjectID());
+        //removeTransfer(m_nObjectID);
     }
     
     BOOL ContextMenuWindow::Receive(ContextMenuParam param) {

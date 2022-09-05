@@ -81,6 +81,9 @@
     <ClInclude Include="transfer\RegistryTransfer.h">
       <Filter>transfer</Filter>
     </ClInclude>
+    <ClInclude Include="rcedit\BinResourceUpdater.h">
+      <Filter>rcedit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -124,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="transfer\RegistryTransfer.cpp">
       <Filter>transfer</Filter>
+    </ClCompile>
+    <ClCompile Include="rcedit\BinResourceUpdater.cpp">
+      <Filter>rcedit</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -13,7 +13,14 @@ namespace amo {
     
     Any KeyboardTransfer::sayString(IPCMessage::SmartType msg) {
         amo::string str(msg->getArgumentList()->getString(0), true);
-        SendKeys(str);
+        int interval = 5;
+        Any& val = msg->getArgumentList()->getValue(1);
+        
+        if (val.isValid() && val.is<int>()) {
+            interval = msg->getArgumentList()->getInt(1);
+        }
+        
+        SendKeys(str, interval);
         return Undefined();
     }
     
@@ -102,7 +109,7 @@ namespace amo {
         SendInput(2, input, sizeof(INPUT));
     }
     
-    void KeyboardTransfer::SendKeys(const amo::string& msg) {
+    void KeyboardTransfer::SendKeys(const amo::string& msg, int interval/* = 5*/) {
     
         USES_CONVERSION;
         std::wstring data = msg.to_unicode();
@@ -110,6 +117,10 @@ namespace amo {
         
         for (int i = 0; i < len; i++) {
             SendUnicode(data[i]);
+            
+            if (interval > 0) {
+                Sleep(interval);
+            }
         }
     }
     

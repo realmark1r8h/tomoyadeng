@@ -1,14 +1,12 @@
-// Created by amoylel on 06/19/2017.
-// Copyright (c) 2017 amoylel All rights reserved.
+// Copyright (c) 2013 GitHub, Inc. All rights reserved.
+// Use of this source code is governed by MIT license that can be found in the
+// LICENSE file.
+//
+// This file is modified from Rescle written by yoshio.okumura@gmail.com:
+// http://code.google.com/p/amo/
 
-#ifndef AMO_RESOURCEUPDATER_H__
-#define AMO_RESOURCEUPDATER_H__
-
-
-
-
-
-
+#ifndef VERSION_INFO_UPDATER
+#define VERSION_INFO_UPDATER
 
 #ifndef _UNICODE
 #define _UNICODE
@@ -25,9 +23,6 @@
 #include <windows.h>
 #include <memory> // unique_ptr
 
-
-
-
 #define RU_VS_COMMENTS          L"Comments"
 #define RU_VS_COMPANY_NAME      L"CompanyName"
 #define RU_VS_FILE_DESCRIPTION  L"FileDescription"
@@ -43,8 +38,7 @@
 
 namespace amo {
 
-    class IconsValue {
-    public:
+    struct IconsValue {
         typedef struct _ICONENTRY {
             BYTE width;
             BYTE height;
@@ -74,44 +68,51 @@ namespace amo {
     };
     
     typedef std::pair<std::wstring, std::wstring> VersionString;
+    typedef std::pair<const BYTE* const, const size_t> OffsetLengthPair;
     
     struct VersionStringTable {
-        Translate Encoding;
-        std::vector<VersionString> Strings;
+        Translate encoding;
+        std::vector<VersionString> strings;
     };
     
-    struct VersionInfo {
-        VersionInfo() {}
+    class VersionInfo {
+    public:
+        VersionInfo();
+        VersionInfo(HMODULE hModule, WORD languageId);
         
-        VersionInfo(const HMODULE& hModule, const WORD& languageId);
-        
-        std::vector<BYTE> Serialize();
+        std::vector<BYTE> Serialize() const;
         
         bool HasFixedFileInfo() const;
         VS_FIXEDFILEINFO& GetFixedFileInfo();
+        const VS_FIXEDFILEINFO& GetFixedFileInfo() const;
         void SetFixedFileInfo(const VS_FIXEDFILEINFO& value);
         
-        std::vector<VersionStringTable> StringTables;
-        std::vector<Translate> SupportedTranslations;
+        std::vector<VersionStringTable> stringTables;
+        std::vector<Translate> supportedTranslations;
         
     private:
-        VS_FIXEDFILEINFO m_fixedFileInfo;
-        void DeserializeVersionInfo(const BYTE* const pData, size_t size);
+        VS_FIXEDFILEINFO fixedFileInfo_;
+        
+        void FillDefaultData();
+        void DeserializeVersionInfo(const BYTE* pData, size_t size);
+        
+        VersionStringTable DeserializeVersionStringTable(const BYTE* tableData);
+        void DeserializeVersionStringFileInfo(const BYTE* offset, size_t length, std::vector<VersionStringTable>& stringTables);
+        void DeserializeVarFileInfo(const unsigned char* offset, std::vector<Translate>& translations);
+        OffsetLengthPair GetChildrenData(const BYTE* entryData);
     };
     
-    class ResourceUpdater  {
+    class ResourceUpdater {
     public:
         typedef std::vector<std::wstring> StringValues;
         typedef std::map<UINT, StringValues> StringTable;
         typedef std::map<WORD, StringTable> StringTableMap;
-        
         typedef std::map<LANGID, VersionInfo> VersionStampMap;
-        
         typedef std::map<UINT, std::unique_ptr<IconsValue>> IconTable;
         
         struct IconResInfo {
-            UINT MaxIconId = 0;
-            IconTable IconBundles;
+            UINT maxIconId = 0;
+            IconTable iconBundles;
         };
         
         typedef std::map<LANGID, IconResInfo> IconTableMap;
@@ -119,56 +120,61 @@ namespace amo {
         ResourceUpdater();
         ~ResourceUpdater();
         
-        virtual bool Load(const WCHAR* filename);
-        virtual bool SetVersionString(const WORD& languageId, const WCHAR* name, const WCHAR* value);
-        virtual bool SetVersionString(const WCHAR* name, const WCHAR* value);
-        virtual bool SetProductVersion(const WORD& languageId, const UINT& id, const unsigned short& v1, const unsigned short& v2, const unsigned short& v3, const unsigned short& v4);
-        virtual bool SetProductVersion(const unsigned short& v1, const unsigned short& v2, const unsigned short& v3, const unsigned short& v4);
-        virtual bool SetFileVersion(const WORD& languageId, const UINT& id, const unsigned short& v1, const unsigned short& v2, const unsigned short& v3, const unsigned short& v4);
-        virtual bool SetFileVersion(const unsigned short& v1, const unsigned short& v2, const unsigned short& v3, const unsigned short& v4);
-        virtual bool ChangeString(const WORD& languageId, const UINT& id, const WCHAR* value);
-        virtual bool ChangeString(const UINT& id, const WCHAR* value);
-        virtual bool SetIcon(const WCHAR* path, const LANGID& langId, const UINT& iconBundle);
-        virtual bool SetIcon(const WCHAR* path, const LANGID& langId);
-        virtual bool SetIcon(const WCHAR* path);
-        virtual bool Commit();
-        
-        static bool UpdateRaw(const WCHAR* filename, const WORD& languageId, const WCHAR* type, const UINT& id, const void* data, const size_t& dataSize, const bool& deleteOld);
-        static bool GetResourcePointer(const HMODULE& hModule, const WORD& languageId, const int& id, const WCHAR* type, BYTE*& data, size_t& dataSize);
+        bool Load(const WCHAR* filename);
+        bool SetVersionString(WORD languageId, const WCHAR* name, const WCHAR* value);
+        bool SetVersionString(const WCHAR* name, const WCHAR* value);
+        const WCHAR* GetVersionString(WORD languageId, const WCHAR* name);
+        const WCHAR* GetVersionString(const WCHAR* name);
+        bool SetProductVersion(WORD languageId, UINT id, unsigned short v1, unsigned short v2, unsigned short v3, unsigned short v4);
+        bool SetProductVersion(unsigned short v1, unsigned short v2, unsigned short v3, unsigned short v4);
+        bool SetFileVersion(WORD languageId, UINT id, unsigned short v1, unsigned short v2, unsigned short v3, unsigned short v4);
+        bool SetFileVersion(unsigned short v1, unsigned short v2, unsigned short v3, unsigned short v4);
+        bool ChangeString(WORD languageId, UINT id, const WCHAR* value);
+        bool ChangeString(UINT id, const WCHAR* value);
+        const WCHAR* GetString(WORD languageId, UINT id);
+        const WCHAR* GetString(UINT id);
+        bool SetIcon(const WCHAR* path, const LANGID& langId, UINT iconBundle);
+        bool SetIcon(const WCHAR* path, const LANGID& langId);
+        bool SetIcon(const WCHAR* path);
+        bool SetExecutionLevel(const WCHAR* value);
+        bool IsExecutionLevelSet();
+        bool SetApplicationManifest(const WCHAR* value);
+        bool IsApplicationManifestSet();
+        bool Commit();
         
     private:
-        bool SerializeStringTable(const StringValues& values, const UINT& blockId, std::vector<char>& out);
+        bool SerializeStringTable(const StringValues& values, UINT blockId, std::vector<char>* out);
         
-        // not thread-safe
         static BOOL CALLBACK OnEnumResourceName(HMODULE hModule, LPCWSTR lpszType, LPWSTR lpszName, LONG_PTR lParam);
-        
-        // not thread-safe
+        static BOOL CALLBACK OnEnumResourceManifest(HMODULE hModule, LPCWSTR lpszType, LPWSTR lpszName, LONG_PTR lParam);
         static BOOL CALLBACK OnEnumResourceLanguage(HANDLE hModule, LPCWSTR lpszType, LPCWSTR lpszName, WORD wIDLanguage, LONG_PTR lParam);
         
-        HMODULE hModule;
-        std::wstring filename;
-        VersionStampMap versionStampMap;
-        StringTableMap stringTableMap;
-        IconTableMap iconBundleMap;
-        
-        unsigned short IconCount;
+        HMODULE module_;
+        std::wstring filename_;
+        std::wstring executionLevel_;
+        std::wstring originalExecutionLevel_;
+        std::wstring applicationManifestPath_;
+        std::wstring manifestString_;
+        VersionStampMap versionStampMap_;
+        StringTableMap stringTableMap_;
+        IconTableMap iconBundleMap_;
     };
     
     class ScopedResourceUpdater {
     public:
-        ScopedResourceUpdater(const WCHAR* filename, const bool& deleteOld);
+        ScopedResourceUpdater(const WCHAR* filename, bool deleteOld);
         ~ScopedResourceUpdater();
         
         HANDLE Get() const;
         bool Commit();
         
     private:
-        bool EndUpdate(const bool& doesCommit);
+        bool EndUpdate(bool doesCommit);
         
-        HANDLE handle;
-        bool commited;
+        HANDLE handle_;
+        bool commited_ = false;
     };
     
-}
+}  // namespace amo
 
-#endif // AMO_RESOURCEUPDATER_H__
+#endif // VERSION_INFO_UPDATER

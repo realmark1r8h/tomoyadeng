@@ -32,6 +32,7 @@
 #include "transfer/BrowserHostTransfer.h"
 #include "utility/utility.hpp"
 #include "scheme/UrlResourceHandlerFactory.h"
+#include <regex>
 
 
 namespace {
@@ -826,6 +827,88 @@ namespace amo {
         return Transfer::onMessageTransfer(msg);
     }
     
+    std::string commandToAction(int commandID) {
+        switch (commandID) {
+        case 100:
+            return "goBack";
+            
+        case 101:
+            return "goForward";
+            
+        case 110:
+            return "undo";
+            
+        case 111:
+            return "redo";
+            
+        case 112:
+            return "cut";
+            
+        case 113:
+            return "copy";
+            
+        case 114:
+            return "paste";
+            
+        case 115:
+            return "delete";
+            
+        case 116:
+            return "selectAll";
+            
+        case 131:
+            return "print";
+            
+        case 132:
+            return "viewResource";
+            
+        default:
+            break;
+        }
+        
+        return "";
+    }
+    
+    bool commandIsEnabled(int commandID, int flag) {
+    
+    
+    
+        switch (commandID) {
+        /*case 100:
+        	return "goBack";
+        
+        case 101:
+        	return "goForward";*/
+        
+        case 110:
+            return  flag & 0x1;
+            
+        case 111:
+            return flag & (0x1 << 1);
+            
+        case 112:
+            return flag & (0x1 << 2);
+            
+        case 113:
+            return flag & (0x1 << 3);
+            
+        case 114:
+            return flag & (0x1 << 4);
+            
+        case 115:
+            return flag & (0x1 << 5);
+            
+        case 116:
+            return flag & (0x1 << 6);
+            
+            
+        default:
+            break;
+        }
+        
+        return true;
+    }
+    
     void WebkitView::OnBeforeContextMenu(CefRefPtr<CefBrowser> browser,
                                          CefRefPtr<CefFrame> frame,
                                          CefRefPtr<CefContextMenuParams> params,
@@ -834,24 +917,145 @@ namespace amo {
             return;
         }
         
+        
+        /*  type:1, value : 撤消(&U), keycode : 261360976, shift : true, ctrl : true, alt : true, command : 110
+        	type : 1, value : 重做(&R), keycode : 261360976, shift : true, ctrl : true, alt : true, command : 111
+        	type : 4, value : , keycode : 261360976, shift : true, ctrl : true, alt : true, command : -1
+        	type : 1, value : 剪切(&T), keycode : 261360976, shift : true, ctrl : true, alt : true, command : 112
+        	type : 1, value : 复制(&C), keycode : 261360976, shift : true, ctrl : true, alt : true, command : 113
+        	type : 1, value : 粘贴(&P), keycode : 261360976, shift : true, ctrl : true, alt : true, command : 114
+        	type : 1, value : 删除(&D), keycode : 261360976, shift : true, ctrl : true, alt : true, command : 115
+        	type : 4, value : , keycode : 261360976, shift : true, ctrl : true, alt : true, command : -1
+        	type : 1, value : 全选(&A), keycode : 261360976, shift : true, ctrl : true, alt : true, command : 116
+        	type : 4, value : , keycode : 261360976, shift : true, ctrl : true, alt : true, command : -1
+        	type : 1, value : radio, keycode : 261360976, shift : true, ctrl : true, alt : true, command : 200
+        	type : 4, value : , keycode : 261360976, shift : true, ctrl : true, alt : true, command : -1
+        	type : 1, value : 添加到字典中(&A), keycode : 261360976, shift : true, ctrl : true, alt : true, command : 206
+        
+        	type:1, value:返回(&B), keycode:259263824, shift:true, ctrl:true, alt:true, command:100
+        	type:1, value:前进(&F), keycode:259263824, shift:true, ctrl:true, alt:true, command:101
+        	type:4, value:, keycode:259263824, shift:true, ctrl:true, alt:true, command:-1
+        	type:1, value:打印(&P)..., keycode:259263824, shift:true, ctrl:true, alt:true, command:131
+        	type:1, value:查看源代码(&O), keycode:259263824, shift:true, ctrl:true, alt:true, command:132*/
+        
+        
         if ((params->GetTypeFlags() & (CM_TYPEFLAG_PAGE | CM_TYPEFLAG_FRAME)) != 0) {
             //if (model->GetCount() > 0) model->AddSeparator();						//添加分割符
             // 不显示含有打印及查看源码的菜单, （只显示Edit类菜单）
             int k = 0;
             int count = model->GetCount();
             
+            if (count == 0) {
+                return;
+            }
+            
+            amo::json json;
+            amo::json menu;
+            menu.set_array();
+            //model->SetAcceleratorAt(0, 'C', true, true, true);
+            
+            
             for (int i = 0; i < count; i++) {
                 int m = model->GetCommandIdAt(i);
+                
+                if (m == 200) { // 200 是一个radio?? ，BUG?
+                    continue;
+                }
                 
                 if (m == 131 || m == 132) { // 131-打印，132-查看源码
                     k++;
                 }
+                
+                
+                int key_code;
+                bool shift;
+                bool ctrl;
+                bool alt;
+                model->GetAcceleratorAt(i, key_code, shift, ctrl, alt);
+                $cdevel("type:{}, value:{}, keycode:{}, shift:{}, ctrl:{}, alt:{},", (int)model->GetTypeAt(i), amo::string(model->GetLabelAt(i).ToString(), true).to_ansi(), key_code, shift, ctrl, alt);
+                
+                /*MENUITEMTYPE_NONE,
+                MENUITEMTYPE_COMMAND,
+                MENUITEMTYPE_CHECK,
+                MENUITEMTYPE_RADIO,
+                MENUITEMTYPE_SEPARATOR,
+                MENUITEMTYPE_SUBMENU,*/
+                CefMenuModel::MenuItemType  type = model->GetTypeAt(i);
+                
+                switch (type) {
+                case	MENUITEMTYPE_NONE:
+                    break;
+                    
+                case	MENUITEMTYPE_COMMAND: {
+                    std::string label = model->GetLabelAt(i);
+                    int commandid = model->GetCommandIdAt(i);
+                    int editFlags = params->GetEditStateFlags();
+                    std::string shortcut;
+                    std::regex reg("\\(&.+?\\)");
+                    std::smatch m;
+                    
+                    while (std::regex_search(label, m, reg)) {
+                        shortcut = m[0].str();
+                        
+                        shortcut = shortcut.substr(2);
+                        shortcut = shortcut.substr(0, shortcut.size() - 1);
+                        break;
+                    }
+                    
+                    label = std::regex_replace(label, reg, "");
+                    
+                    amo::json item;
+                    item.put("id", std::to_string(commandid));
+                    item.put("text", label);
+                    
+                    if (shortcut.size() == 1) {
+                        item.put("shortcut", shortcut);
+                    }
+                    
+                    std::string action = commandToAction(commandid);
+                    
+                    
+                    
+                    if (i < count - 1 && (model->GetTypeAt(i + 1) == MENUITEMTYPE_SEPARATOR)) {
+                        item.put("separator", true);
+                    }
+                    
+                    if (!action.empty()) {
+                        item.put("action", action);
+                    }
+                    
+                    bool enabled = commandIsEnabled(commandid, editFlags);
+                    item.put("enabled", enabled);
+                    menu.push_back(item);
+                }
+                
+                case	MENUITEMTYPE_CHECK:
+                case	MENUITEMTYPE_RADIO:
+                case	MENUITEMTYPE_SEPARATOR:
+                case	MENUITEMTYPE_SUBMENU:
+                default:
+                    break;
+                }
+                
+                
+                
+                
             }
+            
+            
+            model->Clear(); // 移除原有菜单
             
             if (k == 2) {
-                model->Clear();
+                return;
             }
             
+            json.put("menu", menu);
+            auto menuTransfer = ClassTransfer::getUniqueTransfer<MenuTransfer>();
+            std::shared_ptr<IPCMessage> msg = IPCMessage::Empty();
+            
+            msg->getArgumentList()->setValue(0, json);
+            
+            menuTransfer->onCreateClass(msg);
         }
         
         return;

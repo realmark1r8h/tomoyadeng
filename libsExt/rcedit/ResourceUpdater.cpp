@@ -3,7 +3,8 @@
 // LICENSE file.
 //
 // This file is modified from Rescle written by yoshio.okumura@gmail.com:
-// http://code.google.com/p/rescle/
+// http://code.google.com/p/amo/
+
 #include "stdafx.h"
 #include "ResourceUpdater.h"
 
@@ -11,6 +12,8 @@
 #include <atlstr.h>
 #include <sstream> // wstringstream
 #include <iomanip> // setw, setfill
+#include <fstream>
+#include <codecvt>
 
 namespace amo {
 
@@ -70,45 +73,57 @@ namespace amo {
         } VS_VERSION_ROOT;
 #pragma pack(pop)
         
-        unsigned int round(const unsigned int& value,
-                           const unsigned int& modula = 4) {
+        // The default en-us LANGID.
+        LANGID kLangEnUs = 1033;
+        LANGID kCodePageEnUs = 1200;
+        
+        template<typename T>
+        inline T round(T value, int modula = 4) {
             return value + ((value % modula > 0) ? (modula - value % modula) : 0);
+        }
+        
+        std::wstring ReadFileToString(const wchar_t* filename) {
+            std::wifstream wif(filename);
+            wif.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t>));
+            std::wstringstream wss;
+            wss << wif.rdbuf();
+            return wss.str();
         }
         
         class ScopedFile {
         public:
             ScopedFile(const WCHAR* path)
-                : hFile(CreateFileW(path, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) {}
+                : file_(CreateFileW(path, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) {}
             ~ScopedFile() {
-                CloseHandle(hFile);
+                CloseHandle(file_);
             }
             
             operator HANDLE() {
-                return hFile;
+                return file_;
             }
             
         private:
-            HANDLE hFile;
+            HANDLE file_;
         };
         
-        class VersionStampValue {
-        public:
-            DWORD wLength = 0; // length in bytes of struct, including children
-            DWORD wValueLength = 0; // stringfileinfo, stringtable: 0; string: Value size in WORD; var: Value size in bytes
-            DWORD wType = 0; // 0: binary data; 1: text data
-            std::wstring szKey; // stringtable: 8-digit hex stored as UTF-16 (hiword: hi6: sublang, lo10: majorlang; loword: code page); must include zero words to align next member on 32-bit boundary
-            std::vector<BYTE> Value; // string: zero-terminated string; var: array of language & code page ID pairs
-            std::vector<VersionStampValue> Children;
+        struct VersionStampValue {
+            WORD valueLength = 0; // stringfileinfo, stringtable: 0; string: Value size in WORD; var: Value size in bytes
+            WORD type = 0; // 0: binary data; 1: text data
+            std::wstring key; // stringtable: 8-digit hex stored as UTF-16 (hiword: hi6: sublang, lo10: majorlang; loword: code page); must include zero words to align next member on 32-bit boundary
+            std::vector<BYTE> value; // string: zero-terminated string; var: array of language & code page ID pairs
+            std::vector<VersionStampValue> children;
             
-            size_t GetLength();
-            std::vector<BYTE> Serialize();
+            size_t GetLength() const;
+            std::vector<BYTE> Serialize() const;
         };
-        
-        typedef std::pair<const BYTE* const, const size_t> OffsetLengthPair;
         
     }  // namespace
     
-    VersionInfo::VersionInfo(const HMODULE& hModule, const WORD& languageId) {
+    VersionInfo::VersionInfo() {
+        FillDefaultData();
+    }
+    
+    VersionInfo::VersionInfo(HMODULE hModule, WORD languageId) {
         HRSRC hRsrc = FindResourceExW(hModule, RT_VERSION, MAKEINTRESOURCEW(1), languageId);
         
         if (hRsrc == NULL) {
@@ -134,30 +149,35 @@ namespace amo {
         }
         
         DeserializeVersionInfo(static_cast<BYTE*>(p), size);
+        FillDefaultData();
     }
     
     bool VersionInfo::HasFixedFileInfo() const {
-        return m_fixedFileInfo.dwSignature == 0xFEEF04BD;
+        return fixedFileInfo_.dwSignature == 0xFEEF04BD;
     }
     
     VS_FIXEDFILEINFO& VersionInfo::GetFixedFileInfo() {
-        return m_fixedFileInfo;
+        return fixedFileInfo_;
+    }
+    
+    const VS_FIXEDFILEINFO& VersionInfo::GetFixedFileInfo() const {
+        return fixedFileInfo_;
     }
     
     void VersionInfo::SetFixedFileInfo(const VS_FIXEDFILEINFO& value) {
-        m_fixedFileInfo = value;
+        fixedFileInfo_ = value;
     }
     
-    std::vector<BYTE> VersionInfo::Serialize() {
+    std::vector<BYTE> VersionInfo::Serialize() const {
         VersionStampValue versionInfo;
-        versionInfo.szKey = L"VS_VERSION_INFO";
-        versionInfo.wType = 0;
+        versionInfo.key = L"VS_VERSION_INFO";
+        versionInfo.type = 0;
         
         if (HasFixedFileInfo()) {
             auto size = sizeof(VS_FIXEDFILEINFO);
-            versionInfo.wValueLength = size;
+            versionInfo.valueLength = size;
             
-            auto& dst = versionInfo.Value;
+            auto& dst = versionInfo.value;
             dst.resize(size);
             
             memcpy(&dst[0], &GetFixedFileInfo(), size);
@@ -165,141 +185,142 @@ namespace amo {
         
         {
             VersionStampValue stringFileInfo;
-            stringFileInfo.szKey = L"StringFileInfo";
-            stringFileInfo.wType = 1;
-            stringFileInfo.wValueLength = 0;
+            stringFileInfo.key = L"StringFileInfo";
+            stringFileInfo.type = 1;
+            stringFileInfo.valueLength = 0;
             
-            auto& stringTables = StringTables;
-            
-            for (auto iTable = stringTables.begin(); iTable != stringTables.end(); ++iTable) {
+            for (const auto& iTable : stringTables) {
                 VersionStampValue stringTableRaw;
-                stringTableRaw.wType = 1;
-                stringTableRaw.wValueLength = 0;
+                stringTableRaw.type = 1;
+                stringTableRaw.valueLength = 0;
                 
                 {
-                    auto& translate = iTable->Encoding;
+                    auto& translate = iTable.encoding;
                     std::wstringstream ss;
                     ss << std::hex << std::setw(8) << std::setfill(L'0') << (translate.wLanguage << 16 | translate.wCodePage);
-                    stringTableRaw.szKey = ss.str();
+                    stringTableRaw.key = ss.str();
                 }
                 
-                auto& strings = iTable->Strings;
-                
-                for (auto iString = strings.begin(); iString != strings.end(); ++iString) {
-                    auto& stringValue = iString->second;
+                for (const auto& iString : iTable.strings) {
+                    const auto& stringValue = iString.second;
                     auto strLenNullTerminated = stringValue.length() + 1;
                     
                     VersionStampValue stringRaw;
-                    stringRaw.wType = 1;
-                    stringRaw.szKey = iString->first;
-                    stringRaw.wValueLength = (WORD)strLenNullTerminated;
+                    stringRaw.type = 1;
+                    stringRaw.key = iString.first;
+                    stringRaw.valueLength = strLenNullTerminated;
                     
                     auto size = strLenNullTerminated * sizeof(WCHAR);
-                    auto& dst = stringRaw.Value;
+                    auto& dst = stringRaw.value;
                     dst.resize(size);
                     
                     auto src = stringValue.c_str();
                     
                     memcpy(&dst[0], src, size);
                     
-                    stringTableRaw.Children.push_back(std::move(stringRaw));
+                    stringTableRaw.children.push_back(std::move(stringRaw));
                 }
                 
-                stringFileInfo.Children.push_back(std::move(stringTableRaw));
+                stringFileInfo.children.push_back(std::move(stringTableRaw));
             }
             
-            versionInfo.Children.push_back(std::move(stringFileInfo));
+            versionInfo.children.push_back(std::move(stringFileInfo));
         }
         
         {
             VersionStampValue varFileInfo;
-            varFileInfo.szKey = L"VarFileInfo";
-            varFileInfo.wType = 1;
-            varFileInfo.wValueLength = 0;
+            varFileInfo.key = L"VarFileInfo";
+            varFileInfo.type = 1;
+            varFileInfo.valueLength = 0;
             
             {
                 VersionStampValue varRaw;
-                varRaw.szKey = L"Translation";
-                varRaw.wType = 0;
+                varRaw.key = L"Translation";
+                varRaw.type = 0;
                 
                 {
-                    auto& src = SupportedTranslations;
                     auto newValueSize = sizeof(DWORD);
-                    auto& dst = varRaw.Value;
-                    dst.resize(src.size() * newValueSize);
+                    auto& dst = varRaw.value;
+                    dst.resize(supportedTranslations.size() * newValueSize);
                     
-                    for (size_t iVar = 0; iVar < src.size(); ++iVar) {
-                        auto& translate = src[iVar];
+                    for (auto iVar = 0; iVar < supportedTranslations.size(); ++iVar) {
+                        auto& translate = supportedTranslations[iVar];
                         auto var = DWORD(translate.wCodePage) << 16 | translate.wLanguage;
                         memcpy(&dst[iVar * newValueSize], &var, newValueSize);
                     }
                     
-                    varRaw.wValueLength = varRaw.Value.size();
+                    varRaw.valueLength = varRaw.value.size();
                 }
                 
-                varFileInfo.Children.push_back(std::move(varRaw));
+                varFileInfo.children.push_back(std::move(varRaw));
             }
             
-            versionInfo.Children.push_back(std::move(varFileInfo));
+            versionInfo.children.push_back(std::move(varFileInfo));
         }
         
-        versionInfo.wLength = versionInfo.GetLength();
-        return move(versionInfo.Serialize());
+        return std::move(versionInfo.Serialize());
     }
     
-    VersionStringTable DeserializeVersionStringTable(const _VS_VERSION_STRING* const stringTable);
-    void DeserializeVersionStringFileInfo(const BYTE* offset, size_t length, std::vector<VersionStringTable>& stringTables);
-    void DeserializeVarFileInfo(const unsigned char* offset, std::vector<Translate>& translations);
-    OffsetLengthPair GetChildrenData(const VS_VERSION_STRING* const entry);
+    void VersionInfo::FillDefaultData() {
+        if (stringTables.empty()) {
+            Translate enUsTranslate = { kLangEnUs, kCodePageEnUs };
+            stringTables.push_back({ enUsTranslate });
+            supportedTranslations.push_back(enUsTranslate);
+        }
+        
+        if (!HasFixedFileInfo()) {
+            fixedFileInfo_ = { 0 };
+            fixedFileInfo_.dwSignature = 0xFEEF04BD;
+            fixedFileInfo_.dwFileType = VFT_APP;
+        }
+    }
     
-    void VersionInfo::DeserializeVersionInfo(const BYTE* const pData, size_t size) {
-        const auto pVersionInfo = reinterpret_cast<const VS_VERSION_ROOT* const>(pData);
-        const auto& fixedFileInfoSize = pVersionInfo->Header.wValueLength;
+    void VersionInfo::DeserializeVersionInfo(const BYTE* pData, size_t size) {
+        auto pVersionInfo = reinterpret_cast<const VS_VERSION_ROOT*>(pData);
+        WORD fixedFileInfoSize = pVersionInfo->Header.wValueLength;
         
         if (fixedFileInfoSize > 0) {
             SetFixedFileInfo(pVersionInfo->Info.Info);
         }
         
-        const auto fixedFileInfoEndOffset = reinterpret_cast<const BYTE* const>(&pVersionInfo->Info.szKey) + (wcslen(pVersionInfo->Info.szKey) + 1) * sizeof(WCHAR) + fixedFileInfoSize;
-        const auto pVersionInfoChildren = reinterpret_cast<const BYTE* const>(round(reinterpret_cast<unsigned int>(fixedFileInfoEndOffset)));
-        const auto versionInfoChildrenOffset = pVersionInfoChildren - pData;
-        const auto versionInfoChildrenSize = pVersionInfo->Header.wLength - versionInfoChildrenOffset;
+        const BYTE* fixedFileInfoEndOffset = reinterpret_cast<const BYTE*>(&pVersionInfo->Info.szKey) + (wcslen(pVersionInfo->Info.szKey) + 1) * sizeof(WCHAR) + fixedFileInfoSize;
+        const BYTE* pVersionInfoChildren = reinterpret_cast<const BYTE*>(round(reinterpret_cast<ptrdiff_t>(fixedFileInfoEndOffset)));
+        size_t versionInfoChildrenOffset = pVersionInfoChildren - pData;
+        size_t versionInfoChildrenSize = pVersionInfo->Header.wLength - versionInfoChildrenOffset;
         
         const auto childrenEndOffset = pVersionInfoChildren + versionInfoChildrenSize;
         const auto resourceEndOffset = pData + size;
         
         for (auto p = pVersionInfoChildren; p < childrenEndOffset && p < resourceEndOffset;) {
-            const auto pVersionInfoChild = reinterpret_cast<const VS_VERSION_STRING*>(p);
-            
-            const auto& pKey = pVersionInfoChild->szKey;
-            const auto versionInfoChildData = GetChildrenData(pVersionInfoChild);
+            auto pKey = reinterpret_cast<const VS_VERSION_STRING*>(p)->szKey;
+            auto versionInfoChildData = GetChildrenData(p);
             
             if (wcscmp(pKey, L"StringFileInfo") == 0) {
-                DeserializeVersionStringFileInfo(versionInfoChildData.first, versionInfoChildData.second, StringTables);
+                DeserializeVersionStringFileInfo(versionInfoChildData.first, versionInfoChildData.second, stringTables);
             } else if (wcscmp(pKey, L"VarFileInfo") == 0) {
-                DeserializeVarFileInfo(versionInfoChildData.first, SupportedTranslations);
+                DeserializeVarFileInfo(versionInfoChildData.first, supportedTranslations);
             }
             
-            p += round(pVersionInfoChild->Header.wLength);
+            p += round(reinterpret_cast<const VS_VERSION_STRING*>(p)->Header.wLength);
         }
     }
     
-    VersionStringTable DeserializeVersionStringTable(const _VS_VERSION_STRING* const stringTable) {
-        const auto strings = GetChildrenData(stringTable);
-        
+    VersionStringTable VersionInfo::DeserializeVersionStringTable(const BYTE* tableData) {
+        auto strings = GetChildrenData(tableData);
+        auto stringTable = reinterpret_cast<const VS_VERSION_STRING*>(tableData);
         auto end_ptr = const_cast<WCHAR*>(stringTable->szKey + (8 * sizeof(WCHAR)));
         auto langIdCodePagePair = static_cast<DWORD>(wcstol(stringTable->szKey, &end_ptr, 16));
         
         VersionStringTable tableEntry;
         
         // unicode string of 8 hex digits
-        tableEntry.Encoding.wLanguage = langIdCodePagePair >> 16;
-        tableEntry.Encoding.wCodePage = langIdCodePagePair;
+        tableEntry.encoding.wLanguage = langIdCodePagePair >> 16;
+        tableEntry.encoding.wCodePage = langIdCodePagePair;
         
         for (auto posStrings = 0U; posStrings < strings.second;) {
             const auto stringEntry = reinterpret_cast<const VS_VERSION_STRING* const>(strings.first + posStrings);
-            const auto stringData = GetChildrenData(stringEntry);
-            tableEntry.Strings.push_back(std::pair<std::wstring, std::wstring>(stringEntry->szKey, std::wstring(reinterpret_cast<const WCHAR* const>(stringData.first), stringEntry->Header.wValueLength)));
+            const auto stringData = GetChildrenData(strings.first + posStrings);
+            tableEntry.strings.push_back(std::pair<std::wstring, std::wstring>(stringEntry->szKey, std::wstring(reinterpret_cast<const WCHAR* const>(stringData.first), stringEntry->Header.wValueLength)));
             
             posStrings += round(stringEntry->Header.wLength);
         }
@@ -307,20 +328,16 @@ namespace amo {
         return tableEntry;
     }
     
-    void DeserializeVersionStringFileInfo(const BYTE* offset, size_t length, std::vector<VersionStringTable>& stringTables) {
+    void VersionInfo::DeserializeVersionStringFileInfo(const BYTE* offset, size_t length, std::vector<VersionStringTable>& stringTables) {
         for (auto posStringTables = 0U; posStringTables < length;) {
-            const auto stringTable = reinterpret_cast<const VS_VERSION_STRING*>(offset + posStringTables);
-            
-            auto stringTableEntry = DeserializeVersionStringTable(stringTable);
+            auto stringTableEntry = DeserializeVersionStringTable(offset + posStringTables);
             stringTables.push_back(stringTableEntry);
-            
-            posStringTables += round(stringTable->Header.wLength);
+            posStringTables += round(reinterpret_cast<const VS_VERSION_STRING*>(offset + posStringTables)->Header.wLength);
         }
     }
     
-    void DeserializeVarFileInfo(const unsigned char* offset, std::vector<Translate>& translations) {
-        const auto varObject = reinterpret_cast<const VS_VERSION_STRING* const>(offset);
-        const auto translatePairs = GetChildrenData(varObject);
+    void VersionInfo::DeserializeVarFileInfo(const unsigned char* offset, std::vector<Translate>& translations) {
+        const auto translatePairs = GetChildrenData(offset);
         
         const auto top = reinterpret_cast<const DWORD* const>(translatePairs.first);
         
@@ -333,8 +350,9 @@ namespace amo {
         }
     }
     
-    OffsetLengthPair GetChildrenData(const VS_VERSION_STRING* const entry) {
-        auto headerOffset = reinterpret_cast<const BYTE* const>(entry);
+    OffsetLengthPair VersionInfo::GetChildrenData(const BYTE* entryData) {
+        auto entry = reinterpret_cast<const VS_VERSION_STRING*>(entryData);
+        auto headerOffset = entryData;
         auto headerSize = sizeof(VS_VERSION_HEADER);
         auto keySize = (wcslen(entry->szKey) + 1) * sizeof(WCHAR);
         auto childrenOffset = round(headerSize + keySize);
@@ -344,102 +362,111 @@ namespace amo {
         return OffsetLengthPair(pChildren, childrenSize);
     }
     
-    size_t VersionStampValue::GetLength() {
-        if (wLength > 0) {
-            return wLength;
-        }
-        
+    size_t VersionStampValue::GetLength() const {
         size_t bytes = sizeof(VS_VERSION_HEADER);
-        bytes += static_cast<size_t>(szKey.length() + 1) * sizeof(WCHAR);
+        bytes += static_cast<size_t>(key.length() + 1) * sizeof(WCHAR);
         
-        if (!Value.empty()) {
-            bytes = round(bytes) + Value.size();
+        if (!value.empty()) {
+            bytes = round(bytes) + value.size();
         }
         
-        if (!Children.empty()) {
-            for (auto i = Children.begin(); i != Children.end(); ++i) {
-                bytes = round(bytes) + static_cast<size_t>(i->GetLength());
-            }
+        for (const auto& child : children) {
+            bytes = round(bytes) + static_cast<size_t>(child.GetLength());
         }
-        
-        wLength = bytes;
         
         return bytes;
     }
     
-    std::vector<BYTE> VersionStampValue::Serialize() {
+    std::vector<BYTE> VersionStampValue::Serialize() const {
         std::vector<BYTE> data = std::vector<BYTE>(GetLength());
-        memset(&data[0], NULL, data.size());
         
-        size_t bytes = 0;
+        size_t offset = 0;
         
-        size_t headerSize = sizeof(VS_VERSION_HEADER);
-        memcpy(&data[bytes], this, headerSize);
-        bytes += headerSize;
+        VS_VERSION_HEADER header = { static_cast<WORD>(data.size()), valueLength, type };
+        memcpy(&data[offset], &header, sizeof(header));
+        offset += sizeof(header);
         
-        auto keySize = static_cast<size_t>(szKey.length() + 1) * sizeof(WCHAR);
-        memcpy(&data[bytes], szKey.c_str(), keySize);
-        bytes += keySize;
+        auto keySize = static_cast<size_t>(key.length() + 1) * sizeof(WCHAR);
+        memcpy(&data[offset], key.c_str(), keySize);
+        offset += keySize;
         
-        if (!Value.empty()) {
-            bytes = round(bytes);
-            auto valueSize = Value.size();
-            memcpy(&data[bytes], &Value[0], valueSize);
-            bytes += valueSize;
+        if (!value.empty()) {
+            offset = round(offset);
+            memcpy(&data[offset], &value[0], value.size());
+            offset += value.size();
         }
         
-        if (!Children.empty()) {
-            for (auto i = Children.begin(); i != Children.end(); ++i) {
-                bytes = round(bytes);
-                auto childLength = i->GetLength();
-                auto src = i->Serialize();
-                memcpy(&data[bytes], &src[0], childLength);
-                bytes += childLength;
-            }
+        for (const auto& child : children) {
+            offset = round(offset);
+            size_t childLength = child.GetLength();
+            std::vector<BYTE> src = child.Serialize();
+            memcpy(&data[offset], &src[0], childLength);
+            offset += childLength;
         }
         
-        return move(data);
+        return std::move(data);
     }
     
-    ResourceUpdater::ResourceUpdater() : hModule(NULL) {
+    ResourceUpdater::ResourceUpdater() : module_(NULL) {
     }
     
     ResourceUpdater::~ResourceUpdater() {
-        if (hModule != NULL) {
-            FreeLibrary(hModule);
-            hModule = NULL;
+        if (module_ != NULL) {
+            FreeLibrary(module_);
+            module_ = NULL;
         }
     }
     
     bool ResourceUpdater::Load(const WCHAR* filename) {
-        hModule = LoadLibraryExW(filename, NULL, DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_AS_DATAFILE);
+        wchar_t abspath[MAX_PATH] = { 0 };
         
-        if (hModule == NULL) {
+        if (_wfullpath(abspath, filename, MAX_PATH)) {
+            module_ = LoadLibraryExW(abspath, NULL, DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_AS_DATAFILE);
+        } else {
+            module_ = LoadLibraryExW(filename, NULL, DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_AS_DATAFILE);
+        }
+        
+        if (module_ == NULL) {
             return false;
         }
         
-        this->filename = filename;
+        this->filename_ = filename;
         
-        EnumResourceNamesW(hModule, RT_STRING, OnEnumResourceName, reinterpret_cast<LONG_PTR>(this));
-        EnumResourceNamesW(hModule, RT_VERSION, OnEnumResourceName, reinterpret_cast<LONG_PTR>(this));
-        EnumResourceNamesW(hModule, RT_GROUP_ICON, OnEnumResourceName, reinterpret_cast<LONG_PTR>(this));
-        EnumResourceNamesW(hModule, RT_ICON, OnEnumResourceName, reinterpret_cast<LONG_PTR>(this));
+        EnumResourceNamesW(module_, RT_STRING, OnEnumResourceName, reinterpret_cast<LONG_PTR>(this));
+        EnumResourceNamesW(module_, RT_VERSION, OnEnumResourceName, reinterpret_cast<LONG_PTR>(this));
+        EnumResourceNamesW(module_, RT_GROUP_ICON, OnEnumResourceName, reinterpret_cast<LONG_PTR>(this));
+        EnumResourceNamesW(module_, RT_ICON, OnEnumResourceName, reinterpret_cast<LONG_PTR>(this));
+        EnumResourceNamesW(module_, RT_MANIFEST, OnEnumResourceManifest, reinterpret_cast<LONG_PTR>(this));
         
         return true;
     }
     
-    bool ResourceUpdater::SetVersionString(const WORD& languageId, const WCHAR* name, const WCHAR* value) {
-        if (versionStampMap.find(languageId) == versionStampMap.end()) {
-            return false;
-        }
-        
+    bool ResourceUpdater::SetExecutionLevel(const WCHAR* value) {
+        executionLevel_ = value;
+        return true;
+    }
+    
+    bool ResourceUpdater::IsExecutionLevelSet() {
+        return !executionLevel_.empty();
+    }
+    
+    bool ResourceUpdater::SetApplicationManifest(const WCHAR* value) {
+        applicationManifestPath_ = value;
+        return true;
+    }
+    
+    bool ResourceUpdater::IsApplicationManifestSet() {
+        return !applicationManifestPath_.empty();
+    }
+    
+    bool ResourceUpdater::SetVersionString(WORD languageId, const WCHAR* name, const WCHAR* value) {
         std::wstring nameStr(name);
         std::wstring valueStr(value);
         
-        auto& stringTables = versionStampMap[languageId].StringTables;
+        auto& stringTables = versionStampMap_[languageId].stringTables;
         
         for (auto j = stringTables.begin(); j != stringTables.end(); ++j) {
-            auto& stringPairs = j->Strings;
+            auto& stringPairs = j->strings;
             
             for (auto k = stringPairs.begin(); k != stringPairs.end(); ++k) {
                 if (k->first == nameStr) {
@@ -456,19 +483,39 @@ namespace amo {
     }
     
     bool ResourceUpdater::SetVersionString(const WCHAR* name, const WCHAR* value) {
-        if (versionStampMap.size() < 1) {
-            return false;
+        LANGID langId = versionStampMap_.empty() ? kLangEnUs
+                        : versionStampMap_.begin()->first;
+        return SetVersionString(langId, name, value);
+    }
+    
+    const WCHAR* ResourceUpdater::GetVersionString(WORD languageId, const WCHAR* name) {
+        std::wstring nameStr(name);
+        
+        const auto& stringTables = versionStampMap_[languageId].stringTables;
+        
+        for (const auto& j : stringTables) {
+            const auto& stringPairs = j.strings;
+            
+            for (const auto& k : stringPairs) {
+                if (k.first == nameStr) {
+                    return k.second.c_str();
+                }
+            }
+        }
+        
+        return NULL;
+    }
+    
+    const WCHAR* ResourceUpdater::GetVersionString(const WCHAR* name) {
+        if (versionStampMap_.empty()) {
+            return NULL;
         } else {
-            return SetVersionString(versionStampMap.begin()->first, name, value);
+            return GetVersionString(versionStampMap_.begin()->first, name);
         }
     }
     
-    bool ResourceUpdater::SetProductVersion(const WORD& languageId, const UINT& id, const unsigned short& v1, const unsigned short& v2, const unsigned short& v3, const unsigned short& v4) {
-        if (versionStampMap.find(languageId) == versionStampMap.end()) {
-            return false;
-        }
-        
-        VersionInfo& versionInfo = versionStampMap[languageId];
+    bool ResourceUpdater::SetProductVersion(WORD languageId, UINT id, unsigned short v1, unsigned short v2, unsigned short v3, unsigned short v4) {
+        VersionInfo& versionInfo = versionStampMap_[languageId];
         
         if (!versionInfo.HasFixedFileInfo()) {
             return false;
@@ -482,20 +529,14 @@ namespace amo {
         return true;
     }
     
-    bool ResourceUpdater::SetProductVersion(const unsigned short& v1, const unsigned short& v2, const unsigned short& v3, const unsigned short& v4) {
-        if (versionStampMap.size() < 1) {
-            return false;
-        } else {
-            return SetProductVersion(versionStampMap.begin()->first, 1, v1, v2, v3, v4);
-        }
+    bool ResourceUpdater::SetProductVersion(unsigned short v1, unsigned short v2, unsigned short v3, unsigned short v4) {
+        LANGID langId = versionStampMap_.empty() ? kLangEnUs
+                        : versionStampMap_.begin()->first;
+        return SetProductVersion(langId, 1, v1, v2, v3, v4);
     }
     
-    bool ResourceUpdater::SetFileVersion(const WORD& languageId, const UINT& id, const unsigned short& v1, const unsigned short& v2, const unsigned short& v3, const unsigned short& v4) {
-        if (versionStampMap.find(languageId) == versionStampMap.end()) {
-            return false;
-        }
-        
-        VersionInfo& versionInfo = versionStampMap[languageId];
+    bool ResourceUpdater::SetFileVersion(WORD languageId, UINT id, unsigned short v1, unsigned short v2, unsigned short v3, unsigned short v4) {
+        VersionInfo& versionInfo = versionStampMap_[languageId];
         
         if (!versionInfo.HasFixedFileInfo()) {
             return false;
@@ -508,25 +549,22 @@ namespace amo {
         return true;
     }
     
-    bool ResourceUpdater::SetFileVersion(const unsigned short& v1, const unsigned short& v2, const unsigned short& v3, const unsigned short& v4) {
-        if (versionStampMap.size() < 1) {
-            return false;
-        } else {
-            return SetFileVersion(versionStampMap.begin()->first, 1, v1, v2, v3, v4);
-        }
+    bool ResourceUpdater::SetFileVersion(unsigned short v1, unsigned short v2, unsigned short v3, unsigned short v4) {
+        LANGID langId = versionStampMap_.empty() ? kLangEnUs
+                        : versionStampMap_.begin()->first;
+        return SetFileVersion(langId, 1, v1, v2, v3, v4);
     }
     
-    bool ResourceUpdater::ChangeString(const WORD& languageId, const UINT& id, const WCHAR* value) {
-        if (stringTableMap.find(languageId) == stringTableMap.end()) {
-            return false;
-        }
-        
-        StringTable& table = stringTableMap[languageId];
+    bool ResourceUpdater::ChangeString(WORD languageId, UINT id, const WCHAR* value) {
+        StringTable& table = stringTableMap_[languageId];
         
         UINT blockId = id / 16;
         
         if (table.find(blockId) == table.end()) {
-            return false;
+            // Fill the table until we reach the block.
+            for (size_t i = table.size(); i <= blockId; ++i) {
+                table[i] = std::vector<std::wstring>(16);
+            }
         }
         
         assert(table[blockId].size() == 16);
@@ -536,18 +574,41 @@ namespace amo {
         return true;
     }
     
-    bool ResourceUpdater::ChangeString(const UINT& id, const WCHAR* value) {
-        if (stringTableMap.size() < 1) {
-            return false;
-        } else {
-            return ChangeString(stringTableMap.begin()->first, id, value);
-        }
+    bool ResourceUpdater::ChangeString(UINT id, const WCHAR* value) {
+        LANGID langId = stringTableMap_.empty() ? kLangEnUs
+                        : stringTableMap_.begin()->first;
+        return ChangeString(langId, id, value);
     }
     
-    bool ResourceUpdater::SetIcon(const WCHAR* path, const LANGID& langId, const UINT& iconBundle) {
-        auto& pIcon = iconBundleMap[langId].IconBundles[iconBundle];
+    const WCHAR* ResourceUpdater::GetString(WORD languageId, UINT id) {
+        StringTable& table = stringTableMap_[languageId];
         
-        if (pIcon == nullptr) {
+        UINT blockId = id / 16;
+        
+        if (table.find(blockId) == table.end()) {
+            // Fill the table until we reach the block.
+            for (size_t i = table.size(); i <= blockId; ++i) {
+                table[i] = std::vector<std::wstring>(16);
+            }
+        }
+        
+        assert(table[blockId].size() == 16);
+        UINT blockIndex = id % 16;
+        
+        return table[blockId][blockIndex].c_str();
+    }
+    
+    const WCHAR* ResourceUpdater::GetString(UINT id) {
+        LANGID langId = stringTableMap_.empty() ? kLangEnUs
+                        : stringTableMap_.begin()->first;
+        return GetString(langId, id);
+    }
+    
+    bool ResourceUpdater::SetIcon(const WCHAR* path, const LANGID& langId,
+                                  UINT iconBundle) {
+        std::unique_ptr<IconsValue>& pIcon = iconBundleMap_[langId].iconBundles[iconBundle];
+        
+        if (!pIcon) {
             pIcon = std::make_unique<IconsValue>();
         }
         
@@ -557,22 +618,26 @@ namespace amo {
         ScopedFile file(path);
         
         if (file == INVALID_HANDLE_VALUE) {
+            ::fprintf(stderr, "Cannot open icon file '%s'\n", path);
             return false;
         }
         
         IconsValue::ICONHEADER& header = icon.header;
         
         if (!ReadFile(file, &header, 3 * sizeof(WORD), &bytes, NULL)) {
+            ::fprintf(stderr, "Cannot read icon header for '%s'\n", path);
             return false;
         }
         
         if (header.reserved != 0 || header.type != 1) {
+            ::fprintf(stderr, "Reserved header is not 0 or image type is not icon for '%s'\n", path);
             return false;
         }
         
         header.entries.resize(header.count);
         
         if (!ReadFile(file, header.entries.data(), header.count * sizeof(IconsValue::ICONENTRY), &bytes, NULL)) {
+            ::fprintf(stderr, "Cannot read icon metadata for '%s'\n", path);
             return false;
         }
         
@@ -583,6 +648,7 @@ namespace amo {
             SetFilePointer(file, header.entries[i].imageOffset, NULL, FILE_BEGIN);
             
             if (!ReadFile(file, icon.images[i].data(), icon.images[i].size(), &bytes, NULL)) {
+                ::fprintf(stderr, "Cannot read icon data for '%s'\n", path);
                 return false;
             }
         }
@@ -593,7 +659,7 @@ namespace amo {
         pGrpHeader->type = 1;
         pGrpHeader->count = header.count;
         
-        for (WORD i = 0; i < header.count; ++i) {
+        for (size_t i = 0; i < header.count; ++i) {
             GRPICONENTRY* entry = pGrpHeader->entries + i;
             entry->bitCount = 0;
             entry->bytesInRes = header.entries[i].bitCount;
@@ -611,77 +677,138 @@ namespace amo {
     }
     
     bool ResourceUpdater::SetIcon(const WCHAR* path, const LANGID& langId) {
-        auto& iconBundle = iconBundleMap[langId].IconBundles.begin()->first;
+        UINT iconBundle = iconBundleMap_[langId].iconBundles.begin()->first;
         return SetIcon(path, langId, iconBundle);
     }
     
     bool ResourceUpdater::SetIcon(const WCHAR* path) {
-        auto& langId = iconBundleMap.begin()->first;
+        LANGID langId = iconBundleMap_.empty() ? kLangEnUs
+                        : iconBundleMap_.begin()->first;
         return SetIcon(path, langId);
     }
     
     bool ResourceUpdater::Commit() {
-        if (hModule == NULL) {
+        if (module_ == NULL) {
             return false;
         }
         
-        FreeLibrary(hModule);
-        hModule = NULL;
+        FreeLibrary(module_);
+        module_ = NULL;
         
-        ScopedResourceUpdater ru(filename.c_str(), false);
+        ScopedResourceUpdater ru(filename_.c_str(), false);
         
         if (ru.Get() == NULL) {
             return false;
         }
         
-        
         // update version info.
-        for (VersionStampMap::iterator i = versionStampMap.begin(); i != versionStampMap.end(); i++) {
-            auto& langId = i->first;
-            auto& versionInfo = i->second;
-            auto out = versionInfo.Serialize();
+        for (const auto& i : versionStampMap_) {
+            LANGID langId = i.first;
+            std::vector<BYTE> out = i.second.Serialize();
             
-            if (!UpdateResourceW
-                    (ru.Get()
-                     , RT_VERSION
-                     , MAKEINTRESOURCEW(1)
-                     , langId
-                     , &out[0], static_cast<DWORD>(out.size()))) {
-                     
+            if (!UpdateResourceW(ru.Get(), RT_VERSION, MAKEINTRESOURCEW(1), langId,
+                                 &out[0], static_cast<DWORD>(out.size()))) {
+                return false;
+            }
+        }
+        
+        // update the execution level
+        if (applicationManifestPath_.empty() && !executionLevel_.empty()) {
+            // string replace with requested executionLevel
+            std::wstring::size_type pos = 0u;
+            
+            while ((pos = manifestString_.find(originalExecutionLevel_, pos)) != std::string::npos) {
+                manifestString_.replace(pos, originalExecutionLevel_.length(), executionLevel_);
+                pos += executionLevel_.length();
+            }
+            
+            // clean old padding and add new padding, ensuring that the size is a multiple of 4
+            std::wstring::size_type padPos = manifestString_.find(L"</assembly>");
+            // trim anything after the </assembly>, 11 being the length of </assembly> (ie, remove old padding)
+            std::wstring trimmedStr = manifestString_.substr(0, padPos + 11);
+            std::wstring padding = L"\n<!--Padding to make filesize even multiple of 4 X -->";
+            
+            int offset = (trimmedStr.length() + padding.length()) % 4;
+            // multiple X by the number in offset
+            pos = 0u;
+            
+            for (int posCount = 0; posCount < offset; posCount = posCount + 1) {
+                if ((pos = padding.find(L"X", pos)) != std::string::npos) {
+                    padding.replace(pos, 1, L"XX");
+                    pos += executionLevel_.length();
+                }
+            }
+            
+            // convert the wchar back into char, so that it encodes correctly for Windows to read the XML.
+            std::wstring stringSectionW = trimmedStr + padding;
+            std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
+            std::string stringSection = converter.to_bytes(stringSectionW);
+            
+            if (!UpdateResourceW(ru.Get(), RT_MANIFEST, MAKEINTRESOURCEW(1),
+                                 kLangEnUs, // this is hardcoded at 1033, ie, en-us, as that is what RT_MANIFEST default uses
+                                 &stringSection.at(0), sizeof(char) * stringSection.size())) {
+                return false;
+            }
+        }
+        
+        // load file contents and replace the manifest
+        if (!applicationManifestPath_.empty()) {
+            std::wstring fileContents = ReadFileToString(applicationManifestPath_.c_str());
+            
+            // clean old padding and add new padding, ensuring that the size is a multiple of 4
+            std::wstring::size_type padPos = fileContents.find(L"</assembly>");
+            // trim anything after the </assembly>, 11 being the length of </assembly> (ie, remove old padding)
+            std::wstring trimmedStr = fileContents.substr(0, padPos + 11);
+            std::wstring padding = L"\n<!--Padding to make filesize even multiple of 4 X -->";
+            
+            int offset = (trimmedStr.length() + padding.length()) % 4;
+            // multiple X by the number in offset
+            std::wstring::size_type pos = 0u;
+            
+            for (int posCount = 0; posCount < offset; posCount = posCount + 1) {
+                if ((pos = padding.find(L"X", pos)) != std::string::npos) {
+                    padding.replace(pos, 1, L"XX");
+                    pos += executionLevel_.length();
+                }
+            }
+            
+            // convert the wchar back into char, so that it encodes correctly for Windows to read the XML.
+            std::wstring stringSectionW = fileContents + padding;
+            std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
+            std::string stringSection = converter.to_bytes(stringSectionW);
+            
+            if (!UpdateResourceW(ru.Get(), RT_MANIFEST, MAKEINTRESOURCEW(1),
+                                 kLangEnUs, // this is hardcoded at 1033, ie, en-us, as that is what RT_MANIFEST default uses
+                                 &stringSection.at(0), sizeof(char) * stringSection.size())) {
                 return false;
             }
         }
         
         // update string table.
-        for (StringTableMap::iterator i = stringTableMap.begin(); i != stringTableMap.end(); i++) {
-            for (StringTable::iterator j = i->second.begin(); j != i->second.end(); j++) {
+        for (const auto& i : stringTableMap_) {
+            for (const auto& j : i.second) {
                 std::vector<char> stringTableBuffer;
                 
-                if (!SerializeStringTable(j->second, j->first, stringTableBuffer)) {
+                if (!SerializeStringTable(j.second, j.first, &stringTableBuffer)) {
                     return false;
                 }
                 
-                if (!UpdateResourceW
-                        (ru.Get()
-                         , RT_STRING
-                         , MAKEINTRESOURCEW(j->first + 1)
-                         , i->first
-                         , &stringTableBuffer[0], static_cast<DWORD>(stringTableBuffer.size()))) {
-                         
+                if (!UpdateResourceW(ru.Get(), RT_STRING, MAKEINTRESOURCEW(j.first + 1), i.first,
+                                     &stringTableBuffer[0], static_cast<DWORD>(stringTableBuffer.size()))) {
                     return false;
                 }
             }
         }
         
-        for (auto iLangIconInfoPair = iconBundleMap.begin(); iLangIconInfoPair != iconBundleMap.end(); ++iLangIconInfoPair) {
-            auto& langId = iLangIconInfoPair->first;
-            auto& maxIconId = iLangIconInfoPair->second.MaxIconId;
+        for (const auto& iLangIconInfoPair : iconBundleMap_) {
+            auto langId = iLangIconInfoPair.first;
+            auto maxIconId = iLangIconInfoPair.second.maxIconId;
             
-            for (auto iNameBundlePair = iLangIconInfoPair->second.IconBundles.begin(); iNameBundlePair != iLangIconInfoPair->second.IconBundles.end(); ++iNameBundlePair) {
-                auto& bundleId = iNameBundlePair->first;
-                auto& pIcon = iNameBundlePair->second;
+            for (const auto& iNameBundlePair : iLangIconInfoPair.second.iconBundles) {
+                UINT bundleId = iNameBundlePair.first;
+                const std::unique_ptr<IconsValue>& pIcon = iNameBundlePair.second;
                 
-                if (pIcon == nullptr) {
+                if (!pIcon) {
                     continue;
                 }
                 
@@ -689,39 +816,22 @@ namespace amo {
                 
                 // update icon.
                 if (icon.grpHeader.size() > 0) {
-                    if (!UpdateResourceW
-                            (ru.Get()
-                             , RT_GROUP_ICON
-                             , MAKEINTRESOURCEW(bundleId)
-                             , langId
-                             , icon.grpHeader.data()
-                             , icon.grpHeader.size())) {
-                             
+                    if (!UpdateResourceW(ru.Get(), RT_GROUP_ICON, MAKEINTRESOURCEW(bundleId),
+                                         langId, icon.grpHeader.data(), icon.grpHeader.size())) {
                         return false;
                     }
                     
                     for (size_t i = 0; i < icon.header.count; ++i) {
-                        if (!UpdateResourceW
-                                (ru.Get()
-                                 , RT_ICON
-                                 , MAKEINTRESOURCEW(i + 1)
-                                 , langId
-                                 , icon.images[i].data()
-                                 , icon.images[i].size())) {
-                                 
+                        if (!UpdateResourceW(ru.Get(), RT_ICON, MAKEINTRESOURCEW(i + 1),
+                                             langId, icon.images[i].data(), icon.images[i].size())) {
+                                             
                             return false;
                         }
                     }
                     
                     for (size_t i = icon.header.count; i < maxIconId; ++i) {
-                        if (!UpdateResourceW
-                                (ru.Get()
-                                 , RT_ICON
-                                 , MAKEINTRESOURCEW(i + 1)
-                                 , langId
-                                 , nullptr
-                                 , 0)) {
-                                 
+                        if (!UpdateResourceW(ru.Get(), RT_ICON, MAKEINTRESOURCEW(i + 1),
+                                             langId, nullptr, 0)) {
                             return false;
                         }
                     }
@@ -732,65 +842,7 @@ namespace amo {
         return ru.Commit();
     }
     
-    bool ResourceUpdater::GetResourcePointer(const HMODULE& hModule, const WORD& languageId, const int& id, const WCHAR* type, BYTE*& data, size_t& dataSize) {
-        if (!IS_INTRESOURCE(id)) {
-            return false;
-        }
-        
-        HRSRC hRsrc = FindResourceExW(hModule, type, MAKEINTRESOURCEW(id), languageId);
-        
-        if (hRsrc == NULL) {
-            DWORD e = GetLastError();
-            return false;
-        }
-        
-        DWORD size = SizeofResource(hModule, hRsrc);
-        
-        if (size == 0) {
-            return false;
-        }
-        
-        HGLOBAL hGlobal = LoadResource(hModule, hRsrc);
-        
-        if (hGlobal == NULL) {
-            return false;
-        }
-        
-        void* p = LockResource(hGlobal);
-        
-        if (p == NULL) {
-            return false;
-        }
-        
-        dataSize = static_cast<size_t>(size);
-        data = static_cast<BYTE*>(p);
-        return true;
-    }
-    
-    // static
-    bool ResourceUpdater::UpdateRaw
-    (const WCHAR* filename
-     , const WORD& languageId
-     , const WCHAR* type
-     , const UINT& id
-     , const void* data
-     , const size_t& dataSize
-     , const bool& deleteOld) {
-     
-        ScopedResourceUpdater ru(filename, deleteOld);
-        
-        if (ru.Get() == NULL) {
-            return false;
-        }
-        
-        if (UpdateResourceW(ru.Get(), type, MAKEINTRESOURCEW(id), languageId, const_cast<void*>(data), static_cast<DWORD>(dataSize))) {
-            return ru.Commit();
-        } else {
-            return false;
-        }
-    }
-    
-    bool ResourceUpdater::SerializeStringTable(const StringValues& values, const UINT& blockId, std::vector<char>& out) {
+    bool ResourceUpdater::SerializeStringTable(const StringValues& values, UINT blockId, std::vector<char>* out) {
         // calc total size.
         // string table is pascal string list.
         size_t size = 0;
@@ -800,10 +852,10 @@ namespace amo {
             size += values[i].length() * sizeof(WCHAR);
         }
         
-        out.resize(size);
+        out->resize(size);
         
         // write.
-        char* pDst = &out[0];
+        char* pDst = &(*out)[0];
         
         for (size_t i = 0; i < 16; i++) {
             WORD length = static_cast<WORD>(values[i].length());
@@ -825,44 +877,48 @@ namespace amo {
         ResourceUpdater* instance = reinterpret_cast<ResourceUpdater*>(lParam);
         
         if (IS_INTRESOURCE(lpszName) && IS_INTRESOURCE(lpszType)) {
-            switch (reinterpret_cast<UINT>(lpszType)) {
-            case reinterpret_cast<UINT>(RT_VERSION) : {
+            switch (reinterpret_cast<ptrdiff_t>(lpszType)) {
+            case reinterpret_cast<ptrdiff_t>(RT_VERSION) : {
                 try {
-                    instance->versionStampMap[wIDLanguage] = VersionInfo(instance->hModule, wIDLanguage);
+                    instance->versionStampMap_[wIDLanguage] = VersionInfo(instance->module_, wIDLanguage);
                 } catch (const std::system_error& e) {
-                    e.what();
                     return false;
                 }
+                
+                break;
             }
-            break;
             
-            case reinterpret_cast<UINT>(RT_STRING) : {
-                UINT id = reinterpret_cast<UINT>(lpszName) - 1;
-                auto& vector = instance->stringTableMap[wIDLanguage][id];
+            case reinterpret_cast<ptrdiff_t>(RT_STRING) : {
+                UINT id = reinterpret_cast<ptrdiff_t>(lpszName) - 1;
+                auto& vector = instance->stringTableMap_[wIDLanguage][id];
                 
                 for (size_t k = 0; k < 16; k++) {
                     CStringW buf;
                     
-                    buf.LoadStringW(instance->hModule, id * 16 + k, wIDLanguage);
+                    buf.LoadStringW(instance->module_, id * 16 + k, wIDLanguage);
                     vector.push_back(buf.GetBuffer());
                 }
+                
+                break;
             }
-            break;
             
-            case reinterpret_cast<UINT>(RT_ICON) : {
-                auto iconId = reinterpret_cast<UINT>(lpszName);
-                auto& maxIconId = instance->iconBundleMap[wIDLanguage].MaxIconId;
+            case reinterpret_cast<ptrdiff_t>(RT_ICON) : {
+                UINT iconId = reinterpret_cast<ptrdiff_t>(lpszName);
+                UINT maxIconId = instance->iconBundleMap_[wIDLanguage].maxIconId;
                 
                 if (iconId > maxIconId) {
                     maxIconId = iconId;
                 }
-            }
-            break;
-            
-            case reinterpret_cast<UINT>(RT_GROUP_ICON) :
-                instance->iconBundleMap[wIDLanguage].IconBundles[reinterpret_cast<UINT>(lpszName)] = nullptr;
-                break;
                 
+                break;
+            }
+            
+            case reinterpret_cast<ptrdiff_t>(RT_GROUP_ICON) : {
+                UINT iconId = reinterpret_cast<ptrdiff_t>(lpszName);
+                instance->iconBundleMap_[wIDLanguage].iconBundles[iconId] = nullptr;
+                break;
+            }
+            
             default:
                 break;
             }
@@ -877,30 +933,54 @@ namespace amo {
         return TRUE;
     }
     
-    ScopedResourceUpdater::ScopedResourceUpdater(const wchar_t* filename, const bool& deleteOld)
-        : handle(NULL)
-        , commited(false) {
-        handle = BeginUpdateResourceW(filename, deleteOld ? TRUE : FALSE);
+    // static
+    // courtesy of http://stackoverflow.com/questions/420852/reading-an-applications-manifest-file
+    BOOL CALLBACK ResourceUpdater::OnEnumResourceManifest(HMODULE hModule, LPCTSTR lpType, LPWSTR lpName, LONG_PTR lParam) {
+        ResourceUpdater* instance = reinterpret_cast<ResourceUpdater*>(lParam);
+        HRSRC hResInfo = FindResource(hModule, lpName, lpType);
+        DWORD cbResource = SizeofResource(hModule, hResInfo);
+        
+        HGLOBAL hResData = LoadResource(hModule, hResInfo);
+        const BYTE *pResource = (const BYTE *)LockResource(hResData);
+        
+        int len = strlen(reinterpret_cast<const char*>(pResource));
+        std::wstring manifestStringLocal(pResource, pResource + len);
+        size_t found = manifestStringLocal.find(L"requestedExecutionLevel");
+        size_t end = manifestStringLocal.find(L"uiAccess");
+        
+        instance->originalExecutionLevel_ = manifestStringLocal.substr(found + 31, end - found - 33);
+        
+        // also store original manifestString
+        instance->manifestString_ = manifestStringLocal;
+        
+        UnlockResource(hResData);
+        FreeResource(hResData);
+        
+        return TRUE;   // Keep going
+    }
+    
+    ScopedResourceUpdater::ScopedResourceUpdater(const WCHAR* filename, bool deleteOld)
+        : handle_(BeginUpdateResourceW(filename, deleteOld)) {
     }
     
     ScopedResourceUpdater::~ScopedResourceUpdater() {
-        if (!commited) {
+        if (!commited_) {
             EndUpdate(false);
         }
     }
     
     HANDLE ScopedResourceUpdater::Get() const {
-        return handle;
+        return handle_;
     }
     
     bool ScopedResourceUpdater::Commit() {
-        commited = true;
+        commited_ = true;
         return EndUpdate(true);
     }
     
-    bool ScopedResourceUpdater::EndUpdate(const bool& doesCommit) {
+    bool ScopedResourceUpdater::EndUpdate(bool doesCommit) {
         BOOL fDiscard = doesCommit ? FALSE : TRUE;
-        BOOL bResult = EndUpdateResourceW(handle, fDiscard);
+        BOOL bResult = EndUpdateResourceW(handle_, fDiscard);
         DWORD e = GetLastError();
         return bResult ? true : false;
     }

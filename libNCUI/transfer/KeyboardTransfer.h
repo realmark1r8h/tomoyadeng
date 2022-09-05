@@ -36,6 +36,7 @@ namespace amo {
          * @brief	输入一段文本.
          *
          * @param	#String 要发送的字符串.
+         * @param	#Int=5 每输入一个字符后的暂停时间.默认为5ms，输入太快有可能导致字符错乱.
          *
          * @return	无.
          *
@@ -212,7 +213,8 @@ namespace amo {
         void SendKeyDown(char data);
         void SendKeyUp(char data);
         void SendUnicode(wchar_t data);
-        void SendKeys(const amo::string& msg);
+        void SendKeys(const amo::string& msg, int interval = 5);
+        
         std::vector<char> getKeys(IPCMessage::SmartType msg);
     private:
     };

@@ -41,38 +41,178 @@ namespace amo {
         virtual std::string getClass() const override;
         virtual Transfer* getInterface(const std::string& name) override;
         
-        Any toString(IPCMessage::SmartType msg);
-        Any isExsit(IPCMessage::SmartType msg);
-        Any append(IPCMessage::SmartType msg);
-        Any removeFileSpec(IPCMessage::SmartType msg);
         
         
-        // 静态函数
+        /*!
+         * @fn	Any PathTransfer::getFullAppDir(IPCMessage::SmartType msg);
+         *  @tag sync static
+         * @brief	返回当前程序所在目录.
+         *
+         *
+         * @return	#Path 返回一个Path对象.
+         */
+        
         Any getFullAppDir(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	Any PathTransfer::getFullAppName(IPCMessage::SmartType msg);
+         *  @tag sync static
+         * @brief	获取当前程序的完整路径.
+         *
+         * @return	#Path 返回一个Path对象.
+         */
+        
         Any getFullAppName(IPCMessage::SmartType msg);
         
+        /*!
+         * @fn	Any PathTransfer::fileExsit(IPCMessage::SmartType msg);
+         *  @tag sync static
+         * @brief	判断文件或目录是否存在.
+         *
+         * @param	#String 路径.
+         *
+         * @return	#Boolean true 存在/false 不存在.
+         */
+        
         Any fileExsit(IPCMessage::SmartType msg);
-        Any remove(IPCMessage::SmartType msg);
-        Any removeAll(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	Any PathTransfer::Remove(IPCMessage::SmartType msg);
+         * @tag static
+         * @brief	删除一个文件，或空目录.
+         *
+         * @param	#String 路径.
+         *
+         * @return	#Boolean true 成功/false 失败.
+         */
+        
+        Any Remove(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	Any PathTransfer::RemoveAll(IPCMessage::SmartType msg);
+         * @tag static
+         * @brief	删除一个文件或文件夹，文件目录可以不为空.
+         *
+         * @param	#String 路径.
+         *
+         * @return	#Boolean true 成功/false 失败.
+         */
+        
+        Any RemoveAll(IPCMessage::SmartType msg);
+        
+        
+        /*!
+        * @fn	Any PathTransfer::toString(IPCMessage::SmartType msg);
+        * @tag sync
+        * @brief	将当前Path对象转换为String.
+        *
+        *
+        * @return	#String .
+        */
+        
+        Any toString(IPCMessage::SmartType msg);
+        
+        /*!
+        * @fn	Any PathTransfer::isExsit(IPCMessage::SmartType msg);
+        * @tag sync
+        * @brief	判断当前路径是否存在.
+        *
+        *
+        * @return	#Boolean true 存在/ false 不存在.
+        */
+        
+        Any isExsit(IPCMessage::SmartType msg);
+        
+        /*!
+        * @fn	Any PathTransfer::append(IPCMessage::SmartType msg);
+        * @tag sync
+        * @brief	往当前路径中追加子路径.
+        *
+        * @param	#String 需要追加了路径.
+        *
+        * @return	#Path 当前对象.
+        */
+        
+        Any append(IPCMessage::SmartType msg);
+        
+        /*!
+        * @fn	Any PathTransfer::removeFileSpec(IPCMessage::SmartType msg);
+        * @tag sync
+        * @brief	去除文件名，得到目录.
+        *
+        *
+        * @return	#Path 当前对象.
+        */
+        
+        Any removeFileSpec(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	Any PathTransfer::copyTo(IPCMessage::SmartType msg);
+         * @tag sync
+         * @brief	复制文件到指定位置.
+         *
+         * @param	#String 目标位置.
+         *
+         * @return	#Boolean true 存在/ false 不存在.
+         */
+        
         Any copyTo(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	Any PathTransfer::moveTo(IPCMessage::SmartType msg);
+         * @tag sync
+         * @brief	移动文件到指定位置.
+         *
+         * @param	#String 目标位置.
+         *
+         * @return	#Boolean true 存在/ false 不存在.
+         */
+        
         Any moveTo(IPCMessage::SmartType msg);
         
+        
+        /*!
+        * @fn	Any PathTransfer::remove(IPCMessage::SmartType msg);
+        * @tag
+        * @brief	删除当前路径，该路径只能是一个文件或空目录删除一个文件，或空目录.
+        *
+        * @return	#Boolean true 成功/false 失败.
+        */
+        
+        Any remove(IPCMessage::SmartType msg);
+        
+        /*!
+        * @fn	Any PathTransfer::removeAll(IPCMessage::SmartType msg);
+        * @tag
+        * @brief	删除当前路径，可以删除子目录，.
+        *
+        *
+        * @return	#Boolean true 成功/false 失败.
+        */
+        
+        Any removeAll(IPCMessage::SmartType msg);
     public:
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(PathTransfer, RunnableTransfer)
+        
+        
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getFullAppDir,
+                                      TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getFullAppName,
+                                      TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(fileExsit, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(Remove, TransferFuncStatic | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(RemoveAll,
+                                      TransferFuncStatic | TransferExecNormal)
+                                      
         AMO_CEF_MESSAGE_TRANSFER_FUNC(toString, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(isExsit, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(append, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(removeFileSpec,
                                       TransferFuncNormal | TransferExecSync)
                                       
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getFullAppDir,
-                                      TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getFullAppName,
-                                      TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(fileExsit, TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(remove, TransferFuncStatic | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(remove,   TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(removeAll,
-                                      TransferFuncStatic | TransferExecNormal)
+                                      TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(copyTo,
                                       TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(moveTo,

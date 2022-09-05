@@ -41,7 +41,7 @@ namespace amo {
         int m_nBrowserID;
         int64_t m_nFrameID;
         bool m_bClosed;
-        
+        int64_t m_nObjectID;
         
     };
 }

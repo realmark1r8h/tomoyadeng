@@ -37,8 +37,8 @@ public:
         m_hInstance = hInstance;
     }
     std::string load(UINT id) {
-        char str[4096] = { 0 };
-        ::LoadStringA(m_hInstance, id, str, 4096);
+        char str[32768] = { 0 };
+        ::LoadStringA(m_hInstance, id, str, 32768);
         return str;
     }
 private:

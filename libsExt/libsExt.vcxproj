@@ -84,6 +84,7 @@
   <ItemGroup>
     <ClInclude Include="rcedit\RceditTransfer.h" />
     <ClInclude Include="rcedit\ResourceUpdater.h" />
+    <ClInclude Include="rcedit\BinResourceUpdater.h" />
     <ClInclude Include="sqlite\SqliteTransfer.h" />
     <ClInclude Include="sqlite\SqlMessageEmitter.hpp" />
     <ClInclude Include="sqlite\src\sqlite3pp.h" />
@@ -101,6 +102,7 @@
     <ClInclude Include="transfer\UUIDTransfer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="rcedit\BinResourceUpdater.cpp" />
     <ClCompile Include="rcedit\RceditTransfer.cpp" />
     <ClCompile Include="rcedit\ResourceUpdater.cpp" />
     <ClCompile Include="sqlite\SqliteTransfer.cpp" />

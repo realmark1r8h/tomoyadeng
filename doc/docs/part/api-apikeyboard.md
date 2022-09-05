@@ -193,6 +193,10 @@
 	<td>String </td>
 	<td></td>
 	<td>要发送的字符串.</td>
+</tr><tr>
+	<td>Int</td>
+	<td>5 </td>
+	<td>每输入一个字符后的暂停时间.默认为5ms，输入太快有可能导致字符错乱.</td>
 </tr>
 	</tbody>
 </table>

@@ -543,6 +543,28 @@ namespace amo {
                     json.put("separatorColor", m_pMenuSettings->separatorColor);
                 }
                 
+                if (p.contains_key("icon")) {
+                    std::string icon = p.getString("icon");
+                    json.put("icon", icon);
+                }
+                
+                std::string selected;
+                
+                if (p.contains_key("selected")) {
+                    if (p.is_bool("selected") && p.getBool("selected")) {
+                        selected = "checkbox";
+                    } else if (p.is_string("selected")) {
+                        selected = p.getString("selected");
+                    }
+                }
+                
+                
+                if (selected == "checkbox") {
+                    json.put("icon", "checkbox.png");
+                } else if (selected == "radio") {
+                    json.put("icon", "radio.png");
+                }
+                
                 
                 if (!json.empty()) {
                     amo::string misc(skinMenuElementMisc, true);

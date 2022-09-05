@@ -64,7 +64,7 @@ menu.on('select', function(){
 		<tr>
 	<td>JsonObject </td>
 	<td></td>
-	<td>创建菜单所用到的参数<br>[**Int**]		lineHeight 菜单项行高，默认为32<br>[**String**]	separatorColor 分隔条颜色，默认"0xffe8e8e8"<br>[**JsonObject**] menu 所有菜单项,具体内容参考：<br>&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	id 当前菜单项ID,一个菜单里面的菜单项ID应该是唯一的<br>&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	text 当前菜单项所显示的文本<br>&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	String 当前菜单项的预定义动作，如果有效则执且不会向页面返回菜单选择事件<br>&nbsp;&nbsp;&nbsp;&nbsp;[**Boolean**]	separator 是否显示分隔符，默认false<br>&nbsp;&nbsp;&nbsp;&nbsp;[**Boolean**]	visible 当前菜单项是否可见，默认true<br>&nbsp;&nbsp;&nbsp;&nbsp;[**Boolean**]	enabled 当前菜单项是否可用，默认true<br>&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	shortcut 当前菜单项快捷键，默认无快捷键<br>&nbsp;&nbsp;&nbsp;&nbsp;[**JsonObject**] menu 子菜单，与上面的内容一样，可以不填</td>
+	<td>创建菜单所用到的参数<br>[**Int**]		lineHeight 菜单项行高，默认为32<br>[**String**]	separatorColor 分隔条颜色，默认"0xffe8e8e8"<br>[**JsonObject**] menu 所有菜单项,具体内容参考：<br>&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	id 当前菜单项ID,一个菜单里面的菜单项ID应该是唯一的<br>&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	text 当前菜单项所显示的文本<br>&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	String 当前菜单项的预定义动作，如果有效则执且不会向页面返回菜单选择事件<br>&nbsp;&nbsp;&nbsp;&nbsp;[**Boolean**]	separator 是否显示分隔符，默认false<br>&nbsp;&nbsp;&nbsp;&nbsp;[**Boolean**]	visible 当前菜单项是否可见，默认true<br>&nbsp;&nbsp;&nbsp;&nbsp;[**Boolean**]	enabled 当前菜单项是否可用，默认true<br>&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	shortcut 当前菜单项快捷键，默认无快捷键<br>&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	icon 当前菜单项图标，显示在文字前面，默认无，必须为skin目录下的文件<br>&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	selected 当前菜单项选中状态，支持"checkbox"和"radio",**该字段与上面的icon字段冲突，并且优先级高于icon字段**，默认无<br>&nbsp;&nbsp;&nbsp;&nbsp;[**JsonObject**] menu 子菜单，与上面的内容一样，可以不填</td>
 </tr>
 	</tbody>
 </table>
@@ -100,10 +100,11 @@ var menu = new Menu({
     backgroundColor: 0xFFFFFFFF,
     roundcorner: 3,
     menu: [
-        { id: '1', text: '中文', 'separator': true },
-        { id: '2', text: '英文', 'shortcut': 'D' },
-        { id: '3', text: '法文', 'shortcut': 'E'  },
-        { id: '4', text: '德文', 'shortcut': 'F'  }
+        { id: '1', text: '中文', 'separator': true, icon: 'huiyuan.png' },
+        { id: '2', text: '英文', 'shortcut': 'D', selected: 'checkbox' },
+        { id: '3', text: '法文', 'shortcut': 'E', selected: true  },
+        { id: '4', text: '德文', 'shortcut': 'F', selected: 'radio' },
+        { id: '5', text: '俄文', 'shortcut': 'G', icon: 'pick.png' }
     ]
 });
 

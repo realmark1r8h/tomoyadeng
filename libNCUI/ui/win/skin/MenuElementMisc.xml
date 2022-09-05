@@ -1,5 +1,13 @@
 <VerticalLayout>
 	<HorizontalLayout>
+	<VerticalLayout width="10">
+ 
+	</VerticalLayout>
+	<VerticalLayout width="16">
+	<Control />
+	<Control width="16" height="16" bkimage="{icon}"/>
+	<Control />
+	</VerticalLayout>
 	<Control />
 	
 	<VerticalLayout width="16">
