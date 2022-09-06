@@ -113,6 +113,9 @@ namespace amo {
     template<> static std::string anyToString(const int64_t& val) {
         return valueToString<int64_t>(val);
     }
+    template<> static std::string anyToString(const uint64_t& val) {
+        return valueToString<uint64_t>(val);
+    }
     template<> static std::string anyToString(const double& val) {
         return valueToString<double>(val);
     }
@@ -177,6 +180,9 @@ namespace amo {
     }
     template<> static int64_t stringToAny(const std::string& val) {
         return stringToValue<int64_t>(val);
+    }
+    template<> static uint64_t stringToAny(const std::string& val) {
+        return stringToValue<uint64_t>(val);
     }
     template<> static double stringToAny(const std::string& val) {
         return stringToValue<double>(val);
@@ -244,6 +250,10 @@ namespace amo {
     };
     template<> struct AnyValueType <const char*> {
         static const char value = 7;
+    };
+    
+    template<> struct AnyValueType <uint64_t> {
+        static const char value = 8;
     };
     
     // ∏®÷˙¿‡
@@ -584,6 +594,9 @@ namespace amo {
             return getValue(nIndex);
         }
         int64_t getInt64(const int& nIndex) {
+            return getValue(nIndex);
+        }
+        uint64_t getUint64(const int& nIndex) {
             return getValue(nIndex);
         }
         double getDouble(const int& nIndex) {

@@ -60,6 +60,30 @@ namespace amo {
          * @example 修改manifest.json
          *
          ```
+        	 includes('Path','FileStream', 'app');
+        	 var path = new Path('manifest.json');
+        	 path.copyTo('manifest2.json');// 备份manifest.json，你可以再查看效果后手动恢复该文件
+        	 var filestream = new FileStream('manifest.json', 2 + 32); // 2 以写入方式打开，32 以二进制方式打开
+        	 filestream.write(`
+        		 {
+        			 "appSettings":{
+        				 "single_process": true,
+        				 "useNode":false
+        			 },
+        			 "browserWindowSettings":{
+        				 "titleBar": true,
+        				 "url": "http://127.0.0.1:8020/doc/example/ManifestWindow.html"
+        			 },
+        			 "splashWindowSettings":{
+        				"images":"%webDir%images/splash.png"
+        			 }
+        		}`,3);
+        	 filestream.close();
+        	 app.restart();
+         ```
+         * @example 修改manifest.json
+         *
+         ```
         			include('Path');
         			var path = new Path('manifest.json');
         			path.copyTo('manifest2.json');// 备份manifest.json，你可以再查看效果后手动恢复该文件
@@ -80,7 +104,8 @@ namespace amo {
         								 "splashWindowSettings":{
         									"images":"%webDir%images/splash.png"
         								 }
-        							}`);
+        							}`,3);
+        			sleep(1000);
         			keyboard.keyPress(keyboard.VK_CONTROL, 'S');
         			keyboard.keyPress(keyboard.VK_MENU, keyboard.VK_F4);
         			include('app');

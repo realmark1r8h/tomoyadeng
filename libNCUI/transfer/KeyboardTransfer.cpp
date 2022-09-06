@@ -91,6 +91,8 @@ namespace amo {
     }
     
     
+    
+    
     void KeyboardTransfer::SendUnicode(wchar_t data) {
         INPUT input[2];
         memset(input, 0, 2 * sizeof(INPUT));
@@ -99,7 +101,9 @@ namespace amo {
         input[0].ki.wVk = 0;
         input[0].ki.wScan = data;
         input[0].ki.dwFlags = KEYEVENTF_UNICODE;
-        input[0].ki.time = 0;
+        input[0].ki.time = 0;  // ²»ÄÜÌî£¿£¿
+        
+        
         
         input[1].type = INPUT_KEYBOARD;
         input[1].ki.wVk = 0;
@@ -109,14 +113,19 @@ namespace amo {
         SendInput(2, input, sizeof(INPUT));
     }
     
+    
     void KeyboardTransfer::SendKeys(const amo::string& msg, int interval/* = 5*/) {
     
         USES_CONVERSION;
+        
+        /*  SendKeys2(msg);
+          return;*/
+        
         std::wstring data = msg.to_unicode();
         int len = data.size();
         
         for (int i = 0; i < len; i++) {
-            SendUnicode(data[i]);
+            this->SendUnicode(data[i]);
             
             if (interval > 0) {
                 Sleep(interval);

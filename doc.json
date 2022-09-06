@@ -47,7 +47,9 @@
         "libsExt/transfer/Base64Transfer.h",
         "libsExt/transfer/ProcessTransfer.h",
         "libsExt/transfer/PathTransfer.h",
+		"libsExt/transfer/FileTransfer.hpp",
         "libsExt/rcedit/RceditTransfer.h"
+		
     ],
     "version": "0.0.0.1",
     "updateTime": "2017-09-09 09:26:10",

@@ -123,6 +123,10 @@ namespace amo {
                 json.put(key, val.As<int64_t>());
                 break;
                 
+            case  AnyValueType<uint64_t>::value:
+                json.put(key, val.As<int64_t>());
+                break;
+                
             case  AnyValueType<double>::value:
                 json.put(key, val.As<double>());
                 break;
