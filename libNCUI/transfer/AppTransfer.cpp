@@ -10,7 +10,7 @@
 #include "utility/utility.hpp"
 #include "ui/win/MessageWindow.h"
 #include "handler/RunFileDialogCallback.hpp"
-#include "../scheme/UrlResourceHandlerFactory.h"
+#include "scheme/UrlResourceHandlerFactory.h"
 #include <amo/app.hpp>
 
 namespace amo {
@@ -66,6 +66,7 @@ namespace amo {
         
         
         url = util::getUrlFromUtf8(url).to_utf8();
+        amo::string_utils::trim_right(url, "/\\");
         
         
         for (auto& p : m_oUrlToNativeMap) {
@@ -118,6 +119,8 @@ namespace amo {
         }
         
         url = util::getUrlFromUtf8(url);
+        amo::string_utils::trim_right(url, "/\\");
+        
         
         m_oUrlToNativeMap.push_back(std::make_pair(url, nativeFile));
         m_oUrlToNativeMap.sort([&](std::pair<std::string, std::string> &a,
@@ -137,6 +140,8 @@ namespace amo {
         }
         
         url = util::getUrlFromUtf8(url);
+        amo::string_utils::trim_right(url, "/\\");
+        
         
         m_oUrlToNativeMap.remove_if([&](std::pair<std::string, std::string>& p) {
             return p.first == url;

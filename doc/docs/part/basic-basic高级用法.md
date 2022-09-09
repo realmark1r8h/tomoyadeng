@@ -93,18 +93,46 @@ new BrowserWindow({
 
 
 ## 地址映射 &nbsp;
-  该功能可以将一个URL映射到本地文件.目前支持的映射方式有文件、目录、ZIP格式压缩文件、DLL动态库、SQLITE数据库文件、RES资源文件<br>可以编辑manifest.json指定映射路径，也可以在程序运行后<a href="#api/apiapp/5">手动指定</a>映射路径.<br>当前程序就是采用URL到文件夹的方式访问页面的.
+  该功能可以将一个URL映射到本地文件.目前支持的映射方式有文件、目录、ZIP格式压缩文件、DLL动态库、RES资源文件<br>可以编辑manifest.json指定映射路径，也可以在程序运行后<a href="#api/apiapp/5">手动指定</a>映射路径.<br>本文档程序就是采用URL到文件夹的方式访问页面的.<br>
   
 * **参考** 
 <a href="#api/apiapp/5">app.addUrlMapping</a>
 
+* **示例&nbsp;&nbsp;--&nbsp;&nbsp;修改manifest.json**
+
+```html
+//通过修改manifest.json映射文件
+{
+    "appSettings": {
+        "urlMappings":[
+            {
+                "url":"http://127.0.0.1:8020",
+                "path": "%webDir%"
+            },
+            {
+                "url":"http://127.0.0.1:8020",
+                "path": "zip:///%webDir%web.zip"
+            },
+            {
+                "url":"http://127.0.0.1:8020",
+                "path": "dll:///libResource.dll"
+            },
+            {
+                "url":"http://127.0.0.1:8020",
+                "path": "res:///131.res"
+            }
+        ]
+    }
+}
+
+```
 
 
 <div class="adoc" id="div_地址映射"></div>
 
 
 ## 源代码管理 &nbsp;
-  NCUI支持读取本地文件、ZIP格式压缩文件、DLL动态库中的HTML源代码，你可以通过这些方式为NCUI提供源代码.<br>1. **从本地目录中读取HTML:**<br>2. **从ZIP文件中读取HTML:**<br>3. **从DLL中读取HTML:**<br>4. **从SQLITE数据库中读取HTML:**<br>5. **从程序的资源文件中读取HTML:**<br>NCUI不直接提供源代码加密功能，但支持读取加密的ZIP文件、加载的SQLITE数据库，你可以通过修改源代码的方式提供对应的加密文件密码供程序使用.
+  NCUI支持读取本地文件、ZIP格式压缩文件、DLL动态库中的HTML源代码，你可以通过这些方式为NCUI提供源代码.<br>1. **从本地目录中读取HTML:** 直接指定文件路径或文件夹路径，如D:/web<br>2. **从ZIP文件中读取HTML:** 以zip:///开头<br>3. **从DLL中读取HTML:** 以dll:///开头<br>4. **从程序的资源文件中读取HTML:**以res:///开头<br>NCUI不直接提供源代码加密功能，但支持读取加密的ZIP文件、加载的SQLITE数据库，你可以通过修改源代码的方式提供对应的加密文件密码供程序使用.
   
 
 

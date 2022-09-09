@@ -168,26 +168,72 @@ namespace amo {
         /*!
         * @fn	static Any AppTransfer::addUrlMapping(IPCMessage::SmartType msg);
         *
-        * @tag static
+        * @tag static sync
         *
-        * @brief	添加URL映射路径.
+        * @brief   添加URL映射路径,简单来说就是将URL替换为被映射的URL或文件路径.
         *
-        * @param	#String 需要添加映射的URL.
+        * @param   #String 需要添加映射的URL.
         *
         * @param   #String 被映射的本地文件路径，该路径可以是一个普通的文件或文件夹，
         * 					也可以是ZIP压缩包或DLL动态库.
         *
         * @return	#Boolean 成为返回true, 失败返回false.
-        * @example
+        * @example 映射到另一个URL
         			```
         				// 增加映射
         				app.addUrlMapping('http://www.baidu.com', 'http://www.qq.com');
         				window.open('http://www.baidu.com');
         
-        				app.addUrlMapping('http://www.baidu.com/more', '%webDir%/test.html');
+        				app.addUrlMapping('http://www.baidu.com/more', 'http://www.qq.com');
         				window.open('http://www.baidu.com/more');
         
         			```
+        * @example 映射到文件
+        			```
+        
+        			// 你也可以指定一个绝对路径
+        			//	app.addUrlMapping('http://www.baidu.com/', 'E:/webDir/index.hmtl');
+        			//	app.addUrlMapping('http://www.baidu.com/more', 'E:/webDir/more/more.html');
+        
+        			app.addUrlMapping('http://www.baidu.com', '%webDir%example/BrowserWindow.html');
+        			window.open('http://www.baidu.com');
+        
+        			app.addUrlMapping('http://www.baidu.com/more', '%webDir%/example/FramelessWindow.html');
+        			window.open('http://www.baidu.com/more');
+        
+        ```
+        * @example 映射到ZIP文件
+        ```
+        		// zip文件同样可以是一个绝对路径
+        		// app.addUrlMapping('http://www.baidu.com', 'zip:///D:/web.zip');
+        
+        		app.addUrlMapping('http://127.0.0.1:8088', 'zip:///%webDir%web.zip');
+        		window.open('http://127.0.0.1:8088/example/BrowserWindow.html');
+        
+        		app.addUrlMapping('http://127.0.0.1:8088/test',  'zip:///%webDir%web.zip/example/FramelessWindow.html');
+        		window.open('http://127.0.0.1:8088/test');
+        
+        ```
+        * @example 映射到DLL文件
+        ```
+        
+        		// demo中的dll所提供的根目录为当前程序所在目录下的web目录
+        		app.addUrlMapping('http://www.baidu.com', 'dll:///libResource.dll');
+        		window.open('http://www.baidu.com/example/BrowserWindow.html');
+        
+        		app.addUrlMapping('http://www.baidu.com/more', 'dll:///libResource.dll/example');
+        		window.open('http://www.baidu.com/more/BrowserWindow.html');
+        ```
+        * @example 映射到RES文件
+        ```
+        
+        	// RES本质上与ZIP是一下，只是将ZIP文件提前写入EXE的资源文件里.
+        	// 你可以参考程序生成里面的内容，将ZIP文件写到EXE里面去
+        	// 当前文档程序没有ID为131的资源，所以下面的方法不能正确的打开页面
+        	app.addUrlMapping('http://www.baidu.com', 'res:///131.res');
+        	window.open('http://www.baidu.com/example/BrowserWindow.html');
+        
+        ```
         */
         
         Any addUrlMapping(IPCMessage::SmartType msg);	// UI
@@ -195,7 +241,7 @@ namespace amo {
         /*!
         * @fn	static Any AppTransfer::removeUrlMapping(IPCMessage::SmartType msg);
         *
-        * @tag static
+        * @tag static sync
         *
         * @brief	移除URL映射路径.
         *
@@ -435,8 +481,8 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(urlToNativePath,
                                       TransferFuncStatic | TransferExecSync)
                                       
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(addUrlMapping, TransferFuncStatic)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(removeUrlMapping, TransferFuncStatic)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(addUrlMapping, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(removeUrlMapping, TransferFuncStatic | TransferExecSync)
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setDragClassName,
                                       TransferFuncStatic | TransferExecSync)

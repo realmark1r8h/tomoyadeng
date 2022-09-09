@@ -26,7 +26,7 @@ ClibResource::ClibResource() {
 
 LIBRESOURCE_API int readAsText(const char* path, char** retval) {
 
-    amo::path p = amo::path::fullPathInAppDir("doc");
+    amo::path p = amo::path::fullPathInAppDir("web");
     p.append(path);
     
     std::fstream ifs(p.c_str(), std::ios::in | std::ios::binary);

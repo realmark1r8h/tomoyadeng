@@ -397,7 +397,7 @@ namespace amo {
             auto ptr = getTransferMap();
             
             if (!ptr) {
-                return  ;
+                return ;
             }
             
             auto iter = ptr->find(nID);

@@ -3,7 +3,7 @@
   开始使用NCUI.
   
 ## 编辑配置文件 &nbsp;
-  编辑程序所在目录下的manifest.json文件可以自定义设置程序的启动方式。<br>完整的manifest包含三个段，分别为 appSettings， browserWindowSettings， splashWindowSettings;<br>对应可以设置<a href="#settings/settingsAppSettings">启动参数</a>，<a href="#settings/settingsBrowserWindowSettings">启动浏览器窗口参数</a>，<a href="#settings/settingsSplashWindowSettings">程序启动画面</a><br>manifest不是必须的，如果不存在，那么程序将使用默认配置.<br>注意：**manifest.json只支持ANSI编码，其他类型的编码将不能被正确识别**
+  编辑程序所在目录下的manifest.json文件可以自定义设置程序的启动方式。<br>完整的manifest包含三个段，分别为 appSettings， browserWindowSettings， splashWindowSettings;<br>对应可以设置<a href="#settings/settingsAppSettings">启动参数</a>，<a href="#settings/settingsBrowserWindowSettings">启动浏览器窗口参数</a>，<a href="#settings/settingsSplashWindowSettings">程序启动画面</a><br>manifest不是必须的，如果不存在，那么程序将使用默认配置.<br>注意：**manifest.json只支持ANSI编码，其他类型的编码可能不会被正确识别**
   
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
@@ -12,7 +12,7 @@
 {
     "browserWindowSettings":{
     "titleBar": true,
-    "url": "http://www.oschina.net"
+    "url": "http://www.baidu.com"
     }
 }
 
@@ -47,7 +47,13 @@ filestream.write(`
     {
         "appSettings":{
             "single_process": true,
-            "useNode":false
+            "useNode":false,
+            "urlMappings":[
+               {
+                   "url":"http://127.0.0.1:8020/doc",
+                   "path":"%webDir%"
+               }
+            ]
         },
         "browserWindowSettings":{
             "titleBar": true,
@@ -75,7 +81,13 @@ keyboard.keyPress(keyboard.VK_CONTROL, 'A');
 keyboard.sayString(`{
                     "appSettings":{
                         "single_process": true,
-                        "useNode":false
+                        "useNode":false,
+                        "urlMappings":[
+                            {
+                                "url":"http://127.0.0.1:8020/doc",
+                                "path":"%webDir%"
+                            }
+                        ]
                     },
                     "browserWindowSettings":{
                          "titleBar": true,

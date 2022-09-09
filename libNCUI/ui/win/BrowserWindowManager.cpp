@@ -446,6 +446,7 @@ namespace amo {
         
         std::string u8Url = target_url.ToString();
         u8Url = ret.As<std::string>();
+        u8Url.clear();
         
         if (u8Url.empty()) {
             u8Url = target_url.ToString();

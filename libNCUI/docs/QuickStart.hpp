@@ -25,7 +25,7 @@ namespace amo {
          * 			完整的manifest包含三个段，分别为 appSettings， browserWindowSettings， splashWindowSettings;<br>
          * 			对应可以设置{@link 启动参数}，{@link 启动浏览器窗口参数=浏览器窗口参数}，{@link 程序启动画面=启动画面}<br>
          * 			manifest不是必须的，如果不存在，那么程序将使用默认配置.<br>
-         * 			注意：**manifest.json只支持ANSI编码，其他类型的编码将不能被正确识别**
+         * 			注意：**manifest.json只支持ANSI编码，其他类型的编码可能不会被正确识别**
          *
          * @example
          *
@@ -34,7 +34,7 @@ namespace amo {
         		 {
         			 "browserWindowSettings":{
         			 "titleBar": true,
-        			 "url": "http://www.oschina.net"
+        			 "url": "http://www.baidu.com"
         			 }
         		 }
          ```
@@ -68,7 +68,13 @@ namespace amo {
         		 {
         			 "appSettings":{
         				 "single_process": true,
-        				 "useNode":false
+        				 "useNode":false,
+        				 "urlMappings":[
+        					{
+        						"url":"http://127.0.0.1:8020/doc",
+        						"path":"%webDir%"
+        					}
+        				 ]
         			 },
         			 "browserWindowSettings":{
         				 "titleBar": true,
@@ -95,7 +101,13 @@ namespace amo {
         			keyboard.sayString(`{
         								"appSettings":{
         									"single_process": true,
-        									"useNode":false
+        									"useNode":false,
+        									"urlMappings":[
+        										{
+        											"url":"http://127.0.0.1:8020/doc",
+        											"path":"%webDir%"
+        										}
+        									]
         								},
         								"browserWindowSettings":{
         									 "titleBar": true,

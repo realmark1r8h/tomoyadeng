@@ -138,6 +138,7 @@ namespace amo {
             m_file.reset(new amo::file(p));
             m_filestream = m_file->get_filestream(mode);
             
+            return true;
         }
         
         /**
