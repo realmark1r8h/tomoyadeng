@@ -56,7 +56,7 @@ console.log(url);
 
 new BrowserWindow({
     titleBar: false,
-    url: url
+    url: 'local://file/' + url
 })
 
 ```

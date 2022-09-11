@@ -78,7 +78,7 @@ namespace amo {
         
         	new BrowserWindow({
         		titleBar: false,
-        		url: url
+        		url: 'local://file/' + url
         	})
          ```
          */

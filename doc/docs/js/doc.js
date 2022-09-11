@@ -12782,8 +12782,8 @@ require('./polyfill-done.js');
          basic       : {col: 1},
  settings       : {col: 1},
  api       : {col: 1},
- cef       : {col: 1},
  extend       : {col: 1},
+ cef       : {col: 1},
 
     };
     var isTouchScreen = 'ontouchstart' in document.documentElement;

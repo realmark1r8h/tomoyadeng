@@ -287,7 +287,7 @@ window.open('http://www.baidu.com/example/BrowserWindow.html');
 <div class="adoc" id="div_addUrlMapping"></div>
 
 
-## removeUrlMapping &nbsp;<span class="label label-static">静态</span> 
+## removeUrlMapping &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   移除URL映射路径.
   
