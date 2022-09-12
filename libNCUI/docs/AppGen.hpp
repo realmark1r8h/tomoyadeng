@@ -19,7 +19,9 @@ namespace amo {
         /*!
          * @section	配置文件
          *
-         * @brief	编辑程序配置文件.
+         * @brief	编辑程序配置文件，右键编辑框可以生成程序，详细内容可参考{@link rcedit}.
+         *
+         * @see rcedit
          *
          * @html <div id="appGenExample" class="example code" style="min-height:100px; font-size: 14px; line-height: 20px;" contenteditable="true"><pre style="background: none; border: none; padding: 0;font-size: 14px; line-height: 20px;"></pre>  </div>
          */

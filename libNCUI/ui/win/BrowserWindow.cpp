@@ -278,7 +278,7 @@ namespace amo {
     
     LRESULT BrowserWindow::OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                    BOOL& bHandled) {
-        if (!m_pBrowserSettings->closable) {
+        if (!m_pBrowserSettings->closable && wParam != 255) {
             bHandled = TRUE;
             return TRUE;
         }

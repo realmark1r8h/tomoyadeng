@@ -48,7 +48,7 @@ includes('BrowserWindow', 'app');
 
 var win = new BrowserWindow({
     titleBar: true,
-    url: 'local://file/example/localfile.html'
+    url: 'local://file/example/BrowserWindow.html'
 })
 
 var url = app.toAbsolutePath("%webDir%example/FramelessWindow.html");
@@ -75,7 +75,7 @@ includes('BrowserWindow', 'app');
 
 var win = new BrowserWindow({
     titleBar: true,
-    url: 'localhost/@file:///example/localfile.html'
+    url: 'localhost/@file:///example/BrowserWindow.html'
 })
 
 var url = app.toAbsolutePath("%webDir%example/FramelessWindow.html");
@@ -156,13 +156,5 @@ new BrowserWindow({
 
 
 <div class="adoc" id="div_外部渲染层"></div>
-
-
-## DLL调用 &nbsp;
-  NCUI直接调用C导出的DLL接口,但限制比较多，还不如直接写C++扩展快，暂未开放.
-  
-
-
-<div class="adoc" id="div_DLL调用"></div>
 
 

@@ -19,7 +19,7 @@ namespace amo {
         /*!
          * @section	使用Node.js
          *
-         * @brief	NCUI支持使用Node.js控制程序，但目前只针对4.7.3进行过开发，更高或更低的版本可能并不支持.
+         * @brief	NCUI支持使用Node.js控制程序，但目前只针对4.7.1进行过开发，更高或更低的版本可能并不支持.
          * 			你可以在Node.js中使用文档api部分所提供的绝大部分接口，其他类型的接口不被支持.<br>
          * 			你可以编辑manifest.json文件(useNode=true)来获取Node.js支持.默认情况下Node.js会注入到NCUI中，并在单独的线程中运行.<br>
          * 			你可以编辑manifest.json文件(useNodeProcess=true)使Node.js在单独的进程中执行,该模式下Node.js会以调试模式启动，你可以使用node-inspector或其他调试工作调试Node.js代码.
@@ -48,15 +48,6 @@ namespace amo {
         
         void foo() {}
         
-        /*!
-         * @section	生成应用
-         *
-         * @brief	可以使用{@link 资源编辑模块=rcedit}生成自己的应用.
-         */
-        
-        void foo1() {
-        
-        }
         
         /*!
          * @section	local协议
@@ -70,7 +61,7 @@ namespace amo {
         
         	var win = new BrowserWindow({
         		titleBar: true,
-        		url: 'local://file/example/localfile.html'
+        		url: 'local://file/example/BrowserWindow.html'
         	})
         
         	var url = app.toAbsolutePath("%webDir%example/FramelessWindow.html");
@@ -100,7 +91,7 @@ namespace amo {
         
         		var win = new BrowserWindow({
         			titleBar: true,
-        			url: 'localhost/@file:///example/localfile.html'
+        			url: 'localhost/@file:///example/BrowserWindow.html'
         		})
         
         		var url = app.toAbsolutePath("%webDir%example/FramelessWindow.html");
@@ -203,7 +194,7 @@ namespace amo {
         
         /*!
         * @section	DLL调用
-        *
+        * @ignore
         * @brief	NCUI直接调用C导出的DLL接口,但限制比较多，还不如直接写C++扩展快，暂未开放.
         *
         */

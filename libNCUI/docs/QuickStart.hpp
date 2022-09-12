@@ -25,6 +25,10 @@ namespace amo {
          * 			完整的manifest包含三个段，分别为 appSettings， browserWindowSettings， splashWindowSettings;<br>
          * 			对应可以设置{@link 启动参数}，{@link 启动浏览器窗口参数=浏览器窗口参数}，{@link 程序启动画面=启动画面}<br>
          * 			manifest不是必须的，如果不存在，那么程序将使用默认配置.<br>
+         * 			NCUI共有三个地方保存程序的启动参数，优先级从1到3，分别为：<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;1. manifest.json，可以通过编辑该文件修改启动参数<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;2. exe程序中的资源文件，可以通过编辑exe程序修改启动参数,参考{@link 资源编辑=rcedit}、{@link 应用生成}<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;3. 源代码中的默认启动参数，只能通过修改源代码来更改启动参数<br>
          * 			注意：**manifest.json只支持ANSI编码，其他类型的编码可能不会被正确识别**
          *
          * @example
@@ -34,7 +38,7 @@ namespace amo {
         		 {
         			 "browserWindowSettings":{
         			 "titleBar": true,
-        			 "url": "http://www.baidu.com"
+        			 "url": "http://127.0.0.1:8020/doc/example/ManifestWindow.html"
         			 }
         		 }
          ```
