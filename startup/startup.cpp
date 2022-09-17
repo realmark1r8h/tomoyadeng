@@ -414,6 +414,7 @@ void runNodeInNodeProcess() {
                 
                 amo::string strDebugParam = "--debug-brk ";
                 strDebugParam += args->m_strJsFile;
+                strDebugParam += " --ncui-debug ";
                 
                 SHELLEXECUTEINFOA ShExecInfo = { 0 };
                 ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
