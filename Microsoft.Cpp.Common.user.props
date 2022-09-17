@@ -42,6 +42,7 @@ Copyright (C) ShineEnergy Corporation. All rights reserved.
 		<SDKFolder >D:\SDK\</SDKFolder>
 		<BoostFolder>$(SDKFolder)boost_1_63_0\</BoostFolder>
 		<NodeGypFolder>C:\Users\Administrator\.node-gyp\4.7.1\</NodeGypFolder>
+		<!--<NodeGypFolder>C:\Users\1123456\.node-gyp\4.7.1\</NodeGypFolder>-->
 		<ThirdPartyFolder>$(SolutionDir)\third_party\</ThirdPartyFolder>
 		<ObjectFolder Condition="'$(ObjectFolder)' == ''">$(SolutionDir)../$(SolutionName)-Out\VC2012.IntDir\</ObjectFolder>
 		<ObjectFolder Condition="!HasTrailingSlash('$(ObjectFolder)')">$(ObjectFolder)\</ObjectFolder>
