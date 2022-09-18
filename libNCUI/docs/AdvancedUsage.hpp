@@ -16,39 +16,8 @@ namespace amo {
     class AdvancedUsage {
     public:
     
-        /*!
-         * @section	使用Node.js
-         *
-         * @brief	NCUI支持使用Node.js控制程序，但目前只针对4.7.1进行过开发，更高或更低的版本可能并不支持.
-         * 			你可以在Node.js中使用文档api部分所提供的绝大部分接口，其他类型的接口不被支持.<br>
-         * 			你可以编辑manifest.json文件(useNode=true)来获取Node.js支持.默认情况下Node.js会注入到NCUI中，并在单独的线程中运行.<br>
-         * 			你可以编辑manifest.json文件(useNodeProcess=true)使Node.js在单独的进程中执行,该模式下Node.js会以调试模式启动，你可以使用node-inspector或其他调试工作调试Node.js代码.
-         *
-         * @example
-         *
-        ```
-        		// 直接在NCUI中使用Node.js
-        		{
-        			"appSettings":{
-        				useNode: true,
-        				useNodeProcess: false
-        			}
-        		}
-        
-        		// 在单独的进程中使用Node.js
-        		{
-        			"appSettings":{
-        				useNode: true,
-        				useNodeProcess: true
-        			}
-        		}
-        ```
-         *
-         */
-        
-        void foo() {}
-        
-        
+    
+    
         /*!
          * @section	local协议
          *

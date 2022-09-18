@@ -1010,6 +1010,9 @@
     <ClInclude Include="docs\AppGen.hpp">
       <Filter>docs</Filter>
     </ClInclude>
+    <ClInclude Include="docs\UseNodeJs.hpp">
+      <Filter>docs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="libNCUI.rc">

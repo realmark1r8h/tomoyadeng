@@ -163,7 +163,7 @@
     <ClCompile Include="..\handler\NodeProcessHandler.cpp" />
     <ClCompile Include="..\module\NodeTypeConvertor.cpp" />
     <ClCompile Include="..\stdafx.cpp" />
-    <ClCompile Include="C:\node-v4.7.1-win-x86\node_modules\node-gyp\src\win_delay_load_hook.cc" />
+    <ClCompile Include="node-gyp\src\win_delay_load_hook.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
