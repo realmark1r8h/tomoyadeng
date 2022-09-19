@@ -1946,14 +1946,7 @@ console.assert(BrowserWindow.current.getOpacity() == 255);
 
 ```html
 include('BrowserWindow');
-// 创建一个普通窗口
-var win = new BrowserWindow({titleBar:true, url: 'http://127.0.0.1:8020/doc/example/BrowserWindow.html'});
-// 创建一个离屏窗口
-new BrowserWindow({
-        titleBar:false,
-        url: 'http://127.0.0.1:8020/doc/example/FramelessWindow.html',
-        offscreen: true
-    });
+ 
 // 创建一个透明窗口
 new BrowserWindow({
         titleBar:false,
