@@ -467,6 +467,17 @@ namespace amo {
             browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
         }
         
+        if (!util::isDevUrl(url)) {
+            // 允许页面通过document.dispatchEvent 向ipc发送数据
+            std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(frame));
+            runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+            runner->setValue(IPCArgsPosInfo::TransferID, 0);
+            runner->setValue(IPCArgsPosInfo::JsFuncName, "listenDocumentEvent");
+            runner->execute("runJSFunction",
+                            appSettings->dragClassName,
+                            appSettings->noDragClassName);
+        }
+        
 #endif
         AMO_TIMER_ELAPSED();
         

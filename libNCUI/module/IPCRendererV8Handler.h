@@ -43,6 +43,7 @@ namespace amo {
          */
         Any runJSFunction(IPCMessage::SmartType msg);
         
+        
         /*!
          * @fn	Any IPCRendererV8Handler::runJsFragment(IPCMessage::SmartType msg);
          *
@@ -78,6 +79,7 @@ namespace amo {
         Any triggerEventAllFrame(IPCMessage::SmartType msg);
         
         
+        Any emitCustomEventAllFrame(IPCMessage::SmartType msg);
         Any emitEventAllFrame(IPCMessage::SmartType msg);
         
         Any releaseAllTransfer(IPCMessage::SmartType msg);
@@ -109,6 +111,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(triggerEvent, 0)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(triggerEventAllFrame, 0)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(emitEventAllFrame, 0)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(emitCustomEventAllFrame, 0)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(releaseAllTransfer, 0)
         AMO_CEF_MESSAGE_TRANSFER_END()
         

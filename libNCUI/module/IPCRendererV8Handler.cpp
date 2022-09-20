@@ -264,12 +264,48 @@ namespace amo {
         return retArr;
     }
     
+    Any IPCRendererV8Handler::emitCustomEventAllFrame(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        int32_t nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+        int nFrameId = args->getInt(IPCArgsPosInfo::FrameID);
+        using MGR = BrowserManager < PID_RENDERER >;
+        CefRefPtr<CefBrowser> pBrowser = MGR::GetBrowserByID(nBrowserID);
+        
+        std::vector<int64_t> vec;
+        pBrowser->GetFrameIdentifiers(vec);
+        
+        for (auto& p : vec) {
+            CefRefPtr<CefFrame> pFrame = pBrowser->GetFrame(p);
+            
+            if (!pFrame) {
+                continue;
+            }
+            
+            auto ipcMessage = msg->clone();
+            ipcMessage->getArgumentList()->setValue(IPCArgsPosInfo::JsFuncName, "ncuiTriggerCustomEvent");
+            ipcMessage->getArgumentList()->setValue(IPCArgsPosInfo::FrameID, pFrame->GetIdentifier());
+            runJSFunction(ipcMessage);
+            
+        }
+        
+        return Undefined();
+        
+    }
     Any IPCRendererV8Handler::emitEventAllFrame(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         int32_t nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
         int nFrameId = args->getInt(IPCArgsPosInfo::FrameID);
         using MGR = BrowserManager < PID_RENDERER > ;
         CefRefPtr<CefBrowser> pBrowser = MGR::GetBrowserByID(nBrowserID);
+        
+        
+        // 特殊处理一下ipc消息
+        std::string ncuiTriggerCustomEvent = args->getString(IPCArgsPosInfo::CustomEventName);
+        
+        if (ncuiTriggerCustomEvent == "ncuiTriggerCustomEvent") {
+            return emitCustomEventAllFrame(msg);
+        }
+        
         
         // 获取所有FrameID
         std::vector<int64_t> vec;

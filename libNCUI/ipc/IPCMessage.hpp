@@ -64,6 +64,8 @@ namespace amo {
         /*! @brief	自定义参数的起始位置. */
         const static int CustomArgs = 11;
         
+        /*! @brief	自定义事件名称. */
+        const static int CustomEventName = 18;
         
         /*! @brief	Transfer类名位置. */
         const static int TransferName = 11;

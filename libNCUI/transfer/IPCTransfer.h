@@ -120,6 +120,19 @@ namespace amo {
         
         Any async(IPCMessage::SmartType msg);
         
+        /*!
+         * @fn	Any IPCTransfer::dispatchEvent(IPCMessage::SmartType msg);
+         *
+         * @brief	向所有页面的document发送自定义事件.
+         *
+         * @param	#String 事件名.
+         * @param	#JsonObject 事件内容，CustomEvent的detail字段
+         *
+         * @return	无.
+         */
+        
+        Any dispatchEvent(IPCMessage::SmartType msg);
+        
         Any joinChannel(IPCMessage::SmartType msg);
         Any getChannel(IPCMessage::SmartType msg);
         
@@ -128,7 +141,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(exec, TransferFuncStatic | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(sync, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(async, TransferFuncStatic | TransferExecAsync)
-        
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(dispatchEvent, TransferFuncStatic | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     };

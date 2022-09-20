@@ -32,6 +32,15 @@ namespace amo {
         return ret;
     }
     
+    Any IPCTransfer::dispatchEvent(IPCMessage::SmartType msg) {
+        msg->getArgumentList()->setValue(IPCArgsPosInfo::CustomEventName, "ncuiTriggerCustomEvent");
+        std::shared_ptr<UIMessageBroadcaster> runner;
+        runner.reset(new UIMessageBroadcaster(getObjectID()));
+        runner->broadcast(msg);
+        return Undefined();
+        
+    }
+    
     Any IPCTransfer::joinChannel(IPCMessage::SmartType msg) {
         return Undefined();
     }

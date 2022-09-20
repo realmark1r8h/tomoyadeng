@@ -38,6 +38,10 @@ function usleep(us) {
     return usleep(us);
 };
 
+function ncuiTriggerCustomEvent(name, val){
+	document.dispatchEvent(new CustomEvent(name, {detail: val}));
+}
+
 function objectToString(json) {
     return JSON.stringify(json);
 };
@@ -217,4 +221,22 @@ function loadCSS(url){
     link.rel = 'stylesheet';
     link.type = 'text/css';
     head.appendChild(link);
+}
+
+function listenDocumentEvent(){
+	document.addEventListener('ipc.exec', function(event) { 
+		include('ipc');
+		var name = event.detail.eventName;
+		var data = event.detail;
+		ipc.exec(name, data); 
+	});
+	
+	document.addEventListener('ipc.dispatchEvent', function(event) { 
+		include('ipc');
+		var name = event.detail.eventName;
+		var data = event.detail;
+		ipc.dispatchEvent(name, data); 
+	});
+	
+	document.dispatchEvent(new CustomEvent('ipc.ready', {}));
 }
