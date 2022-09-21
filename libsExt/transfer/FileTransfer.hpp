@@ -143,10 +143,22 @@ namespace amo {
         
         /**
          * @fn	Any FileTransfer::read(IPCMessage::SmartType msg)
-         * @tag sync
+         *
+         * @tag sync deprecated
+         *
          * @brief	读取所有文件内容.
          *
          * @return	#String 读取到的字符串.
+         *
+         * @see readSome=FileStream.readSome
+         * @example
+         *
+         ```
+        	include('FileStream');
+        	var filestream = new FileStream('manifest.json');
+        	console.log(filestream.read());
+        	filestream.close();
+         ```
          */
         
         Any read(IPCMessage::SmartType msg) {
@@ -158,6 +170,97 @@ namespace amo {
         }
         
         /**
+         * @fn	Any FileTransfer::readAll(IPCMessage::SmartType msg)
+         * @tag sync
+         * @brief	获取所有字符串, readAll采用不同的机制读取文件，该操作与当前流无关，
+         * 			所以调用该函数不会影响其他状态函数如{@link eof=FileStream.eof}.
+         *
+         * @return	#String
+         * @example
+         *
+         ```
+        	include('FileStream');
+        	var filestream = new FileStream('manifest.json');
+        	console.log(filestream.readAll());
+        	filestream.close();
+         ```
+         */
+        
+        Any readAll(IPCMessage::SmartType msg) {
+            if (!m_filestream) {
+                return "";
+            }
+            
+            return m_filestream->read_all();
+        }
+        
+        /**
+         * @fn	Any FileTransfer::readSome(IPCMessage::SmartType msg)
+         * @tag sync
+         * @brief	读取指定数量.
+         *
+         * @param	#Int 最多读取多少个字符.
+         *
+         * @return	#String.
+         * @example
+         *
+         ```
+        	include('FileStream');
+        	var filestream = new FileStream('manifest.json');
+        	while(!filestream.eof()){
+        		console.log(filestream.readSome(100));
+        	}
+        	filestream.close();
+         ```
+         */
+        
+        Any readSome(IPCMessage::SmartType msg) {
+            if (!m_filestream) {
+                return "";
+            }
+            
+            int count = msg->getArgumentList()->getInt(0);
+            
+            if (count <= 0) {
+                return "";
+            }
+            
+            std::vector<char> buffer(count, 0);
+            
+            int bytes = m_filestream->read_some(buffer.data(), count);
+            return std::string(buffer.data(), bytes);
+        }
+        
+        /**
+         * @fn	Any FileTransfer::readLine(IPCMessage::SmartType msg)
+         *
+         * @tag sync
+         *
+         * @brief	读取一行,一行最多4096个字符，如果多于这个值则不能获取完整数据，参考
+         * 			{@link readSome=FileStream.readSome}.
+         *
+         * @return	#String.
+         * @example
+         *
+         ```
+        	include('FileStream');
+        	var filestream = new FileStream('manifest.json');
+        	while(!filestream.eof()){
+        		console.log(filestream.readLine());
+        	}
+        	filestream.close();
+         ```
+         */
+        
+        Any readLine(IPCMessage::SmartType msg) {
+            if (!m_filestream) {
+                return "";
+            }
+            
+            return m_filestream->read_line();
+        }
+        
+        /**
          * @fn	Any FileTransfer::write(IPCMessage::SmartType msg)
          * @tag sync
          * @brief	向文件中写入字符串.
@@ -165,6 +268,14 @@ namespace amo {
          * @param	#String 需要写入的数据.
          *
          * @return	#Boolean true 成功/false 失败.
+         * @example
+         *
+         ```
+        	 include('FileStream');
+        	 var filestream = new FileStream('manifest2.json');
+        	 console.assert(filestream.write('1234567890') == true);
+        	 filestream.remove();
+         ```
          */
         
         Any write(IPCMessage::SmartType msg) {
@@ -185,12 +296,25 @@ namespace amo {
         
         /**
          * @fn	Any FileTransfer::append(IPCMessage::SmartType msg)
+         *
          * @tag sync
+         *
          * @brief	将一个文件的内容追加到当前文件中.
          *
          * @param	#String 文件路径
          *
          * @return	#Boolean true 成功/false 失败.
+         *
+         * @example
+         *
+         ```
+        	include('FileStream');
+        	var filestream = new FileStream('manifest2.json');
+        	filestream.append('manifest.json');
+        	filestream.close();
+        	console.log(filestream.size());
+        	filestream.remove();
+         ```
          */
         
         Any append(IPCMessage::SmartType msg) {
@@ -234,7 +358,18 @@ namespace amo {
          *
          *
          * @return	无.
+         *
          * @see open=FileStream.open
+         *
+         * @example
+         *
+         ```
+        		include('FileStream');
+        		var filestream = new FileStream('manifest.json');
+        		filestream.close();
+        
+        		console.assert(filestream.isOpened() == false);
+         ```
          */
         
         Any close(IPCMessage::SmartType msg) {
@@ -249,11 +384,55 @@ namespace amo {
         }
         
         /**
+         * @fn	Any FileTransfer::isOpened(IPCMessage::SmartType msg)
+         *
+         * @tag sync
+         *
+         * @brief	判断文件是否打开.
+         *
+         * @return	#Boolean.
+         * @example
+         *
+         ```
+        	include('FileStream');
+        	var filestream = new FileStream('manifest.json');
+        	console.assert(filestream.isOpened() == true);
+        
+        	filestream.close();
+        	console.assert(filestream.isOpened() == false);
+         ```
+         */
+        
+        Any isOpened(IPCMessage::SmartType msg) {
+            if (!m_filestream) {
+                return false;
+            }
+            
+            return m_filestream->is_open();
+            
+        }
+        
+        /**
          * @fn	Any FileTransfer::size(IPCMessage::SmartType msg)
          * @tag sync
          * @brief	获取文件大小.
          *
          * @return	#Int.
+         * @example
+         *
+         ```
+        	include('FileStream');
+        	var filestream = new FileStream('manifest.json');
+        	console.log(filestream.size());
+        
+        	var filestream2 = new FileStream('manifest2.json');
+        	console.assert(filestream.size() == 0);
+        
+        	filestream2.write('1234567890');
+        	console.assert(filestream.size() == 10);
+        
+        	filestream2.remove();
+         ```
          */
         
         Any size(IPCMessage::SmartType msg) {
@@ -271,14 +450,25 @@ namespace amo {
          *
          * @param #String 文件路径.
          *
-         * @return	无.
+         * @return	#Boolean.
+         * @example
+         *
+         ```
+        	include('FileStream');
+        	var filestream = new FileStream('manifest2.json');
+        	filestream.write('33');
+        	// 文件被占用，无法删除
+        	console.assert(FileStream.Remove('manifest2.json') == false);
+        	filestream.close();
+        	// 解除文件占用，可以删除
+        	console.assert(FileStream.Remove('manifest2.json') == true);
+         ```
          */
         
         Any Remove(IPCMessage::SmartType msg) {
             amo::string strPath(msg->getArgumentList()->getString(0), true);
             amo::path p(strPath);
-            p.remove();
-            return Undefined();
+            return p.remove();
         }
         
         
@@ -287,25 +477,72 @@ namespace amo {
         * @tag sync
         * @brief 删除当前文件.
         *
-        * @return	无.
+        * @return	#Boolean.
+        * @example
+        *
+        ```
+        	include('FileStream');
+        	// 以读写方式打开，如果文件不存在，会创建文件
+        	var filestream = new FileStream('manifest2.json');
+        	console.assert(filestream.remove() == true);
+        	// 以只读方式打开，如果文件不存在，则不会创建文件
+        	var filestream2 = new FileStream('manifest2.json', 1);
+        	console.assert(filestream.remove() == false);
+        ```
         */
         
         Any remove(IPCMessage::SmartType msg) {
             close(msg);
             amo::path p(m_filename);
-            p.remove();
-            return Undefined();
+            return  p.remove();
+        }
+        
+        /**
+         * @fn	Any FileTransfer::eof(IPCMessage::SmartType msg)
+         *
+         * @brief	判断是否已读取到文件末尾.
+         *
+         *
+         * @return	#Boolean true 末尾/ false 非末尾.
+         * @example
+         *
+         ```
+        	include('FileStream');
+        	var filestream = new FileStream('manifest.json');
+        	filestream.readAll(); // readAll不会影响内部文件指针位置
+        	console.assert(filestream.eof() ==false);
+        	while(!filestream.eof()){
+        		console.log(filestream.readSome(100));
+        	}
+        	console.assert(filestream.eof() == true);
+        
+         ```
+         */
+        
+        Any eof(IPCMessage::SmartType msg) {
+            if (!m_filestream) {
+                return true;
+            }
+            
+            bool bRetval =  m_filestream->eof();
+            return bRetval;
         }
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(FileTransfer, RunnableTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(Remove, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(read, TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(readAll, TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(readSome, TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(readLine, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(write, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(append, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(appendTo, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(close, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(size, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(remove, TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(eof, TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(open, TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(isOpened, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     public:

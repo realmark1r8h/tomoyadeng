@@ -443,10 +443,27 @@ namespace amo {
         }
         
         
+        
+        
+        std::string url = frame->GetURL();
+        
+        if (!util::isDevUrl(url)) {
+            // 允许页面通过document.dispatchEvent 向ipc发送数据
+            std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(frame));
+            runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
+            runner->setValue(IPCArgsPosInfo::TransferID, 0);
+            runner->setValue(IPCArgsPosInfo::JsFuncName, "listenDocumentEvent");
+            runner->execute("runJSFunction",
+                            appSettings->dragClassName,
+                            appSettings->noDragClassName);
+        }
+        
+        
+        
 #if CHROME_VERSION_BUILD <2704
         // RenderProcess OnContextCreated 不能正确触发，导致窗口不能拖动，
         // 这里再调用一次
-        std::string url = frame->GetURL();
+        
         
         if (!util::isDevUrl(url)) {
             std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(frame));
@@ -467,16 +484,7 @@ namespace amo {
             browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
         }
         
-        if (!util::isDevUrl(url)) {
-            // 允许页面通过document.dispatchEvent 向ipc发送数据
-            std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter(frame));
-            runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
-            runner->setValue(IPCArgsPosInfo::TransferID, 0);
-            runner->setValue(IPCArgsPosInfo::JsFuncName, "listenDocumentEvent");
-            runner->execute("runJSFunction",
-                            appSettings->dragClassName,
-                            appSettings->noDragClassName);
-        }
+        
         
 #endif
         AMO_TIMER_ELAPSED();
@@ -983,8 +991,10 @@ namespace amo {
                 bool ctrl;
                 bool alt;
                 model->GetAcceleratorAt(i, key_code, shift, ctrl, alt);
-                $cdevel("type:{}, value:{}, keycode:{}, shift:{}, ctrl:{}, alt:{},", (int)model->GetTypeAt(i), amo::string(model->GetLabelAt(i).ToString(), true).to_ansi(), key_code, shift, ctrl, alt);
-                
+                $cdevel("type:{}, value:{}, keycode:{}, shift:{}, ctrl:{}, alt:{},",
+                        (int)model->GetTypeAt(i), amo::string(model->GetLabelAt(i).ToString(),
+                                true).to_ansi(), key_code, shift, ctrl, alt);
+                                
                 /*MENUITEMTYPE_NONE,
                 MENUITEMTYPE_COMMAND,
                 MENUITEMTYPE_CHECK,

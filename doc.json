@@ -4,6 +4,7 @@
         "libNCUI/docs/QuickStart.hpp",
 		"libNCUI/docs/UseNodeJs.hpp",
 		"libNCUI/docs/AdvancedUsage.hpp",
+		"libNCUI/docs/DispatchEvent.hpp",
 		"libNCUI/docs/AppGen.hpp",
 		"libNCUI/docs/Demos.hpp",
 		

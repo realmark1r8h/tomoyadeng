@@ -329,6 +329,7 @@
     <ClInclude Include="docs\AdvancedUsage.hpp" />
     <ClInclude Include="docs\AppGen.hpp" />
     <ClInclude Include="docs\Demos.hpp" />
+    <ClInclude Include="docs\DispatchEvent.hpp" />
     <ClInclude Include="docs\QuickStart.hpp" />
     <ClInclude Include="docs\UseNodeJs.hpp" />
     <ClInclude Include="handler\BrowserManager.hpp" />

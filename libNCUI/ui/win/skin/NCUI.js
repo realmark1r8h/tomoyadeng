@@ -225,6 +225,7 @@ function loadCSS(url){
 
 function listenDocumentEvent(){
 	document.addEventListener('ipc.exec', function(event) { 
+		console.dir(event);
 		include('ipc');
 		var name = event.detail.eventName;
 		var data = event.detail;
@@ -232,6 +233,7 @@ function listenDocumentEvent(){
 	});
 	
 	document.addEventListener('ipc.dispatchEvent', function(event) { 
+		console.dir(event);
 		include('ipc');
 		var name = event.detail.eventName;
 		var data = event.detail;

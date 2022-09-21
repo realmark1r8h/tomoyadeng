@@ -151,3 +151,37 @@ ipc.async('ipc.async', function(val){console.assert(val == 'ipc.async');}, '2382
 <div class="adoc" id="div_async"></div>
 
 
+## dispatchEvent &nbsp;
+  向所有页面的document发送自定义事件.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String </td>
+	<td></td>
+	<td>事件名.</td>
+</tr><tr>
+	<td>JsonObject </td>
+	<td></td>
+	<td>事件内容，CustomEvent的detail字段</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+   无. 
+
+
+
+<div class="adoc" id="div_dispatchEvent"></div>
+
+
