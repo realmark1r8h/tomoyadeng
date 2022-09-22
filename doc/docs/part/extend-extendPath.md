@@ -14,6 +14,15 @@
 * **返回值**
   Path 返回一个Path对象. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = Path.getFullAppDir();
+console.log(p);
+console.log(p.toString());
+
+```
 
 
 <div class="adoc" id="div_getFullAppDir"></div>
@@ -28,6 +37,15 @@
 * **返回值**
   Path 返回一个Path对象. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = Path.getFullAppName();
+console.log(p);
+console.log(p.toString());
+
+```
 
 
 <div class="adoc" id="div_getFullAppName"></div>
@@ -59,12 +77,21 @@
 * **返回值**
   Boolean true 存在/false 不存在. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = new Path('manifest.json');
+p.copyTo('manifest2.json');
+console.assert(Path.fileExsit('manifest2.json') == true);
+
+```
 
 
 <div class="adoc" id="div_fileExsit"></div>
 
 
-## Remove &nbsp;<span class="label label-static">静态</span> 
+## Remove &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   删除一个文件，或空目录.
   
@@ -90,6 +117,16 @@
 * **返回值**
   Boolean true 成功/false 失败. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = new Path('manifest.json');
+p.copyTo('manifest2.json');
+Path.Remove('manifest2.json')
+console.assert(Path.fileExsit('manifest2.json') == false);
+
+```
 
 
 <div class="adoc" id="div_Remove"></div>
@@ -121,6 +158,16 @@
 * **返回值**
   Boolean true 成功/false 失败. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = new Path('manifest.json');
+p.copyTo('manifest2.json');
+Path.RemoveAll('manifest2.json')
+console.assert(Path.fileExsit('manifest2.json') == false);
+
+```
 
 
 <div class="adoc" id="div_RemoveAll"></div>
@@ -135,6 +182,14 @@
 * **返回值**
   String . 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = new Path('manifest.json');
+console.log(p.toString());
+
+```
 
 
 <div class="adoc" id="div_toString"></div>
@@ -149,6 +204,14 @@
 * **返回值**
   Boolean true 存在/ false 不存在. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = new Path('manifest.json');
+console.assert(p.isExsit() == true);
+
+```
 
 
 <div class="adoc" id="div_isExsit"></div>
@@ -180,9 +243,43 @@
 * **返回值**
   Path 当前对象. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = new Path('./');
+p.append('manifest.json');
+console.log(p.toString());
+console.assert(p.isExsit() == true);
+
+```
 
 
 <div class="adoc" id="div_append"></div>
+
+
+## toAbsolute &nbsp;
+  将当前路径转换为一个绝对路径.
+  
+* **函数参数**  无
+
+* **返回值**
+  Path 当前对象. 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = new Path('./');
+p.append('manifest.json');
+p.toAbsolute();
+console.log(p.toString());
+console.assert(p.isExsit() == true);
+
+```
+
+
+<div class="adoc" id="div_toAbsolute"></div>
 
 
 ## removeFileSpec &nbsp;<span class="label label-sync">同步</span> 
@@ -194,6 +291,17 @@
 * **返回值**
   Path 当前对象. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = new Path('./');
+p.append('manifest.json');
+p.toAbsolute().removeFileSpec();
+console.log(p.toString());
+console.assert(p.toString() == Path.getFullAppDir().toString());
+
+```
 
 
 <div class="adoc" id="div_removeFileSpec"></div>
@@ -225,6 +333,16 @@
 * **返回值**
   Boolean true 存在/ false 不存在. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = new Path('manifest.json');
+p.copyTo('manifest2.json');
+
+console.assert(Path.fileExsit('manifest2.json') == true);
+
+```
 
 
 <div class="adoc" id="div_copyTo"></div>
@@ -256,6 +374,22 @@
 * **返回值**
   Boolean true 存在/ false 不存在. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = new Path('manifest.json');
+p.copyTo('manifest2.json');
+console.assert(Path.fileExsit('manifest2.json') == true);
+
+p = new Path('manifest2.json');
+p.moveTo('manifest3.json');
+
+console.assert(Path.fileExsit('manifest2.json') == false);
+console.assert(Path.fileExsit('manifest3.json') == true);
+
+
+```
 
 
 <div class="adoc" id="div_moveTo"></div>
@@ -269,6 +403,17 @@
 * **返回值**
   Boolean true 成功/false 失败. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = new Path('manifest3.json');
+p.remove();
+
+console.assert(Path.fileExsit('manifest3.json') == false);
+
+
+```
 
 
 <div class="adoc" id="div_remove"></div>
@@ -282,6 +427,19 @@
 * **返回值**
   Boolean true 成功/false 失败. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = new Path('web');
+p.copyTo('web2');
+
+console.assert(Path.fileExsit('web2') == true);
+p = new Path('web2');
+p.removeAll();
+console.assert(p.isExsit('web2') == false);
+
+```
 
 
 <div class="adoc" id="div_removeAll"></div>

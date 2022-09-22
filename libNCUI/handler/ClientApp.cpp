@@ -76,7 +76,7 @@ namespace amo {
     }
     
     CefRefPtr<CefRenderProcessHandler> ClientApp::GetRenderProcessHandler() {
-        $clog(amo::cdevel << func_orient << amo::endl;);
+        //$clog(amo::cdevel << func_orient << amo::endl;);
         
         if (m_pRenderProcessHandler == NULL) {
             m_pBrowserProcessHandler = new BrowserProcessHandler();

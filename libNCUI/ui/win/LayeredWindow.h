@@ -18,6 +18,7 @@ using namespace Gdiplus;
 
 
 namespace amo {
+
     class NativeWindowSettings;
     class GlobalShortcutSettings;
     class LayeredWindow
@@ -25,6 +26,7 @@ namespace amo {
         
     {
     public:
+    
         const static uint32_t CUSTOM_MSG_BEGIN = WM_USER + 10000;
         const static uint32_t CUSTOM_MSG_END = WM_USER + 40000;
         

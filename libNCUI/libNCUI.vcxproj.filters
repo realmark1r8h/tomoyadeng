@@ -486,6 +486,9 @@
     <ClCompile Include="transfer\ActionTransfer.cpp">
       <Filter>transfer</Filter>
     </ClCompile>
+    <ClCompile Include="ui\win\D2D1Renderer.cpp">
+      <Filter>ui\win</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context\AppContext.h">
@@ -1015,6 +1018,9 @@
     </ClInclude>
     <ClInclude Include="docs\DispatchEvent.hpp">
       <Filter>docs</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\D2D1Renderer.h">
+      <Filter>ui\win</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

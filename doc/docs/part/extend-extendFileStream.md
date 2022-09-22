@@ -257,7 +257,7 @@ filestream.remove();
 
 ```html
 include('FileStream');
-var filestream = new FileStream('manifest2.json');
+var filestream = new FileStream('manifest2.json', 2);
 filestream.append('manifest.json');
 filestream.close();
 console.log(filestream.size());

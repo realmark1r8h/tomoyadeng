@@ -309,7 +309,7 @@ namespace amo {
          *
          ```
         	include('FileStream');
-        	var filestream = new FileStream('manifest2.json');
+        	var filestream = new FileStream('manifest2.json', 2);
         	filestream.append('manifest.json');
         	filestream.close();
         	console.log(filestream.size());
@@ -437,7 +437,8 @@ namespace amo {
         
         Any size(IPCMessage::SmartType msg) {
             if (!m_file) {
-                return 0;
+                amo::path p(m_filename);
+                m_file.reset(new amo::file(p));
             }
             
             return (int)m_file->size();

@@ -9,6 +9,7 @@
 
 #include "handler/CefHeader.hpp"
 #include "handler/LifeSpanHandler.h"
+#include "ui/win/ViewRenderer.h"
 
 
 
@@ -40,10 +41,10 @@ namespace amo {
         CefRefPtr<CefBrowser> getBrowser();
         virtual void onFocusedNodeChanged(IPCMessage::SmartType msg);
         virtual void updateCaretPos(std::shared_ptr<Gdiplus::Bitmap> image);
-        virtual void insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image);
+        virtual void insertBitmap(std::shared_ptr<PaintResource> image);
         virtual void setTooltip(const amo::string& str);
         
-        
+        virtual void needUpdate();
         
     protected:
         CefRefPtr<amo::ClientHandler> m_pClientHandler;												//!< 浏览器事件处理句柄

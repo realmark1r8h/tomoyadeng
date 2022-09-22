@@ -165,7 +165,7 @@ namespace amo {
         virtual void onFocusedNodeChanged(IPCMessage::SmartType msg);
         void getActiveElementInfo(CefRefPtr<CefFrame> pFrame);
         virtual void updateCaretPos(std::shared_ptr<Gdiplus::Bitmap>image) override;
-        virtual void insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) override;
+        virtual void insertBitmap(std::shared_ptr<PaintResource> image) override;
         
     public:
     
@@ -232,7 +232,7 @@ namespace amo {
         WebkitView* m_pWebkit;																		//!< ä¯ÀÀÆ÷¿Ø¼þ
         std::shared_ptr<IMM32Manager> imm32_manager_;												//!< ÊäÈë·¨¹ÜÀíÆ÷
         //OpenGLRenderer renderer_;																	//!< OPENGLäÖÈ¾Æ÷
-        ViewRenderer* m_pGdiRender;																	//!< GDI+äÖÈ¾Æ÷
+        ViewRenderer* m_pViewRender;																	//!< GDI+äÖÈ¾Æ÷
     };
 }
 #endif // AMO_OFFSCREENRENDERVIEW_H__

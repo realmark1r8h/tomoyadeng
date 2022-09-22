@@ -1,20 +1,43 @@
 #include "stdAfx.h"
 
 #include "ui/win/ViewRenderer.h"
+#include "D2D1Renderer.h"
 #pragma comment(lib, "Msimg32.lib")
 namespace amo {
-    void ViewRenderer::insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) {
-        m_pBitmap = image;
+    void ViewRenderer::insertBitmap(std::shared_ptr<PaintResource> image) {
+        m_resource = image;
         
         PaintStatusImage(GetManager()->GetPaintDC());
     }
+    
+    
     
     void ViewRenderer::SetToolTip(LPCTSTR pstrText) {
         return CControlUI::SetToolTip(pstrText);
     }
     
-    ViewRenderer::ViewRenderer() {
+    void ViewRenderer::SetPos(RECT rc, bool bNeedInvalidate /*= true*/) {
+        /*renderer->hwndRenderTarget->Resize(D2D1::SizeU(rc.right - rc.left, rc.bottom - rc.top));*/
+        //renderer->dcRenderTarget->Resize(D2D1::SizeU(rc.right - rc.left, rc.bottom - rc.top));
+        return CControlUI::SetPos(rc, bNeedInvalidate);
+        
+    }
     
+    void ViewRenderer::DoInit() {
+        if (isAccelerator()) {
+            renderer.reset(new D2D1Renderer());
+            renderer->initialize();
+        }
+        
+        
+        
+        return CControlUI::DoInit();
+    }
+    
+    ViewRenderer::ViewRenderer() {
+        setAccelerator(false);
+        m_nLastFPS = m_nCount = 0;
+        m_nLastTimestamp = amo::timer::now<amo::chrono::seconds>();
     }
     
     ViewRenderer::~ViewRenderer() {
@@ -25,44 +48,23 @@ namespace amo {
         return _T("RenderViewRender");
     }
     
-    void DrawImages3(HDC &hdc, std::shared_ptr<Gdiplus::Bitmap> bitmap) {
     
-    
-    
-    
-        if (!bitmap) {
+    void ViewRenderer::PaintStatusImage(HDC hDC) {
+        amo::timer t;
+        
+        if (!m_resource || !renderer) {
+            return;
+        };
+        
+        if (isAccelerator()) {
+            renderer->Render(hDC, m_resource);
+            updateFPS();
             return;
         }
         
-        Bitmap& bmp1 = *bitmap;
-        //CGdiplusConvertHelper::DumpBitmap(bmp1);
         
-        HBITMAP hBitmap = NULL;
-        Gdiplus::Color clr(0, 0, 0, 0);
+        std::shared_ptr<Gdiplus::Bitmap> m_pBitmap = m_resource->m_pBitmap;
         
-        if (Gdiplus::Ok == bmp1.GetHBITMAP(clr, &hBitmap)) { //转换完成的是预乘Alpha的图像
-            //MyTrace(L"Bkclr %d-%d-%d-%d PixelFormat:%d %d %d %d",
-            //        clr.GetRed(), clr.GetGreen(), clr.GetBlue(), clr.GetAlpha(),
-            //        bmp1.GetPixelFormat(), PixelFormat24bppRGB, PixelFormat32bppARGB, PixelFormat32bppPARGB);
-            //CGdiplusConvertHelper::DumpHBITMAP(hdc, hBitmap);
-            
-            HDC hMemDC = ::CreateCompatibleDC(hdc);
-            HBITMAP hOld = (HBITMAP)SelectObject(hMemDC, hBitmap);
-            
-            BLENDFUNCTION blendfunc = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
-            AlphaBlend(hdc,
-                       0, 0, bmp1.GetWidth(), bmp1.GetHeight(),
-                       hMemDC,
-                       0, 0, bmp1.GetWidth(), bmp1.GetHeight(),
-                       blendfunc);
-                       
-            SelectObject(hMemDC, hOld);
-            DeleteDC(hMemDC);
-            DeleteObject(hBitmap);
-        }
-    }
-    
-    void ViewRenderer::PaintStatusImage(HDC hDC) {
         if (m_pBitmap) {
         
             std::shared_ptr<Gdiplus::Bitmap> bitmap;
@@ -98,10 +100,10 @@ namespace amo {
             amo::rect r2(0, 0, nWidth, nHeight);
             amo::rect r3 = r1.intersect(r2);
             
-            $cdevel("r1 {},{}, {}, {}", r1.left(), r1.top(), r1.width(), r1.height());
-            $cdevel("r2 {},{}, {}, {}", r2.left(), r2.top(), r2.width(), r2.height());
+            /*    $cdevel("r1 {},{}, {}, {}", r1.left(), r1.top(), r1.width(), r1.height());
+                $cdevel("r2 {},{}, {}, {}", r2.left(), r2.top(), r2.width(), r2.height());
             
-            $cdevel("r3 {},{}, {}, {}", r3.left(), r3.top(), r3.width(), r3.height());
+                $cdevel("r3 {},{}, {}, {}", r3.left(), r3.top(), r3.width(), r3.height());*/
             
             static amo::timer t;
             
@@ -146,16 +148,23 @@ namespace amo {
                             (float)nHeight,
                             UnitPixel);
             graph.ReleaseHDC(hDC);
-            m_pBitmap = bitmap;
+            //m_pBitmap = bitmap;
+            m_resource->m_pBitmap = bitmap;
+            updateFPS();
         }
+        
+        $cdevel("渲染111用时：{}", t.elapsed());
     }
     
     LayerViewRender::~LayerViewRender() {
     
     }
     
-    void LayerViewRender::insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) {
-        m_pBitmap = image;
+    void LayerViewRender::insertBitmap(std::shared_ptr<PaintResource> image) {
+        m_resource = image;
         Invalidate();
     }
+    
+    
+    
 }

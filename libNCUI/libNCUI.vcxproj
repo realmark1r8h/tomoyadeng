@@ -73,7 +73,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>D:\SDK\opencv\build\x86\vc14\lib;$(SolutionDir)third_party\cef\lib\Debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\SDK\opencv\build\x86\vc14\lib;$(SolutionDir)third_party\cef\lib\Debug;C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86;$(LibraryPath)</LibraryPath>
     <IncludePath>D:\SDK\opencv\build\include;D:\SDK\opencv\build\include\opencv;D:\SDK\opencv\build\include\opencv\opencv;D:\SDK\opencv\build\include\opencv2;$(SDKFolder)sqlite3;$(SDKFolder)boost_1_63_0;$(ProjectDir);$(ProjectDir)header;$(ProjectDir)include;$(LibraryFolder)cef;$(ThirdPartyDir)sqlite3;$(ThirdPartyDir)node;$(SolutionDir)include;$(SolutionDir)header;$(NCUIDir)libsExt;$(ThirdPartyDir);$(ThirdPartyDir)Duilib;$(ThirdPartyDir)amo;$(ThirdPartyDir)7z\C;$(ThirdPartyDir)7z\CPP;$(ThirdPartyDir)7zpp;$(NCUIDir)libNCUI;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -82,7 +82,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>D:\SDK\opencv\build\x86\vc14\lib;$(SolutionDir)third_party\cef\lib\Release;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\SDK\opencv\build\x86\vc14\lib;$(SolutionDir)third_party\cef\lib\Release;C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86;$(LibraryPath)</LibraryPath>
     <IncludePath>D:\SDK\opencv\build\include;D:\SDK\opencv\build\include\opencv;D:\SDK\opencv\build\include\opencv\opencv;D:\SDK\opencv\build\include\opencv2;$(SDKFolder)sqlite3;$(SDKFolder)boost_1_63_0;$(ProjectDir);$(ProjectDir)header;$(ProjectDir)include;$(LibraryFolder)cef;$(ThirdPartyDir)sqlite3;$(ThirdPartyDir)node;$(SolutionDir)include;$(SolutionDir)header;$(NCUIDir)libsExt;$(ThirdPartyDir);$(ThirdPartyDir)Duilib;$(ThirdPartyDir)amo;$(ThirdPartyDir)7z\C;$(ThirdPartyDir)7z\CPP;$(ThirdPartyDir)7zpp;$(NCUIDir)libNCUI;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -298,6 +298,7 @@
     <ClCompile Include="ui\win\BrowserWindowSkin.cpp" />
     <ClCompile Include="ui\win\BytesWriteHandler.cpp" />
     <ClCompile Include="ui\win\clipboard\Clipboard.cpp" />
+    <ClCompile Include="ui\win\D2D1Renderer.cpp" />
     <ClCompile Include="ui\win\Imm32Manager.cpp" />
     <ClCompile Include="ui\win\LayeredWindow.cpp" />
     <ClCompile Include="ui\win\LocalWindow.cpp" />
@@ -472,6 +473,7 @@
     <ClInclude Include="ui\win\BrowserWindowSkin.h" />
     <ClInclude Include="ui\win\BytesWriteHandler.h" />
     <ClInclude Include="ui\win\clipboard\Clipboard.h" />
+    <ClInclude Include="ui\win\D2D1Renderer.h" />
     <ClInclude Include="ui\win\Imm32Manager.h" />
     <ClInclude Include="ui\win\LayeredWindow.h" />
     <ClInclude Include="ui\win\LocalWindow.h" />

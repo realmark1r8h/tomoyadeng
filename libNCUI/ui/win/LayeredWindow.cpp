@@ -1,12 +1,15 @@
-#include "stdAfx.h"
+ï»¿#include "stdAfx.h"
 #include "ui/win/LayeredWindow.h"
 #include "Core/UIRender.h"
 #include <amo/uuid.hpp>
 
 #include "settings/NativeWindowSettings.h"
 #include "settings/GlobalShortcutSettings.h"
+#include "ui/win/D2D1Renderer.h"
 
 #define WM_DRAWWINDOW (WM_USER +9999)
+
+
 
 
 
@@ -31,7 +34,7 @@ namespace amo {
         m_Blend.BlendOp = AC_SRC_OVER; //theonlyBlendOpdefinedinWindows2000
         m_Blend.BlendFlags = 0; //nothingelseisspecial...
         m_Blend.AlphaFormat = AC_SRC_ALPHA; //...
-        m_Blend.SourceConstantAlpha = 255; //´°¿ÚÍ¸Ã÷¶È
+        m_Blend.SourceConstantAlpha = 255; //çª—å£é€æ˜åº¦
         
         m_isFullScreen = false;
         m_isTopmost = false;
@@ -51,11 +54,22 @@ namespace amo {
     }
     
     void LayeredWindow::drawWindow() {
-        RECT rcRect;
-        ::GetWindowRect(m_hWnd, &rcRect);
-        int nWidth = rcRect.right - rcRect.left;
-        int nHeight = rcRect.bottom - rcRect.top;
+        amo::timer t;
+        /*   {
         
+               amo::timer t;
+               HDC hDC = ::GetDC(m_hWnd);
+               renderer->Render3(m_hWnd, hDC);
+               OutputDebugStringA(std::to_string(t.elapsed()).c_str());
+               OutputDebugStringA("\n");
+               return;
+           }*/
+        
+        RECT rcClient;
+        ::GetWindowRect(m_hWnd, &rcClient);
+        int nWidth = rcClient.right - rcClient.left;
+        int nHeight = rcClient.bottom - rcClient.top;
+        SIZE wndSize = { rcClient.right - rcClient.left, rcClient.bottom - rcClient.top };
         HDC hDC = ::GetDC(m_hWnd);
         HDC memDC;
         memDC = ::CreateCompatibleDC(hDC);
@@ -74,31 +88,43 @@ namespace amo {
         bitmapinfo.bmiHeader.biSizeImage = bitmapinfo.bmiHeader.biWidth
                                            * bitmapinfo.bmiHeader.biHeight
                                            * bitmapinfo.bmiHeader.biBitCount / 8;
-        HBITMAP hBitmap = ::CreateDIBSection(hDC, &bitmapinfo, 0, NULL, 0, 0);
+                                           
+        HBITMAP hBitmap = ::CreateCompatibleBitmap(hDC, wndSize.cx, wndSize.cy);
+        
+        //HBITMAP hBitmap = ::CreateDIBSection(hDC, &bitmapinfo, 0, NULL, 0, 0);
         HBITMAP hOldBitmap = (HBITMAP)::SelectObject(memDC, hBitmap);
         
         CControlUI* pRoot = m_PaintManager.GetRoot();
         pRoot->DoPaint(memDC, pRoot->GetPos(), NULL);
         
+        
+        
         POINT ptSrc = { 0, 0 };
         SIZE sz = { nWidth, nHeight };
+        POINT ptDest = { rcClient.left, rcClient.top };
+        //POINT ptSrc = { 0, 0 };
+        SIZE szLayered = { rcClient.right - rcClient.left, rcClient.bottom - rcClient.top };
         
-        BOOL bOK = ::UpdateLayeredWindow(m_hWnd,
-                                         hDC,
-                                         NULL,//&ptDst,			// ¸üĞÂºó´°¿Ú×óÉÏ½ÇµÄ×ø±êµã £¬Èô²»¸Ä±ä´°¿ÚµÄĞÎ×´ºÍ»æÖÆ¿ÉÒÔÎªNULL
-                                         &sz,					// ¸üĞÂºó´°¿ÚµÄ¿í¶ÈºÍ¸ß¶È£¬¿ÉÒÔÎªNULL
-                                         memDC,					// ¸ø´°¿ÚÌùÍ¼µÄÄÚ´æDC£¬¿ÉÒÔÎªNULL
-                                         &ptSrc,					// ÄÚ´æDCÖĞÍ¼ÏñµÄ×óÉÏ½Çµã£¬¿ÉÒÔÎªNULL
-                                         0,						//
-                                         &m_Blend,
-                                         ULW_ALPHA
-                                        );
+        //BOOL bOK = ::UpdateLayeredWindow(m_hWnd,
+        //                                 hDC,
+        //                                 NULL,//&ptDst,			// æ›´æ–°åçª—å£å·¦ä¸Šè§’çš„åæ ‡ç‚¹ ï¼Œè‹¥ä¸æ”¹å˜çª—å£çš„å½¢çŠ¶å’Œç»˜åˆ¶å¯ä»¥ä¸ºNULL
+        //                                 &sz,					// æ›´æ–°åçª—å£çš„å®½åº¦å’Œé«˜åº¦ï¼Œå¯ä»¥ä¸ºNULL
+        //                                 memDC,					// ç»™çª—å£è´´å›¾çš„å†…å­˜DCï¼Œå¯ä»¥ä¸ºNULL
+        //                                 &ptSrc,					// å†…å­˜DCä¸­å›¾åƒçš„å·¦ä¸Šè§’ç‚¹ï¼Œå¯ä»¥ä¸ºNULL
+        //                                 0,						//
+        //                                 &m_Blend,
+        //                                 ULW_ALPHA
+        //                                );
+        BOOL bOK = ::UpdateLayeredWindow(m_hWnd, hDC, &ptDest, &szLayered, memDC, &ptSrc, RGB(0, 0, 0), &m_Blend, ULW_ALPHA);
+        
         DWORD wd = GetLastError();
         ::SelectObject(memDC, hOldBitmap);
         DeleteObject(hBitmap);
         
         ::ReleaseDC(m_hWnd, memDC);
         ::ReleaseDC(m_hWnd, hDC);
+        $cdevel("æ¸²æŸ“ç”¨æ—¶ï¼š{}", t.elapsed());
+        
     }
     
     LRESULT LayeredWindow::OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam,
@@ -205,7 +231,7 @@ namespace amo {
             return WindowImplBase::OnGetMinMaxInfo(uMsg, wParam, lParam, bHandled);
         }
         
-        //´¦ÀíÈ«ÆÁ×î´ó´óĞ¡
+        //å¤„ç†å…¨å±æœ€å¤§å¤§å°
         pmmi = (MINMAXINFO*)lParam;
         pmmi->ptMaxPosition.x = m_rectFullScreen.left;
         pmmi->ptMaxPosition.y = m_rectFullScreen.top;
@@ -259,7 +285,7 @@ namespace amo {
         if (isLayered()) {
             DWORD dwExStyle = ::GetWindowLong(m_hWnd, GWL_EXSTYLE);
             dwExStyle |= WS_EX_LAYERED | 0x80000L
-                         ;					//!< ĞŞ¸Ä´°¿ÚµÄÀ©Õ¹·ç¸ñÎªÍ¸Ã÷
+                         ;					//!< ä¿®æ”¹çª—å£çš„æ‰©å±•é£æ ¼ä¸ºé€æ˜
             ::SetWindowLong(m_hWnd, GWL_EXSTYLE, dwExStyle);
             ::PostMessage(m_hWnd, WM_DRAWWINDOW, NULL, NULL);
         }
@@ -270,7 +296,7 @@ namespace amo {
     
     LRESULT LayeredWindow::OnHotKey(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                     BOOL& bHandled) {
-        // Èç¹ûÓĞÈÈ¼ü´¦Àí»Øµ÷º¯Êı£¬ÏÈ½»¸ø»Øµ÷º¯Êı´¦Àí
+        // å¦‚æœæœ‰çƒ­é”®å¤„ç†å›è°ƒå‡½æ•°ï¼Œå…ˆäº¤ç»™å›è°ƒå‡½æ•°å¤„ç†
         if (m_fnHotKeyEventCallback) {
             int32_t nKey = (int)wParam;
             std::string strKey ;
@@ -306,7 +332,7 @@ namespace amo {
         amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
         
         if (m_hWnd == NULL) {
-            $clog(amo::cwarn << "RunOnUiThread ÎŞ¾ä±úÖ§³Ö" << amo::endl;);
+            $clog(amo::cwarn << "RunOnUiThread æ— å¥æŸ„æ”¯æŒ" << amo::endl;);
             return;
         }
         
@@ -374,11 +400,12 @@ namespace amo {
     
     void LayeredWindow::InitWindow() {
     
+    
         ::GetWindowPlacement(*this, &m_wpNormalScreen);
-        m_nScreenWidth = GetSystemMetrics(SM_CXSCREEN);//ÆÁÄ»ºáÏò·Ö±æÂÊ
-        m_nScreenHeight = GetSystemMetrics(SM_CYSCREEN);//ÆÁÄ»×İÏò·Ö±æÂÊ
+        m_nScreenWidth = GetSystemMetrics(SM_CXSCREEN);//å±å¹•æ¨ªå‘åˆ†è¾¨ç‡
+        m_nScreenHeight = GetSystemMetrics(SM_CYSCREEN);//å±å¹•çºµå‘åˆ†è¾¨ç‡
         
-        // ÉèÖÃ´°¿ÚÎ»ÖÃ
+        // è®¾ç½®çª—å£ä½ç½®
         if (m_pNativeSettings->adjustPos) {
             if (m_pNativeSettings->center) {
                 CenterWindow();
@@ -391,13 +418,13 @@ namespace amo {
         }
         
         
-        // ½ûÖ¹¸Ä±ä´°¿Ú´óĞ¡£¬ °üÀ¨½ûÖ¹ÍÏ¶¯´°¿Ú£¬½ûÖ¹×î´ó»¯£¬ ²»ÏìÓ¦NCLDBCLICK
+        // ç¦æ­¢æ”¹å˜çª—å£å¤§å°ï¼Œ åŒ…æ‹¬ç¦æ­¢æ‹–åŠ¨çª—å£ï¼Œç¦æ­¢æœ€å¤§åŒ–ï¼Œ ä¸å“åº”NCLDBCLICK
         if (!m_pNativeSettings->resizable) {
             RECT rcSizeBox = { 0, 0, 0, 0 };
             m_PaintManager.SetSizeBox(rcSizeBox);
         }
         
-        // ´°¿ÚÖÃ¶¥
+        // çª—å£ç½®é¡¶
         if (m_pNativeSettings->alwaysOnTop) {
             setTopmost(true);
         }
@@ -441,7 +468,7 @@ namespace amo {
         m_Shadow.Create(&m_PaintManager);
         m_Shadow.Show(m_pNativeSettings->hasShadow);
         
-        // Òş²Ø/ÏÔÊ¾´°¿Ú
+        // éšè—/æ˜¾ç¤ºçª—å£
         ShowWindow(m_pNativeSettings->show);
     }
     
@@ -464,7 +491,7 @@ namespace amo {
     }
     
     void LayeredWindow::needUpdate() {
-        // ÖØ»æ´°¿Ú
+        // é‡ç»˜çª—å£
         m_PaintManager.NeedUpdate();
         m_PaintManager.Invalidate();
     }
@@ -473,7 +500,7 @@ namespace amo {
     LRESULT LayeredWindow::ResponseDefaultKeyEvent(WPARAM wParam) {
         switch (wParam) {
         case VK_ESCAPE:
-            return 0;	// ESC ²»¹Ø±Õ´°¿Ú
+            return 0;	// ESC ä¸å…³é—­çª—å£
             
         default:
             break;
@@ -491,10 +518,10 @@ namespace amo {
         m_isFullScreen = bFull;
         
         if (m_isFullScreen) {
-            //±£´æÈ«ÆÁÇ°´°¿ÚÏÔÊ¾×´Ì¬ĞÅÏ¢
+            //ä¿å­˜å…¨å±å‰çª—å£æ˜¾ç¤ºçŠ¶æ€ä¿¡æ¯
             m_wpNormalScreen.length = sizeof(WINDOWPLACEMENT);
             ::GetWindowPlacement(m_hWnd, &m_wpNormalScreen);
-            //»ñÈ¡´°¿ÚºÍ¿Í»§Çø´óĞ¡
+            //è·å–çª—å£å’Œå®¢æˆ·åŒºå¤§å°
             ::GetWindowRect(m_hWnd, &m_rectWindow);
             ::GetClientRect(m_hWnd, &m_rectClient);
             m_ptUpLeft.x = m_rectClient.left;
@@ -503,14 +530,14 @@ namespace amo {
             m_ptDownRight.y = m_rectClient.bottom;
             ::ClientToScreen(m_hWnd, &m_ptUpLeft);
             ::ClientToScreen(m_hWnd, &m_ptDownRight);
-            //¼ÆËãÈ«ÆÁÊ±´°¿ÚÎ»ÖÃ
+            //è®¡ç®—å…¨å±æ—¶çª—å£ä½ç½®
             m_rectFullScreen.left = m_rectWindow.left - m_ptUpLeft.x;
             m_rectFullScreen.top = m_rectWindow.top - m_ptUpLeft.y;
             m_rectFullScreen.right = m_nScreenWidth
                                      + m_rectWindow.right - m_ptDownRight.x;
             m_rectFullScreen.bottom = m_nScreenHeight
                                       + m_rectWindow.bottom - m_ptDownRight.y;
-            //µ÷ÓÃSetWindowPlacementÊµÏÖÈ«ÆÁ
+            //è°ƒç”¨SetWindowPlacementå®ç°å…¨å±
             m_wpFullScreen.length = sizeof(WINDOWPLACEMENT);
             m_wpFullScreen.flags = 0;
             m_wpFullScreen.showCmd = SW_SHOWNORMAL;
@@ -620,7 +647,7 @@ namespace amo {
     std::shared_ptr<GlobalShortcutSettings> LayeredWindow::createSettingByString(
         const std::string& strKey)  const {
         amo::string sKey(strKey, true);
-        sKey = sKey.replace(" ", ""); // ÒÆ³ıËùÓĞ¿Õ¸ñ
+        sKey = sKey.replace(" ", ""); // ç§»é™¤æ‰€æœ‰ç©ºæ ¼
         
         std::vector<amo::string> vec = sKey.split("+");
         
@@ -683,13 +710,13 @@ namespace amo {
             uiModifiers |= MOD_SHIFT;
         }
         
-        // ÖÁÉÙÒªÓĞÒ»¸ö¿ØÖÆ¼ü
+        // è‡³å°‘è¦æœ‰ä¸€ä¸ªæ§åˆ¶é”®
         if (uiModifiers == 0) {
             return 0;
         }
         
         
-        // ×Ö·û¼üÖ»ÄÜÓĞÒ»Î»
+        // å­—ç¬¦é”®åªèƒ½æœ‰ä¸€ä½
         if (pSettings->key.size() != 1) {
             return 0;
         }

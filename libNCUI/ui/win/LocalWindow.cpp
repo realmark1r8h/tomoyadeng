@@ -234,13 +234,18 @@ namespace amo {
         amo::json json;
         std::string strName = amo::string(msg.pSender->GetName()).to_utf8();
         std::string eventType = amo::string(msg.sType).to_utf8();
-        json.put("name", strName);
-        json.put("type", eventType);
-        json.put("x", msg.ptMouse.x);
-        json.put("y", msg.ptMouse.y);
-        json.put("sender", controlMgr->toSimplifiedJson(msg.pSender));
-        addTransferedControl(msg.pSender);
-        broadcastMessage(getTransferObjectID(), eventType, json);
+        
+        // 加了计时器 timer 触发 太多，先屏蔽掉
+        if (eventType != "timer") {
+            json.put("name", strName);
+            json.put("type", eventType);
+            json.put("x", msg.ptMouse.x);
+            json.put("y", msg.ptMouse.y);
+            json.put("sender", controlMgr->toSimplifiedJson(msg.pSender));
+            addTransferedControl(msg.pSender);
+            broadcastMessage(getTransferObjectID(), eventType, json);
+        }
+        
         
         
         return WindowImplBase::Notify(msg);

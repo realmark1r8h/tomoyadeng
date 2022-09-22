@@ -112,12 +112,20 @@ namespace amo {
 
     void WebkitView::DoEvent(TEventUI& event) {
         if (event.Type == UIEVENT_TIMER) {
-            if (event.wParam == REPAINT_TIMER_ID
-                    && m_pBrowserSettings
-                    &&  m_pBrowserSettings->offscreen) {
-                m_pBrowser->GetHost()->Invalidate(PET_VIEW);
-                return;
+            /* if (event.wParam == REPAINT_TIMER_ID
+            		 && m_pBrowserSettings
+            		 &&  m_pBrowserSettings->offscreen) {
+            	 m_pBrowser->GetHost()->Invalidate(PET_VIEW);
+            	 return;
+             }
+             */
+            
+            if (m_pBrowserSettings->transparent) {
+                Invalidate();
+            } else {
+                m_pRenderWnd->needUpdate();
             }
+            
         }
         
         return LayerViewRender::DoEvent(event);
@@ -132,6 +140,10 @@ namespace amo {
         m_pClientHandler = new amo::ClientHandler();
         m_hParentWnd = NULL;
         m_pBrowser = NULL;
+        
+        if (m_pBrowserSettings->offscreen && m_pBrowserSettings->transparent && m_pBrowserSettings->accelerator) {
+            this->setAccelerator(true);
+        }
         
     }
     
@@ -209,6 +221,7 @@ namespace amo {
             window = new OffScreenRenderView(m_pBrowserSettings);
             window->setClientHandler(m_pClientHandler);								//事件ClientHandler
             m_pRenderWnd = window;
+            
         } else { //非离屏
         
             RenderView* window = (new RenderView(m_pBrowserSettings));
@@ -223,10 +236,12 @@ namespace amo {
         m_hBrowserWnd = m_pRenderWnd->GetHWND();	//获取浏览器窗口句柄
         ::ShowWindow(m_pRenderWnd->GetHWND(),  SW_SHOW);
         AMO_TIMER_ELAPSED();
-        return CControlUI::DoInit();
+        return LayerViewRender::DoInit();
     }
     
     void WebkitView::SetPos(RECT rect, bool bNeedInvalidate /*= true*/) {
+        LayerViewRender::SetPos(rect, bNeedInvalidate);
+        
         if (::IsIconic(m_hParentWnd)) {
             // 最小化时不能改变浏览器的大小，否则还原时左上角会显示滚动条
             return;
@@ -487,6 +502,11 @@ namespace amo {
         
         
 #endif
+        
+        auto msg = IPCMessage::Empty();
+        msg->getArgumentList()->setValue(0, true);
+        msg->getArgumentList()->setValue(1, 30);
+        //repaint(msg);
         AMO_TIMER_ELAPSED();
         
         
@@ -1384,9 +1404,14 @@ namespace amo {
                                          width * 4,
                                          PixelFormat32bppARGB, NULL));
         bitmap = image;
-        /*if (m_paintingRes.empty()) {
-            bitmap = image;
-        }*/
+        std::vector<char> data(width * height * 4, 0);
+        memcpy(data.data(), buffer, data.size());
+        
+        std::shared_ptr<PaintResource> resource(new PaintResource());
+        resource->m_pBitmap = bitmap;
+        resource->width = width;
+        resource->height = height;
+        resource->m_buffer = data;
         
         m_pRenderWnd->updateCaretPos(image);
         
@@ -1510,9 +1535,9 @@ namespace amo {
         
         
         if (m_pBrowserSettings->transparent) {
-            insertBitmap(bitmap);
+            insertBitmap(resource);
         } else {
-            m_pRenderWnd->insertBitmap(bitmap);
+            m_pRenderWnd->insertBitmap(resource);
         }
         
     }

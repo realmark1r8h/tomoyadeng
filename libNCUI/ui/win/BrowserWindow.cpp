@@ -963,7 +963,7 @@ namespace amo {
                                      BOOL& bHandled) {
                                      
         if (m_pWebkit != NULL && isLayered()) {
-            m_pWebkit->insertBitmap(std::shared_ptr<Gdiplus::Bitmap>());
+            m_pWebkit->insertBitmap(std::shared_ptr<PaintResource>());
         }
         
         

@@ -50,6 +50,14 @@ namespace amo {
          *
          *
          * @return	#Path 返回一个Path对象.
+         * @example
+         *
+         ```
+        	include('Path');
+        	var p = Path.getFullAppDir();
+        	console.log(p);
+        	console.log(p.toString());
+         ```
          */
         
         Any getFullAppDir(IPCMessage::SmartType msg);
@@ -60,6 +68,14 @@ namespace amo {
          * @brief	获取当前程序的完整路径.
          *
          * @return	#Path 返回一个Path对象.
+         * @example
+         *
+         ```
+        	include('Path');
+        	var p = Path.getFullAppName();
+        	console.log(p);
+        	console.log(p.toString());
+         ```
          */
         
         Any getFullAppName(IPCMessage::SmartType msg);
@@ -72,18 +88,38 @@ namespace amo {
          * @param	#String 路径.
          *
          * @return	#Boolean true 存在/false 不存在.
+         *
+         * @example
+         *
+         ```
+        	include('Path');
+        	var p = new Path('manifest.json');
+        	p.copyTo('manifest2.json');
+        	console.assert(Path.fileExsit('manifest2.json') == true);
+         ```
+         *
          */
         
         Any fileExsit(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any PathTransfer::Remove(IPCMessage::SmartType msg);
-         * @tag static
+         * @tag static sync
          * @brief	删除一个文件，或空目录.
          *
          * @param	#String 路径.
          *
          * @return	#Boolean true 成功/false 失败.
+         *
+         * @example
+         *
+         ```
+        	include('Path');
+        	var p = new Path('manifest.json');
+        	p.copyTo('manifest2.json');
+        	Path.Remove('manifest2.json')
+        	console.assert(Path.fileExsit('manifest2.json') == false);
+         ```
          */
         
         Any Remove(IPCMessage::SmartType msg);
@@ -96,6 +132,16 @@ namespace amo {
          * @param	#String 路径.
          *
          * @return	#Boolean true 成功/false 失败.
+         *
+         * @example
+         *
+         ```
+        	 include('Path');
+        	 var p = new Path('manifest.json');
+        	 p.copyTo('manifest2.json');
+        	 Path.RemoveAll('manifest2.json')
+        	 console.assert(Path.fileExsit('manifest2.json') == false);
+         ```
          */
         
         Any RemoveAll(IPCMessage::SmartType msg);
@@ -108,6 +154,14 @@ namespace amo {
         *
         *
         * @return	#String .
+        *
+        * @example
+        *
+        ```
+        	include('Path');
+        	var p = new Path('manifest.json');
+        	console.log(p.toString());
+        ```
         */
         
         Any toString(IPCMessage::SmartType msg);
@@ -119,6 +173,14 @@ namespace amo {
         *
         *
         * @return	#Boolean true 存在/ false 不存在.
+        *
+        * @example
+        *
+        ```
+        	include('Path');
+        	var p = new Path('manifest.json');
+        	console.assert(p.isExsit() == true);
+        ```
         */
         
         Any isExsit(IPCMessage::SmartType msg);
@@ -131,17 +193,59 @@ namespace amo {
         * @param	#String 需要追加了路径.
         *
         * @return	#Path 当前对象.
+        *
+        * @example
+        *
+        ```
+        	include('Path');
+        	var p = new Path('./');
+        	p.append('manifest.json');
+        	console.log(p.toString());
+        	console.assert(p.isExsit() == true);
+        ```
         */
         
         Any append(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	Any PathTransfer::toAbsolute(IPCMessage::SmartType msg);
+         *
+         * @brief	将当前路径转换为一个绝对路径.
+         *
+         *
+         * @return	#Path 当前对象.
+         *
+         * @example
+         *
+         ```
+        	 include('Path');
+        	 var p = new Path('./');
+        	 p.append('manifest.json');
+        	 p.toAbsolute();
+        	 console.log(p.toString());
+        	 console.assert(p.isExsit() == true);
+         ```
+         */
+        
+        Any toAbsolute(IPCMessage::SmartType msg);
         
         /*!
         * @fn	Any PathTransfer::removeFileSpec(IPCMessage::SmartType msg);
         * @tag sync
         * @brief	去除文件名，得到目录.
         *
-        *
         * @return	#Path 当前对象.
+        *
+        * @example
+        *
+        ```
+        	include('Path');
+        	var p = new Path('./');
+        	p.append('manifest.json');
+        	p.toAbsolute().removeFileSpec();
+        	console.log(p.toString());
+        	console.assert(p.toString() == Path.getFullAppDir().toString());
+        ```
         */
         
         Any removeFileSpec(IPCMessage::SmartType msg);
@@ -154,6 +258,16 @@ namespace amo {
          * @param	#String 目标位置.
          *
          * @return	#Boolean true 存在/ false 不存在.
+         *
+         * @example
+         *
+         ```
+        	 include('Path');
+        	 var p = new Path('manifest.json');
+        	 p.copyTo('manifest2.json');
+        
+        	 console.assert(Path.fileExsit('manifest2.json') == true);
+         ```
          */
         
         Any copyTo(IPCMessage::SmartType msg);
@@ -166,6 +280,23 @@ namespace amo {
          * @param	#String 目标位置.
          *
          * @return	#Boolean true 存在/ false 不存在.
+         *
+         * @example
+         *
+         ```
+        	 include('Path');
+        	 var p = new Path('manifest.json');
+        	 p.copyTo('manifest2.json');
+        	 console.assert(Path.fileExsit('manifest2.json') == true);
+        
+        	 p = new Path('manifest2.json');
+        	 p.moveTo('manifest3.json');
+        
+        	 console.assert(Path.fileExsit('manifest2.json') == false);
+        	 console.assert(Path.fileExsit('manifest3.json') == true);
+        
+         ```
+         *
          */
         
         Any moveTo(IPCMessage::SmartType msg);
@@ -177,6 +308,17 @@ namespace amo {
         * @brief	删除当前路径，该路径只能是一个文件或空目录删除一个文件，或空目录.
         *
         * @return	#Boolean true 成功/false 失败.
+        *
+        * @example
+        *
+        ```
+        	include('Path');
+        	var p = new Path('manifest3.json');
+        	p.remove();
+        
+        	console.assert(Path.fileExsit('manifest3.json') == false);
+        
+        ```
         */
         
         Any remove(IPCMessage::SmartType msg);
@@ -188,6 +330,19 @@ namespace amo {
         *
         *
         * @return	#Boolean true 成功/false 失败.
+        *
+        * @example
+        *
+        ```
+        	include('Path');
+        	var p = new Path('web');
+        	p.copyTo('web2');
+        
+        	console.assert(Path.fileExsit('web2') == true);
+        	p = new Path('web2');
+        	p.removeAll();
+        	console.assert(p.isExsit('web2') == false);
+        ```
         */
         
         Any removeAll(IPCMessage::SmartType msg);
@@ -208,6 +363,8 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(isExsit, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(append, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(removeFileSpec,
+                                      TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(toAbsolute,
                                       TransferFuncNormal | TransferExecSync)
                                       
         AMO_CEF_MESSAGE_TRANSFER_FUNC(remove,   TransferExecNormal)

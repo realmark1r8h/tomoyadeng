@@ -18,7 +18,7 @@ namespace amo {
      *
      * @chapter extend
      *
-     * @brief	子进程类.<br>
+     * @brief	子进程类，本模块的大部分函数都比较慢，尽可能的放到线程里面去执行<br>
      * 			工作线程**Renderer线程**
      */
     
@@ -29,12 +29,19 @@ namespace amo {
         ProcessTransfer();
         
         /*!
-         * @fn	ProcessTransfer::ProcessTransfer(const std::string& strAppPath);
+         * @fn	ProcessTransfer::Process(const std::string& strAppPath);
          * @tag constructor sync
          * @brief	创建一个进程类.
          *
          * @param	#String 进程路径 .
          * @return  #Process 进程对象.
+         * @example
+         *
+         ```
+        	include ('Process');
+        	var process = new Process('NCUI.exe');
+        	process.start();
+         ```
          */
         
         ProcessTransfer(const std::string& strAppPath);
@@ -53,6 +60,12 @@ namespace amo {
          * @param	#String 程序名.
          *
          * @return	#Array 与程序名匹配的进程ID列表.
+         * @example
+         *
+         ```
+        	include('Process');
+        	console.log(Process.findPIDByName('NCUI.exe'));
+         ```
          */
         
         Any findPIDByName(IPCMessage::SmartType msg);
@@ -65,6 +78,14 @@ namespace amo {
          * @param	#String 程序名.
          *
          * @return	#Boolean true成功/false失败.
+         * @example 终止程序
+         *
+         ```
+        	// 注意，运行该示例将结束当前程序
+        	include('Process');
+        
+        	Process.terminateProcessByName('NCUI.exe');
+         ```
          */
         
         Any terminateProcessByName(IPCMessage::SmartType msg);
@@ -78,6 +99,15 @@ namespace amo {
          * @param	#Boolean=true 是否杀死子进程.
          *
          * @return	#Boolean true成功/false失败.
+         *
+         * @example 终止程序
+         *
+         ```
+        	 // 注意，运行该示例将结束当前程序
+        	 include('Process');
+        
+        	 Process.killProcessByName('NCUI.exe');
+         ```
          */
         
         Any killProcessByName(IPCMessage::SmartType msg);
@@ -90,6 +120,16 @@ namespace amo {
          * @param	#String 启动参数.
          *
          * @return	#Boolean true成功/false失败.
+         *
+         * @example 终止程序
+         *
+         ```
+        
+        	 include('Process');
+        	 var process = new Process('C:/Windows/System32/notepad.exe');
+        
+        	 process.start('manifest.json');
+         ```
          */
         
         Any start(IPCMessage::SmartType msg);
@@ -100,6 +140,19 @@ namespace amo {
          * @brief	获取子进程执行结果，该函数应该放到线程里面去执行，不然会将渲染进程阻塞.
          *
          * @return	无.
+         * @example
+         *
+         ```
+        
+        	 includes('Process', 'Thread');
+        	 var process = new Process('NCUI.exe');
+        
+        	 process.start('');
+        	 Thread.Exec(process.getResult);
+        	 process.unique('process.result', function(){
+        		console.log(arguments);
+        	 });
+         ```
          */
         
         Any getResult(IPCMessage::SmartType msg);

@@ -304,8 +304,14 @@ namespace amo {
                 m_PaintManager.FindControl(_T("reanderLayout")));
                 
         ASSERT(pRenderLayout != NULL);
-        m_pGdiRender = new ViewRenderer();
-        pRenderLayout->Add(m_pGdiRender);
+        m_pViewRender = new ViewRenderer();
+        
+        
+        if (m_oBrowserSettings->offscreen && m_oBrowserSettings->accelerator) {
+            m_pViewRender->setAccelerator(true);
+        }
+        
+        pRenderLayout->Add(m_pViewRender);
         
         
         RECT rect;
@@ -317,6 +323,8 @@ namespace amo {
         if (m_oBrowserSettings->transparent) {
             m_oBrowserSettings->background_color = CefColorSetARGB(0, 0, 0, 0);
         }
+        
+        
         
 #else
         windowInfo.SetAsWindowless(m_hWnd, m_oBrowserSettings->transparent);
@@ -367,8 +375,8 @@ namespace amo {
         return FALSE;
     }
     
-    void OffScreenRenderView::insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) {
-        m_pGdiRender->insertBitmap(image);
+    void OffScreenRenderView::insertBitmap(std::shared_ptr<PaintResource> image) {
+        m_pViewRender->insertBitmap(image);
     }
     
     void OffScreenRenderView::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
@@ -559,8 +567,8 @@ namespace amo {
         drop_target_ = NULL;
 #endif
         
-        if (m_pGdiRender != NULL) {
-            m_pGdiRender->insertBitmap(std::shared_ptr<Gdiplus::Bitmap>());
+        if (m_pViewRender != NULL) {
+            m_pViewRender->insertBitmap(std::shared_ptr<PaintResource>());
         }
         
         if (m_pClientHandler) {
@@ -576,12 +584,12 @@ namespace amo {
     
     bool OffScreenRenderView::OnTooltip(CefRefPtr<CefBrowser> browser,
                                         CefString& text) {
-        if (m_pGdiRender == NULL) {
+        if (m_pViewRender == NULL) {
             return false;
         }
         
         amo::string strTips(text.ToString(), true);
-        m_pGdiRender->SetToolTip(strTips.to_unicode().c_str());
+        m_pViewRender->SetToolTip(strTips.to_unicode().c_str());
         return true;
     }
     
@@ -894,8 +902,8 @@ namespace amo {
         }
         
         Gdiplus::Rect rt(left, top, width, height);
-        $clog(amo::cdevel << "查找范围：" << left << ", " << top << ", " << width
-              << ", " << height << amo::endl;);
+        /*       $clog(amo::cdevel << "查找范围：" << left << ", " << top << ", " << width
+                     << ", " << height << amo::endl;);*/
         Gdiplus::Status status = image->LockBits(&rt, ImageLockModeRead,
                                  PixelFormat32bppARGB, &bmpData);
                                  
@@ -949,7 +957,7 @@ namespace amo {
         
         image->UnlockBits(&bmpData);
         imm32_manager_->updateImeWindow(m_point);
-        $clog(amo::cdevel << "查找用时t1：" << t1.elapsed() << amo::endl;);
+        //$clog(amo::cdevel << "查找用时t1：" << t1.elapsed() << amo::endl;);
     }
     
 }

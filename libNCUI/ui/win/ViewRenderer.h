@@ -5,14 +5,24 @@
 #define AMO_VIEWRENDERER_H__
 
 #include <memory>
+#include <vector>
 
 namespace amo {
-
-
+    class D2D1Renderer;
+    class PaintResource {
+    public:
+        PaintResource() {
+            width = 0;
+            height = 0;
+        }
+        std::shared_ptr<Gdiplus::Bitmap> m_pBitmap;
+        std::vector<char> m_buffer;
+        int width;
+        int height;
+    };
+    
     //页面渲染控件
     class ViewRenderer : public CControlUI {
-    
-    
     
     public:
         ViewRenderer();
@@ -20,17 +30,61 @@ namespace amo {
         LPCTSTR GetClass() const override;
         virtual void PaintStatusImage(HDC hDC) override;
         
-        virtual void insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image);
+        virtual void insertBitmap(std::shared_ptr<PaintResource> image);
+        
         virtual void SetToolTip(LPCTSTR pstrText) override;
+        
+        virtual void SetPos(RECT rc, bool bNeedInvalidate = true) override;
+        
+        
+        virtual void DoInit() override;
+        
+        
+        
+        bool isAccelerator() const {
+            return m_accelerator;
+        }
+        void setAccelerator(bool val) {
+            m_accelerator = val;
+        }
     protected:
-        std::shared_ptr<Gdiplus::Bitmap> m_pBitmap;
+        void updateFPS() {
+            int64_t timestamp = amo::timer::now<amo::chrono::seconds>();
+            
+            if (timestamp > m_nLastTimestamp) {
+                m_nLastTimestamp = timestamp;
+                $cdevel("fps : {}", m_nCount);
+                m_nLastFPS = m_nCount;
+                m_nCount = 0;
+            }
+            
+            ++m_nCount;
+        }
+        int getFPS() {
+            return  m_nLastFPS;
+        }
+        
+    protected:
+    
+        std::shared_ptr<PaintResource> m_resource;
+        std::shared_ptr<D2D1Renderer> renderer;
+        
+        /*! @brief	是否使用硬件加速. */
+        bool m_accelerator;
+        
+        int m_nCount;	// 最近一秒内渲染的帧数
+        int m_nLastFPS;	// 最近一次有记录的FPS
+        
+        int64_t m_nLastTimestamp;  // 最近一次渲染时间 秒
+        
         
     };
     
     class LayerViewRender : public ViewRenderer {
     public:
         virtual ~LayerViewRender();
-        virtual void insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) override;
+        virtual void insertBitmap(std::shared_ptr<PaintResource> image) override;
+        
     };
     
 }

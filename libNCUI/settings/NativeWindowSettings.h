@@ -138,7 +138,7 @@ namespace amo {
         /*! @var #Boolean=false offscreen	是否使用离屏模式创建窗口{@tag const}. */
         bool offscreen;
         
-        /*! @brief #Boolean=false accelerator 是否使用OPENGL渲染窗口，offscreen=true是有效（如果不是必需的不应该使用这项）{@tag const}. */
+        /*! @brief #Boolean=false accelerator 是否使用GPU渲染窗口，offscreen=true是有效，需要Drect2D支持{@tag const}. */
         bool accelerator;
         
         /*! @var #Boolean=false transparent 是否使用透明窗口，offscreen=true时有效{@tag const}. */

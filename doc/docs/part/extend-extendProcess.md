@@ -1,11 +1,11 @@
 # Process
 
-  子进程类.<br>工作线程**Renderer线程**
+  子进程类，本模块的大部分函数都比较慢，尽可能的放到线程里面去执行<br>工作线程**Renderer线程**
   
 * **父类** 
 <a href="#api/apiRunnable">Runnable</a>&nbsp;
 
-## ProcessTransfer &nbsp;<span class="label label-constructor">构造</span> <span class="label label-sync">同步</span> 
+## Process &nbsp;<span class="label label-constructor">构造</span> <span class="label label-sync">同步</span> 
 
   创建一个进程类.
   
@@ -31,9 +31,17 @@
 * **返回值**
   Process 进程对象. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include ('Process');
+var process = new Process('NCUI.exe');
+process.start();
+
+```
 
 
-<div class="adoc" id="div_ProcessTransfer"></div>
+<div class="adoc" id="div_Process"></div>
 
 
 ## findPIDByName &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
@@ -62,6 +70,13 @@
 * **返回值**
   Array 与程序名匹配的进程ID列表. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Process');
+console.log(Process.findPIDByName('NCUI.exe'));
+
+```
 
 
 <div class="adoc" id="div_findPIDByName"></div>
@@ -92,6 +107,15 @@
 * **返回值**
   Boolean true成功/false失败. 
 
+* **示例&nbsp;&nbsp;--&nbsp;&nbsp;终止程序**
+
+```html
+// 注意，运行该示例将结束当前程序
+include('Process');
+
+Process.terminateProcessByName('NCUI.exe');
+
+```
 
 
 <div class="adoc" id="div_terminateProcessByName"></div>
@@ -126,6 +150,15 @@
 * **返回值**
   Boolean true成功/false失败. 
 
+* **示例&nbsp;&nbsp;--&nbsp;&nbsp;终止程序**
+
+```html
+// 注意，运行该示例将结束当前程序
+include('Process');
+
+Process.killProcessByName('NCUI.exe');
+
+```
 
 
 <div class="adoc" id="div_killProcessByName"></div>
@@ -156,6 +189,15 @@
 * **返回值**
   Boolean true成功/false失败. 
 
+* **示例&nbsp;&nbsp;--&nbsp;&nbsp;终止程序**
+
+```html
+include('Process');
+var process = new Process('C:/Windows/System32/notepad.exe');
+
+process.start('manifest.json');
+
+```
 
 
 <div class="adoc" id="div_start"></div>
@@ -169,6 +211,19 @@
 * **返回值**
    无. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+includes('Process', 'Thread');
+var process = new Process('NCUI.exe');
+
+process.start('');
+Thread.Exec(process.getResult);
+process.unique('process.result', function(){
+   console.log(arguments);
+});
+
+```
 
 
 <div class="adoc" id="div_getResult"></div>

@@ -183,7 +183,7 @@ namespace amo {
         return;
     }
     
-    void RenderView::insertBitmap(std::shared_ptr<Gdiplus::Bitmap> image) {
+    void RenderView::insertBitmap(std::shared_ptr<PaintResource> image) {
         return;
     }
     
@@ -194,6 +194,15 @@ namespace amo {
                 
         if (pRenderLayout != NULL) {
             pRenderLayout->SetToolTip(str.to_unicode().c_str());
+        }
+    }
+    
+    void RenderView::needUpdate() {
+        CHorizontalLayoutUI* pRenderLayout = static_cast<CHorizontalLayoutUI*>(
+                m_PaintManager.FindControl(_T("reanderLayout")));
+                
+        if (pRenderLayout && m_oBrowserSettings->offscreen) {
+            pRenderLayout->Invalidate();
         }
     }
     

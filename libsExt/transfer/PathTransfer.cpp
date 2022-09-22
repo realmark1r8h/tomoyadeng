@@ -60,6 +60,11 @@ namespace amo {
         return getFuncMgr().toSimplifiedJson();
     }
     
+    Any PathTransfer::toAbsolute(IPCMessage::SmartType msg) {
+        m_pPath->to_absolute();
+        return getFuncMgr().toSimplifiedJson();
+    }
+    
     Any PathTransfer::removeFileSpec(IPCMessage::SmartType msg) {
         m_pPath->remove_file_spec();
         return getFuncMgr().toSimplifiedJson();
