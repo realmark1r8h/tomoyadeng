@@ -28,6 +28,14 @@
 * **返回值**
   String 加密后的字符串. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('md5');
+var str  = md5.encode('NCUI');
+console.log(str);
+
+```
 
 
 <div class="adoc" id="div_encode"></div>

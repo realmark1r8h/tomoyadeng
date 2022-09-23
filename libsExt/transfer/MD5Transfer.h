@@ -16,7 +16,7 @@ namespace amo {
     /*!
      * @class	md5
      * @chapter extend
-     *
+     * @extend Runnable
      * @brief	MD5加密类.<br>
      * 			工作线程**Renderer线程**
      */
@@ -40,6 +40,13 @@ namespace amo {
          * @param	#String 需要加密的字符串.
          *
          * @return	#String 加密后的字符串.
+         * @example
+         *
+         ```
+        	include('md5');
+        	var str  = md5.encode('NCUI');
+        	console.log(str);
+         ```
          */
         
         Any encode(IPCMessage::SmartType msg);
