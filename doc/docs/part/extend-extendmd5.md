@@ -2,6 +2,9 @@
 
   MD5加密类.<br>工作线程**Renderer线程**
   
+* **父类** 
+<a href="#api/apiRunnable">Runnable</a>&nbsp;
+
 ## encode &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   MD5 加密.

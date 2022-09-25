@@ -23,7 +23,7 @@ ipc.dispatchEvent('NCUI.TEST', {name:3, value:'2323'});
 
 
 ## 发送事件 &nbsp;
-  NCUI允许你通过document.dispatchEvent向Node.js或其他页面发送自定消息.<br>1. "ipc.exec", 通过{@ling ipc.exec}向Node.js或其他页面发送消息，使用ipc.on或ipc.unique可以监听该消息<br>2. "ipc.dispatchEvent", 通过{@ling ipc.dispatchEvent}他页面的document对象发送消息，使用document.addEventListener可以监听该消息，Node.js代码无法接收该消息<br>说明：**必须在CustomEvent的detail对象中增加eventName字段表明需要触发的事件名称**
+  NCUI允许你通过document.dispatchEvent向Node.js或其他页面发送自定消息.<br>1. "ipc.exec", 通过<a href="#api/apiipc/0">ipc.exec</a>向Node.js或其他页面发送消息，使用ipc.on或ipc.unique可以监听该消息<br>2. "ipc.dispatchEvent", 通过<a href="#api/apiipc/3">ipc.dispatchEvent</a>他页面的document对象发送消息，使用document.addEventListener可以监听该消息，Node.js代码无法接收该消息<br>说明：**必须在CustomEvent的detail对象中增加eventName字段表明需要触发的事件名称**
   
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 

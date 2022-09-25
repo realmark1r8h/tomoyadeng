@@ -489,6 +489,7 @@
     <ClCompile Include="ui\win\D2D1Renderer.cpp">
       <Filter>ui\win</Filter>
     </ClCompile>
+    <ClCompile Include="settings\OverlapSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context\AppContext.h">
@@ -1021,6 +1022,9 @@
     </ClInclude>
     <ClInclude Include="ui\win\D2D1Renderer.h">
       <Filter>ui\win</Filter>
+    </ClInclude>
+    <ClInclude Include="settings\OverlapSettings.h">
+      <Filter>settings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

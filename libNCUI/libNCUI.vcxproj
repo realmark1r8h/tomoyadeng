@@ -252,6 +252,7 @@
     <ClCompile Include="settings\GlobalShortcutSettings.cpp" />
     <ClCompile Include="settings\MenuWindowSettings.cpp" />
     <ClCompile Include="settings\NativeWindowSettings.cpp" />
+    <ClCompile Include="settings\OverlapSettings.cpp" />
     <ClCompile Include="settings\RequestSettings.cpp" />
     <ClCompile Include="settings\SplashWindowSettings.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -422,6 +423,7 @@
     <ClInclude Include="settings\GlobalShortcutSettings.h" />
     <ClInclude Include="settings\MenuWindowSettings.h" />
     <ClInclude Include="settings\NativeWindowSettings.h" />
+    <ClInclude Include="settings\OverlapSettings.h" />
     <ClInclude Include="settings\RequestSettings.h" />
     <ClInclude Include="settings\SplashWindowSettings.h" />
     <ClInclude Include="stdafx.h" />

@@ -110,7 +110,7 @@ app.restart();
 
 
 ## 创建浏览器窗口 &nbsp;
-  程序启动时会创建一个默认的浏览器窗口，该窗口的参数可以通过编辑manifest.json文件进行配置.<br>如果需要在页面上创建窗口，可以通过<a href="#api/apiBrowserWindow">BrowserWindow</a>的<a href="#api/apiBrowserWindow/58">构造函数</a>创建一个新的浏览器窗口。<br>除此之外，浏览器默认的窗口创建动作（如：**a标签**、**window.open**等）出来的窗口将使用默认的{@ling 浏览器窗口参数},这可能会影响你的正常使用（比如没有标题栏，不能拖动窗口），可以<a href="#api/apiBrowserWindow/67">预设置浏览器窗口参数</a>来避免该问题
+  程序启动时会创建一个默认的浏览器窗口，该窗口的参数可以通过编辑manifest.json文件进行配置.<br>如果需要在页面上创建窗口，可以通过<a href="#api/apiBrowserWindow">BrowserWindow</a>的<a href="#api/apiBrowserWindow/58">构造函数</a>创建一个新的浏览器窗口。<br>除此之外，浏览器默认的窗口创建动作（如：**a标签**、**window.open**等）出来的窗口将使用默认的<a href="#settings/settingsBrowserWindowSettings">浏览器窗口参数</a>,这可能会影响你的正常使用（比如没有标题栏，不能拖动窗口），可以<a href="#api/apiBrowserWindow/67">预设置浏览器窗口参数</a>来避免该问题
   
 * **参考** 
 <a href="#api/apiBrowserWindow/67">BrowserWindow.addBrowserWindowSettings</a>
