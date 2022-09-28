@@ -141,7 +141,8 @@ namespace amo {
         m_hParentWnd = NULL;
         m_pBrowser = NULL;
         
-        if (m_pBrowserSettings->offscreen && m_pBrowserSettings->transparent && m_pBrowserSettings->accelerator) {
+        if (m_pBrowserSettings->offscreen && m_pBrowserSettings->transparent &&
+                m_pBrowserSettings->accelerator) {
             this->setAccelerator(true);
         }
         

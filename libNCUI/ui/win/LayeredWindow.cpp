@@ -115,15 +115,16 @@ namespace amo {
         //                                 &m_Blend,
         //                                 ULW_ALPHA
         //                                );
-        BOOL bOK = ::UpdateLayeredWindow(m_hWnd, hDC, &ptDest, &szLayered, memDC, &ptSrc, RGB(0, 0, 0), &m_Blend, ULW_ALPHA);
-        
+        BOOL bOK = ::UpdateLayeredWindow(m_hWnd, hDC, &ptDest, &szLayered, memDC,
+                                         &ptSrc, RGB(0, 0, 0), &m_Blend, ULW_ALPHA);
+                                         
         DWORD wd = GetLastError();
         ::SelectObject(memDC, hOldBitmap);
         DeleteObject(hBitmap);
         
         ::ReleaseDC(m_hWnd, memDC);
         ::ReleaseDC(m_hWnd, hDC);
-        $cdevel("渲染用时：{}", t.elapsed());
+        //$cdevel("渲染用时：{}", t.elapsed());
         
     }
     

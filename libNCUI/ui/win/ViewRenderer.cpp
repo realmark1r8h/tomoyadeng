@@ -52,11 +52,15 @@ namespace amo {
     void ViewRenderer::PaintStatusImage(HDC hDC) {
         amo::timer t;
         
-        if (!m_resource || !renderer) {
+        if (!m_resource) {
             return;
         };
         
         if (isAccelerator()) {
+            if (!renderer) {
+                return;
+            }
+            
             renderer->Render(hDC, m_resource);
             updateFPS();
             return;
@@ -153,7 +157,7 @@ namespace amo {
             updateFPS();
         }
         
-        $cdevel("渲染111用时：{}", t.elapsed());
+        //$cdevel("渲染111用时：{}", t.elapsed());
     }
     
     LayerViewRender::~LayerViewRender() {
