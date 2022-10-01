@@ -6,20 +6,11 @@
 
 #include <memory>
 #include <vector>
+#include "ui/win/overlap/PaintResource.hpp"
 
 namespace amo {
     class D2D1Renderer;
-    class PaintResource {
-    public:
-        PaintResource() {
-            width = 0;
-            height = 0;
-        }
-        std::shared_ptr<Gdiplus::Bitmap> m_pBitmap;
-        std::vector<char> m_buffer;
-        int width;
-        int height;
-    };
+    
     
     //Ò³ÃæäÖÈ¾¿Ø¼þ
     class ViewRenderer : public CControlUI {

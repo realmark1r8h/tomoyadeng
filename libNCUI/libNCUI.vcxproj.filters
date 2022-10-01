@@ -64,6 +64,12 @@
     <Filter Include="docs">
       <UniqueIdentifier>{189fc675-3203-4b42-ad9b-e1f6a41bde3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ui\win\overlap">
+      <UniqueIdentifier>{ce6474dc-5455-4e2f-a218-a9558d2ba4f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui\win\renderer">
+      <UniqueIdentifier>{51b80adf-8870-4077-bf8d-76e912eae446}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="context\AppContext.cpp">
@@ -486,10 +492,15 @@
     <ClCompile Include="transfer\ActionTransfer.cpp">
       <Filter>transfer</Filter>
     </ClCompile>
-    <ClCompile Include="ui\win\D2D1Renderer.cpp">
-      <Filter>ui\win</Filter>
+    <ClCompile Include="settings\OverlapSettings.cpp">
+      <Filter>settings</Filter>
     </ClCompile>
-    <ClCompile Include="settings\OverlapSettings.cpp" />
+    <ClCompile Include="ui\win\renderer\GdiRenderer.cpp">
+      <Filter>ui\win\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\win\renderer\D2D1Renderer.cpp">
+      <Filter>ui\win\renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context\AppContext.h">
@@ -987,9 +998,6 @@
     <ClInclude Include="transfer\RendererTransferMgr.h">
       <Filter>transfer</Filter>
     </ClInclude>
-    <ClInclude Include="ui\win\Overlap.hpp">
-      <Filter>ui\win</Filter>
-    </ClInclude>
     <ClInclude Include="scheme\DllFileManager.h">
       <Filter>scheme</Filter>
     </ClInclude>
@@ -1020,11 +1028,29 @@
     <ClInclude Include="docs\DispatchEvent.hpp">
       <Filter>docs</Filter>
     </ClInclude>
-    <ClInclude Include="ui\win\D2D1Renderer.h">
-      <Filter>ui\win</Filter>
-    </ClInclude>
     <ClInclude Include="settings\OverlapSettings.h">
       <Filter>settings</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\overlap\Overlap.hpp">
+      <Filter>ui\win\overlap</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\overlap\PaintResource.hpp">
+      <Filter>ui\win\overlap</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\overlap\OverlapData.hpp">
+      <Filter>ui\win\overlap</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\overlap\DefaultOverlapData.hpp">
+      <Filter>ui\win\overlap</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\renderer\GdiRenderer.h">
+      <Filter>ui\win\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\renderer\D2D1Renderer.h">
+      <Filter>ui\win\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\overlap\FilemappingOverlapData.hpp">
+      <Filter>ui\win\overlap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

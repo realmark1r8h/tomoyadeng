@@ -33,6 +33,9 @@
 #include "utility/utility.hpp"
 #include "scheme/UrlResourceHandlerFactory.h"
 #include <regex>
+#include "ui/win/overlap/OverlapData.hpp"
+#include "ui/win/overlap/DefaultOverlapData.hpp"
+#include "ui/win/overlap/FilemappingOverlapData.hpp"
 
 
 namespace {
@@ -504,10 +507,25 @@ namespace amo {
         
 #endif
         
-        auto msg = IPCMessage::Empty();
-        msg->getArgumentList()->setValue(0, true);
-        msg->getArgumentList()->setValue(1, 30);
-        //repaint(msg);
+        {
+            OverlapSettings settings;
+            settings.width = 1920;
+            settings.height = 1080;
+            settings.name = "ffmpeg888";
+            auto msg = IPCMessage::Empty();
+            msg->getArgumentList()->setValue(0, settings.toJson());
+            
+            addOverlap(msg);
+        }
+        
+        {
+            auto msg = IPCMessage::Empty();
+            msg->getArgumentList()->setValue(0, true);
+            msg->getArgumentList()->setValue(1, 30);
+            repaint(msg);
+        }
+        
+        
         AMO_TIMER_ELAPSED();
         
         
@@ -835,6 +853,9 @@ namespace amo {
         
         std::shared_ptr<amo::file_mapping> map(new amo::file_mapping(name, true));
         std::shared_ptr<Overlap> overlap(new Overlap(settings));
+        std::shared_ptr<OverlapData> overlapData(new FilemappingOverlapData(map));
+        overlapData->fill(map->address(), map->size());
+        overlap->setOverlapData(overlapData);
         
         if (m_paintingRes.find(name) == m_paintingRes.end()) {
             m_paintingRes[name] = { overlap, map };
@@ -1409,129 +1430,145 @@ namespace amo {
         memcpy(data.data(), buffer, data.size());
         
         std::shared_ptr<PaintResource> resource(new PaintResource());
-        resource->m_pBitmap = bitmap;
-        resource->width = width;
-        resource->height = height;
-        resource->m_buffer = data;
         
+        
+        std::shared_ptr<  OverlapSettings > settings(new OverlapSettings());
+        settings->width = width;
+        settings->height = height;
+        settings->name = "default";
+        settings->length = width * height * 4;
+        settings->type = 0;
+        
+        std::shared_ptr<OverlapData> overlapData(new DefalutOverlapData());
+        overlapData->fill((char*)buffer, settings->length);
+        
+        
+        std::shared_ptr<Overlap> overlap(new Overlap(settings));
+        
+        overlap->setOverlapData(overlapData);
+        resource->addOverlap(overlap);
         m_pRenderWnd->updateCaretPos(image);
         
-        Graphics * pGraphics = NULL;
-        
-        if (m_paintingRes.size() > 0) {
-            pGraphics = Graphics::FromImage(&*bitmap);
-        }
-        
-        
         for (auto& item : m_paintingRes) {
-            auto p = item.second.second;
-            std::shared_ptr<Overlap> imageDataInfo = item.second.first;
-            
-            if (!p) {
-                continue;
-            }
-            
-            if (!p->is_opened() && !p->open(true)) {
-                continue;
-            }
-            
-            
-            std::vector<unsigned char> header2(4, 0);
-            p->read((char*)header2.data(), 0, 4);
-            int buffer_size = amo::bytes_to_int<int>(header2.data());
-            
-            
-            if (buffer_size > 16) {
-                std::vector<char> buffer(buffer_size, 0);
-                p->read(buffer.data(), header2.size(), buffer_size);
-                
-                imageDataInfo->fill(buffer.data(), buffer.size());
-                m_LastBitmap = imageDataInfo->getOverlapData()->toBitmap();
-            }
-            
-            if (imageDataInfo && pGraphics != NULL && m_LastBitmap) {
-            
-                amo::rect dstRect = imageDataInfo->dstRect;
-                
-                amo::rect rc(0, 0, width, height);
-                
-                
-                
-                if (dstRect.empty()) {
-                    dstRect.width(m_LastBitmap->GetWidth());
-                    dstRect.height(m_LastBitmap->GetHeight());
-                }
-                
-                Gdiplus::RectF dst(dstRect.left(),
-                                   dstRect.top(),
-                                   dstRect.width(),
-                                   dstRect.height());
-                                   
-                amo::rect srcRect = imageDataInfo->srcRect;
-                
-                if (srcRect.empty()) {
-                    srcRect.width(m_LastBitmap->GetWidth());
-                    srcRect.height(m_LastBitmap->GetHeight());
-                }
-                
-                Gdiplus::RectF src(srcRect.left(),
-                                   srcRect.top(),
-                                   srcRect.width(),
-                                   srcRect.height());
-                                   
-                                   
-                                   
-                pGraphics->DrawImage(&*m_LastBitmap,
-                                     dst,
-                                     src.GetLeft(),
-                                     src.GetTop(),
-                                     src.GetRight() - src.GetLeft(),
-                                     src.GetBottom() - src.GetTop(),
-                                     UnitPixel);
-                                     
-                std::vector<amo::rect> fvec = rc.complement(dstRect);
-                
-                
-                for (size_t i = 0; i < fvec.size(); ++i) {
-                    amo::rect r = fvec[i];
-                    
-                    if (r.empty()) {
-                        continue;
-                    }
-                    
-                    Gdiplus::RectF dst(r.left(),
-                                       r.top(),
-                                       r.width(),
-                                       r.height());
-                                       
-                    Gdiplus::RectF src(r.left(),
-                                       r.top(),
-                                       r.width(),
-                                       r.height());
-                    /*  Gdiplus::Pen pen(Gdiplus::Color(255, 0, 0), (Gdiplus::REAL)1.0);
-                      pen.SetAlignment(Gdiplus::PenAlignmentInset);
-                    
-                      pGraphics->DrawRectangle(&pen, dst);*/
-                    pGraphics->DrawImage(&*image,
-                                         dst,
-                                         src.GetLeft(),
-                                         src.GetTop(),
-                                         src.GetRight() - src.GetLeft(),
-                                         src.GetBottom() - src.GetTop(),
-                                         UnitPixel);
-                                         
-                    //pGraphics->DrawImage(&*image, 0, 0, image->GetWidth(), image->GetHeight());
-                    
-                }
-            }
-            
+            resource->addOverlap(item.second.first);
         }
         
-        if (pGraphics != NULL) {
-            delete pGraphics;
-            pGraphics = NULL;
-        }
-        
+        //Graphics * pGraphics = NULL;
+        //
+        //if (m_paintingRes.size() > 0) {
+        //    pGraphics = Graphics::FromImage(&*bitmap);
+        //}
+        //
+        //
+        //for (auto& item : m_paintingRes) {
+        //    auto p = item.second.second;
+        //    std::shared_ptr<Overlap> imageDataInfo = item.second.first;
+        //
+        //    if (!p) {
+        //        continue;
+        //    }
+        //
+        //    if (!p->is_opened() && !p->open(true)) {
+        //        continue;
+        //    }
+        //
+        //
+        //    std::vector<unsigned char> header2(4, 0);
+        //    p->read((char*)header2.data(), 0, 4);
+        //    int buffer_size = amo::bytes_to_int<int>(header2.data());
+        //
+        //
+        //    if (buffer_size > 16) {
+        //        std::vector<char> buffer(buffer_size, 0);
+        //        p->read(buffer.data(), header2.size(), buffer_size);
+        //
+        //        imageDataInfo->fill(buffer.data(), buffer.size());
+        //        m_LastBitmap = imageDataInfo->getOverlapData()->toBitmap();
+        //    }
+        //
+        //    if (imageDataInfo && pGraphics != NULL && m_LastBitmap) {
+        //
+        //        amo::rect dstRect = imageDataInfo->dstRect;
+        //
+        //        amo::rect rc(0, 0, width, height);
+        //
+        //
+        //
+        //        if (dstRect.empty()) {
+        //            dstRect.width(m_LastBitmap->GetWidth());
+        //            dstRect.height(m_LastBitmap->GetHeight());
+        //        }
+        //
+        //        Gdiplus::RectF dst(dstRect.left(),
+        //                           dstRect.top(),
+        //                           dstRect.width(),
+        //                           dstRect.height());
+        //
+        //        amo::rect srcRect = imageDataInfo->srcRect;
+        //
+        //        if (srcRect.empty()) {
+        //            srcRect.width(m_LastBitmap->GetWidth());
+        //            srcRect.height(m_LastBitmap->GetHeight());
+        //        }
+        //
+        //        Gdiplus::RectF src(srcRect.left(),
+        //                           srcRect.top(),
+        //                           srcRect.width(),
+        //                           srcRect.height());
+        //
+        //
+        //
+        //        pGraphics->DrawImage(&*m_LastBitmap,
+        //                             dst,
+        //                             src.GetLeft(),
+        //                             src.GetTop(),
+        //                             src.GetRight() - src.GetLeft(),
+        //                             src.GetBottom() - src.GetTop(),
+        //                             UnitPixel);
+        //
+        //        std::vector<amo::rect> fvec = rc.complement(dstRect);
+        //
+        //
+        //        for (size_t i = 0; i < fvec.size(); ++i) {
+        //            amo::rect r = fvec[i];
+        //
+        //            if (r.empty()) {
+        //                continue;
+        //            }
+        //
+        //            Gdiplus::RectF dst(r.left(),
+        //                               r.top(),
+        //                               r.width(),
+        //                               r.height());
+        //
+        //            Gdiplus::RectF src(r.left(),
+        //                               r.top(),
+        //                               r.width(),
+        //                               r.height());
+        //            /*  Gdiplus::Pen pen(Gdiplus::Color(255, 0, 0), (Gdiplus::REAL)1.0);
+        //              pen.SetAlignment(Gdiplus::PenAlignmentInset);
+        //
+        //              pGraphics->DrawRectangle(&pen, dst);*/
+        //            pGraphics->DrawImage(&*image,
+        //                                 dst,
+        //                                 src.GetLeft(),
+        //                                 src.GetTop(),
+        //                                 src.GetRight() - src.GetLeft(),
+        //                                 src.GetBottom() - src.GetTop(),
+        //                                 UnitPixel);
+        //
+        //            //pGraphics->DrawImage(&*image, 0, 0, image->GetWidth(), image->GetHeight());
+        //
+        //        }
+        //    }
+        //
+        //}
+        //
+        //if (pGraphics != NULL) {
+        //    delete pGraphics;
+        //    pGraphics = NULL;
+        //}
+        //
         
         
         

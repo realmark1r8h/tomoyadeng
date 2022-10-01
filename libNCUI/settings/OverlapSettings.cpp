@@ -13,41 +13,30 @@ namespace amo {
     void OverlapSettings::initDefaultOverlapSettings() {
     
         DEFAULT_ARGS_SETTINGS(name, "");
-        DEFAULT_ARGS_SETTINGS(imageWidth, 0);
-        DEFAULT_ARGS_SETTINGS(imageHeight, 0);
-        DEFAULT_ARGS_SETTINGS(imageStep, 0);
+        DEFAULT_ARGS_SETTINGS(width, 0);
+        DEFAULT_ARGS_SETTINGS(height, 0);
+        DEFAULT_ARGS_SETTINGS(step, 0);
         
         DEFAULT_ARGS_SETTINGS(type, 0);
         DEFAULT_ARGS_SETTINGS(length, 0);
-        amo::json dstArr;
-        dstArr.set_array();
-        dstArr.push_back(0);
-        dstArr.push_back(0);
-        dstArr.push_back(0);
-        dstArr.push_back(0);
-        settings.put("dstRect", dstArr);
-        settings.removeKey("dstRect");
-        amo::json srcArr;
-        srcArr.set_array();
-        srcArr.push_back(0);
-        srcArr.push_back(0);
-        srcArr.push_back(0);
-        srcArr.push_back(0);
-        settings.put("srcRect", srcArr);
-        settings.removeKey("srcRect");
+        amo::json regions;
+        regions.set_array();
+        
+        settings.put("regions", regions);
+        settings.removeKey("regions");
+        
     }
     
     void OverlapSettings::afterUpdateArgsSettings() {
         BasicSettings::afterUpdateArgsSettings();
         STRING_ARGS_SETTING(name);
-        INT_ARGS_SETTING(imageWidth);
-        INT_ARGS_SETTING(imageHeight);
-        INT_ARGS_SETTING(imageStep);
+        INT_ARGS_SETTING(width);
+        INT_ARGS_SETTING(height);
+        INT_ARGS_SETTING(step);
         INT_ARGS_SETTING(type);
         INT_ARGS_SETTING(length);
         
-        updateRectSettings("srcRect", srcRect);
-        updateRectSettings("dstRect", dstRect);
+        updateRectSettings("regions", regions);
         
     }
     
@@ -56,45 +45,49 @@ namespace amo {
     
     
         UPDATE_ARGS_SETTINGS(name);
-        UPDATE_ARGS_SETTINGS(imageWidth);
-        UPDATE_ARGS_SETTINGS(imageHeight);
-        UPDATE_ARGS_SETTINGS(imageStep);
+        UPDATE_ARGS_SETTINGS(width);
+        UPDATE_ARGS_SETTINGS(height);
+        UPDATE_ARGS_SETTINGS(step);
         UPDATE_ARGS_SETTINGS(type);
         UPDATE_ARGS_SETTINGS(length);
         
-        if (srcRect) {
+        if (regions) {
             amo::json arr;
             arr.set_array();
-            arr.push_back(srcRect->left());
-            arr.push_back(srcRect->top());
-            arr.push_back(srcRect->width());
-            arr.push_back(srcRect->height());
-            settings.put("srcRect", arr);
+            
+            for (auto& p : regions->m_regions) {
+                amo::json src;
+                src.set_array();
+                src.push_back(p.src.left());
+                src.push_back(p.src.top());
+                src.push_back(p.src.width());
+                src.push_back(p.src.height());
+                
+                amo::json dst;
+                dst.set_array();
+                dst.push_back(p.dst.left());
+                dst.push_back(p.dst.top());
+                dst.push_back(p.dst.width());
+                dst.push_back(p.dst.height());
+                
+                amo::json item;
+                item.put("src", src);
+                item.put("dst", dst);
+                arr.push_back(item);
+                
+            }
+            
+            settings.put("regions", arr);
             
         }
         
-        if (dstRect) {
-            amo::json arr;
-            arr.set_array();
-            arr.push_back(dstRect->left());
-            arr.push_back(dstRect->top());
-            arr.push_back(dstRect->width());
-            arr.push_back(dstRect->height());
-            settings.put("dstRect", arr);
-        }
         
         return BasicSettings::toJson();
     }
     
-    void OverlapSettings::updateRectSettings(const std::string& name, std::shared_ptr<amo::rect>& ptr) {
+    amo::rect getRectFromJson(amo::json& json) {
     
         do {
-            if (!settings.contains_key(name)) {
-                break;
-            }
-            
-            amo::json json = settings.getJson(name);
-            
             if (!json.is_array()) {
                 break;
             }
@@ -121,13 +114,49 @@ namespace amo {
                 break;
             }
             
-            ptr.reset(new amo::rect(
-                          vec[0].get<int>(),
-                          vec[1].get<int>(),
-                          vec[2].get<int>(),
-                          vec[3].get<int>()
-                      ));
-                      
+            return amo::rect(
+                       vec[0].get<int>(),
+                       vec[1].get<int>(),
+                       vec[2].get<int>(),
+                       vec[3].get<int>()
+                   );
+        } while (false);
+        
+        return amo::rect();
+    }
+    
+    void OverlapSettings::updateRectSettings(const std::string& name, std::shared_ptr<OverlapRegions>& ptr) {
+    
+        do {
+            if (!settings.contains_key(name)) {
+                break;
+            }
+            
+            amo::json json = settings.getJson(name);
+            
+            if (!json.is_array()) {
+                break;
+            }
+            
+            std::vector<amo::json> vec = json.to_array();
+            
+            for (auto& p : vec) {
+                amo::rect src = getRectFromJson(p.getJson("src"));
+                amo::rect dst = getRectFromJson(p.getJson("dst"));
+                
+                if (src.empty()) {
+                    continue;
+                }
+                
+                if (!ptr) {
+                    ptr.reset(new OverlapRegions());
+                    
+                }
+                
+                ptr->m_regions.push_back({ src, dst });
+            }
+            
+            
         } while (false);
         
     }

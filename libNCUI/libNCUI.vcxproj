@@ -299,7 +299,6 @@
     <ClCompile Include="ui\win\BrowserWindowSkin.cpp" />
     <ClCompile Include="ui\win\BytesWriteHandler.cpp" />
     <ClCompile Include="ui\win\clipboard\Clipboard.cpp" />
-    <ClCompile Include="ui\win\D2D1Renderer.cpp" />
     <ClCompile Include="ui\win\Imm32Manager.cpp" />
     <ClCompile Include="ui\win\LayeredWindow.cpp" />
     <ClCompile Include="ui\win\LocalWindow.cpp" />
@@ -313,6 +312,8 @@
     <ClCompile Include="ui\win\OffscreenDragdrop.cpp" />
     <ClCompile Include="ui\win\OffScreenRenderView.cpp" />
     <ClCompile Include="ui\win\PictureView.cpp" />
+    <ClCompile Include="ui\win\renderer\D2D1Renderer.cpp" />
+    <ClCompile Include="ui\win\renderer\GdiRenderer.cpp" />
     <ClCompile Include="ui\win\RenderView.cpp" />
     <ClCompile Include="ui\win\SharedMemory.cpp" />
     <ClCompile Include="ui\win\SplashWindow.cpp" />
@@ -475,7 +476,6 @@
     <ClInclude Include="ui\win\BrowserWindowSkin.h" />
     <ClInclude Include="ui\win\BytesWriteHandler.h" />
     <ClInclude Include="ui\win\clipboard\Clipboard.h" />
-    <ClInclude Include="ui\win\D2D1Renderer.h" />
     <ClInclude Include="ui\win\Imm32Manager.h" />
     <ClInclude Include="ui\win\LayeredWindow.h" />
     <ClInclude Include="ui\win\LocalWindow.h" />
@@ -490,8 +490,14 @@
     <ClInclude Include="ui\win\OffscreenDragdrop.h" />
     <ClInclude Include="ui\win\OffscreenDragdropEvents.h" />
     <ClInclude Include="ui\win\OffScreenRenderView.h" />
-    <ClInclude Include="ui\win\Overlap.hpp" />
+    <ClInclude Include="ui\win\overlap\DefaultOverlapData.hpp" />
+    <ClInclude Include="ui\win\overlap\FilemappingOverlapData.hpp" />
+    <ClInclude Include="ui\win\overlap\Overlap.hpp" />
+    <ClInclude Include="ui\win\overlap\OverlapData.hpp" />
+    <ClInclude Include="ui\win\overlap\PaintResource.hpp" />
     <ClInclude Include="ui\win\PictureView.h" />
+    <ClInclude Include="ui\win\renderer\D2D1Renderer.h" />
+    <ClInclude Include="ui\win\renderer\GdiRenderer.h" />
     <ClInclude Include="ui\win\RenderView.h" />
     <ClInclude Include="ui\win\SharedMemory.h" />
     <ClInclude Include="ui\win\SplashWindow.h" />

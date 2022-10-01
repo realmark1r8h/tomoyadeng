@@ -5,7 +5,7 @@
 
 #include "settings/NativeWindowSettings.h"
 #include "settings/GlobalShortcutSettings.h"
-#include "ui/win/D2D1Renderer.h"
+
 
 #define WM_DRAWWINDOW (WM_USER +9999)
 

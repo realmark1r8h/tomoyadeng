@@ -26,14 +26,13 @@ namespace amo {
         
         
         
-        void CreateDeviceResources(HWND hWnd);
-        
-        
-        
         void Render(HDC hDC, std::shared_ptr<PaintResource> resource);
         
+        void Render(HDC hDC, std::shared_ptr<PaintResource> resource, std::shared_ptr<Overlap> overlap);
         
-        BOOL CreateBitmpFromMemory(ID2D1RenderTarget*  renderTarget, std::shared_ptr<PaintResource> resource);
+        //BOOL CreateBitmpFromMemory(ID2D1RenderTarget*  renderTarget, std::shared_ptr<PaintResource> resource);
+        
+        BOOL CreateBitmpFromMemory(ID2D1RenderTarget*  renderTarget, std::shared_ptr<Overlap> resource);
         
     public:
     
