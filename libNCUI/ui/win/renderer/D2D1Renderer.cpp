@@ -17,6 +17,8 @@ namespace amo {
         dcRenderTarget = NULL;
         m_bitmap = NULL;
         
+        m_memDC = NULL;
+        hCompatibleBitmap = NULL;
         
     }
     
@@ -60,6 +62,8 @@ namespace amo {
             return false;
         }
         
+        m_executor.reset(new amo::looper_executor());
+        
         return true;
     }
     
@@ -78,14 +82,45 @@ namespace amo {
     void D2D1Renderer::Render(HDC hDC, std::shared_ptr<PaintResource> resource) {
     
     
-        RECT rc;
-        ZeroMemory(&rc, sizeof(rc));
         RECT rcClient = resource->getPos();
         amo::timer t;
+        amo::rect rect = resource->getPos();
         
-        //HDC hCloneDC = ::CreateCompatibleDC(NULL);
+        if (m_memDC == NULL) {
+            m_memDC =  CreateCompatibleDC(hDC);
+        } else {
         
-        dcRenderTarget->BindDC(hDC, &rcClient);
+        }
+        
+        HBITMAP hCompatibleBitmap = CreateCompatibleBitmap(hDC, rect.width(),
+        
+                                    rect.height());
+                                    
+        HBITMAP hOldBitmap = (HBITMAP)SelectObject(m_memDC, hCompatibleBitmap);
+        
+        BITMAPINFO bitmapinfo;
+        bitmapinfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+        bitmapinfo.bmiHeader.biBitCount = 32;
+        bitmapinfo.bmiHeader.biHeight = rect.height();
+        bitmapinfo.bmiHeader.biWidth = rect.width();
+        bitmapinfo.bmiHeader.biPlanes = 1;
+        bitmapinfo.bmiHeader.biCompression = BI_RGB;
+        bitmapinfo.bmiHeader.biXPelsPerMeter = 0;
+        bitmapinfo.bmiHeader.biYPelsPerMeter = 0;
+        bitmapinfo.bmiHeader.biClrUsed = 0;
+        bitmapinfo.bmiHeader.biClrImportant = 0;
+        bitmapinfo.bmiHeader.biSizeImage = bitmapinfo.bmiHeader.biWidth
+                                           * bitmapinfo.bmiHeader.biHeight
+                                           * bitmapinfo.bmiHeader.biBitCount / 8;
+                                           
+        SetDIBits(hDC, hCompatibleBitmap, 0, rect.height(),
+        
+                  NULL, (BITMAPINFO*)&bitmapinfo, DIB_RGB_COLORS);
+                  
+                  
+                  
+                  
+        dcRenderTarget->BindDC(m_memDC, &rcClient);
         dcRenderTarget->BeginDraw();
         static std::vector<int> vec;
         
@@ -94,7 +129,7 @@ namespace amo {
             
             dcRenderTarget->DrawBitmap(m_bitmap, D2D1::RectF(0, 0, p->m_settings->width, p->m_settings->height), 1.0f);
             
-            //StretchBlt(hImageDC, 0, 0, m_iMaxTileSize, m_iMaxTileSize, m_hBackDC, 0, 0, m_iMaxTileSize, m_iMaxTileSize, SRCCOPY);
+            
         }
         
         vec.push_back(t.elapsed());
@@ -111,7 +146,19 @@ namespace amo {
             vec.clear();
         }
         
+        
         dcRenderTarget->EndDraw();
+        
+        BitBlt(hDC, 0, 0, rect.width(), rect.height(),
+        
+               m_memDC, 0, 0, SRCCOPY);
+        DeleteObject(hCompatibleBitmap);
+        
+        SelectObject(m_memDC, hOldBitmap);
+        
+        DeleteObject(m_memDC);
+        m_memDC = NULL;
+        //int ret =    BitBlt(hDC, 0, 0, resource->getPos().width(), resource->getPos().height(), hCloneDC, 0, 0, SRCCOPY);
         
     }
     
@@ -222,6 +269,88 @@ namespace amo {
         }
         
         return FALSE;
+    }
+    
+    
+    void D2D1Renderer::RenderImpl() {
+        amo::timer t;
+        
+        if (!m_resource) {
+            return;
+        }
+        
+        if (m_memDC == NULL) {
+            createMemDC(m_resource->getPos());
+        } else {
+        
+        }
+        
+        
+        RECT rcClient = m_resource->getPos();
+        
+        
+        dcRenderTarget->BindDC(m_memDC, &rcClient);
+        dcRenderTarget->BeginDraw();
+        static std::vector<int> vec;
+        
+        for (auto& p : m_resource->overlaps) {
+            CreateBitmpFromMemory(dcRenderTarget, p);
+            
+            dcRenderTarget->DrawBitmap(m_bitmap, D2D1::RectF(0, 0, p->m_settings->width, p->m_settings->height), 1.0f);
+            
+            
+        }
+        
+        vec.push_back(t.elapsed());
+        
+        if (vec.size() >= 30) {
+            int ntotal = 0;
+            
+            for (auto& p : vec) {
+                ntotal += p;
+            }
+            
+            $cdevel("»æÖÆÓÃÊ±£º{}", ntotal / vec.size());
+            
+            vec.clear();
+        }
+        
+        
+        dcRenderTarget->EndDraw();
+    }
+    
+    void D2D1Renderer::createMemDC(const amo::rect& rect) {
+    
+        m_memDC = CreateCompatibleDC(NULL);
+        
+        
+        HBITMAP hCompatibleBitmap = CreateCompatibleBitmap(NULL, rect.width(),
+                                    rect.height());
+                                    
+        HBITMAP hOldBitmap = (HBITMAP)SelectObject(m_memDC, hCompatibleBitmap);
+        
+        BITMAPINFO bitmapinfo;
+        bitmapinfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+        bitmapinfo.bmiHeader.biBitCount = 32;
+        bitmapinfo.bmiHeader.biHeight = rect.height();
+        bitmapinfo.bmiHeader.biWidth = rect.width();
+        bitmapinfo.bmiHeader.biPlanes = 1;
+        bitmapinfo.bmiHeader.biCompression = BI_RGB;
+        bitmapinfo.bmiHeader.biXPelsPerMeter = 0;
+        bitmapinfo.bmiHeader.biYPelsPerMeter = 0;
+        bitmapinfo.bmiHeader.biClrUsed = 0;
+        bitmapinfo.bmiHeader.biClrImportant = 0;
+        bitmapinfo.bmiHeader.biSizeImage = bitmapinfo.bmiHeader.biWidth
+                                           * bitmapinfo.bmiHeader.biHeight
+                                           * bitmapinfo.bmiHeader.biBitCount / 8;
+                                           
+        SetDIBits(NULL, hCompatibleBitmap, 0, rect.height(),
+                  NULL, (BITMAPINFO*)&bitmapinfo, DIB_RGB_COLORS);
+                  
+    }
+    
+    void D2D1Renderer::releaseMemDC() {
+    
     }
     
 }

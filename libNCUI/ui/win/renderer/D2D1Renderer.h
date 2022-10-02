@@ -34,6 +34,12 @@ namespace amo {
         
         BOOL CreateBitmpFromMemory(ID2D1RenderTarget*  renderTarget, std::shared_ptr<Overlap> resource);
         
+        void RenderImpl();
+        
+        void createMemDC(const amo::rect& rect);
+        
+        void releaseMemDC();
+        
     public:
     
         ID2D1Factory	*gD2dFactory;
@@ -43,8 +49,13 @@ namespace amo {
         ID2D1DCRenderTarget *dcRenderTarget;
         ID2D1Bitmap *m_bitmap;
         
+        std::shared_ptr<PaintResource> m_resource;
+        
+        std::shared_ptr<amo::looper_executor> m_executor;
         
         
+        HDC m_memDC;
+        HBITMAP hCompatibleBitmap;
         
         
     };
