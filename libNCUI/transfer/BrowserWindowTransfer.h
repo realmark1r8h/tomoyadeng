@@ -269,8 +269,6 @@ namespace amo {
         
         
         
-        
-        
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(BrowserWindowTransfer, ClassTransfer)
         
         // ≤‚ ‘”√
@@ -384,7 +382,10 @@ namespace amo {
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getOpacity, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setOpacity, TransferExecNormal)
-        
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(disableIME, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(enableIME, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(computeCursor, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(isComputeCursor, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         

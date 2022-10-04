@@ -5,6 +5,7 @@
 
 #include "settings/NativeWindowSettings.h"
 #include "settings/GlobalShortcutSettings.h"
+#include "ui/win/Imm32Manager.h"
 
 
 #define WM_DRAWWINDOW (WM_USER +9999)
@@ -401,7 +402,8 @@ namespace amo {
     
     void LayeredWindow::InitWindow() {
     
-    
+        imm32_manager_.reset(new IMM32Manager(m_hWnd));
+        imm32_manager_->disableIME();
         ::GetWindowPlacement(*this, &m_wpNormalScreen);
         m_nScreenWidth = GetSystemMetrics(SM_CXSCREEN);//屏幕横向分辨率
         m_nScreenHeight = GetSystemMetrics(SM_CYSCREEN);//屏幕纵向分辨率

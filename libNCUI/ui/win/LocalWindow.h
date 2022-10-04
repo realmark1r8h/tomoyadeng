@@ -56,7 +56,10 @@ namespace amo {
         virtual Any showModal(IPCMessage::SmartType msg);
         virtual Any setOpacity(IPCMessage::SmartType msg) override;
         virtual Any getOpacity(IPCMessage::SmartType msg) override;
-        
+        virtual Any disableIME(IPCMessage::SmartType msg) override;
+        virtual Any enableIME(IPCMessage::SmartType msg) override;
+        virtual Any computeCursor(IPCMessage::SmartType msg) override;
+        virtual Any isComputeCursor(IPCMessage::SmartType msg) override;
         virtual HWND getNativeHWND() override;
         virtual std::shared_ptr<NativeWindowSettings> getNativeSettings() override;
         

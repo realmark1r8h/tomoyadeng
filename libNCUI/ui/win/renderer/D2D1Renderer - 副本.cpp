@@ -18,6 +18,7 @@ namespace amo {
         m_bitmap = NULL;
         
         m_memDC = NULL;
+        hCompatibleBitmap = NULL;
         m_hasCache = false;
         
     }
@@ -81,27 +82,30 @@ namespace amo {
     
     void D2D1Renderer::Render(HDC hDC, std::shared_ptr<PaintResource> resource) {
     
-        amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
-        static std::vector<int> vec;
+    
+        RECT rcClient = resource->getPos();
         amo::timer t;
         amo::rect rect = resource->getPos();
+        HDC dc = GetDC(NULL);
+        m_memDC =  CreateCompatibleDC(NULL);
         
-        if (m_resource) {
-            if (m_resource->getPos() != rect) {
-                releaseMemDC();
-            }
-        }
+        HBITMAP hCompatibleBitmap = CreateCompatibleBitmap(dc,
+                                    rect.width(),
+                                    rect.height());
+                                    
+        HBITMAP hOldBitmap = (HBITMAP)SelectObject(m_memDC, hCompatibleBitmap);
         
-        if (m_memDC != NULL) {
-            BitBlt(hDC, 0, 0, rect.width(), rect.height(), m_memDC, 0, 0, SRCCOPY);
+        
+        dcRenderTarget->BindDC(m_memDC, &rcClient);
+        dcRenderTarget->BeginDraw();
+        static std::vector<int> vec;
+        
+        for (auto& p : resource->overlaps) {
+            CreateBitmpFromMemory(dcRenderTarget, p);
             
-            m_resource = resource;
-            m_executor->execute(std::bind(&D2D1Renderer::RenderImpl, this));
-        } else {
-            m_resource = resource;
-            RenderImpl();
-            BitBlt(hDC, 0, 0, rect.width(), rect.height(), m_memDC, 0, 0, SRCCOPY);
-            m_executor->execute(std::bind(&D2D1Renderer::RenderImpl, this));
+            dcRenderTarget->DrawBitmap(m_bitmap, D2D1::RectF(0, 0, p->m_settings->width, p->m_settings->height), 1.0f);
+            
+            
         }
         
         vec.push_back(t.elapsed());
@@ -113,62 +117,21 @@ namespace amo {
                 ntotal += p;
             }
             
-            $cdevel("渲染用时：{}", ntotal / vec.size());
+            $cdevel("绘制用时：{}", ntotal / vec.size());
             
             vec.clear();
         }
         
-        return;
         
-        /*  RECT rcClient = resource->getPos();
-          amo::timer t;
-          amo::rect rect = resource->getPos();
-          HDC dc = GetDC(NULL);
-          m_memDC =  CreateCompatibleDC(NULL);
+        dcRenderTarget->EndDraw();
         
-          HBITMAP hCompatibleBitmap = CreateCompatibleBitmap(dc,
-                                      rect.width(),
-                                      rect.height());
+        BitBlt(hDC, 0, 0, rect.width(), rect.height(), m_memDC, 0, 0, SRCCOPY);
+        DeleteObject(hCompatibleBitmap);
         
-          HBITMAP hOldBitmap = (HBITMAP)SelectObject(m_memDC, hCompatibleBitmap);
+        SelectObject(m_memDC, hOldBitmap);
         
-        
-          dcRenderTarget->BindDC(m_memDC, &rcClient);
-          dcRenderTarget->BeginDraw();
-          static std::vector<int> vec;
-        
-          for (auto& p : resource->overlaps) {
-              CreateBitmpFromMemory(dcRenderTarget, p);
-        
-              dcRenderTarget->DrawBitmap(m_bitmap, D2D1::RectF(0, 0, p->m_settings->width, p->m_settings->height), 1.0f);
-        
-        
-          }
-        
-          vec.push_back(t.elapsed());
-        
-          if (vec.size() >= 30) {
-              int ntotal = 0;
-        
-              for (auto& p : vec) {
-                  ntotal += p;
-              }
-        
-              $cdevel("绘制用时：{}", ntotal / vec.size());
-        
-              vec.clear();
-          }
-        
-        
-          dcRenderTarget->EndDraw();
-        
-          BitBlt(hDC, 0, 0, rect.width(), rect.height(), m_memDC, 0, 0, SRCCOPY);
-          DeleteObject(hCompatibleBitmap);
-        
-          SelectObject(m_memDC, hOldBitmap);
-        
-          DeleteObject(m_memDC);
-          m_memDC = NULL;*/
+        DeleteObject(m_memDC);
+        m_memDC = NULL;
         //int ret =    BitBlt(hDC, 0, 0, resource->getPos().width(), resource->getPos().height(), hCloneDC, 0, 0, SRCCOPY);
         
     }
@@ -238,65 +201,79 @@ namespace amo {
     
     
     void D2D1Renderer::RenderImpl() {
-        amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
         amo::timer t;
         
-        RECT rcClient = m_resource->getPos();
+        /*   m_memDC = CreateCompatibleDC(NULL);
         
-        amo::rect rect = m_resource->getPos();
-        HDC hDC = GetDC(NULL);
+           HBITMAP hCompatibleBitmap = CreateCompatibleBitmap(hDC,
+                                       rect.width(),
+                                       rect.height());
         
-        if (m_memDC == NULL) {
-            m_memDC = CreateCompatibleDC(NULL);
-        }
-        
-        HBITMAP hCompatibleBitmap = CreateCompatibleBitmap(hDC,
-                                    rect.width(),
-                                    rect.height());
-                                    
-        (HBITMAP)SelectObject(m_memDC, hCompatibleBitmap);
+           HBITMAP hOldBitmap = (HBITMAP)SelectObject(m_memDC, hCompatibleBitmap);
         
         
-        dcRenderTarget->BindDC(m_memDC, &rcClient);
-        dcRenderTarget->BeginDraw();
-        static std::vector<int> vec;
+           dcRenderTarget->BindDC(m_memDC, &rcClient);
+           dcRenderTarget->BeginDraw();
+           static std::vector<int> vec;
         
-        for (auto& p : m_resource->overlaps) {
-            CreateBitmpFromMemory(dcRenderTarget, p);
-            dcRenderTarget->DrawBitmap(m_bitmap, D2D1::RectF(0, 0, p->m_settings->width, p->m_settings->height), 1.0f);
-            
-        }
+           for (auto& p : m_resource->overlaps) {
+               CreateBitmpFromMemory(dcRenderTarget, p);
         
-        vec.push_back(t.elapsed());
-        
-        if (vec.size() >= 30) {
-            int ntotal = 0;
-            
-            for (auto& p : vec) {
-                ntotal += p;
-            }
-            
-            $cdevel("绘制用时：{}", ntotal / vec.size());
-            
-            vec.clear();
-        }
+               dcRenderTarget->DrawBitmap(m_bitmap, D2D1::RectF(0, 0, p->m_settings->width, p->m_settings->height), 1.0f);
         
         
-        dcRenderTarget->EndDraw();
-        DeleteObject(hCompatibleBitmap);
+           }
         
+           vec.push_back(t.elapsed());
+        
+           if (vec.size() >= 30) {
+               int ntotal = 0;
+        
+               for (auto& p : vec) {
+                   ntotal += p;
+               }
+        
+               $cdevel("绘制用时：{}", ntotal / vec.size());
+        
+               vec.clear();
+           }
+        
+        
+           dcRenderTarget->EndDraw();*/
     }
     
+    void D2D1Renderer::createMemDC(const amo::rect& rect) {
+    
+        m_memDC = CreateCompatibleDC(NULL);
+        
+        
+        HBITMAP hCompatibleBitmap = CreateCompatibleBitmap(NULL, rect.width(),
+                                    rect.height());
+                                    
+        HBITMAP hOldBitmap = (HBITMAP)SelectObject(m_memDC, hCompatibleBitmap);
+        
+        BITMAPINFO bitmapinfo;
+        bitmapinfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+        bitmapinfo.bmiHeader.biBitCount = 32;
+        bitmapinfo.bmiHeader.biHeight = rect.height();
+        bitmapinfo.bmiHeader.biWidth = rect.width();
+        bitmapinfo.bmiHeader.biPlanes = 1;
+        bitmapinfo.bmiHeader.biCompression = BI_RGB;
+        bitmapinfo.bmiHeader.biXPelsPerMeter = 0;
+        bitmapinfo.bmiHeader.biYPelsPerMeter = 0;
+        bitmapinfo.bmiHeader.biClrUsed = 0;
+        bitmapinfo.bmiHeader.biClrImportant = 0;
+        bitmapinfo.bmiHeader.biSizeImage = bitmapinfo.bmiHeader.biWidth
+                                           * bitmapinfo.bmiHeader.biHeight
+                                           * bitmapinfo.bmiHeader.biBitCount / 8;
+                                           
+        SetDIBits(NULL, hCompatibleBitmap, 0, rect.height(),
+                  NULL, (BITMAPINFO*)&bitmapinfo, DIB_RGB_COLORS);
+                  
+    }
     
     void D2D1Renderer::releaseMemDC() {
-        amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
-        
-        if (m_memDC == NULL) {
-            return;
-        }
-        
-        DeleteObject(m_memDC);
-        m_memDC = NULL;
+    
     }
     
 }

@@ -18,7 +18,7 @@ using namespace Gdiplus;
 
 
 namespace amo {
-
+    class IMM32Manager;
     class NativeWindowSettings;
     class GlobalShortcutSettings;
     class LayeredWindow
@@ -164,6 +164,7 @@ namespace amo {
         /*! @brief	窗口关闭时回调函数. */
         ClosedCbType m_fnClosedCallback;
         
+        std::shared_ptr<IMM32Manager> imm32_manager_;
     };
 }
 #endif // AMO_LAYEREDWINDOW_H__

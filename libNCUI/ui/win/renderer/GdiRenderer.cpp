@@ -94,32 +94,32 @@ namespace amo {
             return pBitmap;
         }
         
-        unsigned char* dd = (unsigned char*)resource->data();
-        int count = 0;
+        /* unsigned char* dd = (unsigned char*)resource->data();
+         int count = 0;
         
-        for (int i = 0; i < imageSize; ++i) {
-            if (dd[i] != 0) {
-                ++count;
-            }
-        }
+         for (int i = 0; i < imageSize; ++i) {
+        	 if (dd[i] != 0) {
+        		 ++count;
+        	 }
+         }
+         */
+        /*   amo::timer t;
+           std::string ss = std::to_string(t.elapsed());
+           ss += "\t ";
+           ss += std::to_string(count);
+           ss += "\n";
         
-        amo::timer t;
-        std::string ss = std::to_string(t.elapsed());
-        ss += "\t ";
-        ss += std::to_string(count);
-        ss += "\n";
+           OutputDebugStringA(ss.c_str());*/
         
-        OutputDebugStringA(ss.c_str());
+        /* std::shared_ptr<Gdiplus::Bitmap> image;
+         image.reset(new Gdiplus::Bitmap(imageWidth,
+                                         imageHeight,
+                                         imageWidth * 4,
+                                         PixelFormat32bppARGB,
+                                         (BYTE*)resource->data()));
         
-        /*    std::shared_ptr<Gdiplus::Bitmap> image;
-            image.reset(new Gdiplus::Bitmap(imageWidth,
-                                            imageHeight,
-                                            imageWidth * 4,
-                                            PixelFormat32bppARGB,
-                                            (BYTE*)resource->data()));
-        
-            return image;*/
-        
+         return image;
+         */
         pBitmap.reset(new Bitmap(imageWidth, imageHeight,
                                  PixelFormat32bppARGB));
                                  

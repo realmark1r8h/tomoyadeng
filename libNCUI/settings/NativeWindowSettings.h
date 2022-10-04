@@ -158,6 +158,12 @@ namespace amo {
         
         /** @var #Boolean=false back_forword	是否允许前进后退{@tag const}. */
         bool back_forword;
+        
+        /*! @var #Boolean=false disable_ime 是否禁用输入法. */
+        bool disable_ime;
+        
+        /*! @var #Boolean=false compute_cursor 计算光标位置，offscreen=true时有效. */
+        bool compute_cursor;
     };
 }
 

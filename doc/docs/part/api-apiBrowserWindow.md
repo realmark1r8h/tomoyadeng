@@ -1916,6 +1916,110 @@ console.assert(BrowserWindow.current.getOpacity() == 255);
 <div class="adoc" id="div_getOpacity"></div>
 
 
+## disableIME &nbsp;
+  禁用输入法.
+  
+* **函数参数**  无
+
+* **返回值**
+  Undefined . 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('BrowserWindow');
+var win = BrowserWindow.current;
+win.disableIME();
+
+```
+
+
+<div class="adoc" id="div_disableIME"></div>
+
+
+## enableIME &nbsp;
+  开启输入法.
+  
+* **函数参数**  无
+
+* **返回值**
+  Undefined . 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('BrowserWindow');
+var win = BrowserWindow.current;
+win.enableIME();
+
+```
+
+
+<div class="adoc" id="div_enableIME"></div>
+
+
+## computeCursor &nbsp;
+  设置是否计算光标位置，可以用来定位输入法窗口，离屏模式（offscreen=true）下有效.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>Boolean</td>
+	<td>false </td>
+	<td>true计算光标位置/false不计算光标光标位置.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+  Undefined . 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('BrowserWindow');
+var win = BrowserWindow.current;
+// 禁用后将不能定位输入法
+win.computeCursor(false);
+
+```
+
+
+<div class="adoc" id="div_computeCursor"></div>
+
+
+## isComputeCursor &nbsp;<span class="label label-sync">同步</span> 
+
+  判断是否计算光标位置.
+  
+* **函数参数**  无
+
+* **返回值**
+  Boolean true/false. 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('BrowserWindow');
+var win = BrowserWindow.current;
+win.computeCursor(true);
+console.assert(win.isComputeCursor() == true);
+
+```
+
+
+<div class="adoc" id="div_isComputeCursor"></div>
+
+
 ## BrowserWindow &nbsp;<span class="label label-constructor">构造</span> <span class="label label-sync">同步</span> 
 
   创建一个浏览器窗口.
@@ -1979,7 +2083,7 @@ new BrowserWindow({
   BrowserWindow 如果不存在，返回Undefined. 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/60">current</a>
+<a href="#api/apiBrowserWindow/64">current</a>
 
 
 

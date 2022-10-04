@@ -1381,6 +1381,81 @@ namespace amo {
         
         virtual Any getOpacity(IPCMessage::SmartType msg);
         
+        /*!
+         * @fn	virtual Any NativeWindowProxy::disableIME(IPCMessage::SmartType msg);
+         *
+         * @brief	禁用输入法.
+         *
+         * @return	#Undefined.
+         * @example
+         *
+         ```
+        	include('BrowserWindow');
+        	var win = BrowserWindow.current;
+        	win.disableIME();
+         ```
+         */
+        
+        virtual Any disableIME(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	virtual Any NativeWindowProxy::enableIME(IPCMessage::SmartType msg);
+         *
+         * @brief	开启输入法.
+         *
+         *
+         * @return	#Undefined.
+         * @example
+         *
+         ```
+        	include('BrowserWindow');
+        	var win = BrowserWindow.current;
+        	win.enableIME();
+         ```
+         */
+        
+        virtual Any enableIME(IPCMessage::SmartType msg);
+        
+        /*!
+        * @fn	virtual Any computeCursor(IPCMessage::SmartType msg);
+        *
+        * @brief	设置是否计算光标位置，可以用来定位输入法窗口，离屏模式（offscreen=true）下有效.
+        *
+        * @param	#Boolean=false true计算光标位置/false不计算光标光标位置.
+        *
+        * @return	#Undefined.
+        * @example
+        *
+        ```
+        	include('BrowserWindow');
+        	var win = BrowserWindow.current;
+        	// 禁用后将不能定位输入法
+        	win.computeCursor(false);
+        ```
+        */
+        
+        virtual Any computeCursor(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	virtual Any NativeWindowProxy::isComputeCursor(IPCMessage::SmartType msg);
+         * @tag sync
+         *
+         * @brief	判断是否计算光标位置.
+         *
+         *
+         * @return	#Boolean true/false.
+         * @example
+         *
+         ```
+        	include('BrowserWindow');
+        	var win = BrowserWindow.current;
+        	win.computeCursor(true);
+        	console.assert(win.isComputeCursor() == true);
+         ```
+         */
+        
+        virtual Any isComputeCursor(IPCMessage::SmartType msg);
+        
     public:
         /*!
          * @fn	HWND NativeWindowProxy::getNativeHWND(std::shared_ptr<AnyArgsList> args);

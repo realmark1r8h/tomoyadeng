@@ -159,6 +159,7 @@ namespace amo {
     }
     
     
+    
     Any BrowserWindowTransfer::isMainWindow(IPCMessage::SmartType msg) {
         // 由BrowserWindow重载实现
         return Undefined();

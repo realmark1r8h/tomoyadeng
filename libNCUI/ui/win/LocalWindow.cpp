@@ -504,6 +504,26 @@ namespace amo {
     }
     
     
+    Any LocalWindow::disableIME(IPCMessage::SmartType msg) {
+        imm32_manager_->cleanupComposition();
+        imm32_manager_->disableIME();
+        return Undefined();
+    }
+    
+    Any LocalWindow::enableIME(IPCMessage::SmartType msg) {
+        imm32_manager_->enableIME();
+        return Undefined();
+    }
+    
+    Any LocalWindow::computeCursor(IPCMessage::SmartType msg) {
+        m_pNativeSettings->compute_cursor = msg->getArgumentList()->getBool(0);
+        return Undefined();
+    }
+    
+    Any LocalWindow::isComputeCursor(IPCMessage::SmartType msg) {
+        return m_pNativeSettings->compute_cursor;
+    }
+    
     bool LocalWindow::isFocusedWindow() {
         HWND hWnd = m_hWnd;
         HWND hFocusWnd = ::GetFocus();

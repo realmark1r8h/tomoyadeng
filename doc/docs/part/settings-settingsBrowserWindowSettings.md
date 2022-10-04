@@ -202,6 +202,16 @@
 </td>
 </tr><tr>
 	<td>Boolean</td>
+	<td>disable_ime</td>
+	<td>false </td>
+	<td>是否禁用输入法. </td>
+</tr><tr>
+	<td>Boolean</td>
+	<td>compute_cursor</td>
+	<td>false </td>
+	<td>计算光标位置，offscreen=true时有效. </td>
+</tr><tr>
+	<td>Boolean</td>
 	<td>main</td>
 	<td>false </td>
 	<td>当前窗口是否为主窗口.主窗口只能有一个，如果设置为主窗口将取消之前的主窗口设定，新的主窗口会替代原来的主窗口.你可以在程序运行过程中修改该值，但要保证任何时候都最多只能有一个浏览器窗口被标记为main </td>

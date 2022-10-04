@@ -12,7 +12,6 @@
 #include <atlbase.h>
 //#include "atlapp.h"
 #include <gdiplus.h>
-#include <mutex>
 
 
 
@@ -37,13 +36,10 @@ namespace amo {
         
         void RenderImpl();
         
+        void createMemDC(const amo::rect& rect);
         
         void releaseMemDC();
         
-        bool is_not_empty() {
-            amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
-            return m_memDC != NULL;
-        }
     public:
     
         ID2D1Factory	*gD2dFactory;
@@ -59,11 +55,9 @@ namespace amo {
         
         
         HDC m_memDC;
+        HBITMAP hCompatibleBitmap;
         
         std::atomic<bool> m_hasCache;
-        
-        std::recursive_mutex m_mutex;
-        std::condition_variable_any m_not_empty;
     };
     
 }

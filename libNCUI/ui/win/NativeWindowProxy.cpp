@@ -456,6 +456,26 @@ namespace amo {
         return 255;
     }
     
+    Any NativeWindowProxy::disableIME(IPCMessage::SmartType msg) {
+        // 由LocalWindow类重载
+        return Undefined();
+    }
+    
+    
+    Any NativeWindowProxy::enableIME(IPCMessage::SmartType msg) {
+        // 由LocalWindow类重载
+        return Undefined();
+    }
+    
+    Any NativeWindowProxy::computeCursor(IPCMessage::SmartType msg) {
+        // 由LocalWindow类重载
+        return Undefined();
+    }
+    Any NativeWindowProxy::isComputeCursor(IPCMessage::SmartType msg) {
+        // 由LocalWindow类重载
+        return Undefined();
+    }
+    
     HWND NativeWindowProxy::getNativeHWND(std::shared_ptr<AnyArgsList> args) {
         return getNativeHWND();
     }

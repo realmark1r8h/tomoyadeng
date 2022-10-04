@@ -56,6 +56,8 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(focusable, true);
         DEFAULT_ARGS_SETTINGS(esc, false);
         DEFAULT_ARGS_SETTINGS(back_forword, false);
+        DEFAULT_ARGS_SETTINGS(disable_ime, false);
+        DEFAULT_ARGS_SETTINGS(compute_cursor, false);
     }
     
     
@@ -104,7 +106,8 @@ namespace amo {
         
         BOOL_ARGS_SETTING(esc);
         BOOL_ARGS_SETTING(back_forword);
-        
+        BOOL_ARGS_SETTING(disable_ime);
+        BOOL_ARGS_SETTING(compute_cursor);
         
         // 如果不能改变窗口大小，那么maximizable=true;
         if (!resizable) {
@@ -160,7 +163,8 @@ namespace amo {
         
         UPDATE_ARGS_SETTINGS(esc);
         UPDATE_ARGS_SETTINGS(back_forword);
-        
+        UPDATE_ARGS_SETTINGS(disable_ime);
+        UPDATE_ARGS_SETTINGS(compute_cursor);
         return BasicSettings::toJson();
         
     }

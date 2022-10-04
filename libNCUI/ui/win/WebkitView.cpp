@@ -115,13 +115,13 @@ namespace amo {
 
     void WebkitView::DoEvent(TEventUI& event) {
         if (event.Type == UIEVENT_TIMER) {
-            /* if (event.wParam == REPAINT_TIMER_ID
-            		 && m_pBrowserSettings
-            		 &&  m_pBrowserSettings->offscreen) {
-            	 m_pBrowser->GetHost()->Invalidate(PET_VIEW);
-            	 return;
-             }
-             */
+            /*if (event.wParam == REPAINT_TIMER_ID
+                    && m_pBrowserSettings
+                    &&  m_pBrowserSettings->offscreen) {
+                m_pBrowser->GetHost()->Invalidate(PET_VIEW);
+                return;
+            }*/
+            
             
             if (m_pBrowserSettings->transparent) {
                 Invalidate();
@@ -515,14 +515,16 @@ namespace amo {
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, settings.toJson());
             
-            addOverlap(msg);
+            //addOverlap(msg);
         }
         
         {
+            browser->GetHost()->SetWindowlessFrameRate(50);
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, true);
             msg->getArgumentList()->setValue(1, 30);
-            repaint(msg);
+            //repaint(msg);
+            
         }
         
         
@@ -1413,21 +1415,17 @@ namespace amo {
             return;    //  只画透明窗口
         }
         
-        std::shared_ptr<Gdiplus::Bitmap> image;
-        image.reset(new Gdiplus::Bitmap(width,
-                                        height,
-                                        width * 4,
-                                        PixelFormat32bppARGB,
-                                        (BYTE*)buffer));
-                                        
-        std::shared_ptr<Gdiplus::Bitmap> bitmap;
-        bitmap.reset(new Gdiplus::Bitmap(width,
-                                         height,
-                                         width * 4,
-                                         PixelFormat32bppARGB, NULL));
-        bitmap = image;
-        std::vector<char> data(width * height * 4, 0);
-        memcpy(data.data(), buffer, data.size());
+        
+        if (m_pBrowserSettings->compute_cursor) {
+            std::shared_ptr<Gdiplus::Bitmap> image;
+            image.reset(new Gdiplus::Bitmap(width,
+                                            height,
+                                            width * 4,
+                                            PixelFormat32bppARGB,
+                                            (BYTE*)buffer));
+            m_pRenderWnd->updateCaretPos(image);
+        }
+        
         
         std::shared_ptr<PaintResource> resource(new PaintResource());
         
@@ -1447,130 +1445,10 @@ namespace amo {
         
         overlap->setOverlapData(overlapData);
         resource->addOverlap(overlap);
-        m_pRenderWnd->updateCaretPos(image);
         
         for (auto& item : m_paintingRes) {
             resource->addOverlap(item.second.first);
         }
-        
-        //Graphics * pGraphics = NULL;
-        //
-        //if (m_paintingRes.size() > 0) {
-        //    pGraphics = Graphics::FromImage(&*bitmap);
-        //}
-        //
-        //
-        //for (auto& item : m_paintingRes) {
-        //    auto p = item.second.second;
-        //    std::shared_ptr<Overlap> imageDataInfo = item.second.first;
-        //
-        //    if (!p) {
-        //        continue;
-        //    }
-        //
-        //    if (!p->is_opened() && !p->open(true)) {
-        //        continue;
-        //    }
-        //
-        //
-        //    std::vector<unsigned char> header2(4, 0);
-        //    p->read((char*)header2.data(), 0, 4);
-        //    int buffer_size = amo::bytes_to_int<int>(header2.data());
-        //
-        //
-        //    if (buffer_size > 16) {
-        //        std::vector<char> buffer(buffer_size, 0);
-        //        p->read(buffer.data(), header2.size(), buffer_size);
-        //
-        //        imageDataInfo->fill(buffer.data(), buffer.size());
-        //        m_LastBitmap = imageDataInfo->getOverlapData()->toBitmap();
-        //    }
-        //
-        //    if (imageDataInfo && pGraphics != NULL && m_LastBitmap) {
-        //
-        //        amo::rect dstRect = imageDataInfo->dstRect;
-        //
-        //        amo::rect rc(0, 0, width, height);
-        //
-        //
-        //
-        //        if (dstRect.empty()) {
-        //            dstRect.width(m_LastBitmap->GetWidth());
-        //            dstRect.height(m_LastBitmap->GetHeight());
-        //        }
-        //
-        //        Gdiplus::RectF dst(dstRect.left(),
-        //                           dstRect.top(),
-        //                           dstRect.width(),
-        //                           dstRect.height());
-        //
-        //        amo::rect srcRect = imageDataInfo->srcRect;
-        //
-        //        if (srcRect.empty()) {
-        //            srcRect.width(m_LastBitmap->GetWidth());
-        //            srcRect.height(m_LastBitmap->GetHeight());
-        //        }
-        //
-        //        Gdiplus::RectF src(srcRect.left(),
-        //                           srcRect.top(),
-        //                           srcRect.width(),
-        //                           srcRect.height());
-        //
-        //
-        //
-        //        pGraphics->DrawImage(&*m_LastBitmap,
-        //                             dst,
-        //                             src.GetLeft(),
-        //                             src.GetTop(),
-        //                             src.GetRight() - src.GetLeft(),
-        //                             src.GetBottom() - src.GetTop(),
-        //                             UnitPixel);
-        //
-        //        std::vector<amo::rect> fvec = rc.complement(dstRect);
-        //
-        //
-        //        for (size_t i = 0; i < fvec.size(); ++i) {
-        //            amo::rect r = fvec[i];
-        //
-        //            if (r.empty()) {
-        //                continue;
-        //            }
-        //
-        //            Gdiplus::RectF dst(r.left(),
-        //                               r.top(),
-        //                               r.width(),
-        //                               r.height());
-        //
-        //            Gdiplus::RectF src(r.left(),
-        //                               r.top(),
-        //                               r.width(),
-        //                               r.height());
-        //            /*  Gdiplus::Pen pen(Gdiplus::Color(255, 0, 0), (Gdiplus::REAL)1.0);
-        //              pen.SetAlignment(Gdiplus::PenAlignmentInset);
-        //
-        //              pGraphics->DrawRectangle(&pen, dst);*/
-        //            pGraphics->DrawImage(&*image,
-        //                                 dst,
-        //                                 src.GetLeft(),
-        //                                 src.GetTop(),
-        //                                 src.GetRight() - src.GetLeft(),
-        //                                 src.GetBottom() - src.GetTop(),
-        //                                 UnitPixel);
-        //
-        //            //pGraphics->DrawImage(&*image, 0, 0, image->GetWidth(), image->GetHeight());
-        //
-        //        }
-        //    }
-        //
-        //}
-        //
-        //if (pGraphics != NULL) {
-        //    delete pGraphics;
-        //    pGraphics = NULL;
-        //}
-        //
-        
-        
         
         if (m_pBrowserSettings->transparent) {
             insertBitmap(resource);
