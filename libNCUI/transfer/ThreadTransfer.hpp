@@ -65,7 +65,8 @@ namespace amo {
             m_pLooperExecutor->set_exception_callback(
                 std::bind(&ThreadTransfer::onExecption,
                           this,
-                          std::placeholders::_1));
+                          std::placeholders::_1,
+                          std::placeholders::_2));
             m_weakupData = Undefined();
             
         }
@@ -78,7 +79,8 @@ namespace amo {
             m_pLooperExecutor->set_exception_callback(
                 std::bind(&ThreadTransfer::onExecption,
                           this,
-                          std::placeholders::_1));
+                          std::placeholders::_1,
+                          std::placeholders::_2));
             m_weakupData = Undefined();
         }
         
@@ -370,15 +372,23 @@ namespace amo {
         
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(ThreadTransfer, ClassTransfer)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup, TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup,
+                                      TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(suspend, TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(exec, TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(sync, TransferMultiDisabled | TransferFuncNormal | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(start, TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(stop, TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(kill, TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(Exec, TransferMultiDisabled | TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(Sync, TransferMultiDisabled | TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(exec,
+                                      TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(sync,
+                                      TransferMultiDisabled | TransferFuncNormal | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(start,
+                                      TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(stop,
+                                      TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(kill,
+                                      TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(Exec,
+                                      TransferMultiDisabled | TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(Sync,
+                                      TransferMultiDisabled | TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         
@@ -410,7 +420,7 @@ namespace amo {
         }
         
     protected:
-        bool onExecption(const std::string& ansiStr) {
+        bool onExecption(int64_t thread_id, const std::string& ansiStr) {
             TransferEventInfo info;
             info.name = "execption";
             info.data = amo::string(ansiStr, false).to_utf8();

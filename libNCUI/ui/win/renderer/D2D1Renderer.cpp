@@ -16,18 +16,38 @@ namespace amo {
         gD2dFactory = NULL;
         dcRenderTarget = NULL;
         m_bitmap = NULL;
+        m_brush = NULL;
         
         m_memDC = NULL;
         m_hasCache = false;
+        m_backgrounColor = 0xffffff;
+        m_alpha = 1.0;
+        m_bDrawBackground = false;
         
     }
     
     D2D1Renderer::~D2D1Renderer() {
-        gD2dFactory->Release();
-        gD2dFactory = NULL;
+    
+        if (gD2dFactory != NULL) {
+            gD2dFactory->Release();
+            gD2dFactory = NULL;
+        }
         
-        dcRenderTarget->Release();
-        dcRenderTarget = NULL;
+        if (m_bitmap != NULL) {
+            m_bitmap->Release();
+            m_bitmap = NULL;
+        }
+        
+        if (m_brush != NULL) {
+            m_brush->Release();
+            dcRenderTarget = NULL;
+        }
+        
+        if (dcRenderTarget != NULL) {
+            dcRenderTarget->Release();
+            dcRenderTarget = NULL;
+        }
+        
         return;
         
         
@@ -62,6 +82,15 @@ namespace amo {
             return false;
         }
         
+        hr = dcRenderTarget->CreateSolidColorBrush(
+                 D2D1::ColorF(D2D1::ColorF(m_backgrounColor, m_alpha)),
+                 &m_brush
+             );
+             
+        if (FAILED(hr)) {
+            return false;
+        }
+        
         m_executor.reset(new amo::looper_executor());
         
         return true;
@@ -69,6 +98,16 @@ namespace amo {
     
     
     
+    
+    
+    void D2D1Renderer::setBackgrounColor(int32_t color, float alpha /*= 1.0*/) {
+        m_backgrounColor = color;
+        m_alpha = alpha;
+    }
+    
+    void D2D1Renderer::drawBackground(bool bDraw /*= true*/) {
+        m_bDrawBackground = bDraw;
+    }
     
     void releaseBitmap(ID2D1Bitmap * bitmap) {
     
@@ -173,20 +212,23 @@ namespace amo {
         
     }
     
-    void D2D1Renderer::Render(HDC hDC, std::shared_ptr<PaintResource> resource, std::shared_ptr<Overlap> overlap) {
+    void D2D1Renderer::Render(HDC hDC, std::shared_ptr<PaintResource> resource,
+                              std::shared_ptr<Overlap> overlap) {
         CreateBitmpFromMemory(dcRenderTarget, overlap);
         
         RECT rcClient = resource->getPos();
         
         dcRenderTarget->BindDC(hDC, &rcClient);
         dcRenderTarget->BeginDraw();
-        dcRenderTarget->DrawBitmap(m_bitmap, D2D1::RectF(0, 0, overlap->m_settings->width, overlap->m_settings->height), 1.0f);
+        dcRenderTarget->DrawBitmap(m_bitmap, D2D1::RectF(0, 0,
+                                   overlap->m_settings->width, overlap->m_settings->height), 1.0f);
         dcRenderTarget->EndDraw();
     }
     
     
     
-    BOOL D2D1Renderer::CreateBitmpFromMemory(ID2D1RenderTarget* renderTarget, std::shared_ptr<Overlap> resource) {
+    BOOL D2D1Renderer::CreateBitmpFromMemory(ID2D1RenderTarget* renderTarget,
+            std::shared_ptr<Overlap> resource) {
         releaseBitmap(m_bitmap);
         m_bitmap = NULL;
         
@@ -261,10 +303,18 @@ namespace amo {
         dcRenderTarget->BeginDraw();
         static std::vector<int> vec;
         
+        
         for (auto& p : m_resource->overlaps) {
             CreateBitmpFromMemory(dcRenderTarget, p);
-            dcRenderTarget->DrawBitmap(m_bitmap, D2D1::RectF(0, 0, p->m_settings->width, p->m_settings->height), 1.0f);
             
+            if (m_bDrawBackground) {
+                dcRenderTarget->FillRectangle(D2D1::RectF(0, 0, rect.width(), rect.height()),
+                                              m_brush);
+            }
+            
+            dcRenderTarget->DrawBitmap(m_bitmap, D2D1::RectF(0, 0, p->m_settings->width,
+                                       p->m_settings->height), 1.0f);
+                                       
         }
         
         vec.push_back(t.elapsed());

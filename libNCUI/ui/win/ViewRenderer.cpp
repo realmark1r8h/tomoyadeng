@@ -28,6 +28,7 @@ namespace amo {
     void ViewRenderer::DoInit() {
         if (isAccelerator()) {
             renderer.reset(new D2D1Renderer());
+            renderer->drawBackground(m_bDrawBackground);
             renderer->initialize();
         }
         
@@ -36,8 +37,13 @@ namespace amo {
         return CControlUI::DoInit();
     }
     
+    void ViewRenderer::drawBackground(bool bDraw /*= true*/) {
+        m_bDrawBackground = bDraw;
+    }
+    
     ViewRenderer::ViewRenderer() {
         setAccelerator(false);
+        m_bDrawBackground = true;
         m_nLastFPS = m_nCount = 0;
         m_nLastTimestamp = amo::timer::now<amo::chrono::seconds>();
     }

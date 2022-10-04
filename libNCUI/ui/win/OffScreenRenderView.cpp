@@ -307,8 +307,19 @@ namespace amo {
         m_pViewRender = new ViewRenderer();
         
         
+        
+        
         if (m_oBrowserSettings->offscreen && m_oBrowserSettings->accelerator) {
+        
+            if (!m_oBrowserSettings->transparent) {
+                m_pViewRender->drawBackground(true);
+            }
+            
             m_pViewRender->setAccelerator(true);
+        }
+        
+        if (m_oBrowserSettings->offscreen) {
+            m_oBrowserSettings->background_color = CefColorSetARGB(0, 0, 0, 0);
         }
         
         pRenderLayout->Add(m_pViewRender);
@@ -653,7 +664,8 @@ namespace amo {
         SetCursor(cursor);
     }
 #else
-    void OffScreenRenderView::OnCursorChange(CefRefPtr<CefBrowser> browser, CefCursorHandle cursor) {
+    void OffScreenRenderView::OnCursorChange(CefRefPtr<CefBrowser> browser,
+            CefCursorHandle cursor) {
         if (!::IsWindow(m_hWnd)) {
             return;
         }

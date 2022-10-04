@@ -115,19 +115,19 @@ namespace amo {
 
     void WebkitView::DoEvent(TEventUI& event) {
         if (event.Type == UIEVENT_TIMER) {
-            /*if (event.wParam == REPAINT_TIMER_ID
+            if (event.wParam == REPAINT_TIMER_ID
                     && m_pBrowserSettings
                     &&  m_pBrowserSettings->offscreen) {
                 m_pBrowser->GetHost()->Invalidate(PET_VIEW);
                 return;
-            }*/
-            
-            
-            if (m_pBrowserSettings->transparent) {
-                Invalidate();
-            } else {
-                m_pRenderWnd->needUpdate();
             }
+            
+            
+            /* if (m_pBrowserSettings->transparent) {
+                 Invalidate();
+             } else {
+                 m_pRenderWnd->needUpdate();
+             }*/
             
         }
         
@@ -146,6 +146,7 @@ namespace amo {
         
         if (m_pBrowserSettings->offscreen && m_pBrowserSettings->transparent &&
                 m_pBrowserSettings->accelerator) {
+            this->drawBackground(false);
             this->setAccelerator(true);
         }
         
@@ -522,7 +523,7 @@ namespace amo {
             browser->GetHost()->SetWindowlessFrameRate(50);
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, true);
-            msg->getArgumentList()->setValue(1, 30);
+            msg->getArgumentList()->setValue(1, 20);
             //repaint(msg);
             
         }

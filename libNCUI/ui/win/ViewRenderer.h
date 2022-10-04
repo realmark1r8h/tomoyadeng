@@ -38,6 +38,8 @@ namespace amo {
         void setAccelerator(bool val) {
             m_accelerator = val;
         }
+        
+        void drawBackground(bool bDraw = true);
     protected:
         void updateFPS() {
             int64_t timestamp = amo::timer::now<amo::chrono::seconds>();
@@ -68,7 +70,7 @@ namespace amo {
         
         int64_t m_nLastTimestamp;  // 最近一次渲染时间 秒
         
-        
+        bool m_bDrawBackground;
     };
     
     class LayerViewRender : public ViewRenderer {

@@ -25,16 +25,20 @@ namespace amo {
         ~D2D1Renderer();
         bool initialize();
         
+        void setBackgrounColor(int32_t color, float alpha = 1.0);
         
+        void drawBackground(bool bDraw = true);
         
         void Render(HDC hDC, std::shared_ptr<PaintResource> resource);
         
-        void Render(HDC hDC, std::shared_ptr<PaintResource> resource, std::shared_ptr<Overlap> overlap);
-        
+        void Render(HDC hDC, std::shared_ptr<PaintResource> resource,
+                    std::shared_ptr<Overlap> overlap);
+                    
         //BOOL CreateBitmpFromMemory(ID2D1RenderTarget*  renderTarget, std::shared_ptr<PaintResource> resource);
         
-        BOOL CreateBitmpFromMemory(ID2D1RenderTarget*  renderTarget, std::shared_ptr<Overlap> resource);
-        
+        BOOL CreateBitmpFromMemory(ID2D1RenderTarget*  renderTarget,
+                                   std::shared_ptr<Overlap> resource);
+                                   
         void RenderImpl();
         
         
@@ -51,7 +55,10 @@ namespace amo {
         BLENDFUNCTION FBlend;
         
         ID2D1DCRenderTarget *dcRenderTarget;
+        
         ID2D1Bitmap *m_bitmap;
+        
+        ID2D1SolidColorBrush* m_brush;
         
         std::shared_ptr<PaintResource> m_resource;
         
@@ -64,6 +71,11 @@ namespace amo {
         
         std::recursive_mutex m_mutex;
         std::condition_variable_any m_not_empty;
+        
+        uint32_t m_backgrounColor;
+        float m_alpha;
+        
+        bool m_bDrawBackground;
     };
     
 }
