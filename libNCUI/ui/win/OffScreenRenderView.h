@@ -154,10 +154,16 @@ namespace amo {
         virtual void InitWindow() override;
         virtual void OnFinalMessage(HWND hWnd) override;
         virtual LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) override;
-        virtual LRESULT OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        
+        virtual LRESULT OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                               BOOL& bHandled) override;
+        virtual LRESULT OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                    BOOL& bHandled) override;
+        virtual LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                  BOOL& bHandled) override;
+        virtual LRESULT OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                BOOL& bHandled)  ;
+        virtual LRESULT OnUserPaint(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                    BOOL& bHandled);
         /*   void EnableGL();
            void DisableGL();
            void Render();*/
@@ -173,22 +179,28 @@ namespace amo {
         
         virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
         
-        virtual bool GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
+        virtual bool GetRootScreenRect(CefRefPtr<CefBrowser> browser,
+                                       CefRect& rect) override;
         virtual bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
         virtual bool GetScreenPoint(CefRefPtr<CefBrowser> browser,
                                     int viewX, int viewY, int& screenX, int& screenY) override;
                                     
-        virtual void OnPaint(CefRefPtr<CefBrowser> browser, CefRenderHandler::PaintElementType type,
-                             const CefRenderHandler::RectList& dirtyRects, const void* buffer, int width, int height) override;
+        virtual void OnPaint(CefRefPtr<CefBrowser> browser,
+                             CefRenderHandler::PaintElementType type,
+                             const CefRenderHandler::RectList& dirtyRects, const void* buffer, int width,
+                             int height) override;
 #if CHROME_VERSION_BUILD >= 2357
-        virtual void OnCursorChange(CefRefPtr<CefBrowser> browser, CefCursorHandle cursor,
-                                    CefRenderHandler::CursorType type, const CefCursorInfo& custom_cursor_info) override;
+        virtual void OnCursorChange(CefRefPtr<CefBrowser> browser,
+                                    CefCursorHandle cursor,
+                                    CefRenderHandler::CursorType type,
+                                    const CefCursorInfo& custom_cursor_info) override;
 #else
         virtual void OnCursorChange(CefRefPtr<CefBrowser> browser,
                                     CefCursorHandle cursor);
 #endif
                                     
-        virtual bool StartDragging(CefRefPtr<CefBrowser> browser, CefRefPtr<CefDragData> drag_data,
+        virtual bool StartDragging(CefRefPtr<CefBrowser> browser,
+                                   CefRefPtr<CefDragData> drag_data,
                                    CefRenderHandler::DragOperationsMask allowed_ops, int x, int y) override;
         virtual void UpdateDragCursor(CefRefPtr<CefBrowser> browser,
                                       CefRenderHandler::DragOperation operation) override;

@@ -115,12 +115,12 @@ namespace amo {
 
     void WebkitView::DoEvent(TEventUI& event) {
         if (event.Type == UIEVENT_TIMER) {
-            if (event.wParam == REPAINT_TIMER_ID
-                    && m_pBrowserSettings
-                    &&  m_pBrowserSettings->offscreen) {
-                m_pBrowser->GetHost()->Invalidate(PET_VIEW);
-                return;
-            }
+            /*if (event.wParam == REPAINT_TIMER_ID
+            		&& m_pBrowserSettings
+            		&&  m_pBrowserSettings->offscreen) {
+            	m_pBrowser->GetHost()->Invalidate(PET_VIEW);
+            	return;
+            }*/
             
             
             /* if (m_pBrowserSettings->transparent) {
@@ -128,6 +128,14 @@ namespace amo {
              } else {
                  m_pRenderWnd->needUpdate();
              }*/
+            
+            if (m_pBrowserSettings->transparent) {
+                ::PostMessage(::GetParent(m_hBrowserWnd), WM_PAINT, NULL, NULL);
+                
+            } else {
+                ::PostMessage(m_pRenderWnd->GetHWND(), WM_USER_PAINT, NULL, NULL);
+            }
+            
             
         }
         
@@ -143,6 +151,7 @@ namespace amo {
         m_pClientHandler = new amo::ClientHandler();
         m_hParentWnd = NULL;
         m_pBrowser = NULL;
+        this->setPaintSettings(m_pBrowserSettings);
         
         if (m_pBrowserSettings->offscreen && m_pBrowserSettings->transparent &&
                 m_pBrowserSettings->accelerator) {
@@ -512,18 +521,18 @@ namespace amo {
             OverlapSettings settings;
             settings.width = 1920;
             settings.height = 1080;
-            settings.name = "ffmpeg888";
+            settings.name = "face-overlap";
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, settings.toJson());
             
-            //addOverlap(msg);
+            addOverlap(msg);
         }
         
         {
-            browser->GetHost()->SetWindowlessFrameRate(50);
+            //browser->GetHost()->SetWindowlessFrameRate(50);
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, true);
-            msg->getArgumentList()->setValue(1, 20);
+            msg->getArgumentList()->setValue(1, 30);
             //repaint(msg);
             
         }
@@ -1450,6 +1459,8 @@ namespace amo {
         for (auto& item : m_paintingRes) {
             resource->addOverlap(item.second.first);
         }
+        
+        //insertBitmap(resource);
         
         if (m_pBrowserSettings->transparent) {
             insertBitmap(resource);

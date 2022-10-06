@@ -498,7 +498,7 @@
     <ClCompile Include="ui\win\renderer\GdiRenderer.cpp">
       <Filter>ui\win\renderer</Filter>
     </ClCompile>
-    <ClCompile Include="ui\win\renderer\D2D1Renderer.cpp">
+    <ClCompile Include="ui\win\renderer\D2D1RendererOld.cpp">
       <Filter>ui\win\renderer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1046,11 +1046,20 @@
     <ClInclude Include="ui\win\renderer\GdiRenderer.h">
       <Filter>ui\win\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="ui\win\renderer\D2D1Renderer.h">
-      <Filter>ui\win\renderer</Filter>
-    </ClInclude>
     <ClInclude Include="ui\win\overlap\FilemappingOverlapData.hpp">
       <Filter>ui\win\overlap</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\renderer\D2D1Bitmap.hpp">
+      <Filter>ui\win\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\renderer\D2D1Utility.hpp">
+      <Filter>ui\win\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\renderer\D2D1RendererOld.h">
+      <Filter>ui\win\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\renderer\D2D1Render.hpp">
+      <Filter>ui\win\renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -312,7 +312,7 @@
     <ClCompile Include="ui\win\OffscreenDragdrop.cpp" />
     <ClCompile Include="ui\win\OffScreenRenderView.cpp" />
     <ClCompile Include="ui\win\PictureView.cpp" />
-    <ClCompile Include="ui\win\renderer\D2D1Renderer.cpp" />
+    <ClCompile Include="ui\win\renderer\D2D1RendererOld.cpp" />
     <ClCompile Include="ui\win\renderer\GdiRenderer.cpp" />
     <ClCompile Include="ui\win\RenderView.cpp" />
     <ClCompile Include="ui\win\SharedMemory.cpp" />
@@ -496,7 +496,10 @@
     <ClInclude Include="ui\win\overlap\OverlapData.hpp" />
     <ClInclude Include="ui\win\overlap\PaintResource.hpp" />
     <ClInclude Include="ui\win\PictureView.h" />
-    <ClInclude Include="ui\win\renderer\D2D1Renderer.h" />
+    <ClInclude Include="ui\win\renderer\D2D1Bitmap.hpp" />
+    <ClInclude Include="ui\win\renderer\D2D1Render.hpp" />
+    <ClInclude Include="ui\win\renderer\D2D1RendererOld.h" />
+    <ClInclude Include="ui\win\renderer\D2D1Utility.hpp" />
     <ClInclude Include="ui\win\renderer\GdiRenderer.h" />
     <ClInclude Include="ui\win\RenderView.h" />
     <ClInclude Include="ui\win\SharedMemory.h" />

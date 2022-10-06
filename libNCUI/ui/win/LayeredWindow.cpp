@@ -72,8 +72,12 @@ namespace amo {
         int nHeight = rcClient.bottom - rcClient.top;
         SIZE wndSize = { rcClient.right - rcClient.left, rcClient.bottom - rcClient.top };
         HDC hDC = ::GetDC(m_hWnd);
-        HDC memDC;
-        memDC = ::CreateCompatibleDC(hDC);
+        
+        HDC memDC = NULL;
+        
+        if (memDC == NULL) {
+            memDC = ::CreateCompatibleDC(hDC);
+        }
         
         BITMAPINFO bitmapinfo;
         bitmapinfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
@@ -123,7 +127,9 @@ namespace amo {
         ::SelectObject(memDC, hOldBitmap);
         DeleteObject(hBitmap);
         
+        
         ::ReleaseDC(m_hWnd, memDC);
+        
         ::ReleaseDC(m_hWnd, hDC);
         //$cdevel("渲染用时：{}", t.elapsed());
         
@@ -278,6 +284,8 @@ namespace amo {
     
     LRESULT LayeredWindow::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                      BOOL& bHandled) {
+                                     
+                                     
         unregisterAllHotKey();
         return WindowImplBase::OnDestroy(uMsg, wParam, lParam, bHandled);
     }

@@ -20,6 +20,8 @@
 #include "ui/win/OffscreenDragdropEvents.h"
 #include "ui/win/Imm32Manager.h"
 
+#include "ui/win/renderer/D2D1Render.hpp"
+
 namespace {
     static CLIPFORMAT cf[3] = { CF_TEXT, CF_TEXT, CF_HDROP };
     
@@ -94,7 +96,8 @@ namespace amo {
         static double gLastClickTime = 0;
         
         static bool gLastMouseDownOnView = false;
-        
+        BOOL bHandled = false;
+        LRESULT lRes = false;
         CefKeyEvent event;
         CefRefPtr<CefBrowserHost> pBrowserHost;
         
@@ -129,16 +132,11 @@ namespace amo {
         
         switch (message) {
         case WM_PAINT:
-            if (pBrowserHost.get()) {
-                RECT rect;
-                ::GetClientRect(m_hWnd, &rect);
-                CefRect rt(rect.left,
-                           rect.top,
-                           rect.right - rect.left,
-                           rect.bottom - rect.top);
-                pBrowserHost->Invalidate(PET_VIEW);
-            }
+            lRes = 	OnPaint(uMsg, wParam, lParam, bHandled);
+            break;
             
+        case WM_USER_PAINT:
+            lRes = OnUserPaint(uMsg, wParam, lParam, bHandled);
             break;
             
         case WM_LBUTTONDOWN:
@@ -289,6 +287,10 @@ namespace amo {
             break;
         }
         
+        if (lRes == TRUE && bHandled == TRUE) {
+            return TRUE;
+        }
+        
         return RenderView::HandleMessage(uMsg, wParam, lParam);
     }
     
@@ -306,7 +308,7 @@ namespace amo {
         ASSERT(pRenderLayout != NULL);
         m_pViewRender = new ViewRenderer();
         
-        
+        m_pViewRender->setPaintSettings(m_oBrowserSettings);
         
         
         if (m_oBrowserSettings->offscreen && m_oBrowserSettings->accelerator) {
@@ -360,6 +362,10 @@ namespace amo {
                                         BOOL& bHandled) {
         if (m_pBrowser) {
             m_pBrowser->GetHost()->WasResized();
+        }
+        
+        if (m_pViewRender) {
+            m_pViewRender->SetPos({ 0, 0, LOWORD(lParam), HIWORD(lParam) });
         }
         
         SIZE szRoundCorner = m_PaintManager.GetRoundCorner();
@@ -569,6 +575,90 @@ namespace amo {
         
     }
     
+    
+    LRESULT OffScreenRenderView::OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                         BOOL& bHandled) {
+        CefRefPtr<CefBrowserHost> pBrowserHost;
+        
+        if (m_pBrowser) {
+            pBrowserHost = m_pBrowser->GetHost();
+        }
+        
+        //if (pBrowserHost.get()) {
+        //    RECT rect;
+        //    ::GetClientRect(m_hWnd, &rect);
+        //    CefRect rt(rect.left,
+        //               rect.top,
+        //               rect.right - rect.left,
+        //               rect.bottom - rect.top);
+        //    //pBrowserHost->Invalidate(PET_VIEW);
+        //}
+        
+        static std::shared_ptr<amo::d2d1::D2D1HWNDRenderer> renderer;
+        
+        /*   if (!renderer) {
+               renderer.reset(new amo::d2d1::D2D1HWNDRenderer());
+               renderer->SetHWND(m_hWnd);
+               renderer->Init();
+           }
+        
+           PAINTSTRUCT ps = { 0 };
+           ::BeginPaint(m_hWnd, &ps);
+           renderer->BeginDraw();
+           renderer->DrawImage("splash.jpg", 0, 0, 0, 0);
+           renderer->EndDraw();
+        
+           m_pViewRender->PaintBitmap(m_hWnd);
+           ::EndPaint(m_hWnd, &ps);*/
+        //m_pViewRender->PaintStatusImage(GetDC(m_hWnd));
+        
+        bHandled = TRUE;
+        return FALSE;
+    }
+    
+    LRESULT OffScreenRenderView::OnUserPaint(UINT uMsg, WPARAM wParam,
+            LPARAM lParam, BOOL& bHandled) {
+        CefRefPtr<CefBrowserHost> pBrowserHost;
+        
+        if (m_pBrowser) {
+            pBrowserHost = m_pBrowser->GetHost();
+        }
+        
+        //if (pBrowserHost.get()) {
+        //    RECT rect;
+        //    ::GetClientRect(m_hWnd, &rect);
+        //    CefRect rt(rect.left,
+        //               rect.top,
+        //               rect.right - rect.left,
+        //               rect.bottom - rect.top);
+        //    //pBrowserHost->Invalidate(PET_VIEW);
+        //}
+        
+        /*   static std::shared_ptr<amo::d2d1::D2D1HWNDRenderer> renderer;
+        
+           if (!renderer) {
+               renderer.reset(new amo::d2d1::D2D1HWNDRenderer());
+               renderer->SetHWND(m_hWnd);
+               renderer->Init();
+           }*/
+        
+        PAINTSTRUCT ps = { 0 };
+        ::BeginPaint(m_hWnd, &ps);
+        
+        /*      renderer->BeginDraw();
+              renderer->DrawImage("splash.jpg", 0, 0, 0, 0);
+              renderer->EndDraw();*/
+        if (m_oBrowserSettings->offscreen && !m_oBrowserSettings->transparent) {
+            m_pViewRender->PaintBitmap(m_hWnd);
+        }
+        
+        //m_pViewRender->PaintBitmap(GetDC(m_hWnd));
+        ::EndPaint(m_hWnd, &ps);
+        //m_pViewRender->PaintStatusImage(GetDC(m_hWnd));
+        
+        bHandled = TRUE;
+        return FALSE;
+    }
     
     LRESULT OffScreenRenderView::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                            BOOL& bHandled) {

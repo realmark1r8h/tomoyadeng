@@ -165,6 +165,8 @@ namespace amo {
         ClosedCbType m_fnClosedCallback;
         
         std::shared_ptr<IMM32Manager> imm32_manager_;
+        
+        
     };
 }
 #endif // AMO_LAYEREDWINDOW_H__

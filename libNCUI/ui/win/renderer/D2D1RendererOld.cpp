@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "ui/win/renderer/D2D1Renderer.h"
+#include "ui/win/renderer/D2D1RendererOld.h"
 
 
 #pragma comment(lib,"gdiplus.lib")
@@ -12,7 +12,7 @@
 
 namespace amo {
 
-    D2D1Renderer::D2D1Renderer() {
+    D2D1RendererOld::D2D1RendererOld() {
         gD2dFactory = NULL;
         dcRenderTarget = NULL;
         m_bitmap = NULL;
@@ -26,7 +26,7 @@ namespace amo {
         
     }
     
-    D2D1Renderer::~D2D1Renderer() {
+    D2D1RendererOld::~D2D1RendererOld() {
     
         if (gD2dFactory != NULL) {
             gD2dFactory->Release();
@@ -53,7 +53,7 @@ namespace amo {
         
     }
     
-    bool D2D1Renderer::initialize() {
+    bool D2D1RendererOld::initialize() {
         HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &gD2dFactory);
         
         if (FAILED(hr)) {
@@ -100,12 +100,12 @@ namespace amo {
     
     
     
-    void D2D1Renderer::setBackgrounColor(int32_t color, float alpha /*= 1.0*/) {
+    void D2D1RendererOld::setBackgrounColor(int32_t color, float alpha /*= 1.0*/) {
         m_backgrounColor = color;
         m_alpha = alpha;
     }
     
-    void D2D1Renderer::drawBackground(bool bDraw /*= true*/) {
+    void D2D1RendererOld::drawBackground(bool bDraw /*= true*/) {
         m_bDrawBackground = bDraw;
     }
     
@@ -118,7 +118,7 @@ namespace amo {
         }
     }
     
-    void D2D1Renderer::Render(HDC hDC, std::shared_ptr<PaintResource> resource) {
+    void D2D1RendererOld::Render(HDC hDC, std::shared_ptr<PaintResource> resource) {
     
         amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
         static std::vector<int> vec;
@@ -135,12 +135,12 @@ namespace amo {
             BitBlt(hDC, 0, 0, rect.width(), rect.height(), m_memDC, 0, 0, SRCCOPY);
             
             m_resource = resource;
-            m_executor->execute(std::bind(&D2D1Renderer::RenderImpl, this));
+            m_executor->execute(std::bind(&D2D1RendererOld::RenderImpl, this));
         } else {
             m_resource = resource;
             RenderImpl();
             BitBlt(hDC, 0, 0, rect.width(), rect.height(), m_memDC, 0, 0, SRCCOPY);
-            m_executor->execute(std::bind(&D2D1Renderer::RenderImpl, this));
+            m_executor->execute(std::bind(&D2D1RendererOld::RenderImpl, this));
         }
         
         vec.push_back(t.elapsed());
@@ -212,8 +212,8 @@ namespace amo {
         
     }
     
-    void D2D1Renderer::Render(HDC hDC, std::shared_ptr<PaintResource> resource,
-                              std::shared_ptr<Overlap> overlap) {
+    void D2D1RendererOld::Render(HDC hDC, std::shared_ptr<PaintResource> resource,
+                                 std::shared_ptr<Overlap> overlap) {
         CreateBitmpFromMemory(dcRenderTarget, overlap);
         
         RECT rcClient = resource->getPos();
@@ -227,7 +227,7 @@ namespace amo {
     
     
     
-    BOOL D2D1Renderer::CreateBitmpFromMemory(ID2D1RenderTarget* renderTarget,
+    BOOL D2D1RendererOld::CreateBitmpFromMemory(ID2D1RenderTarget* renderTarget,
             std::shared_ptr<Overlap> resource) {
         releaseBitmap(m_bitmap);
         m_bitmap = NULL;
@@ -279,7 +279,7 @@ namespace amo {
     }
     
     
-    void D2D1Renderer::RenderImpl() {
+    void D2D1RendererOld::RenderImpl() {
         amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
         amo::timer t;
         
@@ -338,7 +338,7 @@ namespace amo {
     }
     
     
-    void D2D1Renderer::releaseMemDC() {
+    void D2D1RendererOld::releaseMemDC() {
         amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
         
         if (m_memDC == NULL) {

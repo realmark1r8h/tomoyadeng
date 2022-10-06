@@ -18,11 +18,11 @@
 
 namespace amo {
     class PaintResource;
-    class D2D1Renderer {
+    class D2D1RendererOld {
     public:
-        D2D1Renderer();
+        D2D1RendererOld();
         
-        ~D2D1Renderer();
+        ~D2D1RendererOld();
         bool initialize();
         
         void setBackgrounColor(int32_t color, float alpha = 1.0);

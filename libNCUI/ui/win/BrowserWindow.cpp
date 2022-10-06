@@ -188,6 +188,11 @@ namespace amo {
     
     
     
+    LRESULT BrowserWindow::OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                   BOOL& bHandled) {
+        return LocalWindow::OnPaint(uMsg, wParam, lParam, bHandled);
+    }
+    
     void BrowserWindow::InitWindow() {
     
     
