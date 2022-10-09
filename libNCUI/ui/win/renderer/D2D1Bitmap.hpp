@@ -34,7 +34,7 @@ namespace amo {
                 // and alphaMode fields.
                 //指定RGB格式
                 D2D1_PIXEL_FORMAT pixelFormat = D2D1::PixelFormat(
-                                                    DXGI_FORMAT_B8G8R8A8_UNORM,
+                                                    DXGI_FORMAT_R8G8B8A8_UNORM,
                                                     D2D1_ALPHA_MODE_PREMULTIPLIED
                                                 );
                 //设置属性

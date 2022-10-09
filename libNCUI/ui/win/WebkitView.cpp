@@ -521,7 +521,7 @@ namespace amo {
             OverlapSettings settings;
             settings.width = 1920;
             settings.height = 1080;
-            settings.name = "face-overlap";
+            settings.name = "ffmpeg888";
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, settings.toJson());
             
@@ -533,7 +533,7 @@ namespace amo {
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, true);
             msg->getArgumentList()->setValue(1, 30);
-            //repaint(msg);
+            repaint(msg);
             
         }
         
