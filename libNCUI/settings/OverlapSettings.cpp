@@ -19,6 +19,7 @@ namespace amo {
         
         DEFAULT_ARGS_SETTINGS(type, 0);
         DEFAULT_ARGS_SETTINGS(length, 0);
+        DEFAULT_ARGS_SETTINGS(index, 6);
         amo::json regions;
         regions.set_array();
         
@@ -35,6 +36,7 @@ namespace amo {
         INT_ARGS_SETTING(step);
         INT_ARGS_SETTING(type);
         INT_ARGS_SETTING(length);
+        INT_ARGS_SETTING(index);
         
         updateRectSettings("regions", regions);
         
@@ -50,6 +52,7 @@ namespace amo {
         UPDATE_ARGS_SETTINGS(step);
         UPDATE_ARGS_SETTINGS(type);
         UPDATE_ARGS_SETTINGS(length);
+        UPDATE_ARGS_SETTINGS(index);
         
         if (regions) {
             amo::json arr;
@@ -73,6 +76,7 @@ namespace amo {
                 amo::json item;
                 item.put("src", src);
                 item.put("dst", dst);
+                item.put("index", p.index);
                 arr.push_back(item);
                 
             }
@@ -125,8 +129,9 @@ namespace amo {
         return amo::rect();
     }
     
-    void OverlapSettings::updateRectSettings(const std::string& name, std::shared_ptr<OverlapRegions>& ptr) {
-    
+    void OverlapSettings::updateRectSettings(const std::string& name,
+            std::shared_ptr<OverlapRegions>& ptr) {
+            
         do {
             if (!settings.contains_key(name)) {
                 break;
@@ -153,7 +158,8 @@ namespace amo {
                     
                 }
                 
-                ptr->m_regions.push_back({ src, dst });
+                int index = p.getInt("index", 5);
+                ptr->m_regions.push_back({ index, src, dst });
             }
             
             

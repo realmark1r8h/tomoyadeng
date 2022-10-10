@@ -23,6 +23,13 @@ namespace amo {
         virtual void fill(const char* buffer, int size) override {
             m_buffer.resize(size);
             memcpy(m_buffer.data(), buffer, size);
+            /* char a = m_buffer[0];
+             memcpy(m_buffer.data(), m_buffer.data() + 1, size - 1);
+             m_buffer[size - 1] = a;*/
+            /*for (size_t i = 0; i < m_buffer.size(); ++i) {
+                std::swap(m_buffer[i], m_buffer[i + 3]);
+                i += 4;
+            }*/
             
         }
         virtual int size() override {
@@ -31,12 +38,12 @@ namespace amo {
         
         
         virtual const char* data() const override {
-            return m_buffer.data();
+            return (const char*)m_buffer.data();
         }
         
     public:
     
-        std::vector<char> m_buffer;
+        std::vector<uint8_t> m_buffer;
     };
     
 }

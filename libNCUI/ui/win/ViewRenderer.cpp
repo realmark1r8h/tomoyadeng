@@ -124,6 +124,7 @@ namespace amo {
                 continue;
             }
             
+            //p->m_settings->regions
             
             m_hwndRenderer->GetMainRT()->DrawBitmap(bitmap);
             amo::d2d1::SafeRelease(&bitmap);
@@ -146,6 +147,11 @@ namespace amo {
         }
         
         m_dcRenderer->BeginDraw();
+        std::sort(m_resource->overlaps.begin(),
+                  m_resource->overlaps.end(), [&](std::shared_ptr<Overlap>& a,
+        std::shared_ptr<Overlap>& b) {
+            return a->m_settings->index < b->m_settings->index;
+        });
         
         for (auto& p : m_resource->overlaps) {
             ID2D1Bitmap* bitmap = NULL;
@@ -216,104 +222,7 @@ namespace amo {
         }
         
         updateFPS();
-        return;
         
-        GdiRenderer gdiRenderer;
-        RECT srcRect = GetPos();
-        gdiRenderer.setRect(amo::rect(srcRect));
-        gdiRenderer.Render(hDC, m_resource);
-        
-        //std::shared_ptr<Gdiplus::Bitmap> m_pBitmap = m_resource->m_pBitmap;
-        //
-        //if (m_pBitmap) {
-        //
-        //    std::shared_ptr<Gdiplus::Bitmap> bitmap;
-        //    bitmap.reset(new Gdiplus::Bitmap(m_pBitmap->GetWidth(),
-        //                                     m_pBitmap->GetHeight(),
-        //                                     m_pBitmap->GetWidth() * 4,
-        //                                     PixelFormat32bppARGB, NULL));
-        //
-        //
-        //    Graphics * pGraphics = NULL;
-        //
-        //    pGraphics = Graphics::FromImage(&*bitmap);
-        //
-        //    pGraphics->DrawImage(m_pBitmap.get(), 0, 0);
-        //
-        //    /*  DrawImages3(hDC, m_pBitmap);
-        //      m_pBitmap = bitmap;*/
-        //
-        //    if (pGraphics != NULL) {
-        //        delete pGraphics;
-        //        pGraphics = NULL;
-        //    }
-        //
-        //
-        //
-        //    RECT srcRect = GetPos();
-        //    int nSrcWidth = srcRect.right - srcRect.left;
-        //    int nSrcHeight = srcRect.bottom - srcRect.top;
-        //    int nWidth = m_pBitmap->GetWidth();
-        //    int nHeight = m_pBitmap->GetHeight();
-        //
-        //    amo::rect r1(0, 0, nSrcWidth, nSrcHeight);
-        //    amo::rect r2(0, 0, nWidth, nHeight);
-        //    amo::rect r3 = r1.intersect(r2);
-        //
-        //    /*    $cdevel("r1 {},{}, {}, {}", r1.left(), r1.top(), r1.width(), r1.height());
-        //        $cdevel("r2 {},{}, {}, {}", r2.left(), r2.top(), r2.width(), r2.height());
-        //
-        //        $cdevel("r3 {},{}, {}, {}", r3.left(), r3.top(), r3.width(), r3.height());*/
-        //
-        //    static amo::timer t;
-        //
-        //    /* if (t.elapsed() < 100) {
-        //         return;
-        //     };
-        //
-        //     t.restart();*/
-        //
-        //    /* if (nWidth != nSrcWidth || nHeight != nSrcHeight) {
-        //         return;
-        //     }*/
-        //
-        //    if (nWidth < nSrcWidth) {
-        //        nSrcWidth = nWidth;
-        //    }
-        //
-        //    if (nHeight < nSrcHeight) {
-        //        nSrcHeight = nHeight;
-        //    }
-        //
-        //    if (nWidth > nSrcWidth) {
-        //        nWidth = nSrcWidth;
-        //    }
-        //
-        //    if (nHeight > nSrcHeight) {
-        //        nHeight = nSrcHeight;
-        //    }
-        //
-        //
-        //
-        //
-        //    Graphics graph(hDC);
-        //    graph.DrawImage(m_pBitmap.get(),
-        //                    RectF((float)srcRect.left,
-        //                          (float)srcRect.top,
-        //                          (float)nSrcWidth,
-        //                          (float)nSrcHeight),
-        //                    0,
-        //                    0,
-        //                    (float)nWidth,
-        //                    (float)nHeight,
-        //                    UnitPixel);
-        //    graph.ReleaseHDC(hDC);
-        //    //m_pBitmap = bitmap;
-        //    m_resource->m_pBitmap = bitmap;
-        //
-        //}
-        
-        //$cdevel("‰÷»æ111”√ ±£∫{}", t.elapsed());
     }
     
     LayerViewRender::~LayerViewRender() {

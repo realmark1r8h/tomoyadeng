@@ -110,19 +110,19 @@ namespace amo {
         //POINT ptSrc = { 0, 0 };
         SIZE szLayered = { rcClient.right - rcClient.left, rcClient.bottom - rcClient.top };
         
-        //BOOL bOK = ::UpdateLayeredWindow(m_hWnd,
-        //                                 hDC,
-        //                                 NULL,//&ptDst,			// 更新后窗口左上角的坐标点 ，若不改变窗口的形状和绘制可以为NULL
-        //                                 &sz,					// 更新后窗口的宽度和高度，可以为NULL
-        //                                 memDC,					// 给窗口贴图的内存DC，可以为NULL
-        //                                 &ptSrc,					// 内存DC中图像的左上角点，可以为NULL
-        //                                 0,						//
-        //                                 &m_Blend,
-        //                                 ULW_ALPHA
-        //                                );
-        BOOL bOK = ::UpdateLayeredWindow(m_hWnd, hDC, &ptDest, &szLayered, memDC,
-                                         &ptSrc, RGB(0, 0, 0), &m_Blend, ULW_ALPHA);
-                                         
+        BOOL bOK = ::UpdateLayeredWindow(m_hWnd,
+                                         hDC,
+                                         NULL,//&ptDst,			// 更新后窗口左上角的坐标点 ，若不改变窗口的形状和绘制可以为NULL
+                                         &sz,					// 更新后窗口的宽度和高度，可以为NULL
+                                         memDC,					// 给窗口贴图的内存DC，可以为NULL
+                                         &ptSrc,					// 内存DC中图像的左上角点，可以为NULL
+                                         0,						//
+                                         &m_Blend,
+                                         ULW_ALPHA
+                                        );
+        /*      BOOL bOK = ::UpdateLayeredWindow(m_hWnd, hDC, &ptDest, &szLayered, memDC,
+                                               &ptSrc, RGB(0, 0, 0), &m_Blend, ULW_ALPHA);*/
+        
         DWORD wd = GetLastError();
         ::SelectObject(memDC, hOldBitmap);
         DeleteObject(hBitmap);

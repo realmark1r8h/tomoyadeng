@@ -23,8 +23,9 @@ namespace amo {
         
     }
     
-    void GdiRenderer::Render(HDC hDC, std::shared_ptr<PaintResource> resource, std::shared_ptr<Overlap> overlap) {
-    
+    void GdiRenderer::Render(HDC hDC, std::shared_ptr<PaintResource> resource,
+                             std::shared_ptr<Overlap> overlap) {
+                             
         std::shared_ptr<Gdiplus::Bitmap> m_pBitmap = CreateBitmpFromMemory(overlap);
         
         if (m_pBitmap) {
@@ -76,14 +77,16 @@ namespace amo {
         }
     }
     
-    std::shared_ptr<Gdiplus::Bitmap> GdiRenderer::CreateBitmpFromMemory(std::shared_ptr<PaintResource> resource) {
+    std::shared_ptr<Gdiplus::Bitmap> GdiRenderer::CreateBitmpFromMemory(
+        std::shared_ptr<PaintResource> resource) {
         return{};
     }
     
-    std::shared_ptr<Gdiplus::Bitmap> GdiRenderer::CreateBitmpFromMemory(std::shared_ptr<Overlap> resource) {
-    
-    
-    
+    std::shared_ptr<Gdiplus::Bitmap> GdiRenderer::CreateBitmpFromMemory(
+        std::shared_ptr<Overlap> resource) {
+        
+        
+        
         int imageWidth = resource->m_settings->width;
         int imageHeight = resource->m_settings->height;
         int imageSize = resource->size();
@@ -94,50 +97,35 @@ namespace amo {
             return pBitmap;
         }
         
-        /* unsigned char* dd = (unsigned char*)resource->data();
-         int count = 0;
-        
-         for (int i = 0; i < imageSize; ++i) {
-        	 if (dd[i] != 0) {
-        		 ++count;
-        	 }
-         }
-         */
-        /*   amo::timer t;
-           std::string ss = std::to_string(t.elapsed());
-           ss += "\t ";
-           ss += std::to_string(count);
-           ss += "\n";
-        
-           OutputDebugStringA(ss.c_str());*/
-        
-        /* std::shared_ptr<Gdiplus::Bitmap> image;
-         image.reset(new Gdiplus::Bitmap(imageWidth,
-                                         imageHeight,
-                                         imageWidth * 4,
-                                         PixelFormat32bppARGB,
-                                         (BYTE*)resource->data()));
-        
-         return image;
-         */
-        pBitmap.reset(new Bitmap(imageWidth, imageHeight,
-                                 PixelFormat32bppARGB));
-                                 
-        if (!pBitmap) {
-            return pBitmap;
-        }
-        
         resource->set_locked(true);
-        BitmapData bmpData;
-        Gdiplus::Rect rect(0, 0, imageWidth, imageHeight);
-        pBitmap->LockBits(&rect, ImageLockModeWrite, PixelFormat32bppARGB, &bmpData);
-        BYTE *pByte = (BYTE*)bmpData.Scan0;
-        
-        memcpy(bmpData.Scan0, resource->data(), imageSize);
-        
-        pBitmap->UnlockBits(&bmpData);
+        std::shared_ptr<Gdiplus::Bitmap> image;
+        image.reset(new Gdiplus::Bitmap(imageWidth,
+                                        imageHeight,
+                                        imageWidth * 4,
+                                        PixelFormat32bppARGB,
+                                        (BYTE*)resource->data()));
         resource->set_locked(false);
-        return pBitmap;
+        
+        return image;
+        
+        /* pBitmap.reset(new Bitmap(imageWidth, imageHeight,
+                                  PixelFormat32bppARGB));
+        
+         if (!pBitmap) {
+             return pBitmap;
+         }
+        
+         resource->set_locked(true);
+         BitmapData bmpData;
+         Gdiplus::Rect rect(0, 0, imageWidth, imageHeight);
+         pBitmap->LockBits(&rect, ImageLockModeWrite, PixelFormat32bppARGB, &bmpData);
+         BYTE *pByte = (BYTE*)bmpData.Scan0;
+        
+         memcpy(bmpData.Scan0, resource->data(), imageSize);
+        
+         pBitmap->UnlockBits(&bmpData);
+         resource->set_locked(false);
+         return pBitmap;*/
     }
     
 }

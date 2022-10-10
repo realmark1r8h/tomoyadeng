@@ -521,7 +521,8 @@ namespace amo {
             OverlapSettings settings;
             settings.width = 1920;
             settings.height = 1080;
-            settings.name = "ffmpeg888";
+            settings.name = "face-overlap";
+            settings.index = 3;
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, settings.toJson());
             
@@ -1446,6 +1447,7 @@ namespace amo {
         settings->name = "default";
         settings->length = width * height * 4;
         settings->type = 0;
+        settings->index = 5;
         
         std::shared_ptr<OverlapData> overlapData(new DefalutOverlapData());
         overlapData->fill((char*)buffer, settings->length);
@@ -1454,12 +1456,13 @@ namespace amo {
         std::shared_ptr<Overlap> overlap(new Overlap(settings));
         
         overlap->setOverlapData(overlapData);
-        resource->addOverlap(overlap);
+        
         
         for (auto& item : m_paintingRes) {
             resource->addOverlap(item.second.first);
         }
         
+        resource->addOverlap(overlap);
         //insertBitmap(resource);
         
         if (m_pBrowserSettings->transparent) {

@@ -49,8 +49,10 @@ namespace amo {
                                         
         CEFSTRING_DEFAULT_ARGS_SETTINGS(locale,
                                         "zh-CN");						//!< 语言环境默认中文
-                                        
-                                        
+        DEFAULT_ARGS_SETTINGS(background_color,
+                              0);					//!< 页面未加载前背景色
+                              
+        // 下面的参数最好都不要去动
         //        DEFAULT_ARGS_SETTINGS(command_line_args_disabled,
         //                              false);				//!< 允许命令行参数
         //

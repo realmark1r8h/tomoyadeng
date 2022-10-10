@@ -10,6 +10,16 @@ namespace amo {
 
     class OverlapRect {
     public:
+        OverlapRect() {
+            index = 5;
+        }
+        OverlapRect(int index_, const amo::rect& src_, const amo::rect& dst_) {
+            index = index_;
+            src = src_;
+            dst = dst_;
+        }
+        
+        int index;
         amo::rect src;
         amo::rect dst;
     };
@@ -41,7 +51,8 @@ namespace amo {
         
         virtual amo::json toJson() override;
     protected:
-        void updateRectSettings(const std::string& name, std::shared_ptr<OverlapRegions>& ptr);
+        void updateRectSettings(const std::string& name,
+                                std::shared_ptr<OverlapRegions>& ptr);
     public:
         /*! @var #String name 图层名称. */
         std::string name;
@@ -58,7 +69,8 @@ namespace amo {
         /*! @var #Int length 数据长度. */
         int length;
         
-        
+        /** @var #Int index 图层的渲染顺序，regions 不存在时有效. */
+        int index;
         
         /*! @var #Rect	srcRect 图层区域. */
         std::shared_ptr<OverlapRegions> regions;
