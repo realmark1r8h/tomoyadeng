@@ -5,6 +5,7 @@
 #define LIBNCUI_D2D1BITMAP_5E308BE1_A01F_4623_B14F_646BDEA09AD5_HPP__
 
 #include <memory>
+#include <vector>
 #include <d2d1.h>
 #include "ui/win/renderer/D2D1Utility.hpp"
 #include "ui/win/overlap/Overlap.hpp"
@@ -69,6 +70,71 @@ namespace amo {
                 SafeRelease(&m_bitmap);
                 return NULL;
             }
+        public:
+            D2D1Bitmap(ID2D1RenderTarget* renderTarget_,
+                       std::shared_ptr<Overlap> resource) {
+                renderTarget = renderTarget_;
+                overlap = resource;
+                m_bitmap = CreateBitmpFromMemory(renderTarget, overlap);
+                m_releaseBitmap = true;
+            }
+            
+            D2D1Bitmap(std::shared_ptr<D2D1Bitmap> rhs) {
+                m_bitmap = rhs->m_bitmap;
+                renderTarget = rhs->renderTarget;
+                overlap = rhs->overlap;
+                m_releaseBitmap = false;
+            }
+            
+            D2D1Bitmap(const D2D1Bitmap& rhs) {
+                m_bitmap = rhs.m_bitmap;
+                renderTarget = rhs.renderTarget;
+                overlap = rhs.overlap;
+                m_releaseBitmap = false;
+            }
+            
+            ~D2D1Bitmap() {
+                if (m_releaseBitmap && m_bitmap != NULL) {
+                    SafeRelease(&m_bitmap);
+                }
+            }
+            std::vector<std::shared_ptr<D2D1Bitmap> > regions() {
+                std::vector<std::shared_ptr<D2D1Bitmap> > vec;
+                
+                for (auto& p : overlap->m_settings->regions->m_regions) {
+                    std::shared_ptr<D2D1Bitmap> bitmap(new D2D1Bitmap(*this));
+                    bitmap->setOverlapRect(p);
+                    vec.push_back(bitmap);
+                }
+                
+                return vec;
+            }
+            
+            void setOverlapRect(const OverlapRect& rect) {
+                m_rect.reset(new OverlapRect(rect));
+            }
+            
+            int getRenderIndex() const {
+                return m_rect->index;
+            }
+            
+            bool drawBitmap() {
+                if (m_bitmap == NULL) {
+                    return false;
+                }
+                
+                
+                D2D1_RECT_F dstRect = { m_rect->dst.left(), m_rect->dst.top(), m_rect->dst.right(), m_rect->dst.bottom() };
+                D2D1_RECT_F srcRect = { m_rect->src.left(), m_rect->src.top(), m_rect->src.right(), m_rect->src.bottom() };
+                renderTarget->DrawBitmap(m_bitmap, dstRect, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &srcRect);
+                return true;
+            }
+        private:
+            bool m_releaseBitmap;
+            ID2D1Bitmap* m_bitmap;
+            ID2D1RenderTarget* renderTarget;
+            std::shared_ptr<Overlap> overlap;
+            std::shared_ptr< OverlapRect> m_rect;
         };
     }
 }

@@ -534,7 +534,7 @@ namespace amo {
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, true);
             msg->getArgumentList()->setValue(1, 30);
-            repaint(msg);
+            //repaint(msg);
             
         }
         

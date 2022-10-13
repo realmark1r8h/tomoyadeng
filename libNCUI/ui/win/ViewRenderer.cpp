@@ -73,6 +73,17 @@ namespace amo {
             return;
         }
         
+        if (!m_resource) {
+            return;
+        }
+        
+        m_resource->setPos(GetPos());
+        
+        
+        for (auto& p : m_resource->overlaps) {
+            p->setCanvasRect(GetPos());
+        }
+        
         
         if (m_paintSettings->accelerator) {
             if (m_paintSettings->transparent) {
@@ -114,20 +125,39 @@ namespace amo {
         
         m_hwndRenderer->BeginDraw();
         m_hwndRenderer->Clear(amo::d2d1::ImFloat4(1, 1, 1, 1).ToD2DColorF());
+        std::vector<std::shared_ptr<amo::d2d1::D2D1Bitmap> >  bitmaps;
+        std::vector<std::shared_ptr<amo::d2d1::D2D1Bitmap> > regions;
+        
         
         for (auto& p : m_resource->overlaps) {
-            ID2D1Bitmap* bitmap = NULL;
-            bitmap = amo::d2d1::D2D1Bitmap::CreateBitmpFromMemory(
-                         m_hwndRenderer->GetMainRT(), p);
-                         
-            if (bitmap == NULL) {
-                continue;
-            }
+        
+            std::shared_ptr<amo::d2d1::D2D1Bitmap> bitmap(new amo::d2d1::D2D1Bitmap(m_hwndRenderer->GetMainRT(), p));
+            bitmaps.push_back(bitmap);
             
-            //p->m_settings->regions
+            auto vec =  bitmap->regions();
+            regions.insert(regions.end(), vec.begin(), vec.end());
             
-            m_hwndRenderer->GetMainRT()->DrawBitmap(bitmap);
-            amo::d2d1::SafeRelease(&bitmap);
+            //ID2D1Bitmap* bitmap = NULL;
+            //bitmap = amo::d2d1::D2D1Bitmap::CreateBitmpFromMemory(
+            //             m_hwndRenderer->GetMainRT(), p);
+            //
+            //if (bitmap == NULL) {
+            //    continue;
+            //}
+            //
+            ////p->m_settings->regions
+            //
+            //m_hwndRenderer->GetMainRT()->DrawBitmap(bitmap);
+            //amo::d2d1::SafeRelease(&bitmap);
+        }
+        
+        std::sort(regions.begin(), regions.end(), [&](std::shared_ptr<amo::d2d1::D2D1Bitmap>& a, std::shared_ptr<amo::d2d1::D2D1Bitmap>& b) {
+            return a->getRenderIndex() < b->getRenderIndex();
+        });
+        
+        
+        for (auto& p : regions) {
+            p->drawBitmap();
         }
         
         //m_hwndRenderer->DrawImage("background.png", 0, 0, 0, 0);

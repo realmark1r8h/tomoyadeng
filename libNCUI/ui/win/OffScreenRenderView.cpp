@@ -340,7 +340,7 @@ namespace amo {
         
         
 #else
-        windowInfo.SetAsWindowless(m_hWnd, m_oBrowserSettings->transparent);
+        windowInfo.SetAsWindowless(m_hWnd, m_oBrowserSettings->offscreen);
 #endif
         
         

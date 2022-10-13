@@ -12,16 +12,19 @@ namespace amo {
     public:
         OverlapRect() {
             index = 5;
+            renderMode = 0;
         }
-        OverlapRect(int index_, const amo::rect& src_, const amo::rect& dst_) {
+        OverlapRect(const amo::rect& src_, const amo::rect& dst_, int index_, int renderMode_) {
             index = index_;
             src = src_;
             dst = dst_;
+            renderMode = renderMode_;
         }
         
         int index;
         amo::rect src;
         amo::rect dst;
+        int renderMode;  // 0 平铺 1 居中 2 拉伸
     };
     
     class OverlapRegions {
@@ -50,6 +53,23 @@ namespace amo {
         virtual void afterUpdateArgsSettings() override;
         
         virtual amo::json toJson() override;
+        
+        void setCanvasRect(const amo::rect& rt) {
+            canvasRect = rt;
+            
+            if (!regions) {
+                regions.reset(new OverlapRegions());
+                OverlapRect rect;
+                rect.index = index;
+                rect.dst = canvasRect;
+                rect.src = amo::rect(0, 0, width, height);
+                regions->m_regions.push_back(rect);
+            }
+        }
+        amo::rect getCanvasRect() const {
+            return canvasRect;
+        }
+        
     protected:
         void updateRectSettings(const std::string& name,
                                 std::shared_ptr<OverlapRegions>& ptr);
@@ -74,6 +94,9 @@ namespace amo {
         
         /*! @var #Rect	srcRect 图层区域. */
         std::shared_ptr<OverlapRegions> regions;
+        
+        /*! @var #Rect	canvasRect 画布区域. */
+        amo::rect canvasRect;
         
     };
 }

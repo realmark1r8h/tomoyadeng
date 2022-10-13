@@ -61,12 +61,20 @@ namespace amo {
             return m_data->set_locked(locked);
         }
         
+        void setCanvasRect(const amo::rect& rt) {
+            m_settings->setCanvasRect(rt);
+            
+        }
+        amo::rect getCanvasRect() const {
+            return m_settings->getCanvasRect();
+        }
+        
     public:
         std::shared_ptr<OverlapSettings> m_settings;
         
         std::shared_ptr <OverlapData> m_data;
         
-        int m_renderIndex;
+        
     };
     
 }

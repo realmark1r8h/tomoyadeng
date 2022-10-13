@@ -159,7 +159,9 @@ namespace amo {
                 }
                 
                 int index = p.getInt("index", 5);
-                ptr->m_regions.push_back({ index, src, dst });
+                int renderMode = p.getInt("renderMode", 0);
+                ;
+                ptr->m_regions.push_back({  src, dst, index, renderMode });
             }
             
             
