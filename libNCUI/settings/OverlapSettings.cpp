@@ -20,6 +20,8 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(type, 0);
         DEFAULT_ARGS_SETTINGS(length, 0);
         DEFAULT_ARGS_SETTINGS(index, 6);
+        DEFAULT_ARGS_SETTINGS(renderMode, 0);
+        
         amo::json regions;
         regions.set_array();
         
@@ -37,7 +39,7 @@ namespace amo {
         INT_ARGS_SETTING(type);
         INT_ARGS_SETTING(length);
         INT_ARGS_SETTING(index);
-        
+        INT_ARGS_SETTING(renderMode);
         updateRectSettings("regions", regions);
         
     }
@@ -53,6 +55,7 @@ namespace amo {
         UPDATE_ARGS_SETTINGS(type);
         UPDATE_ARGS_SETTINGS(length);
         UPDATE_ARGS_SETTINGS(index);
+        UPDATE_ARGS_SETTINGS(renderMode);
         
         if (regions) {
             amo::json arr;

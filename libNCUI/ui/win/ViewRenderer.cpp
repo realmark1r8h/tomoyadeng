@@ -131,27 +131,17 @@ namespace amo {
         
         for (auto& p : m_resource->overlaps) {
         
-            std::shared_ptr<amo::d2d1::D2D1Bitmap> bitmap(new amo::d2d1::D2D1Bitmap(m_hwndRenderer->GetMainRT(), p));
+            std::shared_ptr<amo::d2d1::D2D1Bitmap> bitmap(new amo::d2d1::D2D1Bitmap(
+                        m_hwndRenderer->GetMainRT(), p));
             bitmaps.push_back(bitmap);
             
             auto vec =  bitmap->regions();
             regions.insert(regions.end(), vec.begin(), vec.end());
-            
-            //ID2D1Bitmap* bitmap = NULL;
-            //bitmap = amo::d2d1::D2D1Bitmap::CreateBitmpFromMemory(
-            //             m_hwndRenderer->GetMainRT(), p);
-            //
-            //if (bitmap == NULL) {
-            //    continue;
-            //}
-            //
-            ////p->m_settings->regions
-            //
-            //m_hwndRenderer->GetMainRT()->DrawBitmap(bitmap);
-            //amo::d2d1::SafeRelease(&bitmap);
         }
         
-        std::sort(regions.begin(), regions.end(), [&](std::shared_ptr<amo::d2d1::D2D1Bitmap>& a, std::shared_ptr<amo::d2d1::D2D1Bitmap>& b) {
+        std::sort(regions.begin(),
+                  regions.end(), [&](std::shared_ptr<amo::d2d1::D2D1Bitmap>& a,
+        std::shared_ptr<amo::d2d1::D2D1Bitmap>& b) {
             return a->getRenderIndex() < b->getRenderIndex();
         });
         

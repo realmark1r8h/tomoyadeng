@@ -14,7 +14,8 @@ namespace amo {
             index = 5;
             renderMode = 0;
         }
-        OverlapRect(const amo::rect& src_, const amo::rect& dst_, int index_, int renderMode_) {
+        OverlapRect(const amo::rect& src_, const amo::rect& dst_, int index_,
+                    int renderMode_) {
             index = index_;
             src = src_;
             dst = dst_;
@@ -58,18 +59,36 @@ namespace amo {
             canvasRect = rt;
             
             if (!regions) {
-                regions.reset(new OverlapRegions());
+                defaultRegions.reset(new OverlapRegions());
                 OverlapRect rect;
                 rect.index = index;
+                rect.renderMode = renderMode;
                 rect.dst = canvasRect;
                 rect.src = amo::rect(0, 0, width, height);
-                regions->m_regions.push_back(rect);
+                defaultRegions->m_regions.push_back(rect);
             }
         }
         amo::rect getCanvasRect() const {
             return canvasRect;
         }
         
+        std::shared_ptr<OverlapRegions> getOverlapRegions() {
+            if (regions) {
+                return regions;
+            }
+            
+            if (!defaultRegions) {
+                defaultRegions.reset(new OverlapRegions());
+                OverlapRect rect;
+                rect.index = index;
+                rect.renderMode = renderMode;
+                rect.dst = amo::rect();
+                rect.src = amo::rect(0, 0, width, height);
+                defaultRegions->m_regions.push_back(rect);
+            }
+            
+            return defaultRegions;
+        }
     protected:
         void updateRectSettings(const std::string& name,
                                 std::shared_ptr<OverlapRegions>& ptr);
@@ -92,8 +111,14 @@ namespace amo {
         /** @var #Int index 图层的渲染顺序，regions 不存在时有效. */
         int index;
         
-        /*! @var #Rect	srcRect 图层区域. */
+        /** @var #Int renderMode=0 图层渲染模式，regions不存在时有效. */
+        int renderMode;
+        
+        /*! @var #Rect	regions 图层区域. */
         std::shared_ptr<OverlapRegions> regions;
+        
+        /*! @var #RectArray	defaultRegions 默认图层区域，当前regions不存在时使用该值，由程序设置. */
+        std::shared_ptr<OverlapRegions> defaultRegions;
         
         /*! @var #Rect	canvasRect 画布区域. */
         amo::rect canvasRect;

@@ -73,6 +73,7 @@ namespace amo {
         public:
             D2D1Bitmap(ID2D1RenderTarget* renderTarget_,
                        std::shared_ptr<Overlap> resource) {
+                       
                 renderTarget = renderTarget_;
                 overlap = resource;
                 m_bitmap = CreateBitmpFromMemory(renderTarget, overlap);
@@ -101,7 +102,7 @@ namespace amo {
             std::vector<std::shared_ptr<D2D1Bitmap> > regions() {
                 std::vector<std::shared_ptr<D2D1Bitmap> > vec;
                 
-                for (auto& p : overlap->m_settings->regions->m_regions) {
+                for (auto& p : overlap->m_settings->getOverlapRegions()->m_regions) {
                     std::shared_ptr<D2D1Bitmap> bitmap(new D2D1Bitmap(*this));
                     bitmap->setOverlapRect(p);
                     vec.push_back(bitmap);
@@ -123,11 +124,29 @@ namespace amo {
                     return false;
                 }
                 
+                //m_rect->renderMode = 1;
                 
-                D2D1_RECT_F dstRect = { m_rect->dst.left(), m_rect->dst.top(), m_rect->dst.right(), m_rect->dst.bottom() };
-                D2D1_RECT_F srcRect = { m_rect->src.left(), m_rect->src.top(), m_rect->src.right(), m_rect->src.bottom() };
-                renderTarget->DrawBitmap(m_bitmap, dstRect, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &srcRect);
+                if (m_rect->renderMode == 1) {
+                    // ¾ÓÖÐ
+                    amo::rect dst_rect = m_rect->dst.get_full_rect(m_rect->src);
+                    D2D1_RECT_F dstRect = { dst_rect.left(), dst_rect.top(), dst_rect.right(), dst_rect.bottom() };
+                    D2D1_RECT_F srcRect = { m_rect->src.left(), m_rect->src.top(), m_rect->src.right(), m_rect->src.bottom() };
+                    renderTarget->DrawBitmap(m_bitmap, dstRect, 1.0f,
+                                             D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &srcRect);
+                } else if (m_rect->renderMode == 2) {
+                    // À­Éì
+                    D2D1_RECT_F dstRect = { m_rect->dst.left(), m_rect->dst.top(), m_rect->dst.right(), m_rect->dst.bottom() };
+                    D2D1_RECT_F srcRect = { m_rect->src.left(), m_rect->src.top(), m_rect->src.right(), m_rect->src.bottom() };
+                    renderTarget->DrawBitmap(m_bitmap, dstRect, 1.0f,
+                                             D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &srcRect);
+                } else {
+                    // Æ½ÆÌ
+                    D2D1_RECT_F dstRect = { m_rect->dst.left(), m_rect->dst.top(), m_rect->src.width(), m_rect->src.height() };
+                    renderTarget->DrawBitmap(m_bitmap, dstRect);
+                }
+                
                 return true;
+                
             }
         private:
             bool m_releaseBitmap;
