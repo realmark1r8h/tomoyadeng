@@ -103,8 +103,14 @@ namespace amo {
                 std::vector<std::shared_ptr<D2D1Bitmap> > vec;
                 
                 for (auto& p : overlap->m_settings->getOverlapRegions()->m_regions) {
+                    auto rect = p;
+                    
+                    if (rect.dst.empty()) {
+                        rect.dst = overlap->m_settings->canvasRect;
+                    }
+                    
                     std::shared_ptr<D2D1Bitmap> bitmap(new D2D1Bitmap(*this));
-                    bitmap->setOverlapRect(p);
+                    bitmap->setOverlapRect(rect);
                     vec.push_back(bitmap);
                 }
                 
@@ -140,9 +146,14 @@ namespace amo {
                     renderTarget->DrawBitmap(m_bitmap, dstRect, 1.0f,
                                              D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &srcRect);
                 } else {
+                
+                    int srcWidth = (std::min)(m_rect->dst.width(), m_rect->src.width());
+                    int srcHeight = (std::min)(m_rect->dst.height(), m_rect->src.height());
                     // Æ½ÆÌ
-                    D2D1_RECT_F dstRect = { m_rect->dst.left(), m_rect->dst.top(), m_rect->src.width(), m_rect->src.height() };
-                    renderTarget->DrawBitmap(m_bitmap, dstRect);
+                    D2D1_RECT_F dstRect = { m_rect->dst.left(), m_rect->dst.top(), m_rect->dst.width(), m_rect->dst.height() };
+                    D2D1_RECT_F srcRect = { m_rect->src.left(), m_rect->src.top(),  srcWidth,  srcHeight };
+                    renderTarget->DrawBitmap(m_bitmap, dstRect, 1.0f,
+                                             D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &srcRect);
                 }
                 
                 return true;

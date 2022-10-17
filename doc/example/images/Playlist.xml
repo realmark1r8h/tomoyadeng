@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<Window size="226,480"  caption="0,0,0,30">
+	<Font name="微软雅黑" size="14" bold="false" italic="false" />
+    <Font name="微软雅黑" size="14" bold="true" italic="false" />
+    <Font name="微软雅黑" size="10" bold="false" />
+    <Font name="微软雅黑" size="12" bold="false" />
+    <Font name="微软雅黑" size="13" bold="false" />
+	<Include source="scrollbar.xml" />
+    <VerticalLayout name="ctnPlaylist" bkimage="bk.png">
+		<MusicList name="MusicList" itemfont="1" bordercolor="#FF2B2B2B" itemtextcolor="#FFC8C6CB" itemhottextcolor="#FFC8C6CB" selitemtextcolor="#FFC8C6CB" itemhotbkcolor="#881B1B1B" itemselectedbkcolor="#88151C2C" vscrollbar="true" itemhotimage="file='UI\LeftTab\listitem\ListBk.png' fade='25' " itemselectedimage="file='UI\LeftTab\listitem\ListBk.png' fade='55' " itemdisabledimage="file='UI\LeftTab\listitem\ListBk.png' fade='105'" itembkcolor="#00000000" itemdisabledbkcolor="#FFD5D1CC" itemhotbkcolor="#00000000" itemselectedbkcolor="#00000000" menu="true" >
+		</MusicList> 
+    </VerticalLayout>
+</Window>

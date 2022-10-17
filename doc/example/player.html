@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title>VideoPlayer</title>
-		<link rel="stylesheet" type="text/css" href="../docs/css/flex-layout.css"/>
-		<link rel="stylesheet" type="text/css" href="../dist/css/zui.css"/>
-		<link rel="stylesheet" type="text/css" href="../docs/css/common.css"/>
-		<link rel="stylesheet" type="text/css" href="../docs/css/doc.css"/>
+		<link rel="stylesheet" type="text/css" href="../docs/css/flex-layout.css" />
+		<link rel="stylesheet" type="text/css" href="../dist/css/zui.css" />
+		<link rel="stylesheet" type="text/css" href="../docs/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../docs/css/doc.css" />
+		<link rel="stylesheet" type="text/css" href="../docs/css/layout.css" />
 		<script src="../dist/lib/jquery/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../docs/js/common.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
-			html,body {
+			html,
+			body {
 				width: 100%;
 				height: 100%;
 				overflow: hidden;
 				background: none;
 			}
+			/** {
+				border: 1px solid #007BFF;
+			}*/
 			
 			.container {
 				position: absolute;
@@ -33,20 +39,290 @@
 			.no-drag {
 				-webkit-app-region: no-drag;
 			}
+			
+			.btnPlaylistShow {
+				background: url(images/playlist.png) no-repeat center;
+				width: 40px;
+				height: 40px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+				margin-right: 40px;
+			}
+			
+			.btnPlaylistShow:hover,
+			.btnPlaylistShow:checked {
+				background: url(images/playlist_h.png) no-repeat center;
+			}
+			
+			.btnPlaylistShow:disabled {
+				background: url(images/playlist_d.png) no-repeat center;
+			}
+			
+			.btnClip {
+				background: url(images/clip.png) no-repeat center;
+				width: 40px;
+				height: 40px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+				margin-right: 40px;
+			}
+			
+			.btnClip:hover {
+				background: url(images/clip_h.png) no-repeat center;
+			}
+			
+			.btnClip:disabled {
+				background: url(images/clip_d.png) no-repeat center;
+			}
+			
+			.btnStop {
+				background: url(images/stop.png) no-repeat center;
+				width: 40px;
+				height: 40px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+			}
+			
+			.btnStop:hover {
+				background: url(images/stop_h.png) no-repeat center;
+			}
+			
+			.btnStop:disabled {
+				background: url(images/stop_d.png) no-repeat center;
+			}
+			
+			.btnPrevious {
+				background: url(images/prev.png) no-repeat center;
+				width: 40px;
+				height: 40px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+			}
+			
+			.btnPrevious:hover {
+				background: url(images/prev_h.png) no-repeat center;
+			}
+			
+			.btnPrevious:disabled {
+				background: url(images/prev_d.png) no-repeat center;
+			}
+			
+			.btnPlay {
+				background: url(images/play.png) no-repeat center;
+				width: 40px;
+				height: 40px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+			}
+			
+			.btnPlay:hover {
+				background: url(images/play_h.png) no-repeat center;
+			}
+			
+			.btnPlay:disabled {
+				background: url(images/play_d.png) no-repeat center;
+			}
+			
+			.btnPause {
+				background: url(images/pause.png) no-repeat center;
+				width: 40px;
+				height: 40px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+			}
+			
+			.btnPause:hover {
+				background: url(images/pause_h.png) no-repeat center;
+			}
+			
+			.btnPause:disabled {
+				background: url(images/pause_d.png) no-repeat center;
+			}
+			
+			.btnNext {
+				background: url(images/next.png) no-repeat center;
+				width: 40px;
+				height: 40px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+			}
+			
+			.btnNext:hover {
+				background: url(images/next_h.png) no-repeat center;
+			}
+			
+			.btnNext:disabled {
+				background: url(images/nex_d.png) no-repeat center;
+			}
+			
+			.btnVolume {
+				background: url(images/volume.png) no-repeat center;
+				width: 30px;
+				height: 40px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+			}
+			
+			.btnVolume:hover {
+				background: url(images/volume_h.png) no-repeat center;
+			}
+			
+			.btnVolume:disabled {
+				background: url(images/volume_d.png) no-repeat center;
+			}
+			
+			.btnVolumeZero {
+				background: url(images/volume_zero.png) no-repeat center;
+				width: 30px;
+				height: 40px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+			}
+			
+			.btnVolumeZero:hover {
+				background: url(images/volume_zero_h.png) no-repeat center;
+			}
+			
+			.btnVolumeZero:disabled {
+				background: url(images/volume_zero_d.png) no-repeat center;
+			}
+			
+			.btnOpenMini {
+				background: url(images/open_mini.png) no-repeat center;
+				width: 30px;
+				height: 40px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+			}
+			
+			.btnOpenMini:hover {
+				background: url(images/open_mini_h.png) no-repeat center;
+			}
+			
+			.btnOpenMini:disabled {
+				background: url(images/open_mini_d.png) no-repeat center;
+			}
+			
+			.btnScreenFull {
+				background: url(images/screen_full.png) no-repeat center;
+				width: 30px;
+				height: 40px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+			}
+			
+			.btnScreenFull:hover {
+				background: url(images/screen_full_h.png) no-repeat center;
+			}
+			
+			.btnScreenFull:disabled {
+				background: url(images/screen_full_d.png) no-repeat center;
+			}
+			
+			.btnScreenNormal {
+				background: url(images/screen_normal.png) no-repeat center;
+				width: 30px;
+				height: 40px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+			}
+			
+			.btnScreenNormal:hover {
+				background: url(images/screen_normal_h.png) no-repeat center;
+			}
+			
+			.btnScreenNormal:disabled {
+				background: url(images/screen_normal_d.png) no-repeat center;
+			}
+			
+			.btnFastBackward {
+				background: url(images/fast_backward.png) no-repeat center;
+				width: 17px;
+				height: 13px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+			}
+			
+			.btnFastBackward:hover {
+				background: url(images/fast_backward_h.png) no-repeat center;
+			}
+			
+			.btnFastBackward:disabled {
+				background: url(images/fast_backward_d.png) no-repeat center;
+			}
+			
+			.btnFastForward {
+				background: url(images/fast_forward.png) no-repeat center;
+				width: 17px;
+				height: 13px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+			}
+			
+			.btnFastForward:hover {
+				background: url(images/fast_forward_h.png) no-repeat center;
+			}
+			
+			.btnFastForward:disabled {
+				background: url(images/fast_forward_d.png) no-repeat center;
+			}
+			
+			.btnTopmost {
+				background: url(images/topmost.png) no-repeat center;
+				width: 40px;
+				height: 40px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+			}
+			
+			.btnTopmost:hover {
+				background-color: rgba(255, 255, 255, 0.3);
+			}
+			
+			.btnTopmostChecked {
+				background: url(images/topmost_s.png) no-repeat center;
+				width: 40px;
+				height: 40px;
+				box-sizing: border-box;
+				outline: none;
+				border: none;
+			}
+			
+			.btnTopmostChecked:hover {
+				background-color: rgba(255, 255, 255, 0.3);
+			}
 		</style>
-		
+
 	</head>
+
 	<body>
-		 
+
 		<div class="drag" style="position: absolute; top: 0; left: 0; right: 0; height: 40px; background: rgba(0,0,0,0.5);">
 			<div class="flex-row">
 
 				<div class="flex-column flex-top" style="height: 100%;">
 
 					<a href="" class="navbar-brand no-drag hidden"><i class="icon icon-home" style="font-size: 20px; color: white;"></i></a>
-				 
+
+					<input type="button" class="btnTopmost no-drag" />
+					<input type="button" class="btnTopmostChecked no-drag" />
 					<div class="flex-item-6 flex-right " style="width: 128px;">
-					  
+
 						<input type="button" class="minbtn no-drag" />
 						<input type="button" class="maxbtn no-drag" />
 						<input type="button" class="restorebtn no-drag hidden" />
@@ -55,10 +331,89 @@
 				</div>
 			</div>
 		</div>
-		 
-		
-		<div class="drag" style="position: absolute; bottom: 0; left: 0; right: 0; height: 75px; background: rgba(0,0,0,0.6);">
-			
+		<div class="">
+			<div class="demo flex-row flex-middle flex-center" style=" height: 600px;">
+				<div class="flex-item-8" style="margin-bottom: 10px">无论是多行还是单行，都可以垂直居中</div>
+				<div class="flex-item-8">无论是多行还是单行，都可以垂直居中</div>
+			</div>
+		</div>
+
+		<div class="drag   flex-row " style="position: absolute; bottom: 0; left: 0; right: 0; height: 75px; background: rgba(0,0,0,0.6);">
+			<div class="horizontal no-drag" style="height: 13px;">
+				<div class="" style="width: 17px;">
+					<input type="button" class="btnFastBackward no-drag disabled" />
+				</div>
+
+				<div class="" style="cursor: pointer;">
+					<div class="progress progress-striped process-title" style="height: 3px; margin-top: 7px; margin-bottom: 0; ">
+						<div class="progress-bar progress-bar-success  " role="progressbar" aria-valuenow="70" aria-valuemin="10" aria-valuemax="100" style="width:30%;height: 2px;"> </div>
+					</div>
+				</div>
+				<div class="" style="width: 17px;">
+					<input type="button" class="btnFastForward no-drag disabled" />
+				</div>
+				<!--<input type="button" class="btnFastForward no-drag disabled" />-->
+
+			</div>
+
+			<div class="flex-row   flex-middle" style="margin-top: -10px;">
+				<div class="drag flex-column flex-middle" style=" height: 62px;  ">
+					<div class="flex-left flex-item-4" style="   height: 40px;">
+						<div class="flex-column flex-left" style="  margin-right: 10px;">
+							<input type="button" class="btnPlaylistShow no-drag disabled" />
+
+						</div>
+					</div>
+					<div class="flex-item-12" style="  height: 40px;">
+						<div class="flex-column">
+							<div class="flex-item" style=" ">
+								<div class="flex-column flex-middle flex-right">
+									<input type="button" class="btnClip no-drag disabled" />
+									<input type="button" class="btnStop no-drag disabled" />
+								</div>
+
+							</div>
+
+							<div class="" style=" width: 140px;">
+								<div class="flex-column flex-middle flex-center">
+									<input type="button" class="btnPrevious no-drag disabled" />
+									<input type="button" class="btnPlay no-drag disabled" />
+									<input type="button" class="btnPause no-drag hidden" />
+									<input type="button" class="btnNext no-drag disabled" />
+								</div>
+
+							</div>
+
+							<div class="flex-item" style="">
+								<div class="flex-column flex-middle flex-left">
+									<input type="button" class="btnVolume no-drag " />
+									<input type="button" class="btnVolumeZero no-drag hidden" />
+									<div class="no-drag" style="  width: 100px; height: 16px; cursor: pointer;">
+										<div class="progress progress-striped process-title" style="height: 2px; margin-top: 7px;">
+											<div class="progress-bar progress-bar-success  " role="progressbar" aria-valuenow="70" aria-valuemin="10" aria-valuemax="100" style="width:30%;height: 2px;"> </div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+					<div class="flex-right flex-item-4" style="   height: 40px;">
+
+						<div class="flex-column flex-right" style="  margin-right: 0px;">
+							<input type="button" class="btnOpenMini no-drag disabled" />
+							<input type="button" class="btnScreenFull no-drag disabled" disabled="disabled" />
+							<input type="button" class="btnScreenNormal no-drag disabled" />
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
 		</div>
 	</body>
+
 </html>

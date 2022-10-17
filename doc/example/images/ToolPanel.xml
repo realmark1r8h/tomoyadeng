@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<Window size="609,25" >
+     
+	<HorizontalLayout height="25" bkimage="bk.png">
+		<Control width="10" />
+		<CheckBox name="topmost_btn" tooltip="置顶" height="24" width="24"  normalimage="topmost.png" hotimage="topmost_h.png" selectedimage="topmost_s.png" />
+		<Control width="48" />
+		<HorizontalLayout >
+		<Label name="title" textcolor="#FFFFFFFF" align="center"/>
+		</HorizontalLayout>
+		<HorizontalLayout name="size_ctrl_layout" width="48">
+		<Button name="min_btn" tooltip="最小化" height="24" width="24" normalimage="min.png" hotimage="min_h.png" pushedimage="min_p.png"/>
+		<Button name="max_btn" tooltip="最大化" height="24" width="24"  normalimage="max.png" hotimage="max_h.png" pushedimage="max_p.png"/>
+		<Button name="restore_btn" visible="false" tooltip="恢复" height="24" width="24"  normalimage="restore.png" hotimage="restore_h.png" pushedimage="restore_p.png"/>
+		</HorizontalLayout>
+	 
+		<Button name="close_btn" tooltip="关闭" height="24" width="24"  normalimage="close.png" hotimage="close_h.png" pushedimage="close_p.png"/>
+		<HorizontalLayout width="5"/>
+		 
+  </HorizontalLayout>
+        
+    
+</Window>

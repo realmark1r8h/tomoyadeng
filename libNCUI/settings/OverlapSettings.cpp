@@ -80,6 +80,7 @@ namespace amo {
                 item.put("src", src);
                 item.put("dst", dst);
                 item.put("index", p.index);
+                item.put("renderMode", p.renderMode);
                 arr.push_back(item);
                 
             }

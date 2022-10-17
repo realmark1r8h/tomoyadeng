@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<Window size="410,357">
+    <HorizontalLayout bkcolor="#FF070707" >
+     
+		<VerticalLayout />
+		<VerticalLayout width="336">
+			<HorizontalLayout />
+			<HorizontalLayout height="290">
+				<Control float="true" pos="0,26,0,0" width="336" height="164" bkimage="bk_logo_image.png" />
+			</HorizontalLayout>
+			<HorizontalLayout />
+		</VerticalLayout>
+		<VerticalLayout />
+	  
+	</HorizontalLayout>
+	
+</Window>

@@ -523,6 +523,46 @@ namespace amo {
             settings.height = 1080;
             settings.name = "face-overlap";
             settings.index = 3;
+            settings.regions.reset(new OverlapRegions());
+            
+            {
+                OverlapRect rect;
+                rect.dst = amo::rect(0, 0, 100, 400);
+                rect.src = amo::rect(0, 0, 1920, 1080);
+                rect.renderMode = 0;
+                rect.index = 1;
+                settings.regions->m_regions.push_back(rect);
+            }
+            
+            
+            {
+                OverlapRect rect;
+                rect.dst = amo::rect(200, 0, 100, 400);
+                rect.src = amo::rect(0, 0, 120, 1080);
+                rect.renderMode = 1;
+                rect.index = 2;
+                settings.regions->m_regions.push_back(rect);
+            }
+            
+            {
+                OverlapRect rect;
+                rect.dst = amo::rect(400, 0, 100, 400);
+                rect.src = amo::rect(0, 0, 1920, 1080);
+                rect.renderMode = 2;
+                rect.index = 3;
+                settings.regions->m_regions.push_back(rect);
+            }
+            
+            {
+                OverlapRect rect;
+                //rect.dst = amo::rect(0, 0, 100, 400);
+                rect.src = amo::rect(0, 0, 1920, 1080);
+                rect.renderMode = 1;
+                rect.index = 0;
+                settings.regions->m_regions.push_back(rect);
+            }
+            
+            
             settings.renderMode = 1;
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, settings.toJson());

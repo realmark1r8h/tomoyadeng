@@ -67,6 +67,7 @@ namespace amo {
                 rect.src = amo::rect(0, 0, width, height);
                 defaultRegions->m_regions.push_back(rect);
             }
+            
         }
         amo::rect getCanvasRect() const {
             return canvasRect;
