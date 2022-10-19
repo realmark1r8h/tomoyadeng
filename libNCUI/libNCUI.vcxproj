@@ -500,6 +500,7 @@
     <ClInclude Include="ui\win\renderer\D2D1Render.hpp" />
     <ClInclude Include="ui\win\renderer\D2D1RendererOld.h" />
     <ClInclude Include="ui\win\renderer\D2D1Utility.hpp" />
+    <ClInclude Include="ui\win\renderer\GDIPlusBitmap.hpp" />
     <ClInclude Include="ui\win\renderer\GdiRenderer.h" />
     <ClInclude Include="ui\win\RenderView.h" />
     <ClInclude Include="ui\win\SharedMemory.h" />

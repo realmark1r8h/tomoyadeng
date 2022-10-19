@@ -66,6 +66,8 @@ namespace amo {
                return;
            }*/
         
+        PAINTSTRUCT ps = { 0 };
+        ::BeginPaint(m_hWnd, &ps);
         RECT rcClient;
         ::GetWindowRect(m_hWnd, &rcClient);
         int nWidth = rcClient.right - rcClient.left;
@@ -131,6 +133,7 @@ namespace amo {
         ::ReleaseDC(m_hWnd, memDC);
         
         ::ReleaseDC(m_hWnd, hDC);
+        ::EndPaint(m_hWnd, &ps);
         //$cdevel("渲染用时：{}", t.elapsed());
         
     }

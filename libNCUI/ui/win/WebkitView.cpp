@@ -561,7 +561,7 @@ namespace amo {
                 rect.index = 0;
                 settings.regions->m_regions.push_back(rect);
             }
-            
+            //
             
             settings.renderMode = 1;
             auto msg = IPCMessage::Empty();
@@ -574,7 +574,7 @@ namespace amo {
             //browser->GetHost()->SetWindowlessFrameRate(50);
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, true);
-            msg->getArgumentList()->setValue(1, 30);
+            msg->getArgumentList()->setValue(1, 60);
             repaint(msg);
             
         }

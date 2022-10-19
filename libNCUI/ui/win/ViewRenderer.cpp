@@ -4,6 +4,7 @@
 #include "ui/win/renderer/D2D1RendererOld.h"
 #include "ui/win/renderer/GdiRenderer.h"
 #include "ui/win/renderer/D2D1Utility.hpp"
+#include "ui/win/renderer/GDIPlusBitmap.hpp"
 
 #pragma comment(lib, "Msimg32.lib")
 
@@ -167,26 +168,32 @@ namespace amo {
         }
         
         m_dcRenderer->BeginDraw();
-        std::sort(m_resource->overlaps.begin(),
-                  m_resource->overlaps.end(), [&](std::shared_ptr<Overlap>& a,
-        std::shared_ptr<Overlap>& b) {
-            return a->m_settings->index < b->m_settings->index;
-        });
+        m_dcRenderer->Clear(amo::d2d1::ImFloat4(1, 1, 1, 1).ToD2DColorF());
+        std::vector<std::shared_ptr<amo::d2d1::D2D1Bitmap> >  bitmaps;
+        std::vector<std::shared_ptr<amo::d2d1::D2D1Bitmap> > regions;
+        
         
         for (auto& p : m_resource->overlaps) {
-            ID2D1Bitmap* bitmap = NULL;
-            bitmap = amo::d2d1::D2D1Bitmap::CreateBitmpFromMemory(
-                         m_dcRenderer->GetMainRT(), p);
-                         
-            if (bitmap == NULL) {
-                continue;
-            }
+        
+            std::shared_ptr<amo::d2d1::D2D1Bitmap> bitmap(new amo::d2d1::D2D1Bitmap(
+                        m_dcRenderer->GetMainRT(), p));
+            bitmaps.push_back(bitmap);
             
-            m_dcRenderer->GetMainRT()->DrawBitmap(bitmap);
-            amo::d2d1::SafeRelease(&bitmap);
+            auto vec = bitmap->regions();
+            regions.insert(regions.end(), vec.begin(), vec.end());
         }
         
-        //m_dcRenderer->DrawImage("background.png", 0, 0, 0, 0);
+        std::sort(regions.begin(),
+                  regions.end(), [&](std::shared_ptr<amo::d2d1::D2D1Bitmap>& a,
+        std::shared_ptr<amo::d2d1::D2D1Bitmap>& b) {
+            return a->getRenderIndex() < b->getRenderIndex();
+        });
+        
+        
+        for (auto& p : regions) {
+            p->drawBitmap();
+        }
+        
         m_dcRenderer->EndDraw();
         
         if (releaseRenderer) {
@@ -199,10 +206,46 @@ namespace amo {
             return;
         }
         
-        GdiRenderer gdiRenderer;
-        RECT srcRect = GetPos();
-        gdiRenderer.setRect(amo::rect(srcRect));
-        gdiRenderer.Render(hDC, m_resource);
+        if (!m_resource) {
+            return;
+        }
+        
+        std::shared_ptr<Graphics> m_graphics(new Graphics(hDC));
+        
+        
+        
+        std::vector<std::shared_ptr<amo::d2d1::GdiplusBitmap> >  bitmaps;
+        std::vector<std::shared_ptr<amo::d2d1::GdiplusBitmap> > regions;
+        
+        
+        for (auto& p : m_resource->overlaps) {
+        
+            std::shared_ptr<amo::d2d1::GdiplusBitmap> bitmap(new amo::d2d1::GdiplusBitmap(
+                        m_graphics, p));
+            bitmaps.push_back(bitmap);
+            
+            auto vec = bitmap->regions();
+            regions.insert(regions.end(), vec.begin(), vec.end());
+        }
+        
+        std::sort(regions.begin(),
+                  regions.end(), [&](std::shared_ptr<amo::d2d1::GdiplusBitmap>& a,
+        std::shared_ptr<amo::d2d1::GdiplusBitmap>& b) {
+            return a->getRenderIndex() < b->getRenderIndex();
+        });
+        
+        
+        for (auto& p : regions) {
+            p->drawBitmap();
+        }
+        
+        m_graphics->ReleaseHDC(hDC);
+        /*
+        
+                GdiRenderer gdiRenderer;
+                RECT srcRect = GetPos();
+                gdiRenderer.setRect(amo::rect(srcRect));
+                gdiRenderer.Render(hDC, m_resource);*/
     }
     
     ViewRenderer::ViewRenderer() {
@@ -229,6 +272,10 @@ namespace amo {
         }
         
         m_resource->setPos(GetPos());
+        
+        for (auto& p : m_resource->overlaps) {
+            p->setCanvasRect(GetPos());
+        }
         
         if (!m_paintSettings->offscreen) {
             return;

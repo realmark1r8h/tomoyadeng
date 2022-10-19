@@ -1061,6 +1061,9 @@
     <ClInclude Include="ui\win\renderer\D2D1Render.hpp">
       <Filter>ui\win\renderer</Filter>
     </ClInclude>
+    <ClInclude Include="ui\win\renderer\GDIPlusBitmap.hpp">
+      <Filter>ui\win\renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="libNCUI.rc">

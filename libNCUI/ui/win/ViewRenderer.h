@@ -87,6 +87,8 @@ namespace amo {
         std::shared_ptr<amo::d2d1::D2D1HWNDRenderer> m_hwndRenderer;
         
         std::shared_ptr<amo::d2d1::D2D1DCRenderer> m_dcRenderer;
+        
+        
         /*! @brief	是否使用硬件加速. */
         bool m_accelerator;
         
