@@ -5,32 +5,9 @@
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
 
-## getName &nbsp;<span class="label label-sync">同步</span> 
+## getBrowserWindowSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
-  获取窗口名.
-  
-* **函数参数**  无
-
-* **返回值**
-  String . 
-
-* **参考** 
-<a href="#api/apiBrowserWindow/1">setName</a>
-
-* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
-
-```html
-var win = BrowserWindow.current;
-console.log(win.getName());
-
-```
-
-
-<div class="adoc" id="div_getName"></div>
-
-
-## setName &nbsp;
-  设置窗口名,这个函数暂时还没有什么用，只是把名称保留下来了.
+  获取指定URL的默认窗口参数.
   
 * **函数参数**
 
@@ -46,29 +23,22 @@ console.log(win.getName());
 		<tr>
 	<td>String </td>
 	<td></td>
-	<td>名称.</td>
+	<td>URL.</td>
 </tr>
 	</tbody>
 </table>
 
 * **返回值**
-   无. 
-
-* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
-
-```html
-var win = BrowserWindow.current;
-win.setName('NCUI测试窗口');
-console.assert(win.getName() == 'NCUI测试窗口');
-
-```
+  JsonObject . 
 
 
-<div class="adoc" id="div_setName"></div>
+
+<div class="adoc" id="div_getBrowserWindowSettings"></div>
 
 
-## showTitleBar &nbsp;
-  显示/隐藏标题栏.
+## addBrowserWindowSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+
+  为一个URL预设置窗口参数，当这个URL对应及其子路径的浏览器窗口由浏览器触发创建时，将使用该方法预设置的参数.<br>说明：**该方法并不能影响new BrowserWindow() 创建的浏览器窗口**
   
 * **函数参数**
 
@@ -82,9 +52,13 @@ console.assert(win.getName() == 'NCUI测试窗口');
 	</thead>
 	<tbody>
 		<tr>
-	<td>Boolean</td>
-	<td>false </td>
-	<td>true显示/false隐藏.</td>
+	<td>String </td>
+	<td></td>
+	<td>需要预设置窗口参数的url.</td>
+</tr><tr>
+	<td>JsonObject </td>
+	<td></td>
+	<td>可以支持的<a href="#settings/settingsBrowserWindowSettings">浏览器窗口参数</a></td>
 </tr>
 	</tbody>
 </table>
@@ -92,40 +66,118 @@ console.assert(win.getName() == 'NCUI测试窗口');
 * **返回值**
    无. 
 
+* **参考** 
+<a href="#settings/settingsBrowserWindowSettings">浏览器窗口参数</a>
+
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-var win = BrowserWindow.current;
-var titleBar = win.getConfig('titleBar');
-win.showTitleBar(!titleBar);
+include('BrowserWindow');
+BrowserWindow.addBrowserWindowSettings('https://www.baidu.com',{titleBar: true});
+window.open('https://www.baidu.com');
+window.open('https://www.baidu.com/more');
+
 
 ```
 
 
-<div class="adoc" id="div_showTitleBar"></div>
+<div class="adoc" id="div_addBrowserWindowSettings"></div>
 
 
-## close &nbsp;
-  尝试关闭窗口，可以被用户取消如：window.onload.<br>当<a href="#api/apiBrowserWindow/38">isClosable</a>为true,该函数无效.
+## removeBrowserWindowSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+
+  移除一个URL的默认窗口参数.
   
-* **函数参数**  无
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String </td>
+	<td></td>
+	<td>需要移除浏览器窗口参数的URL.</td>
+</tr>
+	</tbody>
+</table>
 
 * **返回值**
    无. 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/4">destroy</a>, <a href="#api/apiBrowserWindow/37">setClosable</a>
+
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-var win = BrowserWindow.current;
-win.close();
+include('BrowserWindow');
+BrowserWindow.removeBrowserWindowSettings('https://www.baidu.com');
+window.open('https://www.baidu.com');
+window.open('https://www.baidu.com/more');
 
 ```
 
 
-<div class="adoc" id="div_close"></div>
+<div class="adoc" id="div_removeBrowserWindowSettings"></div>
+
+
+## BrowserWindow &nbsp;<span class="label label-constructor">构造</span> <span class="label label-sync">同步</span> 
+
+  创建一个浏览器窗口.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>Object </td>
+	<td></td>
+	<td>参见<a href="#settings/settingsBrowserWindowSettings">浏览器窗口参数</a>.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+  BrowserWindow 一个浏览器窗口对象. 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('BrowserWindow');
+// 创建一个普通窗口
+var win = new BrowserWindow({titleBar:true, url: 'http://127.0.0.1:8020/doc/example/BrowserWindow.html'});
+// 创建一个离屏窗口
+new BrowserWindow({
+        titleBar:false,
+        url: 'http://127.0.0.1:8020/doc/example/FramelessWindow.html',
+        offscreen: true
+    });
+// 创建一个透明窗口
+new BrowserWindow({
+        titleBar:false,
+        hasShadow:false,
+        url: 'http://127.0.0.1:8020/doc/example/TransparentWindow.html',
+        offscreen: true,
+        transparent: true
+    });
+
+```
+
+
+<div class="adoc" id="div_BrowserWindow"></div>
 
 
 ## destroy &nbsp;
@@ -137,7 +189,7 @@ win.close();
    无. 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/3">close</a>, <a href="#api/apiBrowserWindow/37">setClosable</a>
+<a href="#api/apiBrowserWindow/73">close</a>, <a href="#api/apiBrowserWindow/37">setClosable</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
@@ -1802,50 +1854,33 @@ win.setConfig({
 * **返回值**
   JsonObject 所有配置参数. 
 
-*****
-  获取窗口的指定配置参数.
-  
-* **函数参数**
 
-<table class="table table-hover table-bordered ">
-	<thead>
-		<tr>
-			<th class="col-xs-1">类型</th>
-			<th class="col-xs-1">默认值</th>
-			<th>说明</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-	<td>String </td>
-	<td></td>
-	<td>需要获取的字段名称.</td>
-</tr>
-	</tbody>
-</table>
+
+<div class="adoc" id="div_getConfig"></div>
+
+
+## getName &nbsp;<span class="label label-sync">同步</span> 
+
+  获取窗口名.
+  
+* **函数参数**  无
 
 * **返回值**
-   返回字段名所对应的配置参数。返回类型视配置参数类型而定，为JS所支持的基本数据类型. 
+  String . 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/54">setConfig</a>
+<a href="#api/apiBrowserWindow/63">setName</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-//获取浏览器窗口的所有配置参数
 var win = BrowserWindow.current;
-var config = win.getConfig();
-console.log(config);
-
-//获取浏览器窗口的指定配置参数
-var titleBar = win.getConfig('titleBar');
-console.assert(titleBar == false);
+console.log(win.getName());
 
 ```
 
 
-<div class="adoc" id="div_getConfig"></div>
+<div class="adoc" id="div_getName"></div>
 
 
 ## setOpacity &nbsp;
@@ -1874,7 +1909,7 @@ console.assert(titleBar == false);
    无. 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/57">getOpacity</a>
+<a href="#api/apiBrowserWindow/58">getOpacity</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
@@ -1898,7 +1933,7 @@ BrowserWindow.current.setOpacity(200);
   Int 不透明度. 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/56">setOpacity</a>
+<a href="#api/apiBrowserWindow/57">setOpacity</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
@@ -2020,9 +2055,8 @@ console.assert(win.isComputeCursor() == true);
 <div class="adoc" id="div_isComputeCursor"></div>
 
 
-## BrowserWindow &nbsp;<span class="label label-constructor">构造</span> <span class="label label-sync">同步</span> 
-
-  创建一个浏览器窗口.
+## setName &nbsp;
+  设置窗口名,这个函数暂时还没有什么用，只是把名称保留下来了.
   
 * **函数参数**
 
@@ -2036,41 +2070,27 @@ console.assert(win.isComputeCursor() == true);
 	</thead>
 	<tbody>
 		<tr>
-	<td>Object </td>
+	<td>String </td>
 	<td></td>
-	<td>参见<a href="#settings/settingsBrowserWindowSettings">浏览器窗口参数</a>.</td>
+	<td>名称.</td>
 </tr>
 	</tbody>
 </table>
 
 * **返回值**
-  BrowserWindow 一个浏览器窗口对象. 
+   无. 
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-include('BrowserWindow');
-// 创建一个普通窗口
-var win = new BrowserWindow({titleBar:true, url: 'http://127.0.0.1:8020/doc/example/BrowserWindow.html'});
-// 创建一个离屏窗口
-new BrowserWindow({
-        titleBar:false,
-        url: 'http://127.0.0.1:8020/doc/example/FramelessWindow.html',
-        offscreen: true
-    });
-// 创建一个透明窗口
-new BrowserWindow({
-        titleBar:false,
-        hasShadow:false,
-        url: 'http://127.0.0.1:8020/doc/example/TransparentWindow.html',
-        offscreen: true,
-        transparent: true
-    });
+var win = BrowserWindow.current;
+win.setName('NCUI测试窗口');
+console.assert(win.getName() == 'NCUI测试窗口');
 
 ```
 
 
-<div class="adoc" id="div_BrowserWindow"></div>
+<div class="adoc" id="div_setName"></div>
 
 
 ## currentWindow &nbsp;<span class="label label-deprecated">废弃</span> 
@@ -2083,24 +2103,58 @@ new BrowserWindow({
   BrowserWindow 如果不存在，返回Undefined. 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/64">current</a>
+<a href="#api/apiBrowserWindow/74">current</a>
 
 
 
 <div class="adoc" id="div_currentWindow"></div>
 
 
-## current &nbsp;
-  获取当前页面所对应的窗口对象.
+## getConfig &nbsp;<span class="label label-sync">同步</span> 
+
+  获取窗口的指定配置参数.
   
-* **函数参数**  无
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String </td>
+	<td></td>
+	<td>需要获取的字段名称.</td>
+</tr>
+	</tbody>
+</table>
 
 * **返回值**
-  BrowserWindow 如果不存在，返回Undefined. 
+   返回字段名所对应的配置参数。返回类型视配置参数类型而定，为JS所支持的基本数据类型. 
+
+* **参考** 
+<a href="#api/apiBrowserWindow/54">setConfig</a>
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+//获取浏览器窗口的所有配置参数
+var win = BrowserWindow.current;
+var config = win.getConfig();
+console.log(config);
+
+//获取浏览器窗口的指定配置参数
+var titleBar = win.getConfig('titleBar');
+console.assert(titleBar == false);
+
+```
 
 
-
-<div class="adoc" id="div_current"></div>
+<div class="adoc" id="div_getConfig"></div>
 
 
 ## getAllWindows &nbsp;
@@ -2256,9 +2310,8 @@ new BrowserWindow({
 <div class="adoc" id="div_getDragBlackList"></div>
 
 
-## addBrowserWindowSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
-
-  为一个URL预设置窗口参数，当这个URL对应及其子路径的浏览器窗口由浏览器触发创建时，将使用该方法预设置的参数.<br>说明：**该方法并不能影响new BrowserWindow() 创建的浏览器窗口**
+## showTitleBar &nbsp;
+  显示/隐藏标题栏.
   
 * **函数参数**
 
@@ -2272,13 +2325,9 @@ new BrowserWindow({
 	</thead>
 	<tbody>
 		<tr>
-	<td>String </td>
-	<td></td>
-	<td>需要预设置窗口参数的url.</td>
-</tr><tr>
-	<td>JsonObject </td>
-	<td></td>
-	<td>可以支持的<a href="#settings/settingsBrowserWindowSettings">浏览器窗口参数</a></td>
+	<td>Boolean</td>
+	<td>false </td>
+	<td>true显示/false隐藏.</td>
 </tr>
 	</tbody>
 </table>
@@ -2286,95 +2335,52 @@ new BrowserWindow({
 * **返回值**
    无. 
 
-* **参考** 
-<a href="#settings/settingsBrowserWindowSettings">浏览器窗口参数</a>
-
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-include('BrowserWindow');
-BrowserWindow.addBrowserWindowSettings('https://www.baidu.com',{titleBar: true});
-window.open('https://www.baidu.com');
-window.open('https://www.baidu.com/more');
-
+var win = BrowserWindow.current;
+var titleBar = win.getConfig('titleBar');
+win.showTitleBar(!titleBar);
 
 ```
 
 
-<div class="adoc" id="div_addBrowserWindowSettings"></div>
+<div class="adoc" id="div_showTitleBar"></div>
 
 
-## removeBrowserWindowSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
-
-  移除一个URL的默认窗口参数.
+## close &nbsp;
+  尝试关闭窗口，可以被用户取消如：window.onload.<br>当<a href="#api/apiBrowserWindow/38">isClosable</a>为true,该函数无效.
   
-* **函数参数**
-
-<table class="table table-hover table-bordered ">
-	<thead>
-		<tr>
-			<th class="col-xs-1">类型</th>
-			<th class="col-xs-1">默认值</th>
-			<th>说明</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-	<td>String </td>
-	<td></td>
-	<td>需要移除浏览器窗口参数的URL.</td>
-</tr>
-	</tbody>
-</table>
+* **函数参数**  无
 
 * **返回值**
    无. 
 
 * **参考** 
-
+<a href="#api/apiBrowserWindow/4">destroy</a>, <a href="#api/apiBrowserWindow/37">setClosable</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-include('BrowserWindow');
-BrowserWindow.removeBrowserWindowSettings('https://www.baidu.com');
-window.open('https://www.baidu.com');
-window.open('https://www.baidu.com/more');
+var win = BrowserWindow.current;
+win.close();
 
 ```
 
 
-<div class="adoc" id="div_removeBrowserWindowSettings"></div>
+<div class="adoc" id="div_close"></div>
 
 
-## getBrowserWindowSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
-
-  获取指定URL的默认窗口参数.
+## current &nbsp;
+  获取当前页面所对应的窗口对象.
   
-* **函数参数**
-
-<table class="table table-hover table-bordered ">
-	<thead>
-		<tr>
-			<th class="col-xs-1">类型</th>
-			<th class="col-xs-1">默认值</th>
-			<th>说明</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-	<td>String </td>
-	<td></td>
-	<td>URL.</td>
-</tr>
-	</tbody>
-</table>
+* **函数参数**  无
 
 * **返回值**
-  JsonObject . 
+  BrowserWindow 如果不存在，返回Undefined. 
 
 
 
-<div class="adoc" id="div_getBrowserWindowSettings"></div>
+<div class="adoc" id="div_current"></div>
 
 

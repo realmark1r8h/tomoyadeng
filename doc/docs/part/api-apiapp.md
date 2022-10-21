@@ -14,46 +14,6 @@
 * **返回值**
   JsonObject 所有配置参数. 
 
-*****
-  获取应用程序的指定配置参数.
-  
-* **函数参数**
-
-<table class="table table-hover table-bordered ">
-	<thead>
-		<tr>
-			<th class="col-xs-1">类型</th>
-			<th class="col-xs-1">默认值</th>
-			<th>说明</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-	<td>String </td>
-	<td></td>
-	<td>需要获取的字段名称.</td>
-</tr>
-	</tbody>
-</table>
-
-* **返回值**
-   返回字段名所对应的配置参数。返回类型视配置参数类型而定，为JS所支持的基本数据类型. 
-
-* **参考** 
-<a href="#api/apiapp/1">setConfig</a>
-
-* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
-
-```html
-//获取应用程序的所有配置参数
-var config = app.getConfig();
-console.log(config);
-
-//获取应用程序的指定配置参数
-var single_process = app.getConfig('single_process');
-console.log('单进程模式：' + single_process);
-
-```
 
 
 <div class="adoc" id="div_getConfig"></div>
@@ -532,5 +492,50 @@ app.destroy();
 
 
 <div class="adoc" id="div_destroy"></div>
+
+
+## getConfig &nbsp;
+  获取应用程序的指定配置参数.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String </td>
+	<td></td>
+	<td>需要获取的字段名称.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+   返回字段名所对应的配置参数。返回类型视配置参数类型而定，为JS所支持的基本数据类型. 
+
+* **参考** 
+<a href="#api/apiapp/1">setConfig</a>
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+//获取应用程序的所有配置参数
+var config = app.getConfig();
+console.log(config);
+
+//获取应用程序的指定配置参数
+var single_process = app.getConfig('single_process');
+console.log('单进程模式：' + single_process);
+
+```
+
+
+<div class="adoc" id="div_getConfig"></div>
 
 

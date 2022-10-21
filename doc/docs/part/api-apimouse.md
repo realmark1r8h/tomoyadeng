@@ -60,56 +60,6 @@ var pos = mouse.clientToScreen(win, 100, 100);
 console.log(pos);
 
 ```
-## click &nbsp;
-  单击鼠标左键.
-  
-* **函数参数**
-
-<table class="table table-hover table-bordered ">
-	<thead>
-		<tr>
-			<th class="col-xs-1">类型</th>
-			<th class="col-xs-1">默认值</th>
-			<th>说明</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-	<td>Int</td>
-	<td>0 </td>
-	<td>x坐标</td>
-</tr><tr>
-	<td>Int</td>
-	<td>0 </td>
-	<td>y坐标</td>
-</tr>
-	</tbody>
-</table>
-
-* **返回值**
-   无. 
-
-* **参考** 
-<a href="#api/apimouse/2">leftClick</a>
-
-* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
-
-```html
-includes('BrowserWindow','mouse');
-var win = BrowserWindow.current;
-// 获取最大化按钮的位置
-var winRect = win.getWindowRect();
-var x = winRect.r - 50;
-var y = winRect.y + 10;
-// 点击最大化按钮
-mouse.click(x,y);
-
-```
-
-
-<div class="adoc" id="div_click"></div>
-
-
 ## leftClick &nbsp;<span class="label label-static">静态</span> 
 
   单击左键.
@@ -141,7 +91,7 @@ mouse.click(x,y);
    无. 
 
 * **参考** 
-<a href="#api/apimouse/1">click</a>
+<a href="#api/apimouse/15">click</a>
 
 
 
@@ -672,19 +622,6 @@ mouse.restoreMousePos();
 <div class="adoc" id="div_restoreMousePos"></div>
 
 
-## lockMouse &nbsp;
-  锁定鼠标，禁止所有鼠标功能（未实现）.
-  
-* **函数参数**  无
-
-* **返回值**
-   无. 
-
-
-
-<div class="adoc" id="div_lockMouse"></div>
-
-
 ## unlockMouse &nbsp;<span class="label label-static">静态</span> 
 
   解锁鼠标（未实现）.s
@@ -697,6 +634,69 @@ mouse.restoreMousePos();
 
 
 <div class="adoc" id="div_unlockMouse"></div>
+
+
+## click &nbsp;
+  单击鼠标左键.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>Int</td>
+	<td>0 </td>
+	<td>x坐标</td>
+</tr><tr>
+	<td>Int</td>
+	<td>0 </td>
+	<td>y坐标</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+   无. 
+
+* **参考** 
+<a href="#api/apimouse/1">leftClick</a>
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+includes('BrowserWindow','mouse');
+var win = BrowserWindow.current;
+// 获取最大化按钮的位置
+var winRect = win.getWindowRect();
+var x = winRect.r - 50;
+var y = winRect.y + 10;
+// 点击最大化按钮
+mouse.click(x,y);
+
+```
+
+
+<div class="adoc" id="div_click"></div>
+
+
+## lockMouse &nbsp;
+  锁定鼠标，禁止所有鼠标功能（未实现）.
+  
+* **函数参数**  无
+
+* **返回值**
+   无. 
+
+
+
+<div class="adoc" id="div_lockMouse"></div>
 
 
 ## waitClick &nbsp;
@@ -779,7 +779,7 @@ console.log(pos);
    无. 
 
 * **参考** 
-<a href="#api/apimouse/10">moveTo</a>
+<a href="#api/apimouse/9">moveTo</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 

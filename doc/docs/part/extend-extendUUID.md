@@ -5,27 +5,6 @@
 * **父类** 
 <a href="#api/apiRunnable">Runnable</a>&nbsp;
 
-## UUID &nbsp;<span class="label label-constructor">构造</span> 
-
-  创建一个UUID 对象.
-  
-* **函数参数**  无
-
-* **返回值**
-  UUID 实例 
-
-* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
-
-```html
-include('UUID');
-var uuid = new UUID();
-
-```
-
-
-<div class="adoc" id="div_UUID"></div>
-
-
 ## fromString &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   用一个字符串构建UUID.
@@ -127,6 +106,27 @@ console.log(UUID.nilString());
 
 
 <div class="adoc" id="div_nilString"></div>
+
+
+## UUID &nbsp;<span class="label label-constructor">构造</span> 
+
+  创建一个UUID 对象.
+  
+* **函数参数**  无
+
+* **返回值**
+  UUID 实例 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('UUID');
+var uuid = new UUID();
+
+```
+
+
+<div class="adoc" id="div_UUID"></div>
 
 
 ## toString &nbsp;<span class="label label-sync">同步</span> 

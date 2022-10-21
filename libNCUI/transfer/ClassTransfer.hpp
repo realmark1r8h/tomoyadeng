@@ -684,6 +684,7 @@ namespace amo {
         
         /**
         * @fn  static Any fromObjectID(IPCMessage::SmartType msg)
+        * @tag static sync single
         *
         * @brief	通过对象ID查找对象.
         *

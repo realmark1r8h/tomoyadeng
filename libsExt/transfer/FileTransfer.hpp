@@ -44,7 +44,7 @@ namespace amo {
         /**
          * @fn	FileTransfer::FileStream(const amo::string& fileName, int mode = 3)
          * @tag constructor
-         *
+         * @index 1
          * @brief	创建或打开一个文件.
          *
          * @param	#String 需要操作文件的路径.

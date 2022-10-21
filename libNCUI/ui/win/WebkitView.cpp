@@ -522,60 +522,82 @@ namespace amo {
             settings.width = 1920;
             settings.height = 1080;
             settings.name = "face-overlap";
-            settings.index = 3;
+            settings.index = 9;
             settings.regions.reset(new OverlapRegions());
             
-            {
-                OverlapRect rect;
-                rect.dst = amo::rect(0, 0, 100, 400);
-                rect.src = amo::rect(0, 0, 1920, 1080);
-                rect.renderMode = 0;
-                rect.index = 1;
-                settings.regions->m_regions.push_back(rect);
-            }
             
+            amo::rect rt(0, 0, 1980, 1080);
+            std::vector<amo::rect> srcRects = 	rt.split();
+            amo::rect dstRect = GetPos();// (0, 0, 900, 900);
+            std::vector<amo::rect> dstRects = dstRect.split();
             
-            {
+            for (size_t i = 0 ; i < dstRects.size(); ++i) {
+                if (i == 4) {
+                    continue;
+                }
+                
                 OverlapRect rect;
-                rect.dst = amo::rect(200, 0, 100, 400);
-                rect.src = amo::rect(0, 0, 120, 1080);
-                rect.renderMode = 1;
-                rect.index = 2;
-                settings.regions->m_regions.push_back(rect);
-            }
-            
-            {
-                OverlapRect rect;
-                rect.dst = amo::rect(400, 0, 100, 400);
-                rect.src = amo::rect(0, 0, 1920, 1080);
+                rect.dst = dstRects[i];
+                rect.src = srcRects[i];
                 rect.renderMode = 2;
-                rect.index = 3;
+                rect.index = i + 10;
+                
                 settings.regions->m_regions.push_back(rect);
+                //break;
             }
             
-            {
-                OverlapRect rect;
-                //rect.dst = amo::rect(0, 0, 100, 400);
-                rect.src = amo::rect(0, 0, 1920, 1080);
-                rect.renderMode = 1;
-                rect.index = 0;
-                settings.regions->m_regions.push_back(rect);
-            }
+            //{
+            //    OverlapRect rect;
+            //    rect.dst = amo::rect(0, 0, 100, 400);
+            //    rect.src = amo::rect(0, 0, 1920, 1080);
+            //    rect.renderMode = 0;
+            //    rect.index = 1;
+            //    settings.regions->m_regions.push_back(rect);
+            //}
+            //
+            //
+            //{
+            //    OverlapRect rect;
+            //    rect.dst = amo::rect(200, 0, 100, 400);
+            //    rect.src = amo::rect(0, 0, 120, 1080);
+            //    rect.renderMode = 1;
+            //    rect.index = 2;
+            //    settings.regions->m_regions.push_back(rect);
+            //}
+            //
+            //{
+            //    OverlapRect rect;
+            //    rect.dst = amo::rect(400, 0, 100, 400);
+            //    rect.src = amo::rect(0, 0, 1920, 1080);
+            //    rect.renderMode = 2;
+            //    rect.index = 3;
+            //    settings.regions->m_regions.push_back(rect);
+            //}
+            //
+            //{
+            //    OverlapRect rect;
+            //    //rect.dst = amo::rect(0, 0, 100, 400);
+            //    rect.src = amo::rect(0, 0, 1920, 1080);
+            //    rect.renderMode = 1;
+            //    rect.index = 9;
+            //    settings.regions->m_regions.push_back(rect);
+            //}
+            
             //
             
             settings.renderMode = 1;
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, settings.toJson());
             
-            addOverlap(msg);
+            //addOverlap(msg);
         }
         
         {
             //browser->GetHost()->SetWindowlessFrameRate(50);
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, true);
-            msg->getArgumentList()->setValue(1, 60);
-            repaint(msg);
+            msg->getArgumentList()->setValue(1, 30);
+            //repaint(msg);
             
         }
         

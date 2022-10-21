@@ -5,6 +5,44 @@
 * **父类** 
 <a href="#api/apiRunnable">Runnable</a>&nbsp;
 
+## findPIDByName &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+
+  通过程序名称查找进程.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String </td>
+	<td></td>
+	<td>程序名.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+  Array 与程序名匹配的进程ID列表. 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Process');
+console.log(Process.findPIDByName('NCUI.exe'));
+
+```
+
+
+<div class="adoc" id="div_findPIDByName"></div>
+
+
 ## Process &nbsp;<span class="label label-constructor">构造</span> <span class="label label-sync">同步</span> 
 
   创建一个进程类.
@@ -42,44 +80,6 @@ process.start();
 
 
 <div class="adoc" id="div_Process"></div>
-
-
-## findPIDByName &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
-
-  通过程序名称查找进程.
-  
-* **函数参数**
-
-<table class="table table-hover table-bordered ">
-	<thead>
-		<tr>
-			<th class="col-xs-1">类型</th>
-			<th class="col-xs-1">默认值</th>
-			<th>说明</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-	<td>String </td>
-	<td></td>
-	<td>程序名.</td>
-</tr>
-	</tbody>
-</table>
-
-* **返回值**
-  Array 与程序名匹配的进程ID列表. 
-
-* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
-
-```html
-include('Process');
-console.log(Process.findPIDByName('NCUI.exe'));
-
-```
-
-
-<div class="adoc" id="div_findPIDByName"></div>
 
 
 ## terminateProcessByName &nbsp;

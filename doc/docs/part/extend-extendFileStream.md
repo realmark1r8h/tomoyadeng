@@ -5,6 +5,50 @@
 * **父类** 
 <a href="#api/apiRunnable">Runnable</a>&nbsp;
 
+## Remove &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+
+  删除文件.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String </td>
+	<td></td>
+	<td>文件路径.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+  Boolean . 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('FileStream');
+var filestream = new FileStream('manifest2.json');
+filestream.write('33');
+// 文件被占用，无法删除
+console.assert(FileStream.Remove('manifest2.json') == false);
+filestream.close();
+// 解除文件占用，可以删除
+console.assert(FileStream.Remove('manifest2.json') == true);
+
+```
+
+
+<div class="adoc" id="div_Remove"></div>
+
+
 ## FileStream &nbsp;<span class="label label-constructor">构造</span> 
 
   创建或打开一个文件.
@@ -42,7 +86,7 @@
 
 ## open &nbsp;<span class="label label-sync">同步</span> 
 
-  打开文件，创建对象时会默认打开文件，不需要重复调用.如果你调用了<a href="#extend/extendFileStream/8">close</a>函数，那么可以调用该函数重新打开文件
+  打开文件，创建对象时会默认打开文件，不需要重复调用.如果你调用了<a href="#extend/extendFileStream/9">close</a>函数，那么可以调用该函数重新打开文件
   
 * **函数参数**
 
@@ -58,7 +102,7 @@
 		<tr>
 	<td>int</td>
 	<td>0 </td>
-	<td>文件打开方式，参见<a href="#extend/extendFileStream/0">构造函数</a>的内容.如果不输入该参数，程序会使用创建该对象时指定的打开方式</td>
+	<td>文件打开方式，参见<a href="#extend/extendFileStream/1">构造函数</a>的内容.如果不输入该参数，程序会使用创建该对象时指定的打开方式</td>
 </tr>
 	</tbody>
 </table>
@@ -81,7 +125,7 @@
   String 读取到的字符串. 
 
 * **参考** 
-<a href="#extend/extendFileStream/4">readSome</a>
+<a href="#extend/extendFileStream/5">readSome</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
@@ -164,7 +208,7 @@ filestream.close();
 
 ## readLine &nbsp;<span class="label label-sync">同步</span> 
 
-  读取一行,一行最多4096个字符，如果多于这个值则不能获取完整数据，参考<a href="#extend/extendFileStream/4">readSome</a>.
+  读取一行,一行最多4096个字符，如果多于这个值则不能获取完整数据，参考<a href="#extend/extendFileStream/5">readSome</a>.
   
 * **函数参数**  无
 
@@ -279,7 +323,7 @@ filestream.remove();
    无. 
 
 * **参考** 
-<a href="#extend/extendFileStream/1">open</a>
+<a href="#extend/extendFileStream/2">open</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
@@ -349,50 +393,6 @@ filestream2.remove();
 
 
 <div class="adoc" id="div_size"></div>
-
-
-## Remove &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
-
-  删除文件.
-  
-* **函数参数**
-
-<table class="table table-hover table-bordered ">
-	<thead>
-		<tr>
-			<th class="col-xs-1">类型</th>
-			<th class="col-xs-1">默认值</th>
-			<th>说明</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-	<td>String </td>
-	<td></td>
-	<td>文件路径.</td>
-</tr>
-	</tbody>
-</table>
-
-* **返回值**
-  Boolean . 
-
-* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
-
-```html
-include('FileStream');
-var filestream = new FileStream('manifest2.json');
-filestream.write('33');
-// 文件被占用，无法删除
-console.assert(FileStream.Remove('manifest2.json') == false);
-filestream.close();
-// 解除文件占用，可以删除
-console.assert(FileStream.Remove('manifest2.json') == true);
-
-```
-
-
-<div class="adoc" id="div_Remove"></div>
 
 
 ## remove &nbsp;<span class="label label-sync">同步</span> 

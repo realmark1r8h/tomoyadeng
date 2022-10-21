@@ -61,19 +61,6 @@
 <div class="adoc" id="div_getDefaultAppSettings"></div>
 
 
-## getDefaultBrowserSettings &nbsp;
-  获取默认的浏览器窗口启动参数.
-  
-* **函数参数**  无
-
-* **返回值**
-  JsonObject . 
-
-
-
-<div class="adoc" id="div_getDefaultBrowserSettings"></div>
-
-
 ## getDefaultSplashSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   获取默认的启动画面.
@@ -174,5 +161,18 @@ rcedit.commit();
 
 
 <div class="adoc" id="div_commit"></div>
+
+
+## getDefaultBrowserSettings &nbsp;
+  获取默认的浏览器窗口启动参数.
+  
+* **函数参数**  无
+
+* **返回值**
+  JsonObject . 
+
+
+
+<div class="adoc" id="div_getDefaultBrowserSettings"></div>
 
 

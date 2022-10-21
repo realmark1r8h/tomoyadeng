@@ -140,6 +140,20 @@
 <div class="adoc" id="div_setObjectName"></div>
 
 
+## All &nbsp;<span class="label label-static">静态</span> <span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
+
+  获取当前类的所有对象.
+  
+* **函数参数**  无
+
+* **返回值**
+  Array 包含当前类的所有对象. 
+
+
+
+<div class="adoc" id="div_All"></div>
+
+
 ## getObjectName &nbsp;<span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
 
   获取当前对象名称.
@@ -233,7 +247,7 @@
    返回字段名所对应的数据。返回类型视配置参数类型而定，为JS所支持的基本数据类型. 
 
 * **参考** 
-<a href="#api/apiObject/8">setUserData</a>
+<a href="#api/apiObject/9">setUserData</a>
 
 
 
@@ -242,7 +256,7 @@
 
 ## setUserData &nbsp;<span class="label label-single">单线程</span> 
 
-  保存自定义数据.该函数并不要求一定要输入所支持的参数，你也可以设置自定义参数，并在getUserData里面获取所设置的值与<a href="#api/apiObject/7">getUserData</a>相对应.
+  保存自定义数据.该函数并不要求一定要输入所支持的参数，你也可以设置自定义参数，并在getUserData里面获取所设置的值与<a href="#api/apiObject/8">getUserData</a>相对应.
   
 * **函数参数**
 
@@ -267,24 +281,10 @@
    无. 
 
 * **参考** 
-<a href="#api/apiObject/7">getUserData</a>
+<a href="#api/apiObject/8">getUserData</a>
 
 
 
 <div class="adoc" id="div_setUserData"></div>
-
-
-## All &nbsp;<span class="label label-static">静态</span> <span class="label label-single">单线程</span> <span class="label label-sync">同步</span> 
-
-  获取当前类的所有对象.
-  
-* **函数参数**  无
-
-* **返回值**
-  Array 包含当前类的所有对象. 
-
-
-
-<div class="adoc" id="div_All"></div>
 
 

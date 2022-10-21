@@ -9,6 +9,197 @@
 #pragma comment(lib, "Msimg32.lib")
 
 
+
+
+#define NUM_OBJECTS 100
+
+
+static int num_objects = 400;
+static bool cycle_color;
+static bool cycle_alpha;
+static int cycle_direction = 1;
+static int current_alpha = 255;
+static int current_color = 255;
+ID2D1SolidColorBrush*	_pCommonBrush = NULL;
+
+void
+DrawPoints(ID2D1RenderTarget * renderer, const amo::rect& rt) {
+    int i;
+    int x, y;
+    amo::rect viewport = rt;
+    
+    
+    
+    for (i = 0; i < num_objects * 4; ++i) {
+        /* Cycle the color and alpha, if desired */
+        if (cycle_color) {
+            current_color += cycle_direction;
+            
+            if (current_color < 0) {
+                current_color = 0;
+                cycle_direction = -cycle_direction;
+            }
+            
+            if (current_color > 255) {
+                current_color = 255;
+                cycle_direction = -cycle_direction;
+            }
+        }
+        
+        if (cycle_alpha) {
+            current_alpha += cycle_direction;
+            
+            if (current_alpha < 0) {
+                current_alpha = 0;
+                cycle_direction = -cycle_direction;
+            }
+            
+            if (current_alpha > 255) {
+                current_alpha = 255;
+                cycle_direction = -cycle_direction;
+            }
+        }
+        
+        //SDL_SetRenderDrawColor(renderer, 255, (Uint8)current_color,
+        //                       (Uint8)current_color, (Uint8)current_alpha);
+        //
+        if (_pCommonBrush == NULL)
+            renderer->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Orange),
+                                            &_pCommonBrush);
+                                            
+        _pCommonBrush->SetColor(amo::d2d1::ImFloat4(1, current_color / 255.0, current_color / 255.0, 1).ToD2DColorF());
+        x = rand() % viewport.width();
+        y = rand() % viewport.height();
+        renderer->FillRectangle(amo::d2d1::ImFloat4(x, y, 1, 1).ToD2DRectF(), _pCommonBrush);
+        //SDL_RenderDrawPoint(renderer, x, y);
+    }
+}
+
+void
+DrawLines(ID2D1RenderTarget * renderer, const amo::rect& rt) {
+    int i;
+    int x1, y1, x2, y2;
+    amo::rect viewport = rt;
+    
+    
+    
+    for (i = 0; i < num_objects; ++i) {
+        /* Cycle the color and alpha, if desired */
+        if (cycle_color) {
+            current_color += cycle_direction;
+            
+            if (current_color < 0) {
+                current_color = 0;
+                cycle_direction = -cycle_direction;
+            }
+            
+            if (current_color > 255) {
+                current_color = 255;
+                cycle_direction = -cycle_direction;
+            }
+        }
+        
+        if (cycle_alpha) {
+            current_alpha += cycle_direction;
+            
+            if (current_alpha < 0) {
+                current_alpha = 0;
+                cycle_direction = -cycle_direction;
+            }
+            
+            if (current_alpha > 255) {
+                current_alpha = 255;
+                cycle_direction = -cycle_direction;
+            }
+        }
+        
+        
+        if (_pCommonBrush == NULL)
+            renderer->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Orange),
+                                            &_pCommonBrush);
+                                            
+        _pCommonBrush->SetColor(amo::d2d1::ImFloat4(1, current_color / 255.0, current_color / 255.0, 1).ToD2DColorF());
+        
+        if (i == 0) {
+            renderer->DrawLine(amo::d2d1::ImFloat2(0, 0).ToD2DPointF(), amo::d2d1::ImFloat2(viewport.width() - 1, viewport.height() - 1).ToD2DPointF(), _pCommonBrush);
+            renderer->DrawLine(amo::d2d1::ImFloat2(0, viewport.height() - 1).ToD2DPointF(), amo::d2d1::ImFloat2(viewport.width() - 1, 0).ToD2DPointF(), _pCommonBrush);
+            renderer->DrawLine(amo::d2d1::ImFloat2(0, viewport.height() / 2).ToD2DPointF(), amo::d2d1::ImFloat2(viewport.width() - 1, viewport.height() / 2).ToD2DPointF(), _pCommonBrush);
+            renderer->DrawLine(amo::d2d1::ImFloat2(viewport.width() / 2, 0).ToD2DPointF(), amo::d2d1::ImFloat2(viewport.width() / 2, viewport.height() - 1).ToD2DPointF(), _pCommonBrush);
+            /*  SDL_RenderDrawLine(renderer, 0, 0, viewport.w - 1, viewport.h - 1);
+              SDL_RenderDrawLine(renderer, 0, viewport.h - 1, viewport.w - 1, 0);
+              SDL_RenderDrawLine(renderer, 0, viewport.h / 2, viewport.w - 1, viewport.h / 2);
+              SDL_RenderDrawLine(renderer, viewport.w / 2, 0, viewport.w / 2, viewport.h - 1);*/
+        } else {
+            x1 = (rand() % (viewport.width() * 2)) - viewport.width();
+            x2 = (rand() % (viewport.width() * 2)) - viewport.width();
+            y1 = (rand() % (viewport.height() * 2)) - viewport.height();
+            y2 = (rand() % (viewport.height() * 2)) - viewport.height();
+            
+            renderer->DrawLine(amo::d2d1::ImFloat2(x1, y1).ToD2DPointF(), amo::d2d1::ImFloat2(x2, y2).ToD2DPointF(), _pCommonBrush);
+            
+            //SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+        }
+    }
+}
+
+void
+DrawRects(ID2D1RenderTarget * renderer, const amo::rect& rt) {
+    int i;
+    amo::rect rect;
+    amo::rect viewport = rt;
+    
+    
+    
+    for (i = 0; i < num_objects / 4; ++i) {
+        /* Cycle the color and alpha, if desired */
+        if (cycle_color) {
+            current_color += cycle_direction;
+            
+            if (current_color < 0) {
+                current_color = 0;
+                cycle_direction = -cycle_direction;
+            }
+            
+            if (current_color > 255) {
+                current_color = 255;
+                cycle_direction = -cycle_direction;
+            }
+        }
+        
+        if (cycle_alpha) {
+            current_alpha += cycle_direction;
+            
+            if (current_alpha < 0) {
+                current_alpha = 0;
+                cycle_direction = -cycle_direction;
+            }
+            
+            if (current_alpha > 255) {
+                current_alpha = 255;
+                cycle_direction = -cycle_direction;
+            }
+        }
+        
+        if (_pCommonBrush == NULL)
+            renderer->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Orange),
+                                            &_pCommonBrush);
+                                            
+        _pCommonBrush->SetColor(amo::d2d1::ImFloat4(1, current_color / 255.0, current_color / 255.0, 1).ToD2DColorF());
+        
+        int width = rand() % (viewport.height() / 2);
+        int height = rand() % (viewport.height() / 2);
+        
+        rect.left((rand() % (viewport.width() * 2) - viewport.width()) - (width / 2));
+        rect.top((rand() % (viewport.height() * 2) - viewport.height()) - (height / 2));
+        
+        rect.width(width);
+        rect.height(height);
+        renderer->FillRectangle(amo::d2d1::ImFloat4(rect.left(), rect.top(), rect.width(), rect.height()).ToD2DRectF(), _pCommonBrush);
+        //SDL_RenderFillRect(renderer, &rect);
+    }
+}
+
+
 namespace amo {
     void ViewRenderer::insertBitmap(std::shared_ptr<PaintResource> image) {
         m_resource = image;
@@ -151,6 +342,9 @@ namespace amo {
             p->drawBitmap();
         }
         
+        /*  DrawPoints(m_hwndRenderer->GetMainRT(), GetPos());
+          DrawLines(m_hwndRenderer->GetMainRT(), GetPos());
+          DrawRects(m_hwndRenderer->GetMainRT(), GetPos());*/
         //m_hwndRenderer->DrawImage("background.png", 0, 0, 0, 0);
         m_hwndRenderer->EndDraw();
     }
