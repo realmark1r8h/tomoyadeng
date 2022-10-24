@@ -19,7 +19,7 @@ static bool cycle_color;
 static bool cycle_alpha;
 static int cycle_direction = 1;
 static int current_alpha = 255;
-static int current_color = 255;
+static int current_color = 25;
 ID2D1SolidColorBrush*	_pCommonBrush = NULL;
 
 void
@@ -342,9 +342,9 @@ namespace amo {
             p->drawBitmap();
         }
         
-        /*  DrawPoints(m_hwndRenderer->GetMainRT(), GetPos());
-          DrawLines(m_hwndRenderer->GetMainRT(), GetPos());
-          DrawRects(m_hwndRenderer->GetMainRT(), GetPos());*/
+        /* DrawPoints(m_hwndRenderer->GetMainRT(), GetPos());
+         DrawLines(m_hwndRenderer->GetMainRT(), GetPos());
+         DrawRects(m_hwndRenderer->GetMainRT(), GetPos());*/
         //m_hwndRenderer->DrawImage("background.png", 0, 0, 0, 0);
         m_hwndRenderer->EndDraw();
     }
