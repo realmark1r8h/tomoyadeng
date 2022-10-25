@@ -1064,6 +1064,9 @@
     <ClInclude Include="ui\win\renderer\GDIPlusBitmap.hpp">
       <Filter>ui\win\renderer</Filter>
     </ClInclude>
+    <ClInclude Include="transfer\TransferHelper.hpp">
+      <Filter>transfer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="libNCUI.rc">

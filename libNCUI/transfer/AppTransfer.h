@@ -53,7 +53,7 @@ namespace amo {
         
         /*!
         * @fn	static Any AppTransfer::getConfig(IPCMessage::SmartType msg);
-        *
+        * @tag static sync
         * @brief	获取应用程序的指定配置参数.
         *
         * @param	#String 需要获取的字段名称.
@@ -377,6 +377,13 @@ namespace amo {
          * @return	#Boolean .
          *
          * @see setAutoRun=app.setAutoRun
+         * @example
+         *
+         ```
+        	include('app');
+        	app.setAutoRun(false);
+        	console.assert(app.isAutoRun() == false);
+         ```
          */
         
         Any isAutoRun(IPCMessage::SmartType msg);

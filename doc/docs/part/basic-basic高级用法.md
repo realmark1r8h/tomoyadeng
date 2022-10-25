@@ -39,7 +39,7 @@ includes('BrowserWindow', 'app');
 
 var win = new BrowserWindow({
     titleBar: true,
-    url: 'localhost/@file:///example/BrowserWindow.html'
+    url: 'file:///@file:///example/BrowserWindow.html'
 })
 
 var url = app.toAbsolutePath("%webDir%example/FramelessWindow.html");
@@ -96,7 +96,7 @@ new BrowserWindow({
 
 
 ## 源代码管理 &nbsp;
-  NCUI支持读取本地文件、ZIP格式压缩文件、DLL动态库中的HTML源代码，你可以通过这些方式为NCUI提供源代码.<br>1. **从本地目录中读取HTML:** 直接指定文件路径或文件夹路径，如D:/web<br>2. **从ZIP文件中读取HTML:** 以zip:///开头<br>3. **从DLL中读取HTML:** 以dll:///开头<br>4. **从程序的资源文件中读取HTML:**以res:///开头<br>NCUI不直接提供源代码加密功能，但支持读取加密的ZIP文件、加载的SQLITE数据库，你可以通过修改源代码的方式提供对应的加密文件密码供程序使用.
+  NCUI支持读取本地文件、ZIP格式压缩文件、DLL动态库中的HTML源代码，你可以通过这些方式为NCUI提供源代码.<br>1. **从本地目录中读取HTML:** 直接指定文件路径或文件夹路径，如D:/web<br>2. **从ZIP文件中读取HTML:** 以zip:///开头<br>3. **从DLL中读取HTML:** 以dll:///开头<br>4. **从程序的资源文件中读取HTML:**以res:///开头<br>NCUI不直接提供源代码加密功能，但支持读取加密的ZIP文件、加密的SQLITE数据库，你可以通过修改源代码的方式提供对应的加密文件密码供程序使用.
   
 
 

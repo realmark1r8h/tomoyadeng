@@ -30,6 +30,21 @@
 * **返回值**
   Boolean true成功/false失败. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+includes('Demo', 'Thread');
+var demo = new Demo();
+var thread = new Thread();
+console.log(demo.add(1,2));
+demo.attach(thread);
+demo.unique('Demo.add',function(info){
+    console.log(info);
+    console.log('在线程中执行函数的返回结果：' + info.data);
+});
+console.log(demo.add(1,2));
+
+```
 
 
 <div class="adoc" id="div_attach"></div>
@@ -43,6 +58,23 @@
 * **返回值**
    无. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+includes('Demo', 'Thread');
+var demo = new Demo();
+var thread = new Thread();
+console.log(demo.add(1,2));
+demo.attach(thread);
+demo.unique('Demo.add',function(info){
+    console.log(info);
+    console.log('在线程中执行函数的返回结果：' + info.data);
+});
+console.log(demo.add(1,2));
+demo.detach();
+console.assert(demo.add(1,3) == 4, true);
+
+```
 
 
 <div class="adoc" id="div_detach"></div>
@@ -57,6 +89,26 @@
 * **返回值**
    无. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+includes('Demo', 'Thread');
+var demo = new Demo();
+var thread = new Thread();
+console.log(demo.add(1,2));
+demo.attach(thread);
+demo.sleepForWeakup();
+setTimeout(function(){
+   demo.weakup();
+}, 3000);
+demo.unique('Demo.add',function(info){
+    console.log(info);
+    console.log('在线程中执行函数的返回结果：' + info.data);
+});
+console.log(demo.add(1,3));
+
+
+```
 
 
 <div class="adoc" id="div_weakup"></div>
@@ -70,6 +122,28 @@
 * **返回值**
    无. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+includes('Demo', 'Thread');
+ var demo = new Demo();
+ var thread = new Thread();
+ console.log(demo.add(1,2));
+ demo.attach(thread);
+ demo.suspend();   // 如果没有attach，不能在渲染线程上调用该函数，否则会阻塞渲染线程
+ setTimeout(function(){
+    demo.weakup();
+ }, 3000);
+ demo.unique('Demo.add',function(info){
+    // 3秒后才能得到结果
+     console.log(info);
+     console.log('在线程中执行函数的返回结果：' + info.data);
+ });
+
+ demo.add(1,4);
+
+
+```
 
 
 <div class="adoc" id="div_suspend"></div>

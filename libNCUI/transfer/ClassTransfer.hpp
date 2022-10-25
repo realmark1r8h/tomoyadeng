@@ -540,6 +540,11 @@ namespace amo {
                              this,
                              std::placeholders::_1),
                              TransferMultiDisabled | TransferFuncStatic | TransferExecSync);
+            registerTransfer("getObjectID", std::bind(&ClassTransfer::onGetObjectID,
+                             this,
+                             std::placeholders::_1),
+                             TransferMultiDisabled | TransferFuncNormal | TransferExecSync);
+                             
             registerTransfer("getObjectName", std::bind(&ClassTransfer::onGetObjectName,
                              this,
                              std::placeholders::_1),
@@ -631,6 +636,16 @@ namespace amo {
          * @brief	获取当前类所对象的对象，调用该对象的函数将会作用到类上面去.
          *
          * @return	#Object 类所对象的CLASS对象.
+         * @example
+         *
+         ```
+        	include('Demo');
+        	console.assert(Demo.CLASS.staticTestID == 2, true);
+        	Demo.CLASS.staticTestID = 32;
+        	console.log(Demo.CLASS.staticTestID);
+        	console.assert(Demo.CLASS.staticTestID != 2, true);
+        
+         ```
          */
         
         virtual Any onGetClassObject(IPCMessage::SmartType msg) {
@@ -657,6 +672,16 @@ namespace amo {
          * @return	#Object 如果对象存在，返回该对象; 如果不存在，返回Undefined.
          *
          * @see fromObjectID=Object.fromObjectID
+         * @example
+         *
+         ```
+        	include('Demo');
+        	var demo = new Demo();
+        	demo.setObjectName('demo2');
+        	var name = demo.getObjectName();
+        	var demo2 = Demo.fromObjectName(name);
+        	console.assert(demo.getObjectID() == demo2.getObjectID(), true);
+         ```
          */
         
         virtual Any onFromObjectName(IPCMessage::SmartType msg) {
@@ -693,11 +718,23 @@ namespace amo {
         * @return	#Object 如果对象存在，返回该对象; 如果不存在，返回Undefined.
         *
         * @see	fromObjectName=Object.fromObjectName
+        *
+        * @example
+        *
+         ```
+        
+        	include('Demo');
+        	var demo = new Demo();
+        	demo.setObjectName('demo1');
+        	var id = demo.getObjectID();
+        	var demo2 = Demo.fromObjectID(id);
+        	console.assert(demo.getObjectName() == demo2.getObjectName(), true);
+         ```
         */
         
         virtual Any onFromObjectID(IPCMessage::SmartType msg) {
             Any& val = msg->getArgumentList()->getValue(0);
-            int nObjectID = 0;
+            int64_t nObjectID = 0;
             
             if (val.is<int64_t>()) {
                 nObjectID = val.As<int64_t>();
@@ -728,13 +765,22 @@ namespace amo {
         /**
          * @fn	virtual Any setObjectName(IPCMessage::SmartType msg)
          *
-         * 	@tag static
+         * 	@tag
          *
          * @brief	设置当前对象名称.
          *
          * @param	#String 对象名称.
          *
          * @return	无.
+         *
+         * @example
+         *
+         ```
+        	include ('Demo');
+        	var demo = new Demo();
+        	demo.setObjectName('demo3');
+        	console.log(demo.getObjectName());
+         ```
          */
         
         virtual Any onSetObjectName(IPCMessage::SmartType msg) {
@@ -743,6 +789,30 @@ namespace amo {
             return Undefined();
         }
         
+        /*!
+         * @fn	virtual Any onGetObjectID(IPCMessage::SmartType msg)
+         *
+         * @brief	获取当前对象名称ID.ID为一个字符串
+         *
+         *
+         * @return	#String.
+         *
+         * @see getObjectName=Object.getObjectName
+         *
+         * @example
+         *
+         ```
+        	 include ('Demo');
+        	 var demo = new Demo();
+        	 demo.setObjectName('demo4');
+        	 console.log(demo.getObjectName());
+         ```
+         */
+        
+        virtual Any onGetObjectID(IPCMessage::SmartType msg) {
+            return std::to_string(this->getObjectID());
+            
+        }
         /**
          * @fn	virtual Any getObjectName(IPCMessage::SmartType msg)
          *
@@ -752,6 +822,17 @@ namespace amo {
          *
          *
          * @return	#String 对象名称.
+         *
+         * @see getObjectID=Object.getObjectID, setObjectName=Object.setObjectName
+         *
+         * @example
+         *
+         ```
+        	include ('Demo');
+        	var demo = new Demo();
+        	demo.setObjectName('demo4');
+        	console.log(demo.getObjectName());
+         ```
          */
         
         virtual Any onGetObjectName(IPCMessage::SmartType msg) {
@@ -763,9 +844,22 @@ namespace amo {
          *
          * @brief	向自己发送一个通知，可以监听这个通知得到返回结果(当transfer在单独的线程上执行时，可以通过自己定义消息来监听执行进度).
          *
-         * @param	#Object 任务Javascript所支持的基本类型（Int Double String JsonObject Array）.
+         * @param	#String 通知名称
+         * @param	#Object 任务Javascript所支持的基本类型（Int Double String JsonObject Array），可以不填.
+         *
          *
          * @return	无.
+         *
+         * @example
+         *
+         ```
+        	 include ('Demo');
+        	 var demo = new Demo();
+        	 demo.on('Demo.notifyTest', function(){
+        		console.log(arguments);
+        	 });
+        	 demo.notify('Demo.notifyTest');
+         ```
          */
         
         virtual Any onNotify(IPCMessage::SmartType msg) {
@@ -829,6 +923,15 @@ namespace amo {
         * @return	返回字段名所对应的数据。返回类型视配置参数类型而定，为JS所支持的基本数据类型.
         *
         * @see setUserData=Object.setUserData
+        * @example
+        *
+        ```
+        	include('Demo');
+        	var demo = new Demo();
+        	demo.setUserData({aaa: 123, bbb: 344});
+        	console.assert(demo.getUserData('aaa')== 123, true);
+        	console.log(demo.getUserData());
+        ```
         */
         
         virtual Any OnGetUserData(IPCMessage::SmartType msg) {
@@ -878,6 +981,18 @@ namespace amo {
         *
         * @see getUserData=Object.getUserData
         *
+        * @example
+        *
+        ```
+        	include('Demo');
+        	var demo = new Demo();
+        	demo.setUserData({aaa: 123, bbb: 344});
+        	demo.setUserData({aaa:222});
+        	demo.setUserData({ccc:444});
+        	console.assert(demo.getUserData('aaa')== 222, true);
+        	console.log(demo.getUserData());
+        ```
+        *
         */
         
         
@@ -908,6 +1023,13 @@ namespace amo {
          *
          *
          * @return	#Array 包含当前类的所有对象.
+         * @example
+         *
+         ```
+        	include('Demo');
+        	var arr = Demo.All();
+        	console.log(arr);
+         ```
          */
         
         virtual Any OnGetAll(IPCMessage::SmartType msg) {

@@ -11,7 +11,7 @@
 #include <amo/string.hpp>
 #include <amo/json.hpp>
 #include "transfer/TransferEventInfo.hpp"
-
+#include "transfer/TransferHelper.hpp"
 namespace amo {
 
     /**
@@ -102,6 +102,20 @@ namespace amo {
          * @param	#Object 需要附加的线程
          *
          * @return	#Boolean true成功/false失败.
+         * @example
+         *
+         ```
+        	includes('Demo', 'Thread');
+        	var demo = new Demo();
+        	var thread = new Thread();
+        	console.log(demo.add(1,2));
+        	demo.attach(thread);
+        	demo.unique('Demo.add',function(info){
+        		console.log(info);
+        		console.log('在线程中执行函数的返回结果：' + info.data);
+        	});
+        	console.log(demo.add(1,2));
+         ```
          */
         
         Any attach(IPCMessage::SmartType msg) {
@@ -130,6 +144,23 @@ namespace amo {
          * @brief	将当前对象从一个线程中分离.
          *
          * @return	无.
+         *
+         * @example
+         *
+         ```
+        	 includes('Demo', 'Thread');
+        	 var demo = new Demo();
+        	 var thread = new Thread();
+        	 console.log(demo.add(1,2));
+        	 demo.attach(thread);
+        	 demo.unique('Demo.add',function(info){
+        		 console.log(info);
+        		 console.log('在线程中执行函数的返回结果：' + info.data);
+        	 });
+        	 console.log(demo.add(1,2));
+        	 demo.detach();
+        	 console.assert(demo.add(1,3) == 4, true);
+         ```
          */
         
         Any detach(IPCMessage::SmartType msg) {
@@ -143,6 +174,25 @@ namespace amo {
          * @brief	唤醒当前对象所附加的线程.
          *
          * @return	无.
+         * @example
+         *
+         ```
+        	 includes('Demo', 'Thread');
+        	 var demo = new Demo();
+        	 var thread = new Thread();
+        	 console.log(demo.add(1,2));
+        	 demo.attach(thread);
+        	 demo.sleepForWeakup();
+        	 setTimeout(function(){
+        		demo.weakup();
+        	 }, 3000);
+        	 demo.unique('Demo.add',function(info){
+        		 console.log(info);
+        		 console.log('在线程中执行函数的返回结果：' + info.data);
+        	 });
+        	 console.log(demo.add(1,3));
+        
+         ```
          */
         
         Any weakup(IPCMessage::SmartType msg) {
@@ -176,6 +226,27 @@ namespace amo {
          * @brief	挂起所附加线程，不能在浏览器线程（UI/Renderer）上执行.
          *
          * @return	无.
+         * @example
+         *
+         ```
+        	includes('Demo', 'Thread');
+        	 var demo = new Demo();
+        	 var thread = new Thread();
+        	 console.log(demo.add(1,2));
+        	 demo.attach(thread);
+        	 demo.suspend();   // 如果没有attach，不能在渲染线程上调用该函数，否则会阻塞渲染线程
+        	 setTimeout(function(){
+        		demo.weakup();
+        	 }, 3000);
+        	 demo.unique('Demo.add',function(info){
+        		// 3秒后才能得到结果
+        		 console.log(info);
+        		 console.log('在线程中执行函数的返回结果：' + info.data);
+        	 });
+        
+        	 demo.add(1,4);
+        
+         ```
          */
         
         Any suspend(IPCMessage::SmartType msg) {
@@ -230,6 +301,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(RunnableTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(attach, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(detach, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(suspend, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup,
                                       TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_END()

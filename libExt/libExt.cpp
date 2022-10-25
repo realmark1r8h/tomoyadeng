@@ -13,6 +13,7 @@
 #include "transfer/InterProcessTransfer.h"
 #include "transfer/ProcessTransfer.h"
 #include "transfer/RegistryTransfer.h"
+#include "transfer/DemoTransfer.h"
 
 
 
@@ -27,6 +28,7 @@ AMO_CLASS_REGISTER(Base64Transfer)
 AMO_CLASS_REGISTER(InterProcessTransfer)
 AMO_CLASS_REGISTER(ProcessTransfer)
 AMO_CLASS_REGISTER(RegistryTransfer)
+AMO_CLASS_REGISTER(DemoTransfer)
 AMO_REGISTER_TRANSFER_END()
 
 //LIBEXT_API bool registerTransfer(std::shared_ptr<amo::TransferRegister> info) {

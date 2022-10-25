@@ -269,11 +269,21 @@ namespace amo {
                     Any ret =    pTransfer->onMessageTransfer(ipcMsg);
                     std::string funcName = ipcMsg->getArgumentList()->getString(
                                                IPCArgsPosInfo::FuncName);
-                    TransferEventInfo info;
-                    info.name = transferName + "." + funcName;
-                    info.toAll = true;
-                    info.setData(ret);
-                    pTransfer->triggerEvent(info);
+                                               
+                                               
+                    int64_t nID = ipcMsg->getArgumentList()->getInt64(IPCArgsPosInfo::TransferID);
+                    std::shared_ptr<ClassTransfer> pObject = findTransfer(nID);
+                    
+                    if (pObject) {
+                        TransferEventInfo info;
+                        info.name = transferName + "." + funcName;
+                        info.toAll = true;
+                        info.setData(ret);
+                        pObject->triggerEvent(info);
+                    }
+                    
+                    
+                    
                     return Undefined();
                 });
             }

@@ -35,8 +35,7 @@ namespace amo {
         IMPLEMENT_REFCOUNTING(JSExecV8Handler);
         
     };
-    /*   static int ffff = 0;
-       static int eeee = 0;*/
+    
     JsClassObjectV8Handler::JsClassObjectV8Handler() {
         setHandlerName("JsClassObjectV8Handler");
         
@@ -45,8 +44,7 @@ namespace amo {
     
     JsClassObjectV8Handler::~JsClassObjectV8Handler() {
     
-        //$cdevel("IDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD:{}", getID());
-        //++eeee;
+    
     }
     
     CefRefPtr<CefV8Value> JsClassObjectV8Handler::getV8Object(

@@ -47,13 +47,6 @@ namespace amo {
     void JsClassV8Handler::onGetV8Object(CefRefPtr<CefV8Value> object) {
         amo::cdevel << func_orient << m_oFuncMgr.name() << amo::endl;
         
-        if (m_oFuncMgr.name() == "User") {
-            int i = 32;
-        }
-        
-        if (m_oFuncMgr.getObjectName() == "CLASS.User") {
-            int i = 32;
-        }
         
         for (auto& p : m_oFuncMgr.toMap()) {
             if (p.second.functionType() == TransferFuncStatic) {

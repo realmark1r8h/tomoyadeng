@@ -463,6 +463,7 @@
     <ClInclude Include="transfer\Transfer.hpp" />
     <ClInclude Include="transfer\TransferEventEmitter.hpp" />
     <ClInclude Include="transfer\TransferEventInfo.hpp" />
+    <ClInclude Include="transfer\TransferHelper.hpp" />
     <ClInclude Include="transfer\TransferMapping.hpp" />
     <ClInclude Include="transfer\TransferMappingMgr.hpp" />
     <ClInclude Include="transfer\TransferMgr.h" />
