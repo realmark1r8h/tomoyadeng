@@ -29,6 +29,7 @@ namespace amo {
         FrameTransfer();
         FrameTransfer(CefRefPtr<CefFrame> pFrame);
         
+        
         Any current(IPCMessage::SmartType msg);
         
         /*!
@@ -57,11 +58,19 @@ namespace amo {
         
         /*!
          * @fn	Any FrameTransfer::IsValid(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	当前页面是否有效.
          *
          *
          * @return	#Boolean true有效/false无效.
+         * @example
+         *
+         ```
+        	includes('Frame');
+        	var frame = Frame.current;
+        	console.log(frame.IsValid());
+        
+         ```
          */
         
         Any IsValid(IPCMessage::SmartType msg);
@@ -69,9 +78,10 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::Undo(IPCMessage::SmartType msg);
          *
-         * @brief	撤消.
+         * @brief	撤消，编辑框内有效.
          *
          * @return	无.
+         *
          */
         
         Any Undo(IPCMessage::SmartType msg);
@@ -79,7 +89,7 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::Redo(IPCMessage::SmartType msg);
          *
-         * @brief	重做.
+         * @brief	重做，编辑框内有效.
          *
          * @return	无.
          */
@@ -89,7 +99,7 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::Cut(IPCMessage::SmartType msg);
          *
-         * @brief	剪切.
+         * @brief	剪切，编辑框内有效.
          *
          *
          * @return	无.
@@ -100,7 +110,7 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::Copy(IPCMessage::SmartType msg);
          *
-         * @brief	复制.
+         * @brief	复制，编辑框内有效.
          *
          *
          * @return	无.
@@ -111,7 +121,7 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::Paste(IPCMessage::SmartType msg);
          *
-         * @brief	粘贴.
+         * @brief	粘贴，编辑框内有效.
          *
          *
          * @return	无.
@@ -122,7 +132,7 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::Delete(IPCMessage::SmartType msg);
          *
-         * @brief	删除.
+         * @brief	删除，编辑框内有效.
          *
          *
          * @return	无.
@@ -136,13 +146,20 @@ namespace amo {
          * @brief	全选.
          *
          * @return	无.
+         * @example
+         *
+         ```
+         includes('Frame');
+         Frame.current.SelectAll();
+        
+         ```
          */
         
         Any SelectAll(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any FrameTransfer::ViewSource(IPCMessage::SmartType msg);
-         *
+         * @ignore
          * @brief	查看网页源代码.
          *
          * @return	无.
@@ -162,7 +179,9 @@ namespace amo {
          */
         
         Any GetSource(IPCMessage::SmartType msg);
+        
         Any GetText(IPCMessage::SmartType msg);
+        
         Any LoadRequest(IPCMessage::SmartType msg) ;
         
         /*!
@@ -173,38 +192,136 @@ namespace amo {
          * @param	#String URL.
          *
          * @return	无.
+         * @example
+         *
+         ```
+        	include('Frame');
+        	Frame.current.LoadURL('http://www.baidu.com');
+         ```
          */
         
         Any LoadURL(IPCMessage::SmartType msg) ;
+        
+        /**
+         * @fn	Any FrameTransfer::LoadString(IPCMessage::SmartType msg);
+         *
+         * @brief	加载HTML代码.
+         *
+         * @param	#String HTML代码.
+         * @param	#String="" URL,选填
+         *
+         * @return	#Undefined.
+         * @example
+         *
+         ```
+        	// vConsole转换存在问题，程序中可以正常使用
+        	include('Frame');
+        	Frame.current.LoadString(`
+        		<!DOCTYPE html>
+        		<html lang="zh-CN">
+        
+        			<head>
+        				<meta charset='utf-8'>
+        				<script type="text/javascript">
+        					includes('app', 'BrowserWindow');
+        				</script>
+        				<style>
+        					html,
+        					body {
+        						width: 100%;
+        						height: 100%;
+        						overflow: hidden;
+        					}
+        					.container {
+        						position: absolute;
+        						top: 0;
+        						left: 0;
+        						right: 0;
+        						bottom: 0;
+        					}
+        
+        					.drag {
+        						-webkit-app-region: drag;
+        					}
+        
+        					.no-drag {
+        						-webkit-app-region: no-drag;
+        					}
+        				</style>
+        			</head>
+        
+        			<body>
+        				<div class="container ">
+        					<h1>我是一个普通浏览器窗口<a href="#" onclick="recoveryManifest();">点我恢复manifest.json</a></h1>
+        					<h1>我是一个普通浏览器窗口<a href="#" onclick="app.restart();">点我重启APP</a></h1>
+        				</div>
+        			</body>
+        			<script type="text/javascript">
+        
+        
+        				function recoveryManifest() {
+        					include('Path');
+        					var path = new Path('manifest2.json');
+        					if(!path.isExsit()) return;
+        					path.copyTo('manifest.json');
+        					path.remove();
+        				}
+        			</script>
+        
+        		</html>
+        	`);
+         ```
+         */
+        
         Any LoadString(IPCMessage::SmartType msg) ;
         
         /*!
          * @fn	Any FrameTransfer::IsMain(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	当前页面是否为主页面.
          *
          *
          * @return	#Boolean.
+         * @example
+         *
+         ```
+        	include('Frame');
+        	console.assert(Frame.current.IsMain() == true);
+         ```
          */
         
         Any IsMain(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any FrameTransfer::IsFocused(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	当前页面是否获得焦点.
          *
          * @return	#Boolean.
+         *
+         * @example
+         *
+         ```
+        	 include('Frame');
+        	 console.assert(Frame.current.IsFocused() == true);
+         ```
          */
         
         Any IsFocused(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any FrameTransfer::GetName(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	获取当前页面的名称.
          *
          * @return	#String 页面名称.
+         *
+         * @example
+         *
+         ```
+        	 include('Frame');
+        	 console.assert(Frame.current.GetName() == '');
+         ```
          */
         
         Any GetName(IPCMessage::SmartType msg);
@@ -212,40 +329,68 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::GetIdentifier(IPCMessage::SmartType msg);
          *
+         * @tag sync
+         *
          * @brief	获取当前页面的ID.
          *
-         *
          * @return	#Int identifier.
+         *
+         * @example
+         *
+         ```
+        	 include('Frame');
+        	 console.log(Frame.current.GetIdentifier());
+         ```
          */
         
         Any GetIdentifier(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any FrameTransfer::GetParent(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	获取当前页面的父页面.
          *
-         * @return	#Frame .
+         * @return	#Frame 如果不存在返回Undefined.
+         *
+         * @example
+         *
+         ```
+        	include('Frame');
+        	console.log(Frame.current.GetParent());
+         ```
          */
         
         Any GetParent(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any FrameTransfer::GetURL(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	获取当前页面的URL.
          *
          * @return	#String url.
+         *
+         * @example
+         *
+         ```
+        	 include('Frame');
+        	 console.log(Frame.current.GetURL());
+         ```
          */
         
         Any GetURL(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any FrameTransfer::GetBrowser(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	获取当前页面所属的Browser对象.
          *
          * @return	#Browser .
+         * @example
+         *
+         ```
+        	 include('Frame');
+        	 console.log(Frame.current.GetBrowser().GetIdentifier());
+         ```
          */
         
         Any GetBrowser(IPCMessage::SmartType msg);

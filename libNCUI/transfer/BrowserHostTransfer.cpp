@@ -98,7 +98,7 @@ namespace amo {
     }
     
     Any BrowserHostTransfer::SetZoomLevel(IPCMessage::SmartType msg) {
-        double fVal = msg->getArgumentList()->getBool(0);
+        double fVal = msg->getArgumentList()->getDouble(0);
         m_pBrowserHost->SetZoomLevel(fVal);
         return Undefined();
     }

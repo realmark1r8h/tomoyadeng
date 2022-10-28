@@ -29,18 +29,128 @@ namespace amo {
         
         Any current(IPCMessage::SmartType msg);
         
+        /**
+         * @fn	Any BrowserHostTransfer::click(IPCMessage::SmartType msg);
+         *
+         * @brief	向页面发送单击事件.
+         *
+         * @param	#Int=0 X轴坐标.
+         * @param	#Int=0 Y轴坐标
+         *
+         * @return	#Undefined.
+         * @example
+         *
+         ```
+        	includes('BrowserWindow', 'BrowserHost');
+        	var host = BrowserHost.current;
+        	var x = $('.closebtn').offset().left;
+        	var y = $('.closebtn').offset().top;
+        
+        	console.log(x);
+        	console.log(y);
+        	host.click(x + 20, y + 20);
+         ```
+         */
+        
         Any click(IPCMessage::SmartType msg);
         
-        // Cef 自带
+        /**
+         * @fn	Any BrowserHostTransfer::GetBrowser(IPCMessage::SmartType msg);
+         * @tag sync
+         * @brief	获取Host所对应的Browser对象.
+         *
+         *
+         * @return	#Browser.
+         * @example
+         *
+         ```
+        	includes('BrowserWindow', 'BrowserHost', 'Browser');
+        	var host = BrowserHost.current;
+        	console.log(host.GetBrowser().GetIdentifier());
+        
+         ```
+         */
+        
         Any GetBrowser(IPCMessage::SmartType msg);
+        
+        /**
+         * @fn	Any BrowserHostTransfer::CloseBrowser(IPCMessage::SmartType msg);
+         *
+         * @brief	关闭浏览器.
+         *
+         * @return	#Undefined.
+         * @example
+         *
+         ```
+        	includes('BrowserWindow', 'BrowserHost', 'Browser');
+        	var host = BrowserHost.current;
+        	host.CloseBrowser();
+        
+         */
+        
         Any CloseBrowser(IPCMessage::SmartType msg);
+        
+        /**
+         * @fn	Any BrowserHostTransfer::SetFocus(IPCMessage::SmartType msg);
+         *
+         * @brief	使浏览器获得焦点.
+         *
+         * @return	#Undefined.
+         * @example
+         *
+         ```
+        	includes('BrowserWindow', 'BrowserHost', 'Browser');
+        	var host = BrowserHost.current;
+        	host.SetFocus();
+        
+         ```
+         */
+        
         Any SetFocus(IPCMessage::SmartType msg);
         Any SetWindowVisibility(IPCMessage::SmartType msg);
         Any GetWindowHandle(IPCMessage::SmartType msg);
         Any GetOpenerWindowHandle(IPCMessage::SmartType msg);
         Any GetClient(IPCMessage::SmartType msg);
         Any GetRequestContext(IPCMessage::SmartType msg);
+        
+        /**
+         * @fn	Any BrowserHostTransfer::GetZoomLevel(IPCMessage::SmartType msg);
+         * @tag sync
+         * @brief	获取页面缩放等级.
+         *
+         * @return	#Double.
+         * @example
+         *
+         ```
+        	includes('BrowserWindow', 'BrowserHost', 'Browser');
+        	var host = BrowserHost.current;
+        	console.log(host.GetZoomLevel());
+        	host.SetZoomLevel(1.0);
+        	console.assert(host.GetZoomLevel() == 1.0);
+        	host.SetZoomLevel(0.0);
+         ```
+         */
+        
         Any GetZoomLevel(IPCMessage::SmartType msg);
+        
+        /**
+         * @fn	Any BrowserHostTransfer::SetZoomLevel(IPCMessage::SmartType msg);
+         *
+         * @brief	设备页面缩放等级 .
+         *
+         * @param	#Double 缩放等级.
+         *
+         * @return	#Undefined.
+         *
+         * @example
+         *
+         ```
+        	includes('BrowserWindow', 'BrowserHost', 'Browser');
+        	var host = BrowserHost.current;
+        	host.SetZoomLevel(-0.6);
+         ```
+         */
+        
         Any SetZoomLevel(IPCMessage::SmartType msg);
         Any RunFileDialog(IPCMessage::SmartType msg);
         Any StartDownload(IPCMessage::SmartType msg);
