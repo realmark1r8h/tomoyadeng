@@ -36,6 +36,8 @@
 #include "ui/win/overlap/OverlapData.hpp"
 #include "ui/win/overlap/DefaultOverlapData.hpp"
 #include "ui/win/overlap/FilemappingOverlapData.hpp"
+#include "gif.h"
+#include "Bitmap.hpp"
 
 
 namespace {
@@ -1481,6 +1483,49 @@ namespace amo {
                              int width,
                              int height) {
         CEF_REQUIRE_UI_THREAD();
+        
+        static std::shared_ptr< GifWriter> writer;
+        
+        if (!writer && width == 1280 && height == 720) {
+            writer.reset(new GifWriter());
+            
+            if (!GifBegin(writer.get(), "D:/gddd.gif", width, height, 3)) {
+                return;
+            }
+            
+        }
+        
+        static int count = 0;
+        
+        if (width == 1280 && height == 720) {
+            std::vector<uint8_t> vec(width * height * 4, 0);
+            memcpy(vec.data(), buffer, vec.size());
+            
+            // ARGB,转 RGBA
+            for (size_t i = 0; i < vec.size();) {
+                uint8_t c = vec[i];
+                vec[i] = vec[i + 1] ;
+                vec[i + 1] = vec[i + 2];
+                vec[i + 2] = vec[i + 3];
+                vec[i + 3] = c;
+                /* memcpy(&vec[i], &vec[i + 1], 3);
+                 vec[i + 3] = c;*/
+                /* std::swap(vec[i], vec[i + 3]);
+                 std::swap(vec[i + 1], vec[i + 2]);*/
+                i += 4;
+            }
+            
+            GifWriteFrame(writer.get(), (const uint8_t*)vec.data(), width, height, 3);
+            WriteBmp(std::to_string(count) + ".bmp", GetDC((m_hParentWnd)));
+            ++count;
+            
+            
+        }
+        
+        
+        if (count == 30) {
+            GifEnd(writer.get());
+        }
         
         amo::rect rc;
         rc.intersect(amo::rect());

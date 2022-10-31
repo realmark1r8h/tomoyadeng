@@ -1067,6 +1067,12 @@
     <ClInclude Include="transfer\TransferHelper.hpp">
       <Filter>transfer</Filter>
     </ClInclude>
+    <ClInclude Include="ui\win\gif.h">
+      <Filter>ui\win</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\Bitmap.hpp">
+      <Filter>ui\win</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="libNCUI.rc">

@@ -472,11 +472,13 @@
     <ClInclude Include="transfer\URLRequestClientTransfer.h" />
     <ClInclude Include="transfer\URLRequestTransfer.h" />
     <ClInclude Include="ui\win\ActionPreprocessor.h" />
+    <ClInclude Include="ui\win\Bitmap.hpp" />
     <ClInclude Include="ui\win\BrowserWindow.h" />
     <ClInclude Include="ui\win\BrowserWindowManager.h" />
     <ClInclude Include="ui\win\BrowserWindowSkin.h" />
     <ClInclude Include="ui\win\BytesWriteHandler.h" />
     <ClInclude Include="ui\win\clipboard\Clipboard.h" />
+    <ClInclude Include="ui\win\gif.h" />
     <ClInclude Include="ui\win\Imm32Manager.h" />
     <ClInclude Include="ui\win\LayeredWindow.h" />
     <ClInclude Include="ui\win\LocalWindow.h" />
