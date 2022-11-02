@@ -267,7 +267,29 @@ namespace amo {
         
         Any getBrowserWindowSettings(IPCMessage::SmartType msg);
         
+        /**
+         * @fn	Any saveImageToFile(IPCMessage::SmartType msg);
+         *
+         * @brief	保存页面到文件， 离屏模式下(offscreen== true)有效.支持.png, .bmp, .gif, .jpeg, .jpg, .tiff
+         *
+         * @param	#String 图片保存路径.
+         * @param	#Boolean=false 是否保存标题栏（标题栏存在时有效）
+         *
+         * @return	#Undefined.
+         * @example
+         *
+         ```
+        	include('BrowserWindow');
+        	var win = BrowserWindow.current;
+        	// 如果当前程序是以离屏模式运行才能成功
+        	win.saveImageToFile('1.png', true);
         
+        
+        
+         ```
+         */
+        
+        virtual Any saveImageToFile(IPCMessage::SmartType msg);
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(BrowserWindowTransfer, ClassTransfer)
         
@@ -386,6 +408,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(enableIME, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(computeCursor, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(isComputeCursor, TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(saveImageToFile, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         

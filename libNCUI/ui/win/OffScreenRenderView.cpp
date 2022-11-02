@@ -396,6 +396,17 @@ namespace amo {
         m_pViewRender->insertBitmap(image);
     }
     
+    bool OffScreenRenderView::DoPaintOnMemDC(HDC hDC, RECT rc) {
+        CControlUI* pRoot = m_PaintManager.GetRoot();
+        
+        if (!pRoot) {
+            return false;
+            
+        }
+        
+        return  m_pViewRender->DoPaint(hDC, rc, m_pViewRender);
+    }
+    
     void OffScreenRenderView::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
         if (m_hWnd == (browser->GetHost()->GetWindowHandle())) {
             m_pBrowser = browser;

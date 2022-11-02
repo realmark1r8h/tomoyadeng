@@ -115,7 +115,7 @@ new BrowserWindow({
   仅离屏模式下支持使用外部数据渲染界面.
   
 * **参考** 
-<a href="#api/apiBrowserWindow/68">BrowserWindow.addOverlap</a>
+<a href="#api/apiBrowserWindow/67">BrowserWindow.addOverlap</a>
 
 
 

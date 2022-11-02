@@ -9,7 +9,8 @@
 
 namespace amo {
 
-    RenderView::RenderView(std::shared_ptr<BrowserWindowSettings> pBrowserSettings) {
+    RenderView::RenderView(std::shared_ptr<BrowserWindowSettings>
+                           pBrowserSettings) {
         m_oBrowserSettings = pBrowserSettings;
     }
     
@@ -45,7 +46,8 @@ namespace amo {
     
     
     
-    LRESULT RenderView::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT RenderView::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                               BOOL& bHandled) {
         RECT rect;
         ::GetClientRect(m_hWnd, &rect);
         
@@ -85,7 +87,8 @@ namespace amo {
     }
     
     
-    LRESULT RenderView::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT RenderView::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                            BOOL& bHandled) {
         LRESULT lRes = FALSE;
         
         switch (uMsg) {
@@ -204,6 +207,10 @@ namespace amo {
         if (pRenderLayout && m_oBrowserSettings->offscreen) {
             pRenderLayout->Invalidate();
         }
+    }
+    
+    bool RenderView::DoPaintOnMemDC(HDC hDC, RECT rc) {
+        return true;
     }
     
     RenderView::~RenderView() {

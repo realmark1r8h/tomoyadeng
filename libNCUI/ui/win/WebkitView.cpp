@@ -287,6 +287,75 @@ namespace amo {
                        NULL);
     }
     
+    bool WebkitView::DoPaint(HDC hDC, const RECT& rcPaint,
+                             CControlUI* pStopControl) {
+                             
+        if (!m_pBrowserSettings->offscreen) {
+            return ViewRenderer::DoPaint(hDC, rcPaint, pStopControl);
+        }
+        
+        if (!m_pBrowserSettings->transparent) {
+        
+            HWND m_hWnd = m_pRenderWnd->GetHWND();
+            PAINTSTRUCT ps = { 0 };
+            ::BeginPaint(m_hWnd, &ps);
+            RECT rcClient;
+            ::GetWindowRect(m_hWnd, &rcClient);
+            int nWidth = rcClient.right - rcClient.left;
+            int nHeight = rcClient.bottom - rcClient.top;
+            SIZE wndSize = { rcClient.right - rcClient.left, rcClient.bottom - rcClient.top };
+            HDC hDC2 = ::GetDC(m_hWnd);
+            
+            HDC memDC = NULL;
+            
+            if (memDC == NULL) {
+                memDC = ::CreateCompatibleDC(hDC2);
+            }
+            
+            BITMAPINFO bitmapinfo;
+            bitmapinfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+            bitmapinfo.bmiHeader.biBitCount = 32;
+            bitmapinfo.bmiHeader.biHeight = nHeight;
+            bitmapinfo.bmiHeader.biWidth = nWidth;
+            bitmapinfo.bmiHeader.biPlanes = 1;
+            bitmapinfo.bmiHeader.biCompression = BI_RGB;
+            bitmapinfo.bmiHeader.biXPelsPerMeter = 0;
+            bitmapinfo.bmiHeader.biYPelsPerMeter = 0;
+            bitmapinfo.bmiHeader.biClrUsed = 0;
+            bitmapinfo.bmiHeader.biClrImportant = 0;
+            bitmapinfo.bmiHeader.biSizeImage = bitmapinfo.bmiHeader.biWidth
+                                               * bitmapinfo.bmiHeader.biHeight
+                                               * bitmapinfo.bmiHeader.biBitCount / 8;
+                                               
+            HBITMAP hBitmap = ::CreateCompatibleBitmap(hDC, wndSize.cx, wndSize.cy);
+            
+            //HBITMAP hBitmap = ::CreateDIBSection(hDC, &bitmapinfo, 0, NULL, 0, 0);
+            HBITMAP hOldBitmap = (HBITMAP)::SelectObject(memDC, hBitmap);
+            
+            
+            m_pRenderWnd->DoPaintOnMemDC(memDC, GetPos());
+            RECT rc = GetPos();
+            ::BitBlt(hDC, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top, memDC, 0,
+                     0, SRCCOPY);
+                     
+            DWORD wd = GetLastError();
+            ::SelectObject(memDC, hOldBitmap);
+            DeleteObject(hBitmap);
+            
+            
+            ::ReleaseDC(m_hWnd, memDC);
+            
+            ::ReleaseDC(m_hWnd, hDC2);
+            ::EndPaint(m_hWnd, &ps);
+            
+            
+            return true;
+        } else {
+            return ViewRenderer::DoPaint(hDC, rcPaint, pStopControl);
+        }
+        
+    }
+    
     void WebkitView::loadURL(const std::string& url) {
         CEF_REQUIRE_UI_THREAD();
         // 不能直接LoadURL不知为什么
@@ -1501,22 +1570,14 @@ namespace amo {
             std::vector<uint8_t> vec(width * height * 4, 0);
             memcpy(vec.data(), buffer, vec.size());
             
-            // ARGB,转 RGBA
+            // BGRA,转 RGBA
             for (size_t i = 0; i < vec.size();) {
-                uint8_t c = vec[i];
-                vec[i] = vec[i + 1] ;
-                vec[i + 1] = vec[i + 2];
-                vec[i + 2] = vec[i + 3];
-                vec[i + 3] = c;
-                /* memcpy(&vec[i], &vec[i + 1], 3);
-                 vec[i + 3] = c;*/
-                /* std::swap(vec[i], vec[i + 3]);
-                 std::swap(vec[i + 1], vec[i + 2]);*/
+                std::swap(vec[i], vec[i + 2]);
                 i += 4;
             }
             
             GifWriteFrame(writer.get(), (const uint8_t*)vec.data(), width, height, 3);
-            WriteBmp(std::to_string(count) + ".bmp", GetDC((m_hParentWnd)));
+            //WriteBmp(std::to_string(count) + ".bmp", GetDC((m_hParentWnd)));
             ++count;
             
             

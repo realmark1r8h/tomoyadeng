@@ -64,6 +64,8 @@ namespace amo {
         void	SetInternVisible(bool bVisible = true) override;
         void	DoInit() override;
         void	SetPos(RECT rect, bool bNeedInvalidate = true) override;
+        bool  DoPaint(HDC hDC, const RECT& rcPaint,
+                      CControlUI* pStopControl) override ;
         virtual HWND GetNativeWindow() const override;
         
         void loadURL(const std::string& url);

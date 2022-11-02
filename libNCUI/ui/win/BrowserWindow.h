@@ -192,6 +192,20 @@ namespace amo {
         
         std::vector<HWND> getParents(HWND hWnd);
         
+        
+        
+        //使用GDI+保存BITMAP到文件
+        //CLSID encoderClsid
+        //GetEncoderClsid(L"image/png", &encoderClsid);    //png
+        //GetEncoderClsid(L"image/bmp", &encoderClsid);
+        //GetEncoderClsid(L"image/gif", &encoderClsid);
+        //GetEncoderClsid(L"image/jpeg",&encoderClsid);
+        //GetEncoderClsid(L"image/tiff",&encoderClsid);
+        
+        
+        virtual Any saveImageToFile(IPCMessage::SmartType msg) override;
+        
+        
     private:
     
         static	LRESULT CALLBACK SubclassedWindowProc(HWND hWnd,

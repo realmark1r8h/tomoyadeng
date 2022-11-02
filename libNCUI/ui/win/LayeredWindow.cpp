@@ -55,17 +55,7 @@ namespace amo {
     }
     
     void LayeredWindow::drawWindow() {
-        amo::timer t;
-        /*   {
-        
-               amo::timer t;
-               HDC hDC = ::GetDC(m_hWnd);
-               renderer->Render3(m_hWnd, hDC);
-               OutputDebugStringA(std::to_string(t.elapsed()).c_str());
-               OutputDebugStringA("\n");
-               return;
-           }*/
-        
+    
         PAINTSTRUCT ps = { 0 };
         ::BeginPaint(m_hWnd, &ps);
         RECT rcClient;
@@ -102,9 +92,21 @@ namespace amo {
         HBITMAP hOldBitmap = (HBITMAP)::SelectObject(memDC, hBitmap);
         
         CControlUI* pRoot = m_PaintManager.GetRoot();
+        
+        //pRoot = m_PaintManager.FindControl(_T("Webkit"));
+        
+        if (pRoot == NULL) {
+            return;
+        }
+        
         pRoot->DoPaint(memDC, pRoot->GetPos(), NULL);
         
-        
+        //amo::string str = std::to_string(amo::date_time::now());
+        //str += ".png";
+        ////SaveBitmap(hBitmap, str.to_unicode().c_str(), L"image/png");
+        //
+        //SaveHBitmapToFile(hBitmap, (wchar_t*)str.to_unicode().c_str(), L"image/png");
+        //SaveBitmap(hBitmap, L"C:\\123.jpeg", L"image/jpeg");
         
         POINT ptSrc = { 0, 0 };
         SIZE sz = { nWidth, nHeight };
@@ -122,9 +124,8 @@ namespace amo {
                                          &m_Blend,
                                          ULW_ALPHA
                                         );
-        /*      BOOL bOK = ::UpdateLayeredWindow(m_hWnd, hDC, &ptDest, &szLayered, memDC,
-                                               &ptSrc, RGB(0, 0, 0), &m_Blend, ULW_ALPHA);*/
-        
+                                        
+                                        
         DWORD wd = GetLastError();
         ::SelectObject(memDC, hOldBitmap);
         DeleteObject(hBitmap);
@@ -134,7 +135,6 @@ namespace amo {
         
         ::ReleaseDC(m_hWnd, hDC);
         ::EndPaint(m_hWnd, &ps);
-        //$cdevel("渲染用时：{}", t.elapsed());
         
     }
     

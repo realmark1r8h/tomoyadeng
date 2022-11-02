@@ -172,6 +172,7 @@ namespace amo {
         void getActiveElementInfo(CefRefPtr<CefFrame> pFrame);
         virtual void updateCaretPos(std::shared_ptr<Gdiplus::Bitmap>image) override;
         virtual void insertBitmap(std::shared_ptr<PaintResource> image) override;
+        virtual bool DoPaintOnMemDC(HDC hDC, RECT rc) override;
         
     public:
     

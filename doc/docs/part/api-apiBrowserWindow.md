@@ -5,37 +5,6 @@
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
 
-## getBrowserWindowSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
-
-  获取指定URL的默认窗口参数.
-  
-* **函数参数**
-
-<table class="table table-hover table-bordered ">
-	<thead>
-		<tr>
-			<th class="col-xs-1">类型</th>
-			<th class="col-xs-1">默认值</th>
-			<th>说明</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-	<td>String </td>
-	<td></td>
-	<td>URL.</td>
-</tr>
-	</tbody>
-</table>
-
-* **返回值**
-  JsonObject . 
-
-
-
-<div class="adoc" id="div_getBrowserWindowSettings"></div>
-
-
 ## addBrowserWindowSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   为一个URL预设置窗口参数，当这个URL对应及其子路径的浏览器窗口由浏览器触发创建时，将使用该方法预设置的参数.<br>说明：**该方法并不能影响new BrowserWindow() 创建的浏览器窗口**
@@ -125,6 +94,37 @@ window.open('https://www.baidu.com/more');
 
 
 <div class="adoc" id="div_removeBrowserWindowSettings"></div>
+
+
+## getBrowserWindowSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+
+  获取指定URL的默认窗口参数.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String </td>
+	<td></td>
+	<td>URL.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+  JsonObject . 
+
+
+
+<div class="adoc" id="div_getBrowserWindowSettings"></div>
 
 
 ## BrowserWindow &nbsp;<span class="label label-constructor">构造</span> <span class="label label-sync">同步</span> 
@@ -1854,33 +1854,50 @@ win.setConfig({
 * **返回值**
   JsonObject 所有配置参数. 
 
-
-
-<div class="adoc" id="div_getConfig"></div>
-
-
-## getName &nbsp;<span class="label label-sync">同步</span> 
-
-  获取窗口名.
+*****
+  获取窗口的指定配置参数.
   
-* **函数参数**  无
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String </td>
+	<td></td>
+	<td>需要获取的字段名称.</td>
+</tr>
+	</tbody>
+</table>
 
 * **返回值**
-  String . 
+   返回字段名所对应的配置参数。返回类型视配置参数类型而定，为JS所支持的基本数据类型. 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/63">setName</a>
+<a href="#api/apiBrowserWindow/54">setConfig</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
+//获取浏览器窗口的所有配置参数
 var win = BrowserWindow.current;
-console.log(win.getName());
+var config = win.getConfig();
+console.log(config);
+
+//获取浏览器窗口的指定配置参数
+var titleBar = win.getConfig('titleBar');
+console.assert(titleBar == false);
 
 ```
 
 
-<div class="adoc" id="div_getName"></div>
+<div class="adoc" id="div_getConfig"></div>
 
 
 ## setOpacity &nbsp;
@@ -1909,7 +1926,7 @@ console.log(win.getName());
    无. 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/58">getOpacity</a>
+<a href="#api/apiBrowserWindow/57">getOpacity</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
@@ -1933,7 +1950,7 @@ BrowserWindow.current.setOpacity(200);
   Int 不透明度. 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/57">setOpacity</a>
+<a href="#api/apiBrowserWindow/56">setOpacity</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
@@ -2055,42 +2072,28 @@ console.assert(win.isComputeCursor() == true);
 <div class="adoc" id="div_isComputeCursor"></div>
 
 
-## setName &nbsp;
-  设置窗口名,这个函数暂时还没有什么用，只是把名称保留下来了.
-  
-* **函数参数**
+## getName &nbsp;<span class="label label-sync">同步</span> 
 
-<table class="table table-hover table-bordered ">
-	<thead>
-		<tr>
-			<th class="col-xs-1">类型</th>
-			<th class="col-xs-1">默认值</th>
-			<th>说明</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-	<td>String </td>
-	<td></td>
-	<td>名称.</td>
-</tr>
-	</tbody>
-</table>
+  获取窗口名.
+  
+* **函数参数**  无
 
 * **返回值**
-   无. 
+  String . 
+
+* **参考** 
+<a href="#api/apiBrowserWindow/71">setName</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
 var win = BrowserWindow.current;
-win.setName('NCUI测试窗口');
-console.assert(win.getName() == 'NCUI测试窗口');
+console.log(win.getName());
 
 ```
 
 
-<div class="adoc" id="div_setName"></div>
+<div class="adoc" id="div_getName"></div>
 
 
 ## currentWindow &nbsp;<span class="label label-deprecated">废弃</span> 
@@ -2103,58 +2106,24 @@ console.assert(win.getName() == 'NCUI测试窗口');
   BrowserWindow 如果不存在，返回Undefined. 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/74">current</a>
+<a href="#api/apiBrowserWindow/64">current</a>
 
 
 
 <div class="adoc" id="div_currentWindow"></div>
 
 
-## getConfig &nbsp;<span class="label label-sync">同步</span> 
-
-  获取窗口的指定配置参数.
+## current &nbsp;
+  获取当前页面所对应的窗口对象.
   
-* **函数参数**
-
-<table class="table table-hover table-bordered ">
-	<thead>
-		<tr>
-			<th class="col-xs-1">类型</th>
-			<th class="col-xs-1">默认值</th>
-			<th>说明</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-	<td>String </td>
-	<td></td>
-	<td>需要获取的字段名称.</td>
-</tr>
-	</tbody>
-</table>
+* **函数参数**  无
 
 * **返回值**
-   返回字段名所对应的配置参数。返回类型视配置参数类型而定，为JS所支持的基本数据类型. 
-
-* **参考** 
-<a href="#api/apiBrowserWindow/54">setConfig</a>
-
-* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
-
-```html
-//获取浏览器窗口的所有配置参数
-var win = BrowserWindow.current;
-var config = win.getConfig();
-console.log(config);
-
-//获取浏览器窗口的指定配置参数
-var titleBar = win.getConfig('titleBar');
-console.assert(titleBar == false);
-
-```
+  BrowserWindow 如果不存在，返回Undefined. 
 
 
-<div class="adoc" id="div_getConfig"></div>
+
+<div class="adoc" id="div_current"></div>
 
 
 ## getAllWindows &nbsp;
@@ -2310,6 +2279,44 @@ console.assert(titleBar == false);
 <div class="adoc" id="div_getDragBlackList"></div>
 
 
+## setName &nbsp;
+  设置窗口名,这个函数暂时还没有什么用，只是把名称保留下来了.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String </td>
+	<td></td>
+	<td>名称.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+   无. 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+var win = BrowserWindow.current;
+win.setName('NCUI测试窗口');
+console.assert(win.getName() == 'NCUI测试窗口');
+
+```
+
+
+<div class="adoc" id="div_setName"></div>
+
+
 ## showTitleBar &nbsp;
   显示/隐藏标题栏.
   
@@ -2371,16 +2378,49 @@ win.close();
 <div class="adoc" id="div_close"></div>
 
 
-## current &nbsp;
-  获取当前页面所对应的窗口对象.
+## saveImageToFile &nbsp;
+  保存页面到文件， 离屏模式下(offscreen== true)有效.支持.png, .bmp, .gif, .jpeg, .jpg, .tiff
   
-* **函数参数**  无
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String </td>
+	<td></td>
+	<td>图片保存路径.</td>
+</tr><tr>
+	<td>Boolean</td>
+	<td>false </td>
+	<td>是否保存标题栏（标题栏存在时有效）</td>
+</tr>
+	</tbody>
+</table>
 
 * **返回值**
-  BrowserWindow 如果不存在，返回Undefined. 
+  Undefined . 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('BrowserWindow');
+var win = BrowserWindow.current;
+// 如果当前程序是以离屏模式运行才能成功
+win.saveImageToFile('1.png', true);
 
 
 
-<div class="adoc" id="div_current"></div>
+
+```
+
+
+<div class="adoc" id="div_saveImageToFile"></div>
 
 

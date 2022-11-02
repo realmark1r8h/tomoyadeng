@@ -32,8 +32,10 @@ namespace amo {
         virtual UINT GetClassStyle() const override;
         virtual CDuiString GetSkinFolder() override;
         virtual CDuiString GetSkinFile() override;
-        virtual LRESULT OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
+        virtual LRESULT OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                               BOOL& bHandled) override;
+        virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                            BOOL& bHandled) override;
         virtual LRESULT OnDestroy(UINT, WPARAM, LPARAM, BOOL& bHandled) override;
         virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
         
@@ -45,10 +47,13 @@ namespace amo {
         virtual void setTooltip(const amo::string& str);
         
         virtual void needUpdate();
+        virtual bool DoPaintOnMemDC(HDC hDC, RECT rc);
         
     protected:
-        CefRefPtr<amo::ClientHandler> m_pClientHandler;												//!< ä¯ÀÀÆ÷ÊÂ¼þ´¦Àí¾ä±ú
-        std::shared_ptr<BrowserWindowSettings>  m_oBrowserSettings;									//!< ä¯ÀÀÆ÷ÉèÖÃ
+        CefRefPtr<amo::ClientHandler>
+        m_pClientHandler;												//!< ä¯ÀÀÆ÷ÊÂ¼þ´¦Àí¾ä±ú
+        std::shared_ptr<BrowserWindowSettings>
+        m_oBrowserSettings;									//!< ä¯ÀÀÆ÷ÉèÖÃ
         CefRefPtr<CefBrowser> m_pBrowser;															//!< ä¯ÀÀÆ÷Ö¸Õë
     };
     

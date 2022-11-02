@@ -38,7 +38,9 @@
 #include "settings/BrowserWindowSettings.h"
 #include "ui/win/clipboard/Clipboard.h"
 
-#include <amo/adb.hpp>
+#include "ui/win/Bitmap.hpp"
+
+
 
 
 #ifndef SPI_GETWINARRANGING
@@ -242,6 +244,9 @@ namespace amo {
             m_pWebkit = new WebkitView(m_pBrowserSettings);
         }
         
+        auto ss = m_pWebkit->GetName();
+        
+        m_pWebkit->SetName(_T("Webkit"));
         m_pWebkit->getClientHandler()->RegisterRenderHandlerDelegate(this);
         m_pWebkit->getClientHandler()->RegisterLifeSpanHandlerDelegate(this);
         m_pWebkit->getClientHandler()->RegisterDragHandlerDelegate(this);
@@ -466,6 +471,96 @@ namespace amo {
         
         return vec;
     }
+    
+    
+    Any BrowserWindow::saveImageToFile(IPCMessage::SmartType msg) {
+    
+        auto args = msg->getArgumentList();
+        
+        amo::string filename(args->getString(0), true);
+        
+        bool containsTitleBar = args->getBool(1);
+        
+        if (filename.empty()) {
+            return false;
+        }
+        
+        
+        amo::path p(filename);
+        std::string ext = p.find_extension();
+        
+        std::string fileformat = GetFormatByExt(ext);
+        
+        
+        
+        
+        PAINTSTRUCT ps = { 0 };
+        ::BeginPaint(m_hWnd, &ps);
+        
+        CControlUI* pRoot = m_PaintManager.GetRoot();
+        
+        if (!containsTitleBar) {
+            pRoot = m_PaintManager.FindControl(_T("Webkit"));
+        }
+        
+        if (pRoot == NULL) {
+            return false;
+        }
+        
+        
+        RECT rcClient = pRoot->GetPos();
+        int nWidth = rcClient.right - rcClient.left;
+        int nHeight = rcClient.bottom - rcClient.top;
+        SIZE wndSize = { rcClient.right - rcClient.left, rcClient.bottom - rcClient.top };
+        HDC hDC = ::GetDC(m_hWnd);
+        
+        HDC memDC = NULL;
+        
+        if (memDC == NULL) {
+            memDC = ::CreateCompatibleDC(hDC);
+        }
+        
+        BITMAPINFO bitmapinfo;
+        bitmapinfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+        bitmapinfo.bmiHeader.biBitCount = 32;
+        bitmapinfo.bmiHeader.biHeight = nHeight;
+        bitmapinfo.bmiHeader.biWidth = nWidth;
+        bitmapinfo.bmiHeader.biPlanes = 1;
+        bitmapinfo.bmiHeader.biCompression = BI_RGB;
+        bitmapinfo.bmiHeader.biXPelsPerMeter = 0;
+        bitmapinfo.bmiHeader.biYPelsPerMeter = 0;
+        bitmapinfo.bmiHeader.biClrUsed = 0;
+        bitmapinfo.bmiHeader.biClrImportant = 0;
+        bitmapinfo.bmiHeader.biSizeImage = bitmapinfo.bmiHeader.biWidth
+                                           * bitmapinfo.bmiHeader.biHeight
+                                           * bitmapinfo.bmiHeader.biBitCount / 8;
+                                           
+        HBITMAP hBitmap = ::CreateCompatibleBitmap(hDC, wndSize.cx, wndSize.cy);
+        
+        //HBITMAP hBitmap = ::CreateDIBSection(hDC, &bitmapinfo, 0, NULL, 0, 0);
+        HBITMAP hOldBitmap = (HBITMAP)::SelectObject(memDC, hBitmap);
+        
+        
+        pRoot->DoPaint(memDC, pRoot->GetPos(), NULL);
+        
+        
+        SaveHBitmapToFile(hBitmap,
+                          filename.to_unicode().c_str(),
+                          amo::string(fileformat).to_unicode().c_str());
+                          
+                          
+        ::SelectObject(memDC, hOldBitmap);
+        DeleteObject(hBitmap);
+        
+        
+        ::ReleaseDC(m_hWnd, memDC);
+        
+        ::ReleaseDC(m_hWnd, hDC);
+        ::EndPaint(m_hWnd, &ps);
+        return Undefined();
+    }
+    
+    
     
     LRESULT CALLBACK BrowserWindow::SubclassedWindowProc(HWND hWnd, UINT message,
             WPARAM wParam, LPARAM lParam) {
