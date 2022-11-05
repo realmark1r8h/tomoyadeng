@@ -39,7 +39,7 @@
 #include "ui/win/clipboard/Clipboard.h"
 
 #include "ui/win/Bitmap.hpp"
-
+#include "gif.h"
 
 
 
@@ -65,6 +65,9 @@
 #include <amo/filestream.hpp>
 #include <amo/file.hpp>
 
+#ifndef WM_GIF_RECORD_TIMER
+#define WM_GIF_RECOFD_TIMER (WM_USER + 1232)
+#endif
 
 namespace amo {
 
@@ -80,6 +83,7 @@ namespace amo {
         m_pNativeSettings->id = amo::string::from_number(getObjectID()).to_utf8();
         m_pTitleBar = NULL;
         m_pBrowserLayout = NULL;
+        m_gifRecordTimer = 0;
         m_pCefCallbackHandler.reset(new CefCallbackHandler(getObjectID()));
         setNativeWindow(false);
         draggable_region_ = ::CreateRectRgn(0, 0, 0, 0);
@@ -193,6 +197,20 @@ namespace amo {
     LRESULT BrowserWindow::OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                    BOOL& bHandled) {
         return LocalWindow::OnPaint(uMsg, wParam, lParam, bHandled);
+    }
+    
+    LRESULT BrowserWindow::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+        if (!writer) {
+            return FALSE;
+        }
+        
+        if (wParam == writer->m_gifRecordTimer) {
+            writeGif();
+            return 0;
+        }
+        
+        bHandled = FALSE;
+        return 0;
     }
     
     void BrowserWindow::InitWindow() {
@@ -328,6 +346,9 @@ namespace amo {
             lRes = OnNcLButtonDbClick(uMsg, wParam, lParam, bHandled);
             break;
             
+        case  WM_TIMER:
+            lRes = OnTimer(uMsg, wParam, lParam, bHandled);
+            
         default:
             break;
         }
@@ -456,6 +477,282 @@ namespace amo {
         return Undefined();
     }
     
+    Any BrowserWindow::stopRecordGif(IPCMessage::SmartType msg) {
+        if (!writer) {
+            return Undefined();
+        }
+        
+        GifEnd(&writer->writer);
+        KillTimer(m_hWnd, writer->m_gifRecordTimer);
+        writer.reset();
+        
+        return Undefined();
+    }
+    
+    //VC下把HBITMAP保存为bmp图片
+    BOOL  SaveBmp2(HBITMAP     hBitmap, std::vector<uint8_t>& vec) {
+        HDC     hDC;
+        //当前分辨率下每象素所占字节数
+        int     iBits;
+        //位图中每象素所占字节数
+        WORD     wBitCount;
+        //定义调色板大小，     位图中像素字节大小     ，位图文件大小     ，     写入文件字节数
+        DWORD     dwPaletteSize = 0, dwBmBitsSize = 0, dwDIBSize = 0, dwWritten = 0;
+        //位图属性结构
+        BITMAP     Bitmap;
+        //位图文件头结构
+        BITMAPFILEHEADER     bmfHdr;
+        //位图信息头结构
+        BITMAPINFOHEADER     bi;
+        //指向位图信息头结构
+        LPBITMAPINFOHEADER     lpbi;
+        //定义文件，分配内存句柄，调色板句柄
+        HANDLE     fh, hDib, hPal, hOldPal = NULL;
+        
+        //计算位图文件每个像素所占字节数
+        hDC = CreateDCA("DISPLAY", NULL, NULL, NULL);
+        iBits = GetDeviceCaps(hDC, BITSPIXEL)     *     GetDeviceCaps(hDC, PLANES);
+        DeleteDC(hDC);
+        
+        if (iBits <= 1) {
+            wBitCount = 1;
+        } else  if (iBits <= 4) {
+            wBitCount = 4;
+        } else if (iBits <= 8) {
+            wBitCount = 8;
+        } else  if (iBits <= 24) {
+        
+            wBitCount = 24;
+        } else {
+            wBitCount = 32;
+        }
+        
+        GetObject(hBitmap, sizeof(Bitmap), (LPSTR)&Bitmap);
+        bi.biSize = sizeof(BITMAPINFOHEADER);
+        bi.biWidth = Bitmap.bmWidth;
+        bi.biHeight = Bitmap.bmHeight;
+        bi.biPlanes = 1;
+        bi.biBitCount = wBitCount;
+        bi.biCompression = BI_RGB;
+        bi.biSizeImage = 0;
+        bi.biXPelsPerMeter = 0;
+        bi.biYPelsPerMeter = 0;
+        bi.biClrImportant = 0;
+        bi.biClrUsed = 0;
+        
+        dwBmBitsSize = ((Bitmap.bmWidth * wBitCount + 31) / 32) * 4 * Bitmap.bmHeight;
+        
+        //为位图内容分配内存
+        hDib = GlobalAlloc(GHND,
+                           dwBmBitsSize + dwPaletteSize + sizeof(BITMAPINFOHEADER));
+        lpbi = (LPBITMAPINFOHEADER)GlobalLock(hDib);
+        *lpbi = bi;
+        
+        //     处理调色板
+        hPal = GetStockObject(DEFAULT_PALETTE);
+        
+        if (hPal) {
+            hDC = ::GetDC(NULL);
+            hOldPal = ::SelectPalette(hDC, (HPALETTE)hPal, FALSE);
+            RealizePalette(hDC);
+        }
+        
+        //     获取该调色板下新的像素值
+        GetDIBits(hDC, hBitmap, 0, (UINT)Bitmap.bmHeight,
+                  (LPSTR)lpbi + sizeof(BITMAPINFOHEADER) + dwPaletteSize,
+                  (BITMAPINFO*)lpbi, DIB_RGB_COLORS);
+                  
+        //恢复调色板
+        if (hOldPal) {
+            ::SelectPalette(hDC, (HPALETTE)hOldPal, TRUE);
+            RealizePalette(hDC);
+            ::ReleaseDC(NULL, hDC);
+        }
+        
+        //创建位图文件
+        /*      fh = CreateFileA(FileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
+                               FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+        
+              if (fh == INVALID_HANDLE_VALUE) {
+                  return     FALSE;
+              }*/
+        
+        //     设置位图文件头
+        bmfHdr.bfType = 0x4D42;     //     "BM"
+        dwDIBSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + dwPaletteSize
+                    + dwBmBitsSize;
+        bmfHdr.bfSize = dwDIBSize;
+        bmfHdr.bfReserved1 = 0;
+        bmfHdr.bfReserved2 = 0;
+        bmfHdr.bfOffBits = (DWORD)sizeof(BITMAPFILEHEADER) + (DWORD)sizeof(
+                               BITMAPINFOHEADER) + dwPaletteSize;
+        ////     写入位图文件头
+        //WriteFile(fh, (LPSTR)&bmfHdr, sizeof(BITMAPFILEHEADER), &dwWritten, NULL);
+        ////     写入位图文件其余内容
+        //WriteFile(fh, (LPSTR)lpbi, dwDIBSize, &dwWritten, NULL);
+        
+        vec.resize(dwBmBitsSize);
+        memcpy(vec.data(), lpbi, vec.size());
+        
+        //清除
+        GlobalUnlock(hDib);
+        GlobalFree(hDib);
+        //CloseHandle(fh);
+        
+        return     TRUE;
+    }
+    void ConvertBitmapToBuf(HBITMAP hBitmap, std::vector<uint8_t>& vec) {
+        ULONG_PTR				m_gdiplusToken;
+        GdiplusStartupInput		m_gdiplusStartupInput;
+        GdiplusStartup(&m_gdiplusToken, &m_gdiplusStartupInput, NULL);
+        Bitmap * pBmp = Bitmap::FromHBITMAP(hBitmap, NULL);
+        BitmapData* bmpData = new BitmapData;
+        Rect rect(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
+        pBmp->LockBits(
+            &rect,
+            Gdiplus::ImageLockModeRead | Gdiplus::ImageLockModeWrite,
+            pBmp->GetPixelFormat(),
+            bmpData);
+            
+        int len = bmpData->Height * std::abs(bmpData->Stride);
+        //BYTE* buffer = new BYTE[len];
+        //memcpy(buffer, bmpData->Scan0, len / 2); //copy it to an array of BYTEs
+        int bytes = len;// bmpData->Stride * pBmp->GetHeight();
+        /*  FILE* fp2 = fopen("./res/logo2.png", "wb");
+          ULONG uWrite = fwrite(bmpData->Scan0, 1, bytes, fp2);
+          fclose(fp2);*/
+        
+        vec.resize(bytes);
+        memcpy(vec.data(), bmpData->Scan0, vec.size());
+        pBmp->UnlockBits(bmpData);
+        delete pBmp;
+        ::GdiplusShutdown(m_gdiplusToken);
+        //BITMAP bm;
+        //GetObject(hBitmap, sizeof(BITMAP), (LPSTR)&bm);// bmBits=0 !
+        //
+        //if (bm.bmBitsPixel < 24) {
+        //    AfxMessageBox("Not 24 or 32!");
+        //    return 0;
+        //}
+        //
+        //CBitmap Bitmap;
+        //Bitmap.Attach(hBitmap);
+        //// sizeof(BITMAPINFOHEADER)=40;
+        ////caller needs to dekete [] buffer
+        //DWORD dwBmBitsSize = ((bm.bmWidth * bm.bmBitsPixel + 31) / 32) * 4 * bm.bmHeight;
+        //BYTE *buffer = new BYTE[dwBmBitsSize + sizeof(BITMAPINFOHEADER)];
+        //DWORD len = Bitmap.GetBitmapBits(dwBmBitsSize, (buffer + sizeof(BITMAPINFOHEADER)));
+        //bm.bmBits = buffer + sizeof(BITMAPINFOHEADER) - sizeof(LPVOID);
+        //memcpy(buffer, &bm, sizeof(BITMAPINFOHEADER));
+        //return buffer;
+    }
+    void BrowserWindow::writeGif() {
+    
+    
+        if (!writer) {
+            return;
+        }
+        
+        
+        
+        
+        // BGRA,转 RGBA
+        /*     for (size_t i = 0; i < vec.size();) {
+        		 std::swap(vec[i], vec[i + 2]);
+        		 i += 4;
+        	 }*/
+        RECT rc = { 0 };
+        ::GetClientRect(m_hWnd, &rc);
+        
+        createBitmapFromDC([&](HBITMAP hBitmap) {
+            std::vector<uint8_t> vec;
+            SaveBmp2(hBitmap, vec);
+            //ConvertBitmapToBuf(hBitmap, vec);
+            GifWriteFrame(&writer->writer, (const uint8_t*)vec.data(), writer->width, writer->height, writer->delay);
+            
+        }, true);
+        
+        
+        writer->count++;
+        
+        
+        //stopRecordGif(IPCMessage::Empty());
+        
+        if (writer->count >= writer->total) {
+            stopRecordGif(IPCMessage::Empty());
+        }
+        
+        
+    }
+    
+    void BrowserWindow::createBitmapFromDC(std::function<void(HBITMAP)> fn, bool containsTitleBar /*= false*/) {
+    
+        PAINTSTRUCT ps = { 0 };
+        ::BeginPaint(m_hWnd, &ps);
+        
+        CControlUI* pRoot = m_PaintManager.GetRoot();
+        
+        if (!containsTitleBar) {
+            pRoot = m_PaintManager.FindControl(_T("Webkit"));
+        }
+        
+        if (pRoot == NULL) {
+            return;
+        }
+        
+        
+        RECT rcClient = pRoot->GetPos();
+        int nWidth = rcClient.right - rcClient.left;
+        int nHeight = rcClient.bottom - rcClient.top;
+        SIZE wndSize = { rcClient.right - rcClient.left, rcClient.bottom - rcClient.top };
+        HDC hDC = ::GetDC(m_hWnd);
+        
+        HDC memDC = NULL;
+        
+        if (memDC == NULL) {
+            memDC = ::CreateCompatibleDC(hDC);
+        }
+        
+        BITMAPINFO bitmapinfo;
+        bitmapinfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+        bitmapinfo.bmiHeader.biBitCount = 32;
+        bitmapinfo.bmiHeader.biHeight = nHeight;
+        bitmapinfo.bmiHeader.biWidth = nWidth;
+        bitmapinfo.bmiHeader.biPlanes = 1;
+        bitmapinfo.bmiHeader.biCompression = BI_RGB;
+        bitmapinfo.bmiHeader.biXPelsPerMeter = 0;
+        bitmapinfo.bmiHeader.biYPelsPerMeter = 0;
+        bitmapinfo.bmiHeader.biClrUsed = 0;
+        bitmapinfo.bmiHeader.biClrImportant = 0;
+        bitmapinfo.bmiHeader.biSizeImage = bitmapinfo.bmiHeader.biWidth
+                                           * bitmapinfo.bmiHeader.biHeight
+                                           * bitmapinfo.bmiHeader.biBitCount / 8;
+                                           
+        HBITMAP hBitmap = ::CreateCompatibleBitmap(hDC, wndSize.cx, wndSize.cy);
+        
+        //HBITMAP hBitmap = ::CreateDIBSection(hDC, &bitmapinfo, 0, NULL, 0, 0);
+        HBITMAP hOldBitmap = (HBITMAP)::SelectObject(memDC, hBitmap);
+        
+        
+        pRoot->DoPaint(memDC, pRoot->GetPos(), NULL);
+        
+        if (fn) {
+            fn(hBitmap);
+        }
+        
+        
+        ::SelectObject(memDC, hOldBitmap);
+        
+        DeleteObject(hBitmap);
+        
+        
+        ::ReleaseDC(m_hWnd, memDC);
+        
+        ::ReleaseDC(m_hWnd, hDC);
+        ::EndPaint(m_hWnd, &ps);
+    }
+    
+    
     std::shared_ptr<amo::BrowserWindowSettings>
     BrowserWindow::getBrowserSettings()  const {
         return m_pBrowserSettings;
@@ -561,6 +858,60 @@ namespace amo {
     }
     
     
+    
+    Any BrowserWindow::recordGifToFile(IPCMessage::SmartType msg) {
+        if (writer) {
+            return Undefined();
+        }
+        
+        amo::json json;// = msg->getArgumentList()->getJson(0);
+        json.put("filename", "3.gif");
+        json.put("total", 20);
+        writer = GifInfo::fromJson(json);
+        
+        
+        
+        RECT rc = { 0 };
+        GetClientRect(m_hWnd, &rc);
+        amo::rect rect(rc);
+        
+        if (writer->width == 0 || writer->height == 0) {
+            writer->width = rect.width();
+            writer->height = rect.height();
+        }
+        
+        if (!GifBegin(&writer->writer, writer->filename.c_str(), writer->width, writer->height, writer->delay)) {
+            return Undefined();
+        }
+        
+        writer->m_gifRecordTimer =  SetTimer(m_hWnd, WM_GIF_RECOFD_TIMER, writer->delay, NULL);
+        return Undefined();
+        //static int count = 0;
+        //
+        //if (width == 1280 && height == 720) {
+        //    std::vector<uint8_t> vec(width * height * 4, 0);
+        //    memcpy(vec.data(), buffer, vec.size());
+        //
+        //    // BGRA,转 RGBA
+        //    for (size_t i = 0; i < vec.size();) {
+        //        std::swap(vec[i], vec[i + 2]);
+        //        i += 4;
+        //    }
+        //
+        //    GifWriteFrame(writer.get(), (const uint8_t*)vec.data(), width, height, 3);
+        //    //WriteBmp(std::to_string(count) + ".bmp", GetDC((m_hParentWnd)));
+        //    ++count;
+        //
+        //
+        //}
+        //
+        //
+        //if (count == 30) {
+        //    GifEnd(writer.get());
+        //}
+        //
+        //BeinGif
+    }
     
     LRESULT CALLBACK BrowserWindow::SubclassedWindowProc(HWND hWnd, UINT message,
             WPARAM wParam, LPARAM lParam) {
@@ -816,6 +1167,11 @@ namespace amo {
 #endif
     
     
+    
+    void BrowserWindow::OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, int httpStatusCode) {
+        recordGifToFile(IPCMessage::Empty());
+    }
+    
     bool BrowserWindow::preTranslateMessage(CefEventHandle os_event) {
     
         if (m_pWebkit == NULL || m_pWebkit->getBrowser().get() == NULL) {
@@ -967,7 +1323,7 @@ namespace amo {
     }
     
     LRESULT BrowserWindow::OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam,
-                                       BOOL& bHandled) {
+                                       BOOL & bHandled) {
                                        
                                        
                                        
@@ -1058,7 +1414,7 @@ namespace amo {
     }
     
     LRESULT BrowserWindow::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam,
-                                     BOOL& bHandled) {
+                                     BOOL & bHandled) {
                                      
         if (m_pWebkit != NULL && isLayered()) {
             m_pWebkit->insertBitmap(std::shared_ptr<PaintResource>());
@@ -1087,13 +1443,13 @@ namespace amo {
         return LocalWindow::OnDestroy(uMsg, wParam, lParam, bHandled);
     }
     
-    void foo123(Any& any) {
+    void foo123(Any & any) {
     
     }
     
     
     LRESULT BrowserWindow::OnNcLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
-                                           BOOL& bHandled) {
+                                           BOOL & bHandled) {
         /* if (!m_pBrowserSettings->resizeable) {
              fWinArrange.reset(new BOOL(FALSE));
              fSnapSizing.reset(new BOOL(FALSE));
@@ -1142,7 +1498,7 @@ namespace amo {
     }
     
     LRESULT BrowserWindow::OnNcLButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam,
-                                         BOOL& bHandled) {
+                                         BOOL & bHandled) {
         /*if (!m_pBrowserSettings->resizeable) {
             if (fWinArrange && fSnapSizing) {
         
@@ -1161,7 +1517,7 @@ namespace amo {
     }
     
     LRESULT BrowserWindow::OnNcLButtonDbClick(UINT uMsg, WPARAM wParam,
-            LPARAM lParam, BOOL& bHandled) {
+            LPARAM lParam, BOOL & bHandled) {
         if (!m_pBrowserSettings->resizable) {
             bHandled = TRUE;
             return TRUE;

@@ -160,10 +160,24 @@ namespace amo {
     
     
     
+    
+    
     Any BrowserWindowTransfer::saveImageToFile(IPCMessage::SmartType msg) {
         // 由BrowserWindow重载实现
         return Undefined();
     }
+    
+    Any BrowserWindowTransfer::recordGifToFile(IPCMessage::SmartType msg) {
+        // 由BrowserWindow重载实现
+        return Undefined();
+    }
+    
+    Any BrowserWindowTransfer::stopRecordGif(IPCMessage::SmartType msg) {
+        // 由BrowserWindow重载实现
+        return Undefined();
+    }
+    
+    
     
     Any BrowserWindowTransfer::isMainWindow(IPCMessage::SmartType msg) {
         // 由BrowserWindow重载实现

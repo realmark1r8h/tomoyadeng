@@ -291,6 +291,20 @@ namespace amo {
         
         virtual Any saveImageToFile(IPCMessage::SmartType msg);
         
+        /*!
+         * @fn	virtual Any saveGifToFile(IPCMessage::SmartType msg);
+         *
+         * @brief	录制GIF到文件.
+         *
+         * @param	#JsonObject 录制参数.
+         *
+         * @return	#Undefined.
+         */
+        
+        virtual Any recordGifToFile(IPCMessage::SmartType msg);
+        
+        virtual Any stopRecordGif(IPCMessage::SmartType msg);
+        
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(BrowserWindowTransfer, ClassTransfer)
         
         // 测试用

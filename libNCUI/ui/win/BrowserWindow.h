@@ -21,12 +21,59 @@
 #include "ui/win/LayeredWindow.h"
 #include "ui/win/LocalWindow.h"
 
+#include <amo/json_helper.hpp>
+#include <memory>
 
 
-
+#include "gif.h"
 
 namespace amo {
-
+    class GifInfo : public amo::json_object {
+    
+    public:
+        GifInfo() {
+            m_gifRecordTimer = 0;
+            delay = 100;
+            x = y = width = height = 0;
+            total = 0;
+            count = 0;
+        }
+        
+        AMO_ENTITY_ARGS_GET_BEGIN(GifInfo)
+        AMO_ENTITY_ARGS_GET(filename)
+        AMO_ENTITY_ARGS_GET(delay)
+        AMO_ENTITY_ARGS_GET(x)
+        AMO_ENTITY_ARGS_GET(y)
+        AMO_ENTITY_ARGS_GET(width)
+        AMO_ENTITY_ARGS_GET(height)
+        AMO_ENTITY_ARGS_GET(count)
+        AMO_ENTITY_ARGS_GET(total)
+        AMO_ENTITY_ARGS_GET_END()
+        
+        AMO_ENTITY_ARGS_SET_BEGIN(GifInfo)
+        AMO_ENTITY_ARGS_SET(filename)
+        AMO_ENTITY_ARGS_SET(delay)
+        AMO_ENTITY_ARGS_SET(x)
+        AMO_ENTITY_ARGS_SET(y)
+        AMO_ENTITY_ARGS_SET(width)
+        AMO_ENTITY_ARGS_SET(height)
+        AMO_ENTITY_ARGS_SET(count)
+        AMO_ENTITY_ARGS_SET(total)
+        AMO_ENTITY_ARGS_SET_END()
+        
+        std::string filename;
+        int32_t delay;
+        UINT_PTR m_gifRecordTimer;
+        GifWriter  writer;
+        int x;
+        int y;
+        int width;
+        int height;
+        int total;
+        int count;
+        
+    };
+    
     class BrowserWindowSettings;
     class CefCallbackHandler;
     class WebkitView;
@@ -92,6 +139,8 @@ namespace amo {
                                BOOL& bHandled) override;
         virtual LRESULT OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                 BOOL& bHandled) override;
+                                
+        virtual LRESULT OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         int foo3();
     public:
         // LifeSpanHandlerDelegate
@@ -117,7 +166,9 @@ namespace amo {
         
         virtual void OnLoadStart(CefRefPtr<CefBrowser> browser,
                                  CefRefPtr<CefFrame> frame);
-                                 
+        virtual void OnLoadEnd(CefRefPtr<CefBrowser> browser,
+                               CefRefPtr<CefFrame> frame,
+                               int httpStatusCode);
 #if CHROME_VERSION_BUILD >= 2704
         virtual void OnDraggableRegionsChanged(CefRefPtr<CefBrowser> browser,
                                                const std::vector<CefDraggableRegion>& regions) override;
@@ -141,6 +192,25 @@ namespace amo {
         virtual Any getDragBlackList(IPCMessage::SmartType msg) override;
         virtual Any showTitleBar(IPCMessage::SmartType msg) override;
         
+        
+        //使用GDI+保存BITMAP到文件
+        //CLSID encoderClsid
+        //GetEncoderClsid(L"image/png", &encoderClsid);    //png
+        //GetEncoderClsid(L"image/bmp", &encoderClsid);
+        //GetEncoderClsid(L"image/gif", &encoderClsid);
+        //GetEncoderClsid(L"image/jpeg",&encoderClsid);
+        //GetEncoderClsid(L"image/tiff",&encoderClsid);
+        
+        
+        virtual Any saveImageToFile(IPCMessage::SmartType msg) override;
+        
+        virtual Any recordGifToFile(IPCMessage::SmartType msg) override;
+        
+        virtual Any stopRecordGif(IPCMessage::SmartType msg) override;
+        
+        void writeGif();
+        
+        void createBitmapFromDC(std::function<void(HBITMAP)> fn, bool containsTitleBar = false);
         
     public:
         // LocalWindow
@@ -194,18 +264,6 @@ namespace amo {
         
         
         
-        //使用GDI+保存BITMAP到文件
-        //CLSID encoderClsid
-        //GetEncoderClsid(L"image/png", &encoderClsid);    //png
-        //GetEncoderClsid(L"image/bmp", &encoderClsid);
-        //GetEncoderClsid(L"image/gif", &encoderClsid);
-        //GetEncoderClsid(L"image/jpeg",&encoderClsid);
-        //GetEncoderClsid(L"image/tiff",&encoderClsid);
-        
-        
-        virtual Any saveImageToFile(IPCMessage::SmartType msg) override;
-        
-        
     private:
     
         static	LRESULT CALLBACK SubclassedWindowProc(HWND hWnd,
@@ -250,6 +308,9 @@ namespace amo {
 #if CHROME_VERSION_BUILD >= 2704
         std::vector<CefDraggableRegion> m_lastDragRegions;
 #endif
+        
+        UINT_PTR m_gifRecordTimer;
+        std::shared_ptr< GifInfo> writer;
         
     };
 }
