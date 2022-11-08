@@ -299,9 +299,35 @@ namespace amo {
          * @param	#JsonObject 录制参数.
          *
          * @return	#Undefined.
+         * @example
+         *
+         ```
+        	include('BrowserWindow');
+        	var win = BrowserWindow.current;
+        	win.recordGifToFile({
+        		filename: '1.gif',
+        		delay: 30,
+        		total:20
+        	});
+         ```
          */
         
         virtual Any recordGifToFile(IPCMessage::SmartType msg);
+        
+        /*!
+         * @fn	virtual Any stopRecordGif(IPCMessage::SmartType msg);
+         *
+         * @brief	停止录制GIF.
+         *
+         * @return	#Undefined.
+         * @example
+         *
+         ```
+        	include('BrowserWindow');
+        	var win = BrowserWindow.current;
+        	win.stopRecordGif();
+         ```
+         */
         
         virtual Any stopRecordGif(IPCMessage::SmartType msg);
         
@@ -423,6 +449,8 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(computeCursor, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(isComputeCursor, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(saveImageToFile, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(recordGifToFile, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(stopRecordGif, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         

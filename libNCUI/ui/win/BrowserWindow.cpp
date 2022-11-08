@@ -541,6 +541,10 @@ namespace amo {
         bi.biClrUsed = 0;
         
         dwBmBitsSize = ((Bitmap.bmWidth * wBitCount + 31) / 32) * 4 * Bitmap.bmHeight;
+        int32_t stride = ((Bitmap.bmWidth * 32 + 31) & 0xffffffe0) / 8;  // 32位图像扫描线宽度
+        
+        int width = Bitmap.bmWidth;
+        int height = Bitmap.bmHeight;
         
         //为位图内容分配内存
         hDib = GlobalAlloc(GHND,
@@ -569,13 +573,15 @@ namespace amo {
             ::ReleaseDC(NULL, hDC);
         }
         
-        //创建位图文件
-        /*      fh = CreateFileA(FileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
-                               FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+        std::string FileName = std::to_string(amo::timer::now()) + ".bmp";
         
-              if (fh == INVALID_HANDLE_VALUE) {
-                  return     FALSE;
-              }*/
+        //创建位图文件
+        /*  fh = CreateFileA(FileName.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
+                           FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+        
+          if (fh == INVALID_HANDLE_VALUE) {
+              return     FALSE;
+          }*/
         
         //     设置位图文件头
         bmfHdr.bfType = 0x4D42;     //     "BM"
@@ -592,8 +598,14 @@ namespace amo {
         //WriteFile(fh, (LPSTR)lpbi, dwDIBSize, &dwWritten, NULL);
         
         vec.resize(dwBmBitsSize);
-        memcpy(vec.data(), lpbi, vec.size());
+        //memcpy(vec.data(), lpbi, vec.size());
         
+        for (size_t i = 0; i < height; ++i) {
+            memcpy(vec.data() + stride * i, (char*)lpbi + ((height - i - 1) * stride), stride);
+        }
+        
+        /*  PRGBTRIPLE p;
+          p = (PRGBTRIPLE)((char*)lpbi + ((height- i - 1) * stride));*/
         //清除
         GlobalUnlock(hDib);
         GlobalFree(hDib);
@@ -654,19 +666,18 @@ namespace amo {
         }
         
         
-        
-        
-        // BGRA,转 RGBA
-        /*     for (size_t i = 0; i < vec.size();) {
-        		 std::swap(vec[i], vec[i + 2]);
-        		 i += 4;
-        	 }*/
         RECT rc = { 0 };
         ::GetClientRect(m_hWnd, &rc);
         
         createBitmapFromDC([&](HBITMAP hBitmap) {
             std::vector<uint8_t> vec;
             SaveBmp2(hBitmap, vec);
+            
+            for (size_t i = 0; i < vec.size();) {
+                std::swap(vec[i], vec[i + 2]);
+                i += 4;
+            }
+            
             //ConvertBitmapToBuf(hBitmap, vec);
             GifWriteFrame(&writer->writer, (const uint8_t*)vec.data(), writer->width, writer->height, writer->delay);
             
@@ -864,9 +875,9 @@ namespace amo {
             return Undefined();
         }
         
-        amo::json json;// = msg->getArgumentList()->getJson(0);
-        json.put("filename", "3.gif");
-        json.put("total", 20);
+        amo::json json = msg->getArgumentList()->getJson(0);
+        /* json.put("filename", "3.gif");
+         json.put("total", 40);*/
         writer = GifInfo::fromJson(json);
         
         
@@ -886,31 +897,7 @@ namespace amo {
         
         writer->m_gifRecordTimer =  SetTimer(m_hWnd, WM_GIF_RECOFD_TIMER, writer->delay, NULL);
         return Undefined();
-        //static int count = 0;
-        //
-        //if (width == 1280 && height == 720) {
-        //    std::vector<uint8_t> vec(width * height * 4, 0);
-        //    memcpy(vec.data(), buffer, vec.size());
-        //
-        //    // BGRA,转 RGBA
-        //    for (size_t i = 0; i < vec.size();) {
-        //        std::swap(vec[i], vec[i + 2]);
-        //        i += 4;
-        //    }
-        //
-        //    GifWriteFrame(writer.get(), (const uint8_t*)vec.data(), width, height, 3);
-        //    //WriteBmp(std::to_string(count) + ".bmp", GetDC((m_hParentWnd)));
-        //    ++count;
-        //
-        //
-        //}
-        //
-        //
-        //if (count == 30) {
-        //    GifEnd(writer.get());
-        //}
-        //
-        //BeinGif
+        
     }
     
     LRESULT CALLBACK BrowserWindow::SubclassedWindowProc(HWND hWnd, UINT message,
@@ -1169,7 +1156,7 @@ namespace amo {
     
     
     void BrowserWindow::OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, int httpStatusCode) {
-        recordGifToFile(IPCMessage::Empty());
+    
     }
     
     bool BrowserWindow::preTranslateMessage(CefEventHandle os_event) {

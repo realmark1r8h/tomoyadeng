@@ -2424,3 +2424,66 @@ win.saveImageToFile('1.png', true);
 <div class="adoc" id="div_saveImageToFile"></div>
 
 
+## saveGifToFile &nbsp;
+  录制GIF到文件.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>JsonObject </td>
+	<td></td>
+	<td>录制参数.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+  Undefined . 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('BrowserWindow');
+var win = BrowserWindow.current;
+win.recordGifToFile({
+    filename: '1.gif',
+    delay: 30,
+    total:20
+});
+
+```
+
+
+<div class="adoc" id="div_saveGifToFile"></div>
+
+
+## stopRecordGif &nbsp;
+  停止录制GIF.
+  
+* **函数参数**  无
+
+* **返回值**
+  Undefined . 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('BrowserWindow');
+var win = BrowserWindow.current;
+win.stopRecordGif();
+
+```
+
+
+<div class="adoc" id="div_stopRecordGif"></div>
+
+
