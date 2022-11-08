@@ -600,8 +600,10 @@ namespace amo {
         vec.resize(dwBmBitsSize);
         //memcpy(vec.data(), lpbi, vec.size());
         
+        //lpbi += bi.biSize;
+        
         for (size_t i = 0; i < height; ++i) {
-            memcpy(vec.data() + stride * i, (char*)lpbi + ((height - i - 1) * stride), stride);
+            memcpy(vec.data() + stride * i, (char*)lpbi + ((height - i - 1) * stride + 40), stride);
         }
         
         /*  PRGBTRIPLE p;
