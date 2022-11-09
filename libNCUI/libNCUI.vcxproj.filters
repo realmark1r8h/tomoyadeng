@@ -1067,10 +1067,10 @@
     <ClInclude Include="transfer\TransferHelper.hpp">
       <Filter>transfer</Filter>
     </ClInclude>
-    <ClInclude Include="ui\win\gif.h">
+    <ClInclude Include="ui\win\Bitmap.hpp">
       <Filter>ui\win</Filter>
     </ClInclude>
-    <ClInclude Include="ui\win\Bitmap.hpp">
+    <ClInclude Include="ui\win\GifEncoder.hpp">
       <Filter>ui\win</Filter>
     </ClInclude>
   </ItemGroup>

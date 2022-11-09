@@ -39,7 +39,7 @@
 #include "ui/win/clipboard/Clipboard.h"
 
 #include "ui/win/Bitmap.hpp"
-#include "gif.h"
+
 
 
 
@@ -199,12 +199,13 @@ namespace amo {
         return LocalWindow::OnPaint(uMsg, wParam, lParam, bHandled);
     }
     
-    LRESULT BrowserWindow::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
-        if (!writer) {
+    LRESULT BrowserWindow::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                   BOOL& bHandled) {
+        if (!m_gifEncoder) {
             return FALSE;
         }
         
-        if (wParam == writer->m_gifRecordTimer) {
+        if (wParam == m_gifEncoder->m_gifRecordTimer) {
             writeGif();
             return 0;
         }
@@ -478,192 +479,23 @@ namespace amo {
     }
     
     Any BrowserWindow::stopRecordGif(IPCMessage::SmartType msg) {
-        if (!writer) {
+        if (!m_gifEncoder) {
             return Undefined();
         }
         
-        GifEnd(&writer->writer);
-        KillTimer(m_hWnd, writer->m_gifRecordTimer);
-        writer.reset();
+        m_gifEncoder->End();
+        KillTimer(m_hWnd, m_gifEncoder->m_gifRecordTimer);
+        m_gifEncoder.reset();
         
         return Undefined();
     }
     
-    //VC下把HBITMAP保存为bmp图片
-    BOOL  SaveBmp2(HBITMAP     hBitmap, std::vector<uint8_t>& vec) {
-        HDC     hDC;
-        //当前分辨率下每象素所占字节数
-        int     iBits;
-        //位图中每象素所占字节数
-        WORD     wBitCount;
-        //定义调色板大小，     位图中像素字节大小     ，位图文件大小     ，     写入文件字节数
-        DWORD     dwPaletteSize = 0, dwBmBitsSize = 0, dwDIBSize = 0, dwWritten = 0;
-        //位图属性结构
-        BITMAP     Bitmap;
-        //位图文件头结构
-        BITMAPFILEHEADER     bmfHdr;
-        //位图信息头结构
-        BITMAPINFOHEADER     bi;
-        //指向位图信息头结构
-        LPBITMAPINFOHEADER     lpbi;
-        //定义文件，分配内存句柄，调色板句柄
-        HANDLE     fh, hDib, hPal, hOldPal = NULL;
-        
-        //计算位图文件每个像素所占字节数
-        hDC = CreateDCA("DISPLAY", NULL, NULL, NULL);
-        iBits = GetDeviceCaps(hDC, BITSPIXEL)     *     GetDeviceCaps(hDC, PLANES);
-        DeleteDC(hDC);
-        
-        if (iBits <= 1) {
-            wBitCount = 1;
-        } else  if (iBits <= 4) {
-            wBitCount = 4;
-        } else if (iBits <= 8) {
-            wBitCount = 8;
-        } else  if (iBits <= 24) {
-        
-            wBitCount = 24;
-        } else {
-            wBitCount = 32;
-        }
-        
-        GetObject(hBitmap, sizeof(Bitmap), (LPSTR)&Bitmap);
-        bi.biSize = sizeof(BITMAPINFOHEADER);
-        bi.biWidth = Bitmap.bmWidth;
-        bi.biHeight = Bitmap.bmHeight;
-        bi.biPlanes = 1;
-        bi.biBitCount = wBitCount;
-        bi.biCompression = BI_RGB;
-        bi.biSizeImage = 0;
-        bi.biXPelsPerMeter = 0;
-        bi.biYPelsPerMeter = 0;
-        bi.biClrImportant = 0;
-        bi.biClrUsed = 0;
-        
-        dwBmBitsSize = ((Bitmap.bmWidth * wBitCount + 31) / 32) * 4 * Bitmap.bmHeight;
-        int32_t stride = ((Bitmap.bmWidth * 32 + 31) & 0xffffffe0) / 8;  // 32位图像扫描线宽度
-        
-        int width = Bitmap.bmWidth;
-        int height = Bitmap.bmHeight;
-        
-        //为位图内容分配内存
-        hDib = GlobalAlloc(GHND,
-                           dwBmBitsSize + dwPaletteSize + sizeof(BITMAPINFOHEADER));
-        lpbi = (LPBITMAPINFOHEADER)GlobalLock(hDib);
-        *lpbi = bi;
-        
-        //     处理调色板
-        hPal = GetStockObject(DEFAULT_PALETTE);
-        
-        if (hPal) {
-            hDC = ::GetDC(NULL);
-            hOldPal = ::SelectPalette(hDC, (HPALETTE)hPal, FALSE);
-            RealizePalette(hDC);
-        }
-        
-        //     获取该调色板下新的像素值
-        GetDIBits(hDC, hBitmap, 0, (UINT)Bitmap.bmHeight,
-                  (LPSTR)lpbi + sizeof(BITMAPINFOHEADER) + dwPaletteSize,
-                  (BITMAPINFO*)lpbi, DIB_RGB_COLORS);
-                  
-        //恢复调色板
-        if (hOldPal) {
-            ::SelectPalette(hDC, (HPALETTE)hOldPal, TRUE);
-            RealizePalette(hDC);
-            ::ReleaseDC(NULL, hDC);
-        }
-        
-        std::string FileName = std::to_string(amo::timer::now()) + ".bmp";
-        
-        //创建位图文件
-        /*  fh = CreateFileA(FileName.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
-                           FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL);
-        
-          if (fh == INVALID_HANDLE_VALUE) {
-              return     FALSE;
-          }*/
-        
-        //     设置位图文件头
-        bmfHdr.bfType = 0x4D42;     //     "BM"
-        dwDIBSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + dwPaletteSize
-                    + dwBmBitsSize;
-        bmfHdr.bfSize = dwDIBSize;
-        bmfHdr.bfReserved1 = 0;
-        bmfHdr.bfReserved2 = 0;
-        bmfHdr.bfOffBits = (DWORD)sizeof(BITMAPFILEHEADER) + (DWORD)sizeof(
-                               BITMAPINFOHEADER) + dwPaletteSize;
-        ////     写入位图文件头
-        //WriteFile(fh, (LPSTR)&bmfHdr, sizeof(BITMAPFILEHEADER), &dwWritten, NULL);
-        ////     写入位图文件其余内容
-        //WriteFile(fh, (LPSTR)lpbi, dwDIBSize, &dwWritten, NULL);
-        
-        vec.resize(dwBmBitsSize);
-        //memcpy(vec.data(), lpbi, vec.size());
-        
-        //lpbi += bi.biSize;
-        
-        for (size_t i = 0; i < height; ++i) {
-            memcpy(vec.data() + stride * i, (char*)lpbi + ((height - i - 1) * stride + 40), stride);
-        }
-        
-        /*  PRGBTRIPLE p;
-          p = (PRGBTRIPLE)((char*)lpbi + ((height- i - 1) * stride));*/
-        //清除
-        GlobalUnlock(hDib);
-        GlobalFree(hDib);
-        //CloseHandle(fh);
-        
-        return     TRUE;
-    }
-    void ConvertBitmapToBuf(HBITMAP hBitmap, std::vector<uint8_t>& vec) {
-        ULONG_PTR				m_gdiplusToken;
-        GdiplusStartupInput		m_gdiplusStartupInput;
-        GdiplusStartup(&m_gdiplusToken, &m_gdiplusStartupInput, NULL);
-        Bitmap * pBmp = Bitmap::FromHBITMAP(hBitmap, NULL);
-        BitmapData* bmpData = new BitmapData;
-        Rect rect(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
-        pBmp->LockBits(
-            &rect,
-            Gdiplus::ImageLockModeRead | Gdiplus::ImageLockModeWrite,
-            pBmp->GetPixelFormat(),
-            bmpData);
-            
-        int len = bmpData->Height * std::abs(bmpData->Stride);
-        //BYTE* buffer = new BYTE[len];
-        //memcpy(buffer, bmpData->Scan0, len / 2); //copy it to an array of BYTEs
-        int bytes = len;// bmpData->Stride * pBmp->GetHeight();
-        /*  FILE* fp2 = fopen("./res/logo2.png", "wb");
-          ULONG uWrite = fwrite(bmpData->Scan0, 1, bytes, fp2);
-          fclose(fp2);*/
-        
-        vec.resize(bytes);
-        memcpy(vec.data(), bmpData->Scan0, vec.size());
-        pBmp->UnlockBits(bmpData);
-        delete pBmp;
-        ::GdiplusShutdown(m_gdiplusToken);
-        //BITMAP bm;
-        //GetObject(hBitmap, sizeof(BITMAP), (LPSTR)&bm);// bmBits=0 !
-        //
-        //if (bm.bmBitsPixel < 24) {
-        //    AfxMessageBox("Not 24 or 32!");
-        //    return 0;
-        //}
-        //
-        //CBitmap Bitmap;
-        //Bitmap.Attach(hBitmap);
-        //// sizeof(BITMAPINFOHEADER)=40;
-        ////caller needs to dekete [] buffer
-        //DWORD dwBmBitsSize = ((bm.bmWidth * bm.bmBitsPixel + 31) / 32) * 4 * bm.bmHeight;
-        //BYTE *buffer = new BYTE[dwBmBitsSize + sizeof(BITMAPINFOHEADER)];
-        //DWORD len = Bitmap.GetBitmapBits(dwBmBitsSize, (buffer + sizeof(BITMAPINFOHEADER)));
-        //bm.bmBits = buffer + sizeof(BITMAPINFOHEADER) - sizeof(LPVOID);
-        //memcpy(buffer, &bm, sizeof(BITMAPINFOHEADER));
-        //return buffer;
-    }
+    
+    
     void BrowserWindow::writeGif() {
     
     
-        if (!writer) {
+        if (!m_gifEncoder) {
             return;
         }
         
@@ -673,33 +505,31 @@ namespace amo {
         
         createBitmapFromDC([&](HBITMAP hBitmap) {
             std::vector<uint8_t> vec;
-            SaveBmp2(hBitmap, vec);
+            amo::BitmapToBytes(hBitmap, vec);
             
             for (size_t i = 0; i < vec.size();) {
                 std::swap(vec[i], vec[i + 2]);
                 i += 4;
             }
             
-            //ConvertBitmapToBuf(hBitmap, vec);
-            GifWriteFrame(&writer->writer, (const uint8_t*)vec.data(), writer->width, writer->height, writer->delay);
             
+            m_gifEncoder->Write(vec.data(), m_gifEncoder->width, m_gifEncoder->height,
+                                m_gifEncoder->delay);
+                                
         }, true);
         
         
-        writer->count++;
+        m_gifEncoder->count++;
         
-        
-        //stopRecordGif(IPCMessage::Empty());
-        
-        if (writer->count >= writer->total) {
+        if (m_gifEncoder->count >= m_gifEncoder->total) {
             stopRecordGif(IPCMessage::Empty());
         }
         
-        
     }
     
-    void BrowserWindow::createBitmapFromDC(std::function<void(HBITMAP)> fn, bool containsTitleBar /*= false*/) {
-    
+    void BrowserWindow::createBitmapFromDC(std::function<void(HBITMAP)> fn,
+                                           bool containsTitleBar /*= false*/) {
+                                           
         PAINTSTRUCT ps = { 0 };
         ::BeginPaint(m_hWnd, &ps);
         
@@ -873,14 +703,13 @@ namespace amo {
     
     
     Any BrowserWindow::recordGifToFile(IPCMessage::SmartType msg) {
-        if (writer) {
+        if (m_gifEncoder) {
             return Undefined();
         }
         
         amo::json json = msg->getArgumentList()->getJson(0);
-        /* json.put("filename", "3.gif");
-         json.put("total", 40);*/
-        writer = GifInfo::fromJson(json);
+        
+        m_gifEncoder = GifEncoder::fromJson(json);
         
         
         
@@ -888,16 +717,19 @@ namespace amo {
         GetClientRect(m_hWnd, &rc);
         amo::rect rect(rc);
         
-        if (writer->width == 0 || writer->height == 0) {
-            writer->width = rect.width();
-            writer->height = rect.height();
+        if (m_gifEncoder->width == 0 || m_gifEncoder->height == 0) {
+            m_gifEncoder->width = rect.width();
+            m_gifEncoder->height = rect.height();
         }
         
-        if (!GifBegin(&writer->writer, writer->filename.c_str(), writer->width, writer->height, writer->delay)) {
+        if (!m_gifEncoder->Begin(m_gifEncoder->filename.c_str(), m_gifEncoder->width,
+                                 m_gifEncoder->height, m_gifEncoder->delay)) {
             return Undefined();
         }
         
-        writer->m_gifRecordTimer =  SetTimer(m_hWnd, WM_GIF_RECOFD_TIMER, writer->delay, NULL);
+        m_gifEncoder->m_gifRecordTimer =  SetTimer(m_hWnd, WM_GIF_RECOFD_TIMER,
+                                          m_gifEncoder->delay,
+                                          NULL);
         return Undefined();
         
     }
@@ -1157,8 +989,9 @@ namespace amo {
     
     
     
-    void BrowserWindow::OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, int httpStatusCode) {
-    
+    void BrowserWindow::OnLoadEnd(CefRefPtr<CefBrowser> browser,
+                                  CefRefPtr<CefFrame> frame, int httpStatusCode) {
+                                  
     }
     
     bool BrowserWindow::preTranslateMessage(CefEventHandle os_event) {

@@ -25,55 +25,11 @@
 #include <memory>
 
 
-#include "gif.h"
+#include "ui/win/GifEncoder.hpp"
 
 namespace amo {
-    class GifInfo : public amo::json_object {
-    
-    public:
-        GifInfo() {
-            m_gifRecordTimer = 0;
-            delay = 100;
-            x = y = width = height = 0;
-            total = 0;
-            count = 0;
-        }
-        
-        AMO_ENTITY_ARGS_GET_BEGIN(GifInfo)
-        AMO_ENTITY_ARGS_GET(filename)
-        AMO_ENTITY_ARGS_GET(delay)
-        AMO_ENTITY_ARGS_GET(x)
-        AMO_ENTITY_ARGS_GET(y)
-        AMO_ENTITY_ARGS_GET(width)
-        AMO_ENTITY_ARGS_GET(height)
-        AMO_ENTITY_ARGS_GET(count)
-        AMO_ENTITY_ARGS_GET(total)
-        AMO_ENTITY_ARGS_GET_END()
-        
-        AMO_ENTITY_ARGS_SET_BEGIN(GifInfo)
-        AMO_ENTITY_ARGS_SET(filename)
-        AMO_ENTITY_ARGS_SET(delay)
-        AMO_ENTITY_ARGS_SET(x)
-        AMO_ENTITY_ARGS_SET(y)
-        AMO_ENTITY_ARGS_SET(width)
-        AMO_ENTITY_ARGS_SET(height)
-        AMO_ENTITY_ARGS_SET(count)
-        AMO_ENTITY_ARGS_SET(total)
-        AMO_ENTITY_ARGS_SET_END()
-        
-        std::string filename;
-        int32_t delay;
-        UINT_PTR m_gifRecordTimer;
-        GifWriter  writer;
-        int x;
-        int y;
-        int width;
-        int height;
-        int total;
-        int count;
-        
-    };
-    
+
+
     class BrowserWindowSettings;
     class CefCallbackHandler;
     class WebkitView;
@@ -140,7 +96,8 @@ namespace amo {
         virtual LRESULT OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                 BOOL& bHandled) override;
                                 
-        virtual LRESULT OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        virtual LRESULT OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                BOOL& bHandled);
         int foo3();
     public:
         // LifeSpanHandlerDelegate
@@ -210,8 +167,9 @@ namespace amo {
         
         void writeGif();
         
-        void createBitmapFromDC(std::function<void(HBITMAP)> fn, bool containsTitleBar = false);
-        
+        void createBitmapFromDC(std::function<void(HBITMAP)> fn,
+                                bool containsTitleBar = false);
+                                
     public:
         // LocalWindow
         virtual std::shared_ptr<BrowserWindow> toBrowserWindow() override;
@@ -310,7 +268,7 @@ namespace amo {
 #endif
         
         UINT_PTR m_gifRecordTimer;
-        std::shared_ptr< GifInfo> writer;
+        std::shared_ptr< GifEncoder> m_gifEncoder;
         
     };
 }

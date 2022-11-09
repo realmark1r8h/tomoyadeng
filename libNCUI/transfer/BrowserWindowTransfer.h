@@ -296,7 +296,10 @@ namespace amo {
          *
          * @brief	录制GIF到文件.
          *
-         * @param	#JsonObject 录制参数.
+         * @param	#JsonObject 录制参数.<br>
+         * 						| #String filename gif文件保存目录<br>
+         * 						| #Int=10	delay 帧间隔（注意单位为：百分一秒）<br>
+         * 						| #Int=20	total 最多录制帧数<br>
          *
          * @return	#Undefined.
          * @example
@@ -306,8 +309,8 @@ namespace amo {
         	var win = BrowserWindow.current;
         	win.recordGifToFile({
         		filename: '1.gif',
-        		delay: 30,
-        		total:20
+        		delay: 10,
+        		total:100
         	});
          ```
          */
