@@ -645,14 +645,14 @@ namespace amo {
             //    settings.regions->m_regions.push_back(rect);
             //}
             //
-            //{
-            //    OverlapRect rect;
-            //    //rect.dst = amo::rect(0, 0, 100, 400);
-            //    rect.src = amo::rect(0, 0, 1920, 1080);
-            //    rect.renderMode = 1;
-            //    rect.index = 9;
-            //    settings.regions->m_regions.push_back(rect);
-            //}
+            {
+                OverlapRect rect;
+                //rect.dst = amo::rect(0, 0, 100, 400);
+                rect.src = amo::rect(0, 0, 1920, 1080);
+                rect.renderMode = 1;
+                rect.index = 9;
+                settings.regions->m_regions.push_back(rect);
+            }
             
             //
             
@@ -660,7 +660,7 @@ namespace amo {
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, settings.toJson());
             
-            //addOverlap(msg);
+            addOverlap(msg);
         }
         
         {
@@ -668,7 +668,7 @@ namespace amo {
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, true);
             msg->getArgumentList()->setValue(1, 30);
-            //repaint(msg);
+            repaint(msg);
             
         }
         

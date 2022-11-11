@@ -331,12 +331,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="">
+		<!--<div class="">
 			<div class="demo flex-row flex-middle flex-center" style=" height: 600px;">
 				<div class="flex-item-8" style="margin-bottom: 10px">无论是多行还是单行，都可以垂直居中</div>
 				<div class="flex-item-8">无论是多行还是单行，都可以垂直居中</div>
 			</div>
-		</div>
+		</div>-->
 
 		<div class="drag   flex-row " style="position: absolute; bottom: 0; left: 0; right: 0; height: 75px; background: rgba(0,0,0,0.6);">
 			<div class="horizontal no-drag" style="height: 13px;">
@@ -415,5 +415,19 @@
 		</div>
 		</div>
 	</body>
+	
+	<script type="text/javascript">
+		$(function(){
+			include('BrowserWindow');
+			var win = BrowserWindow.current;
+//			setTimeout(function(){
+//				win.recordGifToFile({
+//					filename: 'player.gif',
+//					delay: 3,
+//					total:300
+//				})
+//			}, 10000)
+		});
+	</script>
 
 </html>
