@@ -135,14 +135,14 @@ namespace amo {
                 if (m_rect->renderMode == 1) {
                     // ¾ÓÖÐ
                     amo::rect dst_rect = m_rect->dst.get_full_rect(m_rect->src);
-                    D2D1_RECT_F dstRect = { dst_rect.left(), dst_rect.top(), dst_rect.right(), dst_rect.bottom() };
-                    D2D1_RECT_F srcRect = { m_rect->src.left(), m_rect->src.top(), m_rect->src.right(), m_rect->src.bottom() };
+                    D2D1_RECT_F dstRect = { (FLOAT)dst_rect.left(), (FLOAT)dst_rect.top(), (FLOAT)dst_rect.right(), (FLOAT)dst_rect.bottom() };
+                    D2D1_RECT_F srcRect = { (FLOAT)m_rect->src.left(), (FLOAT)m_rect->src.top(), (FLOAT)m_rect->src.right(), (FLOAT)m_rect->src.bottom() };
                     renderTarget->DrawBitmap(m_bitmap, dstRect, 1.0f,
                                              D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &srcRect);
                 } else if (m_rect->renderMode == 2) {
                     // À­Éì
-                    D2D1_RECT_F dstRect = { m_rect->dst.left(), m_rect->dst.top(), m_rect->dst.right(), m_rect->dst.bottom() };
-                    D2D1_RECT_F srcRect = { m_rect->src.left(), m_rect->src.top(), m_rect->src.right(), m_rect->src.bottom() };
+                    D2D1_RECT_F dstRect = { (FLOAT)m_rect->dst.left(), (FLOAT)m_rect->dst.top(), (FLOAT)m_rect->dst.right(), (FLOAT)m_rect->dst.bottom() };
+                    D2D1_RECT_F srcRect = { (FLOAT)m_rect->src.left(), (FLOAT)m_rect->src.top(), (FLOAT)m_rect->src.right(), (FLOAT)m_rect->src.bottom() };
                     renderTarget->DrawBitmap(m_bitmap, dstRect, 1.0f,
                                              D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &srcRect);
                 } else {
@@ -150,8 +150,8 @@ namespace amo {
                     int srcWidth = (std::min)(m_rect->dst.width(), m_rect->src.width());
                     int srcHeight = (std::min)(m_rect->dst.height(), m_rect->src.height());
                     // Æ½ÆÌ
-                    D2D1_RECT_F dstRect = { m_rect->dst.left(), m_rect->dst.top(), m_rect->dst.width(), m_rect->dst.height() };
-                    D2D1_RECT_F srcRect = { m_rect->src.left(), m_rect->src.top(),  srcWidth,  srcHeight };
+                    D2D1_RECT_F dstRect = { (FLOAT)m_rect->dst.left(), (FLOAT)m_rect->dst.top(), (FLOAT)m_rect->dst.width(), (FLOAT)m_rect->dst.height() };
+                    D2D1_RECT_F srcRect = { (FLOAT)m_rect->src.left(), (FLOAT)m_rect->src.top(), (FLOAT)srcWidth, (FLOAT)srcHeight };
                     renderTarget->DrawBitmap(m_bitmap, dstRect, 1.0f,
                                              D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &srcRect);
                 }

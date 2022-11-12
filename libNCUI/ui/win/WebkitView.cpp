@@ -602,20 +602,20 @@ namespace amo {
             amo::rect dstRect = GetPos();// (0, 0, 900, 900);
             std::vector<amo::rect> dstRects = dstRect.split();
             
-            for (size_t i = 0 ; i < dstRects.size(); ++i) {
-                if (i == 4) {
-                    continue;
-                }
-                
-                OverlapRect rect;
-                rect.dst = dstRects[i];
-                rect.src = srcRects[i];
-                rect.renderMode = 2;
-                rect.index = i + 10;
-                
-                settings.regions->m_regions.push_back(rect);
-                //break;
-            }
+            //for (size_t i = 0 ; i < dstRects.size(); ++i) {
+            //    if (i == 4) {
+            //        continue;
+            //    }
+            //
+            //    OverlapRect rect;
+            //    rect.dst = dstRects[i];
+            //    rect.src = srcRects[i];
+            //    rect.renderMode = 2;
+            //    rect.index = i + 10;
+            //
+            //    settings.regions->m_regions.push_back(rect);
+            //    //break;
+            //}
             
             //{
             //    OverlapRect rect;
@@ -660,7 +660,7 @@ namespace amo {
             auto msg = IPCMessage::Empty();
             msg->getArgumentList()->setValue(0, settings.toJson());
             
-            addOverlap(msg);
+            //addOverlap(msg);
         }
         
         {
@@ -1089,25 +1089,25 @@ namespace amo {
         	return "goForward";*/
         
         case 110:
-            return  flag & 0x1;
+            return (flag & 0x1) != 0;
             
         case 111:
-            return flag & (0x1 << 1);
+            return (flag & (0x1 << 1)) != 0;
             
         case 112:
-            return flag & (0x1 << 2);
+            return (flag & (0x1 << 2)) != 0;
             
         case 113:
-            return flag & (0x1 << 3);
+            return (flag & (0x1 << 3)) != 0;
             
         case 114:
-            return flag & (0x1 << 4);
+            return (flag & (0x1 << 4)) != 0;
             
         case 115:
-            return flag & (0x1 << 5);
+            return (flag & (0x1 << 5)) != 0;
             
         case 116:
-            return flag & (0x1 << 6);
+            return (flag & (0x1 << 6)) != 0;
             
             
         default:

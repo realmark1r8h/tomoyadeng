@@ -421,7 +421,7 @@ namespace amo {
         auto manager = BrowserWindowManager::getInstance();
         manager->init();
         auto pAppSettings = getDefaultAppSettings();
-        ClientHandler::SingleProcessMode(pAppSettings->single_process);
+        ClientHandler::SingleProcessMode(pAppSettings->single_process != 0);
         
         //
         bool bNeedQuit = needQuitWithOutNode();

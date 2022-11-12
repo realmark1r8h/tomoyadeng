@@ -67,10 +67,12 @@ DrawPoints(ID2D1RenderTarget * renderer, const amo::rect& rt) {
             renderer->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Orange),
                                             &_pCommonBrush);
                                             
-        _pCommonBrush->SetColor(amo::d2d1::ImFloat4(1, current_color / 255.0, current_color / 255.0, 1).ToD2DColorF());
+        _pCommonBrush->SetColor(amo::d2d1::ImFloat4(1, current_color / 255.0,
+                                current_color / 255.0, 1).ToD2DColorF());
         x = rand() % viewport.width();
         y = rand() % viewport.height();
-        renderer->FillRectangle(amo::d2d1::ImFloat4(x, y, 1, 1).ToD2DRectF(), _pCommonBrush);
+        renderer->FillRectangle(amo::d2d1::ImFloat4(x, y, 1, 1).ToD2DRectF(),
+                                _pCommonBrush);
         //SDL_RenderDrawPoint(renderer, x, y);
     }
 }
@@ -118,13 +120,21 @@ DrawLines(ID2D1RenderTarget * renderer, const amo::rect& rt) {
             renderer->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Orange),
                                             &_pCommonBrush);
                                             
-        _pCommonBrush->SetColor(amo::d2d1::ImFloat4(1, current_color / 255.0, current_color / 255.0, 1).ToD2DColorF());
-        
+        _pCommonBrush->SetColor(amo::d2d1::ImFloat4(1, current_color / 255.0,
+                                current_color / 255.0, 1).ToD2DColorF());
+                                
         if (i == 0) {
-            renderer->DrawLine(amo::d2d1::ImFloat2(0, 0).ToD2DPointF(), amo::d2d1::ImFloat2(viewport.width() - 1, viewport.height() - 1).ToD2DPointF(), _pCommonBrush);
-            renderer->DrawLine(amo::d2d1::ImFloat2(0, viewport.height() - 1).ToD2DPointF(), amo::d2d1::ImFloat2(viewport.width() - 1, 0).ToD2DPointF(), _pCommonBrush);
-            renderer->DrawLine(amo::d2d1::ImFloat2(0, viewport.height() / 2).ToD2DPointF(), amo::d2d1::ImFloat2(viewport.width() - 1, viewport.height() / 2).ToD2DPointF(), _pCommonBrush);
-            renderer->DrawLine(amo::d2d1::ImFloat2(viewport.width() / 2, 0).ToD2DPointF(), amo::d2d1::ImFloat2(viewport.width() / 2, viewport.height() - 1).ToD2DPointF(), _pCommonBrush);
+            renderer->DrawLine(amo::d2d1::ImFloat2(0, 0).ToD2DPointF(),
+                               amo::d2d1::ImFloat2(viewport.width() - 1, viewport.height() - 1).ToD2DPointF(),
+                               _pCommonBrush);
+            renderer->DrawLine(amo::d2d1::ImFloat2(0, viewport.height() - 1).ToD2DPointF(),
+                               amo::d2d1::ImFloat2(viewport.width() - 1, 0).ToD2DPointF(), _pCommonBrush);
+            renderer->DrawLine(amo::d2d1::ImFloat2(0, viewport.height() / 2).ToD2DPointF(),
+                               amo::d2d1::ImFloat2(viewport.width() - 1, viewport.height() / 2).ToD2DPointF(),
+                               _pCommonBrush);
+            renderer->DrawLine(amo::d2d1::ImFloat2(viewport.width() / 2, 0).ToD2DPointF(),
+                               amo::d2d1::ImFloat2(viewport.width() / 2, viewport.height() - 1).ToD2DPointF(),
+                               _pCommonBrush);
             /*  SDL_RenderDrawLine(renderer, 0, 0, viewport.w - 1, viewport.h - 1);
               SDL_RenderDrawLine(renderer, 0, viewport.h - 1, viewport.w - 1, 0);
               SDL_RenderDrawLine(renderer, 0, viewport.h / 2, viewport.w - 1, viewport.h / 2);
@@ -135,8 +145,9 @@ DrawLines(ID2D1RenderTarget * renderer, const amo::rect& rt) {
             y1 = (rand() % (viewport.height() * 2)) - viewport.height();
             y2 = (rand() % (viewport.height() * 2)) - viewport.height();
             
-            renderer->DrawLine(amo::d2d1::ImFloat2(x1, y1).ToD2DPointF(), amo::d2d1::ImFloat2(x2, y2).ToD2DPointF(), _pCommonBrush);
-            
+            renderer->DrawLine(amo::d2d1::ImFloat2(x1, y1).ToD2DPointF(),
+                               amo::d2d1::ImFloat2(x2, y2).ToD2DPointF(), _pCommonBrush);
+                               
             //SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
         }
     }
@@ -184,8 +195,9 @@ DrawRects(ID2D1RenderTarget * renderer, const amo::rect& rt) {
             renderer->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Orange),
                                             &_pCommonBrush);
                                             
-        _pCommonBrush->SetColor(amo::d2d1::ImFloat4(1, current_color / 255.0, current_color / 255.0, 1).ToD2DColorF());
-        
+        _pCommonBrush->SetColor(amo::d2d1::ImFloat4(1, current_color / 255.0,
+                                current_color / 255.0, 1).ToD2DColorF());
+                                
         int width = rand() % (viewport.height() / 2);
         int height = rand() % (viewport.height() / 2);
         
@@ -194,7 +206,8 @@ DrawRects(ID2D1RenderTarget * renderer, const amo::rect& rt) {
         
         rect.width(width);
         rect.height(height);
-        renderer->FillRectangle(amo::d2d1::ImFloat4(rect.left(), rect.top(), rect.width(), rect.height()).ToD2DRectF(), _pCommonBrush);
+        renderer->FillRectangle(amo::d2d1::ImFloat4(rect.left(), rect.top(),
+                                rect.width(), rect.height()).ToD2DRectF(), _pCommonBrush);
         //SDL_RenderFillRect(renderer, &rect);
     }
 }
@@ -459,6 +472,7 @@ namespace amo {
     
     
     void ViewRenderer::PaintStatusImage(HDC hDC) {
+        static std::vector<int> vec;
         amo::timer t;
         
         if (!m_resource) {
@@ -475,7 +489,7 @@ namespace amo {
             return;
         }
         
-        if (m_paintSettings->transparent && m_paintSettings->accelerator) {
+        if (m_paintSettings->accelerator) {
         
             PaintBitmapWithHDC(hDC, true);
         } else {
@@ -483,7 +497,19 @@ namespace amo {
         }
         
         updateFPS();
+        vec.push_back(t.elapsed());
         
+        if (vec.size() >= 30) {
+            int ntotal = 0;
+            
+            for (auto& p : vec) {
+                ntotal += p;
+            }
+            
+            $cdevel("‰÷»æ”√ ±£∫{}", ntotal / vec.size());
+            
+            vec.clear();
+        }
     }
     
     LayerViewRender::~LayerViewRender() {

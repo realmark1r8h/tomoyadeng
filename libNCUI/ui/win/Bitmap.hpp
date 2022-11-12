@@ -262,7 +262,7 @@ namespace amo {
         //指向位图信息头结构
         LPBITMAPINFOHEADER     lpbi;
         //定义文件，分配内存句柄，调色板句柄
-        HANDLE     fh, hDib, hPal, hOldPal = NULL;
+        HANDLE       hDib, hPal, hOldPal = NULL;
         
         //计算位图文件每个像素所占字节数
         hDC = CreateDCA("DISPLAY", NULL, NULL, NULL);
@@ -358,7 +358,7 @@ namespace amo {
         
         //lpbi += bi.biSize;
         
-        for (size_t i = 0; i < height; ++i) {
+        for (int i = 0; i < height; ++i) {
             memcpy(vec.data() + stride * i,
                    (char*)lpbi + ((height - i - 1) * stride + bi.biSize + dwPaletteSize),
                    stride);

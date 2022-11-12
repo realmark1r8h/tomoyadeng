@@ -530,6 +530,7 @@ namespace amo {
     void BrowserWindow::createBitmapFromDC(std::function<void(HBITMAP)> fn,
                                            bool containsTitleBar /*= false*/) {
                                            
+        amo::timer t;
         PAINTSTRUCT ps = { 0 };
         ::BeginPaint(m_hWnd, &ps);
         
@@ -576,14 +577,16 @@ namespace amo {
         //HBITMAP hBitmap = ::CreateDIBSection(hDC, &bitmapinfo, 0, NULL, 0, 0);
         HBITMAP hOldBitmap = (HBITMAP)::SelectObject(memDC, hBitmap);
         
-        
+        $cdevel("createBitmapFromDC used1: {}", t.elapsed());
+        t.restart();
         pRoot->DoPaint(memDC, pRoot->GetPos(), NULL);
         
         if (fn) {
             fn(hBitmap);
         }
         
-        
+        $cdevel("createBitmapFromDC used2: {}", t.elapsed());
+        t.restart();
         ::SelectObject(memDC, hOldBitmap);
         
         DeleteObject(hBitmap);
@@ -593,6 +596,9 @@ namespace amo {
         
         ::ReleaseDC(m_hWnd, hDC);
         ::EndPaint(m_hWnd, &ps);
+        
+        $cdevel("createBitmapFromDC used3: {}", t.elapsed());
+        t.restart();
     }
     
     
