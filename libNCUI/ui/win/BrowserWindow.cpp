@@ -1134,8 +1134,6 @@ namespace amo {
                 ::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_SIZENESW)));
                 return true;
                 
-                
-                
             default:
             
             
@@ -1152,7 +1150,6 @@ namespace amo {
     
     LRESULT BrowserWindow::OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                        BOOL & bHandled) {
-                                       
                                        
                                        
         if (!ptInWindow()) {
