@@ -38,6 +38,7 @@
 #include "ui/win/overlap/FilemappingOverlapData.hpp"
 
 #include "Bitmap.hpp"
+#include "ui/win/WinUserMsg.hpp"
 
 
 namespace {

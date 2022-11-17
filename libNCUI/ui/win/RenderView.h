@@ -10,6 +10,7 @@
 #include "handler/CefHeader.hpp"
 #include "handler/LifeSpanHandler.h"
 #include "ui/win/ViewRenderer.h"
+#include "ui/win/overlap/PaintResource.hpp"
 
 
 

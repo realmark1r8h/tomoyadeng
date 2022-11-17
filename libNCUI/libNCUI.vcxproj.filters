@@ -498,7 +498,7 @@
     <ClCompile Include="ui\win\renderer\GdiRenderer.cpp">
       <Filter>ui\win\renderer</Filter>
     </ClCompile>
-    <ClCompile Include="ui\win\renderer\D2D1RendererOld.cpp">
+    <ClCompile Include="ui\win\renderer\D2D1ViewRenderer.cpp">
       <Filter>ui\win\renderer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1055,9 +1055,6 @@
     <ClInclude Include="ui\win\renderer\D2D1Utility.hpp">
       <Filter>ui\win\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="ui\win\renderer\D2D1RendererOld.h">
-      <Filter>ui\win\renderer</Filter>
-    </ClInclude>
     <ClInclude Include="ui\win\renderer\D2D1Render.hpp">
       <Filter>ui\win\renderer</Filter>
     </ClInclude>
@@ -1071,6 +1068,12 @@
       <Filter>ui\win</Filter>
     </ClInclude>
     <ClInclude Include="ui\win\GifEncoder.hpp">
+      <Filter>ui\win</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\renderer\D2D1ViewRenderer.h">
+      <Filter>ui\win\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\win\WinUserMsg.hpp">
       <Filter>ui\win</Filter>
     </ClInclude>
   </ItemGroup>

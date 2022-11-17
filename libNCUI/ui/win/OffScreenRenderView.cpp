@@ -21,6 +21,7 @@
 #include "ui/win/Imm32Manager.h"
 
 #include "ui/win/renderer/D2D1Render.hpp"
+#include "ui/win/WinUserMsg.hpp"
 
 namespace {
     static CLIPFORMAT cf[3] = { CF_TEXT, CF_TEXT, CF_HDROP };
