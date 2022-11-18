@@ -5,7 +5,7 @@
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
 
-## injectSrcipt &nbsp;
+## injectScript &nbsp;
   向页面注入JS代码.
   
 * **函数参数**
@@ -30,9 +30,17 @@
 * **返回值**
   Boolean true成功/false失败. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Frame');
+var frame = Frame.current;
+frame.injectScript('@file:///example/js/testJs.js');
+
+```
 
 
-<div class="adoc" id="div_injectSrcipt"></div>
+<div class="adoc" id="div_injectScript"></div>
 
 
 ## injectCSS &nbsp;
@@ -60,6 +68,14 @@
 * **返回值**
   Boolean true成功/false失败. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Frame');
+var frame = Frame.current;
+frame.injectCSS('@file:///example/css/zui-theme.css');
+
+```
 
 
 <div class="adoc" id="div_injectCSS"></div>

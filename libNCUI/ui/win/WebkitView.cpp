@@ -1587,7 +1587,8 @@ namespace amo {
         //if (count == 30) {
         //    GifEnd(writer.get());
         //}
-        
+        /*  static int count = 0;
+          WriteBmp(std::to_string(count) + ".png", GetDC((m_hParentWnd)));*/
         amo::rect rc;
         rc.intersect(amo::rect());
         

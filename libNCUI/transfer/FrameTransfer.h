@@ -33,16 +33,23 @@ namespace amo {
         Any current(IPCMessage::SmartType msg);
         
         /*!
-         * @fn	Any FrameTransfer::injectSrcipt(IPCMessage::SmartType msg);
+         * @fn	Any FrameTransfer::injectScript(IPCMessage::SmartType msg);
          *
          * @brief	向页面注入JS代码.
          *
          * @param	#String JS代码.
          *
          * @return	#Boolean true成功/false失败.
+         * @example
+         *
+         ```
+        	include('Frame');
+        	var frame = Frame.current;
+        	frame.injectScript('@file:///example/js/testJs.js');
+         ```
          */
         
-        Any injectSrcipt(IPCMessage::SmartType msg);
+        Any injectScript(IPCMessage::SmartType msg);
         
         /*!
          * @fn	Any FrameTransfer::injectCSS(IPCMessage::SmartType msg);
@@ -52,6 +59,14 @@ namespace amo {
          * @param	#String CSS代码.
          *
          * @return	#Boolean true成功/false失败.
+         *
+         * @example
+         *
+         ```
+        	 include('Frame');
+        	 var frame = Frame.current;
+        	 frame.injectCSS('@file:///example/css/zui-theme.css');
+         ```
          */
         
         Any injectCSS(IPCMessage::SmartType msg);
@@ -399,7 +414,8 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(FrameTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(current,
                                       TransferFuncConstProperty | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(injectSrcipt, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(injectScript, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(injectCSS, TransferExecNormal)
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(IsValid, TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(Undo, TransferExecSync)
