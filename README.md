@@ -1,14 +1,7 @@
 # NCUI
-基于Duilib+CEF++NodeJs的类似electron的桌面UI框架，适用于Windows XP 及以上系统，整体框架已完成，还有一些功能未实现，BUG未修改，C++用户已经可以修改使用，具有以下特性：
+基于Duilib+CEF++NodeJs的类似electron的桌面UI框架，适用于Windows XP 及以上系统.
+![Image text](https://gitee.com/amoylel/NCUI/blob/dev/doc/example/image/NCUI.png)
 
-*   **单进程模式**： 可以选择程序以单进程还是多进程方式执行。
-*   **离屏渲染**： 通过离屏渲染实现窗口透明。
-*   **进程同步**： 可以在各进程间同步发送接收数据。
-*   **请求拦截**： 拦截网络请求。
-*   **C++扩展**： 只需包含头文件及可编写扩展，而且写法也很简单。
-*   **差量更新**： 热更新。
-*   **NODEJS**： 支持NodeJs控制程序。
-*   **无版本限制**： 不限制CEF或Nodejs版本。
 
 ## 编译
 * [下载CEF和NODE库](https://gitee.com/amoylel/NCUI/attach_files/download?i=95744&u=http%3A%2F%2Ffiles.git.oschina.net%2Fgroup1%2FM00%2F01%2FEC%2FPaAvDFm_w36ALMokBIafhng4_Zc6163.7z%3Ftoken%3D4839d493c3094bd59c257c16e29e6584%26ts%3D1505740719%26attname%3DNCUI-Library.7z) 解压到解决方案同级目录
