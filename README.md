@@ -1,6 +1,6 @@
 # NCUI
 基于Duilib+CEF++NodeJs的类似electron的桌面UI框架，适用于Windows XP 及以上系统. 
-
+![输入图片说明](https://images.gitee.com/uploads/images/2018/0917/221303_e96c0628_8680.png "NCUI.png")
 ![预览图](https://gitee.com/amoylel/NCUI/blob/dev/doc/example/image/NCUI.png)
 ![Image text](https://raw.github.com/yourName/repositpry/master/yourprojectName/img-folder/test.jpg)
 ## 编译
