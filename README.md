@@ -1,8 +1,6 @@
 # NCUI
-基于Duilib+CEF++NodeJs的类似electron的桌面UI框架，适用于Windows XP 及以上系统. 
-![输入图片说明](https://images.gitee.com/uploads/images/2018/0917/221303_e96c0628_8680.png "NCUI.png")
-![预览图](https://gitee.com/amoylel/NCUI/blob/dev/doc/example/image/NCUI.png)
-![Image text](https://raw.github.com/yourName/repositpry/master/yourprojectName/img-folder/test.jpg)
+基于Duilib+CEF++NodeJs的类似electron的桌面UI框架，支持CEF217以上版本，适用于Windows XP 及以上系统. 
+![预览图](https://images.gitee.com/uploads/images/2018/0917/221303_e96c0628_8680.png "NCUI.png")
 ## 编译
 * [下载CEF和NODE库](https://gitee.com/amoylel/NCUI/attach_files/download?i=95744&u=http%3A%2F%2Ffiles.git.oschina.net%2Fgroup1%2FM00%2F01%2FEC%2FPaAvDFm_w36ALMokBIafhng4_Zc6163.7z%3Ftoken%3D4839d493c3094bd59c257c16e29e6584%26ts%3D1505740719%26attname%3DNCUI-Library.7z) 解压到解决方案同级目录
 * 运行config_debug.bat或config_release.bat初始化项目文件(需要python)
