@@ -13,7 +13,7 @@ namespace amo {
         , m_pFrame(pFrame) {
     }
     
-    Any FrameTransfer::injectSrcipt(IPCMessage::SmartType msg) {
+    Any FrameTransfer::injectScript(IPCMessage::SmartType msg) {
         std::string jsFile = msg->getArgumentList()->getString(0);
         
         if (jsFile.empty()) {
