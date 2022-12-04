@@ -13,7 +13,7 @@ namespace amo {
     /*!
      * @class	keyboard
      *
-     * @script	keyboard.js
+     * @script	../../example/js/keyboard.js
      *
      * @extend Object
      *

@@ -1,5 +1,5 @@
 {
-    "output_path": "doc",
+    "output_path": "resources/web",
     "files": [
         "libNCUI/docs/QuickStart.hpp",
 		"libNCUI/docs/UseNodeJs.hpp",
