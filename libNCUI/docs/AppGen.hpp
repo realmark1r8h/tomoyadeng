@@ -11,7 +11,7 @@ namespace amo {
      * @chapter basic
      *
      * @brief	可以通过该模块生成自定义程序.
-     * 	@script	appGen.js
+     * 	@script	../../example/js/appGen.js
      */
     
     class AppGen {

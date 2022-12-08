@@ -1,0 +1,10 @@
+1. 本程序依赖 boost1.63及以上版本
+2. XP下不支持d2d1硬件加速，如果要编译xp版本 需要定义宏 NCUI_NO_D2D1
+3. 程序需要win10sdk支持
+4. 本程序使用vs2015 update3 编译通过
+
+5. 如果需要nodejs 请查看nodejs编译说明
+6. 修改Microsoft.Cpp.Common.user.props 
+		<LibraryFolder >$(SolutionDir)../$(SolutionName)-Library\</LibraryFolder>   // cef 目录及node目录
+		<BoostFolder>$(SDKFolder)boost_1_63_0\</BoostFolder>	// boost 目录
+		<NodeGypFolder>$(LibraryFolder).node-gyp\4.7.1\</NodeGypFolder>  // node插件目录， 编译node-dev项目时需要
