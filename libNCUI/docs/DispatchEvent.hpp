@@ -1,4 +1,4 @@
-// Created by amoylel on 11/08/2018.
+ï»¿// Created by amoylel on 11/08/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBNCUI_DISPATCHEVENT_3C949AC8_6F42_4A67_A7C6_EF033BFA40BD_HPP__
@@ -8,26 +8,26 @@
 namespace amo {
 
     /**
-     * @class	ÊÂ¼şÇı¶¯±à³Ì
+     * @class	äº‹ä»¶é©±åŠ¨ç¼–ç¨‹
      * @chapter basic
-     * @brief	Äã¿ÉÒÔÊ¹ÓÃÊÂ¼şÇı¶¯±à³Ì·ÀÖ¹NCUIÎÛÈ¾ÄãµÄÒ³Ãæ.
+     * @brief	ä½ å¯ä»¥ä½¿ç”¨äº‹ä»¶é©±åŠ¨ç¼–ç¨‹é˜²æ­¢NCUIæ±¡æŸ“ä½ çš„é¡µé¢.
      */
     
     class DispatchEvent {
     public:
     
         /**
-         * @section ¼àÌıÊÂ¼ş
+         * @section ç›‘å¬äº‹ä»¶
          *
-         * @brief	Ê¹ÓÃdocument.addEventListener¼àÌıÒ»¸ö×Ô¶¨ÒåÊÂ¼ş.
-         * 			NCUI»á½«ipc.dispatchEvent·¢ËÍµÄÏûÏ¢ÖØ¶¨Ïòµ½documentÉÏ
+         * @brief	ä½¿ç”¨document.addEventListenerç›‘å¬ä¸€ä¸ªè‡ªå®šä¹‰äº‹ä»¶.
+         * 			NCUIä¼šå°†ipc.dispatchEventå‘é€çš„æ¶ˆæ¯é‡å®šå‘åˆ°documentä¸Š
          * @example
          *
          ```
         	document.addEventListener('NCUI.TEST', function(event){
         		console.log(arguments);
         	});
-        	// ÏÂÃæµÄ´úÂë¿ÉÒÔĞ´µ½Node.jsÀïÃæÈ¥£¬ÕâÀïÖ»×öÑİÊ¾
+        	// ä¸‹é¢çš„ä»£ç å¯ä»¥å†™åˆ°Node.jsé‡Œé¢å»ï¼Œè¿™é‡Œåªåšæ¼”ç¤º
         	include('ipc');
         	ipc.dispatchEvent('NCUI.TEST', {name:3, value:'2323'});
         
@@ -39,16 +39,16 @@ namespace amo {
         }
         
         /**
-         * @section ·¢ËÍÊÂ¼ş
+         * @section å‘é€äº‹ä»¶
          *
-         * @brief	NCUIÔÊĞíÄãÍ¨¹ıdocument.dispatchEventÏòNode.js»òÆäËûÒ³Ãæ·¢ËÍ×Ô¶¨ÏûÏ¢.<br>
-         * 			1. "ipc.exec", Í¨¹ı{@link ipc.exec}ÏòNode.js»òÆäËûÒ³Ãæ·¢ËÍÏûÏ¢£¬Ê¹ÓÃipc.on»òipc.unique¿ÉÒÔ¼àÌı¸ÃÏûÏ¢<br>
-         * 			2. "ipc.dispatchEvent", Í¨¹ı{@link ipc.dispatchEvent}ËûÒ³ÃæµÄdocument¶ÔÏó·¢ËÍÏûÏ¢£¬Ê¹ÓÃdocument.addEventListener¿ÉÒÔ¼àÌı¸ÃÏûÏ¢£¬Node.js´úÂëÎŞ·¨½ÓÊÕ¸ÃÏûÏ¢<br>
-         * 			ËµÃ÷£º**±ØĞëÔÚCustomEventµÄdetail¶ÔÏóÖĞÔö¼ÓeventName×Ö¶Î±íÃ÷ĞèÒª´¥·¢µÄÊÂ¼şÃû³Æ**
+         * @brief	NCUIå…è®¸ä½ é€šè¿‡document.dispatchEventå‘Node.jsæˆ–å…¶ä»–é¡µé¢å‘é€è‡ªå®šæ¶ˆæ¯.<br>
+         * 			1. "ipc.exec", é€šè¿‡{@link ipc.exec}å‘Node.jsæˆ–å…¶ä»–é¡µé¢å‘é€æ¶ˆæ¯ï¼Œä½¿ç”¨ipc.onæˆ–ipc.uniqueå¯ä»¥ç›‘å¬è¯¥æ¶ˆæ¯<br>
+         * 			2. "ipc.dispatchEvent", é€šè¿‡{@link ipc.dispatchEvent}ä»–é¡µé¢çš„documentå¯¹è±¡å‘é€æ¶ˆæ¯ï¼Œä½¿ç”¨document.addEventListenerå¯ä»¥ç›‘å¬è¯¥æ¶ˆæ¯ï¼ŒNode.jsä»£ç æ— æ³•æ¥æ”¶è¯¥æ¶ˆæ¯<br>
+         * 			è¯´æ˜ï¼š**å¿…é¡»åœ¨CustomEventçš„detailå¯¹è±¡ä¸­å¢åŠ eventNameå­—æ®µè¡¨æ˜éœ€è¦è§¦å‘çš„äº‹ä»¶åç§°**
          * @example
          *
          ```
-        	// Äã¿ÉÒÔ½«ipc.uniqueĞ´µ½Node.js´úÂëÖĞ,»ò±à¼­manifest.json£¬¿ªÆôNode.jsÖ§³Ö£¬²¢ÒÔµ÷ÊÔÄ£¿éÔËĞĞNCUI-DEV.exe²é¿´Ğ§¹û
+        	// ä½ å¯ä»¥å°†ipc.uniqueå†™åˆ°Node.jsä»£ç ä¸­,æˆ–ç¼–è¾‘manifest.jsonï¼Œå¼€å¯Node.jsæ”¯æŒï¼Œå¹¶ä»¥è°ƒè¯•æ¨¡å—è¿è¡ŒNCUI-DEV.exeæŸ¥çœ‹æ•ˆæœ
         	include('ipc');
         	ipc.unique('NCUI.TEST2', function(){
         		console.log('NCUI.TEST2');

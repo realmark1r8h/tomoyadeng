@@ -1,4 +1,4 @@
-// Created by amoylel on 06/13/2017.
+ï»¿// Created by amoylel on 06/13/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_OFFSCREENRENDERVIEW_H__
@@ -75,7 +75,7 @@ public:
             std::regex rgb("\\w+\\b");
             
             if (std::regex_search(ss, m, rgbName)) {
-                std::cout << "·µ»ØÖµ£º" << m[0].str() << std::endl;
+                std::cout << "è¿”å›žå€¼ï¼š" << m[0].str() << std::endl;
                 ss = m.suffix();
             } else {
                 break;
@@ -138,7 +138,7 @@ namespace amo {
     class BrowserWindowSettings;
     class IMM32Manager;
     
-    //ÀëÆÁÄ£Ê½ÏÂÒ³ÃæäÖÈ¾´°¿Ú
+    //ç¦»å±æ¨¡å¼ä¸‹é¡µé¢æ¸²æŸ“çª—å£
     class OffScreenRenderView : public RenderView
         , public amo::RenderHandlerDelegate
         , public amo::DisplayHandlerDelegate
@@ -238,14 +238,14 @@ namespace amo {
         HGLRC hrc_;
         bool painting_popup_;
         float device_scale_factor_;
-        CefRefPtr<CefBrowser> browser_;																//!< ä¯ÀÀÆ÷Ö¸Õë
-        POINT m_point;																				//!< ¹â±êÎ»ÖÃ
-        CefRefPtr<CefFrame> m_pFocusFrame;															//!< µ±Ç°½¹µãiframe
-        ActiveElementInfo m_oActiveElementInfo;														//!< ½¹µã¿Ø¼þÐÅÏ¢
-        WebkitView* m_pWebkit;																		//!< ä¯ÀÀÆ÷¿Ø¼þ
-        std::shared_ptr<IMM32Manager> imm32_manager_;												//!< ÊäÈë·¨¹ÜÀíÆ÷
-        //OpenGLRenderer renderer_;																	//!< OPENGLäÖÈ¾Æ÷
-        ViewRenderer* m_pViewRender;																	//!< GDI+äÖÈ¾Æ÷
+        CefRefPtr<CefBrowser> browser_;																//!< æµè§ˆå™¨æŒ‡é’ˆ
+        POINT m_point;																				//!< å…‰æ ‡ä½ç½®
+        CefRefPtr<CefFrame> m_pFocusFrame;															//!< å½“å‰ç„¦ç‚¹iframe
+        ActiveElementInfo m_oActiveElementInfo;														//!< ç„¦ç‚¹æŽ§ä»¶ä¿¡æ¯
+        WebkitView* m_pWebkit;																		//!< æµè§ˆå™¨æŽ§ä»¶
+        std::shared_ptr<IMM32Manager> imm32_manager_;												//!< è¾“å…¥æ³•ç®¡ç†å™¨
+        //OpenGLRenderer renderer_;																	//!< OPENGLæ¸²æŸ“å™¨
+        ViewRenderer* m_pViewRender;																	//!< GDI+æ¸²æŸ“å™¨
     };
 }
 #endif // AMO_OFFSCREENRENDERVIEW_H__

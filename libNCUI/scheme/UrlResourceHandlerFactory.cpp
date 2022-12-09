@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "scheme/UrlResourceHandlerFactory.h"
 #include "scheme/ZipFileHandler.h"
 #include "scheme/DllFileHandler.h"

@@ -1,4 +1,4 @@
-// Created by amoylel on 03/27/2017.
+ï»¿// Created by amoylel on 03/27/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_DLLRETVALV8HANDLER_H__
@@ -41,7 +41,7 @@ namespace amo {
         
         
     private:
-        CefString m_dllName;																		//!< DLL Ãû
+        CefString m_dllName;																		//!< DLL å
     };
 }
 

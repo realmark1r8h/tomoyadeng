@@ -1,4 +1,4 @@
-// Created by amoylel on 7/02/2017.
+ï»¿// Created by amoylel on 7/02/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_MESSAGEBOX_H__
@@ -15,14 +15,14 @@ namespace amo {
     public:
         static UINT Show(HWND pMainWnd,
                          LPCTSTR lpText,
-                         LPCTSTR lpCaption = _T("ÌáÊ¾"),
+                         LPCTSTR lpCaption = _T("æç¤º"),
                          UINT uType = MB_OK,
                          UINT uIcon = MB_ICONWARNING);
                          
         static UINT ShowPrompt(HWND pMainWnd,
                                LPCTSTR lpText,
                                CDuiString* lpdefaultPrompt,
-                               LPCTSTR lpCaption = _T("ÌáÊ¾"),
+                               LPCTSTR lpCaption = _T("æç¤º"),
                                UINT uType = MB_OK,
                                UINT uIcon = MB_ICONWARNING);
                                
@@ -60,7 +60,7 @@ namespace amo {
         /*!
          * @fn	void MessageWindow::setType(UINT uType);
          *
-         * @brief	ÉèÖÃÏûÏ¢¿òÀàĞÍ.
+         * @brief	è®¾ç½®æ¶ˆæ¯æ¡†ç±»å‹.
          *
          * @param	uType	The type.
          */
@@ -69,7 +69,7 @@ namespace amo {
         /*!
          * @fn	void MessageWindow::setText(CDuiString msg);
          *
-         * @brief	ÉèÖÃÏÔÊ¾ÎÄ±¾.
+         * @brief	è®¾ç½®æ˜¾ç¤ºæ–‡æœ¬.
          *
          * @param	msg	The message.
          */
@@ -78,7 +78,7 @@ namespace amo {
         /*!
          * @fn	void MessageWindow::setPrompt(CDuiString* prompt);
          *
-         * @brief	ÉèÖÃ±à¼­¿òÎÄ±¾.
+         * @brief	è®¾ç½®ç¼–è¾‘æ¡†æ–‡æœ¬.
          *
          * @param 	prompt	If non-null, the prompt.
          */
@@ -87,7 +87,7 @@ namespace amo {
         /*!
          * @fn	void MessageWindow::setCaption(CDuiString caption);
          *
-         * @brief	ÉèÖÃ±êÌâÀ¸ÎÄ±¾.
+         * @brief	è®¾ç½®æ ‡é¢˜æ æ–‡æœ¬.
          *
          * @param	caption	The caption.
          */
@@ -96,7 +96,7 @@ namespace amo {
         /*!
          * @fn	void MessageWindow::SetIcon(UINT uIcon);
          *
-         * @brief	 ÉèÖÃÏÔÊ¾Í¼±êÀàĞÍ.
+         * @brief	 è®¾ç½®æ˜¾ç¤ºå›¾æ ‡ç±»å‹.
          *
          * @param	uIcon	The icon.
          */

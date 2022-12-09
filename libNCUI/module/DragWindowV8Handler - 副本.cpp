@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "module/DragWindowV8Handler.h"
 
 #include <regex>
@@ -29,12 +29,12 @@ namespace amo {
                                           const CefV8ValueList& args,
                                           CefRefPtr<CefV8Value>& retval,
                                           CefString& except) {
-        // µİ¹é
+        // é€’å½’
         if (target->IsUndefined() || target->IsNull() || !target->IsObject()) {
             return sendDragableToBrowserProcess(false);
         }
         
-        // ÓÅÏÈÊ¹ÓÃ webkit-app-region
+        // ä¼˜å…ˆä½¿ç”¨ webkit-app-region
         std::string str = getWebkitAppRegion(target);
         
         if (!str.empty()) {
@@ -71,7 +71,7 @@ namespace amo {
         //    //if (appRegion && appRegion->IsString()) {
         //    //    std::string str = appRegion->GetStringValue();
         //    //
-        //    //    // ¸ã²»¶¨ È¡²»µ½Öµ
+        //    //    // æä¸å®š å–ä¸åˆ°å€¼
         //    //    if (!str.empty()) {
         //    //        if (str == "no-drag") {
         //    //            return sendDragableToBrowserProcess(false);
@@ -84,7 +84,7 @@ namespace amo {
         //
         //}
         
-        //// ÔÙÅĞ¶Ï className
+        //// å†åˆ¤æ–­ className
         //CefRefPtr<CefV8Value> className = target->GetValue("className");
         //std::string strClassList = className->GetStringValue().ToString();
         //
@@ -107,7 +107,7 @@ namespace amo {
         //    strClassList = m.suffix().str();
         //}
         
-        // ¾ÉµÄ class
+        // æ—§çš„ class
         //{
         //    CefRefPtr<CefV8Value> className = target->GetValue("className");
         //    amo::string strClassList(className->GetStringValue().ToString(), true);
@@ -227,7 +227,7 @@ namespace amo {
         
         strRegex =  dragClassName + "\\b|" + noDragClassName + "\\b";
         
-        // ¿ÉÒÔ¸üĞÂDragClassName
+        // å¯ä»¥æ›´æ–°DragClassName
         if (m_bInit) {
             return;
         }
@@ -250,7 +250,7 @@ namespace amo {
         
         CefRefPtr<CefV8Value> listener = document->GetValue("addEventListener");
         
-        // ¼àÌıÊó±êÏûÏ¢
+        // ç›‘å¬é¼ æ ‡æ¶ˆæ¯
         if (listener->IsFunction()) {
             CefV8ValueList list;
             list.push_back(CefV8Value::CreateString("mouseover"));

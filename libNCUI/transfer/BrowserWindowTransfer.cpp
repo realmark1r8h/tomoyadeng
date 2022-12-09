@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "transfer/BrowserWindowTransfer.h"
 
 #include <amo/json.hpp>
@@ -93,7 +93,7 @@ namespace amo {
     
     Any BrowserWindowTransfer::addBrowserWindowSettings(IPCMessage::SmartType msg) {
     
-        // ÏÈÒÆ³ıÏÖÓĞµÄÉèÖÃ
+        // å…ˆç§»é™¤ç°æœ‰çš„è®¾ç½®
         removeBrowserWindowSettings(msg);
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string url = args->getString(0);
@@ -163,30 +163,30 @@ namespace amo {
     
     
     Any BrowserWindowTransfer::saveImageToFile(IPCMessage::SmartType msg) {
-        // ÓÉBrowserWindowÖØÔØÊµÏÖ
+        // ç”±BrowserWindowé‡è½½å®ç°
         return Undefined();
     }
     
     Any BrowserWindowTransfer::recordGifToFile(IPCMessage::SmartType msg) {
-        // ÓÉBrowserWindowÖØÔØÊµÏÖ
+        // ç”±BrowserWindowé‡è½½å®ç°
         return Undefined();
     }
     
     Any BrowserWindowTransfer::stopRecordGif(IPCMessage::SmartType msg) {
-        // ÓÉBrowserWindowÖØÔØÊµÏÖ
+        // ç”±BrowserWindowé‡è½½å®ç°
         return Undefined();
     }
     
     
     
     Any BrowserWindowTransfer::isMainWindow(IPCMessage::SmartType msg) {
-        // ÓÉBrowserWindowÖØÔØÊµÏÖ
+        // ç”±BrowserWindowé‡è½½å®ç°
         return Undefined();
     }
     
     
     Any BrowserWindowTransfer::repaint(IPCMessage::SmartType msg) {
-        // ÓÉBrowserWindowÖØÔØÊµÏÖ
+        // ç”±BrowserWindowé‡è½½å®ç°
         return Undefined();
     }
     
@@ -228,7 +228,7 @@ namespace amo {
             }
         }
         
-        // Ã»ÓĞÕÒµ½£¬·µ»ØUndefined(), NodeJS ¾Í²»Ö§³Ö
+        // æ²¡æœ‰æ‰¾åˆ°ï¼Œè¿”å›Undefined(), NodeJS å°±ä¸æ”¯æŒ
         return Undefined();
     }
     
@@ -399,7 +399,7 @@ namespace amo {
     //}
     
     //Any BrowserWindowTransfer::setHasShadow(IPCMessage::SmartType msg) {
-    //    // ÓÉBrowserWindowÀàÖØÔØ
+    //    // ç”±BrowserWindowç±»é‡è½½
     //    return Undefined();
     //}
     //
@@ -408,38 +408,38 @@ namespace amo {
     //}
     
     //Any BrowserWindowTransfer::topmost(IPCMessage::SmartType msg) {
-    //    // ÓÉBrowserWindowÀàÖØÔØ
+    //    // ç”±BrowserWindowç±»é‡è½½
     //    return Undefined();
     //}
     //
     //Any BrowserWindowTransfer::isTopmost(IPCMessage::SmartType msg) {
-    //    // ÓÉBrowserWindowÀàÖØÔØ
+    //    // ç”±BrowserWindowç±»é‡è½½
     //    return Undefined();
     //}
     
     Any BrowserWindowTransfer::enableDrag(IPCMessage::SmartType msg) {
-        // ÓÉBrowserWindowÀàÖØÔØ
+        // ç”±BrowserWindowç±»é‡è½½
         return Undefined();
     }
     
     Any BrowserWindowTransfer::disableDrag(IPCMessage::SmartType msg) {
-        // ÓÉBrowserWindowÀàÖØÔØ
+        // ç”±BrowserWindowç±»é‡è½½
         return Undefined();
     }
     
     Any BrowserWindowTransfer::getBrowser(IPCMessage::SmartType msg) {
-        // ÓÉBrowserWindowÀàÖØÔØ
+        // ç”±BrowserWindowç±»é‡è½½
         return Undefined();
     }
     
     
     Any BrowserWindowTransfer::showDevTools(IPCMessage::SmartType msg) {
-        // ÓÉBrowserWindowÀàÖØÔØ
+        // ç”±BrowserWindowç±»é‡è½½
         return Undefined();
     }
     
     Any BrowserWindowTransfer::closeDevTools(IPCMessage::SmartType msg) {
-        // ÓÉBrowserWindowÀàÖØÔØ
+        // ç”±BrowserWindowç±»é‡è½½
         return Undefined();
     }
     

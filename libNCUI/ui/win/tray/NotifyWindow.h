@@ -1,4 +1,4 @@
-// Created by amoylel on 07/01/2017.
+ï»¿// Created by amoylel on 07/01/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_NOTIFYWINDOW_H__
@@ -42,25 +42,25 @@ namespace amo {
         
         
     private:
-        /*! @brief	¹Ø±Õ°´Å¥. */
+        /*! @brief	å…³é—­æŒ‰é’®. */
         CButtonUI* m_pBtnMsgBoxClose;
-        /*! @brief	ºöÂÔÈ«²¿. */
+        /*! @brief	å¿½ç•¥å…¨éƒ¨. */
         CButtonUI* m_pBtnIgnore;
-        /*! @brief	²é¿´È«²¿. */
+        /*! @brief	æŸ¥çœ‹å…¨éƒ¨. */
         CButtonUI* m_pBtnCheck;
         
         bool m_bIsMouseInFrame;
         
-        /*! @brief	ÏûÏ¢¿ò¿í. */
+        /*! @brief	æ¶ˆæ¯æ¡†å®½. */
         const static uint32 BOXFRAMEWIDTH = 220;
-        /*! @brief	ÏûÏ¢¿ò¸ß. */
+        /*! @brief	æ¶ˆæ¯æ¡†é«˜. */
         const static uint32 BOXFRAMEHEIGHT = 110;
-        /*! @brief	ÆÁÄ»ÓÒ¼ä¸ô. */
+        /*! @brief	å±å¹•å³é—´éš”. */
         const static uint32 SCREENRIGHTINTERVAL = 10;
-        /*! @brief	ÆÁÄ»µ×²¿¼ä¸ô. */
+        /*! @brief	å±å¹•åº•éƒ¨é—´éš”. */
         const static uint32 SCREENBOTTONINTERVAL = 10;
         
-        /*! @brief	ÍĞÅÌÏûÏ¢»Øµ÷º¯Êı. */
+        /*! @brief	æ‰˜ç›˜æ¶ˆæ¯å›è°ƒå‡½æ•°. */
         std::function<LRESULT(INT, WPARAM, LPARAM)> m_fnTrayMessageCallback;
         /*! @brief	The clip message callback. */
         std::function<LRESULT(HWND, INT, WPARAM, LPARAM)> m_fnClipMessageCallback;

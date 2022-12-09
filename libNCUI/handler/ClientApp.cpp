@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+ï»¿#include "stdAfx.h"
 
 #include "handler/ClientApp.h"
 
@@ -31,21 +31,21 @@ namespace amo {
 #if CHROME_VERSION_BUILD >= 3029
     void ClientApp::RegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar> registrar,
                                           std::vector<CefString>& cookiable_schemes) {
-        $clog(amo::cdevel << func_orient << "×¢²á×Ô¶¨ÒåÐ­Òé:" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "æ³¨å†Œè‡ªå®šä¹‰åè®®:" << amo::endl;);
         registrar->AddCustomScheme("local", true, false, false, false, true, false);
         cookiable_schemes.push_back("local");
     }
 #elif CHROME_VERSION_BUILD >= 2987
     void ClientApp::RegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar> registrar,
                                           std::vector<CefString>& cookiable_schemes) {
-        $clog(amo::cdevel << func_orient << "×¢²á×Ô¶¨ÒåÐ­Òé:" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "æ³¨å†Œè‡ªå®šä¹‰åè®®:" << amo::endl;);
         registrar->AddCustomScheme("local", true, false, false, false, true);
         cookiable_schemes.push_back("local");
     }
 #else
     void ClientApp::RegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar> registrar,
                                           std::vector<CefString>& cookiable_schemes) {
-        $clog(amo::cdevel << func_orient << "×¢²á×Ô¶¨ÒåÐ­Òé:" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "æ³¨å†Œè‡ªå®šä¹‰åè®®:" << amo::endl;);
         registrar->AddCustomScheme("local", true, false, false);
         cookiable_schemes.push_back("local");
     }
@@ -56,7 +56,7 @@ namespace amo {
     
     
     ClientApp::ClientApp() {
-        $clog(amo::cdevel << func_orient << "ClientApp ¹¹Ôìº¯Êý" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "ClientApp æž„é€ å‡½æ•°" << amo::endl;);
         
         m_pBrowserProcessHandler = NULL;
         m_pRenderProcessHandler = NULL;
@@ -179,7 +179,7 @@ namespace amo {
         bool bOk = 	command_line->HasSwitch("multi-threaded-message-loop");*/
         //command_line->AppendSwitch("ppapi-out-of-process");
         //command_line->AppendSwitch("enable-gpu");
-        //command_line->AppendSwitch("disable-gpu");	// ¹Ø±ÕGPU ¿ÉÒÔ¼õÉÙÒ»¸ö½ø³Ì
+        //command_line->AppendSwitch("disable-gpu");	// å…³é—­GPU å¯ä»¥å‡å°‘ä¸€ä¸ªè¿›ç¨‹
         //const char kMultiThreadedMessageLoop[] = "multi-threaded-message-loop";
         //const char kCachePath[] = "cache-path";
         //const char kUrl[] = "url";
@@ -216,32 +216,32 @@ namespace amo {
         //
         //
         //command_line->AppendSwitch("--allow-running-insecure-content");
-        // ´Ë²ÎÊý½â¾ö¶à´°¿ÚÎÊÌâ
+        // æ­¤å‚æ•°è§£å†³å¤šçª—å£é—®é¢˜
         command_line->AppendSwitch("enable-gpu");
         command_line->AppendSwitch("enable-pdf-extension");
-        // ÔÊÐíµ÷ÓÃÉãÏñÍ·
+        // å…è®¸è°ƒç”¨æ‘„åƒå¤´
         command_line->AppendSwitch("enable-media-stream");
         command_line->AppendSwitch("process-per-site");
-        // Ê¹ÓÃnpapi flash ²å¼þ ²¿·ÖÍøÒ³»áµ¼ÖÂ³ÌÐòÎÞÏìÓ¦ËÀµô °Ù¶ÈÒôÀÖ
-        command_line->AppendSwitch("enable-npapi");		// http://blog.csdn.net/sp_daiyq/article/details/50187737 Ô­ÒòÊÇchromium´Ó42Ö®ºó¾Í²»Ä¬ÈÏÖ§³ÖNPAPIÁË£¨3.2357Ê¹ÓÃµÄchromiumÊÇ43£©
+        // ä½¿ç”¨npapi flash æ’ä»¶ éƒ¨åˆ†ç½‘é¡µä¼šå¯¼è‡´ç¨‹åºæ— å“åº”æ­»æŽ‰ ç™¾åº¦éŸ³ä¹
+        command_line->AppendSwitch("enable-npapi");		// http://blog.csdn.net/sp_daiyq/article/details/50187737 åŽŸå› æ˜¯chromiumä»Ž42ä¹‹åŽå°±ä¸é»˜è®¤æ”¯æŒNPAPIäº†ï¼ˆ3.2357ä½¿ç”¨çš„chromiumæ˜¯43ï¼‰
         
         command_line->AppendSwitchWithValue("ppapi-flash-path", "plugins/pepflashplayer.dll");
         
-        // ÔÊÐíÊ¹ÓÃFlash£¬2704ÒÔÏÂ°æ±¾±¾Éí¿ÉÒÔ×Ô¶¯¼ÓÔØflash²å¼þ£¬¸ß°æ±¾ÐèÒªÊÖ¶¯Ö¸¶¨flashÂ·¾¶£¬µ«ÊÇ³ÌÐòÆô¶¯Ê±»áµ¯¸öºÚ¿ò
+        // å…è®¸ä½¿ç”¨Flashï¼Œ2704ä»¥ä¸‹ç‰ˆæœ¬æœ¬èº«å¯ä»¥è‡ªåŠ¨åŠ è½½flashæ’ä»¶ï¼Œé«˜ç‰ˆæœ¬éœ€è¦æ‰‹åŠ¨æŒ‡å®šflashè·¯å¾„ï¼Œä½†æ˜¯ç¨‹åºå¯åŠ¨æ—¶ä¼šå¼¹ä¸ªé»‘æ¡†
         /*      command_line->AppendSwitchWithValue("ppapi-flash-path",
                                                   "plugins/pepflashplayer.dll");*/
         
-        //command_line->AppendSwitch("--disable-web-security");//¹Ø±ÕÍ¬Ô´²ßÂÔ
+        //command_line->AppendSwitch("--disable-web-security");//å…³é—­åŒæºç­–ç•¥
         //command_line->AppendSwitchWithValue("ppapi-flash-version",
-        //                                    "30.0.0.113");//PepperFlash\manifest.jsonÖÐµÄversion
+        //                                    "30.0.0.113");//PepperFlash\manifest.jsonä¸­çš„version
         //command_line->AppendSwitch("ppapi-out-of-process");
         // command_line->AppendSwitchWithValue("ppapi-flash-path", "plugins/pepflashplayer.dll");
-        //command_line->AppendSwitch("--disable-web-security");//¹Ø±ÕÍ¬Ô´²ßÂÔ
+        //command_line->AppendSwitch("--disable-web-security");//å…³é—­åŒæºç­–ç•¥
         //command_line->AppendSwitchWithValue("ppapi-flash-version",
-        //                                    "19.0.0.226");//PepperFlash\manifest.jsonÖÐµÄversion
+        //                                    "19.0.0.226");//PepperFlash\manifest.jsonä¸­çš„version
         //command_line->AppendSwitchWithValue("ppapi-flash-path",
         //                                    "plugins/NPSWF32_19_0_0_226.dll");
-        //command_line->AppendSwitch("--disable-web-security");//¹Ø±ÕÍ¬Ô´²ßÂÔ
+        //command_line->AppendSwitch("--disable-web-security");//å…³é—­åŒæºç­–ç•¥
         //command_line->AppendSwitch("--enable-system-flash");
         
         //      /*command_line->AppendSwitchWithValue("register-netscape-plugins", "E:\\test2\\firebreath-dev\\build\\bin\\xdemocef\\Debug\\npxdemocef.dll;application/x-xdemocef");
@@ -258,13 +258,13 @@ namespace amo {
         //      //command_line->AppendSwitch("--register-netscape-plugins = \"E:\\amoylel-Out\\Binary.UR32\\plugins\\npaemo.dll;application/x-demo-a\"");
         //      //command_line->AppendArgument("--register-pepper-plugins = \"E:\\amoylel-Out\\Binary.UR32\\plugins\\npaemo.dll;application/x-demo-a\"");
         
-        $clog(amo::cdevel << func_orient << "×Ô¶¨ÒåCommandLine" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "è‡ªå®šä¹‰CommandLine" << amo::endl;);
         return;
     }
     
     
     void ClientApp::OnContextInitialized() {
-        $clog(amo::cdevel << func_orient << "Context³õÊ¼»¯Íê³É»Øµ÷" << amo::endl;
+        $clog(amo::cdevel << func_orient << "Contextåˆå§‹åŒ–å®Œæˆå›žè°ƒ" << amo::endl;
              );
 #if CHROME_VERSION_BUILD >= 2357
         CefRefPtr<CefCookieManager> manager = CefCookieManager::GetGlobalManager(NULL);
@@ -313,8 +313,8 @@ namespace amo {
             const CefString& domain_name,
             CefRefPtr<CefSchemeHandlerFactory> factory) {
         $clog(amo::cdevel << func_orient <<
-              "×¢²á×Ô¶¨ÒåÐ­Òé¹¤³§Àà£¬Ð­ÒéÃû£º"
-              << amo::string(scheme_name.ToString(), true).str() << "ÓòÃû£º"
+              "æ³¨å†Œè‡ªå®šä¹‰åè®®å·¥åŽ‚ç±»ï¼Œåè®®åï¼š"
+              << amo::string(scheme_name.ToString(), true).str() << "åŸŸåï¼š"
               << amo::string(domain_name.ToString(), true).str() << amo::endl;);
         return CefRegisterSchemeHandlerFactory(scheme_name, domain_name, factory);
     }

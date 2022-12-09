@@ -1,4 +1,4 @@
-// Created by amoylel on 03/16/2017.
+ï»¿// Created by amoylel on 03/16/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_DLLRUNNER_H__
@@ -24,7 +24,7 @@ namespace amo {
 
 #ifdef AMO_RUN_DLL
 
-    // Cef Dllµ÷ÓÃÀà
+    // Cef Dllè°ƒç”¨ç±»
     class DllRunner {
     public:
     
@@ -150,13 +150,13 @@ namespace amo {
             return R();
         }
         
-        // Õ¹¿ªÖÕÖ¹º¯Êı£¬·ñÔò±àÒëÊ±»áÎŞÏŞÖÆµÄÕ¹¿ª£¬ ²ÎÊı¸öÊı²»ÄÜÌ«¶à
+        // å±•å¼€ç»ˆæ­¢å‡½æ•°ï¼Œå¦åˆ™ç¼–è¯‘æ—¶ä¼šæ— é™åˆ¶çš„å±•å¼€ï¼Œ å‚æ•°ä¸ªæ•°ä¸èƒ½å¤ªå¤š
         /*template<typename R, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
         R runDllFunc(AnyArgsWrapper valueWrapper, P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6){
         	if (valueWrapper.size() == 0) return runDllFuncImpl<R>(p1, p2, p3, p4, p5, p6);
         	return R();
         }*/
-        // µ÷ÊÔÊ±Ê¹ÓÃ£¬¼õÉÙ±àÒëÊ±¼ä
+        // è°ƒè¯•æ—¶ä½¿ç”¨ï¼Œå‡å°‘ç¼–è¯‘æ—¶é—´
         template<typename R, typename P1, typename P2, typename P3>
         R runDllFunc(AnyArgsWrapper valueWrapper, P1 p1, P2 p2, P3 p3) {
             if (valueWrapper.size() == 0) {

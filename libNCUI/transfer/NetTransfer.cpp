@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "transfer/NetTransfer.h"
 #include "transfer/ClassTransfer.hpp"
 #include "transfer/DownloaderTransfer.h"

@@ -1,4 +1,4 @@
-// Created by amoylel on 10/06/2017.
+ï»¿// Created by amoylel on 10/06/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_SPLASHWINDOWSETTINGS_H__
@@ -9,16 +9,16 @@ namespace amo {
 
 
     /*!
-     * @class Æô¶¯»­Ãæ
+     * @class å¯åŠ¨ç”»é¢
      *
      * @id	settingsSplashWindowSettings
      *
-     * @desc Æô¶¯»­Ãæ
+     * @desc å¯åŠ¨ç”»é¢
      *
      * @chapter settings
      *
      *
-     * @brief	Æô¶¯»­ÃæÏà¹Ø²ÎÊı.
+     * @brief	å¯åŠ¨ç”»é¢ç›¸å…³å‚æ•°.
      */
     
     class SplashWindowSettings
@@ -33,7 +33,7 @@ namespace amo {
         *
         * @ignore
         *
-        * @brief	³õÊ¼»¯Ä¬ÈÏÆô¶¯»­Ãæ²ÎÊı.
+        * @brief	åˆå§‹åŒ–é»˜è®¤å¯åŠ¨ç”»é¢å‚æ•°.
         */
         
         void initDefaultSplashSettings();
@@ -42,13 +42,13 @@ namespace amo {
         
         virtual amo::json toJson() override;
     public:
-        /*! @var #String image Æô¶¯´°¿ÚÏÔÊ¾Í¼Æ¬. */
+        /*! @var #String image å¯åŠ¨çª—å£æ˜¾ç¤ºå›¾ç‰‡. */
         std::string image;
         
-        /*! @var #Int=0 duration	 ÏÔÊ¾Ê±¼ä£¬ msÈç¹ûÎª0£¬±íÊ¾²»×Ô¶¯¹Ø±Õ. */
+        /*! @var #Int=0 duration	 æ˜¾ç¤ºæ—¶é—´ï¼Œ mså¦‚æœä¸º0ï¼Œè¡¨ç¤ºä¸è‡ªåŠ¨å…³é—­. */
         int duration;
         
-        /*! @var #Int=1000 fadeout ¹Ø±Õ¶¯»­³ÖĞøÊ±¼äms. */
+        /*! @var #Int=1000 fadeout å…³é—­åŠ¨ç”»æŒç»­æ—¶é—´ms. */
         int fadeout;
         
     };

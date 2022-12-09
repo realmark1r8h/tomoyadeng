@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+ï»¿#include "stdAfx.h"
 #include "handler/LifeSpanHandler.h"
 
 #include <amo/logger.hpp>
@@ -16,8 +16,8 @@ namespace amo {
         
         DelegateSet::iterator it = m_Delegates.begin();
         
-        //TODO: ÍË³öÊ±´íÎó£¬ÓÐ¿ÉÄÜÔÚÑ­»·µÄÊ±Ê±ºò£¬´°¿Ú±»ÒÆ³ýÊý¾Ý£¬µ¼ÖÂ³ÌÐò³ö´í
-        // ºÃÏñÒÑ¾­¸ÄÁË£¬²»ÖªµÀ¸Äµ½Ã»ÓÐ
+        //TODO: é€€å‡ºæ—¶é”™è¯¯ï¼Œæœ‰å¯èƒ½åœ¨å¾ªçŽ¯çš„æ—¶æ—¶å€™ï¼Œçª—å£è¢«ç§»é™¤æ•°æ®ï¼Œå¯¼è‡´ç¨‹åºå‡ºé”™
+        // å¥½åƒå·²ç»æ”¹äº†ï¼Œä¸çŸ¥é“æ”¹åˆ°æ²¡æœ‰
         for (; it != m_Delegates.end(); ++it) {
             (*it)->OnBeforeClose(browser);
         }
@@ -25,9 +25,9 @@ namespace amo {
     
     bool LifeSpanHandler::DoClose(CefRefPtr<CefBrowser> browser) {
         $clog(amo::cdevel << func_orient << amo::endl;);
-        // Í¨Öªä¯ÀÀÆ÷¸¸´°¿Ú¼´½«¹Ø±Õ
+        // é€šçŸ¥æµè§ˆå™¨çˆ¶çª—å£å³å°†å…³é—­
 #if CHROME_VERSION_BUILD >= 2272
-        //TODO: ÕâÀï¹Ø±Õä¯ÀÀÆ÷
+        //TODO: è¿™é‡Œå…³é—­æµè§ˆå™¨
 #else
         browser->GetHost()->ParentWindowWillClose();
 #endif

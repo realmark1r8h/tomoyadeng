@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "ui/win/RenderView.h"
 
 #include <amo/logger.hpp>
@@ -51,7 +51,7 @@ namespace amo {
         RECT rect;
         ::GetClientRect(m_hWnd, &rect);
         
-        //////×îÐ¡»¯Ê±²»ÒÆ¶¯ä¯ÀÀÆ÷´°¿Ú£¬²»È»»¹Ô­Ê±Ò³ÃæäÖÈ¾Ê±»á³öÎÊÌâ
+        //////æœ€å°åŒ–æ—¶ä¸ç§»åŠ¨æµè§ˆå™¨çª—å£ï¼Œä¸ç„¶è¿˜åŽŸæ—¶é¡µé¢æ¸²æŸ“æ—¶ä¼šå‡ºé—®é¢˜
         if (m_pBrowser/* &&  !::IsIconic(::GetParent(m_hWnd))*/)
             ::SetWindowPos(m_pBrowser->GetHost()->GetWindowHandle(),
                            NULL,

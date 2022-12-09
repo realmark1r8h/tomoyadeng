@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_JSDIALOGHANDLER_H__
@@ -12,7 +12,7 @@ namespace amo {
     /*!
      * @class	JSDialogHandlerDelegate
      *
-     * @brief	JS¶Ô»°¿òÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	JSå¯¹è¯æ¡†äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class JSDialogHandlerDelegate {
@@ -68,7 +68,7 @@ namespace amo {
     /*!
      * @class	JSDialogHandler
      *
-     * @brief	JS¶Ô»°¿òÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	JSå¯¹è¯æ¡†äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class JSDialogHandler : public CefJSDialogHandler
@@ -89,7 +89,7 @@ namespace amo {
          * 		CefRefPtr<CefJSDialogCallback> callback,
          * 		bool& suppress_message);
          *
-         * @brief	Ò³ÃæÇëÇóJS¶Ô»°¿òÊ±´¥·¢
+         * @brief	é¡µé¢è¯·æ±‚JSå¯¹è¯æ¡†æ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser						The browser.
@@ -131,7 +131,7 @@ namespace amo {
          * 		bool is_reload,
          * 		CefRefPtr<CefJSDialogCallback> callback);
          *
-         * @brief	Àë¿ªÒ³ÃæÊ±Ìá¹©¸øÓÃ»§Ñ¡ÔñÊÇ·ñÀë¿ªÒ³ÃæµÄ¶Ô»°¿ò
+         * @brief	ç¦»å¼€é¡µé¢æ—¶æä¾›ç»™ç”¨æˆ·é€‰æ‹©æ˜¯å¦ç¦»å¼€é¡µé¢çš„å¯¹è¯æ¡†
          * 			B UI.
          *
          * @param	browser			The browser.
@@ -151,7 +151,7 @@ namespace amo {
          * @fn	virtual void JSDialogHandler::OnResetDialogState(
          * 		CefRefPtr<CefBrowser> browser);
          *
-         * @brief	JS¶Ô»°¿ò×´Ì¬ÖØÖÃÊ±´¥·¢
+         * @brief	JSå¯¹è¯æ¡†çŠ¶æ€é‡ç½®æ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser	The browser.
@@ -163,7 +163,7 @@ namespace amo {
          * @fn	virtual void JSDialogHandler::OnDialogClosed(
          * 		CefRefPtr<CefBrowser> browser);
          *
-         * @brief	Ä¬ÈÏJS¶Ô»°¿ò¹Ø±ÕÊ±´¥·¢
+         * @brief	é»˜è®¤JSå¯¹è¯æ¡†å…³é—­æ—¶è§¦å‘
          * 			B IO.
          *
          * @param	browser	The browser.

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "transfer/AppTransfer.h"
 
 #include <amo/path.hpp>
@@ -58,7 +58,7 @@ namespace amo {
         std::unique_lock<std::recursive_mutex> lock(m_mutex);
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string url = args->getString(0);
-        bool bNeedExsit = args->getBool(1); // ÊÇ·ñÒªÇóÎÄ¼ş´æÔÚ
+        bool bNeedExsit = args->getBool(1); // æ˜¯å¦è¦æ±‚æ–‡ä»¶å­˜åœ¨
         
         if (url.empty()) {
             return std::string();
@@ -93,7 +93,7 @@ namespace amo {
                 return amo::string(path.c_str(), false).to_utf8();
             }
             
-            // ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ,ÇÒ²»ÄÜÎªÄ¿Â¼
+            // åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨,ä¸”ä¸èƒ½ä¸ºç›®å½•
             if (!path.is_directory() && path.file_exists()) {
                 return  amo::string(path.c_str(), false).to_utf8();
             }
@@ -160,7 +160,7 @@ namespace amo {
         
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         
-        // drag ºÍno drag ²»ÄÜÏàÍ¬
+        // drag å’Œno drag ä¸èƒ½ç›¸åŒ
         if (dragClassName == appSettings->noDragClassName) {
             return false;
         }
@@ -183,7 +183,7 @@ namespace amo {
         
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         
-        // drag ºÍno drag ²»ÄÜÏàÍ¬
+        // drag å’Œno drag ä¸èƒ½ç›¸åŒ
         if (noDragClassName == appSettings->dragClassName) {
             return false;
         }
@@ -215,7 +215,7 @@ namespace amo {
         
         if (val.type() == AnyValueType<Nil>::value) {
         
-            // ·µ»ØËùÓĞÉèÖÃ
+            // è¿”å›æ‰€æœ‰è®¾ç½®
             return m_global;
             
         } else  if (val.type() == AnyValueType<std::string>::value) {
@@ -238,7 +238,7 @@ namespace amo {
                 return Undefined();
             }
             
-            // ·µ»Øµ¥ÏîÉèÖÃ
+            // è¿”å›å•é¡¹è®¾ç½®
         }
         
         return Undefined();
@@ -302,7 +302,7 @@ namespace amo {
         
         if (val.type() == AnyValueType<Nil>::value) {
         
-            // ·µ»ØËùÓĞÉèÖÃ
+            // è¿”å›æ‰€æœ‰è®¾ç½®
             return appSettings->toJson();
             
         } else  if (val.type() == AnyValueType<std::string>::value) {
@@ -326,7 +326,7 @@ namespace amo {
                 return Undefined();
             }
             
-            // ·µ»Øµ¥ÏîÉèÖÃ
+            // è¿”å›å•é¡¹è®¾ç½®
         }
         
         return Undefined();
@@ -339,7 +339,7 @@ namespace amo {
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         
         if (val.type() == AnyValueType<amo::json>::value) {
-            // ¸üĞÂAppSettings
+            // æ›´æ–°AppSettings
             std::string strConfig = args->getString(0);
             appSettings->updateArgsSettings(strConfig);
             return Undefined();

@@ -1,4 +1,4 @@
-// Created by amoylel on 07/04/2017.
+ï»¿// Created by amoylel on 07/04/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_TRANSFERMAPPING_HPP__
@@ -9,7 +9,7 @@
 /*!
  * @namespace	amo
  *
- * @brief	Transfer ÓëÊµ¼ÊµÄCefÀàĞÍÓ³Éä.
+ * @brief	Transfer ä¸å®é™…çš„Cefç±»å‹æ˜ å°„.
  */
 namespace amo {
     class BrowserTransfer;
@@ -21,7 +21,7 @@ namespace amo {
     /*!
      * @struct	TransferMapping
      *
-     * @brief	Í¨ÓÃÀàĞÍ£¬ËùÓ³ÉäµÄÀàĞÍÓë×ÔÉíÏàÍ¬.
+     * @brief	é€šç”¨ç±»å‹ï¼Œæ‰€æ˜ å°„çš„ç±»å‹ä¸è‡ªèº«ç›¸åŒ.
      *
      * @tparam	T	Generic type parameter.
      */

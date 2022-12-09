@@ -1,4 +1,4 @@
-// Created by amoylel on 03/27/2017.
+ï»¿// Created by amoylel on 03/27/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_EVENTEMITTERV8HANDLER_H__
@@ -90,7 +90,7 @@ namespace amo {
     public:
         virtual CefRefPtr<JsV8Handler> createV8Handler();
     protected:
-        std::map<std::string, std::vector<CallbackFunctionWrapper::SmartType > >  m_oEventCallbackFunc;			//!< ÊÂ¼þ¼àÌý»Øµ÷º¯Êý
+        std::map<std::string, std::vector<CallbackFunctionWrapper::SmartType > >  m_oEventCallbackFunc;			//!< äº‹ä»¶ç›‘å¬å›žè°ƒå‡½æ•°
     };
 }
 #endif AMO_EVENTEMITTERV8HANDLER_H__

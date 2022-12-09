@@ -1,4 +1,4 @@
-// Created by amoylel on 05/18/2017.
+ï»¿// Created by amoylel on 05/18/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_FUNCTIONWRAPPER_HPP__
@@ -24,36 +24,36 @@
 
 
 namespace amo {
-    // TransferÀàĞÍ
+    // Transferç±»å‹
     enum TransferType {
         TransferUnknown = -1,
-        TransferClass,						//Àà
-        TransferObject						//¶ÔÏó
+        TransferClass,						//ç±»
+        TransferObject						//å¯¹è±¡
     };
     
-    // ¶àÏß³ÌÖ§³Ö
+    // å¤šçº¿ç¨‹æ”¯æŒ
     enum TransferMultiType {
-        TransferMultiUnkown = -1, //Î´Öª
-        TransferMultiSupport = 0 << 16,  // ÔÊĞíÔÚÆäËûÏß³ÌÉÏÖ´ĞĞ£¨Ä¬ÈÏ£©
-        TransferMultiDisabled = 1 << 16, // ½ûÖ¹¶àÏß³ÌÖ´ĞĞ
+        TransferMultiUnkown = -1, //æœªçŸ¥
+        TransferMultiSupport = 0 << 16,  // å…è®¸åœ¨å…¶ä»–çº¿ç¨‹ä¸Šæ‰§è¡Œï¼ˆé»˜è®¤ï¼‰
+        TransferMultiDisabled = 1 << 16, // ç¦æ­¢å¤šçº¿ç¨‹æ‰§è¡Œ
     };
-    // JSÀàÖĞµÄº¯ÊıÀàĞÍ£¬
+    // JSç±»ä¸­çš„å‡½æ•°ç±»å‹ï¼Œ
     enum TransferFuncType {
-        TransferFuncUnknown = -1,					// Î´Öª
-        TransferFuncNormal = 0 << 8,				// ÆÕÍ¨º¯Êı
-        TransferFuncStatic = 1 << 8,				// ¾²Ì¬º¯Êı
-        TransferFuncConstructor = 2 << 8,			// ¹¹Ôìº¯Êı
-        TransferFuncConstProperty = 3 << 8,			// Àà¾²Ì¬³£Á¿ÊôĞÔ£¬²»ÄÜ±»¸³Öµ
-        TransferFuncClassProperty = 4 << 8,			// ÀàÊôĞÔ£¬¿ÉÒÔÍ¨¹ı.CLASS·ÃÎÊ¸³Öµ
-        TransferFuncMemberProperty = 5 << 8,		// ¶ÔÏóÊôĞÔ£¬¿ÉÒÔ¸³Öµ
+        TransferFuncUnknown = -1,					// æœªçŸ¥
+        TransferFuncNormal = 0 << 8,				// æ™®é€šå‡½æ•°
+        TransferFuncStatic = 1 << 8,				// é™æ€å‡½æ•°
+        TransferFuncConstructor = 2 << 8,			// æ„é€ å‡½æ•°
+        TransferFuncConstProperty = 3 << 8,			// ç±»é™æ€å¸¸é‡å±æ€§ï¼Œä¸èƒ½è¢«èµ‹å€¼
+        TransferFuncClassProperty = 4 << 8,			// ç±»å±æ€§ï¼Œå¯ä»¥é€šè¿‡.CLASSè®¿é—®èµ‹å€¼
+        TransferFuncMemberProperty = 5 << 8,		// å¯¹è±¡å±æ€§ï¼Œå¯ä»¥èµ‹å€¼
     };
     
-    // JSÔÚµ÷ÓÃC++Ê±µÄÍ¬²½ÀàĞÍ
+    // JSåœ¨è°ƒç”¨C++æ—¶çš„åŒæ­¥ç±»å‹
     enum TransferExecType {
-        TransferExecUnknown = -1,	//Î´Öª
-        TransferExecNormal = 0,		//ÆÕÍ¨
-        TransferExecSync = 1,		//Í¬²½
-        TransferExecAsync = 2,		//Òì²½
+        TransferExecUnknown = -1,	//æœªçŸ¥
+        TransferExecNormal = 0,		//æ™®é€š
+        TransferExecSync = 1,		//åŒæ­¥
+        TransferExecAsync = 2,		//å¼‚æ­¥
     };
     
     class FunctionWrapper {
@@ -101,7 +101,7 @@ namespace amo {
         /**
          * @fn	TransferMultiThread FunctionWrapper::multiType()
          *
-         * @brief	¶àÏß³ÌÀàĞÍ.
+         * @brief	å¤šçº¿ç¨‹ç±»å‹.
          *
          * @return	A TransferMultiThread.
          */
@@ -215,7 +215,7 @@ namespace amo {
             json.put("id", this->getObjectID());
             json.put("builtin", this->isBuiltIn());
             json.put("rendererClass", this->isRendererClass());
-            json.put("transferClass", true); //±íÊ¾ÕâÊÇÒ»¸öÀà
+            json.put("transferClass", true); //è¡¨ç¤ºè¿™æ˜¯ä¸€ä¸ªç±»
             amo::json functions;
             
             functions.set_array();
@@ -258,7 +258,7 @@ namespace amo {
             json.put("id", this->getObjectID());
             json.put("builtin", this->isBuiltIn());
             json.put("rendererClass", this->isRendererClass());
-            json.put("transferObject", true); //±íÊ¾ÕâÊÇÒ»¸öÀàÊµÀı
+            json.put("transferObject", true); //è¡¨ç¤ºè¿™æ˜¯ä¸€ä¸ªç±»å®ä¾‹
             return json;
         }
         
@@ -300,7 +300,7 @@ namespace amo {
             return m_mpJsFunc;
         }
         
-        // Ìí¼ÓĞèÒªµ÷ÓÃµÄJSÄ£¿é
+        // æ·»åŠ éœ€è¦è°ƒç”¨çš„JSæ¨¡å—
         void addModule(const std::string& strName) {
             m_vecModules.push_back(strName);
         }
@@ -371,7 +371,7 @@ namespace amo {
         /*!
         * @fn	bool JsClassV8Handler::isRendererClass() const;
         *
-        * @brief	ÅĞ¶Ïµ±Ç°µ÷ÓÃµÄC++º¯ÊıÊÇ·ñÊÇÔÚäÖÈ¾½ø³ÌÉÏÖ´ĞĞ.
+        * @brief	åˆ¤æ–­å½“å‰è°ƒç”¨çš„C++å‡½æ•°æ˜¯å¦æ˜¯åœ¨æ¸²æŸ“è¿›ç¨‹ä¸Šæ‰§è¡Œ.
         *
         * @return	true if renderer class, false if not.
         */
@@ -382,7 +382,7 @@ namespace amo {
         /*!
         * @fn	void JsClassV8Handler::setRendererClass(bool val);
         *
-        * @brief	ÉèÖÃµ±Ç°ÀàµÄC++º¯ÊıÔÚäÖÈ¾½ø³ÌÉÏÖ´ĞĞ.
+        * @brief	è®¾ç½®å½“å‰ç±»çš„C++å‡½æ•°åœ¨æ¸²æŸ“è¿›ç¨‹ä¸Šæ‰§è¡Œ.
         *
         * @param	val	true to value.
         */
@@ -418,11 +418,11 @@ namespace amo {
         
         
         std::unordered_map < std::string, FunctionWrapper >
-        m_mpJsFunc;								//JSµ÷ÓÃC++»Øµ÷´¦Àíº¯Êı¼¯ºÏ
+        m_mpJsFunc;								//JSè°ƒç”¨C++å›è°ƒå¤„ç†å‡½æ•°é›†åˆ
         std::string m_strName;
         std::string m_strObjectName;
         bool m_bRendererClass;
-        /*! @brief	ÊÇ·ñÎªÄÚÖÃÄ£¿é£¬Ä¬ÈÏÎªtrue. */
+        /*! @brief	æ˜¯å¦ä¸ºå†…ç½®æ¨¡å—ï¼Œé»˜è®¤ä¸ºtrue. */
         bool m_bBuiltIn;
     };
 }

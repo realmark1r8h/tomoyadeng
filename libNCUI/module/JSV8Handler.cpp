@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "JSV8Handler.h"
 
 namespace amo {
@@ -63,7 +63,7 @@ namespace amo {
         
         if (m_oFuncMap.find(key) == m_oFuncMap.end()) {
             exception = ("invalid function.");
-            // Èç¹ûµ±Ç°handlerÃ»ÓĞ×¢²á¸Ãº¯Êı£¬·µ»ØFALSE
+            // å¦‚æœå½“å‰handleræ²¡æœ‰æ³¨å†Œè¯¥å‡½æ•°ï¼Œè¿”å›FALSE
             return false;
         }
         

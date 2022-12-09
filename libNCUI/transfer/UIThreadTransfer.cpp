@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIThreadTransfer.h"
 #include "transfer/TransferMgr.h"
 

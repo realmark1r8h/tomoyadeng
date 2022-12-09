@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "node/NodeJSDialogHandler.h"
 #include "node/NodeHandlerHelper.h"
 

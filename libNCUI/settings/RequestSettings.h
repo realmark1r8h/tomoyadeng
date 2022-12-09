@@ -1,4 +1,4 @@
-// Created by amoylel on 11/26/2017.
+ï»¿// Created by amoylel on 11/26/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_REQUESTSETTINGS_H__
@@ -13,13 +13,13 @@
 namespace amo {
 
     /**
-     * @class	HTTPÇëÇó²ÎÊı
+     * @class	HTTPè¯·æ±‚å‚æ•°
      *
      * @id RequestSettings
      *
      * @chapter settings
      *
-     * @brief	ÊÖ¶¯HTTPÇëÇóÊ±ĞèÒªÓÃµ½µÄ²ÎÊı.
+     * @brief	æ‰‹åŠ¨HTTPè¯·æ±‚æ—¶éœ€è¦ç”¨åˆ°çš„å‚æ•°.
      *
      */
     
@@ -44,19 +44,19 @@ namespace amo {
         std::vector<amo::string> getFiles();
     public:
     
-        /*! @var #String=GET type HTPPÇëÇóÀàĞÍ£¬POST »òÕß GET */
+        /*! @var #String=GET type HTPPè¯·æ±‚ç±»å‹ï¼ŒPOST æˆ–è€… GET */
         std::string type;
         
-        /*! @var #String	url HTTPÇëÇóµØÖ·. */
+        /*! @var #String	url HTTPè¯·æ±‚åœ°å€. */
         std::string url;
         
-        /*! @var #JsonObject data	Òª·¢ËÍµÄÊı¾İ. */
+        /*! @var #JsonObject data	è¦å‘é€çš„æ•°æ®. */
         amo::json data;
         
-        /** @var #JsonObject header	HTTPÇëÇóµÄÍ·²¿²ÎÊı. */
+        /** @var #JsonObject header	HTTPè¯·æ±‚çš„å¤´éƒ¨å‚æ•°. */
         amo::json header;
         
-        /** @var #Array files 	ÒªÉÏ´«µÄÎÄ¼şÁĞ±í£¬ÎÄ¼şÒÔ×Ö·û´®±íÊ¾. */
+        /** @var #Array files 	è¦ä¸Šä¼ çš„æ–‡ä»¶åˆ—è¡¨ï¼Œæ–‡ä»¶ä»¥å­—ç¬¦ä¸²è¡¨ç¤º. */
         amo::json files;
     };
 }

@@ -1,4 +1,4 @@
-// Created by amoylel on 21/09/2018.
+ï»¿// Created by amoylel on 21/09/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBNCUI_VIEWRENDERER_A24141A0_AF19_4ED2_8992_1EA3A4AB57EA_H__
@@ -13,7 +13,7 @@
 #include "ui/win/overlap/PaintResource.hpp"
 
 namespace amo {
-	//Ò³ÃæäÖÈ¾¿Ø¼ş
+	//é¡µé¢æ¸²æŸ“æ§ä»¶
 	class ViewRenderer : public CControlUI {
 
 	public:
@@ -81,13 +81,13 @@ namespace amo {
 
 		 
 
-		/*! @brief	ÊÇ·ñÊ¹ÓÃÓ²¼ş¼ÓËÙ. */
+		/*! @brief	æ˜¯å¦ä½¿ç”¨ç¡¬ä»¶åŠ é€Ÿ. */
 		bool m_accelerator;
 
-		int m_nCount;	// ×î½üÒ»ÃëÄÚäÖÈ¾µÄÖ¡Êı
-		int m_nLastFPS;	// ×î½üÒ»´ÎÓĞ¼ÇÂ¼µÄFPS
+		int m_nCount;	// æœ€è¿‘ä¸€ç§’å†…æ¸²æŸ“çš„å¸§æ•°
+		int m_nLastFPS;	// æœ€è¿‘ä¸€æ¬¡æœ‰è®°å½•çš„FPS
 
-		int64_t m_nLastTimestamp;  // ×î½üÒ»´ÎäÖÈ¾Ê±¼ä Ãë
+		int64_t m_nLastTimestamp;  // æœ€è¿‘ä¸€æ¬¡æ¸²æŸ“æ—¶é—´ ç§’
 
 		bool m_bDrawBackground;
 

@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+ï»¿#include "stdAfx.h"
 
 #include "handler/DownloadHandler.h"
 #include <amo/logger.hpp>
@@ -17,7 +17,7 @@ namespace amo {
     void DownloadHandler::OnDownloadUpdated(CefRefPtr<CefBrowser> browser,
                                             CefRefPtr<CefDownloadItem> download_item,
                                             CefRefPtr<CefDownloadItemCallback> callback) {
-        $clog(amo::cdevel << func_orient << "ÎÄ¼þÏÂÔØ½ø¶È£º" << amo::string(download_item->GetSuggestedFileName().ToString(), true).str() << ": " << download_item->GetReceivedBytes() << " / " << download_item->GetTotalBytes() << amo::endl;);
+        $clog(amo::cdevel << func_orient << "æ–‡ä»¶ä¸‹è½½è¿›åº¦ï¼š" << amo::string(download_item->GetSuggestedFileName().ToString(), true).str() << ": " << download_item->GetReceivedBytes() << " / " << download_item->GetTotalBytes() << amo::endl;);
         
         if (m_fnDownloadUpdate) {
             bool bOk = m_fnDownloadUpdate(browser, download_item, callback);
@@ -63,7 +63,7 @@ namespace amo {
                                            CefRefPtr<CefDownloadItem> download_item,
                                            const CefString& suggested_name,
                                            CefRefPtr<CefBeforeDownloadCallback> callback) {
-        $clog(amo::cdevel << func_orient << "ÏÂÔØÎÄ¼þ£º" << amo::string(download_item->GetSuggestedFileName().ToString(), true).str() << download_item->GetTotalBytes() << amo::endl;);
+        $clog(amo::cdevel << func_orient << "ä¸‹è½½æ–‡ä»¶ï¼š" << amo::string(download_item->GetSuggestedFileName().ToString(), true).str() << download_item->GetTotalBytes() << amo::endl;);
         ASSERT(CefCurrentlyOn(TID_UI));
         
         if (m_fnBeforeDownload) {

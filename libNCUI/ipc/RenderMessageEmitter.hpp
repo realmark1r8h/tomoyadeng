@@ -1,4 +1,4 @@
-// Created by amoylel on 06/30/2017.
+ï»¿// Created by amoylel on 06/30/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_RENDERMESSAGEEMITTER_HPP__
@@ -21,7 +21,7 @@ namespace amo {
     /*!
      * @class	RenderMessageEmitter
      *
-     * @brief	ÏòUIÏß³Ì·¢ËÍÏûÏ¢.
+     * @brief	å‘UIçº¿ç¨‹å‘é€æ¶ˆæ¯.
      */
     
     class RenderMessageEmitter
@@ -70,7 +70,7 @@ namespace amo {
         /*!
          * @fn	template<typename ... Args> Any RenderMessageEmitter::Transfer(std::string name, Args... args)
          *
-         * @brief	Ê¹ÓÃ×Ô¼º½ø³ÌµÄtransferÖ´ĞĞº¯Êı£¬²»ĞèÒªÏò¶Ô·½½ø³Ì ·µ»ØÊı¾İ.
+         * @brief	ä½¿ç”¨è‡ªå·±è¿›ç¨‹çš„transferæ‰§è¡Œå‡½æ•°ï¼Œä¸éœ€è¦å‘å¯¹æ–¹è¿›ç¨‹ è¿”å›æ•°æ®.
          *
          * @tparam	Args	Type of the arguments.
          * @param	name	The name.
@@ -120,7 +120,7 @@ namespace amo {
 #endif
                     
                     
-                    // Èç¹ûpHander´æÔÚ£¬ÄÇÃ´ËµÃ÷µ±Ç°º¯ÊıÊÇÒ»¸öC++´´½¨µÄº¯Êı
+                    // å¦‚æœpHanderå­˜åœ¨ï¼Œé‚£ä¹ˆè¯´æ˜å½“å‰å‡½æ•°æ˜¯ä¸€ä¸ªC++åˆ›å»ºçš„å‡½æ•°
                     JsClassV8Handler* pClassHandler = NULL;
                     
                     if (pHandler) {
@@ -150,7 +150,7 @@ namespace amo {
                         
                         
                     } else {
-                        // Èç¹ûÊÇº¯Êı£¬ÄÇÃ´½âÎöÎªÒ»¸ö»Øµ÷º¯Êı
+                        // å¦‚æœæ˜¯å‡½æ•°ï¼Œé‚£ä¹ˆè§£æä¸ºä¸€ä¸ªå›è°ƒå‡½æ•°
                         using MGR = AsyncFunctionManager < PID_RENDERER >;
                         auto manager = MGR::getInstance();
                         int nKey = manager->registerCallabackFunction(m_pFrame,
@@ -177,14 +177,14 @@ namespace amo {
                 //} else if (pValue->IsUndefined()) {
                 //    args->setValue(nIndex++, Undefined());
                 //} else if (pValue->IsFunction()) {
-                //    // Èç¹ûÊÇº¯Êı£¬ÄÇÃ´½âÎöÎªÒ»¸ö»Øµ÷º¯Êı
+                //    // å¦‚æœæ˜¯å‡½æ•°ï¼Œé‚£ä¹ˆè§£æä¸ºä¸€ä¸ªå›è°ƒå‡½æ•°
                 //    using MGR = AsyncFunctionManager < PID_RENDERER > ;
                 //    auto manager = MGR::getInstance();
                 //    int nKey = manager->RegisterCallabackFunction(m_pFrame,
                 //               pValue);
                 //    args->setValue(IPCArgsPosInfo::AsyncCallback, nKey);
                 //} else if (pValue->IsObject()) {
-                //    // ½«Object×ª»»ÎªJSON×Ö·û´®
+                //    // å°†Objectè½¬æ¢ä¸ºJSONå­—ç¬¦ä¸²
                 //    TypeConvertor convertor;
                 //    convertor.toAny(pValue);
                 //    std::string ss = convertor.ObjectToJson(pValue).to_string();

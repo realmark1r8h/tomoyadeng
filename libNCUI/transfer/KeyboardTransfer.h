@@ -1,4 +1,4 @@
-// Created by amoylel on 08/20/2017.
+ï»¿// Created by amoylel on 08/20/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_KEYBOARDTRANSFER_H__
@@ -17,8 +17,8 @@ namespace amo {
      *
      * @extend Object
      *
-     * @brief	¼üÅÌ²Ù×÷Àà.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	é”®ç›˜æ“ä½œç±».<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      */
     
     class KeyboardTransfer
@@ -33,19 +33,19 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÊäÈëÒ»¶ÎÎÄ±¾.
+         * @brief	è¾“å…¥ä¸€æ®µæ–‡æœ¬.
          *
-         * @param	#String Òª·¢ËÍµÄ×Ö·û´®.
-         * @param	#Int=5 Ã¿ÊäÈëÒ»¸ö×Ö·ûºóµÄÔİÍ£Ê±¼ä.Ä¬ÈÏÎª5ms£¬ÊäÈëÌ«¿ìÓĞ¿ÉÄÜµ¼ÖÂ×Ö·û´íÂÒ.
+         * @param	#String è¦å‘é€çš„å­—ç¬¦ä¸².
+         * @param	#Int=5 æ¯è¾“å…¥ä¸€ä¸ªå­—ç¬¦åçš„æš‚åœæ—¶é—´.é»˜è®¤ä¸º5msï¼Œè¾“å…¥å¤ªå¿«æœ‰å¯èƒ½å¯¼è‡´å­—ç¬¦é”™ä¹±.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
         			 ```
         				include('keyboard');
         				$('#div_sayString').find('.example').focus();
-        				keyboard.sayString('NCUI²âÊÔ×Ö·û´®');
+        				keyboard.sayString('NCUIæµ‹è¯•å­—ç¬¦ä¸²');
         			 ```
          */
         
@@ -56,11 +56,11 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	µ¥»÷°´¼ü.
+         * @brief	å•å‡»æŒ‰é”®.
          *
-         * @param	#Args... °´¼ü, ÊäÈë²ÎÊı¸öÊı²»¶¨£¬µ¥¸ö²ÎÊı¿ÉÒÔÊÇÒ»¸ö×Ö·û´®£¬Ò²¿ÉÒÔÊÇÒ»¸öÌØÊâ°´¼ü..
+         * @param	#Args... æŒ‰é”®, è¾“å…¥å‚æ•°ä¸ªæ•°ä¸å®šï¼Œå•ä¸ªå‚æ•°å¯ä»¥æ˜¯ä¸€ä¸ªå­—ç¬¦ä¸²ï¼Œä¹Ÿå¯ä»¥æ˜¯ä¸€ä¸ªç‰¹æ®ŠæŒ‰é”®..
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -68,7 +68,7 @@ namespace amo {
         				include('keyboard');
         				$('#div_keyPress').find('.example').focus();
         				keyboard.keyPress('1','2','3', '5');
-        				// ¹Ø±Õµ±Ç°´°¿Ú
+        				// å…³é—­å½“å‰çª—å£
         				keyboard.keyPress(keyboard.VK_MENU, keyboard.VK_F4);
         			 ```
          */
@@ -80,11 +80,11 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	°´ÏÂ°´¼ü.
+         * @brief	æŒ‰ä¸‹æŒ‰é”®.
          *
-         * @param	#Args... °´¼ü, ÊäÈë²ÎÊı¸öÊı²»¶¨£¬µ¥¸ö²ÎÊı¿ÉÒÔÊÇÒ»¸ö×Ö·û´®£¬Ò²¿ÉÒÔÊÇÒ»¸öÌØÊâ°´¼ü.
+         * @param	#Args... æŒ‰é”®, è¾“å…¥å‚æ•°ä¸ªæ•°ä¸å®šï¼Œå•ä¸ªå‚æ•°å¯ä»¥æ˜¯ä¸€ä¸ªå­—ç¬¦ä¸²ï¼Œä¹Ÿå¯ä»¥æ˜¯ä¸€ä¸ªç‰¹æ®ŠæŒ‰é”®.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -103,11 +103,11 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	µ¯Æğ°´¼ü.
+         * @brief	å¼¹èµ·æŒ‰é”®.
          *
-         * @param	#Args... °´¼ü, ÊäÈë²ÎÊı¸öÊı²»¶¨£¬µ¥¸ö²ÎÊı¿ÉÒÔÊÇÒ»¸ö×Ö·û´®£¬Ò²¿ÉÒÔÊÇÒ»¸öÌØÊâ°´¼ü.
+         * @param	#Args... æŒ‰é”®, è¾“å…¥å‚æ•°ä¸ªæ•°ä¸å®šï¼Œå•ä¸ªå‚æ•°å¯ä»¥æ˜¯ä¸€ä¸ªå­—ç¬¦ä¸²ï¼Œä¹Ÿå¯ä»¥æ˜¯ä¸€ä¸ªç‰¹æ®ŠæŒ‰é”®.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
         			 ```
@@ -125,9 +125,9 @@ namespace amo {
          *
          * @tag sync static
          *
-         * @brief	µÈ´ı°´ÈÎÒâ¼ü.
+         * @brief	ç­‰å¾…æŒ‰ä»»æ„é”®.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any waitKey(IPCMessage::SmartType msg);
@@ -137,7 +137,7 @@ namespace amo {
          *
          * @tag sync static
          *
-         * @brief	¼ì²âÉÏ´Î°´¼ü.
+         * @brief	æ£€æµ‹ä¸Šæ¬¡æŒ‰é”®.
          *
          * @return	#String.
          */
@@ -152,33 +152,33 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(waitKey, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getLastKey, TransferFuncStatic | TransferExecSync)
         
-        /*! @attr #Int=CONTROL VK_CONTROL ¼üÅÌ°´¼üCONTROL. {@tag const static property}*/
-        /*! @attr #Int=SHIFT VK_SHIFT ¼üÅÌ°´¼üSHIFT.{@tag const static property} */
-        /*! @attr #Int=ALT VK_MENU ¼üÅÌ°´¼üALT.{@tag const static property} */
+        /*! @attr #Int=CONTROL VK_CONTROL é”®ç›˜æŒ‰é”®CONTROL. {@tag const static property}*/
+        /*! @attr #Int=SHIFT VK_SHIFT é”®ç›˜æŒ‰é”®SHIFT.{@tag const static property} */
+        /*! @attr #Int=ALT VK_MENU é”®ç›˜æŒ‰é”®ALT.{@tag const static property} */
         
-        /*! @attr #Int=F1 VK_F1 ¼üÅÌ°´¼üF1. {@tag const static property}*/
-        /*! @attr #Int=F2 VK_F2 ¼üÅÌ°´¼üF2. {@tag const static property}*/
-        /*! @attr #Int=F3 VK_F3 ¼üÅÌ°´¼üF3. {@tag const static property}*/
-        /*! @attr #Int=F4 VK_F4 ¼üÅÌ°´¼üF4. {@tag const static property}*/
-        /*! @attr #Int=F5 VK_F5 ¼üÅÌ°´¼üF5. {@tag const static property}*/
-        /*! @attr #Int=F6 VK_F6 ¼üÅÌ°´¼üF6. {@tag const static property}*/
-        /*! @attr #Int=F7 VK_F7 ¼üÅÌ°´¼üF7. {@tag const static property}*/
-        /*! @attr #Int=F8 VK_F8 ¼üÅÌ°´¼üF8. {@tag const static property}*/
-        /*! @attr #Int=F9 VK_F9 ¼üÅÌ°´¼üF9. {@tag const static property}*/
-        /*! @attr #Int=F10 VK_F10 ¼üÅÌ°´¼üF10. {@tag const static property}*/
-        /*! @attr #Int=F11 VK_F11 ¼üÅÌ°´¼üF11. {@tag const static property}*/
-        /*! @attr #Int=F12 VK_F12 ¼üÅÌ°´¼üF12. {@tag const static property}*/
+        /*! @attr #Int=F1 VK_F1 é”®ç›˜æŒ‰é”®F1. {@tag const static property}*/
+        /*! @attr #Int=F2 VK_F2 é”®ç›˜æŒ‰é”®F2. {@tag const static property}*/
+        /*! @attr #Int=F3 VK_F3 é”®ç›˜æŒ‰é”®F3. {@tag const static property}*/
+        /*! @attr #Int=F4 VK_F4 é”®ç›˜æŒ‰é”®F4. {@tag const static property}*/
+        /*! @attr #Int=F5 VK_F5 é”®ç›˜æŒ‰é”®F5. {@tag const static property}*/
+        /*! @attr #Int=F6 VK_F6 é”®ç›˜æŒ‰é”®F6. {@tag const static property}*/
+        /*! @attr #Int=F7 VK_F7 é”®ç›˜æŒ‰é”®F7. {@tag const static property}*/
+        /*! @attr #Int=F8 VK_F8 é”®ç›˜æŒ‰é”®F8. {@tag const static property}*/
+        /*! @attr #Int=F9 VK_F9 é”®ç›˜æŒ‰é”®F9. {@tag const static property}*/
+        /*! @attr #Int=F10 VK_F10 é”®ç›˜æŒ‰é”®F10. {@tag const static property}*/
+        /*! @attr #Int=F11 VK_F11 é”®ç›˜æŒ‰é”®F11. {@tag const static property}*/
+        /*! @attr #Int=F12 VK_F12 é”®ç›˜æŒ‰é”®F12. {@tag const static property}*/
         
-        /*! @attr #Int=UP VK_UP ¼üÅÌ°´¼üUP. {@tag const static property}*/
-        /*! @attr #Int=DOWN VK_DOWN ¼üÅÌ°´¼üDOWN. {@tag const static property}*/
-        /*! @attr #Int=LEFT VK_LEFT ¼üÅÌ°´¼üLEFT. {@tag const static property}*/
-        /*! @attr #Int=RIGHT VK_RIGHT ¼üÅÌ°´¼üRIGHT. {@tag const static property}*/
-        /*! @attr #Int=RETURN VK_RETURN ¼üÅÌ°´¼üRETURN. {@tag const static property}*/
-        /*! @attr #Int=ESCAPE VK_ESCAPE ¼üÅÌ°´¼üESCAPE. {@tag const static property}*/
-        /*! @attr #Int=BACK VK_BACK ¼üÅÌ°´¼üBACK. {@tag const static property}*/
-        /*! @attr #Int=HOME VK_HOME ¼üÅÌ°´¼üHOME. {@tag const static property}*/
-        /*! @attr #Int=DELETE VK_DELETE ¼üÅÌ°´¼üDELETE. {@tag const static property}*/
-        /*! @attr #Int=INSERT VK_INSERT ¼üÅÌ°´¼üINSERT. {@tag const static property}*/
+        /*! @attr #Int=UP VK_UP é”®ç›˜æŒ‰é”®UP. {@tag const static property}*/
+        /*! @attr #Int=DOWN VK_DOWN é”®ç›˜æŒ‰é”®DOWN. {@tag const static property}*/
+        /*! @attr #Int=LEFT VK_LEFT é”®ç›˜æŒ‰é”®LEFT. {@tag const static property}*/
+        /*! @attr #Int=RIGHT VK_RIGHT é”®ç›˜æŒ‰é”®RIGHT. {@tag const static property}*/
+        /*! @attr #Int=RETURN VK_RETURN é”®ç›˜æŒ‰é”®RETURN. {@tag const static property}*/
+        /*! @attr #Int=ESCAPE VK_ESCAPE é”®ç›˜æŒ‰é”®ESCAPE. {@tag const static property}*/
+        /*! @attr #Int=BACK VK_BACK é”®ç›˜æŒ‰é”®BACK. {@tag const static property}*/
+        /*! @attr #Int=HOME VK_HOME é”®ç›˜æŒ‰é”®HOME. {@tag const static property}*/
+        /*! @attr #Int=DELETE VK_DELETE é”®ç›˜æŒ‰é”®DELETE. {@tag const static property}*/
+        /*! @attr #Int=INSERT VK_INSERT é”®ç›˜æŒ‰é”®INSERT. {@tag const static property}*/
         
         AMO_CEF_MESSAGE_TRANSFER_ATTR(VK_CONTROL)
         AMO_CEF_MESSAGE_TRANSFER_ATTR(VK_SHIFT)

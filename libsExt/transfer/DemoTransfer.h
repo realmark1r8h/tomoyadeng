@@ -1,4 +1,4 @@
-// Created by amoylel on 11/24/2017.
+ï»¿// Created by amoylel on 11/24/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_DEMOTRANSFER_H__
@@ -11,7 +11,7 @@
 #include <amo/singleton.hpp>
 
 
-// ×î¼òµ¥µÄÀ©Õ¹£¬ĞèÒªÌá¹©ÒÔÏÂ½Ó¿Ú
+// æœ€ç®€å•çš„æ‰©å±•ï¼Œéœ€è¦æä¾›ä»¥ä¸‹æ¥å£
 //namespace amo {
 //	class DemoTransfer
 //		: public RunnableTransfer
@@ -32,36 +32,36 @@
 //}
 
 //
-//// TransferÀàĞÍ
+//// Transferç±»å‹
 //enum TransferType {
 //    TransferUnknown = -1,
-//    TransferClass,						//Àà
-//    TransferObject						//¶ÔÏó
+//    TransferClass,						//ç±»
+//    TransferObject						//å¯¹è±¡
 //};
 //
-//// ¶àÏß³ÌÖ§³Ö
+//// å¤šçº¿ç¨‹æ”¯æŒ
 //enum TransferMultiType {
-//    TransferMultiUnkown = -1, //Î´Öª
-//    TransferMultiSupport = 0 << 16,  // ÔÊĞíÔÚÆäËûÏß³ÌÉÏÖ´ĞĞ£¨Ä¬ÈÏ£©
-//    TransferMultiDisabled = 1 << 16, // ½ûÖ¹¶àÏß³ÌÖ´ĞĞ
+//    TransferMultiUnkown = -1, //æœªçŸ¥
+//    TransferMultiSupport = 0 << 16,  // å…è®¸åœ¨å…¶ä»–çº¿ç¨‹ä¸Šæ‰§è¡Œï¼ˆé»˜è®¤ï¼‰
+//    TransferMultiDisabled = 1 << 16, // ç¦æ­¢å¤šçº¿ç¨‹æ‰§è¡Œ
 //};
-//// JSÀàÖĞµÄº¯ÊıÀàĞÍ£¬
+//// JSç±»ä¸­çš„å‡½æ•°ç±»å‹ï¼Œ
 //enum TransferFuncType {
-//    TransferFuncUnknown = -1,					// Î´Öª
-//    TransferFuncNormal = 0 << 8,				// ÆÕÍ¨º¯Êı
-//    TransferFuncStatic = 1 << 8,				// ¾²Ì¬º¯Êı
-//    TransferFuncConstructor = 2 << 8,			// ¹¹Ôìº¯Êı
-//    TransferFuncConstProperty = 3 << 8,			// Àà¾²Ì¬³£Á¿ÊôĞÔ£¬²»ÄÜ±»¸³Öµ
-//    TransferFuncClassProperty = 4 << 8,			// ÀàÊôĞÔ£¬¿ÉÒÔÍ¨¹ı.CLASS·ÃÎÊ¸³Öµ
-//    TransferFuncMemberProperty = 5 << 8,		// ¶ÔÏóÊôĞÔ£¬¿ÉÒÔ¸³Öµ
+//    TransferFuncUnknown = -1,					// æœªçŸ¥
+//    TransferFuncNormal = 0 << 8,				// æ™®é€šå‡½æ•°
+//    TransferFuncStatic = 1 << 8,				// é™æ€å‡½æ•°
+//    TransferFuncConstructor = 2 << 8,			// æ„é€ å‡½æ•°
+//    TransferFuncConstProperty = 3 << 8,			// ç±»é™æ€å¸¸é‡å±æ€§ï¼Œä¸èƒ½è¢«èµ‹å€¼
+//    TransferFuncClassProperty = 4 << 8,			// ç±»å±æ€§ï¼Œå¯ä»¥é€šè¿‡.CLASSè®¿é—®èµ‹å€¼
+//    TransferFuncMemberProperty = 5 << 8,		// å¯¹è±¡å±æ€§ï¼Œå¯ä»¥èµ‹å€¼
 //};
 //
-//// JSÔÚµ÷ÓÃC++Ê±µÄÍ¬²½ÀàĞÍ
+//// JSåœ¨è°ƒç”¨C++æ—¶çš„åŒæ­¥ç±»å‹
 //enum TransferExecType {
-//    TransferExecUnknown = -1,	//Î´Öª
-//    TransferExecNormal = 0,		//ÆÕÍ¨
-//    TransferExecSync = 1,		//Í¬²½
-//    TransferExecAsync = 2,		//Òì²½
+//    TransferExecUnknown = -1,	//æœªçŸ¥
+//    TransferExecNormal = 0,		//æ™®é€š
+//    TransferExecSync = 1,		//åŒæ­¥
+//    TransferExecAsync = 2,		//å¼‚æ­¥
 //};
 
 
@@ -99,7 +99,7 @@ namespace amo {
         AMO_CONFIG_GETTER_SETTER(constStaticTestID)
         AMO_CONFIG_GETTER_SETTER(memberTestID)
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(DemoTransfer, RunnableTransfer)
-        // ³ÉÔ±º¯Êı
+        // æˆå‘˜å‡½æ•°
         AMO_CEF_MESSAGE_TRANSFER_FUNC(add, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(sub, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(mul, TransferFuncNormal | TransferExecSync)

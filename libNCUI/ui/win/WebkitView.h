@@ -1,4 +1,4 @@
-// Created by amoylel on 06/13/2017.
+ï»¿// Created by amoylel on 06/13/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_WEBKITVIEW_H__
@@ -35,7 +35,7 @@ namespace amo {
     class RenderView;
     class BrowserWindowSettings;
     
-    // Cefä¯ÀÀÆ÷ÔÚDuilibÉÏµÄ¿Ø¼ş·â×°
+    // Cefæµè§ˆå™¨åœ¨Duilibä¸Šçš„æ§ä»¶å°è£…
     class WebkitView : public LayerViewRender
         , public ClassTransfer
         , public LifeSpanHandlerDelegate
@@ -187,7 +187,7 @@ namespace amo {
         /*!
          * @fn	void triggerEventOnUIThread(IPCMessage::SmartType msg);
          *
-         * @brief	ÔÚUIÏß³ÌÖĞÖ´ĞĞº¯Êı£¬µ±Ç°Ïß³Ì¿ÉÄÜ·ÇUIÏß³Ì.
+         * @brief	åœ¨UIçº¿ç¨‹ä¸­æ‰§è¡Œå‡½æ•°ï¼Œå½“å‰çº¿ç¨‹å¯èƒ½éUIçº¿ç¨‹.
          *
          * @param	msg	The message.
          */
@@ -197,7 +197,7 @@ namespace amo {
         /*!
          * @fn	void triggerEventOnUIThreadImpl(IPCMessage::SmartType msg);
          *
-         * @brief	ÔÚUIÏß³ÌÖĞÖ´ĞĞº¯ÊıÊµÏÖº¯Êı£¬´ËÏß³ÌÎªUIÏß³Ì.
+         * @brief	åœ¨UIçº¿ç¨‹ä¸­æ‰§è¡Œå‡½æ•°å®ç°å‡½æ•°ï¼Œæ­¤çº¿ç¨‹ä¸ºUIçº¿ç¨‹.
          *
          * @param	msg	The message.
          */
@@ -289,28 +289,28 @@ namespace amo {
     public:
         AMO_CEF_IMPL_NO_REFCOUNTING(WebkitView)
     protected:
-        /*! @brief	Ò³ÃæäÖÈ¾¿Ø¼ş. */
+        /*! @brief	é¡µé¢æ¸²æŸ“æ§ä»¶. */
         RenderView* m_pRenderWnd;
-        /*! @brief	ä¯ÀÀÆ÷ÊÂ¼ş´¦Àí¾ä±ú. */
+        /*! @brief	æµè§ˆå™¨äº‹ä»¶å¤„ç†å¥æŸ„. */
         CefRefPtr<amo::ClientHandler> m_pClientHandler;
-        /*! @brief	ä¯ÀÀÆ÷Ö¸Õë. */
+        /*! @brief	æµè§ˆå™¨æŒ‡é’ˆ. */
         CefRefPtr<CefBrowser> m_pBrowser;
-        /*! @brief	ä¯ÀÀÆ÷µ÷ÊÔ´°¿ÚÖ¸Õë. */
+        /*! @brief	æµè§ˆå™¨è°ƒè¯•çª—å£æŒ‡é’ˆ. */
         CefRefPtr<CefBrowser> m_pDevBrowser;
-        /*! @brief	ä¯ÀÀÆ÷ID. */
+        /*! @brief	æµè§ˆå™¨ID. */
         int m_nBrowserID;
-        /*! @brief	Ò³Ãæ¼ÄÉú´°¿Ú. */
+        /*! @brief	é¡µé¢å¯„ç”Ÿçª—å£. */
         HWND m_hBrowserWnd;
-        /*! @brief	ä¯ÀÀÆ÷ÊÇ·ñÔÊĞí±»¹Ø±Õ. */
+        /*! @brief	æµè§ˆå™¨æ˜¯å¦å…è®¸è¢«å…³é—­. */
         bool m_bIsClosing;
-        /*! @brief	ä¯ÀÀÆ÷ÉèÖÃ. */
+        /*! @brief	æµè§ˆå™¨è®¾ç½®. */
         std::shared_ptr<BrowserWindowSettings> m_pBrowserSettings;
-        /*! @brief	ä¯ÀÀÆ÷´°¿Ú¾ä±ú. */
+        /*! @brief	æµè§ˆå™¨çª—å£å¥æŸ„. */
         HWND m_hParentWnd;
         
         std::shared_ptr<Gdiplus::Bitmap> m_LastBitmap;
         
-        /** @brief	Ò³Ãæ»æÖÆ×ÊÔ´,µ±ÀëÆÁÒ³Ãæ·¢ÉúÖØ»æÊ±£¬½«ÖØÀïÃæÀïÃæ¶ÁÈ¡Êı¾İºÏ²¢µ½Ò³ÃæÖĞ */
+        /** @brief	é¡µé¢ç»˜åˆ¶èµ„æº,å½“ç¦»å±é¡µé¢å‘ç”Ÿé‡ç»˜æ—¶ï¼Œå°†é‡é‡Œé¢é‡Œé¢è¯»å–æ•°æ®åˆå¹¶åˆ°é¡µé¢ä¸­ */
         std::map<std::string, std::pair<std::shared_ptr<Overlap>, std::shared_ptr<amo::file_mapping> > >
         m_paintingRes;
         

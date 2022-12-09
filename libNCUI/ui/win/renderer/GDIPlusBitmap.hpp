@@ -1,4 +1,4 @@
-// Created by amoylel on 08/30/2018.
+ï»¿// Created by amoylel on 08/30/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef AMO_GDIPLUSBITMAP_1C6EB951_C13F_424A_ADFB_C51C1684FDA9_HPP__
@@ -107,7 +107,7 @@ namespace amo {
                 //m_rect->renderMode = 1;
                 
                 if (m_rect->renderMode == 1) {
-                    // ¾ÓÖÐ
+                    // å±…ä¸­
                     amo::rect dst_rect = m_rect->dst.get_full_rect(m_rect->src);
                     amo::rect dstRect = { dst_rect.left(), dst_rect.top(), dst_rect.right(), dst_rect.bottom() };
                     amo::rect srcRect = { m_rect->src.left(), m_rect->src.top(), m_rect->src.right(), m_rect->src.bottom() };
@@ -125,7 +125,7 @@ namespace amo {
                                         
                                         
                 } else if (m_rect->renderMode == 2) {
-                    // À­Éì
+                    // æ‹‰ä¼¸
                     amo::rect dstRect = { m_rect->dst.left(), m_rect->dst.top(), m_rect->dst.right(), m_rect->dst.bottom() };
                     amo::rect dst_rect = dstRect;
                     amo::rect srcRect = { m_rect->src.left(), m_rect->src.top(), m_rect->src.right(), m_rect->src.bottom() };
@@ -143,7 +143,7 @@ namespace amo {
                 
                     int srcWidth = (std::min)(m_rect->dst.width(), m_rect->src.width());
                     int srcHeight = (std::min)(m_rect->dst.height(), m_rect->src.height());
-                    // Æ½ÆÌ
+                    // å¹³é“º
                     amo::rect dstRect = { m_rect->dst.left(), m_rect->dst.top(), m_rect->dst.width(), m_rect->dst.height() };
                     amo::rect dst_rect = dstRect;
                     amo::rect srcRect = { m_rect->src.left(), m_rect->src.top(),  srcWidth,  srcHeight };

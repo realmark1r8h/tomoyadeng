@@ -1,4 +1,4 @@
-// Created by amoylel on 07/19/2017.
+ï»¿// Created by amoylel on 07/19/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_BROWSERHOSTTRANSFER_H__
@@ -16,8 +16,8 @@ namespace amo {
      *
      * @chapter cef
      *
-     * @brief	CEF BrowserHost ¶ÔÏó·â×°.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	CEF BrowserHost å¯¹è±¡å°è£….<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      */
     
     class BrowserHostTransfer
@@ -32,10 +32,10 @@ namespace amo {
         /**
          * @fn	Any BrowserHostTransfer::click(IPCMessage::SmartType msg);
          *
-         * @brief	ÏòÒ³Ãæ·¢ËÍµ¥»÷ÊÂ¼ş.
+         * @brief	å‘é¡µé¢å‘é€å•å‡»äº‹ä»¶.
          *
-         * @param	#Int=0 XÖá×ø±ê.
-         * @param	#Int=0 YÖá×ø±ê
+         * @param	#Int=0 Xè½´åæ ‡.
+         * @param	#Int=0 Yè½´åæ ‡
          *
          * @return	#Undefined.
          * @example
@@ -57,7 +57,7 @@ namespace amo {
         /**
          * @fn	Any BrowserHostTransfer::GetBrowser(IPCMessage::SmartType msg);
          * @tag sync
-         * @brief	»ñÈ¡HostËù¶ÔÓ¦µÄBrowser¶ÔÏó.
+         * @brief	è·å–Hostæ‰€å¯¹åº”çš„Browserå¯¹è±¡.
          *
          *
          * @return	#Browser.
@@ -76,7 +76,7 @@ namespace amo {
         /**
          * @fn	Any BrowserHostTransfer::CloseBrowser(IPCMessage::SmartType msg);
          *
-         * @brief	¹Ø±Õä¯ÀÀÆ÷.
+         * @brief	å…³é—­æµè§ˆå™¨.
          *
          * @return	#Undefined.
          * @example
@@ -93,7 +93,7 @@ namespace amo {
         /**
          * @fn	Any BrowserHostTransfer::SetFocus(IPCMessage::SmartType msg);
          *
-         * @brief	Ê¹ä¯ÀÀÆ÷»ñµÃ½¹µã.
+         * @brief	ä½¿æµè§ˆå™¨è·å¾—ç„¦ç‚¹.
          *
          * @return	#Undefined.
          * @example
@@ -116,7 +116,7 @@ namespace amo {
         /**
          * @fn	Any BrowserHostTransfer::GetZoomLevel(IPCMessage::SmartType msg);
          * @tag sync
-         * @brief	»ñÈ¡Ò³ÃæËõ·ÅµÈ¼¶.
+         * @brief	è·å–é¡µé¢ç¼©æ”¾ç­‰çº§.
          *
          * @return	#Double.
          * @example
@@ -136,9 +136,9 @@ namespace amo {
         /**
          * @fn	Any BrowserHostTransfer::SetZoomLevel(IPCMessage::SmartType msg);
          *
-         * @brief	Éè±¸Ò³ÃæËõ·ÅµÈ¼¶ .
+         * @brief	è®¾å¤‡é¡µé¢ç¼©æ”¾ç­‰çº§ .
          *
-         * @param	#Double Ëõ·ÅµÈ¼¶.
+         * @param	#Double ç¼©æ”¾ç­‰çº§.
          *
          * @return	#Undefined.
          *
@@ -180,7 +180,7 @@ namespace amo {
         Any HandleKeyEventAfterTextInputClient(IPCMessage::SmartType msg);
         Any IsWindowRenderingDisabled(IPCMessage::SmartType msg);
         
-        // ÀëÆÁÏÂ¿ÉÓÃ
+        // ç¦»å±ä¸‹å¯ç”¨
         Any WasResized(IPCMessage::SmartType msg);
         Any WasHidden(IPCMessage::SmartType msg);
         Any GetNSTextInputContext(IPCMessage::SmartType msg);

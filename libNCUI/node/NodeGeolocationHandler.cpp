@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "node/NodeGeolocationHandler.h"
 #include "node/NodeHandlerHelper.h"
 

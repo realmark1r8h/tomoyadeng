@@ -1,4 +1,4 @@
-// Created by amoylel on 06/14/2017.
+ï»¿// Created by amoylel on 06/14/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_BROWSERWINDOWTRANSFER_H__
@@ -20,8 +20,8 @@ namespace amo {
      *
      * @extend Object
      *
-     * @brief	ä¯ÀÀÆ÷´°¿Ú´´½¨¼°¿ØÖÆ.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	æµè§ˆå™¨çª—å£åˆ›å»ºåŠæ§åˆ¶.<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      */
     
     class BrowserWindowTransfer
@@ -46,24 +46,24 @@ namespace amo {
          *
          * @tag constructor sync
          *
-         * @brief	´´½¨Ò»¸öä¯ÀÀÆ÷´°¿Ú.
+         * @brief	åˆ›å»ºä¸€ä¸ªæµè§ˆå™¨çª—å£.
          *
-         * @param	#Object ²Î¼û{@link ä¯ÀÀÆ÷´°¿Ú²ÎÊı}.
+         * @param	#Object å‚è§{@link æµè§ˆå™¨çª—å£å‚æ•°}.
          *
-         * @return	#BrowserWindow Ò»¸öä¯ÀÀÆ÷´°¿Ú¶ÔÏó.
+         * @return	#BrowserWindow ä¸€ä¸ªæµè§ˆå™¨çª—å£å¯¹è±¡.
          * @example
          *
          ```
         	include('BrowserWindow');
-        	// ´´½¨Ò»¸öÆÕÍ¨´°¿Ú
+        	// åˆ›å»ºä¸€ä¸ªæ™®é€šçª—å£
         	var win = new BrowserWindow({titleBar:true, url: 'http://127.0.0.1:8020/doc/example/BrowserWindow.html'});
-        	// ´´½¨Ò»¸öÀëÆÁ´°¿Ú
+        	// åˆ›å»ºä¸€ä¸ªç¦»å±çª—å£
         	new BrowserWindow({
         			titleBar:false,
         			url: 'http://127.0.0.1:8020/doc/example/FramelessWindow.html',
         			offscreen: true
         		});
-        	// ´´½¨Ò»¸öÍ¸Ã÷´°¿Ú
+        	// åˆ›å»ºä¸€ä¸ªé€æ˜çª—å£
         	new BrowserWindow({
         			titleBar:false,
         			hasShadow:false,
@@ -76,16 +76,16 @@ namespace amo {
         
         virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
-        // ¾²Ì¬º¯Êı
+        // é™æ€å‡½æ•°
         
         /*!
          * @fn	Any BrowserWindowTransfer::currentWindow(IPCMessage::SmartType msg);
          *
          * @tag deprecated
          *
-         * @brief   »ñÈ¡µ±Ç°Ò³ÃæËù¶ÔÓ¦µÄ´°¿Ú¶ÔÏó
+         * @brief   è·å–å½“å‰é¡µé¢æ‰€å¯¹åº”çš„çª—å£å¯¹è±¡
          *
-         * @return	#BrowserWindow Èç¹û²»´æÔÚ£¬·µ»ØUndefined.
+         * @return	#BrowserWindow å¦‚æœä¸å­˜åœ¨ï¼Œè¿”å›Undefined.
          *
          * @see current=BrowserWindow.current
          */
@@ -94,19 +94,19 @@ namespace amo {
         /*!
          * @fn	Any current(IPCMessage::SmartType msg);
          *
-         * @brief	»ñÈ¡µ±Ç°Ò³ÃæËù¶ÔÓ¦µÄ´°¿Ú¶ÔÏó.
+         * @brief	è·å–å½“å‰é¡µé¢æ‰€å¯¹åº”çš„çª—å£å¯¹è±¡.
          *
-         * @return	#BrowserWindow Èç¹û²»´æÔÚ£¬·µ»ØUndefined.
+         * @return	#BrowserWindow å¦‚æœä¸å­˜åœ¨ï¼Œè¿”å›Undefined.
          */
         
         Any current(IPCMessage::SmartType msg);
         /*!
          * @fn	Any BrowserWindowTransfer::getAllWindows(IPCMessage::SmartType msg);
          *
-         * @brief	»ñÈ¡ËùÓĞµÄä¯ÀÀÆ÷´°¿Ú.
+         * @brief	è·å–æ‰€æœ‰çš„æµè§ˆå™¨çª—å£.
          *
          *
-         * @return	#Array ËùÓĞµÄä¯ÀÀÆ÷´°¿Ú.
+         * @return	#Array æ‰€æœ‰çš„æµè§ˆå™¨çª—å£.
          *
          * @see All=BrowserWindow.All
          */
@@ -118,8 +118,8 @@ namespace amo {
         
         Any fromName(IPCMessage::SmartType msg);
         
-        // ÊôĞÔ
-        // ´°¿ÚµÄÎ¨Ò»id
+        // å±æ€§
+        // çª—å£çš„å”¯ä¸€id
         virtual Any id(IPCMessage::SmartType msg) override;
         virtual Any loadURL(IPCMessage::SmartType msg);
         virtual Any reload(IPCMessage::SmartType msg);
@@ -129,7 +129,7 @@ namespace amo {
         virtual Any showDevTools(IPCMessage::SmartType msg);
         virtual Any closeDevTools(IPCMessage::SmartType msg);
         
-        // Ïò´°¿Ú·¢ËÍÏûÏ¢
+        // å‘çª—å£å‘é€æ¶ˆæ¯
         virtual Any exec(IPCMessage::SmartType msg);
         virtual Any sync(IPCMessage::SmartType msg);
         virtual Any async(IPCMessage::SmartType msg);
@@ -139,12 +139,12 @@ namespace amo {
         /**
          * @fn	virtual Any repaint(IPCMessage::SmartType msg);
          *
-         * @brief	Ç¿ÖÆÒ³ÃæÖØ»æ£¬»òÍ£Ö¹Ö®Ç°µÄÇ¿ÖÆÖØ»æ
+         * @brief	å¼ºåˆ¶é¡µé¢é‡ç»˜ï¼Œæˆ–åœæ­¢ä¹‹å‰çš„å¼ºåˆ¶é‡ç»˜
          *
-         * @param	#Boolean  ÊÇ·ñÖØ»æ½çÃæ,Èç¹ûÎªfalse£¬½«ÒÆ³ıÖ®Ç°µÄ¼ÆÊ±Æ÷.
-         * @param	#Int   ÖØ»æ½çÃæµÄ¼ä¸ôÊ±¼ä(ºÁÃë)£¬³ÌĞòÃ¿¸ô(delay)¶ÔÒ³Ãæ½øĞĞÒ»´ÎÖØ»æ¡£
-         * 				  Èç¹û=0£¬½«²»»áÌí¼Ó¼ÆÊ±Æ÷½øĞĞÖØ»æ.
-         * 				  Èç¹û<30,delay»áÌáÉıµ½30ms.
+         * @param	#Boolean  æ˜¯å¦é‡ç»˜ç•Œé¢,å¦‚æœä¸ºfalseï¼Œå°†ç§»é™¤ä¹‹å‰çš„è®¡æ—¶å™¨.
+         * @param	#Int   é‡ç»˜ç•Œé¢çš„é—´éš”æ—¶é—´(æ¯«ç§’)ï¼Œç¨‹åºæ¯éš”(delay)å¯¹é¡µé¢è¿›è¡Œä¸€æ¬¡é‡ç»˜ã€‚
+         * 				  å¦‚æœ=0ï¼Œå°†ä¸ä¼šæ·»åŠ è®¡æ—¶å™¨è¿›è¡Œé‡ç»˜.
+         * 				  å¦‚æœ<30,delayä¼šæå‡åˆ°30ms.
          *
          * @return	#Undefined.
          */
@@ -154,9 +154,9 @@ namespace amo {
         /**
          * @fn	virtual Any addOverlap(IPCMessage::SmartType msg);
          *
-         * @brief	Ìí¼ÓÒ»¸öäÖÈ¾Í¼²ã£¬ÔÚ½øĞĞÒ³ÃæÖØ»æÊ±»á½«¸ÃÍ¼Æ¬ºÏ²¢µ½Ò³ÃæÔ­Ê¼µÄBitmapÖĞ
+         * @brief	æ·»åŠ ä¸€ä¸ªæ¸²æŸ“å›¾å±‚ï¼Œåœ¨è¿›è¡Œé¡µé¢é‡ç»˜æ—¶ä¼šå°†è¯¥å›¾ç‰‡åˆå¹¶åˆ°é¡µé¢åŸå§‹çš„Bitmapä¸­
          *
-         * @param	#String   Í¼²ãÃû³Æ £¨¸ÃÃû³ÆÎªÒ»¸ö¹²ÏíÄÚ´æµÄÃû³Æ£¬Ò³ÃæÖØ»æÊ±½«¶ÁÈ¡¹²ÏíÄÚ´æÖĞµÄÊı¾İ½øĞĞºÏ²¢£©.
+         * @param	#String   å›¾å±‚åç§° ï¼ˆè¯¥åç§°ä¸ºä¸€ä¸ªå…±äº«å†…å­˜çš„åç§°ï¼Œé¡µé¢é‡ç»˜æ—¶å°†è¯»å–å…±äº«å†…å­˜ä¸­çš„æ•°æ®è¿›è¡Œåˆå¹¶ï¼‰.
          *
          * @return	#Undefined.
          */
@@ -166,9 +166,9 @@ namespace amo {
         /**
          * @fn	virtual Any removeOverlap(IPCMessage::SmartType msg);
          *
-         * @brief	ÒÆ³ıÒ»¸öäÖÈ¾Í¼²ã
+         * @brief	ç§»é™¤ä¸€ä¸ªæ¸²æŸ“å›¾å±‚
          *
-         * @param	#String Í¼²ãÃû³Æ.
+         * @param	#String å›¾å±‚åç§°.
          *
          * @return	#Undefined.
          */
@@ -178,11 +178,11 @@ namespace amo {
         /**
          * @fn	virtual Any setDragBlackList(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃÍÏ×§ºÚÃûµ¥.
+         * @brief	è®¾ç½®æ‹–æ‹½é»‘åå•.
          *
-         * @param	#Int ²ÎÊı.
+         * @param	#Int å‚æ•°.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         virtual Any setDragBlackList(IPCMessage::SmartType msg);
@@ -190,10 +190,10 @@ namespace amo {
         /**
          * @fn	virtual Any getDragBlackList(IPCMessage::SmartType msg);
          *
-         * @brief	»ñÈ¡ÍÏ×§ºÚÃûµ¥.
+         * @brief	è·å–æ‹–æ‹½é»‘åå•.
          *
          *
-         * @return	#Int ²»ÔÊĞíÍÏ×§µÄÀàĞÍ.
+         * @return	#Int ä¸å…è®¸æ‹–æ‹½çš„ç±»å‹.
          */
         
         virtual Any getDragBlackList(IPCMessage::SmartType msg);
@@ -203,16 +203,16 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	ÎªÒ»¸öURLÔ¤ÉèÖÃ´°¿Ú²ÎÊı£¬µ±Õâ¸öURL¶ÔÓ¦¼°Æä×ÓÂ·¾¶µÄä¯ÀÀÆ÷´°¿ÚÓÉä¯ÀÀÆ÷´¥·¢´´½¨Ê±£¬½«Ê¹ÓÃ¸Ã·½·¨Ô¤ÉèÖÃµÄ²ÎÊı.<br>
-         * 			ËµÃ÷£º**¸Ã·½·¨²¢²»ÄÜÓ°Ïìnew BrowserWindow() ´´½¨µÄä¯ÀÀÆ÷´°¿Ú**
+         * @brief	ä¸ºä¸€ä¸ªURLé¢„è®¾ç½®çª—å£å‚æ•°ï¼Œå½“è¿™ä¸ªURLå¯¹åº”åŠå…¶å­è·¯å¾„çš„æµè§ˆå™¨çª—å£ç”±æµè§ˆå™¨è§¦å‘åˆ›å»ºæ—¶ï¼Œå°†ä½¿ç”¨è¯¥æ–¹æ³•é¢„è®¾ç½®çš„å‚æ•°.<br>
+         * 			è¯´æ˜ï¼š**è¯¥æ–¹æ³•å¹¶ä¸èƒ½å½±å“new BrowserWindow() åˆ›å»ºçš„æµè§ˆå™¨çª—å£**
          *
-         * @param	#String ĞèÒªÔ¤ÉèÖÃ´°¿Ú²ÎÊıµÄurl.
+         * @param	#String éœ€è¦é¢„è®¾ç½®çª—å£å‚æ•°çš„url.
          *
-         * @param	#JsonObject ¿ÉÒÔÖ§³ÖµÄ{@link ä¯ÀÀÆ÷´°¿Ú²ÎÊı}
+         * @param	#JsonObject å¯ä»¥æ”¯æŒçš„{@link æµè§ˆå™¨çª—å£å‚æ•°}
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
-         * @see removeBrowserWindowSettings ä¯ÀÀÆ÷´°¿Ú²ÎÊı
+         * @see removeBrowserWindowSettings æµè§ˆå™¨çª—å£å‚æ•°
          * @example
          *
          ```
@@ -231,11 +231,11 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	ÒÆ³ıÒ»¸öURLµÄÄ¬ÈÏ´°¿Ú²ÎÊı.
+         * @brief	ç§»é™¤ä¸€ä¸ªURLçš„é»˜è®¤çª—å£å‚æ•°.
          *
-         * @param	#String ĞèÒªÒÆ³ıä¯ÀÀÆ÷´°¿Ú²ÎÊıµÄURL.
+         * @param	#String éœ€è¦ç§»é™¤æµè§ˆå™¨çª—å£å‚æ•°çš„URL.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see addBrowserWindowSettings
          * @example
@@ -255,7 +255,7 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	»ñÈ¡Ö¸¶¨URLµÄÄ¬ÈÏ´°¿Ú²ÎÊı.
+         * @brief	è·å–æŒ‡å®šURLçš„é»˜è®¤çª—å£å‚æ•°.
          *
          * @param	#String URL.
          *
@@ -270,10 +270,10 @@ namespace amo {
         /**
          * @fn	Any saveImageToFile(IPCMessage::SmartType msg);
          *
-         * @brief	±£´æÒ³Ãæµ½ÎÄ¼ş£¬ ÀëÆÁÄ£Ê½ÏÂ(offscreen== true)ÓĞĞ§.Ö§³Ö.png, .bmp, .gif, .jpeg, .jpg, .tiff
+         * @brief	ä¿å­˜é¡µé¢åˆ°æ–‡ä»¶ï¼Œ ç¦»å±æ¨¡å¼ä¸‹(offscreen== true)æœ‰æ•ˆ.æ”¯æŒ.png, .bmp, .gif, .jpeg, .jpg, .tiff
          *
-         * @param	#String Í¼Æ¬±£´æÂ·¾¶.
-         * @param	#Boolean=false ÊÇ·ñ±£´æ±êÌâÀ¸£¨±êÌâÀ¸´æÔÚÊ±ÓĞĞ§£©
+         * @param	#String å›¾ç‰‡ä¿å­˜è·¯å¾„.
+         * @param	#Boolean=false æ˜¯å¦ä¿å­˜æ ‡é¢˜æ ï¼ˆæ ‡é¢˜æ å­˜åœ¨æ—¶æœ‰æ•ˆï¼‰
          *
          * @return	#Undefined.
          * @example
@@ -281,7 +281,7 @@ namespace amo {
          ```
         	include('BrowserWindow');
         	var win = BrowserWindow.current;
-        	// Èç¹ûµ±Ç°³ÌĞòÊÇÒÔÀëÆÁÄ£Ê½ÔËĞĞ²ÅÄÜ³É¹¦
+        	// å¦‚æœå½“å‰ç¨‹åºæ˜¯ä»¥ç¦»å±æ¨¡å¼è¿è¡Œæ‰èƒ½æˆåŠŸ
         	win.saveImageToFile('1.png', true);
         
         
@@ -294,12 +294,12 @@ namespace amo {
         /*!
          * @fn	virtual Any saveGifToFile(IPCMessage::SmartType msg);
          *
-         * @brief	Â¼ÖÆGIFµ½ÎÄ¼ş.
+         * @brief	å½•åˆ¶GIFåˆ°æ–‡ä»¶.
          *
-         * @param	#JsonObject Â¼ÖÆ²ÎÊı.<br>
-         * 						| #String filename gifÎÄ¼ş±£´æÄ¿Â¼<br>
-         * 						| #Int=10	delay Ö¡¼ä¸ô£¨×¢Òâµ¥Î»Îª£º°Ù·ÖÒ»Ãë£©<br>
-         * 						| #Int=20	total ×î¶àÂ¼ÖÆÖ¡Êı<br>
+         * @param	#JsonObject å½•åˆ¶å‚æ•°.<br>
+         * 						| #String filename gifæ–‡ä»¶ä¿å­˜ç›®å½•<br>
+         * 						| #Int=10	delay å¸§é—´éš”ï¼ˆæ³¨æ„å•ä½ä¸ºï¼šç™¾åˆ†ä¸€ç§’ï¼‰<br>
+         * 						| #Int=20	total æœ€å¤šå½•åˆ¶å¸§æ•°<br>
          *
          * @return	#Undefined.
          * @example
@@ -320,7 +320,7 @@ namespace amo {
         /*!
          * @fn	virtual Any stopRecordGif(IPCMessage::SmartType msg);
          *
-         * @brief	Í£Ö¹Â¼ÖÆGIF.
+         * @brief	åœæ­¢å½•åˆ¶GIF.
          *
          * @return	#Undefined.
          * @example
@@ -336,7 +336,7 @@ namespace amo {
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(BrowserWindowTransfer, ClassTransfer)
         
-        // ²âÊÔÓÃ
+        // æµ‹è¯•ç”¨
         //AMO_CEF_MESSAGE_TRANSFER_FUNC(test1, TransferExecNormal)
         //AMO_CEF_MESSAGE_TRANSFER_FUNC(test2, TransferExecSync)
         //AMO_CEF_MESSAGE_TRANSFER_FUNC(test3, TransferExecAsync)

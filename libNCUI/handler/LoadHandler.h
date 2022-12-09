@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_LOADHANDLER_H__
@@ -13,7 +13,7 @@ namespace amo {
     /*!
      * @class	LoadHandlerDelegate
      *
-     * @brief	Ò³Ãæ¼ÓÔØÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³Ì»òäÖÈ¾½ø³ÌÖĞµÄÖ÷Ïß³ÌÖĞµ÷ÓÃ.
+     * @brief	é¡µé¢åŠ è½½äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹æˆ–æ¸²æŸ“è¿›ç¨‹ä¸­çš„ä¸»çº¿ç¨‹ä¸­è°ƒç”¨.
      */
     
     class LoadHandlerDelegate {
@@ -44,7 +44,7 @@ namespace amo {
     /*!
      * @class	LoadHandler
      *
-     * @brief	Ò³Ãæ¼ÓÔØÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³Ì»òäÖÈ¾½ø³ÌÖĞµÄÖ÷Ïß³ÌÖĞµ÷ÓÃ.
+     * @brief	é¡µé¢åŠ è½½äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹æˆ–æ¸²æŸ“è¿›ç¨‹ä¸­çš„ä¸»çº¿ç¨‹ä¸­è°ƒç”¨.
      */
     
     class LoadHandler : public CefLoadHandler
@@ -60,11 +60,11 @@ namespace amo {
          * 		bool isLoading,
          * 		bool canGoBack, bool canGoForward);
          *
-         * @brief	Ò³Ãæ¼ÓÔØ×´Ì¬·¢Éú¸Ä±äÊ±´¥·¢
+         * @brief	é¡µé¢åŠ è½½çŠ¶æ€å‘ç”Ÿæ”¹å˜æ—¶è§¦å‘
          * 			B UI / R MAIN
-         *			ÔÚÒ³Ãæ¼ÓÔØ¹ı³ÌÖĞ£¬¸Ãº¯Êı»á±»µ÷ÓÃÁ½´Î£º
-         *			Ò»¡¢ÓÃ»§·¢ÆğÊ±
-         *			¶ş¡¢¼ÓÔØÍê³É»òÈ¡ÏûÊ±.
+         *			åœ¨é¡µé¢åŠ è½½è¿‡ç¨‹ä¸­ï¼Œè¯¥å‡½æ•°ä¼šè¢«è°ƒç”¨ä¸¤æ¬¡ï¼š
+         *			ä¸€ã€ç”¨æˆ·å‘èµ·æ—¶
+         *			äºŒã€åŠ è½½å®Œæˆæˆ–å–æ¶ˆæ—¶.
          *
          * @param	browser			The browser.
          * @param	isLoading   	true if this object is loading.
@@ -83,7 +83,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		CefRefPtr<CefFrame> frame);
          *
-         * @brief	Ò³Ãæ¿ªÊ¼¼ÓÔØÊ±´¥·¢
+         * @brief	é¡µé¢å¼€å§‹åŠ è½½æ—¶è§¦å‘
          * 			B UI / R MAIN.
          *
          * @param	browser	The browser.
@@ -106,7 +106,7 @@ namespace amo {
          * 		CefRefPtr<CefFrame> frame,
          * 		int httpStatusCode);
          *
-         * @brief	Ò³Ãæ¼ÓÔØÍê³ÉÊ±´¥·¢
+         * @brief	é¡µé¢åŠ è½½å®Œæˆæ—¶è§¦å‘
          * 			B UI / R MAIN.
          *
          * @param	browser		  	The browser.
@@ -125,7 +125,7 @@ namespace amo {
          * 		const CefString& errorText,
          * 		const CefString& failedUrl);
          *
-         * @brief	Ò³Ãæ¼ÓÔØ³öÏÖ´íÎóÊ±´¥·¢
+         * @brief	é¡µé¢åŠ è½½å‡ºç°é”™è¯¯æ—¶è§¦å‘
          * 			B UI / R MAIN.
          *
          * @param	browser  	The browser.

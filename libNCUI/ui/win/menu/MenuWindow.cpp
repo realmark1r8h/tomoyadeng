@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+ï»¿#include "stdAfx.h"
 #include "ui/win/menu/MenuWindow.h"
 #include <algorithm>
 
@@ -105,7 +105,7 @@ namespace amo {
         }
         
         
-        // ¹Ø±Õ²Ëµ¥´°¿ÚµÄÊäÈë·¨
+        // å…³é—­èœå•çª—å£çš„è¾“å…¥æ³•
         m_pIMM32.reset(new IMM32Manager(m_hWnd));
         m_pIMM32->disableIME();
         
@@ -534,8 +534,8 @@ namespace amo {
                     json.put("bkimage", "arrow.png");
                 }
                 
-                // ÅĞ¶ÏÊÇ·ñÓĞ×Ó²Ëµ¥
-                // ÅĞ¶ÏÊÇ·ñÓĞ·Ö¸ô·û
+                // åˆ¤æ–­æ˜¯å¦æœ‰å­èœå•
+                // åˆ¤æ–­æ˜¯å¦æœ‰åˆ†éš”ç¬¦
                 
                 
                 

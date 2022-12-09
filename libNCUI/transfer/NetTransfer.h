@@ -1,4 +1,4 @@
-// Created by amoylel on 08/17/2017.
+ï»¿// Created by amoylel on 08/17/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_NETTRANSFER_H__
@@ -15,8 +15,8 @@ namespace amo {
     /*!
      * @class	net
      *
-     * @brief	ÍøÂçÏà¹ØÀà.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	ç½‘ç»œç›¸å…³ç±».<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      */
     
     class NetTransfer
@@ -30,11 +30,11 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	´´½¨Ò»¸öDownloader¶ÔÏó.
+         * @brief	åˆ›å»ºä¸€ä¸ªDownloaderå¯¹è±¡.
          *
-         * @param	#JsonObject Ïê¼û{@link Downloader=Downloader.Downloader}.
+         * @param	#JsonObject è¯¦è§{@link Downloader=Downloader.Downloader}.
          *
-         * @return	#Downloader ·µ»ØÒ»¸öÏÂÔØ¶ÔÏó.
+         * @return	#Downloader è¿”å›ä¸€ä¸ªä¸‹è½½å¯¹è±¡.
          *
          * @see Downloader
          */
@@ -46,11 +46,11 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	´´½¨Ò»¸öURLRequest¶ÔÏó.
+         * @brief	åˆ›å»ºä¸€ä¸ªURLRequestå¯¹è±¡.
          *
-         * @param	#JsonObject Ïê¼û{@link URLRequest=URLRequest.URLRequest}.
+         * @param	#JsonObject è¯¦è§{@link URLRequest=URLRequest.URLRequest}.
          *
-         * @return	#URLRequest ·µ»ØÒ»¸öURLRequest¶ÔÏó.
+         * @return	#URLRequest è¿”å›ä¸€ä¸ªURLRequestå¯¹è±¡.
          *
          * @see URLRequest
          */

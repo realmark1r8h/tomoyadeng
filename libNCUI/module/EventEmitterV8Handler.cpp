@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "module/EventEmitterV8Handler.h"
 #include "module/basic/EventFunctionManager.h"
 

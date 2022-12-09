@@ -1,4 +1,4 @@
-// Created by amoylel on 08/06/2017.
+ï»¿// Created by amoylel on 08/06/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_ACTIONPREPROCESSOR_H__
@@ -9,15 +9,15 @@
 namespace amo {
 
     /*!
-     * @class	Ô¤ÖÃÊÂ¼ş
+     * @class	é¢„ç½®äº‹ä»¶
      *
      * @id settingsActionPreprocessor
      *
-     * @desc Ô¤ÖÃÊÂ¼ş
+     * @desc é¢„ç½®äº‹ä»¶
      *
      * @chapter settings
      *
-     * @brief	Ô¤ÖÃÊÂ¼ş,ÓÃÓÚ´¦Àí²Ëµ¥£¬ºÍÈ«¾Ö¿ì½İ¼üµÄactionËùÃèÊöµÄÊÂ¼ş£¬Èç¹ûactionÎªÒÔÏÂËùÃèÊöµÄÊÂ¼ş£¬ÄÇÃ´³ÌĞò»á´¦ÀíÕâĞ©ÊÂ¼ş£¬²¢×èÖ¹ÊÂ¼şÏòÒ³Ãæ´«µİ.
+     * @brief	é¢„ç½®äº‹ä»¶,ç”¨äºå¤„ç†èœå•ï¼Œå’Œå…¨å±€å¿«æ·é”®çš„actionæ‰€æè¿°çš„äº‹ä»¶ï¼Œå¦‚æœactionä¸ºä»¥ä¸‹æ‰€æè¿°çš„äº‹ä»¶ï¼Œé‚£ä¹ˆç¨‹åºä¼šå¤„ç†è¿™äº›äº‹ä»¶ï¼Œå¹¶é˜»æ­¢äº‹ä»¶å‘é¡µé¢ä¼ é€’.
      */
     
     class ActionPreprocessor {
@@ -36,41 +36,41 @@ namespace amo {
         
         bool process(const std::string& action);
         
-        /*! @var	#String undo  ³·Ïû£¬×÷ÓÃÓÚFrame*/
-        /*! @var	#String redo  ÖØ×ö£¬×÷ÓÃÓÚFrame*/
-        /*! @var	#String cut  ¼ôÇĞ£¬×÷ÓÃÓÚFrame*/
-        /*! @var	#String copy  ¸´ÖÆ£¬×÷ÓÃÓÚFrame*/
-        /*! @var	#String paste  Õ³Ìù£¬×÷ÓÃÓÚFrame*/
-        /*! @var	#String selectAll  È«Ñ¡£¬×÷ÓÃÓÚFrame*/
-        /*! @var	#String delete  É¾³ı£¬×÷ÓÃÓÚFrame*/
+        /*! @var	#String undo  æ’¤æ¶ˆï¼Œä½œç”¨äºFrame*/
+        /*! @var	#String redo  é‡åšï¼Œä½œç”¨äºFrame*/
+        /*! @var	#String cut  å‰ªåˆ‡ï¼Œä½œç”¨äºFrame*/
+        /*! @var	#String copy  å¤åˆ¶ï¼Œä½œç”¨äºFrame*/
+        /*! @var	#String paste  ç²˜è´´ï¼Œä½œç”¨äºFrame*/
+        /*! @var	#String selectAll  å…¨é€‰ï¼Œä½œç”¨äºFrame*/
+        /*! @var	#String delete  åˆ é™¤ï¼Œä½œç”¨äºFrame*/
         
-        /*! @var	#String goBack  ºóÍË£¬×÷ÓÃÓÚBrowser*/
-        /*! @var	#String goForward  Ç°½ø£¬×÷ÓÃÓÚBrowser*/
-        /*! @var	#String reload  Õı³£ÖØĞÂ¼ÓÔØµ±Ç°´°¿Ú£¬×÷ÓÃÓÚBrowser*/
-        /*! @var	#String forceReload  ºöÂÔ»º´æ²¢ÖØĞÂ¼ÓÔØµ±Ç°´°¿Ú£¬×÷ÓÃÓÚBrowser*/
-        /*! @var	#String stopLoad  Í£Ö¹¼ÓÔØ£¬×÷ÓÃÓÚBrowser*/
+        /*! @var	#String goBack  åé€€ï¼Œä½œç”¨äºBrowser*/
+        /*! @var	#String goForward  å‰è¿›ï¼Œä½œç”¨äºBrowser*/
+        /*! @var	#String reload  æ­£å¸¸é‡æ–°åŠ è½½å½“å‰çª—å£ï¼Œä½œç”¨äºBrowser*/
+        /*! @var	#String forceReload  å¿½ç•¥ç¼“å­˜å¹¶é‡æ–°åŠ è½½å½“å‰çª—å£ï¼Œä½œç”¨äºBrowser*/
+        /*! @var	#String stopLoad  åœæ­¢åŠ è½½ï¼Œä½œç”¨äºBrowser*/
         
         
-        /*! @var	#String print  ´òÓ¡Ò³Ãæ£¬×÷ÓÃÓÚHOST*/
-        /*! @var	#String printToPDF  ´òÓ¡Ò³ÃæÎªPDF£¬×÷ÓÃÓÚHOST*/
-        /*! @var	#String resetZoom  ÖØÖÃÒ³ÃæËõ·ÅµÈ¼¶£¬×÷ÓÃÓÚHOST*/
-        /*! @var	#String zoomIn  ËõĞ¡Ò³Ãæ£¬×÷ÓÃÓÚHOST*/
-        /*! @var	#String zoomOut  ·Å´óÒ³Ãæ£¬×÷ÓÃÓÚHOST*/
+        /*! @var	#String print  æ‰“å°é¡µé¢ï¼Œä½œç”¨äºHOST*/
+        /*! @var	#String printToPDF  æ‰“å°é¡µé¢ä¸ºPDFï¼Œä½œç”¨äºHOST*/
+        /*! @var	#String resetZoom  é‡ç½®é¡µé¢ç¼©æ”¾ç­‰çº§ï¼Œä½œç”¨äºHOST*/
+        /*! @var	#String zoomIn  ç¼©å°é¡µé¢ï¼Œä½œç”¨äºHOST*/
+        /*! @var	#String zoomOut  æ”¾å¤§é¡µé¢ï¼Œä½œç”¨äºHOST*/
         
-        /*! @var	#String show  ÏÔÊ¾´°¿Ú*/
-        /*! @var	#String hide  Òş²Ø´°¿Ú*/
-        /*! @var	#String toggleVisible  ÏÔÊ¾/Òş²Ø´°¿Ú*/
-        /*! @var	#String minimize  ×îĞ¡»¯´°¿Ú*/
-        /*! @var	#String maximize  ×î´ó»¯´°¿Ú*/
-        /*! @var	#String close  ¹Ø±Õ´°¿Ú*/
-        /*! @var	#String showDevtools  ´ò¿ªµ÷ÊÔ´°¿Ú*/
-        /*! @var	#String closeDevtools  ¹Ø±Õµ÷ÊÔ´°¿Ú*/
-        /*! @var	#String fullscreen  È«ÆÁ*/
-        /*! @var	#String nonFullscreen  ÍË³öÈ«ÆÁ*/
-        /*! @var	#String toggleFullScreen  È«ÆÁ/ÍË³öÈ«ÆÁ*/
+        /*! @var	#String show  æ˜¾ç¤ºçª—å£*/
+        /*! @var	#String hide  éšè—çª—å£*/
+        /*! @var	#String toggleVisible  æ˜¾ç¤º/éšè—çª—å£*/
+        /*! @var	#String minimize  æœ€å°åŒ–çª—å£*/
+        /*! @var	#String maximize  æœ€å¤§åŒ–çª—å£*/
+        /*! @var	#String close  å…³é—­çª—å£*/
+        /*! @var	#String showDevtools  æ‰“å¼€è°ƒè¯•çª—å£*/
+        /*! @var	#String closeDevtools  å…³é—­è°ƒè¯•çª—å£*/
+        /*! @var	#String fullscreen  å…¨å±*/
+        /*! @var	#String nonFullscreen  é€€å‡ºå…¨å±*/
+        /*! @var	#String toggleFullScreen  å…¨å±/é€€å‡ºå…¨å±*/
         
-        /*! @var	#String quit  ³¢ÊÔÍË³ö³ÌĞò*/
-        /*! @var	#String exit  Ç¿ÖÆÍË³ö³ÌĞò*/
+        /*! @var	#String quit  å°è¯•é€€å‡ºç¨‹åº*/
+        /*! @var	#String exit  å¼ºåˆ¶é€€å‡ºç¨‹åº*/
         
         
         

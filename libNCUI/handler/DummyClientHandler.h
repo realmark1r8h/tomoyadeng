@@ -1,4 +1,4 @@
-// Created by amoylel on 7/02/2017.
+﻿// Created by amoylel on 7/02/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 #ifndef AMO_DUMMYCLIENTHANDLER_H__
 #define AMO_DUMMYCLIENTHANDLER_H__

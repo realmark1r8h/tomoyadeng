@@ -1,4 +1,4 @@
-// Created by amoylel on 08/01/2017.
+ï»¿// Created by amoylel on 08/01/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_TRAY_H__
@@ -40,7 +40,7 @@ namespace amo {
         /*!
          * @fn	void Tray::show(bool bShow);
          *
-         * @brief	ÏÔÊ¾»òÒş²ØÍĞÅÌ.
+         * @brief	æ˜¾ç¤ºæˆ–éšè—æ‰˜ç›˜.
          *
          * @param	bShow	true to show, false to hide.
          */
@@ -48,7 +48,7 @@ namespace amo {
         /*!
          * @fn	void Tray::setToolTip(const std::string& tipMsg);
          *
-         * @brief	ÉèÖÃÍĞÅÌÌáÊ¾ÎÄ±¾.
+         * @brief	è®¾ç½®æ‰˜ç›˜æç¤ºæ–‡æœ¬.
          *
          * @param	tipMsg	Message describing the tip.
          */
@@ -57,7 +57,7 @@ namespace amo {
         /*!
          * @fn	void Tray::setBlink(bool isBlink);
          *
-         * @brief	ÉèÖÃÍĞÅÌÊÇ·ñÉÁË¸.
+         * @brief	è®¾ç½®æ‰˜ç›˜æ˜¯å¦é—ªçƒ.
          *
          * @param	isBlink	true if this object is blink.
          */
@@ -65,7 +65,7 @@ namespace amo {
         /*!
          * @fn	bool Tray::isBlink() const;
          *
-         * @brief	ÅĞ¶ÏÍĞÅÌÊÇ·ñÕıÔÚÉÁË¸.
+         * @brief	åˆ¤æ–­æ‰˜ç›˜æ˜¯å¦æ­£åœ¨é—ªçƒ.
          *
          * @return	true if blink, false if not.
          */
@@ -73,7 +73,7 @@ namespace amo {
         /*!
          * @fn	HICON Tray::getTrayIcon() const;
          *
-         * @brief	»ñÈ¡ÍĞÅÌÍ¼±ê.
+         * @brief	è·å–æ‰˜ç›˜å›¾æ ‡.
          *
          * @return	The tray icon.
          */
@@ -81,7 +81,7 @@ namespace amo {
         /*!
          * @fn	void Tray::setTrayIcon(HICON val);
          *
-         * @brief	ÉèÖÃÍĞÅÌÍ¼±ê.
+         * @brief	è®¾ç½®æ‰˜ç›˜å›¾æ ‡.
          *
          * @param	val	The value.
          */
@@ -89,7 +89,7 @@ namespace amo {
         /*!
          * @fn	void Tray::setTrayIcon(const amo::string& strPath);
          *
-         * @brief	ÉèÖÃÍĞÅÌÍ¼±ê.
+         * @brief	è®¾ç½®æ‰˜ç›˜å›¾æ ‡.
          *
          * @param	strPath	Full pathname of the file.
          */
@@ -98,7 +98,7 @@ namespace amo {
         /*!
          * @fn	NOTIFYICONDATAA& Tray::getNotifyCondata();
          *
-         * @brief	ÍĞÅÌÊı¾İ½á¹¹.
+         * @brief	æ‰˜ç›˜æ•°æ®ç»“æ„.
          *
          * @return	The notify condata.
          */
@@ -106,7 +106,7 @@ namespace amo {
         /*!
          * @fn	void Tray::setNotifyCondata(NOTIFYICONDATAA val);
          *
-         * @brief	ÉèÖÃÍĞÅÌÊı¾İ.
+         * @brief	è®¾ç½®æ‰˜ç›˜æ•°æ®.
          *
          * @param	val	The value.
          */
@@ -115,7 +115,7 @@ namespace amo {
         /*!
          * @fn	std::function<void(const std::string&)> getEventCallback() const;
          *
-         * @brief	»ñÈ¡ÍĞÅÌÊÂ¼ş»Øµ÷º¯Êı.
+         * @brief	è·å–æ‰˜ç›˜äº‹ä»¶å›è°ƒå‡½æ•°.
          *
          * @return	The event callback.
          */
@@ -123,7 +123,7 @@ namespace amo {
         /*!
          * @fn	void Tray::setEventCallback(std::function<void(const std::string&)> fn);
          *
-         * @brief	ÉèÖÃÍĞÅÌÊÂ¼ş»Øµ÷º¯Êı.
+         * @brief	è®¾ç½®æ‰˜ç›˜äº‹ä»¶å›è°ƒå‡½æ•°.
          *
          * @param	fn	The function.
          */
@@ -132,7 +132,7 @@ namespace amo {
         /*!
          * @fn	NotifyWindow* Tray::getNotifyWindow();
          *
-         * @brief	»ñÈ¡Í¨Öª´°¿Ú£¬ÏÖÖ»×÷ÏûÏ¢´°¿ÚÊ¹ÓÃ.
+         * @brief	è·å–é€šçŸ¥çª—å£ï¼Œç°åªä½œæ¶ˆæ¯çª—å£ä½¿ç”¨.
          *
          * @return	null if it fails, else the notify window.
          */
@@ -142,7 +142,7 @@ namespace amo {
         /*!
          * @fn	void Tray::triggerEvent(const std::string& event);
          *
-         * @brief	´¥·¢ÍĞÅÌÊÂ¼ş.
+         * @brief	è§¦å‘æ‰˜ç›˜äº‹ä»¶.
          *
          * @param	event	The event.
          */
@@ -152,25 +152,25 @@ namespace amo {
         
     private:
     
-        /*! @brief	ÍĞÅÌÊı¾İ. */
+        /*! @brief	æ‰˜ç›˜æ•°æ®. */
         NOTIFYICONDATAA m_notifyCondata;
-        /*! @brief	ÏûÏ¢Ñ­»·¾ä±ú. */
+        /*! @brief	æ¶ˆæ¯å¾ªç¯å¥æŸ„. */
         HWND m_hMessageWnd;
-        /*ÍĞÅÌÍ¼±ê*/
+        /*æ‰˜ç›˜å›¾æ ‡*/
         HICON m_hTrayIcon;
-        /*! @brief	ÍĞÅÌÏûÏ¢¿ò. */
+        /*! @brief	æ‰˜ç›˜æ¶ˆæ¯æ¡†. */
         NotifyWindow* m_pNotifyWindow;
-        /*! @brief	ÍĞÅÌÉÁË¸¶¨Ê±Æ÷. */
+        /*! @brief	æ‰˜ç›˜é—ªçƒå®šæ—¶å™¨. */
         UINT_PTR m_flashTimer;
-        /*! @brief	ÊÇ·ñÉÁË¸ÍĞÅÌ£¬Ä¬ÈÏÎªfalse. */
+        /*! @brief	æ˜¯å¦é—ªçƒæ‰˜ç›˜ï¼Œé»˜è®¤ä¸ºfalse. */
         bool m_bBlink;
-        /*! @brief	ÍĞÅÌÏûÏ¢. */
+        /*! @brief	æ‰˜ç›˜æ¶ˆæ¯. */
         UINT WM_TRAY_MONITOR;
         
-        /*! @brief	Ë«»÷¼ÆÊ±Æ÷. */
+        /*! @brief	åŒå‡»è®¡æ—¶å™¨. */
         std::shared_ptr<amo::timer> m_timer;
         
-        /*! @brief	ÍĞÅÌÊÂ¼ş»Øµ÷º¯Êı. */
+        /*! @brief	æ‰˜ç›˜äº‹ä»¶å›è°ƒå‡½æ•°. */
         std::function<void(const std::string&)> m_fnEventCallback;
         
     public:

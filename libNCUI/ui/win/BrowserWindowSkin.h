@@ -1,4 +1,4 @@
-#ifndef AMO_SKIN_H
+﻿#ifndef AMO_SKIN_H
 #define AMO_SKIN_H
  
 extern const char skinBrowserWindow[];

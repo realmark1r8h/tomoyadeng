@@ -1,4 +1,4 @@
-#ifndef _HAD_ZIPCONF_H
+﻿#ifndef _HAD_ZIPCONF_H
 #define _HAD_ZIPCONF_H
 
 /*

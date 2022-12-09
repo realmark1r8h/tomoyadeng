@@ -1,4 +1,4 @@
-// Created by amoylel on 13/04/2018.
+﻿// Created by amoylel on 13/04/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBNCUI_OVERLAP_C7F8CD76_678A_4084_BA01_C6800CD33984_HPP__

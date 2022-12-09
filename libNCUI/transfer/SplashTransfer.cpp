@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "transfer/SplashTransfer.h"
 #include "ui/win/SplashWindow.h"
 #include "settings/SplashWindowSettings.h"

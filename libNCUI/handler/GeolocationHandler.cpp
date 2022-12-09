@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+ï»¿#include "stdAfx.h"
 
 #include "handler/GeolocationHandler.h"
 #include <amo/logger.hpp>
@@ -33,7 +33,7 @@ namespace amo {
             int request_id,
             CefRefPtr<CefGeolocationCallback> callback) {
         $clog(amo::cdevel << func_orient << amo::endl;);
-        //ÔÊÐíËùÓÐÍøÕ¾·ÃÎÊµØÀíÎ»ÖÃ
+        //å…è®¸æ‰€æœ‰ç½‘ç«™è®¿é—®åœ°ç†ä½ç½®
         callback->Continue(true);
 
         DelegateSet::iterator it = m_Delegates.begin();
@@ -49,7 +49,7 @@ namespace amo {
             int request_id,
             CefRefPtr<CefGeolocationCallback> callback) {
         $clog(amo::cdevel << func_orient << amo::endl;);
-        //ÔÊÐíËùÓÐÍøÕ¾·ÃÎÊµØÀíÎ»ÖÃ
+        //å…è®¸æ‰€æœ‰ç½‘ç«™è®¿é—®åœ°ç†ä½ç½®
         callback->Continue(true);
 
         DelegateSet::iterator it = m_Delegates.begin();

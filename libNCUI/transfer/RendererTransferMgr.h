@@ -1,4 +1,4 @@
-// Created by amoylel on 14/02/2018.
+ï»¿// Created by amoylel on 14/02/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBNCUI_RENDERERTRANSFERMGR_FCE5686C_EBC2_42B4_93C2_44FF8DA6148B_H__
@@ -11,7 +11,7 @@ namespace amo {
     /*!
     * @class	RendererTransferMgr
     *
-    * @brief	¹ÜÀíäÖÈ¾½ø³ÌµÄTransferMap.
+    * @brief	ç®¡ç†æ¸²æŸ“è¿›ç¨‹çš„TransferMap.
     */
     class RendererTransferMgr
         : public TransferMgr

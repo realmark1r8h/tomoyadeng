@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "transfer/DesktopTransfer.h"
 
 namespace amo {
@@ -9,8 +9,8 @@ namespace amo {
     }
     
     Any DesktopTransfer::getScreenInfo(IPCMessage::SmartType msg) {
-        int nScreenWidth = GetSystemMetrics(SM_CXSCREEN);//ÆÁÄ»ºáÏò·Ö±æÂÊ
-        int nScreenHeight = GetSystemMetrics(SM_CYSCREEN);//ÆÁÄ»×İÏò·Ö±æÂÊ
+        int nScreenWidth = GetSystemMetrics(SM_CXSCREEN);//å±å¹•æ¨ªå‘åˆ†è¾¨ç‡
+        int nScreenHeight = GetSystemMetrics(SM_CYSCREEN);//å±å¹•çºµå‘åˆ†è¾¨ç‡
         amo::json json;
         json.put("width", nScreenWidth);
         json.put("height", nScreenHeight);

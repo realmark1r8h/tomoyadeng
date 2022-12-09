@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+﻿#include "stdAfx.h"
 
 #include "handler/LoadHandler.h"
 #include <amo/logger.hpp>

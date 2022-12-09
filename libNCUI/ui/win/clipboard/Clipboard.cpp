@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 
 #include "ui/win/clipboard/Clipboard.h"
 
@@ -102,12 +102,12 @@ namespace amo {
     bool Clipboard::writeText(const std::string& text) {
         bool bRet = false;
         
-        //´ò¿ª¼ôÌù°å
+        //æ‰“å¼€å‰ªè´´æ¿
         if (!::OpenClipboard(m_hWnd)) {
             return bRet;
         }
         
-        // Çå¿Õ¼ôÌù°å
+        // æ¸…ç©ºå‰ªè´´æ¿
         if (!::EmptyClipboard()) {
             ::CloseClipboard();
             return bRet;

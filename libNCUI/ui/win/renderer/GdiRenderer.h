@@ -1,4 +1,4 @@
-// Created by amoylel on 08/19/2018.
+﻿// Created by amoylel on 08/19/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef AMO_GDIRENDERER_33BFE9BE_15A8_42A1_8847_667EC0BA0F11_H__

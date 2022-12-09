@@ -1,4 +1,4 @@
-// Created by amoylel on 08/06/2017.
+ï»¿// Created by amoylel on 08/06/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_GLOBALSHORTCUTSETTINGS_H__
@@ -50,9 +50,9 @@ namespace amo {
         bool alt;
         /*! @brief	shift. */
         bool shift;
-        /*! @brief	char ÀàĞÍ 1¸ö×Ö·û. */
+        /*! @brief	char ç±»å‹ 1ä¸ªå­—ç¬¦. */
         std::string key;
-        /*! @brief	´¥·¢ÊÂ¼ş. */
+        /*! @brief	è§¦å‘äº‹ä»¶. */
         std::string action;
         
     };

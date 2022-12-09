@@ -1,4 +1,4 @@
-// Created by amoylel on 05/27/2017.
+ï»¿// Created by amoylel on 05/27/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_CEFWEBKITWND_H__
@@ -52,10 +52,10 @@ namespace amo {
         
     protected:
         CefRefPtr<amo::ClientHandler>
-        m_pClientHandler;												//!< ä¯ÀÀÆ÷ÊÂ¼þ´¦Àí¾ä±ú
+        m_pClientHandler;												//!< æµè§ˆå™¨äº‹ä»¶å¤„ç†å¥æŸ„
         std::shared_ptr<BrowserWindowSettings>
-        m_oBrowserSettings;									//!< ä¯ÀÀÆ÷ÉèÖÃ
-        CefRefPtr<CefBrowser> m_pBrowser;															//!< ä¯ÀÀÆ÷Ö¸Õë
+        m_oBrowserSettings;									//!< æµè§ˆå™¨è®¾ç½®
+        CefRefPtr<CefBrowser> m_pBrowser;															//!< æµè§ˆå™¨æŒ‡é’ˆ
     };
     
 }

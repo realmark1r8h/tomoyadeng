@@ -1,4 +1,4 @@
-// Created by amoylel on 08/19/2017.
+ï»¿// Created by amoylel on 08/19/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_DOWNLOADERTRANSFER_H__
@@ -21,8 +21,8 @@ namespace amo {
      * @class	Downloader
      * @extend  Object
      *
-     * @brief	ÎÄ¼şÏÂÔØÀà£¬Ê¹ÓÃä¯ÀÀÆ÷µÄÏÂÔØ¹¦ÄÜÏÂÔØÎÄ¼ş.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	æ–‡ä»¶ä¸‹è½½ç±»ï¼Œä½¿ç”¨æµè§ˆå™¨çš„ä¸‹è½½åŠŸèƒ½ä¸‹è½½æ–‡ä»¶.<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      */
     
     class DownloaderTransfer
@@ -52,52 +52,52 @@ namespace amo {
          *
          * @tag constructor
          *
-         * @brief	´´½¨Ò»ÏÂÏÂÔØÀà£¬ÓÃÓÚÏÂÔØÎÄ¼ş.
+         * @brief	åˆ›å»ºä¸€ä¸‹ä¸‹è½½ç±»ï¼Œç”¨äºä¸‹è½½æ–‡ä»¶.
          *
-         * @param	#JsonObject ÏÂÔØ²ÎÊı.<br>
-         * 						[**String**]	url ÏÂÔØÎÄ¼şµÄurl,Èç¹ûËù¸øµÄURLÓëÖ®Ç°Ëù´´½¨µÄÏÂÔØ¶ÔÏóurlÏàÍ¬·´·µ»ØÖ®Ç°µÄ¶ÔÏó£¬ÏÂÃæµÄ²ÎÊı½«±»ºöÂÔ.<br>
-         * 						[**String**]	file ÎÄ¼ş±£´æÂ·¾¶, Ä¬ÈÏ»á¸ù¾İurl×Ô¶¯ÃüÃû.<br>
-         * 						[**Boolean**]	autoDownload ÊÇ·ñ×Ô¶¯¿ªÊ¼ÏÂÔØ,Ä¬ÈÏÎªtrue.<br>
-         * 						[**Boolean**]	forceReplace ÊÇ·ñÇ¿ÖÆÌæ»»ÒÑ¾­´æÔÚµÄÎÄ¼ş,Ä¬ÈÏÎªtrue.
+         * @param	#JsonObject ä¸‹è½½å‚æ•°.<br>
+         * 						[**String**]	url ä¸‹è½½æ–‡ä»¶çš„url,å¦‚æœæ‰€ç»™çš„URLä¸ä¹‹å‰æ‰€åˆ›å»ºçš„ä¸‹è½½å¯¹è±¡urlç›¸åŒåè¿”å›ä¹‹å‰çš„å¯¹è±¡ï¼Œä¸‹é¢çš„å‚æ•°å°†è¢«å¿½ç•¥.<br>
+         * 						[**String**]	file æ–‡ä»¶ä¿å­˜è·¯å¾„, é»˜è®¤ä¼šæ ¹æ®urlè‡ªåŠ¨å‘½å.<br>
+         * 						[**Boolean**]	autoDownload æ˜¯å¦è‡ªåŠ¨å¼€å§‹ä¸‹è½½,é»˜è®¤ä¸ºtrue.<br>
+         * 						[**Boolean**]	forceReplace æ˜¯å¦å¼ºåˆ¶æ›¿æ¢å·²ç»å­˜åœ¨çš„æ–‡ä»¶,é»˜è®¤ä¸ºtrue.
          *
-         * @return #Object ·µ»ØÒ»¸öDownloaderÊµÀı.
+         * @return #Object è¿”å›ä¸€ä¸ªDownloaderå®ä¾‹.
          * @example
          *
         		 ```
-        		 // ĞèÒªÏÈÔËĞĞ¸ÃÊ¾Àı²ÅÄÜÔËĞĞºóÃæµÄÊ¾Àı
+        		 // éœ€è¦å…ˆè¿è¡Œè¯¥ç¤ºä¾‹æ‰èƒ½è¿è¡Œåé¢çš„ç¤ºä¾‹
         		 include('Downloader');
         		 window.downloader = new Downloader({
         			url: 'https://dldir1.qq.com/qqfile/qq/TIM1.2.0/21645/TIM1.2.0.exe'
         		 });
-        		 // ¼àÌıÏÂÔØ¿ªÊ¼ÊÂ¼ş
+        		 // ç›‘å¬ä¸‹è½½å¼€å§‹äº‹ä»¶
         		 window.downloader.on('start', function(item){
         
-        			console.log('ÏÂÔØ¿ªÊ¼');
+        			console.log('ä¸‹è½½å¼€å§‹');
         			console.log(item);
         		 });
         
         		 window.downloader.on('resume', function(item){
-        			 console.log('ÏÂÔØ»Ö¸´');
+        			 console.log('ä¸‹è½½æ¢å¤');
         		 });
         
         		 window.downloader.on('pause', function(item){
-        			 console.log('ÏÂÔØÔİÍ£');
+        			 console.log('ä¸‹è½½æš‚åœ');
         		 });
         
         		 window.downloader.on('cancel', function(item){
-        			console.log('ÏÂÔØÈ¡Ïû');
+        			console.log('ä¸‹è½½å–æ¶ˆ');
         		 });
         
         		 window.downloader.on('canceled', function(item){
-        			 console.log('ÏÂÔØÈ¡ÏûÍê³É');
+        			 console.log('ä¸‹è½½å–æ¶ˆå®Œæˆ');
         		 });
         
         		 window.downloader.on('update', function(item){
-        			console.log('ÏÂÔØ½ø¶È£º' + item.percentComplete);
+        			console.log('ä¸‹è½½è¿›åº¦ï¼š' + item.percentComplete);
         		 });
         
         		 window.downloader.on('complete', function(item){
-        			 console.log('ÏÂÔØÍê±Ï');
+        			 console.log('ä¸‹è½½å®Œæ¯•');
         		 });
         		 ```
          *
@@ -111,9 +111,9 @@ namespace amo {
         /*!
          * @fn	Any DownloaderTransfer::start(IPCMessage::SmartType msg);
          *
-         * @brief	¿ªÊ¼ÏÂÔØ.
+         * @brief	å¼€å§‹ä¸‹è½½.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -127,10 +127,10 @@ namespace amo {
         /*!
         * @fn	Any DownloaderTransfer::pause(IPCMessage::SmartType msg);
         *
-        * @brief	ÔİÍ£ÏÂÔØ.
+        * @brief	æš‚åœä¸‹è½½.
         *
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         *
         * @example
         *
@@ -144,9 +144,9 @@ namespace amo {
         /*!
          * @fn	Any DownloaderTransfer::resume(IPCMessage::SmartType msg);
          *
-         * @brief	»Ö¸´µ±Ç°ÏÂÔØ.
+         * @brief	æ¢å¤å½“å‰ä¸‹è½½.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -162,9 +162,9 @@ namespace amo {
         /*!
          * @fn	Any DownloaderTransfer::cancel(IPCMessage::SmartType msg);
          *
-         * @brief	È¡ÏûÏÂÔØ.
+         * @brief	å–æ¶ˆä¸‹è½½.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -179,94 +179,94 @@ namespace amo {
         /*!
         * @event	Any DownloaderTransfer::start(IPCMessage::SmartType msg);
         *
-        * @brief	¿ªÊ¼ÏÂÔØÊ±´¥·¢.
+        * @brief	å¼€å§‹ä¸‹è½½æ—¶è§¦å‘.
         * @param	#JsonObject <br>
-        * 						[**Boolean**] isValid µ±Ç°ÏÂÔØÊÇ·ñÓĞĞ§.<br>
-        * 						[**Boolean**] isInProgress ÊÇ·ñÕıÔÚÏÂÔØ£¨°üÀ¨ÔİÍ££©.<br>
-        * 						[**Boolean**] isComplete µ±Ç°ÏÂÔØÊÇ·ñÒÑ¾­Íê³É.<br>
-        * 						[**Boolean**] isCanceled µ±Ç°ÏÂÔØÊÇ·ñÒÑ¾­±»È¡Ïû.<br>
+        * 						[**Boolean**] isValid å½“å‰ä¸‹è½½æ˜¯å¦æœ‰æ•ˆ.<br>
+        * 						[**Boolean**] isInProgress æ˜¯å¦æ­£åœ¨ä¸‹è½½ï¼ˆåŒ…æ‹¬æš‚åœï¼‰.<br>
+        * 						[**Boolean**] isComplete å½“å‰ä¸‹è½½æ˜¯å¦å·²ç»å®Œæˆ.<br>
+        * 						[**Boolean**] isCanceled å½“å‰ä¸‹è½½æ˜¯å¦å·²ç»è¢«å–æ¶ˆ.<br>
         * 						<br>
-        * 						[**Int**] currentSpeed µ±Ç°ÏÂÔØËÙ¶È.<br>
-        * 						[**Int**] percentComplete ÏÂÔØÍê³É°Ù·Ö±È£¬Èç¹û·µ»Ø-1£¬±íÊ¾Î´»ñÈ¡µ½ËùÏÂÔØÎÄ¼şµÄ´óĞ¡.<br>
-        * 						[**Int**] totalBytes ×Ü×Ö½ÚÊı.<br>
-        * 						[**Int**] receivedBytes ÒÑ½ÓÊÕµÄ×Ö½ÚÊı.<br>
+        * 						[**Int**] currentSpeed å½“å‰ä¸‹è½½é€Ÿåº¦.<br>
+        * 						[**Int**] percentComplete ä¸‹è½½å®Œæˆç™¾åˆ†æ¯”ï¼Œå¦‚æœè¿”å›-1ï¼Œè¡¨ç¤ºæœªè·å–åˆ°æ‰€ä¸‹è½½æ–‡ä»¶çš„å¤§å°.<br>
+        * 						[**Int**] totalBytes æ€»å­—èŠ‚æ•°.<br>
+        * 						[**Int**] receivedBytes å·²æ¥æ”¶çš„å­—èŠ‚æ•°.<br>
         * 						<br>
-        * 						[**Double**] startTime ÏÂÔØ¿ªÊ¼µÄÊ±¼ä.<br>
-        * 						[**Double**] endTime ÏÂÔØ½áÊøµÄÊ±¼ä.<br>
+        * 						[**Double**] startTime ä¸‹è½½å¼€å§‹çš„æ—¶é—´.<br>
+        * 						[**Double**] endTime ä¸‹è½½ç»“æŸçš„æ—¶é—´.<br>
         *						<br>
-        * 						[**String**] fullPath ÏÂÔØÎÄ¼şËù±£´æµÄÍêÕûÂ·¾¶.<br>
-        * 						[**String**] id µ±Ç°ÏÂÔØµÄÎ¨Ò»±êÊ¶·û.<br>
+        * 						[**String**] fullPath ä¸‹è½½æ–‡ä»¶æ‰€ä¿å­˜çš„å®Œæ•´è·¯å¾„.<br>
+        * 						[**String**] id å½“å‰ä¸‹è½½çš„å”¯ä¸€æ ‡è¯†ç¬¦.<br>
         * 						[**String**] url URL.<br>
-        * 						[**String**] originalUrl ÖØ¶¨ÏòÖ®Ç°µÄÔ­Ê¼URL£¨Èç¹û±»ÖØ¶¨ÏòµÄ»°£©.<br>
-        * 						[**String**] suggestedFileName ä¯ÀÀÆ÷½¨ÒéµÄÎÄ¼şÃû.<br>
+        * 						[**String**] originalUrl é‡å®šå‘ä¹‹å‰çš„åŸå§‹URLï¼ˆå¦‚æœè¢«é‡å®šå‘çš„è¯ï¼‰.<br>
+        * 						[**String**] suggestedFileName æµè§ˆå™¨å»ºè®®çš„æ–‡ä»¶å.<br>
         * 						[**String**] contentDisposition  .<br>
-        * 						[**String**] mimeType MIMEÀàĞÍ.<br>
+        * 						[**String**] mimeType MIMEç±»å‹.<br>
         *
         *
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         */
         
         /*!
         * @event	Any DownloaderTransfer::resume(IPCMessage::SmartType msg);
         *
-        * @brief	ÏÂÔØ»Ö¸´Ê±´¥·¢.
+        * @brief	ä¸‹è½½æ¢å¤æ—¶è§¦å‘.
         *
-        * @param #JsonObject ÓëstartÊÂ¼şÖĞµÄ²ÎÊıÏàÍ¬.
+        * @param #JsonObject ä¸startäº‹ä»¶ä¸­çš„å‚æ•°ç›¸åŒ.
         *
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         */
         
         /*!
         * @event	Any DownloaderTransfer::pause(IPCMessage::SmartType msg);
         *
-        * @brief	ÔİÍ£ÏÂÔØÊ±´¥·¢.
+        * @brief	æš‚åœä¸‹è½½æ—¶è§¦å‘.
         *
-        * @param #JsonObject ÓëstartÊÂ¼şÖĞµÄ²ÎÊıÏàÍ¬.
+        * @param #JsonObject ä¸startäº‹ä»¶ä¸­çš„å‚æ•°ç›¸åŒ.
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         */
         
         /*!
         * @event	Any DownloaderTransfer::cancel(IPCMessage::SmartType msg);
         *
-        * @brief	È¡ÏûÏÂÔØÊ±´¥·¢.
+        * @brief	å–æ¶ˆä¸‹è½½æ—¶è§¦å‘.
         *
-        * @param #JsonObject ÓëstartÊÂ¼şÖĞµÄ²ÎÊıÏàÍ¬.
+        * @param #JsonObject ä¸startäº‹ä»¶ä¸­çš„å‚æ•°ç›¸åŒ.
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         */
         
         /*!
         * @event	Any DownloaderTransfer::canceled(IPCMessage::SmartType msg);
         *
-        * @brief	È¡ÏûÏÂÔØºóÊ±´¥·¢.
+        * @brief	å–æ¶ˆä¸‹è½½åæ—¶è§¦å‘.
         *
-        * @param #JsonObject ÓëstartÊÂ¼şÖĞµÄ²ÎÊıÏàÍ¬.
+        * @param #JsonObject ä¸startäº‹ä»¶ä¸­çš„å‚æ•°ç›¸åŒ.
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         */
         
         /*!
         * @event	Any DownloaderTransfer::update(IPCMessage::SmartType msg);
         *
-        * @brief	ÏÂÔØÊı¾İ¸üĞÂÊ±´¥·¢.
+        * @brief	ä¸‹è½½æ•°æ®æ›´æ–°æ—¶è§¦å‘.
         *
-        * @param #JsonObject ÓëstartÊÂ¼şÖĞµÄ²ÎÊıÏàÍ¬.
+        * @param #JsonObject ä¸startäº‹ä»¶ä¸­çš„å‚æ•°ç›¸åŒ.
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         */
         
         
         /*!
         * @event	Any DownloaderTransfer::complete(IPCMessage::SmartType msg);
         *
-        * @brief	ÏÂÔØÍê³ÉÊ±´¥·¢.
+        * @brief	ä¸‹è½½å®Œæˆæ—¶è§¦å‘.
         *
-        * @param #JsonObject ÓëstartÊÂ¼şÖĞµÄ²ÎÊıÏàÍ¬.
+        * @param #JsonObject ä¸startäº‹ä»¶ä¸­çš„å‚æ•°ç›¸åŒ.
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         */
         
         

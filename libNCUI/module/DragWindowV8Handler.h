@@ -1,4 +1,4 @@
-// Created by amoylel on 04/26/2017.
+ï»¿// Created by amoylel on 04/26/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_DRAGWINDOWV8HANDLER_H__
@@ -11,7 +11,7 @@ namespace amo {
     /*!
      * @class	DragWindowV8Handler
      *
-     * @brief	´°¿ÚÍÏ×§.
+     * @brief	çª—å£æ‹–æ‹½.
      */
     
     class DragWindowV8Handler : public JsClassObjectV8Handler {
@@ -62,7 +62,7 @@ namespace amo {
         /*!
          * @fn	void DragWindowV8Handler::sendDragableToBrowserProcess(bool bEnabled);
          *
-         * @brief	ÏòUI·¢ËÍµ±Ç°µãÊÇ·ñ¿ÉÒÔÒÆ¶¯´°¿Ú.
+         * @brief	å‘UIå‘é€å½“å‰ç‚¹æ˜¯å¦å¯ä»¥ç§»åŠ¨çª—å£.
          *
          * @param	bEnabled	true to enable, false to disable.
          */

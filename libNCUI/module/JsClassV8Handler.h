@@ -1,4 +1,4 @@
-// Created by amoylel on 04/11/2017.
+ï»¿// Created by amoylel on 04/11/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_JSCLASSV8HANDLER_H__
@@ -11,7 +11,7 @@ namespace amo {
     /*!
      * @class	JsClassObjectV8Accessor
      *
-     * @brief	ÓÃÀ´½â¾ö¶ÔÏóÖĞÊôĞÔÎÊÌâ£¬ÔİÊ±Ã»ÓĞÓÃ.
+     * @brief	ç”¨æ¥è§£å†³å¯¹è±¡ä¸­å±æ€§é—®é¢˜ï¼Œæš‚æ—¶æ²¡æœ‰ç”¨.
      */
     
     class JsClassObjectV8Accessor : public CefV8Accessor {
@@ -124,7 +124,7 @@ namespace amo {
                              
     };
     
-    // class µ÷ÓÃUIÏß³ÌÖĞµÄTransfer
+    // class è°ƒç”¨UIçº¿ç¨‹ä¸­çš„Transfer
     class JsClassV8Handler : public JsV8Handler {
     public:
     
@@ -136,13 +136,13 @@ namespace amo {
          * @fn	virtual CefRefPtr<CefV8Value> JsClassV8Handler::getV8Object(
          * 		CefRefPtr<CefV8Value> object = NULL);
          *
-         * @brief	»ñÈ¡ÀàµÄJS¶ÔÏó.
-         * 			²»ÔÚÊ¹ÓÃºê´´½¨¶ÔÏó£¬ÕâÀïĞèÒª¹¹½¨µÄÊÇÒ»¸öº¯Êı£¨¹¹Ôìº¯Êı£©
-         * 			¿ÉÒÔÊ¹ÓÃnew Object();
+         * @brief	è·å–ç±»çš„JSå¯¹è±¡.
+         * 			ä¸åœ¨ä½¿ç”¨å®åˆ›å»ºå¯¹è±¡ï¼Œè¿™é‡Œéœ€è¦æ„å»ºçš„æ˜¯ä¸€ä¸ªå‡½æ•°ï¼ˆæ„é€ å‡½æ•°ï¼‰
+         * 			å¯ä»¥ä½¿ç”¨new Object();
          *
          * @param	object	(Optional) the object.
-         * 					Èç¹ûobject²»´æÔÚ£¬ÄÇÃ´´´½¨Ò»¸öĞÂµÄ¶ÔÏó£¬
-         * 					Èç¹ûobject´æÔÚ£¬ÄÇÃ´Ö±½ÓÔÚÕâ¸ö¶ÔÏóÉÏÌí¼ÓÊôĞÔ
+         * 					å¦‚æœobjectä¸å­˜åœ¨ï¼Œé‚£ä¹ˆåˆ›å»ºä¸€ä¸ªæ–°çš„å¯¹è±¡ï¼Œ
+         * 					å¦‚æœobjectå­˜åœ¨ï¼Œé‚£ä¹ˆç›´æ¥åœ¨è¿™ä¸ªå¯¹è±¡ä¸Šæ·»åŠ å±æ€§
          *
          * @return	The v8 object.
          */
@@ -153,7 +153,7 @@ namespace amo {
          * @fn	virtual void JsClassV8Handler::onGetV8Object(
          * 		CefRefPtr<CefV8Value> object) override;
          *
-         * @brief	º¯Êı´´½¨ºóµÄ´¦Àíº¯Êı£¬ÕâÀï¿ÉÒÔ½«Ò»Ğ©¾²Ì¬º¯ÊıÖ®ÀàµÄ¶«Î÷¸½¼Óµ½ÀàÖĞ.
+         * @brief	å‡½æ•°åˆ›å»ºåçš„å¤„ç†å‡½æ•°ï¼Œè¿™é‡Œå¯ä»¥å°†ä¸€äº›é™æ€å‡½æ•°ä¹‹ç±»çš„ä¸œè¥¿é™„åŠ åˆ°ç±»ä¸­.
          *
          * @param	object	The object.
          */
@@ -166,7 +166,7 @@ namespace amo {
          * 		  CefRefPtr<CefV8Value>& retval,
          * 		  CefString& exception) override;
          *
-         * @brief	ÖØÔØExecuteº¯Êı.
+         * @brief	é‡è½½Executeå‡½æ•°.
          *
          * @param	name			 	The name.
          * @param	object			 	The object.
@@ -185,7 +185,7 @@ namespace amo {
         /*!
          * @fn	bool JsClassV8Handler::isRendererClass() const;
          *
-         * @brief	ÅĞ¶Ïµ±Ç°µ÷ÓÃµÄC++º¯ÊıÊÇ·ñÊÇÔÚäÖÈ¾½ø³ÌÉÏÖ´ĞĞ.
+         * @brief	åˆ¤æ–­å½“å‰è°ƒç”¨çš„C++å‡½æ•°æ˜¯å¦æ˜¯åœ¨æ¸²æŸ“è¿›ç¨‹ä¸Šæ‰§è¡Œ.
          *
          * @return	true if renderer class, false if not.
          */
@@ -194,7 +194,7 @@ namespace amo {
         /*!
          * @fn	void JsClassV8Handler::setRendererClass(bool val);
          *
-         * @brief	ÉèÖÃµ±Ç°ÀàµÄC++º¯ÊıÔÚäÖÈ¾½ø³ÌÉÏÖ´ĞĞ.
+         * @brief	è®¾ç½®å½“å‰ç±»çš„C++å‡½æ•°åœ¨æ¸²æŸ“è¿›ç¨‹ä¸Šæ‰§è¡Œ.
          *
          * @param	val	true to value.
          */
@@ -205,7 +205,7 @@ namespace amo {
          * 		  CefRefPtr<CefV8Value>& retval,
          * 		   CefString& exception);
          *
-         * @brief	jsµ÷ÓÃ Ê±¿ÉÒÔÅĞ¶ÏÎÒÊÇÒ»¸ö±¾µØTransfer¶ÔÏó.
+         * @brief	jsè°ƒç”¨ æ—¶å¯ä»¥åˆ¤æ–­æˆ‘æ˜¯ä¸€ä¸ªæœ¬åœ°Transferå¯¹è±¡.
          *
          * @param	name	The name.
          *
@@ -224,7 +224,7 @@ namespace amo {
          * 		  CefRefPtr<CefV8Value>& retval,
          * 		   CefString& exception);
          *
-         * @brief	½«±¾µØ¶ÔÏó×ª»»Îª JSON×Ö·û´®.
+         * @brief	å°†æœ¬åœ°å¯¹è±¡è½¬æ¢ä¸º JSONå­—ç¬¦ä¸².
          *
          * @param	name	The name.
          *

@@ -1,4 +1,4 @@
-// Created by amoylel on 06/13/2017.
+ï»¿// Created by amoylel on 06/13/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_URLREQUESTCLIENT_H__
@@ -78,17 +78,17 @@ namespace amo {
         IMPLEMENT_REFCOUNTING(URLRequestClient);
         
     private:
-        /*! @brief	ÓÃ»§Æ¾Ö¤»Øµ÷. */
+        /*! @brief	ç”¨æˆ·å‡­è¯å›è°ƒ. */
         AuthCbType m_fnOnGetAuthCredentials;
-        /*! @brief	ÏÂÔØÊı¾İ»Øµ÷. */
+        /*! @brief	ä¸‹è½½æ•°æ®å›è°ƒ. */
         DataCbType m_fnOnDownloadData;
-        /*! @brief	ÏÂÔØ½ø¶È»Øµ÷. */
+        /*! @brief	ä¸‹è½½è¿›åº¦å›è°ƒ. */
         ProcessCbType m_fnOnDownloadProgress;
-        /*! @brief	ÉÏ´«½ø¶È»Øµ÷. */
+        /*! @brief	ä¸Šä¼ è¿›åº¦å›è°ƒ. */
         ProcessCbType m_fnOnUploadProgress;
-        /*! @brief	ÇëÇóÍê³É»Øµ÷. */
+        /*! @brief	è¯·æ±‚å®Œæˆå›è°ƒ. */
         CompleteCbType m_fnOnRequestComplete;
-        /*! @brief	¸ÃÇëÇóÊÇ·ñ±»·ÅÆú. */
+        /*! @brief	è¯¥è¯·æ±‚æ˜¯å¦è¢«æ”¾å¼ƒ. */
         bool m_bDiscard;
     };
     

@@ -1,6 +1,6 @@
-/*
+﻿/*
   libzippp.h -- exported declarations.
-  Copyright (C) 2013 Cédric Tabin
+  Copyright (C) 2013 C茅dric Tabin
 
   This file is part of libzippp, a library that wraps libzip for manipulating easily
   ZIP files in C++.

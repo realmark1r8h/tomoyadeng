@@ -1,4 +1,4 @@
-#include "ipc/NodeMessageEmitter.hpp"
+﻿#include "ipc/NodeMessageEmitter.hpp"
 #include "ipc/NodeProcessExchanger.hpp"
 #include "handler/NodeProcessHandler.h"
 #include "nan\nan.h"

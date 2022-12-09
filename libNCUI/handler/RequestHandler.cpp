@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+ï»¿#include "stdAfx.h"
 
 #include "handler/RequestHandler.h"
 
@@ -358,7 +358,7 @@ namespace amo {
         CefRequest::TransitionType type = request->GetTransitionType();
         
         //if ((unsigned int)type & TT_FORWARD_BACK_FLAG)
-        //	return true;  // ²»ÄÜÇ°½øÓëºóÍË
+        //	return true;  // ä¸èƒ½å‰è¿›ä¸ŽåŽé€€
         if (m_pMessageRouter) {
             m_pMessageRouter->OnBeforeBrowse(browser, frame);
         }

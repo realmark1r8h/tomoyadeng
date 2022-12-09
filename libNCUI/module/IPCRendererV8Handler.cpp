@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "module/IPCRendererV8Handler.h"
 #include "module/basic/TypeConvertor.h"
 #include <amo/json.hpp>
@@ -184,12 +184,12 @@ namespace amo {
         using MGR = BrowserManager < PID_RENDERER > ;
         CefRefPtr<CefBrowser> pBrowser = MGR::GetBrowserByID(nBrowserID);
         
-        // »ñÈ¡ËùÓĞFrameID
+        // è·å–æ‰€æœ‰FrameID
         std::vector<int64_t> vec;
         pBrowser->GetFrameIdentifiers(vec);
         
         int64_t nObjectID = args->getInt64(IPCArgsPosInfo::EventObjectID);
-        // »ñÈ¡ËùÓĞObjectIDÏàÍ¬µÄ¶ÔÏó
+        // è·å–æ‰€æœ‰ObjectIDç›¸åŒçš„å¯¹è±¡
         std::vector<std::pair<int64_t, CefRefPtr<CefV8Value> > > values;
         values = TypeConvertor::getClassObject(vec, nObjectID);
         
@@ -201,7 +201,7 @@ namespace amo {
         
         
         
-        // ±éÀú¶ÔÏó£¬´¥·¢ÊÂ¼ş
+        // éå†å¯¹è±¡ï¼Œè§¦å‘äº‹ä»¶
         for (size_t i = 0; i < values.size(); ++i) {
         
             CefRefPtr<CefV8Value> pValue = values[i].second;
@@ -235,12 +235,12 @@ namespace amo {
                               NULL,
                               list);
                               
-                // Èç¹û·µ»ØÒ»¸öundefined£¬ËµÃ÷Ã»ÓĞ¼àÌıµ±Ç°ÊÂ¼ş
+                // å¦‚æœè¿”å›ä¸€ä¸ªundefinedï¼Œè¯´æ˜æ²¡æœ‰ç›‘å¬å½“å‰äº‹ä»¶
                 if (!v8Value || v8Value->IsUndefined()) {
                     continue;
                 }
                 
-                // Õı³£Ó¦¸Ã·µ»ØÒ»¸öArray
+                // æ­£å¸¸åº”è¯¥è¿”å›ä¸€ä¸ªArray
                 if (!v8Value->IsArray()) {
                     continue;
                 }
@@ -253,7 +253,7 @@ namespace amo {
                               valArr.end(),
                               std::back_inserter(retArr));
                 } else {
-                    // Õâ¾ä´úÂë²»Ó¦¸Ã±»Ö´ĞĞ
+                    // è¿™å¥ä»£ç ä¸åº”è¯¥è¢«æ‰§è¡Œ
                     retArr.push_back(convertor.toAny(v8Value));
                 }
                 
@@ -299,7 +299,7 @@ namespace amo {
         CefRefPtr<CefBrowser> pBrowser = MGR::GetBrowserByID(nBrowserID);
         
         
-        // ÌØÊâ´¦ÀíÒ»ÏÂipcÏûÏ¢
+        // ç‰¹æ®Šå¤„ç†ä¸€ä¸‹ipcæ¶ˆæ¯
         std::string ncuiTriggerCustomEvent = args->getString(IPCArgsPosInfo::CustomEventName);
         
         if (ncuiTriggerCustomEvent == "ncuiTriggerCustomEvent") {
@@ -307,12 +307,12 @@ namespace amo {
         }
         
         
-        // »ñÈ¡ËùÓĞFrameID
+        // è·å–æ‰€æœ‰FrameID
         std::vector<int64_t> vec;
         pBrowser->GetFrameIdentifiers(vec);
         
         int64_t nObjectID = args->getInt64(IPCArgsPosInfo::EventObjectID);
-        // »ñÈ¡ËùÓĞObjectIDÏàÍ¬µÄ¶ÔÏó
+        // è·å–æ‰€æœ‰ObjectIDç›¸åŒçš„å¯¹è±¡
         std::vector<std::pair<int64_t, CefRefPtr<CefV8Value> > > values;
         values = TypeConvertor::getClassObject(vec, nObjectID);
         
@@ -324,7 +324,7 @@ namespace amo {
         
         CefRefPtr<CefV8Value> v8Value = CefV8Value::CreateUndefined();
         
-        // ±éÀú¶ÔÏó£¬´¥·¢ÊÂ¼ş
+        // éå†å¯¹è±¡ï¼Œè§¦å‘äº‹ä»¶
         for (size_t i = 0; i < values.size(); ++i) {
         
             CefRefPtr<CefV8Value> pValue = values[i].second;
@@ -388,10 +388,10 @@ namespace amo {
     }
     
     Any IPCRendererV8Handler::releaseAllTransfer(IPCMessage::SmartType msg) {
-        // ÏÈÍ¨ÖªÒ³Ãæ£¬Transfer±»ÒÆ³ı
+        // å…ˆé€šçŸ¥é¡µé¢ï¼ŒTransferè¢«ç§»é™¤
         //
         emitEventAllFrame(msg);
-        // ÔÙÉ¾³ıV8Handler»º´æ
+        // å†åˆ é™¤V8Handlerç¼“å­˜
         
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         int32_t nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
@@ -403,7 +403,7 @@ namespace amo {
             return Undefined();
         }
         
-        // »ñÈ¡ËùÓĞFrameID
+        // è·å–æ‰€æœ‰FrameID
         std::vector<int64_t> vec;
         pBrowser->GetFrameIdentifiers(vec);
         int64_t nObjectID = args->getInt64(IPCArgsPosInfo::EventObjectID);

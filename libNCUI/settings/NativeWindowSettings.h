@@ -1,4 +1,4 @@
-// Created by amoylel on 07/28/2017.
+ï»¿// Created by amoylel on 07/28/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_NATIVEWINDOWSETTINGS_H__
@@ -20,8 +20,8 @@ namespace amo {
      *
      * @unexport
      *
-     * @brief	´´½¨Ê±Ô­Éú´°¿Ú¿ÉÓÃ²ÎÊı.<br>
-     * 			ËµÃ÷£º**ÅäÖÃ²ÎÊı²»ÄÜÔÚ³ÌĞòÔËĞĞ¹ı³ÌÖĞĞŞ¸Ä£¬Ö»ÓĞ³ÌĞòÄÚ²¿º¯Êı¿ÉÒÔĞŞ¸ÄÕâĞ©Öµ¡£**
+     * @brief	åˆ›å»ºæ—¶åŸç”Ÿçª—å£å¯ç”¨å‚æ•°.<br>
+     * 			è¯´æ˜ï¼š**é…ç½®å‚æ•°ä¸èƒ½åœ¨ç¨‹åºè¿è¡Œè¿‡ç¨‹ä¸­ä¿®æ”¹ï¼Œåªæœ‰ç¨‹åºå†…éƒ¨å‡½æ•°å¯ä»¥ä¿®æ”¹è¿™äº›å€¼ã€‚**
      *
      * @sa	BasicSettings
      */
@@ -42,127 +42,127 @@ namespace amo {
         virtual amo::json toJson() override;
     public:
     
-        /*! @var #String=0 id	´°¿ÚID£¬ÓÉ³ÌĞòÉèÖÃ¸ÃÖµ£¬Äã²»Ó¦¸ÃĞŞ¸Ä¸ÃÖµ£¬µ±Í¨¹ıID {@link fromID=BrowserWindow.fromID}²éÕÒ´°¿ÚÊ±¿ÉÒÔÊ¹ÓÃ¸ÃÖµ {@tag const}. */
+        /*! @var #String=0 id	çª—å£IDï¼Œç”±ç¨‹åºè®¾ç½®è¯¥å€¼ï¼Œä½ ä¸åº”è¯¥ä¿®æ”¹è¯¥å€¼ï¼Œå½“é€šè¿‡ID {@link fromID=BrowserWindow.fromID}æŸ¥æ‰¾çª—å£æ—¶å¯ä»¥ä½¿ç”¨è¯¥å€¼ {@tag const}. */
         std::string id;
         
-        /*! @var #String=Chromium{&nbsp;}Embedded{&nbsp;}Framework{&nbsp;}(CEF) name	´°¿ÚÃû£¬µ±Í¨¹ıÃû³Æ{@link fromName=BrowserWindow.fromName}²éÕÒ´°¿ÚÊ±¿ÉÒÔÊ¹ÓÃ¸ÃÖµ£¬Èç¹ûÏëÒªÍ¨¹ıÃû³Æ²éÕÒ´°¿Ú£¬ÄÇÃ´Õâ¸öÖµÓ¦¸Ã±»ÉèÖÃ³ÉÎ¨Ò»µÄ£¬Ä¬ÈÏÎªChromium Embedded Framework (CEF) */
+        /*! @var #String=Chromium{&nbsp;}Embedded{&nbsp;}Framework{&nbsp;}(CEF) name	çª—å£åï¼Œå½“é€šè¿‡åç§°{@link fromName=BrowserWindow.fromName}æŸ¥æ‰¾çª—å£æ—¶å¯ä»¥ä½¿ç”¨è¯¥å€¼ï¼Œå¦‚æœæƒ³è¦é€šè¿‡åç§°æŸ¥æ‰¾çª—å£ï¼Œé‚£ä¹ˆè¿™ä¸ªå€¼åº”è¯¥è¢«è®¾ç½®æˆå”¯ä¸€çš„ï¼Œé»˜è®¤ä¸ºChromium Embedded Framework (CEF) */
         std::string name;
         
-        /*! @var #String=NULL parent	µ±Ç°´°¿ÚµÄ¸¸´°¿Ú£¬´´½¨´°¿ÚÊ±ÉèÖÃ. {@tag const}*/
+        /*! @var #String=NULL parent	å½“å‰çª—å£çš„çˆ¶çª—å£ï¼Œåˆ›å»ºçª—å£æ—¶è®¾ç½®. {@tag const}*/
         std::string parent;
         
-        /*! @var #String=Chromium{&nbsp;}Embedded{&nbsp;}Framework{&nbsp;}(CEF) title	´°¿Ú±êÌâ£¨Äã¿ÉÒÔÔÚÈÎºÎ´°¿ÚÔ¤ÀÀµÄµØ·½¿´µ½¸ÃÖµ£¬ÈçÈÎÎñÀ¸£¬ÈÎÎñ¹ÜÀíÆ÷£©£¬Ä¬ÈÏÎªChromium Embedded Framework (CEF),³ÌĞò»á¸ù¾İÒ³ÃæµÄtitle±êÇ©ÄÚÈİ×Ô¼ºĞŞ¸Ä¸ÃÖµ. */
+        /*! @var #String=Chromium{&nbsp;}Embedded{&nbsp;}Framework{&nbsp;}(CEF) title	çª—å£æ ‡é¢˜ï¼ˆä½ å¯ä»¥åœ¨ä»»ä½•çª—å£é¢„è§ˆçš„åœ°æ–¹çœ‹åˆ°è¯¥å€¼ï¼Œå¦‚ä»»åŠ¡æ ï¼Œä»»åŠ¡ç®¡ç†å™¨ï¼‰ï¼Œé»˜è®¤ä¸ºChromium Embedded Framework (CEF),ç¨‹åºä¼šæ ¹æ®é¡µé¢çš„titleæ ‡ç­¾å†…å®¹è‡ªå·±ä¿®æ”¹è¯¥å€¼. */
         std::string title;
         
-        /*! @var #String="" icon	´°¿ÚÍ¼±ê£¬Ä¬ÈÏÎª¿Õ. */
+        /*! @var #String="" icon	çª—å£å›¾æ ‡ï¼Œé»˜è®¤ä¸ºç©º. */
         std::string icon;
         
-        /*! @var #Boolean=false titleBar	ÊÇ·ñÏÔÊ¾±êÌâÀ¸. */
+        /*! @var #Boolean=false titleBar	æ˜¯å¦æ˜¾ç¤ºæ ‡é¢˜æ . */
         bool titleBar;
         
-        /*! @var #String=chrome://version url	ĞèÒª´ò¿ªµÄÍøÒ³µØÖ·.{@tag const} */
+        /*! @var #String=chrome://version url	éœ€è¦æ‰“å¼€çš„ç½‘é¡µåœ°å€.{@tag const} */
         std::string url;
         
-        /*! @var #String=2,2,2,2 sizebox	 ¿ÉÒÔ±»ÍÏ¶¯¸Ä±ä´°¿Ú´óĞ¡µÄ±ß¿ò¾à.{@tag const} */
+        /*! @var #String=2,2,2,2 sizebox	 å¯ä»¥è¢«æ‹–åŠ¨æ”¹å˜çª—å£å¤§å°çš„è¾¹æ¡†è·.{@tag const} */
         std::string sizebox;
         
-        /*! @var #Int=0 roundcorner	 ´°¿ÚÔ²½Ç.{@tag const} */
+        /*! @var #Int=0 roundcorner	 çª—å£åœ†è§’.{@tag const} */
         int roundcorner;
         
-        /** @var #String=BrowserWindow windowClass	´°¿ÚÀàÃû.{@tag const} */
+        /** @var #String=BrowserWindow windowClass	çª—å£ç±»å.{@tag const} */
         std::string windowClass;
         
-        /*! @var #Boolean=false modal	µ±Ç°´°¿ÚÊÇ·ñÎªÄ£Ì¬´°¿Ú£¬Èç¹ûÊÇÄÇÃ´ÔÚµ±Ç°´°¿ÚÖ®ºóËù´´½¨µÄ´°¿Ú¶¼ÊÇÄ£Ì¬´°¿Ú£¬²»¹ÜÓĞÃ»ÓĞÖ¸¶¨modal=true {@tag const}. */
+        /*! @var #Boolean=false modal	å½“å‰çª—å£æ˜¯å¦ä¸ºæ¨¡æ€çª—å£ï¼Œå¦‚æœæ˜¯é‚£ä¹ˆåœ¨å½“å‰çª—å£ä¹‹åæ‰€åˆ›å»ºçš„çª—å£éƒ½æ˜¯æ¨¡æ€çª—å£ï¼Œä¸ç®¡æœ‰æ²¡æœ‰æŒ‡å®šmodal=true {@tag const}. */
         bool modal;
         
-        /*! @var #Boolean=true	 show ´´½¨Ê±ÊÇ·ñÏÔÊ¾´°¿Ú. */
+        /*! @var #Boolean=true	 show åˆ›å»ºæ—¶æ˜¯å¦æ˜¾ç¤ºçª—å£. */
         bool show;
         
-        /*! @var #Boolean=true	 center ´´½¨Ê±´°¿ÚÊÇ·ñ¾ÓÖĞ{@tag const}. */
+        /*! @var #Boolean=true	 center åˆ›å»ºæ—¶çª—å£æ˜¯å¦å±…ä¸­{@tag const}. */
         bool center;
         
-        /*! @var #Boolean=true	adjustPos ÊÇ·ñÔÊĞíµ÷Õû´°¿ÚÎ»ÖÃ. */
+        /*! @var #Boolean=true	adjustPos æ˜¯å¦å…è®¸è°ƒæ•´çª—å£ä½ç½®. */
         bool adjustPos;
         
-        /*! @var #Int=0 x ´°¿Ú´´½¨Ê±µÄXÖá×ø±ê, adjustPos = true && center = falseÊ±ÓĞĞ§. */
+        /*! @var #Int=0 x çª—å£åˆ›å»ºæ—¶çš„Xè½´åæ ‡, adjustPos = true && center = falseæ—¶æœ‰æ•ˆ. */
         int x;
         
-        /*! @var #Int=0	 y ´°¿Ú´´½¨Ê±µÄYÖá×ø±ê, adjustPos = true && center = falseÊ±ÓĞĞ§. */
+        /*! @var #Int=0	 y çª—å£åˆ›å»ºæ—¶çš„Yè½´åæ ‡, adjustPos = true && center = falseæ—¶æœ‰æ•ˆ. */
         int y;
         
-        /*! @var #Int=1280 width	´°¿Ú¿í¶È. */
+        /*! @var #Int=1280 width	çª—å£å®½åº¦. */
         int width;
         
-        /*! @var #Int=720 height 	´°¿Ú¸ß¶È. */
+        /*! @var #Int=720 height 	çª—å£é«˜åº¦. */
         int height;
         
-        /*! @var #Int=0 minWidth	´°¿Ú×îĞ¡¿í¶È£¬Îª0Ê±²»ÏŞÖÆ. */
+        /*! @var #Int=0 minWidth	çª—å£æœ€å°å®½åº¦ï¼Œä¸º0æ—¶ä¸é™åˆ¶. */
         int minWidth;
         
-        /*! @var #Int=0 minHeight	´°¿Ú×îĞ¡¿í¶È£¬Îª0Ê±²»ÏŞÖÆ. */
+        /*! @var #Int=0 minHeight	çª—å£æœ€å°å®½åº¦ï¼Œä¸º0æ—¶ä¸é™åˆ¶. */
         int minHeight;
         
-        /*! @var #Int=0 maxWidth	´°¿Ú×îĞ¡¿í¶È£¬Îª0Ê±²»ÏŞÖÆ. */
+        /*! @var #Int=0 maxWidth	çª—å£æœ€å°å®½åº¦ï¼Œä¸º0æ—¶ä¸é™åˆ¶. */
         int maxWidth;
         
-        /*! @var #Int=0 maxHeight	´°¿Ú×îĞ¡¿í¶È£¬Îª0Ê±²»ÏŞÖÆ. */
+        /*! @var #Int=0 maxHeight	çª—å£æœ€å°å®½åº¦ï¼Œä¸º0æ—¶ä¸é™åˆ¶. */
         int maxHeight;
         
-        /*! @var #Boolean=true resizable 	ÊÇ·ñ¿ÉÒÔ¸Ä±ä´°¿Ú´óĞ¡. */
+        /*! @var #Boolean=true resizable 	æ˜¯å¦å¯ä»¥æ”¹å˜çª—å£å¤§å°. */
         bool resizable;
         
-        /*! @var #Boolean=true	moveable ÊÇ·ñ¿ÉÒÔÒÆ¶¯´°¿Ú. */
+        /*! @var #Boolean=true	moveable æ˜¯å¦å¯ä»¥ç§»åŠ¨çª—å£. */
         bool moveable;
         
-        /*! @var #Boolean=true minimizable	ÊÇ·ñ¿ÉÒÔ×îĞ¡»¯´°¿Ú. */
+        /*! @var #Boolean=true minimizable	æ˜¯å¦å¯ä»¥æœ€å°åŒ–çª—å£. */
         bool minimizable;
         
-        /*! @var #Boolean=true	maximizable ÊÇ·ñÒªÒÔ×î´ó»¯´°¿Ú£¬Èç¹ûresizable==false, maximizable»á±»ÖØÖÃÎªtrue, ²»¹ÜÖ®Ç°´«ÈëµÄÊÇÊ²Ã´Öµ. */
+        /*! @var #Boolean=true	maximizable æ˜¯å¦è¦ä»¥æœ€å¤§åŒ–çª—å£ï¼Œå¦‚æœresizable==false, maximizableä¼šè¢«é‡ç½®ä¸ºtrue, ä¸ç®¡ä¹‹å‰ä¼ å…¥çš„æ˜¯ä»€ä¹ˆå€¼. */
         bool maximizable;
         
-        /*! @var #Boolean=true	fullscreenable ÊÇ·ñÒªÒÔÈ«ÆÁ´°¿Ú. */
+        /*! @var #Boolean=true	fullscreenable æ˜¯å¦è¦ä»¥å…¨å±çª—å£. */
         bool fullscreenable;
         
-        /*! @var #Boolean=true	closable ÊÇ·ñÒªÒÔ¹Ø±Õ´°¿Ú. */
+        /*! @var #Boolean=true	closable æ˜¯å¦è¦ä»¥å…³é—­çª—å£. */
         bool closable;
         
-        /*! @var #Boolean=false fullscreen	ÊÇ·ñÒÔÈ«ÆÁµÄ·½Ê½Æô¶¯´°¿Ú. */
+        /*! @var #Boolean=false fullscreen	æ˜¯å¦ä»¥å…¨å±çš„æ–¹å¼å¯åŠ¨çª—å£. */
         bool fullscreen;
         
-        // @var #Boolean=false skipTaskbar	Ã»Ê²Ã´ÓÃ.
+        // @var #Boolean=false skipTaskbar	æ²¡ä»€ä¹ˆç”¨.
         bool skipTaskbar;
         
-        /*! @brief #Boolean=false alwaysOnTop	ÊÇ·ñ±£³Ö´°¿ÚÇ°¶ËÏÔÊ¾. */
+        /*! @brief #Boolean=false alwaysOnTop	æ˜¯å¦ä¿æŒçª—å£å‰ç«¯æ˜¾ç¤º. */
         bool alwaysOnTop;
         
-        /*! @var #Boolean=false offscreen	ÊÇ·ñÊ¹ÓÃÀëÆÁÄ£Ê½´´½¨´°¿Ú{@tag const}. */
+        /*! @var #Boolean=false offscreen	æ˜¯å¦ä½¿ç”¨ç¦»å±æ¨¡å¼åˆ›å»ºçª—å£{@tag const}. */
         bool offscreen;
         
-        /*! @brief #Boolean=false accelerator ÊÇ·ñÊ¹ÓÃGPUäÖÈ¾´°¿Ú£¬offscreen=trueÊÇÓĞĞ§£¬ĞèÒªDrect2DÖ§³Ö{@tag const}. */
+        /*! @brief #Boolean=false accelerator æ˜¯å¦ä½¿ç”¨GPUæ¸²æŸ“çª—å£ï¼Œoffscreen=trueæ˜¯æœ‰æ•ˆï¼Œéœ€è¦Drect2Dæ”¯æŒ{@tag const}. */
         bool accelerator;
         
-        /*! @var #Boolean=false transparent ÊÇ·ñÊ¹ÓÃÍ¸Ã÷´°¿Ú£¬offscreen=trueÊ±ÓĞĞ§{@tag const}. */
+        /*! @var #Boolean=false transparent æ˜¯å¦ä½¿ç”¨é€æ˜çª—å£ï¼Œoffscreen=trueæ—¶æœ‰æ•ˆ{@tag const}. */
         bool transparent;
         
         /*! @brief	The window color. */
         uint32_t windowColor;
         
-        /*! @var #Boolean=false hasShadow	ÊÇ·ñÏÔÊ¾´°¿ÚÒõÓ°. */
+        /*! @var #Boolean=false hasShadow	æ˜¯å¦æ˜¾ç¤ºçª—å£é˜´å½±. */
         bool hasShadow;
         
-        /*! @var #Boolean=true	focusable ÊÇ·ñÔÊĞí´°¿Ú»ñµÃ½¹µã. */
+        /*! @var #Boolean=true	focusable æ˜¯å¦å…è®¸çª—å£è·å¾—ç„¦ç‚¹. */
         bool focusable;
         
-        /*! @var #Boolean=false esc	ÊÇ·ñÔÊĞíESC¹Ø±Õ´°¿Ú. */
+        /*! @var #Boolean=false esc	æ˜¯å¦å…è®¸ESCå…³é—­çª—å£. */
         bool esc;
         
-        /** @var #Boolean=false back_forword	ÊÇ·ñÔÊĞíÇ°½øºóÍË{@tag const}. */
+        /** @var #Boolean=false back_forword	æ˜¯å¦å…è®¸å‰è¿›åé€€{@tag const}. */
         bool back_forword;
         
-        /*! @var #Boolean=false disable_ime ÊÇ·ñ½ûÓÃÊäÈë·¨. */
+        /*! @var #Boolean=false disable_ime æ˜¯å¦ç¦ç”¨è¾“å…¥æ³•. */
         bool disable_ime;
         
-        /*! @var #Boolean=false compute_cursor ¼ÆËã¹â±êÎ»ÖÃ£¬offscreen=trueÊ±ÓĞĞ§. */
+        /*! @var #Boolean=false compute_cursor è®¡ç®—å…‰æ ‡ä½ç½®ï¼Œoffscreen=trueæ—¶æœ‰æ•ˆ. */
         bool compute_cursor;
     };
 }

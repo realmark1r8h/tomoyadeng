@@ -1,4 +1,4 @@
-// Created by amoylel on 13/02/2018.
+﻿// Created by amoylel on 13/02/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBNCUI_IPCMESSAGEEMITTER_4F56D4BA_5285_441E_AA3B_D0D84CA2D726_HPP__

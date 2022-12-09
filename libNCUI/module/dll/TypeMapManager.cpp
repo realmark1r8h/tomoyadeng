@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "module/dll/TypeMapManager.h"
 
 namespace amo {

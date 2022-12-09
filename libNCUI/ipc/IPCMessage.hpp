@@ -1,4 +1,4 @@
-// Created by amoylel on 06/13/2017.
+ï»¿// Created by amoylel on 06/13/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_CONSTANTS_HPP__
@@ -8,106 +8,106 @@
 
 
 #define WM_CUSTOM_MESSAGE_BEGIN (WM_USER + 1000)
-// ½øÈëÈ«ÆÁ
+// è¿›å…¥å…¨å±
 #define WM_ENTER_FULLSCREEN (WM_CUSTOM_MESSAGE_BEGIN + 1)
-// Àë¿ªÈ«ÆÁ
+// ç¦»å¼€å…¨å±
 #define WM_LEAVE_FULLSCREEN (WM_CUSTOM_MESSAGE_BEGIN + 2)
-// ´°¿Ú´´½¨³É¹¦
+// çª—å£åˆ›å»ºæˆåŠŸ
 #define WM_WINDOW_CREATED (WM_CUSTOM_MESSAGE_BEGIN + 3)
-// ¹ÜÀí´´½¨³É¹¦
+// ç®¡ç†åˆ›å»ºæˆåŠŸ
 #define WM_IPC_READY (WM_CUSTOM_MESSAGE_BEGIN + 4)
 
 namespace amo {
 
-    /*! @brief	Í¨ÖªÖ÷½ø³Ì¹ÜµÀÒÑ¾­×¼±¸ºÃ£¬¿ÉÒÔ½øĞĞ¹ÜµÀÍ¨ĞÅÁË. */
+    /*! @brief	é€šçŸ¥ä¸»è¿›ç¨‹ç®¡é“å·²ç»å‡†å¤‡å¥½ï¼Œå¯ä»¥è¿›è¡Œç®¡é“é€šä¿¡äº†. */
     static const std::string MSG_IPC_READY = "IPCReady";
-    /*! @brief	´´½¨äÖÈ¾½ø³Ì¿Í»§¶ËPipeÓÉäÖÈ¾½ø³Ì·¢ËÍ£¬Ö÷½ø³Ì½ÓÊÕ´¦Àí. */
+    /*! @brief	åˆ›å»ºæ¸²æŸ“è¿›ç¨‹å®¢æˆ·ç«¯Pipeç”±æ¸²æŸ“è¿›ç¨‹å‘é€ï¼Œä¸»è¿›ç¨‹æ¥æ”¶å¤„ç†. */
     static const std::string MSG_CREATE_PIPE_CLIENT	 = "CreatePipeClient";
-    /*! @brief	ÈÕÖ¾ÏûÏ¢. */
+    /*! @brief	æ—¥å¿—æ¶ˆæ¯. */
     static const std::string MSG_LOG_MESSAGE		 = "LogMessage";
-    /*! @brief	ÉèÖÃÊÇ·ñÔÊĞíÇ°½øºóÍË. */
+    /*! @brief	è®¾ç½®æ˜¯å¦å…è®¸å‰è¿›åé€€. */
     static const std::string MSG_ENABLE_BACK_FORWORD = "EnableBackForword";
-    /*! @brief	Ö±½Óµ÷ÓÃC++»òJS. */
+    /*! @brief	ç›´æ¥è°ƒç”¨C++æˆ–JS. */
     static const std::string MSG_NATIVE_EXECUTE		 = "NativeExecute";
-    /*! @brief	Í¬²½µ÷ÓÃC++»òJS. */
+    /*! @brief	åŒæ­¥è°ƒç”¨C++æˆ–JS. */
     static const std::string MSG_NATIVE_SYNC_EXECUTE = "NativesyncExecute";
-    /*! @brief	Òì²½µ÷ÓÃC++»òJS. */
+    /*! @brief	å¼‚æ­¥è°ƒç”¨C++æˆ–JS. */
     static const std::string MSG_NATIVE_ASYNC_EXECUTE = "NativeasyncExecute";
-    /*! @brief	Í¨Öª¶Ô·½´¦ÀíÍ¬²½Êı¾İ. */
+    /*! @brief	é€šçŸ¥å¯¹æ–¹å¤„ç†åŒæ­¥æ•°æ®. */
     static const std::string MSG_PROCESS_SYNC_EXECUTE = "ProcesssyncExecute";
-    /*! @brief	½¹µã·¢Éú¸Ä±äÊ±´¥·¢. */
+    /*! @brief	ç„¦ç‚¹å‘ç”Ÿæ”¹å˜æ—¶è§¦å‘. */
     static const std::string MSG_FOCUSED_NODE_CHANGED = "focusedNodeChanged";
     
     static const std::string MSG_BROWSER_SETTINGS = "browserSettings";
     
-    /*! @brief	Ä¬ÈÏ¹ÜµÀ´óĞ¡. */
+    /*! @brief	é»˜è®¤ç®¡é“å¤§å°. */
     static const int DefaultPipeSize = 2000000;
     
-    /*! @brief	äÖÈ¾½ø³Ì¹ÜµÀÇ°×º. */
+    /*! @brief	æ¸²æŸ“è¿›ç¨‹ç®¡é“å‰ç¼€. */
     static const std::string RendererPipePrefix = "render_pipe_name_";
-    /*! @brief	Ö÷½ø³Ì¹ÜµÀÇ°×º. */
+    /*! @brief	ä¸»è¿›ç¨‹ç®¡é“å‰ç¼€. */
     static const std::string BrowserPipePrefix = "browser_pipe_name_";
     
-    /*! @brief	¹ÜµÀÏûÏ¢Í·²¿. */
+    /*! @brief	ç®¡é“æ¶ˆæ¯å¤´éƒ¨. */
     static const char PipeMessageHeader = 'a';
-    /*! @brief	¹ÜµÀÏûÏ¢Î²²¿. */
+    /*! @brief	ç®¡é“æ¶ˆæ¯å°¾éƒ¨. */
     static const char PipeMessageTail = 'z';
     
-    // ÏûÏ¢¸÷²ÎÊıËùÔÚÎ»ÖÃ
+    // æ¶ˆæ¯å„å‚æ•°æ‰€åœ¨ä½ç½®
     class IPCArgsPosInfo {
     public:
-        /*! @brief	ÏûÏ¢²ÎÊıµÄÆğÊ¼Î»ÖÃ. */
+        /*! @brief	æ¶ˆæ¯å‚æ•°çš„èµ·å§‹ä½ç½®. */
         const static int MessageArgs = 0;
-        /*! @brief	ÏûÏ¢Ãû³ÆËùÔÚÎ»ÖÃ. */
+        /*! @brief	æ¶ˆæ¯åç§°æ‰€åœ¨ä½ç½®. */
         const static int FuncName = 10;
         
-        /*! @brief	×Ô¶¨Òå²ÎÊıµÄÆğÊ¼Î»ÖÃ. */
+        /*! @brief	è‡ªå®šä¹‰å‚æ•°çš„èµ·å§‹ä½ç½®. */
         const static int CustomArgs = 11;
         
-        /*! @brief	×Ô¶¨ÒåÊÂ¼şÃû³Æ. */
+        /*! @brief	è‡ªå®šä¹‰äº‹ä»¶åç§°. */
         const static int CustomEventName = 18;
         
-        /*! @brief	TransferÀàÃûÎ»ÖÃ. */
+        /*! @brief	Transferç±»åä½ç½®. */
         const static int TransferName = 11;
-        /*! @brief	TransferIDÎ»ÖÃ. */
+        /*! @brief	TransferIDä½ç½®. */
         const static int TransferID = 12;
         
-        /*! @brief	ĞèÒª´¥·¢ÊÂ¼şµÄEventEmittter ID. */
+        /*! @brief	éœ€è¦è§¦å‘äº‹ä»¶çš„EventEmittter ID. */
         const static int EventObjectID = 14;
-        /*! @brief	JavaScript º¯ÊıÃû Ïàµ±ÓÚ×Ô¶¨Òå²ÎÊıÀïÃæµÄÒ»¸ö. */
+        /*! @brief	JavaScript å‡½æ•°å ç›¸å½“äºè‡ªå®šä¹‰å‚æ•°é‡Œé¢çš„ä¸€ä¸ª. */
         const static int JsFuncName = 13;
         
         
-        /*! @brief	¶¯Ì¬¿âÃû. */
+        /*! @brief	åŠ¨æ€åº“å. */
         const static int DllName = 11;
-        /*! @brief	¶¯Ì¬¿âº¯ÊıÃû. */
+        /*! @brief	åŠ¨æ€åº“å‡½æ•°å. */
         const static int DllFuncName = 12;
-        /*! @brief	¶¯Ì¬¿âº¯Êı·µ»ØÖµÀàĞÍ. */
+        /*! @brief	åŠ¨æ€åº“å‡½æ•°è¿”å›å€¼ç±»å‹. */
         const static int DllRetalType = 13;
         
-        /** @brief	ÒªÔÚÏß³ÌÖĞÖ´ĞĞµÄTransfer Name. */
+        /** @brief	è¦åœ¨çº¿ç¨‹ä¸­æ‰§è¡Œçš„Transfer Name. */
         const static int ThreadTransferName = 15;
         
-        /** @brief	ÒªÔÚÏß³ÌÖĞÖ´ĞĞµÄTransfer ID. */
+        /** @brief	è¦åœ¨çº¿ç¨‹ä¸­æ‰§è¡Œçš„Transfer ID. */
         const static int ThreadTransferID = 16;
         
-        /** @brief	ÒªÔÚÏß³ÌÖĞÖ´ĞĞµÄº¯ÊıÃû. */
+        /** @brief	è¦åœ¨çº¿ç¨‹ä¸­æ‰§è¡Œçš„å‡½æ•°å. */
         const static int ThreadTransferFuncName = 17;
         
-        /** @brief	¿ç½ø³Ìµ÷ÓÃ±êÖ¾1±íÊ¾Ö»ÔÚµ±Ç°½ø³ÌÖĞÖ´ĞĞ£¬0±íÊ¾¿ç½ø³Ìµ÷ÓÃ. */
+        /** @brief	è·¨è¿›ç¨‹è°ƒç”¨æ ‡å¿—1è¡¨ç¤ºåªåœ¨å½“å‰è¿›ç¨‹ä¸­æ‰§è¡Œï¼Œ0è¡¨ç¤ºè·¨è¿›ç¨‹è°ƒç”¨. */
         const static int CrossProcessFlag = 22;
         
-        /*! @brief	Òì²½µ÷ÓÃÊ±»Øµ÷º¯ÊıÎ»ÖÃ. */
+        /*! @brief	å¼‚æ­¥è°ƒç”¨æ—¶å›è°ƒå‡½æ•°ä½ç½®. */
         const static int AsyncCallback = 23;
-        /*! @brief	ÏûÏ¢ÁĞ±íÖĞ±£´æBrowserIDµÄÎ»ÖÃ. */
+        /*! @brief	æ¶ˆæ¯åˆ—è¡¨ä¸­ä¿å­˜BrowserIDçš„ä½ç½®. */
         const static int BrowserID = 24;
-        /*! @brief	ÏûÏ¢ÁĞ±íÖĞ±£´æFrameIDµÄÎ»ÖÃ. */
+        /*! @brief	æ¶ˆæ¯åˆ—è¡¨ä¸­ä¿å­˜FrameIDçš„ä½ç½®. */
         const static int FrameID = 25;
-        /*! @brief	ÏûÏ¢ÁĞ±íÖĞ±£´æ²ÎÊıÁĞ±í³¤¶ÈµÄÎ»ÖÃ. */
+        /*! @brief	æ¶ˆæ¯åˆ—è¡¨ä¸­ä¿å­˜å‚æ•°åˆ—è¡¨é•¿åº¦çš„ä½ç½®. */
         const static int ArgsLength = 26;
-        /*! @brief	ÏûÏ¢ID. */
+        /*! @brief	æ¶ˆæ¯ID. */
         const static int MessageID = 27;
-        /*! @brief	²ÎÊıÁĞ±í×î´ó³¤¶È[0,16]. */
+        /*! @brief	å‚æ•°åˆ—è¡¨æœ€å¤§é•¿åº¦[0,16]. */
         const static int MaxLength = 28;
     };
     

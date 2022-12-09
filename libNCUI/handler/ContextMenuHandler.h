@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_CONTEXTMENUHANDLER_H__
@@ -13,7 +13,7 @@ namespace amo {
     /*!
      * @class	ContextMenuHandlerDelegate
      *
-     * @brief	¼Ì³Ğ¸ÃÀà´¦Àí²Ëµ¥ÊÂ¼ş£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	ç»§æ‰¿è¯¥ç±»å¤„ç†èœå•äº‹ä»¶ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class ContextMenuHandlerDelegate {
@@ -47,7 +47,7 @@ namespace amo {
     /*!
      * @class	ContextMenuHandler
      *
-     * @brief	²Ëµ¥ÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	èœå•äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class ContextMenuHandler : public CefContextMenuHandler
@@ -66,7 +66,7 @@ namespace amo {
          * 		CefRefPtr<CefContextMenuParams> params,
          * 		CefRefPtr<CefMenuModel> model);
          *
-         * @brief	²Ëµ¥ÏÔÊ¾Ç°´¥·¢¸Ãº¯Êı£¬ÓÃÓÚ¶¨ÖÆ²Ëµ¥
+         * @brief	èœå•æ˜¾ç¤ºå‰è§¦å‘è¯¥å‡½æ•°ï¼Œç”¨äºå®šåˆ¶èœå•
          * 			B UI.
          *
          * @param	browser	The browser.
@@ -88,7 +88,7 @@ namespace amo {
          * 		int command_id,
          * 		EventFlags event_flags);
          *
-         * @brief	Ö´ĞĞ²Ëµ¥ÃüÁîÊ±´¥·¢
+         * @brief	æ‰§è¡Œèœå•å‘½ä»¤æ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser	   	The browser.
@@ -111,7 +111,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		CefRefPtr<CefFrame> frame);
          *
-         * @brief	²Ëµ¥ÊÂ¼şÍê³ÉÊ±»Øµ÷°üÀ¨¿Õ²Ëµ¥»ò²Ëµ¥ÃüÁî±»Ñ¡ÖĞºó»Øµ÷
+         * @brief	èœå•äº‹ä»¶å®Œæˆæ—¶å›è°ƒåŒ…æ‹¬ç©ºèœå•æˆ–èœå•å‘½ä»¤è¢«é€‰ä¸­åå›è°ƒ
          * 			B UI.
          *
          * @param	browser	The browser.

@@ -1,4 +1,4 @@
-// Created by amoylel on 06/26/2017.
+ï»¿// Created by amoylel on 06/26/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_GLOBALSHORTCUTTRANSFER_H__
@@ -15,8 +15,8 @@ namespace amo {
      *
      * @extend Object
      *
-     * @brief	È«¾Ö¿ì½İ¼ü.<br>
-     * 			¹¤×÷Ïß³Ì **UIÏß³Ì**
+     * @brief	å…¨å±€å¿«æ·é”®.<br>
+     * 			å·¥ä½œçº¿ç¨‹ **UIçº¿ç¨‹**
      */
     
     class GlobalShortcutTransfer
@@ -31,11 +31,11 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	Í¨¹ı×éºÏ¼ü×¢²á¿ì½İ¼ü.
+         * @brief	é€šè¿‡ç»„åˆé”®æ³¨å†Œå¿«æ·é”®.
          *
-         * @param	#String ×Ö·û´®.
+         * @param	#String å­—ç¬¦ä¸².
          *
-         * @return	#Int ¿ì½İ¼üID £¬ µ±·µ»ØÖµÎª0Ê±±íÊ¾×¢²áÊ§°Ü.
+         * @return	#Int å¿«æ·é”®ID ï¼Œ å½“è¿”å›å€¼ä¸º0æ—¶è¡¨ç¤ºæ³¨å†Œå¤±è´¥.
          * @example
          *
         		```
@@ -52,18 +52,18 @@ namespace amo {
         *
         * @tag static sync
         *
-        * @brief	×¢²á¿ì½İ¼ü.
+        * @brief	æ³¨å†Œå¿«æ·é”®.
         *
-        * @param	#JsonObject ×Ö·û´®.<br>
-        * 						[**Boolean**] ctrl		¼üÅÌÉÏµÄCTRL°´¼ü£¬Ä¬ÈÏÎªfalse, ¶ÔÓ¦×Ö·û´®MOD_CONTROL.<br>
-        * 						[**Boolean**] win		¼üÅÌÉÏµÄWIN°´¼ü£¬Ä¬ÈÏÎªfalse, ¶ÔÓ¦×Ö·û´®MOD_WIN.<br>
-        * 						[**Boolean**] alt		¼üÅÌÉÏµÄALT°´¼ü£¬Ä¬ÈÏÎªfalse, ¶ÔÓ¦×Ö·û´®MOD_ALT.<br>
-        * 						[**Boolean**] shift		¼üÅÌÉÏµÄSHIFT°´¼ü£¬Ä¬ÈÏÎªfalse, ¶ÔÓ¦×Ö·û´®MOD_SHIFT.<br>
-        * 						[**String**]  key		¼üÅÌÉÏµÄ×ÖÄ¸»òÊı×Ö°´¼ü£¬Ò»¸ö×Ö·û.<br>
-        * 						[**String**]  action	µ±Ç°¿ì½İ¼üËù´¥·¢µÄ{@link Ô¤¶¨ÒåÊÂ¼ş=Ô¤ÖÃÊÂ¼ş}.<br>
+        * @param	#JsonObject å­—ç¬¦ä¸².<br>
+        * 						[**Boolean**] ctrl		é”®ç›˜ä¸Šçš„CTRLæŒ‰é”®ï¼Œé»˜è®¤ä¸ºfalse, å¯¹åº”å­—ç¬¦ä¸²MOD_CONTROL.<br>
+        * 						[**Boolean**] win		é”®ç›˜ä¸Šçš„WINæŒ‰é”®ï¼Œé»˜è®¤ä¸ºfalse, å¯¹åº”å­—ç¬¦ä¸²MOD_WIN.<br>
+        * 						[**Boolean**] alt		é”®ç›˜ä¸Šçš„ALTæŒ‰é”®ï¼Œé»˜è®¤ä¸ºfalse, å¯¹åº”å­—ç¬¦ä¸²MOD_ALT.<br>
+        * 						[**Boolean**] shift		é”®ç›˜ä¸Šçš„SHIFTæŒ‰é”®ï¼Œé»˜è®¤ä¸ºfalse, å¯¹åº”å­—ç¬¦ä¸²MOD_SHIFT.<br>
+        * 						[**String**]  key		é”®ç›˜ä¸Šçš„å­—æ¯æˆ–æ•°å­—æŒ‰é”®ï¼Œä¸€ä¸ªå­—ç¬¦.<br>
+        * 						[**String**]  action	å½“å‰å¿«æ·é”®æ‰€è§¦å‘çš„{@link é¢„å®šä¹‰äº‹ä»¶=é¢„ç½®äº‹ä»¶}.<br>
         *
         *
-        * @return	#Int ¿ì½İ¼üID£¬ µ±·µ»ØÖµÎª0Ê±±íÊ¾×¢²áÊ§°Ü.
+        * @return	#Int å¿«æ·é”®IDï¼Œ å½“è¿”å›å€¼ä¸º0æ—¶è¡¨ç¤ºæ³¨å†Œå¤±è´¥.
         *
         * @example
         *
@@ -71,7 +71,7 @@ namespace amo {
         			include('globalShortcut');
         			var hotkey = globalShortcut.registerShortcut({ ctrl: true, alt: true, key: 'O', action: 'toggleVisible' });
         			console.log(hotkey);
-        			// °´ÏÂCtrl+Atl+O¿ÉÒÔÏÔÊ¾»òÒş²Øµ±Ç°´°¿Ú
+        			// æŒ‰ä¸‹Ctrl+Atl+Oå¯ä»¥æ˜¾ç¤ºæˆ–éšè—å½“å‰çª—å£
         			console.assert(hotkey != 0);
         
         			```
@@ -84,11 +84,11 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	Í¨¹ıIDÅĞ¶Ï¿ì½İ¼üÊÇ·ñ×¢²á.
+         * @brief	é€šè¿‡IDåˆ¤æ–­å¿«æ·é”®æ˜¯å¦æ³¨å†Œ.
          *
-         * @param	#Int ¿ì½İ¼üID.
+         * @param	#Int å¿«æ·é”®ID.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -103,11 +103,11 @@ namespace amo {
         /*!
         * @fn	Any GlobalShortcutTransfer::isRegistered(IPCMessage::SmartType msg);
         * @tag static
-        * @brief	Í¨¹ı×éºÏ¼üÅĞ¶Ï¿ì½İ¼üÊÇ·ñ×¢²á.
+        * @brief	é€šè¿‡ç»„åˆé”®åˆ¤æ–­å¿«æ·é”®æ˜¯å¦æ³¨å†Œ.
         *
-        * @param	#String ×éºÏ¼ü.
+        * @param	#String ç»„åˆé”®.
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         * @example
         *
         			```
@@ -123,11 +123,11 @@ namespace amo {
         /*!
          * @fn	Any GlobalShortcutTransfer::unregisterShortcut(IPCMessage::SmartType msg);
          * @tag static
-         * @brief	Í¨¹ıID×¢Ïú¿ì½İ¼ü.
+         * @brief	é€šè¿‡IDæ³¨é”€å¿«æ·é”®.
          *
-         * @param	#Int ¿ì½İ¼üID.
+         * @param	#Int å¿«æ·é”®ID.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         /*!
@@ -135,11 +135,11 @@ namespace amo {
         *
         * @tag static
         *
-        * @brief	Í¨¹ı×éºÏ¼ü×¢Ïú¿ì½İ¼ü.
+        * @brief	é€šè¿‡ç»„åˆé”®æ³¨é”€å¿«æ·é”®.
         *
-        * @param	#String ×éºÏ¼üËù×é³ÉµÄ×Ö·û´®.
+        * @param	#String ç»„åˆé”®æ‰€ç»„æˆçš„å­—ç¬¦ä¸².
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         * @example
         *
         		```
@@ -160,9 +160,9 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	×¢ÏúËùÓĞ¿ì½İ¼ü.
+         * @brief	æ³¨é”€æ‰€æœ‰å¿«æ·é”®.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -180,18 +180,18 @@ namespace amo {
         *
         * @tag static
         *
-        * @brief	¿ì½İ¼üÊÂ¼ş¼àÌı£¬µ±°´ÏÂ×¢²áµÄ¿ì½İ¼üÊ±£¬¸ÃÊÂ¼ş»á±»´¥·¢.
-        * 			µ«ÊÇÈç¹û×¢²á¿ì½İ¼üÊ±Ö¸¶¨ÁËaction£¬ÇÒ¸ÃactionÄÜ±»³ÌĞò´¦Àí£¬ÄÇÃ´¸Ã¿ì½İ¼üµÄÊÂ¼ş²»»á±»´¥·¢.
+        * @brief	å¿«æ·é”®äº‹ä»¶ç›‘å¬ï¼Œå½“æŒ‰ä¸‹æ³¨å†Œçš„å¿«æ·é”®æ—¶ï¼Œè¯¥äº‹ä»¶ä¼šè¢«è§¦å‘.
+        * 			ä½†æ˜¯å¦‚æœæ³¨å†Œå¿«æ·é”®æ—¶æŒ‡å®šäº†actionï¼Œä¸”è¯¥actionèƒ½è¢«ç¨‹åºå¤„ç†ï¼Œé‚£ä¹ˆè¯¥å¿«æ·é”®çš„äº‹ä»¶ä¸ä¼šè¢«è§¦å‘.
         *
-        * @param	#Int ¿ì½İ¼üID
+        * @param	#Int å¿«æ·é”®ID
         *
-        * @param	#JsonObject ¿ì½İ¼üÏà¹ØĞÅÏ¢
-        * 				[**Boolean**] ctrl		¼üÅÌÉÏµÄCTRL°´¼ü£¬ ¶ÔÓ¦×Ö·û´®MOD_CONTROL.<br>
-        * 				[**Boolean**] win		¼üÅÌÉÏµÄWIN°´¼ü£¬ ¶ÔÓ¦×Ö·û´®MOD_WIN.<br>
-        * 				[**Boolean**] alt		¼üÅÌÉÏµÄALT°´¼ü£¬ ¶ÔÓ¦×Ö·û´®MOD_ALT.<br>
-        * 				[**Boolean**] shift		¼üÅÌÉÏµÄSHIFT°´¼ü, ¶ÔÓ¦×Ö·û´®MOD_SHIFT.<br>
-        * 				[**String**]  key		¼üÅÌÉÏµÄ×ÖÄ¸»òÊı×Ö°´¼ü£¬Ò»¸ö×Ö·û.<br>
-        * 				[**String**]  action	µ±Ç°¿ì½İ¼üËù´¥·¢µÄ{@link Ô¤¶¨ÒåÊÂ¼ş=Ô¤ÖÃÊÂ¼ş}.<br>
+        * @param	#JsonObject å¿«æ·é”®ç›¸å…³ä¿¡æ¯
+        * 				[**Boolean**] ctrl		é”®ç›˜ä¸Šçš„CTRLæŒ‰é”®ï¼Œ å¯¹åº”å­—ç¬¦ä¸²MOD_CONTROL.<br>
+        * 				[**Boolean**] win		é”®ç›˜ä¸Šçš„WINæŒ‰é”®ï¼Œ å¯¹åº”å­—ç¬¦ä¸²MOD_WIN.<br>
+        * 				[**Boolean**] alt		é”®ç›˜ä¸Šçš„ALTæŒ‰é”®ï¼Œ å¯¹åº”å­—ç¬¦ä¸²MOD_ALT.<br>
+        * 				[**Boolean**] shift		é”®ç›˜ä¸Šçš„SHIFTæŒ‰é”®, å¯¹åº”å­—ç¬¦ä¸²MOD_SHIFT.<br>
+        * 				[**String**]  key		é”®ç›˜ä¸Šçš„å­—æ¯æˆ–æ•°å­—æŒ‰é”®ï¼Œä¸€ä¸ªå­—ç¬¦.<br>
+        * 				[**String**]  action	å½“å‰å¿«æ·é”®æ‰€è§¦å‘çš„{@link é¢„å®šä¹‰äº‹ä»¶=é¢„ç½®äº‹ä»¶}.<br>
         *
         * @example
         *

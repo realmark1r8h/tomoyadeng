@@ -1,4 +1,4 @@
-// Created by amoylel on 07/10/2017.
+Ôªø// Created by amoylel on 07/10/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_NODETYPECONVERTOR_H__
@@ -19,7 +19,7 @@ namespace amo {
         NodeTypeConvertor(const std::string& strName = "");
         void ParseJsonToObject(amo::json& json, v8::Local<v8::Value>& retval);
         
-        // ªÒ»°V8¿‡–Õ
+        // Ëé∑ÂèñV8Á±ªÂûã
         std::string V8ValueType(v8::Local<v8::Value> object);
         
         v8::Local<v8::Value> toV8Value(amo::Any& ret);

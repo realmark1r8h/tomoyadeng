@@ -1,4 +1,4 @@
-// Created by amoylel on 07/07/2017.
+ï»¿// Created by amoylel on 07/07/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_APPTRANSFER_H__
@@ -17,8 +17,8 @@ namespace amo {
      *
      * @extend  Object
      *
-     * @brief	¿ØÖÆ³ÌĞò³ÌĞòµÄÉúÃüÖÜÆÚ£¬²¢Ìá¹©Ò»Ğ©Óë³ÌĞòÏà¹ØµÄ¹¦ÄÜ.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	æ§åˆ¶ç¨‹åºç¨‹åºçš„ç”Ÿå‘½å‘¨æœŸï¼Œå¹¶æä¾›ä¸€äº›ä¸ç¨‹åºç›¸å…³çš„åŠŸèƒ½.<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      */
     
     class AppTransfer
@@ -33,7 +33,7 @@ namespace amo {
          *
          * @fn	void AppTransfer::initUrlMapping(amo::json& json);
          *
-         * @brief	½«ÅäÖÃÎÄ¼şÖĞµÄÉèÖÃÌí¼Óµ½MAPÖĞ.
+         * @brief	å°†é…ç½®æ–‡ä»¶ä¸­çš„è®¾ç½®æ·»åŠ åˆ°MAPä¸­.
          *
          * @param [in,out]	json	The JSON.
          */
@@ -45,31 +45,31 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	»ñÈ¡Ó¦ÓÃ³ÌĞòµÄËùÓĞÅäÖÃ²ÎÊı,¿É»ñÈ¡µÄÄÚÈİ¼û{@link Æô¶¯²ÎÊı=Æô¶¯²ÎÊı}.
+         * @brief	è·å–åº”ç”¨ç¨‹åºçš„æ‰€æœ‰é…ç½®å‚æ•°,å¯è·å–çš„å†…å®¹è§{@link å¯åŠ¨å‚æ•°=å¯åŠ¨å‚æ•°}.
          *
-         * @return	#JsonObject ËùÓĞÅäÖÃ²ÎÊı.
+         * @return	#JsonObject æ‰€æœ‰é…ç½®å‚æ•°.
          */
         
         
         /*!
         * @fn	static Any AppTransfer::getConfig(IPCMessage::SmartType msg);
         * @tag static sync
-        * @brief	»ñÈ¡Ó¦ÓÃ³ÌĞòµÄÖ¸¶¨ÅäÖÃ²ÎÊı.
+        * @brief	è·å–åº”ç”¨ç¨‹åºçš„æŒ‡å®šé…ç½®å‚æ•°.
         *
-        * @param	#String ĞèÒª»ñÈ¡µÄ×Ö¶ÎÃû³Æ.
+        * @param	#String éœ€è¦è·å–çš„å­—æ®µåç§°.
         *
-        * @return	·µ»Ø×Ö¶ÎÃûËù¶ÔÓ¦µÄÅäÖÃ²ÎÊı¡£·µ»ØÀàĞÍÊÓÅäÖÃ²ÎÊıÀàĞÍ¶ø¶¨£¬ÎªJSËùÖ§³ÖµÄ»ù±¾Êı¾İÀàĞÍ.
+        * @return	è¿”å›å­—æ®µåæ‰€å¯¹åº”çš„é…ç½®å‚æ•°ã€‚è¿”å›ç±»å‹è§†é…ç½®å‚æ•°ç±»å‹è€Œå®šï¼Œä¸ºJSæ‰€æ”¯æŒçš„åŸºæœ¬æ•°æ®ç±»å‹.
         *
         * @see setConfig=app.setConfig
         * @example
         			```
-        				//»ñÈ¡Ó¦ÓÃ³ÌĞòµÄËùÓĞÅäÖÃ²ÎÊı
+        				//è·å–åº”ç”¨ç¨‹åºçš„æ‰€æœ‰é…ç½®å‚æ•°
         				var config = app.getConfig();
         				console.log(config);
         
-        				//»ñÈ¡Ó¦ÓÃ³ÌĞòµÄÖ¸¶¨ÅäÖÃ²ÎÊı
+        				//è·å–åº”ç”¨ç¨‹åºçš„æŒ‡å®šé…ç½®å‚æ•°
         				var single_process = app.getConfig('single_process');
-        				console.log('µ¥½ø³ÌÄ£Ê½£º' + single_process);
+        				console.log('å•è¿›ç¨‹æ¨¡å¼ï¼š' + single_process);
         			```
         */
         
@@ -81,12 +81,12 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÉèÖÃÓ¦ÓÃ³ÌĞòÅäÖÃ²ÎÊı.¸Ãº¯Êı²¢²»ÒªÇóÒ»¶¨ÒªÊäÈëËùÖ§³ÖµÄ²ÎÊı£¬
-         * 			ÄãÒ²¿ÉÒÔÉèÖÃ×Ô¶¨Òå²ÎÊı£¬²¢ÔÚgetConfigÀïÃæ»ñÈ¡ËùÉèÖÃµÄÖµÓë{@link app.getConfig}Ïà¶ÔÓ¦.
+         * @brief	è®¾ç½®åº”ç”¨ç¨‹åºé…ç½®å‚æ•°.è¯¥å‡½æ•°å¹¶ä¸è¦æ±‚ä¸€å®šè¦è¾“å…¥æ‰€æ”¯æŒçš„å‚æ•°ï¼Œ
+         * 			ä½ ä¹Ÿå¯ä»¥è®¾ç½®è‡ªå®šä¹‰å‚æ•°ï¼Œå¹¶åœ¨getConfigé‡Œé¢è·å–æ‰€è®¾ç½®çš„å€¼ä¸{@link app.getConfig}ç›¸å¯¹åº”.
          *
-         * @param	#JsonObject ĞèÒªÉèÖÃµÄ²ÎÊı£¬¸ÃÖµÎªÒ»¸öJSON¶ÔÏó.
+         * @param	#JsonObject éœ€è¦è®¾ç½®çš„å‚æ•°ï¼Œè¯¥å€¼ä¸ºä¸€ä¸ªJSONå¯¹è±¡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see getConfig=app.getConfig
          *
@@ -107,20 +107,20 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	½«Ò»¸öÂ·¾¶×ªÎª¾ø¶ÔÂ·¾¶Èç£º%web%.
+         * @brief	å°†ä¸€ä¸ªè·¯å¾„è½¬ä¸ºç»å¯¹è·¯å¾„å¦‚ï¼š%web%.
          *
-         * @param	#String ĞèÒª×ª»»µÄÂ·¾¶.
+         * @param	#String éœ€è¦è½¬æ¢çš„è·¯å¾„.
          *
-         * @return	#String ×ª»»ºóµÄ¾ø¶ÔÂ·¾¶.
+         * @return	#String è½¬æ¢åçš„ç»å¯¹è·¯å¾„.
          *
          * @example
          			```
-        				// »ñÈ¡web×ÊÔ´ÎÄ¼şÄ¿Â¼
+        				// è·å–webèµ„æºæ–‡ä»¶ç›®å½•
         				var webDir = app.toAbsolutePath('%webDir%');
         				console.log(webDir);
         				console.log(app.toAbsolutePath('%webDir%docs/index.html'));
         
-        				// »ñÈ¡Í¼Æ¬ÎÄ¼şËùÓĞÄ¿Â¼
+        				// è·å–å›¾ç‰‡æ–‡ä»¶æ‰€æœ‰ç›®å½•
         				var picturesDir = app.toAbsolutePath('%picturesDir%');
         				console.log(picturesDir);
         
@@ -134,10 +134,10 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	³¢ÊÔÍË³ö³ÌĞò£¬¿ÉÒÔÓÃ»§±»È¡Ïû£¨Èçwindow.unloadº¯Êı£©.
+         * @brief	å°è¯•é€€å‡ºç¨‹åºï¼Œå¯ä»¥ç”¨æˆ·è¢«å–æ¶ˆï¼ˆå¦‚window.unloadå‡½æ•°ï¼‰.
          *
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
           		   ```
          		   app.quit();
@@ -151,13 +151,13 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	Ç¿ÖÆÍË³ö³ÌĞò.
+         * @brief	å¼ºåˆ¶é€€å‡ºç¨‹åº.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
         		   ```
-        		   // Ö±½ÓÍË³ö³ÌĞò£¬²»»áÓĞÈÎºÎÌáÊ¾
+        		   // ç›´æ¥é€€å‡ºç¨‹åºï¼Œä¸ä¼šæœ‰ä»»ä½•æç¤º
         		   app.exit();
         		   ```
          */
@@ -170,17 +170,17 @@ namespace amo {
         *
         * @tag static sync
         *
-        * @brief   Ìí¼ÓURLÓ³ÉäÂ·¾¶,¼òµ¥À´Ëµ¾ÍÊÇ½«URLÌæ»»Îª±»Ó³ÉäµÄURL»òÎÄ¼şÂ·¾¶.
+        * @brief   æ·»åŠ URLæ˜ å°„è·¯å¾„,ç®€å•æ¥è¯´å°±æ˜¯å°†URLæ›¿æ¢ä¸ºè¢«æ˜ å°„çš„URLæˆ–æ–‡ä»¶è·¯å¾„.
         *
-        * @param   #String ĞèÒªÌí¼ÓÓ³ÉäµÄURL.
+        * @param   #String éœ€è¦æ·»åŠ æ˜ å°„çš„URL.
         *
-        * @param   #String ±»Ó³ÉäµÄ±¾µØÎÄ¼şÂ·¾¶£¬¸ÃÂ·¾¶¿ÉÒÔÊÇÒ»¸öÆÕÍ¨µÄÎÄ¼ş»òÎÄ¼ş¼Ğ£¬
-        * 					Ò²¿ÉÒÔÊÇZIPÑ¹Ëõ°ü»òDLL¶¯Ì¬¿â.
+        * @param   #String è¢«æ˜ å°„çš„æœ¬åœ°æ–‡ä»¶è·¯å¾„ï¼Œè¯¥è·¯å¾„å¯ä»¥æ˜¯ä¸€ä¸ªæ™®é€šçš„æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹ï¼Œ
+        * 					ä¹Ÿå¯ä»¥æ˜¯ZIPå‹ç¼©åŒ…æˆ–DLLåŠ¨æ€åº“.
         *
-        * @return	#Boolean ³ÉÎª·µ»Øtrue, Ê§°Ü·µ»Øfalse.
-        * @example Ó³Éäµ½ÁíÒ»¸öURL
+        * @return	#Boolean æˆä¸ºè¿”å›true, å¤±è´¥è¿”å›false.
+        * @example æ˜ å°„åˆ°å¦ä¸€ä¸ªURL
         			```
-        				// Ôö¼ÓÓ³Éä
+        				// å¢åŠ æ˜ å°„
         				app.addUrlMapping('http://www.baidu.com', 'http://www.qq.com');
         				window.open('http://www.baidu.com');
         
@@ -188,10 +188,10 @@ namespace amo {
         				window.open('http://www.baidu.com/more');
         
         			```
-        * @example Ó³Éäµ½ÎÄ¼ş
+        * @example æ˜ å°„åˆ°æ–‡ä»¶
         			```
         
-        			// ÄãÒ²¿ÉÒÔÖ¸¶¨Ò»¸ö¾ø¶ÔÂ·¾¶
+        			// ä½ ä¹Ÿå¯ä»¥æŒ‡å®šä¸€ä¸ªç»å¯¹è·¯å¾„
         			//	app.addUrlMapping('http://www.baidu.com/', 'E:/webDir/index.hmtl');
         			//	app.addUrlMapping('http://www.baidu.com/more', 'E:/webDir/more/more.html');
         
@@ -202,9 +202,9 @@ namespace amo {
         			window.open('http://www.baidu.com/more');
         
         ```
-        * @example Ó³Éäµ½ZIPÎÄ¼ş
+        * @example æ˜ å°„åˆ°ZIPæ–‡ä»¶
         ```
-        		// zipÎÄ¼şÍ¬Ñù¿ÉÒÔÊÇÒ»¸ö¾ø¶ÔÂ·¾¶
+        		// zipæ–‡ä»¶åŒæ ·å¯ä»¥æ˜¯ä¸€ä¸ªç»å¯¹è·¯å¾„
         		// app.addUrlMapping('http://www.baidu.com', 'zip:///D:/web.zip');
         
         		app.addUrlMapping('http://127.0.0.1:8088', 'zip:///%webDir%web.zip');
@@ -214,22 +214,22 @@ namespace amo {
         		window.open('http://127.0.0.1:8088/test');
         
         ```
-        * @example Ó³Éäµ½DLLÎÄ¼ş
+        * @example æ˜ å°„åˆ°DLLæ–‡ä»¶
         ```
         
-        		// demoÖĞµÄdllËùÌá¹©µÄ¸ùÄ¿Â¼Îªµ±Ç°³ÌĞòËùÔÚÄ¿Â¼ÏÂµÄwebÄ¿Â¼
+        		// demoä¸­çš„dllæ‰€æä¾›çš„æ ¹ç›®å½•ä¸ºå½“å‰ç¨‹åºæ‰€åœ¨ç›®å½•ä¸‹çš„webç›®å½•
         		app.addUrlMapping('http://www.baidu.com', 'dll:///libResource.dll');
         		window.open('http://www.baidu.com/example/BrowserWindow.html');
         
         		app.addUrlMapping('http://www.baidu.com/more', 'dll:///libResource.dll/example');
         		window.open('http://www.baidu.com/more/BrowserWindow.html');
         ```
-        * @example Ó³Éäµ½RESÎÄ¼ş
+        * @example æ˜ å°„åˆ°RESæ–‡ä»¶
         ```
         
-        	// RES±¾ÖÊÉÏÓëZIPÊÇÒ»ÏÂ£¬Ö»ÊÇ½«ZIPÎÄ¼şÌáÇ°Ğ´ÈëEXEµÄ×ÊÔ´ÎÄ¼şÀï.
-        	// Äã¿ÉÒÔ²Î¿¼³ÌĞòÉú³ÉÀïÃæµÄÄÚÈİ£¬½«ZIPÎÄ¼şĞ´µ½EXEÀïÃæÈ¥
-        	// µ±Ç°ÎÄµµ³ÌĞòÃ»ÓĞIDÎª131µÄ×ÊÔ´£¬ËùÒÔÏÂÃæµÄ·½·¨²»ÄÜÕıÈ·µÄ´ò¿ªÒ³Ãæ
+        	// RESæœ¬è´¨ä¸Šä¸ZIPæ˜¯ä¸€ä¸‹ï¼Œåªæ˜¯å°†ZIPæ–‡ä»¶æå‰å†™å…¥EXEçš„èµ„æºæ–‡ä»¶é‡Œ.
+        	// ä½ å¯ä»¥å‚è€ƒç¨‹åºç”Ÿæˆé‡Œé¢çš„å†…å®¹ï¼Œå°†ZIPæ–‡ä»¶å†™åˆ°EXEé‡Œé¢å»
+        	// å½“å‰æ–‡æ¡£ç¨‹åºæ²¡æœ‰IDä¸º131çš„èµ„æºï¼Œæ‰€ä»¥ä¸‹é¢çš„æ–¹æ³•ä¸èƒ½æ­£ç¡®çš„æ‰“å¼€é¡µé¢
         	app.addUrlMapping('http://www.baidu.com', 'res:///131.res');
         	window.open('http://www.baidu.com/example/BrowserWindow.html');
         
@@ -243,14 +243,14 @@ namespace amo {
         *
         * @tag static sync
         *
-        * @brief	ÒÆ³ıURLÓ³ÉäÂ·¾¶.
+        * @brief	ç§»é™¤URLæ˜ å°„è·¯å¾„.
         *
-        * @param	#String ĞèÒªÒÆ³ıµÄURL.
+        * @param	#String éœ€è¦ç§»é™¤çš„URL.
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         * @example
         			```
-        				// É¾³ıÓ³Éä
+        				// åˆ é™¤æ˜ å°„
         				app.removeUrlMapping('http://www.baidu.com');
         				window.open('http://www.baidu.com');
         			```
@@ -263,14 +263,14 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	½«Ò»¸öURL×ª»»Îª±¾µØÂ·¾¶£¬
-         * 			Õâ¼¸¸öº¯Êı¿ÉÄÜ»á±»IOÏß³ÌºÍUIÏß³ÌÍ¬Ê±µ÷ÓÃ£¬ËùÒÔÒª¼ÓËø.
+         * @brief	å°†ä¸€ä¸ªURLè½¬æ¢ä¸ºæœ¬åœ°è·¯å¾„ï¼Œ
+         * 			è¿™å‡ ä¸ªå‡½æ•°å¯èƒ½ä¼šè¢«IOçº¿ç¨‹å’ŒUIçº¿ç¨‹åŒæ—¶è°ƒç”¨ï¼Œæ‰€ä»¥è¦åŠ é”.
          *
-         * @param	#String ĞèÒª×ª»»µÄURL.
-         * @param	#Boolean=false ÊÇ·ñÒªÇóËùÓ³ÉäµÄÎÄ¼ş´æÔÚ .
+         * @param	#String éœ€è¦è½¬æ¢çš„URL.
+         * @param	#Boolean=false æ˜¯å¦è¦æ±‚æ‰€æ˜ å°„çš„æ–‡ä»¶å­˜åœ¨ .
          *
-         * @return	#String ×ª»»ºóµÄÂ·¾¶£¬Èç¹ûµ±Ç°Ëù¸øµÄURLÃ»ÓĞÓëÖ®Ó³ÉäµÄ±¾µØÂ·¾¶£¬
-         * 			½«·µ»Ø¸ÃURL.
+         * @return	#String è½¬æ¢åçš„è·¯å¾„ï¼Œå¦‚æœå½“å‰æ‰€ç»™çš„URLæ²¡æœ‰ä¸ä¹‹æ˜ å°„çš„æœ¬åœ°è·¯å¾„ï¼Œ
+         * 			å°†è¿”å›è¯¥URL.
          * @example
          *
         	```
@@ -296,7 +296,7 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÉèÖÃ¿ÉÍÏ¶¯´°¿Ú¿Ø¼şClassÃû.
+         * @brief	è®¾ç½®å¯æ‹–åŠ¨çª—å£æ§ä»¶Classå.
          *
          * @param	msg	The message.
          *
@@ -312,7 +312,7 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÉèÖÃ²»¿ÉÊÖ¶¯´°¿Ú¿Ø¼şClassÃû.
+         * @brief	è®¾ç½®ä¸å¯æ‰‹åŠ¨çª—å£æ§ä»¶Classå.
          *
          * @param	msg	The message.
          *
@@ -328,7 +328,7 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÉèÖÃÈ«¾ÖÊı¾İ.
+         * @brief	è®¾ç½®å…¨å±€æ•°æ®.
          *
          * @param	msg	The message.
          *
@@ -344,7 +344,7 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	»ñÈ¡È«¾ÖÊı¾İ.
+         * @brief	è·å–å…¨å±€æ•°æ®.
          *
          * @param	msg	The message.
          *
@@ -358,7 +358,7 @@ namespace amo {
          *
          * @tag static sync deprecated
          *
-         * @brief	»ñÈ¡ÊÇ·ñ¿ª»úÆô¶¯£¬Ê¹ÓÃ{@link isAutoRun=app.isAutoRun}´úÌæ.
+         * @brief	è·å–æ˜¯å¦å¼€æœºå¯åŠ¨ï¼Œä½¿ç”¨{@link isAutoRun=app.isAutoRun}ä»£æ›¿.
          *
          * @return	#Boolean .
          *
@@ -372,7 +372,7 @@ namespace amo {
            *
          * @tag static sync
          *
-         * @brief	»ñÈ¡ÊÇ·ñ¿ª»úÆô¶¯.
+         * @brief	è·å–æ˜¯å¦å¼€æœºå¯åŠ¨.
          *
          * @return	#Boolean .
          *
@@ -394,21 +394,21 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÉèÖÃÊÇ·ñ¿ª»úÆô¶¯.
+         * @brief	è®¾ç½®æ˜¯å¦å¼€æœºå¯åŠ¨.
          *
-         * @param	#Boolean=false true¿ª»úÆô¶¯£¬faseÈ¡Ïû¿ª»úÆô¶¯.
+         * @param	#Boolean=false trueå¼€æœºå¯åŠ¨ï¼Œfaseå–æ¶ˆå¼€æœºå¯åŠ¨.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see isAutoRun=app.isAutoRun
          *
          * @example
         			```
-        			// ÉèÖÃ¿ª»úÆô¶¯
+        			// è®¾ç½®å¼€æœºå¯åŠ¨
         			app.setAutoRun(true);
         			console.assert(app.isAutoRun() == true);
         
-        			// È¡Ïû¿ª»úÆô¶¯
+        			// å–æ¶ˆå¼€æœºå¯åŠ¨
         			app.setAutoRun(false);
         			console.assert(app.isAutoRun() == false);
         			```
@@ -421,13 +421,13 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	µ±Ç°³ÌĞò´ÓÆô¶¯µ½ÏÖÔÚµÄÔËĞĞÊ±¼ä(ºÁÃë).
+         * @brief	å½“å‰ç¨‹åºä»å¯åŠ¨åˆ°ç°åœ¨çš„è¿è¡Œæ—¶é—´(æ¯«ç§’).
          *
          * @return	#Int.
          * @example
         			```
         			var elapsed = app.elapsed();
-        			console.log('³ÌĞòÒÑÔËĞĞ£º' + elapsed + ' ms');
+        			console.log('ç¨‹åºå·²è¿è¡Œï¼š' + elapsed + ' ms');
         			```
          */
         
@@ -438,15 +438,15 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÖØÆôµ±Ç°³ÌĞò.
+         * @brief	é‡å¯å½“å‰ç¨‹åº.
          *
-         * @param	#Int=0 ÖØÆôÑÓÊ±(Ãë)£¬µ±Ç°³ÌĞò»áÁ¢¼´¹Ø±Õ£¬ĞÂµÄ³ÌĞò»áÔÚÑÓÊ±Ê±¼äµ½´ïºóÆô¶¯.
+         * @param	#Int=0 é‡å¯å»¶æ—¶(ç§’)ï¼Œå½“å‰ç¨‹åºä¼šç«‹å³å…³é—­ï¼Œæ–°çš„ç¨‹åºä¼šåœ¨å»¶æ—¶æ—¶é—´åˆ°è¾¾åå¯åŠ¨.
          *
-         * @return	#Boolean Éú³É·µ»Øtrue, Ê§°Ü·µ»Øfalse.
+         * @return	#Boolean ç”Ÿæˆè¿”å›true, å¤±è´¥è¿”å›false.
          *
          * @example
         			```
-        			// 5ÃëºóÖØÆôÔËĞĞµ±Ç°³ÌĞò
+        			// 5ç§’åé‡å¯è¿è¡Œå½“å‰ç¨‹åº
         			app.restart(5);
         			```
          */
@@ -459,13 +459,13 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	Ïú»Ùµ±Ç°³ÌĞò£¬(´Ó´ÅÅÌÉÏÉ¾³ıµ±Ç°¿ÉÖ´ĞĞ³ÌĞò).
+         * @brief	é”€æ¯å½“å‰ç¨‹åºï¼Œ(ä»ç£ç›˜ä¸Šåˆ é™¤å½“å‰å¯æ‰§è¡Œç¨‹åº).
          *
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
         		```
-        			// ²»ÒªÊÔ£¡£¡£¡
+        			// ä¸è¦è¯•ï¼ï¼ï¼
         			app.destroy();
         		```
          */
@@ -507,11 +507,11 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     private:
-        /*! @brief	URL×ª±¾µØÂ·¾¶Ëø. */
+        /*! @brief	URLè½¬æœ¬åœ°è·¯å¾„é”. */
         std::recursive_mutex m_mutex;
-        /*! @brief	URLµ½±¾µØÂ·¾¶Ó³Éä. */
+        /*! @brief	URLåˆ°æœ¬åœ°è·¯å¾„æ˜ å°„. */
         std::list<std::pair<std::string, std::string > > m_oUrlToNativeMap;
-        /*! @brief	È«¾ÖÊı¾İ. */
+        /*! @brief	å…¨å±€æ•°æ®. */
         amo::json m_global;
     };
 }

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "transfer/SystemTransfer.h"
 #include "transfer/DesktopTransfer.h"
 #include "transfer/MouseTransfer.h"

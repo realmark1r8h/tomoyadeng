@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_CLIENTHANDLER_H__
@@ -87,7 +87,7 @@ namespace amo {
         std::function<bool(int, IPCMessage::SmartType)> m_fnExec;
     };
     
-    // Cef¸÷Àà½Ó¿Ú´¦ÀíÀà
+    // Cefå„ç±»æ¥å£å¤„ç†ç±»
     class ClientHandler : public CefClient
         , public HandlerDelegate<ClientHandlerDelegate>
         , public LifeSpanHandlerDelegate
@@ -126,7 +126,7 @@ namespace amo {
          * 		CefProcessId source_process,
          * 		CefRefPtr<CefProcessMessage> message);
          *
-         * @brief	´¦ÀíÀ´×Ô×Ó½ø³ÌµÄÏûÏ¢.
+         * @brief	å¤„ç†æ¥è‡ªå­è¿›ç¨‹çš„æ¶ˆæ¯.
          *
          * @param	browser		  	The browser.
          * @param	source_process	Source process.
@@ -144,7 +144,7 @@ namespace amo {
          * 		ContextMenuHandlerDelegate* delegate,
          * 		int nIndex = -1);
          *
-         * @brief	×¢²áÓÒ¼ü²Ëµ¥ÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	æ³¨å†Œå³é”®èœå•äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          * @param	nIndex				(Optional) the index.
@@ -159,7 +159,7 @@ namespace amo {
          * @fn	void UnregisterContextMenuHandlerDelegate(
          * 		ContextMenuHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²áÓÒ¼ü²Ëµ¥ÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	åæ³¨å†Œå³é”®èœå•äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          */
@@ -171,7 +171,7 @@ namespace amo {
          * 		DialogHandlerDelegate* delegate,
          * 		int nIndex = -1);
          *
-         * @brief	×¢²áÎÄ¼ş¶Ô»°¿ò´¦Àíº¯Êı.
+         * @brief	æ³¨å†Œæ–‡ä»¶å¯¹è¯æ¡†å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          * @param	nIndex				(Optional) the index.
@@ -185,7 +185,7 @@ namespace amo {
         /*!
          * @fn	void UnregisterDialogHandlerDelegate(DialogHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²áÎÄ¼ş¶Ô»°¿ò´¦Àíº¯Êı.
+         * @brief	åæ³¨å†Œæ–‡ä»¶å¯¹è¯æ¡†å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          */
@@ -197,7 +197,7 @@ namespace amo {
          * 		DisplayHandlerDelegate* delegate,
          * 		int nIndex = -1);
          *
-         * @brief	×¢²áÏÔÊ¾ÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	æ³¨å†Œæ˜¾ç¤ºäº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          * @param	nIndex				(Optional) the index.
@@ -211,7 +211,7 @@ namespace amo {
         /*!
          * @fn	void UnregisterDisplayHandlerDelegate(DisplayHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²áÏÔÊ¾ÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	åæ³¨å†Œæ˜¾ç¤ºäº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          */
@@ -223,7 +223,7 @@ namespace amo {
          * 		DownloadHandlerDelegate* delegate,
          * 		int nIndex = -1);
          *
-         * @brief	×¢²áÏÂÔØÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	æ³¨å†Œä¸‹è½½äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          * @param	nIndex				(Optional) the index.
@@ -237,7 +237,7 @@ namespace amo {
         /*!
          * @fn	void UnregisterDownloadHandlerDelegate(DownloadHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²áÏÂÔØÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	åæ³¨å†Œä¸‹è½½äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          */
@@ -249,7 +249,7 @@ namespace amo {
          * 		DragHandlerDelegate* delegate,
          * 		int nIndex = -1);
          *
-         * @brief	×¢²áÍÏ×§ÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	æ³¨å†Œæ‹–æ‹½äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          * @param	nIndex				(Optional) the index.
@@ -263,7 +263,7 @@ namespace amo {
         /*!
          * @fn	void UnregisterDragHandlerDelegate(DragHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²áÍÏ×§ÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	åæ³¨å†Œæ‹–æ‹½äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          */
@@ -275,7 +275,7 @@ namespace amo {
          * 		FocusHandlerDelegate* delegate,
          * 		int nIndex = -1);
          *
-         * @brief	×¢²á½¹µãÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	æ³¨å†Œç„¦ç‚¹äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          * @param	nIndex				(Optional) the index.
@@ -289,7 +289,7 @@ namespace amo {
         /*!
          * @fn	void UnregisterFocusHandlerDelegate(FocusHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²á½¹µãÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	åæ³¨å†Œç„¦ç‚¹äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          */
@@ -301,7 +301,7 @@ namespace amo {
          * 		GeolocationHandlerDelegate* delegate,
          * 		int nIndex = -1);
          *
-         * @brief	×¢²áµØÀíÎ»ÖÃ´¦Àíº¯Êı.
+         * @brief	æ³¨å†Œåœ°ç†ä½ç½®å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          * @param	nIndex				(Optional) the index.
@@ -315,7 +315,7 @@ namespace amo {
         /*!
          * @fn	void UnregisterGeolocationHandlerDelegate(GeolocationHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²áµØÀíÎ»ÖÃ´¦Àíº¯Êı.
+         * @brief	åæ³¨å†Œåœ°ç†ä½ç½®å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          */
@@ -327,7 +327,7 @@ namespace amo {
          * 		JSDialogHandlerDelegate* delegate,
          * 		int nIndex = -1);
          *
-         * @brief	ÏûÏ¢¿ò´¦Àíº¯Êı.
+         * @brief	æ¶ˆæ¯æ¡†å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          * @param	nIndex				(Optional) the index.
@@ -341,7 +341,7 @@ namespace amo {
         /*!
          * @fn	void UnregisterJSDialogHandlerDelegate(JSDialogHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²áJSÏûÏ¢¿ò´¦Àíº¯Êı.
+         * @brief	åæ³¨å†ŒJSæ¶ˆæ¯æ¡†å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          */
@@ -353,7 +353,7 @@ namespace amo {
          * 		KeyboardHandlerDelegate* delegate,
          * 		int nIndex = -1);
          *
-         * @brief	×¢²á¼üÅÌÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	æ³¨å†Œé”®ç›˜äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          * @param	nIndex				(Optional) the index.
@@ -367,7 +367,7 @@ namespace amo {
         /*!
          * @fn	void UnregisterKeyboardHandlerDelegate(KeyboardHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²á¼üÅÌÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	åæ³¨å†Œé”®ç›˜äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          */
@@ -379,7 +379,7 @@ namespace amo {
          * 		LifeSpanHandlerDelegate* delegate,
          * 		int nIndex = -1);
          *
-         * @brief	×¢²áä¯ÀÀÆ÷´°¿ÚÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	æ³¨å†Œæµè§ˆå™¨çª—å£äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          * @param	nIndex				(Optional) the index.
@@ -393,7 +393,7 @@ namespace amo {
         /*!
          * @fn	void UnregisterLifeSpanHandlerDelegate(LifeSpanHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²áä¯ÀÀÆ÷´°¿ÚÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	åæ³¨å†Œæµè§ˆå™¨çª—å£äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          */
@@ -405,7 +405,7 @@ namespace amo {
          * 		LoadHandlerDelegate* delegate,
          * 		int nIndex = -1);
          *
-         * @brief	×¢²áÒ³Ãæ¼ÓÔØÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	æ³¨å†Œé¡µé¢åŠ è½½äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          * @param	nIndex				(Optional) the index.
@@ -419,7 +419,7 @@ namespace amo {
         /*!
          * @fn	void UnregisterLoadHandlerDelegate(LoadHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²áÒ³Ãæ¼ÓÔØÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	åæ³¨å†Œé¡µé¢åŠ è½½äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          */
@@ -431,8 +431,8 @@ namespace amo {
          * 		RenderHandlerDelegate* delegate,
          * 		int nIndex = -1);
          *
-         * @brief	×¢²áäÖÈ¾ÊÂ¼ş´¦Àíº¯Êı
-         * 			ÀëÆÁÄ£Ê½ÏÂ¿ÉÓÃ.
+         * @brief	æ³¨å†Œæ¸²æŸ“äº‹ä»¶å¤„ç†å‡½æ•°
+         * 			ç¦»å±æ¨¡å¼ä¸‹å¯ç”¨.
          *
          * @param 	delegate	If non-null, the delegate.
          * @param	nIndex				(Optional) the index.
@@ -446,7 +446,7 @@ namespace amo {
         /*!
          * @fn	void UnregisterRenderHandlerDelegate(RenderHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²áäÖÈ¾ÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	åæ³¨å†Œæ¸²æŸ“äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          */
@@ -458,7 +458,7 @@ namespace amo {
          * 		RequestHandlerDelegate* delegate,
          * 		int nIndex = -1);
          *
-         * @brief	×¢²áRequestÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	æ³¨å†ŒRequestäº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          * @param	nIndex				(Optional) the index.
@@ -472,7 +472,7 @@ namespace amo {
         /*!
          * @fn	void UnregisterRequestHandlerDelegate(RequestHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²áRequestÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	åæ³¨å†ŒRequestäº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          */
@@ -484,7 +484,7 @@ namespace amo {
          * 		MessageHandlerDelegate* delegate,
          * 		bool first = false);
          *
-         * @brief	×¢²áÏûÏ¢ÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	æ³¨å†Œæ¶ˆæ¯äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          * @param	first				(Optional) true to first.
@@ -498,7 +498,7 @@ namespace amo {
         /*!
          * @fn	void UnregisterMesssageHandlerDelegate(MessageHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²áÏûÏ¢ÊÂ¼ş´¦Àíº¯Êı.
+         * @brief	åæ³¨å†Œæ¶ˆæ¯äº‹ä»¶å¤„ç†å‡½æ•°.
          *
          * @param 	delegate	If non-null, the delegate.
          */
@@ -508,7 +508,7 @@ namespace amo {
         /*!
          * @fn	void CopyDelegates();
          *
-         * @brief	 ¸´ÖÆDummyClientHandlerÖĞ×¢²áµÄHandler.
+         * @brief	 å¤åˆ¶DummyClientHandlerä¸­æ³¨å†Œçš„Handler.
          */
         
         void CopyDelegates();
@@ -548,7 +548,7 @@ namespace amo {
         /*!
          * @fn	bool ProcessSyncMessage(int nID, IPCMessage::SmartType msg);
          *
-         * @brief	´¦ÀíÍ¬²½ÏûÏ¢.
+         * @brief	å¤„ç†åŒæ­¥æ¶ˆæ¯.
          *
          * @param	nID	The identifier.
          * @param	msg	The message.
@@ -568,35 +568,35 @@ namespace amo {
         static void AddExchanger(int nBrowserID);
     private:
     
-        /*! @brief	²Ëµ¥ÊÂ¼ş´¦ÀíÀà. */
+        /*! @brief	èœå•äº‹ä»¶å¤„ç†ç±». */
         CefRefPtr<ContextMenuHandler> m_pContextMenuHandler;
-        /*! @brief	¶Ô»°¿òÊÂ¼ş´¦ÀíÀà. */
+        /*! @brief	å¯¹è¯æ¡†äº‹ä»¶å¤„ç†ç±». */
         CefRefPtr<DialogHandler> m_pDialogHandler;
-        /*! @brief	ÏÔÊ¾ÊÂ¼ş´¦ÀíÀà. */
+        /*! @brief	æ˜¾ç¤ºäº‹ä»¶å¤„ç†ç±». */
         CefRefPtr<DisplayHandler> m_pDisplayHandler;
-        /*! @brief	ÏÂÔØÊÂ¼ş´¦ÀíÀà. */
+        /*! @brief	ä¸‹è½½äº‹ä»¶å¤„ç†ç±». */
         CefRefPtr<DownloadHandler> m_pDownloadHandler;
-        /*! @brief	ÍÏ×§ÊÂ¼ş´¦ÀíÀà. */
+        /*! @brief	æ‹–æ‹½äº‹ä»¶å¤„ç†ç±». */
         CefRefPtr<DragHandler> m_pDragHandler;
-        /*! @brief	½¹µãÊÂ¼ş´¦ÀíÀà. */
+        /*! @brief	ç„¦ç‚¹äº‹ä»¶å¤„ç†ç±». */
         CefRefPtr<FocusHandler> m_pFocusHandler;
-        /*! @brief	Î»ÖÃÊÂ¼ş´¦ÀíÀà. */
+        /*! @brief	ä½ç½®äº‹ä»¶å¤„ç†ç±». */
         CefRefPtr<GeolocationHandler> m_pGeolocationHandler;
-        /*! @brief	JSÏûÏ¢¿ò´¦ÀíÀà. */
+        /*! @brief	JSæ¶ˆæ¯æ¡†å¤„ç†ç±». */
         CefRefPtr<JSDialogHandler> m_pJSDialogHandler;
-        /*! @brief	¼üÅÌÊÂ¼ş´¦ÀíÀà. */
+        /*! @brief	é”®ç›˜äº‹ä»¶å¤„ç†ç±». */
         CefRefPtr<KeyboardHandler> m_pKeyboardHandler;
-        /*! @brief	Ò³Ãæ´°¿ÚÊÂ¼ş´¦ÀíÀà. */
+        /*! @brief	é¡µé¢çª—å£äº‹ä»¶å¤„ç†ç±». */
         CefRefPtr<LifeSpanHandler> m_pLifeSpanHandler;
-        /*! @brief	Ò³Ãæ¼ÓÔØÊÂ¼ş´¦ÀíÀà. */
+        /*! @brief	é¡µé¢åŠ è½½äº‹ä»¶å¤„ç†ç±». */
         CefRefPtr<LoadHandler> m_pLoadHandler;
-        /*! @brief	Ò³ÃæäÖÈ¾ÊÂ¼ş´¦ÀíÀà. */
+        /*! @brief	é¡µé¢æ¸²æŸ“äº‹ä»¶å¤„ç†ç±». */
         CefRefPtr<RenderHandler> m_pRenderHandler;
-        /*! @brief	Ò³ÃæÇëÇóÊÂ¼ş´¦ÀíÀà. */
+        /*! @brief	é¡µé¢è¯·æ±‚äº‹ä»¶å¤„ç†ç±». */
         CefRefPtr<RequestHandler> m_pRequestHandler;
-        /*! @brief	ÏûÏ¢ÊÂ¼ş´¦ÀíÀà. */
+        /*! @brief	æ¶ˆæ¯äº‹ä»¶å¤„ç†ç±». */
         CefRefPtr<MessageRouterBrowserSide> m_pMessageRouter;
-        /*! @brief	ÏûÏ¢´¦ÀíÀà¼¯ºÏ. */
+        /*! @brief	æ¶ˆæ¯å¤„ç†ç±»é›†åˆ. */
         static MessageHandlerSet m_MessageSet;
         /*! @brief	The temporary browser map. */
         static std::unordered_map<int, BrowserTempInfo > m_oTempBrowserMap;

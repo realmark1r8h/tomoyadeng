@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+﻿#include "stdAfx.h"
 
 #include "ui/win/ShadowWindow.h"
 
@@ -146,7 +146,7 @@ namespace DuiLib {
                 if (SIZE_MAXIMIZED == wParam || SIZE_MINIMIZED == wParam) {
                     ::ShowWindow(pThis->m_hWnd, SW_HIDE);
                     pThis->m_Status &= ~SS_VISABLE;
-                    pThis->Update(hwnd);											//���������� ��С��->��ԭ->���?>��С��->��ԭ ��������������Ӱ��ʾ����ȷ������
+                    pThis->Update(hwnd);											//锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷 锟斤拷小锟斤拷->锟斤拷原->锟斤拷锟?>锟斤拷小锟斤拷->锟斤拷原 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷影锟斤拷示锟斤拷锟斤拷确锟斤拷锟斤拷锟斤拷
                 } else if (pThis->m_Status & SS_PARENTVISIBLE) {	// Parent maybe resized even if invisible
                     // Awful! It seems that if the window size was not decreased
                     // the window region would never be updated until WM_PAINT was sent.

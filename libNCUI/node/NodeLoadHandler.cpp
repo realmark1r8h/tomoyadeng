@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "NodeLoadHandler.h"
 #include "node/NodeHandlerHelper.h"
 #include "ipc/UIMessageEmitter.hpp"

@@ -1,4 +1,4 @@
-// Created by amoylel on 06/12/2017.
+ï»¿// Created by amoylel on 06/12/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_TRANSFER_HPP__
@@ -105,13 +105,13 @@ LIB_API void removeTransferByID(const int64_t& nID){\
 
 
 
-// JSº¯Êı×¢²áºê ¿ªÊ¼
+// JSå‡½æ•°æ³¨å†Œå® å¼€å§‹
 #define AMO_CEF_MESSAGE_TRANSFER_BEGIN(ClassName, BaseClassName)\
 	virtual void registerFunction(){\
 		typedef ClassName ClassType;\
 		typedef BaseClassName BaseClassType;\
 
-// JSº¯Êı×¢²á Í¬Ãûº¯Êı
+// JSå‡½æ•°æ³¨å†Œ åŒåå‡½æ•°
 #define AMO_CEF_MESSAGE_TRANSFER_FUNC(Func, nExecType)\
 		registerTransfer(#Func,\
 						std::bind(&ClassType::Func, \
@@ -125,7 +125,7 @@ LIB_API void removeTransferByID(const int64_t& nID){\
 #define AMO_CEF_MESSAGE_TRANSFER_ATTR2(Func, VALUE)\
 		registerAttribute(#Func, VALUE);
 
-// JSº¯Êı×¢²áºê ½áÊø
+// JSå‡½æ•°æ³¨å†Œå® ç»“æŸ
 #define AMO_CEF_MESSAGE_TRANSFER_END()\
 		BaseClassType::registerFunction();\
 	}
@@ -135,8 +135,8 @@ namespace amo {
     /*!
      * @class	Transfer
      *
-     * @brief	JSµ÷ÓÃC++Ê±ÏûÏ¢±éÀú»ùÀà.
-     * 			ËùÓĞµÄJS¶ÔC++µÄµ÷ÓÃ¶¼ÓÉ´ËÀàÅÉÉú
+     * @brief	JSè°ƒç”¨C++æ—¶æ¶ˆæ¯éå†åŸºç±».
+     * 			æ‰€æœ‰çš„JSå¯¹C++çš„è°ƒç”¨éƒ½ç”±æ­¤ç±»æ´¾ç”Ÿ
      */
     class Transfer : public log_object,
         public std::enable_shared_from_this<Transfer> {
@@ -145,7 +145,7 @@ namespace amo {
          * @typedef	std::function<bool(const std::string&,
          * 			IPCMessage::SmartType, amo::IPCResult&)> BerforeResultFunc
          *
-         * @brief	»Ø´«Ö´ĞĞ½á¹ûÇ°µÄ»Øµ÷º¯Êı
+         * @brief	å›ä¼ æ‰§è¡Œç»“æœå‰çš„å›è°ƒå‡½æ•°
          */
         typedef std::function<bool(const std::string&,
                                    IPCMessage::SmartType,
@@ -159,11 +159,11 @@ namespace amo {
         /*!
          * @fn	template<typename T> std::shared_ptr<T> Transfer::getDerivedClass()
          *
-         * @brief	»ñÈ¡µ±Ç°¶ÔÏóµÄÖÇÄÜÖ¸Õë.
+         * @brief	è·å–å½“å‰å¯¹è±¡çš„æ™ºèƒ½æŒ‡é’ˆ.
          *
-         * @tparam	T	ÅÉÉúÀàÀàĞÍ.
+         * @tparam	T	æ´¾ç”Ÿç±»ç±»å‹.
          *
-         * @return	ÅÉÉúÀàµÄÖÇÄÜÖ¸Õë.
+         * @return	æ´¾ç”Ÿç±»çš„æ™ºèƒ½æŒ‡é’ˆ.
          */
         template<typename T>
         std::shared_ptr<T> getDerivedClass() {
@@ -174,8 +174,8 @@ namespace amo {
         /*!
          * @fn	Transfer::Transfer()
          *
-         * @brief	Default constructor Ö÷ÒªÓÃ×÷ÀàÊµÀıµÄ´´½¨Àà
-         * 			£¨Í¨¹ıÕâ¸öTransfer´´½¨Àà¶ÔÏó£©.
+         * @brief	Default constructor ä¸»è¦ç”¨ä½œç±»å®ä¾‹çš„åˆ›å»ºç±»
+         * 			ï¼ˆé€šè¿‡è¿™ä¸ªTransferåˆ›å»ºç±»å¯¹è±¡ï¼‰.
          */
         Transfer() {
             transferName("Transfer");
@@ -194,7 +194,7 @@ namespace amo {
          *
          * @brief	Constructor.
          *
-         * @param	strName	 Transfer Ãû³Æ.
+         * @param	strName	 Transfer åç§°.
          */
         Transfer(const std::string& strName) {
             transferName(strName);
@@ -208,7 +208,7 @@ namespace amo {
         }
         
         ~Transfer() {
-            /* $cdevel("ÕıÔÚÊÍ·Å×ÊÔ´£ºtransferName = \"{0}\"£¬ objectName = \"{1}\"£¬ objectID = {2}",
+            /* $cdevel("æ­£åœ¨é‡Šæ”¾èµ„æºï¼štransferName = \"{0}\"ï¼Œ objectName = \"{1}\"ï¼Œ objectID = {2}",
                      transferName(), getObjectName(), getObjectID());*/
         }
         
@@ -220,7 +220,7 @@ namespace amo {
         /**
          * @fn	virtual std::string Transfer::getClass() const
          *
-         * @brief	»ñÈ¡ÀàÃû.
+         * @brief	è·å–ç±»å.
          *
          * @return	The class.
          */
@@ -232,7 +232,7 @@ namespace amo {
         /**
          * @fn	virtual Transfer* Transfer::getInterface(const std::string& name)
          *
-         * @brief	Í¨¹ıÀà¿ª»ñÈ¡½Ó¿Ú.
+         * @brief	é€šè¿‡ç±»å¼€è·å–æ¥å£.
          *
          * @param	name	The name.
          *
@@ -250,7 +250,7 @@ namespace amo {
         /*!
          * @fn	void Transfer::setObjectID(int64_t nID)
          *
-         * @brief	ÉèÖÃTransfer ID.
+         * @brief	è®¾ç½®Transfer ID.
          *
          * @param	nID	Transfer ID.
          */
@@ -261,9 +261,9 @@ namespace amo {
         /*!
          * @fn	int64_t Transfer::getObjectID() const
          *
-         * @brief	»ñÈ¡Transfer ID.
+         * @brief	è·å–Transfer ID.
          *
-         * @return	·µ»ØTransfer ID.
+         * @return	è¿”å›Transfer ID.
          */
         int64_t getObjectID() const {
             return m_nObjectID;
@@ -272,7 +272,7 @@ namespace amo {
         /**
          * @fn	std::string Transfer::getObjectName() const
          *
-         * @brief	»ñÈ¡µ±Ç°TransferµÄÃû³Æ.
+         * @brief	è·å–å½“å‰Transferçš„åç§°.
          *
          * @return	The object name.
          */
@@ -284,7 +284,7 @@ namespace amo {
         /**
          * @fn	void Transfer::setObjectName(std::string val)
          *
-         * @brief	ÉèÖÃµ±Ç°TransferµÄÃû³Æ.
+         * @brief	è®¾ç½®å½“å‰Transferçš„åç§°.
          *
          * @param	val	The value.
          */
@@ -298,7 +298,7 @@ namespace amo {
         /**
          * @fn	bool Transfer::isTransferOjbect() const
          *
-         * @brief	ÅĞ¶Ïµ±Ç°TransferÊÇ·ñÎª¶ÔÏó.
+         * @brief	åˆ¤æ–­å½“å‰Transferæ˜¯å¦ä¸ºå¯¹è±¡.
          *
          * @return	true if class ojbect, false if not.
          */
@@ -310,7 +310,7 @@ namespace amo {
         /**
          * @fn	void Transfer::setClassObject(bool val)
          *
-         * @brief	ÉèÖÃµ±Ç°TrasnferÊÇ·ñÎª¶ÔÏó.
+         * @brief	è®¾ç½®å½“å‰Trasnferæ˜¯å¦ä¸ºå¯¹è±¡.
          *
          * @param	val	true to value.
          */
@@ -322,7 +322,7 @@ namespace amo {
         /*!
          * @fn	void Transfer::setWorkOnRenderer(bool bWorkOnRenderer = true)
          *
-         * @brief	ÉèÖÃµ±Ç°TransferÊÇ·ñ¹¤×÷ÔÚäÖÈ¾½ø³Ì(äÖÈ¾Ïß³Ì)ÉÏ.
+         * @brief	è®¾ç½®å½“å‰Transferæ˜¯å¦å·¥ä½œåœ¨æ¸²æŸ“è¿›ç¨‹(æ¸²æŸ“çº¿ç¨‹)ä¸Š.
          *
          * @param	bWorkOnRenderer	(Optional) true to work on renderer.
          */
@@ -332,7 +332,7 @@ namespace amo {
         /*!
          * @fn	bool Transfer::isWorkOnRenderer() const
          *
-         * @brief	ÅĞ¶Ïµ±Ç°TransferÊÇ·ñ¹¤×÷ÔÚäÖÈ¾½ø³Ì(äÖÈ¾Ïß³Ì)ÉÏ.
+         * @brief	åˆ¤æ–­å½“å‰Transferæ˜¯å¦å·¥ä½œåœ¨æ¸²æŸ“è¿›ç¨‹(æ¸²æŸ“çº¿ç¨‹)ä¸Š.
          *
          * @return	true if work on renderer, false if not.
          */
@@ -343,9 +343,9 @@ namespace amo {
         /*!
          * @fn	const std::string& Transfer::transferName() const
          *
-         * @brief	»ñÈ¡Transfer Ãû³Æ ÀàºÍÀàµÄÊµÀı¶ÔÏóÃû³ÆÏàÍ¬..
+         * @brief	è·å–Transfer åç§° ç±»å’Œç±»çš„å®ä¾‹å¯¹è±¡åç§°ç›¸åŒ..
          *
-         * @return	·µ»ØTransfer Ãû³Æ.
+         * @return	è¿”å›Transfer åç§°.
          */
         const std::string& transferName() const {
             return m_strName;
@@ -353,7 +353,7 @@ namespace amo {
         /*!
          * @fn	void Transfer::transferName(const std::string& strName)
          *
-         * @brief	ÉèÖÃTransfer Ãû³Æ ÀàºÍÀàµÄÊµÀı¶ÔÏóÃû³ÆÏàÍ¬.
+         * @brief	è®¾ç½®Transfer åç§° ç±»å’Œç±»çš„å®ä¾‹å¯¹è±¡åç§°ç›¸åŒ.
          *
          * @param	strName	The Transfer name.
          */
@@ -364,9 +364,9 @@ namespace amo {
         /*!
          * @fn	virtual TransferType Transfer::transferType()
          *
-         * @brief	Transfer ÀàĞÍ °üÀ¨Àà/¶ÔÏó.
+         * @brief	Transfer ç±»å‹ åŒ…æ‹¬ç±»/å¯¹è±¡.
          *
-         * @return	·µ»Ø TransferType.
+         * @return	è¿”å› TransferType.
          */
         virtual TransferType transferType() {
             return TransferUnknown;
@@ -375,7 +375,7 @@ namespace amo {
         /**
          * @fn	TransferMultiType Transfer::multiType(const std::string& funcName)
          *
-         * @brief	ÅĞ¶Ïµ±Ç°º¯ÊıÊÇ·ñÖ§³Ö¶àÏß³ÌÖ´ĞĞ.
+         * @brief	åˆ¤æ–­å½“å‰å‡½æ•°æ˜¯å¦æ”¯æŒå¤šçº¿ç¨‹æ‰§è¡Œ.
          *
          * @param	funcName	Name of the function.
          *
@@ -389,11 +389,11 @@ namespace amo {
         /*!
          * @fn	TransferFuncType Transfer::functionType(const std::string& funcName)
          *
-         * @brief	»ñÈ¡º¯ÊıÀàĞÍÆÕÍ¨/¾²Ì¬/¹¹Ôì.
+         * @brief	è·å–å‡½æ•°ç±»å‹æ™®é€š/é™æ€/æ„é€ .
          *
-         * @param	funcName	º¯ÊıÃû.
+         * @param	funcName	å‡½æ•°å.
          *
-         * @return	º¯ÊıÀàĞÍ TransferFuncType.
+         * @return	å‡½æ•°ç±»å‹ TransferFuncType.
          */
         TransferFuncType functionType(const std::string& funcName) {
             return getFuncMgr().functionType(funcName);
@@ -402,11 +402,11 @@ namespace amo {
         /*!
          * @fn	TransferExecType Transfer::execType(const std::string& funcName)
          *
-         * @brief	»ñÈ¡º¯ÊıµÄµ÷ÓÃ·½Ê½ ÆÕÍ¨/Í¬²½/Òì²½.
+         * @brief	è·å–å‡½æ•°çš„è°ƒç”¨æ–¹å¼ æ™®é€š/åŒæ­¥/å¼‚æ­¥.
          *
-         * @param	funcName	º¯ÊıÃû.
+         * @param	funcName	å‡½æ•°å.
          *
-         * @return	º¯Êıµ÷ÓÃ·½Ê½ TransferExecType.
+         * @return	å‡½æ•°è°ƒç”¨æ–¹å¼ TransferExecType.
          */
         TransferExecType execType(const std::string& funcName) {
             return getFuncMgr().execType(funcName);
@@ -416,7 +416,7 @@ namespace amo {
         /*!
          * @fn	virtual void Transfer::registerFunction()
          *
-         * @brief	×¢²áJSº¯Êı ÉèÖÃ×¢²á×´Ì¬Îªtrue.
+         * @brief	æ³¨å†ŒJSå‡½æ•° è®¾ç½®æ³¨å†ŒçŠ¶æ€ä¸ºtrue.
          */
         virtual void registerFunction() {
             setFuncRegistered(true);
@@ -428,9 +428,9 @@ namespace amo {
          *
          * @brief	Registers the transfer.
          *
-         * @param	name 	JSº¯ÊıÃû.
-         * @param	fn   	JSº¯ÊıËù¶ÔÓ¦µÄC++º¯Êı.
-         * @param	nType	º¯ÊıÀàĞÍ¼°Ö´ĞĞ·½Ê½.
+         * @param	name 	JSå‡½æ•°å.
+         * @param	fn   	JSå‡½æ•°æ‰€å¯¹åº”çš„C++å‡½æ•°.
+         * @param	nType	å‡½æ•°ç±»å‹åŠæ‰§è¡Œæ–¹å¼.
          *
          * @return	true if it succeeds, false if it fails.
          */
@@ -445,8 +445,8 @@ namespace amo {
         /*!
          * @fn	void Transfer::addModule(const std::string& strName)
          *
-         * @brief	Ìí¼ÓĞèÒªµ÷ÓÃµÄJSÄ£¿é£¬Ä£¿é´æÔÚÓÚäÖÈ¾½ø³ÌÖĞ£¬
-         * 			×öÎªµ±Ç°TransferµÄ×ÓÄ£¿éµ÷ÓÃ.
+         * @brief	æ·»åŠ éœ€è¦è°ƒç”¨çš„JSæ¨¡å—ï¼Œæ¨¡å—å­˜åœ¨äºæ¸²æŸ“è¿›ç¨‹ä¸­ï¼Œ
+         * 			åšä¸ºå½“å‰Transferçš„å­æ¨¡å—è°ƒç”¨.
          *
          * @param	strName	The name.
          */
@@ -468,9 +468,9 @@ namespace amo {
         /*!
          * @fn	void Transfer::setBeforeResultCallback(BerforeResultFunc fn)
          *
-         * @brief	ÉèÖÃJSµ÷ÓÃC++µÄ½á¹û»Øµ÷´¦Àíº¯Êı.
+         * @brief	è®¾ç½®JSè°ƒç”¨C++çš„ç»“æœå›è°ƒå¤„ç†å‡½æ•°.
          *
-         * @param	fn	»Øµ÷º¯Êı.
+         * @param	fn	å›è°ƒå‡½æ•°.
          */
         void setBeforeResultCallback(BerforeResultFunc fn) {
             m_fnResultCallback = fn;
@@ -479,9 +479,9 @@ namespace amo {
         /*!
          * @fn	BerforeResultFunc Transfer::getBeforeResultCallback()
          *
-         * @brief	»ñÈ¡µ÷ÓÃ½á¹û»Øµ÷´¦Àíº¯Êı£¬Èç¹û»Øµ÷º¯ÊıÓĞĞ§£¬½«ÓÅÏÈ´¦Àí½á¹û.
+         * @brief	è·å–è°ƒç”¨ç»“æœå›è°ƒå¤„ç†å‡½æ•°ï¼Œå¦‚æœå›è°ƒå‡½æ•°æœ‰æ•ˆï¼Œå°†ä¼˜å…ˆå¤„ç†ç»“æœ.
          *
-         * @return	»Øµ÷´¦Àíº¯Êı.
+         * @return	å›è°ƒå¤„ç†å‡½æ•°.
          */
         BerforeResultFunc getBeforeResultCallback() {
             return m_fnResultCallback;
@@ -490,9 +490,9 @@ namespace amo {
         /*!
          * @fn	amo::FunctionWrapperMgr& Transfer::getFuncMgr()
          *
-         * @brief	»ñÈ¡¿ÉÒÔÓÃJS·ÃÎÊµÄº¯ÊıÁĞ±í.
+         * @brief	è·å–å¯ä»¥ç”¨JSè®¿é—®çš„å‡½æ•°åˆ—è¡¨.
          *
-         * @return	º¯ÊıÁĞ±í.
+         * @return	å‡½æ•°åˆ—è¡¨.
          */
         amo::FunctionWrapperMgr& getFuncMgr() {
             return m_oFuncMgr;
@@ -510,29 +510,29 @@ namespace amo {
         /*!
          * @fn	virtual Any Transfer::onMessageTransfer(IPCMessage::SmartType message)
          *
-         * @brief	Ö´ĞĞJSº¯Êı¶ÔÓ¦µÄC++º¯Êı.
+         * @brief	æ‰§è¡ŒJSå‡½æ•°å¯¹åº”çš„C++å‡½æ•°.
          *
-         * @param	½ø³ÌÏûÏ¢.
+         * @param	è¿›ç¨‹æ¶ˆæ¯.
          *
          * @return	Any.
          */
         virtual Any onMessageTransfer(IPCMessage::SmartType msg) {
         
-            // º¯Êıµ÷ÓÃ·½Ê½
+            // å‡½æ•°è°ƒç”¨æ–¹å¼
             std::string strExecName = msg->getMessageName();
             
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
             int nFrameID = args->getInt(IPCArgsPosInfo::FrameID);
-            // ¶ÔÓ¦µÄC++º¯ÊıÃû£¬ Ã»ÓĞºº×Ö
+            // å¯¹åº”çš„C++å‡½æ•°åï¼Œ æ²¡æœ‰æ±‰å­—
             std::string strFuncName = args->getString(IPCArgsPosInfo::FuncName);
-            // ²éÕÒµ±Ç°TransferÊÇ·ñ´æÔÚËù¸øº¯Êı
+            // æŸ¥æ‰¾å½“å‰Transferæ˜¯å¦å­˜åœ¨æ‰€ç»™å‡½æ•°
             auto iter = getFuncMgr().toMap().find(strFuncName);
             
             amo::IPCResult result;
             result.setID(args->getInt(IPCArgsPosInfo::MessageID));
             
-            //JSÆÕÍ¨µ÷ÓÃC++, ÕâÖÖÖ´ĞĞ·½Ê½²»Ïòµ÷ÓÃÕß·µ»Ø½á¹û
+            //JSæ™®é€šè°ƒç”¨C++, è¿™ç§æ‰§è¡Œæ–¹å¼ä¸å‘è°ƒç”¨è€…è¿”å›ç»“æœ
             if (strExecName == MSG_NATIVE_EXECUTE) {
                 Any ret;
                 
@@ -543,7 +543,7 @@ namespace amo {
                         return Nothing();
                     }
                 } else {
-                    // µ÷ÓÃËù×¢²áµÄC++º¯Êı
+                    // è°ƒç”¨æ‰€æ³¨å†Œçš„C++å‡½æ•°
                     ret = iter->second(msg);
                 }
                 
@@ -551,18 +551,18 @@ namespace amo {
                 
                 result.setResult(ret);
                 
-                // Ïòµ÷ÓÃÕß·µ»Ø½á¹ûÇ°ÏÈ´¦Àí¸Ã½á¹û
+                // å‘è°ƒç”¨è€…è¿”å›ç»“æœå‰å…ˆå¤„ç†è¯¥ç»“æœ
                 if (m_fnResultCallback
                         && m_fnResultCallback(MSG_NATIVE_EXECUTE,
                                               msg,
                                               result)) {
-                    //Èç¹ûµ±Ç°½á¹ûÒÑ±»´¦Àí£¬ÄÇÃ´²»·µ»Øµ±Ç°½á¹û
+                    //å¦‚æœå½“å‰ç»“æœå·²è¢«å¤„ç†ï¼Œé‚£ä¹ˆä¸è¿”å›å½“å‰ç»“æœ
                     return Nothing();
                 }
                 
                 return ret;
             }
-            //JSÍ¬²½µ÷ÓÃC++£¬´ËÏûÏ¢ĞèÒªÍ¨¹ı¹ÜµÀÏòÒ³Ãæ·µ»Ø½á¹û
+            //JSåŒæ­¥è°ƒç”¨C++ï¼Œæ­¤æ¶ˆæ¯éœ€è¦é€šè¿‡ç®¡é“å‘é¡µé¢è¿”å›ç»“æœ
             else if (strExecName == MSG_NATIVE_SYNC_EXECUTE)	{
                 //
                 if (iter != getFuncMgr().toMap().end()) {
@@ -573,7 +573,7 @@ namespace amo {
                             && m_fnResultCallback(MSG_NATIVE_SYNC_EXECUTE,
                                                   msg,
                                                   result)) {
-                        //Èç¹ûµ±Ç°½á¹ûÒÑ±»´¦Àí£¬ÄÇÃ´²»·µ»Øµ±Ç°½á¹û
+                        //å¦‚æœå½“å‰ç»“æœå·²è¢«å¤„ç†ï¼Œé‚£ä¹ˆä¸è¿”å›å½“å‰ç»“æœ
                         return Nothing();
                     }
                     
@@ -581,7 +581,7 @@ namespace amo {
                 } else {
                     Any ret = onDefaultMessageTransfer(msg);
                     
-                    // Ã»ÓĞÕÒµ½Ïà¹Øº¯Êı£¬µ«ÊÇ»¹ÊÇĞèÒª·µ»ØÒ»¸öÖµ¸øµ÷ÓÃÕß£¬ÒÔÃâËÀËø
+                    // æ²¡æœ‰æ‰¾åˆ°ç›¸å…³å‡½æ•°ï¼Œä½†æ˜¯è¿˜æ˜¯éœ€è¦è¿”å›ä¸€ä¸ªå€¼ç»™è°ƒç”¨è€…ï¼Œä»¥å…æ­»é”
                     if (ret.is<Nothing>()) {
                         ret = Undefined();
                     }
@@ -598,7 +598,7 @@ namespace amo {
                     return ret;
                 }
             }
-            //JSÒì²½µ÷ÓÃC++£¬´ËÏûÏ¢ĞèÒªÍ¨¹ıJSÏòÒ³Ãæ·µ»Ø½á¹û
+            //JSå¼‚æ­¥è°ƒç”¨C++ï¼Œæ­¤æ¶ˆæ¯éœ€è¦é€šè¿‡JSå‘é¡µé¢è¿”å›ç»“æœ
             else if (strExecName == MSG_NATIVE_ASYNC_EXECUTE) {
                 if (iter != getFuncMgr().toMap().end()) {
                     Any  ret = iter->second(msg);
@@ -615,7 +615,7 @@ namespace amo {
                 } else {
                     Any ret = onDefaultMessageTransfer(msg);
                     
-                    // Ã»ÓĞÕÒµ½Ïà¹Øº¯Êı£¬µ«ÊÇ»¹ÊÇĞèÒª·µ»ØÒ»¸öÖµ¸øµ÷ÓÃÕß£¬ÒÔÃâËÀËø
+                    // æ²¡æœ‰æ‰¾åˆ°ç›¸å…³å‡½æ•°ï¼Œä½†æ˜¯è¿˜æ˜¯éœ€è¦è¿”å›ä¸€ä¸ªå€¼ç»™è°ƒç”¨è€…ï¼Œä»¥å…æ­»é”
                     if (ret.is<Nothing>()) {
                         ret = Undefined();
                     }
@@ -639,9 +639,9 @@ namespace amo {
         /*!
          * @fn	bool Transfer::isFuncRegistered() const
          *
-         * @brief	²éÑ¯Transfer×¢²á×´Ì¬.
+         * @brief	æŸ¥è¯¢Transferæ³¨å†ŒçŠ¶æ€.
          *
-         * @return	true/false ÒÑ×¢²á/Î´×¢²á.
+         * @return	true/false å·²æ³¨å†Œ/æœªæ³¨å†Œ.
          */
         bool isFuncRegistered() const {
             return m_bIsRegistered;
@@ -650,9 +650,9 @@ namespace amo {
         /*!
          * @fn	void Transfer::setFuncRegistered(bool val)
          *
-         * @brief	ÉèÖÃTransfer×¢²á×´Ì¬.
+         * @brief	è®¾ç½®Transferæ³¨å†ŒçŠ¶æ€.
          *
-         * @param	true/false ×¢²á/Î´×¢²á.
+         * @param	true/false æ³¨å†Œ/æœªæ³¨å†Œ.
          */
         void setFuncRegistered(bool val) {
             m_bIsRegistered = val;
@@ -661,7 +661,7 @@ namespace amo {
         /**
          * @fn	std::function<void(IPCMessage::SmartType) > getDefaultTriggerEventFunc() const
          *
-         * @brief	»ñÈ¡ÊÂ¼ş´¥·¢º¯Êı.
+         * @brief	è·å–äº‹ä»¶è§¦å‘å‡½æ•°.
          *
          * @return	The trigger event function.
          */
@@ -673,7 +673,7 @@ namespace amo {
         /**
          * @fn	virtual void Transfer::setDefaultTriggerEventFunc( std::function<void(IPCMessage::SmartType) > val)
          *
-         * @brief	ÉèÖÃTransferÖĞĞèÒª´¥·¢ÊÂ¼şÊ±µÄ»Øµ÷º¯Êı£¬ Ò»°ãÓÃÓÚÍâ²¿TransferµÄÊÂ¼ş´¥·¢.
+         * @brief	è®¾ç½®Transferä¸­éœ€è¦è§¦å‘äº‹ä»¶æ—¶çš„å›è°ƒå‡½æ•°ï¼Œ ä¸€èˆ¬ç”¨äºå¤–éƒ¨Transferçš„äº‹ä»¶è§¦å‘.
          *
          * @param	val	The value.
          */
@@ -688,7 +688,7 @@ namespace amo {
         /**
          * @fn	std::function<void(IPCMessage::SmartType) > getTriggerEventFunc() const
          *
-         * @brief	»ñÈ¡ÊÂ¼ş´¥·¢º¯Êı.
+         * @brief	è·å–äº‹ä»¶è§¦å‘å‡½æ•°.
          *
          * @return	The trigger event function.
          */
@@ -701,8 +701,8 @@ namespace amo {
         /**
          * @fn	void Transfer::setTriggerEventFunc(std::function<void(IPCMessage::SmartType) > val)
          *
-         * @brief	ÉèÖÃTransferÖĞĞèÒª´¥·¢ÊÂ¼şÊ±µÄ»Øµ÷º¯Êı£¬
-         * 			Ò»°ãÓÃÓÚÍâ²¿TransferµÄÊÂ¼ş´¥·¢.
+         * @brief	è®¾ç½®Transferä¸­éœ€è¦è§¦å‘äº‹ä»¶æ—¶çš„å›è°ƒå‡½æ•°ï¼Œ
+         * 			ä¸€èˆ¬ç”¨äºå¤–éƒ¨Transferçš„äº‹ä»¶è§¦å‘.
          *
          * @param	val	The value.
          */
@@ -762,46 +762,46 @@ namespace amo {
         }
     protected:
     
-        /*! @brief	JSµ÷ÓÃC++»Øµ÷´¦Àíº¯Êı¼¯ºÏ. */
+        /*! @brief	JSè°ƒç”¨C++å›è°ƒå¤„ç†å‡½æ•°é›†åˆ. */
         std::map < std::string, FunctionWrapper > m_mpJsFunction;
         
-        /*! @brief	TransferÃû³Æ. */
+        /*! @brief	Transferåç§°. */
         std::string m_strName;
         
-        /*! @brief	½á¹û·µ»ØÇ°µÄ»Øµ÷º¯Êı£¬Èç¹û¸Ãº¯Êı·µ»ØtrueÄÇÃ´½«²»»áÔÙÏòµ÷ÓÃ¶¼·µ»ØÖ´ĞĞ½á¹û. */
+        /*! @brief	ç»“æœè¿”å›å‰çš„å›è°ƒå‡½æ•°ï¼Œå¦‚æœè¯¥å‡½æ•°è¿”å›trueé‚£ä¹ˆå°†ä¸ä¼šå†å‘è°ƒç”¨éƒ½è¿”å›æ‰§è¡Œç»“æœ. */
         BerforeResultFunc m_fnResultCallback;
         
-        /*! @brief	JSµ÷ÓÃC++»Øµ÷´¦Àíº¯Êı¼¯ºÏ. */
+        /*! @brief	JSè°ƒç”¨C++å›è°ƒå¤„ç†å‡½æ•°é›†åˆ. */
         FunctionWrapperMgr m_oFuncMgr;
         
-        /*! @brief	ÊÇ·ñÔËĞĞÔÚRendererÏß³ÌÉÏ. */
+        /*! @brief	æ˜¯å¦è¿è¡Œåœ¨Rendererçº¿ç¨‹ä¸Š. */
         bool m_bWorkOnRenderer;
         
-        /*! @brief	µ±Ç°Transfer ID. */
+        /*! @brief	å½“å‰Transfer ID. */
         int64_t m_nObjectID;
         
-        /** @brief	µ±Ç°Transfer Ãû³Æ. */
+        /** @brief	å½“å‰Transfer åç§°. */
         std::string m_strObjectName;
         
-        /*! @brief	ÅĞ¶Ïµ±Ç°ÀàÊÇ·ñÒÑ¾­×¢²á. */
+        /*! @brief	åˆ¤æ–­å½“å‰ç±»æ˜¯å¦å·²ç»æ³¨å†Œ. */
         bool m_bIsRegistered;
         
-        /** @brief	ÅĞ¶Ïµ±Ç°transferÊÇÀà»¹ÊÇ¶ÔÏó. */
+        /** @brief	åˆ¤æ–­å½“å‰transferæ˜¯ç±»è¿˜æ˜¯å¯¹è±¡. */
         bool m_bTransferObject;
         
-        /** @brief	TransferÖĞ²úÉúµÄÄ¬ÈÏÊÂ¼ş´¥·¢º¯Êı£¬m_fnTriggerEventFuncÎŞĞ§Ê±»á³¢ÊÔÊ¹ÓÃ¸Ãº¯Êı. */
+        /** @brief	Transferä¸­äº§ç”Ÿçš„é»˜è®¤äº‹ä»¶è§¦å‘å‡½æ•°ï¼Œm_fnTriggerEventFuncæ— æ•ˆæ—¶ä¼šå°è¯•ä½¿ç”¨è¯¥å‡½æ•°. */
         std::function<void(IPCMessage::SmartType)> m_fnDefaultTriggerEventFunc;
         
-        /** @brief	TransferÖĞ²úÉúµÄÊÂ¼ş´¥·¢º¯Êı. */
+        /** @brief	Transferä¸­äº§ç”Ÿçš„äº‹ä»¶è§¦å‘å‡½æ•°. */
         std::function<void(IPCMessage::SmartType)> m_fnTriggerEventFunc;
         
-        /** @brief	Ä¬ÈÏÏûÏ¢´¦Àíº¯Êı£¬Èç¹ûÃ»ÓĞÕÒµ½ÏûÏ¢´¦Àíº¯Êı½«´¥·¢¸Ãº¯Êı. */
+        /** @brief	é»˜è®¤æ¶ˆæ¯å¤„ç†å‡½æ•°ï¼Œå¦‚æœæ²¡æœ‰æ‰¾åˆ°æ¶ˆæ¯å¤„ç†å‡½æ•°å°†è§¦å‘è¯¥å‡½æ•°. */
         std::function<Any(IPCMessage::SmartType)> m_fnDefaultMsgFunc;
         
-        /** @brief	ÊÇ·ñÒÑ¾­±»ÊÍ·Åµô£¬£¨ÔÚÒ³ÃæÉÏÊÍ·Åµô£©. */
+        /** @brief	æ˜¯å¦å·²ç»è¢«é‡Šæ”¾æ‰ï¼Œï¼ˆåœ¨é¡µé¢ä¸Šé‡Šæ”¾æ‰ï¼‰. */
         std::atomic_bool m_bReleased;
         
-        /** @brief	ËùÊôÄ£¿éÃû³Æ. */
+        /** @brief	æ‰€å±æ¨¡å—åç§°. */
         std::string m_strModuleName;
         
         amo::json userData;

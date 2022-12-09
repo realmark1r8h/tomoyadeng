@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "handler/UtilityV8Handler.h"
 
 namespace amo {
@@ -53,7 +53,7 @@ namespace amo {
         } while (false);
         
         
-        exception == L"º¯Êýµ÷ÓÃÊ§°Ü";
+        exception == L"å‡½æ•°è°ƒç”¨å¤±è´¥";
         return false;
     }
     

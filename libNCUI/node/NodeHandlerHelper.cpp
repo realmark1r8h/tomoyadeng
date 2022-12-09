@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "node/NodeHandlerHelper.h"
 #include "transfer/TransferMappingMgr.hpp"
 #include "ipc/UIMessageEmitter.hpp"

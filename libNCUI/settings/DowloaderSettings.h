@@ -1,4 +1,4 @@
-// Created by amoylel on 08/19/2017.
+ï»¿// Created by amoylel on 08/19/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_DOWLOADERSETTINGS_H__
@@ -23,13 +23,13 @@ namespace amo {
         virtual void afterUpdateArgsSettings() override;
         
     public:
-        /*! @brief	ÏÂÔØÎÄ¼şµÄurl. */
+        /*! @brief	ä¸‹è½½æ–‡ä»¶çš„url. */
         std::string url;
-        /*! @brief	ÎÄ¼ş±£´æµÄ±¾µØÄ¿Â¼. */
+        /*! @brief	æ–‡ä»¶ä¿å­˜çš„æœ¬åœ°ç›®å½•. */
         std::string file;
-        /*! @brief	×Ô¶¯ÏÂÔØ. */
+        /*! @brief	è‡ªåŠ¨ä¸‹è½½. */
         bool autoDownload;
-        /*! @brief	Ç¿ÖÆÌæ»»ÒÑ´æÔÚµÄÎÄ¼ş. */
+        /*! @brief	å¼ºåˆ¶æ›¿æ¢å·²å­˜åœ¨çš„æ–‡ä»¶. */
         bool forceReplace;
     };
 }

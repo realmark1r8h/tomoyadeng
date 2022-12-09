@@ -1,4 +1,4 @@
-// Created by amoylel on 10/27/2017.
+ï»¿// Created by amoylel on 10/27/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_RENDERERTHREADTRANSFER_H__
@@ -17,9 +17,9 @@ namespace amo {
     * @extend Object
     *
     *
-    * @brief Ïß³ÌÀà£¬¸ÃÀà¹¹½¨µÄÊµÀı»áÔÚäÖÈ¾½ø³ÌÉÏÖ´ĞĞ,¿ÉÒÔÊ¹Ò»¸öÓÉC++±àĞ´µÄÀ©Õ¹ÔÚÏß³ÌÉÏÔËĞĞ.<br>
-    * 		 ¹¤×÷Ïß³Ì£º**RendererÏß³Ì**.
-    * 		 ËµÃ÷£º**ËäÈ»Ã»ÓĞÏŞÖÆ£¬µ«»¹ÊÇ²»½¨Òé½«ÄÚÖÃ½Ó¿Ú·Åµ½Ïß³ÌÉÏÈ¥Ö´ĞĞ**
+    * @brief çº¿ç¨‹ç±»ï¼Œè¯¥ç±»æ„å»ºçš„å®ä¾‹ä¼šåœ¨æ¸²æŸ“è¿›ç¨‹ä¸Šæ‰§è¡Œ,å¯ä»¥ä½¿ä¸€ä¸ªç”±C++ç¼–å†™çš„æ‰©å±•åœ¨çº¿ç¨‹ä¸Šè¿è¡Œ.<br>
+    * 		 å·¥ä½œçº¿ç¨‹ï¼š**Rendererçº¿ç¨‹**.
+    * 		 è¯´æ˜ï¼š**è™½ç„¶æ²¡æœ‰é™åˆ¶ï¼Œä½†è¿˜æ˜¯ä¸å»ºè®®å°†å†…ç½®æ¥å£æ”¾åˆ°çº¿ç¨‹ä¸Šå»æ‰§è¡Œ**
     */
     class RendererThreadTransfer : public ThreadTransfer<ThreadRenderer>
         , public amo::singleton<RendererThreadTransfer> {

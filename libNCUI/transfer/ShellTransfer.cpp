@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include "transfer/ShellTransfer.h"
 
@@ -69,34 +69,34 @@ namespace amo {
     
     int ShellTransfer::StringToShowCmd(const amo::string& str) {
         if (str == "SW_HIDE") {
-            //���ش��ڣ��״̬����һ������
+            //隐藏窗口，活动状态给令一个窗口
             return SW_HIDE;
         } else if (str == "SW_MINIMIZE") {
-            //��С�����ڣ��״̬����һ������
+            //最小化窗口，活动状态给令一个窗口
             return SW_MINIMIZE;
         } else if (str == "SW_RESTORE") {
-            //��ԭ���Ĵ�С��λ����ʾһ�����ڣ�ͬʱ�������״̬
+            //用原来的大小和位置显示一个窗口，同时令其进入活动状态
             return SW_RESTORE;
         } else if (str == "SW_SHOW") {
-            //�õ�ǰ�Ĵ�С��λ����ʾһ�����ڣ�ͬʱ�������״̬
+            //用当前的大小和位置显示一个窗口，同时令其进入活动状态
             return SW_SHOW;
         } else if (str == "SW_SHOWMAXIMIZED") {
-            //��󻯴��ڣ������伤��
+            //最大化窗口，并将其激活
             return SW_SHOWMAXIMIZED;
         } else if (str == "SW_SHOWMINIMIZED") {
-            //��С�����ڣ������伤��
+            //最小化窗口，并将其激活
             return SW_SHOWMINIMIZED;
         } else if (str == "SW_SHOWMINNOACTIVE") {
-            //��С��һ�����ڣ�ͬʱ���ı�����
+            //最小化一个窗口，同时不改变活动窗口
             return SW_SHOWMINNOACTIVE;
         } else if (str == "SW_SHOWNA") {
-            //�õ�ǰ�Ĵ�С��λ����ʾһ�����ڣ����ı�����
+            //用当前的大小和位置显示一个窗口，不改变活动窗口
             return SW_SHOWNA;
         } else if (str == "SW_SHOWNOACTIVATE") {
-            //������Ĵ�С��λ����ʾһ�����ڣ�ͬʱ���ı�����
+            //用最近的大小和位置显示一个窗口，同时不改变活动窗口
             return SW_SHOWNOACTIVATE;
         } else if (str == "SW_SHOWNORMAL") {
-            //��RESTORE��ͬ
+            //与RESTORE相同
             return SW_SHOWNORMAL;
         } else {
             return SW_SHOWNORMAL;

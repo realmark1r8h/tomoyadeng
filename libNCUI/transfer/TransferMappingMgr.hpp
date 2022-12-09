@@ -1,4 +1,4 @@
-// Created by amoylel on 07/04/2017.
+ï»¿// Created by amoylel on 07/04/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_TRANSFERMAPPINGMGR_HPP__
@@ -16,7 +16,7 @@ namespace amo {
     /*!
      * @struct	cefrefptr_hash
      *
-     * @brief	×Ô¶¨ÒåHash TransferMappingMgr.
+     * @brief	è‡ªå®šä¹‰Hash TransferMappingMgr.
      *
      * @tparam	T	Generic type parameter.
      */
@@ -97,11 +97,11 @@ namespace amo {
         /*!
         * @fn	transfer_type TransferMappingMgr::toTransfer(cefrefptr_type pCefRefPtr)
         *
-        * @brief	½«CefÀàĞÍ×ª»»ÎªTransferÀàĞÍ.
+        * @brief	å°†Cefç±»å‹è½¬æ¢ä¸ºTransferç±»å‹.
         *
-        * @param	pCefRefPtr	CefÀàĞÍ.
+        * @param	pCefRefPtr	Cefç±»å‹.
         *
-        * @return	TransferÀàĞÍ.
+        * @return	Transferç±»å‹.
         */
         transfer_type toTransfer(cefrefptr_type pCefRefPtr) {
             transfer_type pTransfer;
@@ -111,7 +111,7 @@ namespace amo {
                 return pTransfer;
             }
             
-            // ´´½¨Ò»¸öĞÂµÄTransfer²¢±£´æ
+            // åˆ›å»ºä¸€ä¸ªæ–°çš„Transferå¹¶ä¿å­˜
             
             pTransfer = ClassTransfer::createTransfer<T>(pCefRefPtr);
             m_oTransferMap[pCefRefPtr] = pTransfer;
@@ -121,7 +121,7 @@ namespace amo {
         /*!
         * @fn	amo::json TransferMappingMgr::toJson(cefrefptr_type pCefRefPtr)
         *
-        * @brief	½«CefÀàĞÍ×ª»»ÎªJSON.
+        * @brief	å°†Cefç±»å‹è½¬æ¢ä¸ºJSON.
         *
         * @param	pCefRefPtr	The cef reference pointer.
         *
@@ -135,7 +135,7 @@ namespace amo {
         /*!
         * @fn	cefrefptr_type TransferMappingMgr::formJson(amo::json& json)
         *
-        * @brief	½«JSON×ª»»ÎªCefÀàĞÍ.
+        * @brief	å°†JSONè½¬æ¢ä¸ºCefç±»å‹.
         *
         * @param 	json	The JSON.
         *
@@ -156,7 +156,7 @@ namespace amo {
         /*!
         * @fn	amo::json TransferMappingMgr::toSimplifiedJson(cefrefptr_type pCefRefPtr)
         *
-        * @brief	½«CefÀàĞÍ×ª»»ÎªÒ»¸ö¼òµ¥µÄJSON¶ÔÏó£¨Ö»ÓĞIDºÍName£©.
+        * @brief	å°†Cefç±»å‹è½¬æ¢ä¸ºä¸€ä¸ªç®€å•çš„JSONå¯¹è±¡ï¼ˆåªæœ‰IDå’ŒNameï¼‰.
         *
         * @param	pCefRefPtr	The cef reference pointer.
         *
@@ -173,7 +173,7 @@ namespace amo {
         /*!
          * @fn	void TransferMappingMgrBase::removeMapping(cefrefptr_type pCefRefPtr)
          *
-         * @brief	Í¨¹ıÔ­Ê¼ÀàÒÆ³ıÓ³Éä.
+         * @brief	é€šè¿‡åŸå§‹ç±»ç§»é™¤æ˜ å°„.
          *
          * @param	pCefRefPtr	The cef reference pointer.
          */
@@ -190,7 +190,7 @@ namespace amo {
         /*!
          * @fn	void TransferMappingMgrBase::removeMapping(transfer_type pTransfer)
          *
-         * @brief	Í¨¹ıÓ³ÉäÀàÒÆ³ıÓ³Éä.
+         * @brief	é€šè¿‡æ˜ å°„ç±»ç§»é™¤æ˜ å°„.
          *
          * @param	pTransfer	The transfer.
          */
@@ -204,7 +204,7 @@ namespace amo {
             }
         }
     private:
-        /*! @brief	¶ÔÏó¹ÜÀíÆ÷. */
+        /*! @brief	å¯¹è±¡ç®¡ç†å™¨. */
         std::unordered_map<cefrefptr_type,
             transfer_type, cefrefptr_hash<cefrefptr_type> > m_oTransferMap;
     };
@@ -227,7 +227,7 @@ namespace amo {
     ///*!
     //* @class	TransferMappingMgr
     //*
-    //* @brief	ÀàĞÍÓ³Éä¹ÜÀíÆ÷.
+    //* @brief	ç±»å‹æ˜ å°„ç®¡ç†å™¨.
     //*/
     //template<typename T>
     //class TransferMappingMgr : public amo::singleton < TransferMappingMgr<T> > {
@@ -239,21 +239,21 @@ namespace amo {
     //    /*!
     //     * @fn	transfer_type TransferMappingMgr::toTransfer(cefrefptr_type pCefRefPtr)
     //     *
-    //     * @brief	½«CefÀàĞÍ×ª»»ÎªTransferÀàĞÍ.
+    //     * @brief	å°†Cefç±»å‹è½¬æ¢ä¸ºTransferç±»å‹.
     //     *
-    //     * @param	pCefRefPtr	CefÀàĞÍ.
+    //     * @param	pCefRefPtr	Cefç±»å‹.
     //     *
-    //     * @return	TransferÀàĞÍ.
+    //     * @return	Transferç±»å‹.
     //     */
     //    transfer_type toTransfer(cefrefptr_type pCefRefPtr) {
     //        auto iter = m_oTransferMap.find(pCefRefPtr);
     //
-    //        // Èç¹ûÒÑ¾­ÓĞÓ³ÉäµÄTransfer´æÔÚ£¬Ö±½Ó·µ»Ø
+    //        // å¦‚æœå·²ç»æœ‰æ˜ å°„çš„Transferå­˜åœ¨ï¼Œç›´æ¥è¿”å›
     //        if (iter != m_oTransferMap.end()) {
     //            return iter->second;
     //        }
     //
-    //        // ´´½¨Ò»¸öĞÂµÄTransfer²¢±£´æ
+    //        // åˆ›å»ºä¸€ä¸ªæ–°çš„Transferå¹¶ä¿å­˜
     //        transfer_type pTransfer;
     //        pTransfer = ClassTransfer::createTransfer<T>(pCefRefPtr);
     //        m_oTransferMap[pCefRefPtr] = pTransfer;
@@ -263,7 +263,7 @@ namespace amo {
     //    /*!
     //     * @fn	amo::json TransferMappingMgr::toJson(cefrefptr_type pCefRefPtr)
     //     *
-    //     * @brief	½«CefÀàĞÍ×ª»»ÎªJSON.
+    //     * @brief	å°†Cefç±»å‹è½¬æ¢ä¸ºJSON.
     //     *
     //     * @param	pCefRefPtr	The cef reference pointer.
     //     *
@@ -277,7 +277,7 @@ namespace amo {
     //    /*!
     //     * @fn	cefrefptr_type TransferMappingMgr::formJson(amo::json& json)
     //     *
-    //     * @brief	½«JSON×ª»»ÎªCefÀàĞÍ.
+    //     * @brief	å°†JSONè½¬æ¢ä¸ºCefç±»å‹.
     //     *
     //     * @param 	json	The JSON.
     //     *
@@ -298,7 +298,7 @@ namespace amo {
     //    /*!
     //     * @fn	amo::json TransferMappingMgr::toSimplifiedJson(cefrefptr_type pCefRefPtr)
     //     *
-    //     * @brief	½«CefÀàĞÍ×ª»»ÎªÒ»¸ö¼òµ¥µÄJSON¶ÔÏó£¨Ö»ÓĞIDºÍName£©.
+    //     * @brief	å°†Cefç±»å‹è½¬æ¢ä¸ºä¸€ä¸ªç®€å•çš„JSONå¯¹è±¡ï¼ˆåªæœ‰IDå’ŒNameï¼‰.
     //     *
     //     * @param	pCefRefPtr	The cef reference pointer.
     //     *
@@ -314,7 +314,7 @@ namespace amo {
     //    }
     //
     //private:
-    //    /*! @brief	¶ÔÏó¹ÜÀíÆ÷. */
+    //    /*! @brief	å¯¹è±¡ç®¡ç†å™¨. */
     //    std::unordered_map<cefrefptr_type,
     //        transfer_type, cefrefptr_hash<cefrefptr_type> > m_oTransferMap;
     //};

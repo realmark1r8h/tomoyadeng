@@ -1,4 +1,4 @@
-// Created by amoylel on 08/19/2018.
+﻿// Created by amoylel on 08/19/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef AMO_OVERLAPDATA_1CD383A7_67A4_43DA_9A59_BCD4CC0F06AB_HPP__

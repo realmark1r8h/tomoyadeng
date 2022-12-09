@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "ui/win/menu/ContextMenuWindow.h"
 
 #include <functional>
@@ -113,7 +113,7 @@ namespace amo {
         //    return false;
         //}
         //
-        //// Èç¹ûËù¸øFrameIDĞ¡ÓÚ0£¬²éÕÒµ±Ç°Ëù»ñµÃ½¹µãµÄ´°¿Ú
+        //// å¦‚æœæ‰€ç»™FrameIDå°äº0ï¼ŒæŸ¥æ‰¾å½“å‰æ‰€è·å¾—ç„¦ç‚¹çš„çª—å£
         //auto manager = BrowserWindowManager::getInstance();
         //std::shared_ptr<BrowserWindow> pWindow;
         //
@@ -142,7 +142,7 @@ namespace amo {
         //
         //IPCMessage::SmartType msg(new IPCMessage());
         //
-        //// ¶ÔÒÑÓĞActionµÄÖ±½ÓÖ´ĞĞ²Ù×÷
+        //// å¯¹å·²æœ‰Actionçš„ç›´æ¥æ‰§è¡Œæ“ä½œ
         //
         //if (action == "undo") {
         //    pFrame->Undo();
@@ -159,7 +159,7 @@ namespace amo {
         //} else if (action == "delete") {
         //    pFrame->Delete();
         //}
-        //// ´°¿Ú²Ù×÷
+        //// çª—å£æ“ä½œ
         //else if (action == "minimize") {
         //    pWindow->minimize(msg);
         //} else if (action == "maximize") {
@@ -175,10 +175,10 @@ namespace amo {
         //    pTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
         //    pTransfer->exit(msg);
         //} else if (action == "reload") {
-        //    // reload - Õı³£ÖØĞÂ¼ÓÔØµ±Ç°´°¿Ú
+        //    // reload - æ­£å¸¸é‡æ–°åŠ è½½å½“å‰çª—å£
         //    pBrowser->Reload();
         //} else if (action == "forcereload") {
-        //    // ºöÂÔ»º´æ²¢ÖØĞÂ¼ÓÔØµ±Ç°´°¿Ú
+        //    // å¿½ç•¥ç¼“å­˜å¹¶é‡æ–°åŠ è½½å½“å‰çª—å£
         //    pBrowser->ReloadIgnoreCache();
         //} else if (action == "showdevtools") {
         //    pWindow->showDevTools(msg);

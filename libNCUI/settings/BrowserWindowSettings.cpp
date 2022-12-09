@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "settings/BrowserWindowSettings.h"
 #include <amo/string.hpp>
 
@@ -34,7 +34,7 @@ namespace amo {
         universal_access_from_file_urls = STATE_ENABLED;
         file_access_from_file_urls = STATE_ENABLED;
         web_security =
-            STATE_DISABLED;		//·ÃÎÊÍâÍøÊ±²»ÄÜdisable, ·ñÔòÓĞ²¿·ÖÍøÕ¾ÈİÒ×±ÀÀ£
+            STATE_DISABLED;		//è®¿é—®å¤–ç½‘æ—¶ä¸èƒ½disable, å¦åˆ™æœ‰éƒ¨åˆ†ç½‘ç«™å®¹æ˜“å´©æºƒ
         //web_security = STATE_ENABLED;
         image_loading = STATE_ENABLED;
         image_shrink_standalone_to_fit = STATE_ENABLED;
@@ -55,7 +55,7 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(transparent, false);
         DEFAULT_ARGS_SETTINGS(main, false);
         DEFAULT_ARGS_SETTINGS(windowClass, "BrowserWindow");
-        //TODO: ¸Ä³Éfalse,Ä¬ÈÏ²»ÔÊĞíË¢ĞÂ
+        //TODO: æ”¹æˆfalse,é»˜è®¤ä¸å…è®¸åˆ·æ–°
         DEFAULT_ARGS_SETTINGS(reload, true);
         DEFAULT_ARGS_SETTINGS(dragBlacklist, 0);
     }

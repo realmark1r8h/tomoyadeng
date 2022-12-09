@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_WEBKITWINDOW_H__
@@ -150,7 +150,7 @@ namespace amo {
         virtual Any showTitleBar(IPCMessage::SmartType msg) override;
         
         
-        //Ê¹ÓÃGDI+±£´æBITMAPµ½ÎÄ¼ş
+        //ä½¿ç”¨GDI+ä¿å­˜BITMAPåˆ°æ–‡ä»¶
         //CLSID encoderClsid
         //GetEncoderClsid(L"image/png", &encoderClsid);    //png
         //GetEncoderClsid(L"image/bmp", &encoderClsid);
@@ -181,7 +181,7 @@ namespace amo {
         /*!
          * @fn	std::shared_ptr<amo::BrowserWindowSettings> getBrowserSettings() const;
          *
-         * @brief	»ñÈ¡ä¯ÀÀÆ÷ÉèÖÃ.
+         * @brief	è·å–æµè§ˆå™¨è®¾ç½®.
          *
          * @return	The browser settings.
          */
@@ -191,7 +191,7 @@ namespace amo {
         /*!
          * @fn	int GetIdentifier() const;
          *
-         * @brief	»ñÈ¡ä¯ÀÀÆ÷ID.
+         * @brief	è·å–æµè§ˆå™¨ID.
          *
          * @return	The identifier.
          */
@@ -201,7 +201,7 @@ namespace amo {
         /*!
          * @fn	WebkitView* GetWebkitView();
          *
-         * @brief	»ñÈ¡ä¯ÀÀÆ÷¿Ø¼ş.
+         * @brief	è·å–æµè§ˆå™¨æ§ä»¶.
          *
          * @return	null if it fails, else the webkit view.
          */
@@ -211,7 +211,7 @@ namespace amo {
         /*!
          * @fn	std::vector<HWND> getParents(HWND hWnd);
          *
-         * @brief	»ñÈ¡Ëù¸ø´°¿ÚµÄËùÓĞ¸¸´°¿Ú.
+         * @brief	è·å–æ‰€ç»™çª—å£çš„æ‰€æœ‰çˆ¶çª—å£.
          *
          * @param	hWnd	Handle of the window.
          *
@@ -239,19 +239,19 @@ namespace amo {
         
         
     private:
-        /*! @brief	±êÌâÀ¸¿Ø¼ş. */
+        /*! @brief	æ ‡é¢˜æ æ§ä»¶. */
         CControlUI* m_pTitleBar;
-        /*! @brief	ä¯ÀÀÆ÷¿Ø¼şÈİÆ÷. */
+        /*! @brief	æµè§ˆå™¨æ§ä»¶å®¹å™¨. */
         CHorizontalLayoutUI* m_pBrowserLayout;
-        /*! @brief	ä¯ÀÀÆ÷¿Ø¼ş. */
+        /*! @brief	æµè§ˆå™¨æ§ä»¶. */
         WebkitView* m_pWebkit;
-        /*! @brief	ä¯ÀÀÆ÷Ö¸Õë. */
+        /*! @brief	æµè§ˆå™¨æŒ‡é’ˆ. */
         CefRefPtr<CefBrowser> m_pBrowser;
-        /*! @brief	´°¿ÚÊÇ·ñ¿ÉÍÏ×§ÒÆ¶¯. */
+        /*! @brief	çª—å£æ˜¯å¦å¯æ‹–æ‹½ç§»åŠ¨. */
         bool m_isDragable;
-        /*! @brief	CefBrowserµÄJs·â±ÕÀà. */
+        /*! @brief	CefBrowserçš„Jså°é—­ç±». */
         std::shared_ptr<BrowserTransfer> m_pBrowserTransfer;
-        /*! @brief	CefÊÂ¼ş»Øµ÷´¦ÀíÀà£¬Í¨¹ı´ËÀàÏòJS´«µİ»Øµ÷ÊÂ¼ş. */
+        /*! @brief	Cefäº‹ä»¶å›è°ƒå¤„ç†ç±»ï¼Œé€šè¿‡æ­¤ç±»å‘JSä¼ é€’å›è°ƒäº‹ä»¶. */
         std::shared_ptr<CefCallbackHandler> m_pCefCallbackHandler;
         /*! @brief	The browser settings. */
         std::shared_ptr<BrowserWindowSettings> m_pBrowserSettings;

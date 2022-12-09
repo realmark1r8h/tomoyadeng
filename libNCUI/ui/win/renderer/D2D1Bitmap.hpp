@@ -1,4 +1,4 @@
-// Created by amoylel on 28/08/2018.
+ï»¿// Created by amoylel on 28/08/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBNCUI_D2D1BITMAP_5E308BE1_A01F_4623_B14F_646BDEA09AD5_HPP__
@@ -33,12 +33,12 @@ namespace amo {
                 
                 // Create a pixel format and initial its format
                 // and alphaMode fields.
-                //Ö¸¶¨RGB¸ñÊ½
+                //æŒ‡å®šRGBæ ¼å¼
                 D2D1_PIXEL_FORMAT pixelFormat = D2D1::PixelFormat(
                                                     DXGI_FORMAT_B8G8R8A8_UNORM,
                                                     D2D1_ALPHA_MODE_PREMULTIPLIED
                                                 );
-                //ÉèÖÃÊôÐÔ
+                //è®¾ç½®å±žæ€§
                 D2D1_BITMAP_PROPERTIES props;
                 
                 props.pixelFormat = pixelFormat;
@@ -133,14 +133,14 @@ namespace amo {
                 //m_rect->renderMode = 1;
                 
                 if (m_rect->renderMode == 1) {
-                    // ¾ÓÖÐ
+                    // å±…ä¸­
                     amo::rect dst_rect = m_rect->dst.get_full_rect(m_rect->src);
                     D2D1_RECT_F dstRect = { (FLOAT)dst_rect.left(), (FLOAT)dst_rect.top(), (FLOAT)dst_rect.right(), (FLOAT)dst_rect.bottom() };
                     D2D1_RECT_F srcRect = { (FLOAT)m_rect->src.left(), (FLOAT)m_rect->src.top(), (FLOAT)m_rect->src.right(), (FLOAT)m_rect->src.bottom() };
                     renderTarget->DrawBitmap(m_bitmap, dstRect, 1.0f,
                                              D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &srcRect);
                 } else if (m_rect->renderMode == 2) {
-                    // À­Éì
+                    // æ‹‰ä¼¸
                     D2D1_RECT_F dstRect = { (FLOAT)m_rect->dst.left(), (FLOAT)m_rect->dst.top(), (FLOAT)m_rect->dst.right(), (FLOAT)m_rect->dst.bottom() };
                     D2D1_RECT_F srcRect = { (FLOAT)m_rect->src.left(), (FLOAT)m_rect->src.top(), (FLOAT)m_rect->src.right(), (FLOAT)m_rect->src.bottom() };
                     renderTarget->DrawBitmap(m_bitmap, dstRect, 1.0f,
@@ -149,7 +149,7 @@ namespace amo {
                 
                     int srcWidth = (std::min)(m_rect->dst.width(), m_rect->src.width());
                     int srcHeight = (std::min)(m_rect->dst.height(), m_rect->src.height());
-                    // Æ½ÆÌ
+                    // å¹³é“º
                     D2D1_RECT_F dstRect = { (FLOAT)m_rect->dst.left(), (FLOAT)m_rect->dst.top(), (FLOAT)m_rect->dst.width(), (FLOAT)m_rect->dst.height() };
                     D2D1_RECT_F srcRect = { (FLOAT)m_rect->src.left(), (FLOAT)m_rect->src.top(), (FLOAT)srcWidth, (FLOAT)srcHeight };
                     renderTarget->DrawBitmap(m_bitmap, dstRect, 1.0f,

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "module/JsClassV8Handler.h"
 
 #include <functional>
@@ -14,7 +14,7 @@ namespace amo {
 
     JsClassV8Handler::JsClassV8Handler() {
         setHandlerName("JsClassV8Handler");
-        setRendererClass(false); // Ä¬ÈÏÔÚUIÏß³ÌÉÏÖ´ĞĞ
+        setRendererClass(false); // é»˜è®¤åœ¨UIçº¿ç¨‹ä¸Šæ‰§è¡Œ
         
         m_pAccessor = new JsClassObjectV8Accessor();
         m_pAccessor->setGetSetCallback(std::bind(&JsClassV8Handler::Execute,
@@ -34,10 +34,10 @@ namespace amo {
     
     CefRefPtr<CefV8Value> JsClassV8Handler::getV8Object(
         CefRefPtr<CefV8Value> object /*= NULL*/) {
-        // ²»Àí»áobjectÊÇ·ñÎª¿Õ£¬ÎÒÃÇÏÖÔÚ´´½¨µÄÊÇÒ»¸öÀà
+        // ä¸ç†ä¼šobjectæ˜¯å¦ä¸ºç©ºï¼Œæˆ‘ä»¬ç°åœ¨åˆ›å»ºçš„æ˜¯ä¸€ä¸ªç±»
         CefRefPtr<CefV8Value> _object;
         
-        // ´´½¨JSÀàµÄ¹¹Ôìº¯Êı
+        // åˆ›å»ºJSç±»çš„æ„é€ å‡½æ•°
         _object = CefV8Value::CreateFunction(getHandlerName(), this);
         _object->SetUserData(this);
         onGetV8Object(_object);
@@ -50,7 +50,7 @@ namespace amo {
         
         for (auto& p : m_oFuncMgr.toMap()) {
             if (p.second.functionType() == TransferFuncStatic) {
-                // ´´½¨¾²Ì¬º¯Êı
+                // åˆ›å»ºé™æ€å‡½æ•°
                 
                 object->SetValue(p.second.m_strName,
                                  CefV8Value::CreateFunction(p.second.m_strName, this),
@@ -62,7 +62,7 @@ namespace amo {
                 CefRefPtr<CefV8Value> obj = CefV8Value::CreateObject(m_pAccessor);
 #endif
                 
-                // ÀàÖ»ÄÜÉÏ³£Á¿ÊôĞÔ£¬Ö»ÄÜÔÚ³õÊ¼»¯µÄÊ±ºò±»È¡Öµ
+                // ç±»åªèƒ½ä¸Šå¸¸é‡å±æ€§ï¼Œåªèƒ½åœ¨åˆå§‹åŒ–çš„æ—¶å€™è¢«å–å€¼
                 obj->SetValue(p.second.m_strName,
                               V8_ACCESS_CONTROL_DEFAULT,
                               V8_PROPERTY_ATTRIBUTE_NONE);
@@ -80,7 +80,7 @@ namespace amo {
         int nBrowserID = pContext->GetBrowser()->GetIdentifier();
         auto manager = V8HandlerManager::getInstance();
         
-        // Ìí¼ÓÒÀÀµÄ£¿é
+        // æ·»åŠ ä¾èµ–æ¨¡å—
         for (auto& moduleName : m_oFuncMgr.getModules()) {
             CefRefPtr<JsV8Handler> pHandler;
             pHandler = manager->createV8Handler(nBrowserID, moduleName);
@@ -112,7 +112,7 @@ namespace amo {
                          CefV8Value::CreateString(jsonStr),
                          V8_PROPERTY_ATTRIBUTE_READONLY);
                          
-        // »º´æObject
+        // ç¼“å­˜Object
         TypeConvertor::addClassObject(getID(), object);
     }
     
@@ -135,21 +135,21 @@ namespace amo {
             convertor.setRendererObject(isRendererClass());
             
             
-            // µ÷ÓÃRendererÏß³ÌÖĞµÄC++·½·¨
+            // è°ƒç”¨Rendererçº¿ç¨‹ä¸­çš„C++æ–¹æ³•
             if (isRendererClass()) {
-                // Èç¹ûÊÇÔÚäÖÈ¾½ø³ÌÖĞÖ´ĞĞ£¬Ö±½ÓTransfer
+                // å¦‚æœæ˜¯åœ¨æ¸²æŸ“è¿›ç¨‹ä¸­æ‰§è¡Œï¼Œç›´æ¥Transfer
                 Any  any = runner.transfer(name, arguments);
                 retval = convertor.toV8Value(any);
                 return true;
             }
-            // ÅĞ¶ÏÊÇ·ñÎª¹¹Ôìº¯Êı, ÕâÀï¿ÉÄÜÃ»ÓÃÁË
+            // åˆ¤æ–­æ˜¯å¦ä¸ºæ„é€ å‡½æ•°, è¿™é‡Œå¯èƒ½æ²¡ç”¨äº†
             else if (p.functionType() == TransferFuncConstructor) {
                 Any  any = runner.syncExecute(name, arguments);
                 retval = convertor.toV8Value(any);
                 return true;
             }
             
-            // µ÷ÓÃUIÏß³ÌÖĞµÄC++µÄ·½Ê½
+            // è°ƒç”¨UIçº¿ç¨‹ä¸­çš„C++çš„æ–¹å¼
             if (p.execType() == TransferExecSync) {
                 Any  any = runner.syncExecute(name, arguments);
                 retval = convertor.toV8Value(any);

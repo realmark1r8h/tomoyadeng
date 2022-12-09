@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "transfer/MenuTransfer.h"
 #include "ui/win/menu/ContextMenuWindow.h"
 #include "settings/MenuWindowSettings.h"

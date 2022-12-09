@@ -1,4 +1,4 @@
-// Created by amoylel on 7/02/2017.
+ï»¿// Created by amoylel on 7/02/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 #ifndef AMO_BROWSERWINDOWMANAGER_H__
 #define AMO_BROWSERWINDOWMANAGER_H__
@@ -62,7 +62,7 @@ namespace amo {
         void quitMessageLoop();
         IMPLEMENT_REFCOUNTING(BrowserWindowCreator);
     public:
-        /*! @brief	ä¯ÀÀÆ÷´°¿Ú¼¯ºÏ. */
+        /*! @brief	æµè§ˆå™¨çª—å£é›†åˆ. */
         std::list<std::shared_ptr<LocalWindow> > m_WindowMap;
         
         std::function<void()> m_fnAllBrowserWindowClosed;
@@ -139,9 +139,9 @@ namespace amo {
         void onAllNativeWindowClosed();
         
     private:
-        /*! @brief	ä¯ÀÀÆ÷¼ÆÊı. */
+        /*! @brief	æµè§ˆå™¨è®¡æ•°. */
         int m_BrowserCount;
-        /*! @brief	µ¯³ö´°¿Ú´´½¨Àà. */
+        /*! @brief	å¼¹å‡ºçª—å£åˆ›å»ºç±». */
         CefRefPtr<BrowserWindowCreator> m_pWindowCreator;
         
     };

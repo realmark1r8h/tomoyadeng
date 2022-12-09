@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "node/NodeFocusHandler.h"
 #include "node/NodeHandlerHelper.h"
 

@@ -1,4 +1,4 @@
-// Created by amoylel on 02/03/2018.
+ï»¿// Created by amoylel on 02/03/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBNCUI_PROCESSEXCHANGER_A052CB09_41C8_4C51_A40F_54CFDD16FACB_HPP__
@@ -68,7 +68,7 @@ namespace amo {
         /*!
          * @fn	template<typename R> R ProcessExchanger::exchange();
          *
-         * @brief	´Ó¹ÜµÀÖĞ¶ÁÈ¡Ö¸¶¨ÀàĞÍÊı¾İ.
+         * @brief	ä»ç®¡é“ä¸­è¯»å–æŒ‡å®šç±»å‹æ•°æ®.
          *
          * @tparam	R	Type of the r.
          *
@@ -81,7 +81,7 @@ namespace amo {
         /*!
          * @fn	template<> Any ProcessExchanger::exchange<Any>()
          *
-         * @brief	´Ó¹ÜµÀÖĞ¶ÁÈ¡ÈÎÒâÀàĞÍÊı¾İ  exchange Any ÌØ»¯°æ±¾.
+         * @brief	ä»ç®¡é“ä¸­è¯»å–ä»»æ„ç±»å‹æ•°æ®  exchange Any ç‰¹åŒ–ç‰ˆæœ¬.
          *
          * @tparam	Any	Type of any.
          *
@@ -115,11 +115,11 @@ namespace amo {
                     break;
                 }
                 
-                //$clog(amo::cdevel << func_orient << "Êı¾İ¶ÁÈ¡³É¹¦£º£º" << std::string((char*)msg.data()) << amo::endl;);
-                return Any(value_type, std::string((char*)msg.data()));		// ·µ»ØAnyÀàĞÍ
+                //$clog(amo::cdevel << func_orient << "æ•°æ®è¯»å–æˆåŠŸï¼šï¼š" << std::string((char*)msg.data()) << amo::endl;);
+                return Any(value_type, std::string((char*)msg.data()));		// è¿”å›Anyç±»å‹
             } while (false);
             
-            $clog(amo::cdevel << func_orient << "Êı¾İ¶ÁÈ¡Ê§°Ü " << amo::endl;);
+            $clog(amo::cdevel << func_orient << "æ•°æ®è¯»å–å¤±è´¥ " << amo::endl;);
             return Nothing();
         }
         
@@ -136,7 +136,7 @@ namespace amo {
             
             do {
                 if (!m_pPipeServer) {
-                    break;    //¹ÜµÀÊÇ·ñ´æÔÚ
+                    break;    //ç®¡é“æ˜¯å¦å­˜åœ¨
                 }
                 
                 if (!m_pPipeServer->is_ready()) {
@@ -153,7 +153,7 @@ namespace amo {
         /*!
          * @fn	template<typename T> bool ProcessExchanger::exchange(const T& t)
          *
-         * @brief	Ïò¹ÜµÀÖĞĞ´ÈëÊı¾İ.
+         * @brief	å‘ç®¡é“ä¸­å†™å…¥æ•°æ®.
          *
          * @tparam	T	Generic type parameter.
          * @param	t	The T to process.
@@ -167,44 +167,44 @@ namespace amo {
             
             do {
                 if (!m_pPipeClient) {
-                    break;    //ÅĞ¶Ï¹ÜµÀÊÇ·ñ´æÔÚ
+                    break;    //åˆ¤æ–­ç®¡é“æ˜¯å¦å­˜åœ¨
                 }
                 
                 int nCount = 0;
                 
-                /*! @brief	Ğ´ÈëÍ·²¿. */
+                /*! @brief	å†™å…¥å¤´éƒ¨. */
                 nCount = m_pPipeClient->write(&PipeMessageHeader, 1);
                 
                 if (nCount != 1) {
                     break;
                 }
                 
-                /*! @brief	ĞòÁĞ»¯ÏûÏ¢. */
+                /*! @brief	åºåˆ—åŒ–æ¶ˆæ¯. */
                 std::string msg = anyToString(t);
-                /*! @brief	»ñÈ¡ÏûÏ¢³¤¶È. */
+                /*! @brief	è·å–æ¶ˆæ¯é•¿åº¦. */
                 std::vector<int8_t> msg_length = intToBytes(msg.size());
-                /*! @brief	Ğ´ÈëÊı¾İÀàĞÍ. */
+                /*! @brief	å†™å…¥æ•°æ®ç±»å‹. */
                 nCount = m_pPipeClient->write(&AnyValueType<T>::value, 1);
                 
                 if (nCount != 1) {
                     break;
                 }
                 
-                /*! @brief	Ğ´ÈëÏûÏ¢³¤¶È. */
+                /*! @brief	å†™å…¥æ¶ˆæ¯é•¿åº¦. */
                 nCount = m_pPipeClient->write(msg_length.data(), 4);
                 
                 if (nCount != 4) {
                     break;
                 }
                 
-                /*! @brief	Ğ´ÈëÏûÏ¢. */
+                /*! @brief	å†™å…¥æ¶ˆæ¯. */
                 nCount = m_pPipeClient->write(msg.data(), msg.size());
                 
                 if (nCount != msg.size()) {
                     break;
                 }
                 
-                /*! @brief	Ğ´ÈëÎ²²¿. */
+                /*! @brief	å†™å…¥å°¾éƒ¨. */
                 nCount = m_pPipeClient->write(&PipeMessageTail, 1);
                 
                 if (nCount != 1) {
@@ -214,7 +214,7 @@ namespace amo {
                 return true;
             } while (false);
             
-            $clog(amo::cdevel << func_orient << "Êı¾İĞ´ÈëÊ§°Ü:: " << anyToString(
+            $clog(amo::cdevel << func_orient << "æ•°æ®å†™å…¥å¤±è´¥:: " << anyToString(
                       t) << amo::endl;);
             return false;
         }
@@ -235,43 +235,43 @@ namespace amo {
             
             do {
                 if (!m_pPipeClient) {
-                    break;    //ÅĞ¶Ï¹ÜµÀÊÇ·ñ´æÔÚ
+                    break;    //åˆ¤æ–­ç®¡é“æ˜¯å¦å­˜åœ¨
                 }
                 
                 int nCount = 0;
-                /*! @brief	Ğ´ÈëÍ·²¿. */
+                /*! @brief	å†™å…¥å¤´éƒ¨. */
                 nCount = m_pPipeClient->write(&PipeMessageHeader, 1);
                 
                 if (nCount != 1) {
                     break;
                 }
                 
-                /*! @brief	ĞòÁĞ»¯ÏûÏ¢. */
+                /*! @brief	åºåˆ—åŒ–æ¶ˆæ¯. */
                 const std::string& msg = t.value();
-                /*! @brief	»ñÈ¡ÏûÏ¢³¤¶È. */
+                /*! @brief	è·å–æ¶ˆæ¯é•¿åº¦. */
                 std::vector<int8_t> msg_length = intToBytes(msg.size());
-                /*! @brief	Ğ´ÈëÊı¾İÀàĞÍ. */
+                /*! @brief	å†™å…¥æ•°æ®ç±»å‹. */
                 nCount = m_pPipeClient->write(&t.type(), 1);
                 
                 if (nCount != 1) {
                     break;
                 }
                 
-                /*! @brief	Ğ´ÈëÏûÏ¢³¤¶È. */
+                /*! @brief	å†™å…¥æ¶ˆæ¯é•¿åº¦. */
                 nCount = m_pPipeClient->write(msg_length.data(), 4);
                 
                 if (nCount != 4) {
                     break;
                 }
                 
-                /*! @brief	Ğ´ÈëÏûÏ¢. */
+                /*! @brief	å†™å…¥æ¶ˆæ¯. */
                 nCount = m_pPipeClient->write(msg.data(), msg.size());
                 
                 if (nCount != msg.size()) {
                     break;
                 }
                 
-                /*! @brief	Ğ´ÈëÎ²²¿. */
+                /*! @brief	å†™å…¥å°¾éƒ¨. */
                 nCount = m_pPipeClient->write(&PipeMessageTail, 1);
                 
                 if (nCount != 1) {
@@ -281,7 +281,7 @@ namespace amo {
                 return true;
             } while (false);
             
-            $clog(amo::cdevel << func_orient << "Êı¾İĞ´ÈëÊ§°Ü:: " << t.value() <<
+            $clog(amo::cdevel << func_orient << "æ•°æ®å†™å…¥å¤±è´¥:: " << t.value() <<
                   amo::endl;);
             return false;
         }
@@ -290,16 +290,16 @@ namespace amo {
             const IPCMessage::SmartType&  t) {
             std::unique_lock<std::recursive_mutex> lock(m_mutexClient);
             
-            //$clog(amo::cdevel << func_orient << "¿ªÊ¼Ğ´ÈëÊı¾İ£º" << t->toJson().to_string() << amo::endl;);
+            //$clog(amo::cdevel << func_orient << "å¼€å§‹å†™å…¥æ•°æ®ï¼š" << t->toJson().to_string() << amo::endl;);
             
             do {
                 int nCount = 0;
                 
                 if (!m_pPipeClient) {
-                    break;    //ÅĞ¶Ï¹ÜµÀÊÇ·ñ´æÔÚ
+                    break;    //åˆ¤æ–­ç®¡é“æ˜¯å¦å­˜åœ¨
                 }
                 
-                /*! @brief	Ğ´ÈëÍ·²¿. */
+                /*! @brief	å†™å…¥å¤´éƒ¨. */
                 nCount = m_pPipeClient->write(&PipeMessageHeader, 1);
                 
                 if (nCount != 1) {
@@ -308,43 +308,43 @@ namespace amo {
                 
                 
                 //std::vector<int8_t> id_length = IntToBytes(0);
-                /*! @brief	Ğ´ÈëÊı¾İÀàĞÍ. */
+                /*! @brief	å†™å…¥æ•°æ®ç±»å‹. */
                 nCount = m_pPipeClient->write(&AnyValueType<amo::IPCMessage>::value, 1);
                 
                 if (nCount != 1) {
                     break;
                 }
                 
-                /*! @brief	ĞòÁĞ»¯ÏûÏ¢. */
+                /*! @brief	åºåˆ—åŒ–æ¶ˆæ¯. */
                 std::string msg = anyToString(*t);
-                /*! @brief	»ñÈ¡ÏûÏ¢³¤¶È. */
+                /*! @brief	è·å–æ¶ˆæ¯é•¿åº¦. */
                 std::vector<int8_t> msg_length = intToBytes(msg.size());
-                /*! @brief	Ğ´ÈëÏûÏ¢³¤¶È. */
+                /*! @brief	å†™å…¥æ¶ˆæ¯é•¿åº¦. */
                 nCount = m_pPipeClient->write(msg_length.data(), 4);
                 
                 if (nCount != 4) {
                     break;
                 }
                 
-                /*! @brief	Ğ´ÈëÏûÏ¢. */
+                /*! @brief	å†™å…¥æ¶ˆæ¯. */
                 nCount = m_pPipeClient->write(msg.data(), msg.size());
                 
                 if (nCount != msg.size()) {
                     break;
                 }
                 
-                /*! @brief	Ğ´ÈëÎ²²¿. */
+                /*! @brief	å†™å…¥å°¾éƒ¨. */
                 nCount = m_pPipeClient->write(&PipeMessageTail, 1);
                 
                 if (nCount != 1) {
                     break;
                 }
                 
-                //$clog(amo::cdevel << func_orient << "Êı¾İĞ´Èë³É¹¦£º" << t->toJson().to_string() << amo::endl;);
+                //$clog(amo::cdevel << func_orient << "æ•°æ®å†™å…¥æˆåŠŸï¼š" << t->toJson().to_string() << amo::endl;);
                 return true;
             } while (false);
             
-            $clog(amo::cdevel << func_orient << "Êı¾İĞ´ÈëÊ§°Ü:: " <<
+            $clog(amo::cdevel << func_orient << "æ•°æ®å†™å…¥å¤±è´¥:: " <<
                   t->toJson().to_string() << amo::endl;);
             return false;
             
@@ -354,7 +354,7 @@ namespace amo {
         /*!
          * @fn	bool ProcessExchanger::ReadHeader()
          *
-         * @brief	´Ó¹ÜµÀÖĞ¶ÁÈ¡Í·²¿£¬ÅĞ¶ÏÊÇ·ñºÏ·¨.
+         * @brief	ä»ç®¡é“ä¸­è¯»å–å¤´éƒ¨ï¼Œåˆ¤æ–­æ˜¯å¦åˆæ³•.
          *
          * @return	true if it succeeds, false if it fails.
          */
@@ -373,7 +373,7 @@ namespace amo {
         /*!
          * @fn	char ProcessExchanger::ReadValueType()
          *
-         * @brief	¶ÁÈ¡Êı¾İÀàĞÍ.
+         * @brief	è¯»å–æ•°æ®ç±»å‹.
          *
          * @return	The value type.
          */
@@ -387,7 +387,7 @@ namespace amo {
         /*!
          * @fn	bool ProcessExchanger::ReadTail()
          *
-         * @brief	¶ÁÈ¡Î²²¿£¬ÅĞ¶ÏÊÇ·ñºÏ·¨.
+         * @brief	è¯»å–å°¾éƒ¨ï¼Œåˆ¤æ–­æ˜¯å¦åˆæ³•.
          *
          * @return	true if it succeeds, false if it fails.
          */
@@ -412,7 +412,7 @@ namespace amo {
         /*!
          * @fn	int ProcessExchanger::GetMessageLength()
          *
-         * @brief	¶ÁÈ¡ÏûÏ¢³¤¶È.
+         * @brief	è¯»å–æ¶ˆæ¯é•¿åº¦.
          *
          * @return	The message length.
          */
@@ -427,7 +427,7 @@ namespace amo {
          * @fn	void ProcessExchanger::SetPipeServer(
          * 		std::shared_ptr<amo::pipe<amo::pipe_type::server> > ptr)
          *
-         * @brief	ÉèÖÃ¹ÜµÀ·şÎñ¶Ë.
+         * @brief	è®¾ç½®ç®¡é“æœåŠ¡ç«¯.
          *
          * @param	ptr	The pointer.
          */
@@ -440,7 +440,7 @@ namespace amo {
          * @fn	void ProcessExchanger::SetPipeClient(
          * 		std::shared_ptr<amo::pipe<amo::pipe_type::client> > ptr)
          *
-         * @brief	ÉèÖÃ¹ÜµÀ¿Í»§¶Ë.
+         * @brief	è®¾ç½®ç®¡é“å®¢æˆ·ç«¯.
          *
          * @param	ptr	The pointer.
          */
@@ -453,7 +453,7 @@ namespace amo {
          * @fn	void ProcessExchanger::setProcessSyncMessageCallback(
          * 		std::function<bool(int, IPCMessage::SmartType)> fn)
          *
-         * @brief	ÊÕµ½Í¬²½ÏûÏ¢Ê±ÔõÃ´´¦Àí.
+         * @brief	æ”¶åˆ°åŒæ­¥æ¶ˆæ¯æ—¶æ€ä¹ˆå¤„ç†.
          *
          * @param	fn	The function.
          */
@@ -528,9 +528,9 @@ namespace amo {
         //R waitResult();
         //
         //
-        //// Í¨¹ı¹ÜµÀÏûÏ¢ ´´½¨½ø³ÌÏûÏ¢
+        //// é€šè¿‡ç®¡é“æ¶ˆæ¯ åˆ›å»ºè¿›ç¨‹æ¶ˆæ¯
         //template<> Any waitResult() {
-        //    // Ã»ÓĞº¯Êıµ÷¹ıºÃÏñ
+        //    // æ²¡æœ‰å‡½æ•°è°ƒè¿‡å¥½åƒ
         //    while (true) {
         //        Any any = TryGetResult<Any>();
         //
@@ -583,7 +583,7 @@ namespace amo {
             Any any = exchange<Any>();
             
             if (any.type() == AnyValueType<amo::IPCMessage>::value) {
-                // Èç¹ûÊÇÒ»¸ö½ø³ÌÏûÏ¢£¬ËµÃ÷¶Ô·½Ò²ÔÚÖ´ĞĞÍ¬²½µ÷ÓÃ£¬ÄÇÃ´Ö´ĞĞÕâ¸öµ÷ÓÃ
+                // å¦‚æœæ˜¯ä¸€ä¸ªè¿›ç¨‹æ¶ˆæ¯ï¼Œè¯´æ˜å¯¹æ–¹ä¹Ÿåœ¨æ‰§è¡ŒåŒæ­¥è°ƒç”¨ï¼Œé‚£ä¹ˆæ‰§è¡Œè¿™ä¸ªè°ƒç”¨
                 IPCMessage::SmartType msg(new amo::IPCMessage());
                 *msg = any;
                 m_fnSyncMessageCallback(getBrowserID(), msg);
@@ -595,21 +595,21 @@ namespace amo {
                 int iii = 44;
                 ++iii;
                 
-                throw std::runtime_error("´¦Àíµ½²»Ó¦¸Ã³öÏÖµÄÏûÏ¢£¬Ö»ÄÜÊÕµ½ProcessMessageÀà");
+                throw std::runtime_error("å¤„ç†åˆ°ä¸åº”è¯¥å‡ºç°çš„æ¶ˆæ¯ï¼Œåªèƒ½æ”¶åˆ°ProcessMessageç±»");
             }
             
-            $clog(amo::cdevel << func_orient << "tryProcessMessage Ê§°Ü::: " <<
+            $clog(amo::cdevel << func_orient << "tryProcessMessage å¤±è´¥::: " <<
                   any.value() << amo::endl;);
             return Nothing();
         }
     protected:
-        /*! @brief	¹ÜµÀ·şÎñ¶Ë£¬ÓÃÀ´½ÓÊÕÊı¾İ. */
+        /*! @brief	ç®¡é“æœåŠ¡ç«¯ï¼Œç”¨æ¥æ¥æ”¶æ•°æ®. */
         std::shared_ptr<amo::pipe<amo::pipe_type::server> > m_pPipeServer;
-        /*! @brief	¹ÜµÀ¿Í»§ôÊ£¬ÓÃÀ´Ğ´ÈëÊı¾İ. */
+        /*! @brief	ç®¡é“å®¢æˆ·ç¾°ï¼Œç”¨æ¥å†™å…¥æ•°æ®. */
         std::shared_ptr<amo::pipe<amo::pipe_type::client> > m_pPipeClient;
-        /*! @brief	Êı¾İ¶ÁÈ¡Ëø£¬Í¬Ê±Ö»ÄÜÓĞÒ»¸öÏß³Ì¶ÁÈ¡Êı¾İ. */
+        /*! @brief	æ•°æ®è¯»å–é”ï¼ŒåŒæ—¶åªèƒ½æœ‰ä¸€ä¸ªçº¿ç¨‹è¯»å–æ•°æ®. */
         std::recursive_mutex m_mutexServer;
-        /*! @brief	Êı¾İĞ´ÈëËø£¬Í¬Ê±Ö»ÄÜÓĞÒ»¸öÏß³ÌĞ´ÈëÊı¾İ. */
+        /*! @brief	æ•°æ®å†™å…¥é”ï¼ŒåŒæ—¶åªèƒ½æœ‰ä¸€ä¸ªçº¿ç¨‹å†™å…¥æ•°æ®. */
         std::recursive_mutex m_mutexClient;
         /*! @brief	The synchronise message callback. */
         std::function<bool(int, IPCMessage::SmartType)> m_fnSyncMessageCallback;
@@ -630,7 +630,7 @@ namespace amo {
         /*!
          * @fn	template<typename R> R ProcessExchangerManager::exchange(int id)
          *
-         * @brief	¶ÁÈ¡¹ÜµÀÊı¾İ.
+         * @brief	è¯»å–ç®¡é“æ•°æ®.
          *
          * @tparam	R	Type of the r.
          * @param	id	The identifier.
@@ -647,14 +647,14 @@ namespace amo {
             }
             
             R ret = iter->second->exchange<R>();
-            //$clog(amo::cdevel << "¹ÜµÀ£º£º" << m_nN << ", "  << ret << amo::endl;);
+            //$clog(amo::cdevel << "ç®¡é“ï¼šï¼š" << m_nN << ", "  << ret << amo::endl;);
             return ret;
         }
         
         /*!
          * @fn	template<> Any ProcessExchangerManager::exchange(int id)
          *
-         * @brief	¶ÁÈ¡¹ÜµÀÊı¾İ.
+         * @brief	è¯»å–ç®¡é“æ•°æ®.
          *
          * @param	id	The identifier.
          *
@@ -670,7 +670,7 @@ namespace amo {
             }
             
             Any ret = iter->second->exchange<Any>();
-            //$clog(amo::cdevel << "¹ÜµÀ£º£º" << m_nN << ", " << ret.value() << amo::endl;);
+            //$clog(amo::cdevel << "ç®¡é“ï¼šï¼š" << m_nN << ", " << ret.value() << amo::endl;);
             return ret;
         }
         
@@ -687,7 +687,7 @@ namespace amo {
         /*!
          * @fn	template<typename T> bool ProcessExchangerManager::exchange(int id, const T& t)
          *
-         * @brief	Ğ´Èë¹ÜµÀÊı¾İ.
+         * @brief	å†™å…¥ç®¡é“æ•°æ®.
          *
          * @tparam	T	Generic type parameter.
          * @param	id	The identifier.
@@ -701,7 +701,7 @@ namespace amo {
             auto iter = m_mpBrowserExchanger.find(id);
             
             if (iter == m_mpBrowserExchanger.end() || !iter->second) {
-                $clog(amo::cdevel << func_orient << "Ã»ÓĞÕÒµ½¹ÜµÀ " << amo::endl;);
+                $clog(amo::cdevel << func_orient << "æ²¡æœ‰æ‰¾åˆ°ç®¡é“ " << amo::endl;);
                 return false;
             }
             
@@ -711,7 +711,7 @@ namespace amo {
         /*!
          * @fn	void ProcessExchangerManager::addExchanger(int id, std::shared_ptr<T> ptr)
          *
-         * @brief	Ìí¼ÓÊı¾İ½»»»¹ÜµÀµ½¹ÜÀíÆ÷ÖĞ.
+         * @brief	æ·»åŠ æ•°æ®äº¤æ¢ç®¡é“åˆ°ç®¡ç†å™¨ä¸­.
          *
          * @param	id 	The identifier.
          * @param	ptr	The pointer.
@@ -725,7 +725,7 @@ namespace amo {
         /*!
          * @fn	void ProcessExchangerManager::RemoveExchanger(int id)
          *
-         * @brief	´Ó¹ÜÀíÆ÷ÖĞÒÆ³ıÊı¾İ½»»»¹ÜµÀ.
+         * @brief	ä»ç®¡ç†å™¨ä¸­ç§»é™¤æ•°æ®äº¤æ¢ç®¡é“.
          *
          * @param	id	The identifier.
          */
@@ -771,7 +771,7 @@ namespace amo {
         
         template<>
         Any waitResult(int id, int message_id) {
-            // ÏÈ¿´¹ÜµÀÊÇ·ñ´æÔÚ
+            // å…ˆçœ‹ç®¡é“æ˜¯å¦å­˜åœ¨
             if (m_mpBrowserExchanger.find(id) == m_mpBrowserExchanger.end()) {
                 return Undefined();
             }
@@ -784,15 +784,15 @@ namespace amo {
                 if (m_nTimeout > 0) {
                     if (t.elapsed() > m_nTimeout) {
                     
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", ËÀËø£¬ ID: " <<
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", æ­»é”ï¼Œ ID: " <<
                               message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", ËÀËø£¬ ID: " <<
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", æ­»é”ï¼Œ ID: " <<
                               message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", ËÀËø£¬ ID: " <<
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", æ­»é”ï¼Œ ID: " <<
                               message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", ËÀËø£¬ ID: " <<
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", æ­»é”ï¼Œ ID: " <<
                               message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", ËÀËø£¬ ID: " <<
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", æ­»é”ï¼Œ ID: " <<
                               message_id << amo::endl;);
                         m_oDeadlockIDs.insert(std::make_pair(id, message_id));
                         
@@ -804,16 +804,16 @@ namespace amo {
                     }
                 } else {
                     if (t.elapsed() > 5000) {
-                        // ´òÓ¡ÏûÏ¢³öÀ´ÌáÊ¾ËÀËø
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", ËÀËø£¬ ID: " <<
+                        // æ‰“å°æ¶ˆæ¯å‡ºæ¥æç¤ºæ­»é”
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", æ­»é”ï¼Œ ID: " <<
                               message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", ËÀËø£¬ ID: " <<
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", æ­»é”ï¼Œ ID: " <<
                               message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", ËÀËø£¬ ID: " <<
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", æ­»é”ï¼Œ ID: " <<
                               message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", ËÀËø£¬ ID: " <<
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", æ­»é”ï¼Œ ID: " <<
                               message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", ËÀËø£¬ ID: " <<
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", æ­»é”ï¼Œ ID: " <<
                               message_id << amo::endl;);
                               
                     }
@@ -846,19 +846,19 @@ namespace amo {
                             
                             insertCache(p.first, result.getID(), ret);
                         } else {
-                            // ²»Ó¦¸Ã³öÏÖ
+                            // ä¸åº”è¯¥å‡ºç°
                             $clog(amo::cdevel << func_orient << amo::endl;);
                         }
                     } else {
                         tryProcessMessage(p.first);
-                        //// ´¦ÀíÍ¬²½ÏûÏ¢
+                        //// å¤„ç†åŒæ­¥æ¶ˆæ¯
                         //Any ret = p.second->tryProcessMessage();
                         //
                         //if (ret.type() == AnyValueType<amo::IPCResult>::value) {
                         //    amo::IPCResult result = ret;
                         //
                         //    if (result.getID() == message_id) {
-                        //        // ÕâÀï²»Ó¦¸Ã³öÏÖ
+                        //        // è¿™é‡Œä¸åº”è¯¥å‡ºç°
                         //        $clog(amo::cdevel << __FUNCTION__ << ", " << result.getID() << amo::endl;);
                         //        return result.GetResult();
                         //    }
@@ -886,7 +886,7 @@ namespace amo {
         
             if (m_oDeadlockIDs.find(std::make_pair(browserID,
                                                    messageID)) != m_oDeadlockIDs.end()) {
-                $cwarn("´¦Àíµ½ÒÑ·ÅÆúµÄËÀËøID£¬¸ÃÏûÏ¢²»»á±»»º´æ");
+                $cwarn("å¤„ç†åˆ°å·²æ”¾å¼ƒçš„æ­»é”IDï¼Œè¯¥æ¶ˆæ¯ä¸ä¼šè¢«ç¼“å­˜");
                 m_oDeadlockIDs.erase(std::make_pair(browserID, messageID));
                 return;
             }
@@ -907,7 +907,7 @@ namespace amo {
                 p[messageID] = ret;
                 
                 if (p.size() > 200) {
-                    //$cdevel("ÒÆ³ı»º´æ£º{0}", p.begin()->first);
+                    //$cdevel("ç§»é™¤ç¼“å­˜ï¼š{0}", p.begin()->first);
                     p.erase(p.begin());
                 }
                 
@@ -965,7 +965,7 @@ namespace amo {
         /*!
          * @fn	Any ProcessExchangerManager::tryProcessMessage(int id)
          *
-         * @brief	³¢ÊÔ´¦ÀíÒ»´Î¶Ô·½½ø³ÌµÄÏûÏ¢.
+         * @brief	å°è¯•å¤„ç†ä¸€æ¬¡å¯¹æ–¹è¿›ç¨‹çš„æ¶ˆæ¯.
          *
          * @param	id	The identifier.
          *
@@ -1015,8 +1015,8 @@ namespace amo {
                 
                 insertCache(id, result.getID(), ret);
                 
-                //$clog(amo::cdevel << func_orient << "´¦Àíµ½ÆäËû½á¹û" << amo::endl;);
-                // Ò»Ö±´¦Àí£¬Ö±µ½¹ÜµÀÖĞÃ»ÓĞÏûÏ¢ÎªÖ¹
+                //$clog(amo::cdevel << func_orient << "å¤„ç†åˆ°å…¶ä»–ç»“æœ" << amo::endl;);
+                // ä¸€ç›´å¤„ç†ï¼Œç›´åˆ°ç®¡é“ä¸­æ²¡æœ‰æ¶ˆæ¯ä¸ºæ­¢
                 //tryProcessMessage(id);
             } else if (ret.type() != AnyValueType<Nothing>::value) {
                 assert(false);
@@ -1026,27 +1026,27 @@ namespace amo {
             return ret;
         }
     private:
-        /*! @brief	±£´æ¹ÜµÀ. */
+        /*! @brief	ä¿å­˜ç®¡é“. */
         std::unordered_map<int, std::shared_ptr<T> > m_mpBrowserExchanger;
-        /*! @brief	¶ÁĞ´Ëø. */
+        /*! @brief	è¯»å†™é”. */
         std::mutex m_mutex;
-        /*! @brief	Í¬²½µ÷ÓÃ½á¹û»º´æ. */
+        /*! @brief	åŒæ­¥è°ƒç”¨ç»“æœç¼“å­˜. */
         std::unordered_map<int, std::map<int, Any> > m_oResultCache;
         
-        /** @brief	½ø³ÌËÀËø»Øµ÷º¯Êı. */
+        /** @brief	è¿›ç¨‹æ­»é”å›è°ƒå‡½æ•°. */
         std::function<Any()> m_fnDeadlockCallback;
         
-        /** @brief	·¢ÉúËÀËøµÄÏûÏ¢ID(BrowserID + MessageID)£¬Èç¹ûÖ´ĞĞµÄ½á¹ûÀïÃæÓĞÕâ¸öID£¬ËµÃ÷¸ÃÏûÏ¢ÒÑ¾­±»·ÅÆúÁË£¬Ö±½Ó¶ªµô¾Í¿ÉÒÔÁË. */
+        /** @brief	å‘ç”Ÿæ­»é”çš„æ¶ˆæ¯ID(BrowserID + MessageID)ï¼Œå¦‚æœæ‰§è¡Œçš„ç»“æœé‡Œé¢æœ‰è¿™ä¸ªIDï¼Œè¯´æ˜è¯¥æ¶ˆæ¯å·²ç»è¢«æ”¾å¼ƒäº†ï¼Œç›´æ¥ä¸¢æ‰å°±å¯ä»¥äº†. */
         std::set<std::pair<int, int> > m_oDeadlockIDs;
         
-        /** @brief	ÈÎÎñ³¬Ê±Ê±¼ä£¬Èç¹û³¬¹ıÕâ¸öÊ±¼äÈÎÎñ»¹Î´Íê³É£¬ÄÇÃ´ÈÏÎª³ÌĞò·¢ÉúÁËËÀËø½«·ÅÆú¸ÃÈÎÎñµÄÖ´ĞĞ£¬Ä¬ÈÏÎª1000ms. */
+        /** @brief	ä»»åŠ¡è¶…æ—¶æ—¶é—´ï¼Œå¦‚æœè¶…è¿‡è¿™ä¸ªæ—¶é—´ä»»åŠ¡è¿˜æœªå®Œæˆï¼Œé‚£ä¹ˆè®¤ä¸ºç¨‹åºå‘ç”Ÿäº†æ­»é”å°†æ”¾å¼ƒè¯¥ä»»åŠ¡çš„æ‰§è¡Œï¼Œé»˜è®¤ä¸º1000ms. */
         uint64_t m_nTimeout;
     };
     
     /*!
      * @class	BrowserProcessExchangerManager
      *
-     * @brief	Ö÷½ø³Ì¹ÜµÀ¹ÜÀíÆ÷£¬ ×Ó½ø³ÌÖĞÃ»ÓĞ£¬¸÷ÊÇ¸÷µÄexchanger.
+     * @brief	ä¸»è¿›ç¨‹ç®¡é“ç®¡ç†å™¨ï¼Œ å­è¿›ç¨‹ä¸­æ²¡æœ‰ï¼Œå„æ˜¯å„çš„exchanger.
      */
     
     class BrowserProcessExchangerManager : public ProcessExchangerManager

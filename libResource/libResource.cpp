@@ -1,4 +1,4 @@
-// libResource.cpp : ¶¨Òå DLL Ó¦ÓÃ³ÌÐòµÄµ¼³öº¯Êý¡£
+ï»¿// libResource.cpp : å®šä¹‰ DLL åº”ç”¨ç¨‹åºçš„å¯¼å‡ºå‡½æ•°ã€‚
 //
 
 #include "stdafx.h"
@@ -8,18 +8,18 @@
 
 #include <amo/path.hpp>
 
-// ÕâÊÇµ¼³ö±äÁ¿µÄÒ»¸öÊ¾Àý
+// è¿™æ˜¯å¯¼å‡ºå˜é‡çš„ä¸€ä¸ªç¤ºä¾‹
 LIBRESOURCE_API int nlibResource = 0;
 
-// ÕâÊÇµ¼³öº¯ÊýµÄÒ»¸öÊ¾Àý¡£
+// è¿™æ˜¯å¯¼å‡ºå‡½æ•°çš„ä¸€ä¸ªç¤ºä¾‹ã€‚
 LIBRESOURCE_API int fnlibResource(void) {
     return 42;
 }
 
 
 
-// ÕâÊÇÒÑµ¼³öÀàµÄ¹¹Ôìº¯Êý¡£
-// ÓÐ¹ØÀà¶¨ÒåµÄÐÅÏ¢£¬Çë²ÎÔÄ libResource.h
+// è¿™æ˜¯å·²å¯¼å‡ºç±»çš„æž„é€ å‡½æ•°ã€‚
+// æœ‰å…³ç±»å®šä¹‰çš„ä¿¡æ¯ï¼Œè¯·å‚é˜… libResource.h
 ClibResource::ClibResource() {
     return;
 }

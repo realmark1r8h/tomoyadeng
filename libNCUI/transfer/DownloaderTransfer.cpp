@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "transfer/DownloaderTransfer.h"
 #include "../settings/DowloaderSettings.h"
 
@@ -123,13 +123,13 @@ namespace amo {
             return;
         }
         
-        // Èç¹ûBrowser´æÔÚ£¬ÄÇÃ´Ö±½ÓÏÂÔØ
+        // å¦‚æœBrowserå­˜åœ¨ï¼Œé‚£ä¹ˆç›´æ¥ä¸‹è½½
         if (m_pBrowser) {
             m_pBrowser->GetHost()->StartDownload(m_pDownloaderSettings->url);
             return;
         }
         
-        // ÕÒÒ»¸ö¿ÉÓÃµÄä¯ÀÀÆ÷´°¿Ú
+        // æ‰¾ä¸€ä¸ªå¯ç”¨çš„æµè§ˆå™¨çª—å£
         int nBrowserID = -9999;
         auto manager = BrowserWindowManager::getInstance();
         auto pWindow = manager->findValidWindow(nBrowserID);
@@ -188,7 +188,7 @@ namespace amo {
         if (!m_pDownloaderSettings) {
             auto iter = m_oDownloaderMap.find(download_item->GetOriginalUrl());
             
-            // Èç¹ûÃ»ÓĞÕÒµ½Õâ¸öURL,Èç¹ûÕâ¸ö»Øµ÷²»ÊÇÓÉdownloader ´´½¨µÄÏÂÔØ
+            // å¦‚æœæ²¡æœ‰æ‰¾åˆ°è¿™ä¸ªURL,å¦‚æœè¿™ä¸ªå›è°ƒä¸æ˜¯ç”±downloader åˆ›å»ºçš„ä¸‹è½½
             if (iter == m_oDownloaderMap.end()) {
                 return false;
             }
@@ -198,7 +198,7 @@ namespace amo {
                         suggested_name,
                         callback);
                         
-            // Ò»¶¨ÊÇ·µ»Øtrue
+            // ä¸€å®šæ˜¯è¿”å›true
             return true;
             
         } else {
@@ -216,7 +216,7 @@ namespace amo {
             amo::json json = downloadItemToJson(download_item);
             getMessageEmitter()->execute("triggerEvent", "start", json);
             
-            // Èç¹ûÎÄ¼şÒÑ¾­´æÔÚ £¬£¬ÄÇÃ´ÔõÃ´°ì£¬×Ô¶¯ÖØÃüÃû£¬¸²¸Ç£¿
+            // å¦‚æœæ–‡ä»¶å·²ç»å­˜åœ¨ ï¼Œï¼Œé‚£ä¹ˆæ€ä¹ˆåŠï¼Œè‡ªåŠ¨é‡å‘½åï¼Œè¦†ç›–ï¼Ÿ
             return true;
         }
         
@@ -243,7 +243,7 @@ namespace amo {
         } else {
             m_pDownloadItemCallback = callback;
             
-            // update ÓĞ¿ÉÄÜ »áÏÈµ÷ÓÃ£¬ËùÒÔµÈbeforedownloadµ÷ÓÃ¹ıºóÔÙÏòÒ³Ãæ»Øµ÷
+            // update æœ‰å¯èƒ½ ä¼šå…ˆè°ƒç”¨ï¼Œæ‰€ä»¥ç­‰beforedownloadè°ƒç”¨è¿‡åå†å‘é¡µé¢å›è°ƒ
             if (!m_pDownloadCallback) {
                 return true;
             }

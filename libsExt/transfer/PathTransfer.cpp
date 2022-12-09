@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "transfer/PathTransfer.h"
 #include <amo/string.hpp>
 #include <amo/path.hpp>
@@ -56,7 +56,7 @@ namespace amo {
         amo::path p(ansiPath);
         m_pPath->append(p);
         
-        // ·µ»Øthis
+        // è¿”å›žthis
         return getFuncMgr().toSimplifiedJson();
     }
     

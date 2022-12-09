@@ -1,4 +1,4 @@
-// sqlite3ppext.h
+﻿// sqlite3ppext.h
 //
 // The MIT License
 //

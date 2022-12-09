@@ -1,4 +1,4 @@
-// Created by amoylel on 06/29/2017.
+ï»¿// Created by amoylel on 06/29/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_MENUWINDOWTRANSFER_H__
@@ -17,8 +17,8 @@ namespace amo {
      *
      * @extend Object
      *
-     * @brief	µ¯³ö²Ëµ¥.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	å¼¹å‡ºèœå•.<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      */
     
     class MenuTransfer
@@ -31,88 +31,88 @@ namespace amo {
          *
          * @tag constructor
          *
-         * @brief	´´½¨Ò»¸ö²Ëµ¥.²Ëµ¥´´½¨µÄÎ»ÖÃÄ¬ÈÏÎªÊó±êËùÔÚÎ»ÖÃ£¬²Ëµ¥Ê§È¥½¹µã»á×Ô¶¯¹Ø±Õ.
+         * @brief	åˆ›å»ºä¸€ä¸ªèœå•.èœå•åˆ›å»ºçš„ä½ç½®é»˜è®¤ä¸ºé¼ æ ‡æ‰€åœ¨ä½ç½®ï¼Œèœå•å¤±å»ç„¦ç‚¹ä¼šè‡ªåŠ¨å…³é—­.
          *
-         * @param	#JsonObject ´´½¨²Ëµ¥ËùÓÃµ½µÄ²ÎÊı<br>
-         * 						[**Int**]		lineHeight ²Ëµ¥ÏîĞĞ¸ß£¬Ä¬ÈÏÎª32<br>
-         * 						[**String**]	separatorColor ·Ö¸ôÌõÑÕÉ«£¬Ä¬ÈÏ"0xffe8e8e8"<br>
-         * 						[**JsonObject**] menu ËùÓĞ²Ëµ¥Ïî,¾ßÌåÄÚÈİ²Î¿¼£º<br>
-         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	id µ±Ç°²Ëµ¥ÏîID,Ò»¸ö²Ëµ¥ÀïÃæµÄ²Ëµ¥ÏîIDÓ¦¸ÃÊÇÎ¨Ò»µÄ<br>
-         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	text µ±Ç°²Ëµ¥ÏîËùÏÔÊ¾µÄÎÄ±¾<br>
-         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	String µ±Ç°²Ëµ¥ÏîµÄÔ¤¶¨Òå¶¯×÷£¬Èç¹ûÓĞĞ§ÔòÖ´ÇÒ²»»áÏòÒ³Ãæ·µ»Ø²Ëµ¥Ñ¡ÔñÊÂ¼ş<br>
-         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**Boolean**]	separator ÊÇ·ñÏÔÊ¾·Ö¸ô·û£¬Ä¬ÈÏfalse<br>
-         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**Boolean**]	visible µ±Ç°²Ëµ¥ÏîÊÇ·ñ¿É¼û£¬Ä¬ÈÏtrue<br>
-         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**Boolean**]	enabled µ±Ç°²Ëµ¥ÏîÊÇ·ñ¿ÉÓÃ£¬Ä¬ÈÏtrue<br>
-         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	shortcut µ±Ç°²Ëµ¥Ïî¿ì½İ¼ü£¬Ä¬ÈÏÎŞ¿ì½İ¼ü<br>
-         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	icon µ±Ç°²Ëµ¥ÏîÍ¼±ê£¬ÏÔÊ¾ÔÚÎÄ×ÖÇ°Ãæ£¬Ä¬ÈÏÎŞ£¬±ØĞëÎªskinÄ¿Â¼ÏÂµÄÎÄ¼ş<br>
-         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	selected µ±Ç°²Ëµ¥ÏîÑ¡ÖĞ×´Ì¬£¬Ö§³Ö"checkbox"ºÍ"radio",**¸Ã×Ö¶ÎÓëÉÏÃæµÄicon×Ö¶Î³åÍ»£¬²¢ÇÒÓÅÏÈ¼¶¸ßÓÚicon×Ö¶Î**£¬Ä¬ÈÏÎŞ<br>
-         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**JsonObject**] menu ×Ó²Ëµ¥£¬ÓëÉÏÃæµÄÄÚÈİÒ»Ñù£¬¿ÉÒÔ²»Ìî
-         *
-         *
+         * @param	#JsonObject åˆ›å»ºèœå•æ‰€ç”¨åˆ°çš„å‚æ•°<br>
+         * 						[**Int**]		lineHeight èœå•é¡¹è¡Œé«˜ï¼Œé»˜è®¤ä¸º32<br>
+         * 						[**String**]	separatorColor åˆ†éš”æ¡é¢œè‰²ï¼Œé»˜è®¤"0xffe8e8e8"<br>
+         * 						[**JsonObject**] menu æ‰€æœ‰èœå•é¡¹,å…·ä½“å†…å®¹å‚è€ƒï¼š<br>
+         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	id å½“å‰èœå•é¡¹ID,ä¸€ä¸ªèœå•é‡Œé¢çš„èœå•é¡¹IDåº”è¯¥æ˜¯å”¯ä¸€çš„<br>
+         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	text å½“å‰èœå•é¡¹æ‰€æ˜¾ç¤ºçš„æ–‡æœ¬<br>
+         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	String å½“å‰èœå•é¡¹çš„é¢„å®šä¹‰åŠ¨ä½œï¼Œå¦‚æœæœ‰æ•ˆåˆ™æ‰§ä¸”ä¸ä¼šå‘é¡µé¢è¿”å›èœå•é€‰æ‹©äº‹ä»¶<br>
+         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**Boolean**]	separator æ˜¯å¦æ˜¾ç¤ºåˆ†éš”ç¬¦ï¼Œé»˜è®¤false<br>
+         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**Boolean**]	visible å½“å‰èœå•é¡¹æ˜¯å¦å¯è§ï¼Œé»˜è®¤true<br>
+         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**Boolean**]	enabled å½“å‰èœå•é¡¹æ˜¯å¦å¯ç”¨ï¼Œé»˜è®¤true<br>
+         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	shortcut å½“å‰èœå•é¡¹å¿«æ·é”®ï¼Œé»˜è®¤æ— å¿«æ·é”®<br>
+         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	icon å½“å‰èœå•é¡¹å›¾æ ‡ï¼Œæ˜¾ç¤ºåœ¨æ–‡å­—å‰é¢ï¼Œé»˜è®¤æ— ï¼Œå¿…é¡»ä¸ºskinç›®å½•ä¸‹çš„æ–‡ä»¶<br>
+         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	selected å½“å‰èœå•é¡¹é€‰ä¸­çŠ¶æ€ï¼Œæ”¯æŒ"checkbox"å’Œ"radio",**è¯¥å­—æ®µä¸ä¸Šé¢çš„iconå­—æ®µå†²çªï¼Œå¹¶ä¸”ä¼˜å…ˆçº§é«˜äºiconå­—æ®µ**ï¼Œé»˜è®¤æ— <br>
+         * 							&nbsp;&nbsp;&nbsp;&nbsp;[**JsonObject**] menu å­èœå•ï¼Œä¸ä¸Šé¢çš„å†…å®¹ä¸€æ ·ï¼Œå¯ä»¥ä¸å¡«
          *
          *
          *
-         * @return	#MenuObject Menu¶ÔÏó
-         * @html <div id="example" class="example code" contenteditable="true"> ÓÒ¼üµãÎÒ</div>
+         *
+         *
+         * @return	#MenuObject Menuå¯¹è±¡
+         * @html <div id="example" class="example code" contenteditable="true"> å³é”®ç‚¹æˆ‘</div>
          * @example
          *
         		 ```
-        			// ´´½¨Ò»¸öÆÕÍ¨²Ëµ¥
+        			// åˆ›å»ºä¸€ä¸ªæ™®é€šèœå•
         			include('Menu');
         			var menu = new Menu({
         				lineHeight: 32,
         				backgroundColor: 0xFFFFFFFF,
         				roundcorner: 3,
         				menu: [
-        					{ id: '1', text: 'ÖĞÎÄ', 'separator': true },
-        					{ id: '2', text: 'Ó¢ÎÄ' },
-        					{ id: '3', text: '·¨ÎÄ' },
-        					{ id: '4', text: 'µÂÎÄ' }
+        					{ id: '1', text: 'ä¸­æ–‡', 'separator': true },
+        					{ id: '2', text: 'è‹±æ–‡' },
+        					{ id: '3', text: 'æ³•æ–‡' },
+        					{ id: '4', text: 'å¾·æ–‡' }
         				]
         			});
         		 ```
          * @example
          *
         		 ```
-        			// ¿ÉÒÔÊ¹ÓÃ¿ì½İ¼üµÄ²Ëµ¥
+        			// å¯ä»¥ä½¿ç”¨å¿«æ·é”®çš„èœå•
         			include('Menu');
         			var menu = new Menu({
         				lineHeight: 32,
         				backgroundColor: 0xFFFFFFFF,
         				roundcorner: 3,
         				menu: [
-        					{ id: '1', text: 'ÖĞÎÄ', 'separator': true, icon: 'huiyuan.png' },
-        					{ id: '2', text: 'Ó¢ÎÄ', 'shortcut': 'D', selected: 'checkbox' },
-        					{ id: '3', text: '·¨ÎÄ', 'shortcut': 'E', selected: true  },
-        					{ id: '4', text: 'µÂÎÄ', 'shortcut': 'F', selected: 'radio' },
-        					{ id: '5', text: '¶íÎÄ', 'shortcut': 'G', icon: 'pick.png' }
+        					{ id: '1', text: 'ä¸­æ–‡', 'separator': true, icon: 'huiyuan.png' },
+        					{ id: '2', text: 'è‹±æ–‡', 'shortcut': 'D', selected: 'checkbox' },
+        					{ id: '3', text: 'æ³•æ–‡', 'shortcut': 'E', selected: true  },
+        					{ id: '4', text: 'å¾·æ–‡', 'shortcut': 'F', selected: 'radio' },
+        					{ id: '5', text: 'ä¿„æ–‡', 'shortcut': 'G', icon: 'pick.png' }
         				]
         			});
         		 ```
         * @example
         *
         		 ```
-        			// ´øactionµÄ²Ëµ¥
+        			// å¸¦actionçš„èœå•
         			include('Menu');
         			var menu = new Menu({
         				lineHeight: 32,
         				backgroundColor: 0xFFFFFFFF,
         				roundcorner: 3,
         				menu: [
-        					{ id: '1', text: 'ÖĞÎÄ', 'separator': true },
-        					{ id: '2', text: '¹Ø±Õ´°¿Ú', 'shortcut': 'D', action:'close' },
-        					{ id: '3', text: '·¨ÎÄ', 'shortcut': 'E'  },
-        					{ id: '4', text: 'µÂÎÄ', 'shortcut': 'F'  }
+        					{ id: '1', text: 'ä¸­æ–‡', 'separator': true },
+        					{ id: '2', text: 'å…³é—­çª—å£', 'shortcut': 'D', action:'close' },
+        					{ id: '3', text: 'æ³•æ–‡', 'shortcut': 'E'  },
+        					{ id: '4', text: 'å¾·æ–‡', 'shortcut': 'F'  }
         				]
         			});
         			menu.on('select', function(item) {
-        				alert('´¥·¢²Ëµ¥£º' + item.text);
+        				alert('è§¦å‘èœå•ï¼š' + item.text);
         			})
         		 ```
         * @example
         *
         		 ```
-        		 // ¶à²ã¼¶²Ëµ¥
+        		 // å¤šå±‚çº§èœå•
         		 include('Menu');
         		 var menu = new Menu({
         			transparent: false,
@@ -122,7 +122,7 @@ namespace amo {
         					text: '111',
         					'separator': true,
         					menu: [
-        						{ id: '1', text: 'ÖĞ¾ÍÈÃÕâÊ×¸è', 'separator': true },
+        						{ id: '1', text: 'ä¸­å°±è®©è¿™é¦–æ­Œ', 'separator': true },
         						{ id: '2', text: '222' },
         						{ id: '3', text: '333', shortcut: 'd' },
         						{
@@ -158,7 +158,7 @@ namespace amo {
          * @example
          *
          ```
-        	// ÓÒ¼ü²Ëµ¥
+        	// å³é”®èœå•
         	include('Menu');
         	document.oncontextmenu = function() {
         		var menu = new Menu({
@@ -179,7 +179,7 @@ namespace amo {
         			]
         		});
         		menu.on('select', function(item) {
-        			alert('´¥·¢²Ëµ¥£º' + item.text);
+        			alert('è§¦å‘èœå•ï¼š' + item.text);
         		})
         		return false;
         	};
@@ -187,27 +187,27 @@ namespace amo {
          * @example
          *
          ```
-        		 // ÓÒ¼ü²Ëµ¥
+        		 // å³é”®èœå•
         		 include('Menu');
         		 var example = document.getElementById('example');
         		 example.oncontextmenu = function() {
         			 var menu = new Menu({
         				 menu: [
-        					{ id: '1', text: '³·Ïû', action: 'undo', shortcut: 'U' },
-        					{ id: '2', text: 'ÖØ×ö', action: 'redo', shortcut: 'R', separator: true },
-        					{ id: '3', text: '¼ôÇĞ', action: 'cut', shortcut: 'T', enabled: false },
-        					{ id: '4', text: '¸´ÖÆ', action: 'copy', shortcut: 'C', visible: false },
-        					{ id: '5', text: 'Õ³Ìù', action: 'paste', shortcut: 'P', visible: false },
-        					{ id: '6', text: 'É¾³ı', action: 'delete', shortcut: 'D', separator: true },
-        					{ id: '7', text: 'È«Ñ¡', action: 'selectAll', shortcut: 'A', separator: true },
-        					{ id: '8', text: '·Å´ó', action: 'zoomOut', shortcut: 'Z' },
-        					{ id: '9', text: 'ËõĞ¡', action: 'zoomIn', shortcut: 'X' },
-        					{ id: '10', text: 'ÖØÖÃ', action: 'resetZoom', separator: true },
-        					{ id: '11', text: '´òÓ¡', action: 'print' },
+        					{ id: '1', text: 'æ’¤æ¶ˆ', action: 'undo', shortcut: 'U' },
+        					{ id: '2', text: 'é‡åš', action: 'redo', shortcut: 'R', separator: true },
+        					{ id: '3', text: 'å‰ªåˆ‡', action: 'cut', shortcut: 'T', enabled: false },
+        					{ id: '4', text: 'å¤åˆ¶', action: 'copy', shortcut: 'C', visible: false },
+        					{ id: '5', text: 'ç²˜è´´', action: 'paste', shortcut: 'P', visible: false },
+        					{ id: '6', text: 'åˆ é™¤', action: 'delete', shortcut: 'D', separator: true },
+        					{ id: '7', text: 'å…¨é€‰', action: 'selectAll', shortcut: 'A', separator: true },
+        					{ id: '8', text: 'æ”¾å¤§', action: 'zoomOut', shortcut: 'Z' },
+        					{ id: '9', text: 'ç¼©å°', action: 'zoomIn', shortcut: 'X' },
+        					{ id: '10', text: 'é‡ç½®', action: 'resetZoom', separator: true },
+        					{ id: '11', text: 'æ‰“å°', action: 'print' },
         				 ]
         			 });
         			 menu.on('select', function(item) {
-        				alert('´¥·¢²Ëµ¥£º' + item.text);
+        				alert('è§¦å‘èœå•ï¼š' + item.text);
         			 })
         			 return false;
         		 };
@@ -221,9 +221,9 @@ namespace amo {
         /*!
          * @fn	virtual Any MenuTransfer::close(IPCMessage::SmartType msg);
          *
-         * @brief	¹Ø±Õ²Ëµ¥.
+         * @brief	å…³é—­èœå•.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
          ```
@@ -245,7 +245,7 @@ namespace amo {
         				}
         			]
         	});
-        	// Èç¹ûÃ»ÓĞ²Ù×÷£¬5Ãëºó²Ëµ¥»á×Ô¶¯¹Ø±Õ
+        	// å¦‚æœæ²¡æœ‰æ“ä½œï¼Œ5ç§’åèœå•ä¼šè‡ªåŠ¨å…³é—­
         	setTimeout(function(){
         	console.log(123);
         		menu.close();
@@ -259,12 +259,12 @@ namespace amo {
         /*!
         * @event	virtual Any MenuTransfer::select(IPCMessage::SmartType msg);
         *
-        * @brief	²Ëµ¥Ïî±»Ñ¡ÖĞÊ±´¥·¢.
+        * @brief	èœå•é¡¹è¢«é€‰ä¸­æ—¶è§¦å‘.
         *
-        * @param	#JsonObject ±»Ñ¡ÖĞµÄ²Ëµ¥Ïî.
+        * @param	#JsonObject è¢«é€‰ä¸­çš„èœå•é¡¹.
         *
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         *
         * @example
         *

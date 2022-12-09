@@ -1,4 +1,4 @@
-// Created by amoylel on 13/08/2018.
+ï»¿// Created by amoylel on 13/08/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBSEXT_UUIDTRANSFER_03786AD7_00D1_4B00_8C9C_582243FBDDD6_H__
@@ -22,8 +22,8 @@ namespace amo {
      *
      * @extend Runnable
      *
-     * @brief	UUID Éú³ÉÀà,Èç¹ûÊ¹ÓÃÆµ·±£¬ÇëÖ±½Óµ÷ÓÃ¾²Ì¬º¯Êı·µ»ØUUID×Ö·û´®£¬´¿UUID¶ÔÏóÒ²Ã»Ê²Ã´ÒâÒå.
-     * 			<br>¹¤×÷Ïß³Ì**RendererÏß³Ì**
+     * @brief	UUID ç”Ÿæˆç±»,å¦‚æœä½¿ç”¨é¢‘ç¹ï¼Œè¯·ç›´æ¥è°ƒç”¨é™æ€å‡½æ•°è¿”å›UUIDå­—ç¬¦ä¸²ï¼Œçº¯UUIDå¯¹è±¡ä¹Ÿæ²¡ä»€ä¹ˆæ„ä¹‰.
+     * 			<br>å·¥ä½œçº¿ç¨‹**Rendererçº¿ç¨‹**
      */
     
     class UUIDTransfer
@@ -36,8 +36,8 @@ namespace amo {
          *
          * @tag constructor
          *
-         * @brief	´´½¨Ò»¸öUUID ¶ÔÏó.
-         * @return  #UUID ÊµÀı
+         * @brief	åˆ›å»ºä¸€ä¸ªUUID å¯¹è±¡.
+         * @return  #UUID å®ä¾‹
          *
          * @example
          *
@@ -62,11 +62,11 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	ÓÃÒ»¸ö×Ö·û´®¹¹½¨UUID.
+         * @brief	ç”¨ä¸€ä¸ªå­—ç¬¦ä¸²æ„å»ºUUID.
          *
-         * @param	#String ×Ö·û´®.
+         * @param	#String å­—ç¬¦ä¸².
          *
-         * @return	#UUID ·µ»ØÒ»¸öUUID¶ÔÏó.
+         * @return	#UUID è¿”å›ä¸€ä¸ªUUIDå¯¹è±¡.
          *
          * @example
          *
@@ -85,9 +85,9 @@ namespace amo {
         *
         * @tag static sync
         *
-        * @brief	Ö±½Ó»ñÈ¡Ò»¸öUUIDµÄ×Ö·û´®£¬²»´´½¨ĞÂµÄ¶ÔÏó.
+        * @brief	ç›´æ¥è·å–ä¸€ä¸ªUUIDçš„å­—ç¬¦ä¸²ï¼Œä¸åˆ›å»ºæ–°çš„å¯¹è±¡.
         *
-        * @return	#String UUID×Ö·û´®.
+        * @return	#String UUIDå­—ç¬¦ä¸².
         *
         * @example
         *
@@ -104,7 +104,7 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	»ñÈ¡Ò»¸ö¿ÕUUID¶ÔÏó.
+         * @brief	è·å–ä¸€ä¸ªç©ºUUIDå¯¹è±¡.
          *
          * @return	#UUID .
          * @example
@@ -122,10 +122,10 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	»ñÈ¡Ò»¸ö¿ÕUUIDµÄ×Ö·û´®.
+         * @brief	è·å–ä¸€ä¸ªç©ºUUIDçš„å­—ç¬¦ä¸².
          *
          *
-         * @return	#String Ò»¸ö±íÊ¾¿ÕUUIDµÄ×Ö·û´®.
+         * @return	#String ä¸€ä¸ªè¡¨ç¤ºç©ºUUIDçš„å­—ç¬¦ä¸².
          * @example
          *
          ```
@@ -143,10 +143,10 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	½«µ±Ç°UUID×ª»»Îª×Ö·û´®.
+         * @brief	å°†å½“å‰UUIDè½¬æ¢ä¸ºå­—ç¬¦ä¸².
          *
          *
-         * @return	#String UUID×Ö·û´®.
+         * @return	#String UUIDå­—ç¬¦ä¸².
          *
          * @example
          *

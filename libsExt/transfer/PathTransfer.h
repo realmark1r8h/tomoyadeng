@@ -1,4 +1,4 @@
-// Created by amoylel on 17/03/2018.
+ï»¿// Created by amoylel on 17/03/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBSEXT_PATHTRANSFER_F5089CC4_51A8_4448_BB3D_04242220BFA0_H__
@@ -23,8 +23,8 @@ namespace amo {
      *
      * @chapter extend
      *
-     * @brief	Â·¾¶¿â.<br>
-     * 			¹¤×÷Ïß³Ì**RendererÏß³Ì**
+     * @brief	è·¯å¾„åº“.<br>
+     * 			å·¥ä½œçº¿ç¨‹**Rendererçº¿ç¨‹**
      */
     
     class PathTransfer
@@ -46,10 +46,10 @@ namespace amo {
         /*!
          * @fn	Any PathTransfer::getFullAppDir(IPCMessage::SmartType msg);
          *  @tag sync static
-         * @brief	·µ»Øµ±Ç°³ÌĞòËùÔÚÄ¿Â¼.
+         * @brief	è¿”å›å½“å‰ç¨‹åºæ‰€åœ¨ç›®å½•.
          *
          *
-         * @return	#Path ·µ»ØÒ»¸öPath¶ÔÏó.
+         * @return	#Path è¿”å›ä¸€ä¸ªPathå¯¹è±¡.
          * @example
          *
          ```
@@ -65,9 +65,9 @@ namespace amo {
         /*!
          * @fn	Any PathTransfer::getFullAppName(IPCMessage::SmartType msg);
          *  @tag sync static
-         * @brief	»ñÈ¡µ±Ç°³ÌĞòµÄÍêÕûÂ·¾¶.
+         * @brief	è·å–å½“å‰ç¨‹åºçš„å®Œæ•´è·¯å¾„.
          *
-         * @return	#Path ·µ»ØÒ»¸öPath¶ÔÏó.
+         * @return	#Path è¿”å›ä¸€ä¸ªPathå¯¹è±¡.
          * @example
          *
          ```
@@ -83,11 +83,11 @@ namespace amo {
         /*!
          * @fn	Any PathTransfer::fileExsit(IPCMessage::SmartType msg);
          *  @tag sync static
-         * @brief	ÅĞ¶ÏÎÄ¼ş»òÄ¿Â¼ÊÇ·ñ´æÔÚ.
+         * @brief	åˆ¤æ–­æ–‡ä»¶æˆ–ç›®å½•æ˜¯å¦å­˜åœ¨.
          *
-         * @param	#String Â·¾¶.
+         * @param	#String è·¯å¾„.
          *
-         * @return	#Boolean true ´æÔÚ/false ²»´æÔÚ.
+         * @return	#Boolean true å­˜åœ¨/false ä¸å­˜åœ¨.
          *
          * @example
          *
@@ -105,11 +105,11 @@ namespace amo {
         /*!
          * @fn	Any PathTransfer::Remove(IPCMessage::SmartType msg);
          * @tag static sync
-         * @brief	É¾³ıÒ»¸öÎÄ¼ş£¬»ò¿ÕÄ¿Â¼.
+         * @brief	åˆ é™¤ä¸€ä¸ªæ–‡ä»¶ï¼Œæˆ–ç©ºç›®å½•.
          *
-         * @param	#String Â·¾¶.
+         * @param	#String è·¯å¾„.
          *
-         * @return	#Boolean true ³É¹¦/false Ê§°Ü.
+         * @return	#Boolean true æˆåŠŸ/false å¤±è´¥.
          *
          * @example
          *
@@ -127,11 +127,11 @@ namespace amo {
         /*!
          * @fn	Any PathTransfer::RemoveAll(IPCMessage::SmartType msg);
          * @tag static
-         * @brief	É¾³ıÒ»¸öÎÄ¼ş»òÎÄ¼ş¼Ğ£¬ÎÄ¼şÄ¿Â¼¿ÉÒÔ²»Îª¿Õ.
+         * @brief	åˆ é™¤ä¸€ä¸ªæ–‡ä»¶æˆ–æ–‡ä»¶å¤¹ï¼Œæ–‡ä»¶ç›®å½•å¯ä»¥ä¸ä¸ºç©º.
          *
-         * @param	#String Â·¾¶.
+         * @param	#String è·¯å¾„.
          *
-         * @return	#Boolean true ³É¹¦/false Ê§°Ü.
+         * @return	#Boolean true æˆåŠŸ/false å¤±è´¥.
          *
          * @example
          *
@@ -150,7 +150,7 @@ namespace amo {
         /*!
         * @fn	Any PathTransfer::toString(IPCMessage::SmartType msg);
         * @tag sync
-        * @brief	½«µ±Ç°Path¶ÔÏó×ª»»ÎªString.
+        * @brief	å°†å½“å‰Pathå¯¹è±¡è½¬æ¢ä¸ºString.
         *
         *
         * @return	#String .
@@ -169,10 +169,10 @@ namespace amo {
         /*!
         * @fn	Any PathTransfer::isExsit(IPCMessage::SmartType msg);
         * @tag sync
-        * @brief	ÅĞ¶Ïµ±Ç°Â·¾¶ÊÇ·ñ´æÔÚ.
+        * @brief	åˆ¤æ–­å½“å‰è·¯å¾„æ˜¯å¦å­˜åœ¨.
         *
         *
-        * @return	#Boolean true ´æÔÚ/ false ²»´æÔÚ.
+        * @return	#Boolean true å­˜åœ¨/ false ä¸å­˜åœ¨.
         *
         * @example
         *
@@ -188,11 +188,11 @@ namespace amo {
         /*!
         * @fn	Any PathTransfer::append(IPCMessage::SmartType msg);
         * @tag sync
-        * @brief	Íùµ±Ç°Â·¾¶ÖĞ×·¼Ó×ÓÂ·¾¶.
+        * @brief	å¾€å½“å‰è·¯å¾„ä¸­è¿½åŠ å­è·¯å¾„.
         *
-        * @param	#String ĞèÒª×·¼ÓÁËÂ·¾¶.
+        * @param	#String éœ€è¦è¿½åŠ äº†è·¯å¾„.
         *
-        * @return	#Path µ±Ç°¶ÔÏó.
+        * @return	#Path å½“å‰å¯¹è±¡.
         *
         * @example
         *
@@ -210,10 +210,10 @@ namespace amo {
         /*!
          * @fn	Any PathTransfer::toAbsolute(IPCMessage::SmartType msg);
          *
-         * @brief	½«µ±Ç°Â·¾¶×ª»»ÎªÒ»¸ö¾ø¶ÔÂ·¾¶.
+         * @brief	å°†å½“å‰è·¯å¾„è½¬æ¢ä¸ºä¸€ä¸ªç»å¯¹è·¯å¾„.
          *
          *
-         * @return	#Path µ±Ç°¶ÔÏó.
+         * @return	#Path å½“å‰å¯¹è±¡.
          *
          * @example
          *
@@ -232,9 +232,9 @@ namespace amo {
         /*!
         * @fn	Any PathTransfer::removeFileSpec(IPCMessage::SmartType msg);
         * @tag sync
-        * @brief	È¥³ıÎÄ¼şÃû£¬µÃµ½Ä¿Â¼.
+        * @brief	å»é™¤æ–‡ä»¶åï¼Œå¾—åˆ°ç›®å½•.
         *
-        * @return	#Path µ±Ç°¶ÔÏó.
+        * @return	#Path å½“å‰å¯¹è±¡.
         *
         * @example
         *
@@ -253,11 +253,11 @@ namespace amo {
         /*!
          * @fn	Any PathTransfer::copyTo(IPCMessage::SmartType msg);
          * @tag sync
-         * @brief	¸´ÖÆÎÄ¼şµ½Ö¸¶¨Î»ÖÃ.
+         * @brief	å¤åˆ¶æ–‡ä»¶åˆ°æŒ‡å®šä½ç½®.
          *
-         * @param	#String Ä¿±êÎ»ÖÃ.
+         * @param	#String ç›®æ ‡ä½ç½®.
          *
-         * @return	#Boolean true ´æÔÚ/ false ²»´æÔÚ.
+         * @return	#Boolean true å­˜åœ¨/ false ä¸å­˜åœ¨.
          *
          * @example
          *
@@ -275,11 +275,11 @@ namespace amo {
         /*!
          * @fn	Any PathTransfer::moveTo(IPCMessage::SmartType msg);
          * @tag sync
-         * @brief	ÒÆ¶¯ÎÄ¼şµ½Ö¸¶¨Î»ÖÃ.
+         * @brief	ç§»åŠ¨æ–‡ä»¶åˆ°æŒ‡å®šä½ç½®.
          *
-         * @param	#String Ä¿±êÎ»ÖÃ.
+         * @param	#String ç›®æ ‡ä½ç½®.
          *
-         * @return	#Boolean true ´æÔÚ/ false ²»´æÔÚ.
+         * @return	#Boolean true å­˜åœ¨/ false ä¸å­˜åœ¨.
          *
          * @example
          *
@@ -305,9 +305,9 @@ namespace amo {
         /*!
         * @fn	Any PathTransfer::remove(IPCMessage::SmartType msg);
         * @tag
-        * @brief	É¾³ıµ±Ç°Â·¾¶£¬¸ÃÂ·¾¶Ö»ÄÜÊÇÒ»¸öÎÄ¼ş»ò¿ÕÄ¿Â¼É¾³ıÒ»¸öÎÄ¼ş£¬»ò¿ÕÄ¿Â¼.
+        * @brief	åˆ é™¤å½“å‰è·¯å¾„ï¼Œè¯¥è·¯å¾„åªèƒ½æ˜¯ä¸€ä¸ªæ–‡ä»¶æˆ–ç©ºç›®å½•åˆ é™¤ä¸€ä¸ªæ–‡ä»¶ï¼Œæˆ–ç©ºç›®å½•.
         *
-        * @return	#Boolean true ³É¹¦/false Ê§°Ü.
+        * @return	#Boolean true æˆåŠŸ/false å¤±è´¥.
         *
         * @example
         *
@@ -326,10 +326,10 @@ namespace amo {
         /*!
         * @fn	Any PathTransfer::removeAll(IPCMessage::SmartType msg);
         * @tag
-        * @brief	É¾³ıµ±Ç°Â·¾¶£¬¿ÉÒÔÉ¾³ı×ÓÄ¿Â¼£¬.
+        * @brief	åˆ é™¤å½“å‰è·¯å¾„ï¼Œå¯ä»¥åˆ é™¤å­ç›®å½•ï¼Œ.
         *
         *
-        * @return	#Boolean true ³É¹¦/false Ê§°Ü.
+        * @return	#Boolean true æˆåŠŸ/false å¤±è´¥.
         *
         * @example
         *

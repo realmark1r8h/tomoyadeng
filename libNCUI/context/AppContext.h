@@ -1,4 +1,4 @@
-// Created by amoylel on 06/10/2017.
+ï»¿// Created by amoylel on 06/10/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_APPCONTEXT_H__
@@ -25,7 +25,7 @@
 /*!
  * @enum	ProcessType
  *
- * @brief	½ø³ÌÀàĞÍ.
+ * @brief	è¿›ç¨‹ç±»å‹.
  */
 
 enum ProcessType {
@@ -42,7 +42,7 @@ namespace amo {
     /*!
      * @class	AppContext
      *
-     * @brief	Ò»Ğ©È«¾ÖÊôĞÔ.
+     * @brief	ä¸€äº›å…¨å±€å±æ€§.
      */
     class AppContext : public amo::singleton < AppContext > {
     public:
@@ -52,7 +52,7 @@ namespace amo {
         /*!
          * @fn	void AppContext::startNodeThread();
          *
-         * @brief	¿ªÊ¼Node.
+         * @brief	å¼€å§‹Node.
          */
         
         void startNodeThread();
@@ -60,7 +60,7 @@ namespace amo {
         /*!
          * @fn	void AppContext::initialize(HINSTANCE hInstance);
          *
-         * @brief	³õÊ¼»¯APP.
+         * @brief	åˆå§‹åŒ–APP.
          *
          * @param	hInstance	The instance.
          */
@@ -70,7 +70,7 @@ namespace amo {
         /*!
          * @fn	void AppContext::initCommandLine(int argc, const char* const* argv);
          *
-         * @brief	³õÊ¼»¯ÃüÁîĞĞ²ÎÊı.
+         * @brief	åˆå§‹åŒ–å‘½ä»¤è¡Œå‚æ•°.
          *
          * @param	argc	The argc.
          * @param	argv	The argv.
@@ -81,7 +81,7 @@ namespace amo {
         /*!
          * @fn	int AppContext::executeProcess(CefMainArgs& main_args);
          *
-         * @brief	ÔËĞĞCEF×Ó³ÌĞò.
+         * @brief	è¿è¡ŒCEFå­ç¨‹åº.
          *
          * @param [in,out]	main_args	The main arguments.
          *
@@ -93,7 +93,7 @@ namespace amo {
         /*!
          * @fn	void AppContext::run(CefMainArgs& main_args);
          *
-         * @brief	¿ªÊ¼ÔËĞĞCEF³ÌĞò.
+         * @brief	å¼€å§‹è¿è¡ŒCEFç¨‹åº.
          *
          * @param [in,out]	main_args	The main arguments.
          */
@@ -103,7 +103,7 @@ namespace amo {
         /*!
          * @fn	bool AppContext::startHook();
          *
-         * @brief	¿ªÊ¼Windows´°¿ÚÏûÏ¢¼àÌı.
+         * @brief	å¼€å§‹Windowsçª—å£æ¶ˆæ¯ç›‘å¬.
          *
          * @return	true if it succeeds, false if it fails.
          */
@@ -113,7 +113,7 @@ namespace amo {
         /*!
          * @fn	void AppContext::stopHook();
          *
-         * @brief	Í£Ö¹Windows´°¿ÚÏûÏ¢¼àÌı.
+         * @brief	åœæ­¢Windowsçª—å£æ¶ˆæ¯ç›‘å¬.
          */
         
         void stopHook();
@@ -131,7 +131,7 @@ namespace amo {
         /*!
          * @fn	std::shared_ptr<DummyClientHandler> AppContext::getClientHandler();
          *
-         * @brief	»ñÈ¡ĞéÄâClientHandler,Ã¿¸öĞÂ´´½¨µÄClientHandler¶¼»á¸´ÖÆµ±Ç°HandlerµÄÄÚÈİ.
+         * @brief	è·å–è™šæ‹ŸClientHandler,æ¯ä¸ªæ–°åˆ›å»ºçš„ClientHandleréƒ½ä¼šå¤åˆ¶å½“å‰Handlerçš„å†…å®¹.
          *
          * @return	The client handler.
          */
@@ -141,7 +141,7 @@ namespace amo {
         /*!
          * @fn	std::shared_ptr<NodeMessageHandler> AppContext::getNodeMessageHandler();
          *
-         * @brief	»ñÈ¡NodeÏûÏ¢Handler.
+         * @brief	è·å–Nodeæ¶ˆæ¯Handler.
          *
          * @return	The node message handler.
          */
@@ -151,7 +151,7 @@ namespace amo {
         /*!
          * @fn	std::shared_ptr<AppSettings> AppContext::getDefaultAppSettings();
          *
-         * @brief	»ñÈ¡Ä¬ÈÏAppÉèÖÃ.
+         * @brief	è·å–é»˜è®¤Appè®¾ç½®.
          *
          * @return	The default application settings.
          */
@@ -161,7 +161,7 @@ namespace amo {
         /*!
          * @fn	std::shared_ptr<BrowserWindowSettings> AppContext::getDefaultBrowserSettings();
          *
-         * @brief	»ñÈ¡Ä¬ÈÏä¯ÀÀÆ÷ÉèÖÃ.
+         * @brief	è·å–é»˜è®¤æµè§ˆå™¨è®¾ç½®.
          *
          * @return	The default browser settings.
          */
@@ -171,7 +171,7 @@ namespace amo {
         /*!
          * @fn	std::shared_ptr<SplashWindowSettings> AppContext::getDefaultSplashSettings();
          *
-         * @brief	»ñÈ¡Ä¬ÈÏÆô¶¯»­ÃæÉèÖÃ.
+         * @brief	è·å–é»˜è®¤å¯åŠ¨ç”»é¢è®¾ç½®.
          *
          * @return	The default splash settings.
          */
@@ -181,7 +181,7 @@ namespace amo {
         /*!
          * @fn	std::shared_ptr<BrowserWindowManager> AppContext::getBrowserWindowManager();
          *
-         * @brief	»ñÈ¡´°¿Ú¹ÜÀíÆ÷.
+         * @brief	è·å–çª—å£ç®¡ç†å™¨.
          *
          * @return	The browser window manager.
          */
@@ -191,7 +191,7 @@ namespace amo {
         /*!
          * @fn	ProcessType AppContext::getProcessType();
          *
-         * @brief	»ñÈ¡µ±Ç°½ø³ÌÀàĞÍ.
+         * @brief	è·å–å½“å‰è¿›ç¨‹ç±»å‹.
          *
          * @return	The process type.
          */
@@ -203,7 +203,7 @@ namespace amo {
         /*!
          * @fn	static LRESULT CALLBACK AppContext::mouseProc(int nCode, WPARAM wParam, LPARAM lParam);
          *
-         * @brief	¹ıÂÇÊó±êÏûÏ¢.
+         * @brief	è¿‡è™‘é¼ æ ‡æ¶ˆæ¯.
          *
          * @param	nCode 	The code.
          * @param	wParam	The wParam field of the message.
@@ -217,7 +217,7 @@ namespace amo {
         /*!
          * @fn	void AppContext::runNodeThread();
          *
-         * @brief	ÔËĞĞNodeJS.
+         * @brief	è¿è¡ŒNodeJS.
          */
         
         void runNodeThread();
@@ -225,7 +225,7 @@ namespace amo {
         /*!
          * @fn	void AppContext::onUpdateAppSettings(BasicSettings* settings);
          *
-         * @brief	AppSettings¸üĞÂÊ±µÄ»Øµ÷º¯Êı.
+         * @brief	AppSettingsæ›´æ–°æ—¶çš„å›è°ƒå‡½æ•°.
          *
          * @param [in,out]	settings	If non-null, options for controlling the operation.
          */
@@ -235,8 +235,8 @@ namespace amo {
         /*!
          * @fn	bool AppContext::needQuitWithNode();
          *
-         * @brief	»Øµ÷º¯Êı£¬µ±ÓëNodeÍ¨ĞÅµÄ¹ÜµÀ´´½¨ºó»Øµ÷£¬ÊÇ·ñÍË³ö³ÌĞò¡£
-         * 			 ±ØĞëµÈ´ıÍ¨µÀ½¨ºÃ£¬·ñÔò»áÔì³ÉËÀËø£¬ÎŞ·¨ÍË³öNode½ø³Ì.
+         * @brief	å›è°ƒå‡½æ•°ï¼Œå½“ä¸Nodeé€šä¿¡çš„ç®¡é“åˆ›å»ºåå›è°ƒï¼Œæ˜¯å¦é€€å‡ºç¨‹åºã€‚
+         * 			 å¿…é¡»ç­‰å¾…é€šé“å»ºå¥½ï¼Œå¦åˆ™ä¼šé€ æˆæ­»é”ï¼Œæ— æ³•é€€å‡ºNodeè¿›ç¨‹.
          *
          * @return	true if it succeeds, false if it fails.
          */
@@ -246,7 +246,7 @@ namespace amo {
         /*!
          * @fn	bool AppContext::needQuitWithOutNode();
          *
-         * @brief	²»Ê¹ÓÃNodeµÄÇé¿öÏÂÊÇ·ñÍË³ö³ÌĞò.
+         * @brief	ä¸ä½¿ç”¨Nodeçš„æƒ…å†µä¸‹æ˜¯å¦é€€å‡ºç¨‹åº.
          *
          * @return	true if it succeeds, false if it fails.
          */
@@ -256,28 +256,28 @@ namespace amo {
         AMO_CEF_IMPL_NO_REFCOUNTING(NodeMessageHandler)
         
     private:
-        /*! @brief	ÏûÏ¢¹³×Ó. */
+        /*! @brief	æ¶ˆæ¯é’©å­. */
         static HHOOK g_hHook;
-        /*! @brief	×Ó½ø³ÌÍË³ö´úÂë. */
+        /*! @brief	å­è¿›ç¨‹é€€å‡ºä»£ç . */
         int m_nProcessExitCode;
-        /*! @brief	È«¾ÖClientApp. */
+        /*! @brief	å…¨å±€ClientApp. */
         CefRefPtr<ClientApp> m_pClientApp;
-        /*! @brief	ÃüÁîĞĞ²ÎÊı. */
+        /*! @brief	å‘½ä»¤è¡Œå‚æ•°. */
         CefRefPtr<CefCommandLine>   m_pCommandLine;
-        /*! @brief	ä¯ÀÀÆ÷È«¾ÖÉèÖÃ. */
+        /*! @brief	æµè§ˆå™¨å…¨å±€è®¾ç½®. */
         std::shared_ptr<AppSettings> m_pAppSettings;
-        /*! @brief	ÏµÍ³ÅäÖÃ. */
+        /*! @brief	ç³»ç»Ÿé…ç½®. */
         std::shared_ptr<BrowserWindowSettings> m_pBrowserSettings;
-        /*! @brief	ÏµÍ³ÅäÖÃ. */
+        /*! @brief	ç³»ç»Ÿé…ç½®. */
         std::shared_ptr<SplashWindowSettings> m_pSplashSettings;
-        /*! @brief	ä¯ÀÀÆ÷ÊÂ¼ş»Øµ÷¾ä±úClientHandler; */
+        /*! @brief	æµè§ˆå™¨äº‹ä»¶å›è°ƒå¥æŸ„ClientHandler; */
         std::shared_ptr<DummyClientHandler> m_pClientHandler;
-        /*! @brief	ÓëNodeJs½»»¥Handler. */
+        /*! @brief	ä¸NodeJsäº¤äº’Handler. */
         std::shared_ptr<NodeMessageHandler> m_pNodeMessageHandler;
-        /*! @brief	Node Ïß³Ì. */
+        /*! @brief	Node çº¿ç¨‹. */
         std::shared_ptr<std::thread> pNodeThread;
         
-        /*! @brief	¹²ÏíÄÚ´æ£¬ÓÃÓÚ´¦Àíµ¥ÀıÄ£Ê½. */
+        /*! @brief	å…±äº«å†…å­˜ï¼Œç”¨äºå¤„ç†å•ä¾‹æ¨¡å¼. */
         std::shared_ptr<SharedMemory> m_pSharedMemory;
     };
     

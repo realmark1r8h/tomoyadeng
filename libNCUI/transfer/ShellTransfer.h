@@ -1,4 +1,4 @@
-// Created by amoylel on 07/03/2017.
+ï»¿// Created by amoylel on 07/03/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_SHELLTRANSFER_H__
@@ -16,8 +16,8 @@ namespace amo {
      *
      * @extend Object
      *
-     * @brief	ÔËĞĞÒ»¸öÍâ²¿³ÌĞò£¨»òÕßÊÇ´ò¿ªÒ»¸öÒÑ×¢²áµÄÎÄ¼ş¡¢´ò¿ªÒ»¸öÄ¿Â¼¡¢´òÓ¡Ò»¸öÎÄ¼şµÈµÈ£©.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	è¿è¡Œä¸€ä¸ªå¤–éƒ¨ç¨‹åºï¼ˆæˆ–è€…æ˜¯æ‰“å¼€ä¸€ä¸ªå·²æ³¨å†Œçš„æ–‡ä»¶ã€æ‰“å¼€ä¸€ä¸ªç›®å½•ã€æ‰“å°ä¸€ä¸ªæ–‡ä»¶ç­‰ç­‰ï¼‰.<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      *
      */
     
@@ -34,16 +34,16 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	Ö´ĞĞÒ»ÏÂshellÃüÁî.
+         * @brief	æ‰§è¡Œä¸€ä¸‹shellå‘½ä»¤.
          *
-         * @param	#String ÒªÖ´ĞĞµÄshellÃüÁî open print µÈ.
-         * @param	#String Òªµ÷ÓÃµÄ³ÌĞò»ò´ò¿ªµÄÎÄ¼şÂ·¾¶.
-         * @param	#String Æô¶¯²ÎÊı,Ä¬ÈÏÎª"".
-         * @param	#String ¹¤×÷Ä¿Â¼,Ä¬ÈÏÎªµ±Ç°Â·¾¶.
-         * @param	#Int=1 ÏÔÊ¾²ÎÊı
+         * @param	#String è¦æ‰§è¡Œçš„shellå‘½ä»¤ open print ç­‰.
+         * @param	#String è¦è°ƒç”¨çš„ç¨‹åºæˆ–æ‰“å¼€çš„æ–‡ä»¶è·¯å¾„.
+         * @param	#String å¯åŠ¨å‚æ•°,é»˜è®¤ä¸º"".
+         * @param	#String å·¥ä½œç›®å½•,é»˜è®¤ä¸ºå½“å‰è·¯å¾„.
+         * @param	#Int=1 æ˜¾ç¤ºå‚æ•°
          *
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
         	 ```
@@ -61,13 +61,13 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	´ò¿ªÎÄ¼ş»ò³ÌĞò.
+         * @brief	æ‰“å¼€æ–‡ä»¶æˆ–ç¨‹åº.
          *
-         * @param	#String	ÎÄ¼ş»ò³ÌĞòÂ·¾¶.
-         * @param	#String	Æô¶¯²ÎÊı,Ä¬ÈÏÎª"".
-         * @param	#String	¹¤×÷Ä¿Â¼,Ä¬ÈÏÎªµ±Ç°Â·¾¶.
+         * @param	#String	æ–‡ä»¶æˆ–ç¨‹åºè·¯å¾„.
+         * @param	#String	å¯åŠ¨å‚æ•°,é»˜è®¤ä¸º"".
+         * @param	#String	å·¥ä½œç›®å½•,é»˜è®¤ä¸ºå½“å‰è·¯å¾„.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
          ```
@@ -84,11 +84,11 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	 ´òÓ¡ÎÄ¼ş.
+         * @brief	 æ‰“å°æ–‡ä»¶.
          *
-         * @param	#String ÎÄ¼şÂ·¾¶.
+         * @param	#String æ–‡ä»¶è·¯å¾„.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
         
@@ -105,11 +105,11 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÔÚÎÄ¼ş¼ĞÖĞÏÔÊ¾ÎÄ¼ş£¨¶¨Î»ÎÄ¼şÎ»ÖÃ£©.
+         * @brief	åœ¨æ–‡ä»¶å¤¹ä¸­æ˜¾ç¤ºæ–‡ä»¶ï¼ˆå®šä½æ–‡ä»¶ä½ç½®ï¼‰.
          *
-         * @param	#String ÎÄ¼şÂ·¾¶.
+         * @param	#String æ–‡ä»¶è·¯å¾„.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
         		 ```
@@ -127,16 +127,16 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(showItemInFolder, TransferFuncStatic)
         
         
-        /*! @attr #Int=SW_HIDE SW_HIDE ´ò¿ªÊ±²»ÏÔÊ¾½çÃæ. {@tag const static property}*/
-        /*! @attr #Int=SW_MINIMIZE SW_MINIMIZE ÒÔ×îĞ¡»¯µÄ·½Ê½´ò¿ª. {@tag const static property}*/
-        /*! @attr #Int=SW_RESTORE SW_RESTORE ÒÔ»¹Ô­ÏÔÊ¾µÄ·½Ê½´ò¿ª. {@tag const static property}*/
-        /*! @attr #Int=SW_SHOW SW_SHOW ´ò¿ªÊ±ÏÔÊ¾½çÃæ. {@tag const static property}*/
-        /*! @attr #Int=SW_SHOWMAXIMIZED SW_SHOWMAXIMIZED ¼¤»î´°¿Ú²¢½«Æä×î´ó»¯. {@tag const static property}*/
-        /*! @attr #Int=SW_SHOWMINIMIZED SW_SHOWMINIMIZED ¼¤»î´°¿Ú²¢½«Æä×îĞ¡»¯. {@tag const static property}*/
-        /*! @attr #Int=SW_SHOWMINNOACTIVE SW_SHOWMINNOACTIVE ´°¿Ú×îĞ¡»¯£¬¼¤»î´°¿ÚÈÔÈ»Î¬³Ö¼¤»î×´Ì¬. {@tag const static property}*/
-        /*! @attr #Int=SW_SHOWNA SW_SHOWNA ÒÔ´°¿ÚÔ­À´µÄ×´Ì¬ÏÔÊ¾´°¿Ú¡£¼¤»î´°¿ÚÈÔÈ»Î¬³Ö¼¤»î×´Ì¬. {@tag const static property}*/
-        /*! @attr #Int=SW_SHOWNOACTIVATE SW_SHOWNOACTIVATE ÒÔ´°¿Ú×î½üÒ»´ÎµÄ´óĞ¡ºÍ×´Ì¬ÏÔÊ¾´°¿Ú¡£¼¤»î´°¿ÚÈÔÈ»Î¬³Ö¼¤»î×´Ì¬. {@tag const static property}*/
-        /*! @attr #Int=SW_SHOWNORMAL SW_SHOWNORMAL ¼¤»î²¢ÏÔÊ¾Ò»¸ö´°¿Ú¡£Èç¹û´°¿Ú±»×îĞ¡»¯»ò×î´ó»¯£¬ÏµÍ³½«Æä»Ö¸´µ½Ô­À´µÄ³ß´çºÍ´óĞ¡¡£. {@tag const static property}*/
+        /*! @attr #Int=SW_HIDE SW_HIDE æ‰“å¼€æ—¶ä¸æ˜¾ç¤ºç•Œé¢. {@tag const static property}*/
+        /*! @attr #Int=SW_MINIMIZE SW_MINIMIZE ä»¥æœ€å°åŒ–çš„æ–¹å¼æ‰“å¼€. {@tag const static property}*/
+        /*! @attr #Int=SW_RESTORE SW_RESTORE ä»¥è¿˜åŸæ˜¾ç¤ºçš„æ–¹å¼æ‰“å¼€. {@tag const static property}*/
+        /*! @attr #Int=SW_SHOW SW_SHOW æ‰“å¼€æ—¶æ˜¾ç¤ºç•Œé¢. {@tag const static property}*/
+        /*! @attr #Int=SW_SHOWMAXIMIZED SW_SHOWMAXIMIZED æ¿€æ´»çª—å£å¹¶å°†å…¶æœ€å¤§åŒ–. {@tag const static property}*/
+        /*! @attr #Int=SW_SHOWMINIMIZED SW_SHOWMINIMIZED æ¿€æ´»çª—å£å¹¶å°†å…¶æœ€å°åŒ–. {@tag const static property}*/
+        /*! @attr #Int=SW_SHOWMINNOACTIVE SW_SHOWMINNOACTIVE çª—å£æœ€å°åŒ–ï¼Œæ¿€æ´»çª—å£ä»ç„¶ç»´æŒæ¿€æ´»çŠ¶æ€. {@tag const static property}*/
+        /*! @attr #Int=SW_SHOWNA SW_SHOWNA ä»¥çª—å£åŸæ¥çš„çŠ¶æ€æ˜¾ç¤ºçª—å£ã€‚æ¿€æ´»çª—å£ä»ç„¶ç»´æŒæ¿€æ´»çŠ¶æ€. {@tag const static property}*/
+        /*! @attr #Int=SW_SHOWNOACTIVATE SW_SHOWNOACTIVATE ä»¥çª—å£æœ€è¿‘ä¸€æ¬¡çš„å¤§å°å’ŒçŠ¶æ€æ˜¾ç¤ºçª—å£ã€‚æ¿€æ´»çª—å£ä»ç„¶ç»´æŒæ¿€æ´»çŠ¶æ€. {@tag const static property}*/
+        /*! @attr #Int=SW_SHOWNORMAL SW_SHOWNORMAL æ¿€æ´»å¹¶æ˜¾ç¤ºä¸€ä¸ªçª—å£ã€‚å¦‚æœçª—å£è¢«æœ€å°åŒ–æˆ–æœ€å¤§åŒ–ï¼Œç³»ç»Ÿå°†å…¶æ¢å¤åˆ°åŸæ¥çš„å°ºå¯¸å’Œå¤§å°ã€‚. {@tag const static property}*/
         
         
         AMO_CEF_MESSAGE_TRANSFER_ATTR(SW_HIDE)

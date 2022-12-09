@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include <amo/logger.hpp>
 #include "handler/URLRequestClient.h"
 

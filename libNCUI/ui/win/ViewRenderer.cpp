@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+ï»¿#include "stdAfx.h"
 
 #ifndef NCUI_NO_D2D1
 
@@ -103,7 +103,7 @@ namespace amo {
 				ntotal += p;
 			}
 
-			$cdevel("äÖÈ¾ÓÃÊ±£º{}", ntotal / vec.size());
+			$cdevel("æ¸²æŸ“ç”¨æ—¶ï¼š{}", ntotal / vec.size());
 
 			vec.clear();
 		}
@@ -224,7 +224,7 @@ namespace amo {
 				ntotal += p;
 			}
 
-			$cdevel("äÖÈ¾ÓÃÊ±£º{}", ntotal / vec.size());
+			$cdevel("æ¸²æŸ“ç”¨æ—¶ï¼š{}", ntotal / vec.size());
 
 			vec.clear();
 		}

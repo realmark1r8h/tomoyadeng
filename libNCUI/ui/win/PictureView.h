@@ -1,4 +1,4 @@
-// Created by amoylel on 10/06/2017.
+ï»¿// Created by amoylel on 10/06/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_PICTUREVIEW_H__
@@ -9,7 +9,7 @@
 namespace amo {
 
 
-    //Ò³ÃæäÖÈ¾¿Ø¼ş
+    //é¡µé¢æ¸²æŸ“æ§ä»¶
     class PictureView : public CControlUI {
     public:
         PictureView();

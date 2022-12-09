@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+﻿#include "stdAfx.h"
 #include "handler/KeyboardHandler.h"
 #include <amo/logger.hpp>
 

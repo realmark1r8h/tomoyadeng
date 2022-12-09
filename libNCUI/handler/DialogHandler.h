@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_DIALOGHANDLER_H__
@@ -13,7 +13,7 @@ namespace amo {
     /*!
      * @class	DialogHandlerDelegate
      *
-     * @brief	¶Ô»°¿òÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	å¯¹è¯æ¡†äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class DialogHandlerDelegate {
@@ -52,7 +52,7 @@ namespace amo {
     /*!
      * @class	DialogHandler
      *
-     * @brief	¶Ô»°¿òÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	å¯¹è¯æ¡†äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class DialogHandler : public CefDialogHandler
@@ -75,7 +75,7 @@ namespace amo {
          * 		int selected_accept_filter,
          * 		CefRefPtr<CefFileDialogCallback> callback);
          *
-         * @brief	Ò³ÃæÇëÇó´ò¿ªÎÄ¼ş¶Ô»°¿òÊ±´¥·¢ °üÀ¨ÎÄ¼şÑ¡Ôñ¡¢ÎÄ¼ş±£´æ¶Ô»°¿ò
+         * @brief	é¡µé¢è¯·æ±‚æ‰“å¼€æ–‡ä»¶å¯¹è¯æ¡†æ—¶è§¦å‘ åŒ…æ‹¬æ–‡ä»¶é€‰æ‹©ã€æ–‡ä»¶ä¿å­˜å¯¹è¯æ¡†
          * 			B UI
          *
          * @param	browser				  	The browser.

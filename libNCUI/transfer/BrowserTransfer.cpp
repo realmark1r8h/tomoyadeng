@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "transfer/BrowserTransfer.h"
 #include "transfer/TransferMappingMgr.hpp"
 #include "transfer/FrameTransfer.h"
@@ -78,7 +78,7 @@ namespace amo {
         }
         
         auto manager = TransferMappingMgr<BrowserTransfer>::getInstance();
-        // »ñÈ¡CefBrowser
+        // è·å–CefBrowser
         CefRefPtr<CefBrowser> pOther = manager->formJson(json);
         return m_pBrowser->IsSame(pOther);
     }
@@ -147,7 +147,7 @@ namespace amo {
         std::vector<int64_t> vec;
         m_pBrowser->GetFrameIdentifiers(vec);
         
-        // FrameID ²»ÔõÃ´¿ÉÄÜ³¬¹ı32Î»
+        // FrameID ä¸æ€ä¹ˆå¯èƒ½è¶…è¿‡32ä½
         for (auto&p : vec) {
             retArr.push_back((int)p);
         }
@@ -168,7 +168,7 @@ namespace amo {
     }
     
     Any BrowserTransfer::SendProcessMessage(IPCMessage::SmartType msg) {
-        // ²»Ö§³Ö
+        // ä¸æ”¯æŒ
         return Undefined();
     }
     

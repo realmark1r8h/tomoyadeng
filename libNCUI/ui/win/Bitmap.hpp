@@ -1,4 +1,4 @@
-// Created by amoylel on 09/11/2018.
+ï»¿// Created by amoylel on 09/11/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef AMO_BITMAP_AC64628C_6337_4984_AA61_1A965DF7CD99_HPP__
@@ -125,7 +125,7 @@ namespace amo {
         return WriteBmp(strFile, hdc, rcDC);
     }
     
-    //Ê¹ÓÃGDI+±£´æBITMAPµ½ÎÄ¼ş
+    //ä½¿ç”¨GDI+ä¿å­˜BITMAPåˆ°æ–‡ä»¶
     //CLSID encoderClsid
     //GetEncoderClsid(L"image/png", &encoderClsid);    //png
     //GetEncoderClsid(L"image/bmp", &encoderClsid);
@@ -214,7 +214,7 @@ namespace amo {
         Bitmap* pBitmap = NULL;
         Bitmap* pWrapBitmap = NULL;
         
-        //ÅĞ¶ÏÊÇ·ñ32Î»£¬32Î»Ğè±£´æÍ¸Ã÷¶È
+        //åˆ¤æ–­æ˜¯å¦32ä½ï¼Œ32ä½éœ€ä¿å­˜é€æ˜åº¦
         if (bitmap.bmBitsPixel != 32) {
             pBitmap = Bitmap::FromHBITMAP(hBmp, NULL);
         } else {
@@ -244,27 +244,27 @@ namespace amo {
         return bRet;
     }
     
-    //VCÏÂ°ÑHBITMAP±£´æÎªbmpÍ¼Æ¬
+    //VCä¸‹æŠŠHBITMAPä¿å­˜ä¸ºbmpå›¾ç‰‡
     static BOOL  BitmapToBytes(HBITMAP  hBitmap, std::vector<uint8_t>& vec) {
         HDC     hDC;
-        //µ±Ç°·Ö±æÂÊÏÂÃ¿ÏóËØËùÕ¼×Ö½ÚÊı
+        //å½“å‰åˆ†è¾¨ç‡ä¸‹æ¯è±¡ç´ æ‰€å å­—èŠ‚æ•°
         int     iBits;
-        //Î»Í¼ÖĞÃ¿ÏóËØËùÕ¼×Ö½ÚÊı
+        //ä½å›¾ä¸­æ¯è±¡ç´ æ‰€å å­—èŠ‚æ•°
         WORD     wBitCount;
-        //¶¨Òåµ÷É«°å´óĞ¡£¬     Î»Í¼ÖĞÏñËØ×Ö½Ú´óĞ¡     £¬Î»Í¼ÎÄ¼ş´óĞ¡     £¬     Ğ´ÈëÎÄ¼ş×Ö½ÚÊı
+        //å®šä¹‰è°ƒè‰²æ¿å¤§å°ï¼Œ     ä½å›¾ä¸­åƒç´ å­—èŠ‚å¤§å°     ï¼Œä½å›¾æ–‡ä»¶å¤§å°     ï¼Œ     å†™å…¥æ–‡ä»¶å­—èŠ‚æ•°
         DWORD     dwPaletteSize = 0, dwBmBitsSize = 0, dwDIBSize = 0, dwWritten = 0;
-        //Î»Í¼ÊôĞÔ½á¹¹
+        //ä½å›¾å±æ€§ç»“æ„
         BITMAP     Bitmap;
-        //Î»Í¼ÎÄ¼şÍ·½á¹¹
+        //ä½å›¾æ–‡ä»¶å¤´ç»“æ„
         BITMAPFILEHEADER     bmfHdr;
-        //Î»Í¼ĞÅÏ¢Í·½á¹¹
+        //ä½å›¾ä¿¡æ¯å¤´ç»“æ„
         BITMAPINFOHEADER     bi;
-        //Ö¸ÏòÎ»Í¼ĞÅÏ¢Í·½á¹¹
+        //æŒ‡å‘ä½å›¾ä¿¡æ¯å¤´ç»“æ„
         LPBITMAPINFOHEADER     lpbi;
-        //¶¨ÒåÎÄ¼ş£¬·ÖÅäÄÚ´æ¾ä±ú£¬µ÷É«°å¾ä±ú
+        //å®šä¹‰æ–‡ä»¶ï¼Œåˆ†é…å†…å­˜å¥æŸ„ï¼Œè°ƒè‰²æ¿å¥æŸ„
         HANDLE       hDib, hPal, hOldPal = NULL;
         
-        //¼ÆËãÎ»Í¼ÎÄ¼şÃ¿¸öÏñËØËùÕ¼×Ö½ÚÊı
+        //è®¡ç®—ä½å›¾æ–‡ä»¶æ¯ä¸ªåƒç´ æ‰€å å­—èŠ‚æ•°
         hDC = CreateDCA("DISPLAY", NULL, NULL, NULL);
         iBits = GetDeviceCaps(hDC, BITSPIXEL)     *     GetDeviceCaps(hDC, PLANES);
         DeleteDC(hDC);
@@ -296,19 +296,19 @@ namespace amo {
         bi.biClrUsed = 0;
         
         dwBmBitsSize = ((Bitmap.bmWidth * wBitCount + 31) / 32) * 4 * Bitmap.bmHeight;
-        // 32Î»Í¼ÏñÉ¨ÃèÏß¿í¶È
+        // 32ä½å›¾åƒæ‰«æçº¿å®½åº¦
         int32_t stride = ((Bitmap.bmWidth * 32 + 31) & 0xffffffe0) / 8;
         
         int width = Bitmap.bmWidth;
         int height = Bitmap.bmHeight;
         
-        //ÎªÎ»Í¼ÄÚÈİ·ÖÅäÄÚ´æ
+        //ä¸ºä½å›¾å†…å®¹åˆ†é…å†…å­˜
         hDib = GlobalAlloc(GHND,
                            dwBmBitsSize + dwPaletteSize + sizeof(BITMAPINFOHEADER));
         lpbi = (LPBITMAPINFOHEADER)GlobalLock(hDib);
         *lpbi = bi;
         
-        //     ´¦Àíµ÷É«°å
+        //     å¤„ç†è°ƒè‰²æ¿
         hPal = GetStockObject(DEFAULT_PALETTE);
         
         if (hPal) {
@@ -317,12 +317,12 @@ namespace amo {
             RealizePalette(hDC);
         }
         
-        //     »ñÈ¡¸Ãµ÷É«°åÏÂĞÂµÄÏñËØÖµ
+        //     è·å–è¯¥è°ƒè‰²æ¿ä¸‹æ–°çš„åƒç´ å€¼
         GetDIBits(hDC, hBitmap, 0, (UINT)Bitmap.bmHeight,
                   (LPSTR)lpbi + sizeof(BITMAPINFOHEADER) + dwPaletteSize,
                   (BITMAPINFO*)lpbi, DIB_RGB_COLORS);
                   
-        //»Ö¸´µ÷É«°å
+        //æ¢å¤è°ƒè‰²æ¿
         if (hOldPal) {
             ::SelectPalette(hDC, (HPALETTE)hOldPal, TRUE);
             RealizePalette(hDC);
@@ -331,7 +331,7 @@ namespace amo {
         
         std::string FileName = std::to_string(amo::timer::now()) + ".bmp";
         
-        //´´½¨Î»Í¼ÎÄ¼ş
+        //åˆ›å»ºä½å›¾æ–‡ä»¶
         /*  fh = CreateFileA(FileName.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
         FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL);
         
@@ -339,7 +339,7 @@ namespace amo {
         return     FALSE;
         }*/
         
-        //     ÉèÖÃÎ»Í¼ÎÄ¼şÍ·
+        //     è®¾ç½®ä½å›¾æ–‡ä»¶å¤´
         bmfHdr.bfType = 0x4D42;     //     "BM"
         dwDIBSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + dwPaletteSize
                     + dwBmBitsSize;
@@ -348,9 +348,9 @@ namespace amo {
         bmfHdr.bfReserved2 = 0;
         bmfHdr.bfOffBits = (DWORD)sizeof(BITMAPFILEHEADER) + (DWORD)sizeof(
                                BITMAPINFOHEADER) + dwPaletteSize;
-        ////     Ğ´ÈëÎ»Í¼ÎÄ¼şÍ·
+        ////     å†™å…¥ä½å›¾æ–‡ä»¶å¤´
         //WriteFile(fh, (LPSTR)&bmfHdr, sizeof(BITMAPFILEHEADER), &dwWritten, NULL);
-        ////     Ğ´ÈëÎ»Í¼ÎÄ¼şÆäÓàÄÚÈİ
+        ////     å†™å…¥ä½å›¾æ–‡ä»¶å…¶ä½™å†…å®¹
         //WriteFile(fh, (LPSTR)lpbi, dwDIBSize, &dwWritten, NULL);
         
         vec.resize(dwBmBitsSize);
@@ -366,7 +366,7 @@ namespace amo {
         
         /*  PRGBTRIPLE p;
         p = (PRGBTRIPLE)((char*)lpbi + ((height- i - 1) * stride));*/
-        //Çå³ı
+        //æ¸…é™¤
         GlobalUnlock(hDib);
         GlobalFree(hDib);
         //CloseHandle(fh);

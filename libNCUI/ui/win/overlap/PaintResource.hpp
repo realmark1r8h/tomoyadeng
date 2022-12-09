@@ -1,4 +1,4 @@
-// Created by amoylel on 08/19/2018.
+﻿// Created by amoylel on 08/19/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef AMO_PAINTRESOURCE_11000264_4503_4123_BCBC_935E7B3630C6_HPP__

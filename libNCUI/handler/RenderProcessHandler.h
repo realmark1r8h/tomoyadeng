@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_RENDERPROCESSHANDLER_H__
@@ -289,7 +289,7 @@ namespace amo {
          * 		int nID,
          * 		IPCMessage::SmartType msg);
          *
-         * @brief	´¦ÀíÀ´×ÔÖ÷½ø³ÌµÄÍ¬²½µ÷ÓÃJSº¯Êı.
+         * @brief	å¤„ç†æ¥è‡ªä¸»è¿›ç¨‹çš„åŒæ­¥è°ƒç”¨JSå‡½æ•°.
          *
          * @param	nID	The identifier.
          * @param	msg	The message.

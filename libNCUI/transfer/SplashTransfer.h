@@ -1,4 +1,4 @@
-// Created by amoylel on 10/06/2017.
+ï»¿// Created by amoylel on 10/06/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_SPLASHTRANSFER_H__
@@ -17,8 +17,8 @@ namespace amo {
      *
      * @extend Object
      *
-     * @brief	Æô¶¯»­Ãæ.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	å¯åŠ¨ç”»é¢.<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      */
     
     class SplashTransfer
@@ -36,11 +36,11 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÏÔÊ¾Splash.
+         * @brief	æ˜¾ç¤ºSplash.
          *
-         * @param	#JsonObject ¿ÉÖ§³ÖµÄ²ÎÊı¼û{@link Æô¶¯»­Ãæ=Æô¶¯»­Ãæ}.
+         * @param	#JsonObject å¯æ”¯æŒçš„å‚æ•°è§{@link å¯åŠ¨ç”»é¢=å¯åŠ¨ç”»é¢}.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see hide=splash.hide
          * @example
@@ -62,9 +62,9 @@ namespace amo {
         *
         * @tag static
         *
-        * @brief	nºÁÃëºóÒş²ØSplash£¬nÓÉ{@link show=splash.show}ÖĞÉèÖÃµÄfadeout¾ö¶¨.
+        * @brief	næ¯«ç§’åéšè—Splashï¼Œnç”±{@link show=splash.show}ä¸­è®¾ç½®çš„fadeoutå†³å®š.
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         *
         * @example
         
@@ -79,11 +79,11 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	nºÁÃëºóÒş²ØSplash.
+         * @brief	næ¯«ç§’åéšè—Splash.
          *
-         * @param	#Int Ö¸¶¨ÑÓÊ±Ê±¼än (ºÁÃë).
+         * @param	#Int æŒ‡å®šå»¶æ—¶æ—¶é—´n (æ¯«ç§’).
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
         
         		```
@@ -99,7 +99,7 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	ÅĞ¶ÏSplashÊÇ·ñ¿É¼û.
+         * @brief	åˆ¤æ–­Splashæ˜¯å¦å¯è§.
          *
          * @return	#Boolean.
          * @example
@@ -127,13 +127,13 @@ namespace amo {
         /*! @brief	The splash window. */
         SplashWindow* m_pSplashWindow;
         
-        /*! @brief	Splash¹Ø±Õ¶¨Ê±Æ÷. */
+        /*! @brief	Splashå…³é—­å®šæ—¶å™¨. */
         UINT_PTR m_splashTimer;
         
-        /*! @brief	¹Ø±Õ´°¿ÚµÄ¶¯»­Ê±¼ä. */
+        /*! @brief	å…³é—­çª—å£çš„åŠ¨ç”»æ—¶é—´. */
         int m_nDelay;
         
-        /*! @brief	µ±Ç°µ­»¯´°¿ÚÊ£Óà´ÎÊı. */
+        /*! @brief	å½“å‰æ·¡åŒ–çª—å£å‰©ä½™æ¬¡æ•°. */
         int m_nfadeTimes;
     };
 }

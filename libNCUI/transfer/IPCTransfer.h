@@ -1,4 +1,4 @@
-// Created by amoylel on 08/13/2017.
+ï»¿// Created by amoylel on 08/13/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_IPCTRANSFER_H__
@@ -17,9 +17,9 @@ namespace amo {
      *
      * @extend Object
      *
-     * @brief	½ø³Ì¼äÍ¨ĞÅÀà£¬Äã¿ÉÒÔÍ¨¹ı¸ÃÀà·¢ÆäËûÒ³Ãæ·¢ËÍÏûÏ¢.<br>
-     * 			µ«Òª×¢ÒâµÄÊÇ²»ÄÜÔÚÏûÏ¢´¦Àíº¯ÊıÖĞµ÷ÓÃÈÎºÎµ¼ÖÂUI×èÈûµÄº¯ÊıÈç(µ¯³ö´°¿Ú alert dialog)<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	è¿›ç¨‹é—´é€šä¿¡ç±»ï¼Œä½ å¯ä»¥é€šè¿‡è¯¥ç±»å‘å…¶ä»–é¡µé¢å‘é€æ¶ˆæ¯.<br>
+     * 			ä½†è¦æ³¨æ„çš„æ˜¯ä¸èƒ½åœ¨æ¶ˆæ¯å¤„ç†å‡½æ•°ä¸­è°ƒç”¨ä»»ä½•å¯¼è‡´UIé˜»å¡çš„å‡½æ•°å¦‚(å¼¹å‡ºçª—å£ alert dialog)<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      * @example
      *
     			 ```
@@ -55,11 +55,11 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	·¢ËÍÒ»ÌõÏûÏ¢.
+         * @brief	å‘é€ä¸€æ¡æ¶ˆæ¯.
          *
-         * @param	#Args... Òª·¢ËÍµÄÄÚÈİ.
+         * @param	#Args... è¦å‘é€çš„å†…å®¹.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -76,11 +76,11 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	·¢ËÍÒ»ÌõÍ¬²½ÏûÏ¢.
+         * @brief	å‘é€ä¸€æ¡åŒæ­¥æ¶ˆæ¯.
          *
-         * @param	#Args... Òª·¢ËÍµÄÄÚÈİ.
+         * @param	#Args... è¦å‘é€çš„å†…å®¹.
          *
-         * @return	#Any ÏûÏ¢·µ»ØµÄ½á¹û,Ö»»á·µ»ØµÚÒ»¸ö¼àÌıº¯ÊıµÄ·µ»ØÖµ.
+         * @return	#Any æ¶ˆæ¯è¿”å›çš„ç»“æœ,åªä¼šè¿”å›ç¬¬ä¸€ä¸ªç›‘å¬å‡½æ•°çš„è¿”å›å€¼.
          *
          * @example
          *
@@ -101,13 +101,13 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	·¢ËÍÒ»ÌõÒì²½ÏûÏ¢£¬¿ÉÒÔÍ¨¹ı»Øµ÷º¯Êı»ñÈ¡½á¹û.
+         * @brief	å‘é€ä¸€æ¡å¼‚æ­¥æ¶ˆæ¯ï¼Œå¯ä»¥é€šè¿‡å›è°ƒå‡½æ•°è·å–ç»“æœ.
          *
-         * @param	#Args... Òª·¢ËÍµÄÄÚÈİ.
+         * @param	#Args... è¦å‘é€çš„å†…å®¹.
          *
-         * @param	#Function Òª½ÓÊÕÏûÏ¢·µ»ØÖµµÄ»Øµ÷º¯Êı,ÈÎÒâÎ»ÖÃ¶¼¿ÉÒÔ£¬µ«Ö»ÄÜÓĞÒ»¸ö, Ö»»á·µ»ØµÚÒ»¸ö¼àÌıº¯ÊıµÄ·µ»ØÖµ.
+         * @param	#Function è¦æ¥æ”¶æ¶ˆæ¯è¿”å›å€¼çš„å›è°ƒå‡½æ•°,ä»»æ„ä½ç½®éƒ½å¯ä»¥ï¼Œä½†åªèƒ½æœ‰ä¸€ä¸ª, åªä¼šè¿”å›ç¬¬ä¸€ä¸ªç›‘å¬å‡½æ•°çš„è¿”å›å€¼.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -123,12 +123,12 @@ namespace amo {
         /*!
          * @fn	Any IPCTransfer::dispatchEvent(IPCMessage::SmartType msg);
          *
-         * @brief	ÏòËùÓĞÒ³ÃæµÄdocument·¢ËÍ×Ô¶¨ÒåÊÂ¼ş.
+         * @brief	å‘æ‰€æœ‰é¡µé¢çš„documentå‘é€è‡ªå®šä¹‰äº‹ä»¶.
          *
-         * @param	#String ÊÂ¼şÃû.
-         * @param	#JsonObject ÊÂ¼şÄÚÈİ£¬CustomEventµÄdetail×Ö¶Î
+         * @param	#String äº‹ä»¶å.
+         * @param	#JsonObject äº‹ä»¶å†…å®¹ï¼ŒCustomEventçš„detailå­—æ®µ
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any dispatchEvent(IPCMessage::SmartType msg);

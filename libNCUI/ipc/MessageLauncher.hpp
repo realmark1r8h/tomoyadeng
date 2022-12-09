@@ -1,4 +1,4 @@
-// Created by amoylel on 05/15/2017.
+ï»¿// Created by amoylel on 05/15/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_SCRIPTRUNNER_HPP__
@@ -195,14 +195,14 @@ namespace amo {
         
             createIPCMessage<Args ...>(name, MSG_NATIVE_SYNC_EXECUTE, args...);
             
-            bool  bOk =  exchange(m_nPipeID, msg);	// Íù¹ÜµÀÖÐÐ´ÈëÊý¾Ý
+            bool  bOk =  exchange(m_nPipeID, msg);	// å¾€ç®¡é“ä¸­å†™å…¥æ•°æ®
             
             if (!bOk) {
                 return Undefined();
             }
             
             IPCMessage::SmartType notifyMsg(new
-                                            amo::IPCMessage());	// Í¨Öª¶Ô·½´¦ÀíÊý¾Ý
+                                            amo::IPCMessage());	// é€šçŸ¥å¯¹æ–¹å¤„ç†æ•°æ®
             notifyMsg->setMessageName(MSG_PROCESS_SYNC_EXECUTE);
             sendMessage(notifyMsg);
             
@@ -220,14 +220,14 @@ namespace amo {
          */
         
         Any syncExecute(IPCMessage::SmartType msg) {
-            bool bOk = exchange(m_nPipeID, msg);	// Íù¹ÜµÀÖÐÐ´ÈëÊý¾Ý
+            bool bOk = exchange(m_nPipeID, msg);	// å¾€ç®¡é“ä¸­å†™å…¥æ•°æ®
             
             if (!bOk) {
                 return Undefined();
             }
             
             IPCMessage::SmartType notifyMsg(new
-                                            amo::IPCMessage());	// Í¨Öª¶Ô·½´¦ÀíÊý¾Ý
+                                            amo::IPCMessage());	// é€šçŸ¥å¯¹æ–¹å¤„ç†æ•°æ®
             notifyMsg->setMessageName(MSG_PROCESS_SYNC_EXECUTE);
             notifyMsg->setID(msg->getID());
             notifyMsg->getArgumentList()->setValue(IPCArgsPosInfo::MessageID, msg->getID());

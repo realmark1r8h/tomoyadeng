@@ -1,4 +1,4 @@
-// Created by amoylel on 10/27/2017.
+﻿// Created by amoylel on 10/27/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_UITHREADTRANSFER_H__
@@ -12,9 +12,9 @@ namespace amo {
      *
      * @copy  ThreadBase
      *
-     * @brief	�߳��࣬���๹����ʵ������UI������ִ��,����ʹһ����C++��д����չ���߳�������.<br>
-     * 			�����̣߳�**UI�߳�**.<br>
-     * 			˵����**��Ȼû�����ƣ������ǲ����齫���ýӿڷŵ��߳���ȥִ��**
+     * @brief	线程类，该类构建的实例会在UI进程上执行,可以使一个由C++编写的扩展在线程上运行.<br>
+     * 			工作线程：**UI线程**.<br>
+     * 			说明：**虽然没有限制，但还是不建议将内置接口放到线程上去执行**
      *
      */
     

@@ -1,4 +1,4 @@
-// Created by amoylel on 06/09/2017.
+ï»¿// Created by amoylel on 06/09/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_APPSETTINGS_H__
@@ -13,19 +13,19 @@
 namespace amo {
 
     /*!
-     * @class Æô¶¯²ÎÊı
+     * @class å¯åŠ¨å‚æ•°
      *
      * @id settingsAppSettings
      *
-     * @desc Æô¶¯²ÎÊı
+     * @desc å¯åŠ¨å‚æ•°
      *
      *
      * @chapter settings
      *
-     * @brief	Ó¦ÓÃ³ÌĞòÆô¶¯²ÎÊı£¬ÕâĞ©²ÎÊı´ó²¿·Ö²»¿É¸ü¸Ä£¬ÇÒÖ»ÔÚ³ÌĞòÆô¶¯Ç°ÉèÖÃ²ÅÄÜÉúĞ§.<br>
-     * 			Èç¹ûÊ¹ÓÃNodeJS¿ÉÒÔÔÚJS´úÂëÀïÃæµ÷ÓÃ{@link app.setConfig}ÉèÖÃÆô¶¯²ÎÊı.<br>
-     * 			Èç¹ûÎ´Ê¹ÓÃNodeJS¿ÉÒÔÍ¨¹ı³ÌĞòÄ¿Â¼ÏÂµÄmanifest.jsonÎÄ¼ş´ïµ½Í¬ÑùµÄĞ§¹û.<br>
-     * 			ËµÃ÷£º**ÅäÖÃ²ÎÊı²»ÄÜÔÚ³ÌĞòÔËĞĞ¹ı³ÌÖĞĞŞ¸Ä£¬Ö»ÓĞ³ÌĞòÄÚ²¿º¯Êı¿ÉÒÔĞŞ¸ÄÕâĞ©Öµ¡£**
+     * @brief	åº”ç”¨ç¨‹åºå¯åŠ¨å‚æ•°ï¼Œè¿™äº›å‚æ•°å¤§éƒ¨åˆ†ä¸å¯æ›´æ”¹ï¼Œä¸”åªåœ¨ç¨‹åºå¯åŠ¨å‰è®¾ç½®æ‰èƒ½ç”Ÿæ•ˆ.<br>
+     * 			å¦‚æœä½¿ç”¨NodeJSå¯ä»¥åœ¨JSä»£ç é‡Œé¢è°ƒç”¨{@link app.setConfig}è®¾ç½®å¯åŠ¨å‚æ•°.<br>
+     * 			å¦‚æœæœªä½¿ç”¨NodeJSå¯ä»¥é€šè¿‡ç¨‹åºç›®å½•ä¸‹çš„manifest.jsonæ–‡ä»¶è¾¾åˆ°åŒæ ·çš„æ•ˆæœ.<br>
+     * 			è¯´æ˜ï¼š**é…ç½®å‚æ•°ä¸èƒ½åœ¨ç¨‹åºè¿è¡Œè¿‡ç¨‹ä¸­ä¿®æ”¹ï¼Œåªæœ‰ç¨‹åºå†…éƒ¨å‡½æ•°å¯ä»¥ä¿®æ”¹è¿™äº›å€¼ã€‚**
      *
      */
     
@@ -49,7 +49,7 @@ namespace amo {
         /*!
          * @fn	amo::string AppSettings::getUserHomeDir();
          * @ignore
-         * @brief	ÓÃ»§Êı¾İ¸ùÄ¿Â¼.
+         * @brief	ç”¨æˆ·æ•°æ®æ ¹ç›®å½•.
          *
          * @return	The user home dir.
          */
@@ -58,7 +58,7 @@ namespace amo {
         /*!
          * @fn	std::string AppSettings::getSpecialFolder(int nType);
          * @ignore
-         * @brief	»ñÈ¡WindowsÉÏµÄÌØÊâÄ¿Â¼.
+         * @brief	è·å–Windowsä¸Šçš„ç‰¹æ®Šç›®å½•.
          *
          * @param	nType	The type.
          *
@@ -68,103 +68,103 @@ namespace amo {
     public:
     
     
-        /*! @var	#String=%appDir%locales locales  ÓïÑÔÎÄ¼şËùÔÚÄ¿Â¼  {@tag const}*/
-        /*! @var	#Boolean=true single_process  ÊÇ·ñÊ¹ÓÃµ¥½ø³ÌÄ£Ê½£¬Èç¹û³ÌĞò±È½Ï¸´ÔÓ£¬Ó¦¸Ã¾¡Á¿Ê¹ÓÃ¶à½ø³ÌÄ£Ê½{@tag const}*/
-        /*! @var	#String=%appDir% resources_dir_path  ×ÊÔ´ÎÄ¼şËùÔÚÄ¿Â¼{@tag const}*/
-        /*! @var	#String=%APPDATA%appName/cache cache_path  CEF»º´æÎÄ¼şËùÔÚÄ¿Â¼{@tag const}*/
-        /*! @var	#String=zh-CN locale  CEFÓïÑÔ»·¾³{@tag const}*/
+        /*! @var	#String=%appDir%locales locales  è¯­è¨€æ–‡ä»¶æ‰€åœ¨ç›®å½•  {@tag const}*/
+        /*! @var	#Boolean=true single_process  æ˜¯å¦ä½¿ç”¨å•è¿›ç¨‹æ¨¡å¼ï¼Œå¦‚æœç¨‹åºæ¯”è¾ƒå¤æ‚ï¼Œåº”è¯¥å°½é‡ä½¿ç”¨å¤šè¿›ç¨‹æ¨¡å¼{@tag const}*/
+        /*! @var	#String=%appDir% resources_dir_path  èµ„æºæ–‡ä»¶æ‰€åœ¨ç›®å½•{@tag const}*/
+        /*! @var	#String=%APPDATA%appName/cache cache_path  CEFç¼“å­˜æ–‡ä»¶æ‰€åœ¨ç›®å½•{@tag const}*/
+        /*! @var	#String=zh-CN locale  CEFè¯­è¨€ç¯å¢ƒ{@tag const}*/
         
         
         
-        /*! @var	#Boolean=true manifest	ÊÇ·ñÔÊĞíÍâ²¿ÅäÖÃÎÄ¼şmanifest.json£»Èç¹ûÒªÊ¹ÓÃ£¬¸ÃÎÄ¼ş±ØĞëÓëÓ¦ÓÃ³ÌĞòËùÔÚÄ¿Â¼ÏàÍ¬ÇÒÖ»ÄÜÊ¹ÓÃANSI±àÂë£¬ ²»ÄÜÓÃUTF8, ³ÌĞò»á½«±àÂë×ª»»ÎªUTF8{@tag const} */
+        /*! @var	#Boolean=true manifest	æ˜¯å¦å…è®¸å¤–éƒ¨é…ç½®æ–‡ä»¶manifest.jsonï¼›å¦‚æœè¦ä½¿ç”¨ï¼Œè¯¥æ–‡ä»¶å¿…é¡»ä¸åº”ç”¨ç¨‹åºæ‰€åœ¨ç›®å½•ç›¸åŒä¸”åªèƒ½ä½¿ç”¨ANSIç¼–ç ï¼Œ ä¸èƒ½ç”¨UTF8, ç¨‹åºä¼šå°†ç¼–ç è½¬æ¢ä¸ºUTF8{@tag const} */
         bool manifest;
         
-        /*! @var	#String=783a02fd-b493-45ad-aa7f-ddbefeec1122 appID	³ÌĞòÎ¨Ò»ID£¬Ä¬ÈÏÎªNCUIµÄ³ÌĞòID. ÆäËû³ÌĞòÓ¦¸ÃĞŞ¸Ä¸ÃÖµ£¬·ñÔò»áÓ°Ïìµ¥ÀıÄ£Ê½µÄÊ¹ÓÃ£¨appIDÏàÍ¬µÄ³ÌĞò»á±»ÅĞ¶¨ÎªÍ¬Ò»¸ö³ÌĞò³ÌĞò£©{@tag const}. */
+        /*! @var	#String=783a02fd-b493-45ad-aa7f-ddbefeec1122 appID	ç¨‹åºå”¯ä¸€IDï¼Œé»˜è®¤ä¸ºNCUIçš„ç¨‹åºID. å…¶ä»–ç¨‹åºåº”è¯¥ä¿®æ”¹è¯¥å€¼ï¼Œå¦åˆ™ä¼šå½±å“å•ä¾‹æ¨¡å¼çš„ä½¿ç”¨ï¼ˆappIDç›¸åŒçš„ç¨‹åºä¼šè¢«åˆ¤å®šä¸ºåŒä¸€ä¸ªç¨‹åºç¨‹åºï¼‰{@tag const}. */
         std::string appID;
         
-        /*! @var	#Boolean=false singleInstance	µ¥ÀıÄ£Ê½,¸ÃÄ£Ê½ÏÂÖ»ÔÊĞíÒ»¸öÊµÀıÔËĞĞ£¬Èç¹û³¢ÊÔÆô¶¯¶à¸ö³ÌĞò½«²»»á³É¹¦ */
+        /*! @var	#Boolean=false singleInstance	å•ä¾‹æ¨¡å¼,è¯¥æ¨¡å¼ä¸‹åªå…è®¸ä¸€ä¸ªå®ä¾‹è¿è¡Œï¼Œå¦‚æœå°è¯•å¯åŠ¨å¤šä¸ªç¨‹åºå°†ä¸ä¼šæˆåŠŸ */
         bool singleInstance;
         
-        /*! @var	#Boolean=false showSplash	ÊÇ·ñÏÔÊ¾Æô¶¯»­Ãæ.Èç¹ûĞèÒªÆô¶¯»­Ãæ£¬ĞèÒªĞŞ¸ÄÅäÖÃ²ÎÊı{@link Æô¶¯»­Ãæ} */
+        /*! @var	#Boolean=false showSplash	æ˜¯å¦æ˜¾ç¤ºå¯åŠ¨ç”»é¢.å¦‚æœéœ€è¦å¯åŠ¨ç”»é¢ï¼Œéœ€è¦ä¿®æ”¹é…ç½®å‚æ•°{@link å¯åŠ¨ç”»é¢} */
         bool showSplash;
         
-        /*! @var	#Boolean=false useNode	ÊÇ·ñÊ¹ÓÃNodeJs.{@tag const} */
+        /*! @var	#Boolean=false useNode	æ˜¯å¦ä½¿ç”¨NodeJs.{@tag const} */
         bool useNode;
         
-        /*! @var	#Boolean=false useNodeProcess ÊÇ·ñÔÚµ¥¶ÀµÄ½ø³ÌÖĞÊ¹ÓÃNodeJs.µ±useNode=trueÊ±¸Ã×Ö¶ÎÉúĞ§£¬Èç¹ûÔÚµ¥¶ÀµÄ½ø³ÌÖĞÊ¹ÓÃNodeJs,ÄÇÃ´NCUIºÍNode½«»áÔÚ²»Í¬µØ½ø³ÌÔËĞĞ£¬²¢Í¨¹ıÍ¨µÀ½øĞĞÏûÏ¢Í¬²½ {@tag const}*/
+        /*! @var	#Boolean=false useNodeProcess æ˜¯å¦åœ¨å•ç‹¬çš„è¿›ç¨‹ä¸­ä½¿ç”¨NodeJs.å½“useNode=trueæ—¶è¯¥å­—æ®µç”Ÿæ•ˆï¼Œå¦‚æœåœ¨å•ç‹¬çš„è¿›ç¨‹ä¸­ä½¿ç”¨NodeJs,é‚£ä¹ˆNCUIå’ŒNodeå°†ä¼šåœ¨ä¸åŒåœ°è¿›ç¨‹è¿è¡Œï¼Œå¹¶é€šè¿‡é€šé“è¿›è¡Œæ¶ˆæ¯åŒæ­¥ {@tag const}*/
         bool useNodeProcess;
         
-        /** @var	#Int=0 ipcTimeout	½ø³ÌÍ¨ĞÅµÄ³¬Ê±Ê±¼ä£¬Èç¹û³¬¹ıÕâ¸öÊ±¼äÃ»ÓĞµÃµ½·µ»Ø½á¹û£¬¸ÃÏûÏ¢½«±»¶ªÆú¡£¿ÉÒÔÓÃÀ´½â¾ö²¿·ÖËÀËøÎÊÌâ¡£Ä¬ÈÏÎª0£¨ÓÀ²»³¬Ê±£©. */
+        /** @var	#Int=0 ipcTimeout	è¿›ç¨‹é€šä¿¡çš„è¶…æ—¶æ—¶é—´ï¼Œå¦‚æœè¶…è¿‡è¿™ä¸ªæ—¶é—´æ²¡æœ‰å¾—åˆ°è¿”å›ç»“æœï¼Œè¯¥æ¶ˆæ¯å°†è¢«ä¸¢å¼ƒã€‚å¯ä»¥ç”¨æ¥è§£å†³éƒ¨åˆ†æ­»é”é—®é¢˜ã€‚é»˜è®¤ä¸º0ï¼ˆæ°¸ä¸è¶…æ—¶ï¼‰. */
         int64_t ipcTimeout;
         
-        /*! @var	#String=main.js main	NodeJsËùÒªµ÷ÓÃµÄJSÎÄ¼şËùÔÚÎ»ÖÃ. useNodeÎªtrue Ê±£¬¸ÃÖµÓĞĞ§{@tag const} */
+        /*! @var	#String=main.js main	NodeJsæ‰€è¦è°ƒç”¨çš„JSæ–‡ä»¶æ‰€åœ¨ä½ç½®. useNodeä¸ºtrue æ—¶ï¼Œè¯¥å€¼æœ‰æ•ˆ{@tag const} */
         std::string main;
         
-        /*! @var	#Boolean=false debugNode ÊÇ·ñÔÊĞíµ÷ÊÔNodeJs.Èç¹ûÎ´ÔÚµ¥½øĞĞÉÏÔËĞĞNodeÊ±Òªµ÷ÊÔNodeJs ĞèÒªÊ¹ÓÃNCUI-DEV.exe,¼´±ØĞëÔÚÃüÁîĞĞÄ£Ê½ÏÂÔËĞĞNCUI(»áÏà¶ÔÓÚÕı³£µÄÍ¼ĞÎ½çÃæ¶à³öÒ»¸öÃüÁîĞĞ´°¿Ú){@tag const} */
+        /*! @var	#Boolean=false debugNode æ˜¯å¦å…è®¸è°ƒè¯•NodeJs.å¦‚æœæœªåœ¨å•è¿›è¡Œä¸Šè¿è¡ŒNodeæ—¶è¦è°ƒè¯•NodeJs éœ€è¦ä½¿ç”¨NCUI-DEV.exe,å³å¿…é¡»åœ¨å‘½ä»¤è¡Œæ¨¡å¼ä¸‹è¿è¡ŒNCUI(ä¼šç›¸å¯¹äºæ­£å¸¸çš„å›¾å½¢ç•Œé¢å¤šå‡ºä¸€ä¸ªå‘½ä»¤è¡Œçª—å£){@tag const} */
         bool debugNode;
         
-        /*! @var	#String appPath ³ÌĞòÔÚ´ÅÅÌÉÏµÄÍêÕûÂ·¾¶.{@tag const} */
+        /*! @var	#String appPath ç¨‹åºåœ¨ç£ç›˜ä¸Šçš„å®Œæ•´è·¯å¾„.{@tag const} */
         std::string appPath;
         
-        /*! @var	#String appDir	³ÌĞòËùÔÚÄ¿Â¼.{@tag const} */
+        /*! @var	#String appDir	ç¨‹åºæ‰€åœ¨ç›®å½•.{@tag const} */
         std::string appDir;
         
-        /*! @var	#String appName	³ÌĞòÃû³Æ£¬²»°üº¬Ä¿Â¼£¬²»°üº¬À©Õ¹Ãû.{@tag const} */
+        /*! @var	#String appName	ç¨‹åºåç§°ï¼Œä¸åŒ…å«ç›®å½•ï¼Œä¸åŒ…å«æ‰©å±•å.{@tag const} */
         std::string appName;
         
-        /*! @var	#String=%appDir%skin skinDir	Duilib skin Ä¿Â¼.{@tag const} */
+        /*! @var	#String=%appDir%skin skinDir	Duilib skin ç›®å½•.{@tag const} */
         std::string skinDir;
         
-        /*! @var	#String=%appDir% workDir	¹¤×÷Ä¿Â¼,Ä¬ÈÏÓë³ÌĞòËùÓĞÄ¿Â¼ÏàÍ¬.{@tag const} */
+        /*! @var	#String=%appDir% workDir	å·¥ä½œç›®å½•,é»˜è®¤ä¸ç¨‹åºæ‰€æœ‰ç›®å½•ç›¸åŒ.{@tag const} */
         std::string workDir;
         
-        /*! @var	#String=%appDir%web webDir	html Ô´´úÂëÄ¿Â¼.{@tag const} */
+        /*! @var	#String=%appDir%web webDir	html æºä»£ç ç›®å½•.{@tag const} */
         std::string webDir;
         
-        /*! @var	#String homeDir	´¢´æÓ¦ÓÃ³ÌĞòÉèÖÃÎÄ¼şµÄÎÄ¼ş¼Ğ£¬Ä¬ÈÏÊÇ "ÎÒµÄÎÄµµ" ÎÄ¼ş¼Ğ¸½¼ÓÓ¦ÓÃµÄÃû³Æ. */
+        /*! @var	#String homeDir	å‚¨å­˜åº”ç”¨ç¨‹åºè®¾ç½®æ–‡ä»¶çš„æ–‡ä»¶å¤¹ï¼Œé»˜è®¤æ˜¯ "æˆ‘çš„æ–‡æ¡£" æ–‡ä»¶å¤¹é™„åŠ åº”ç”¨çš„åç§°. */
         std::string homeDir;
         
-        /*! @var	#String=%homeDir%downloads downloadsDir ÓÃ»§ÏÂÔØÄ¿Â¼µÄÂ·¾¶. */
+        /*! @var	#String=%homeDir%downloads downloadsDir ç”¨æˆ·ä¸‹è½½ç›®å½•çš„è·¯å¾„. */
         std::string downloadsDir;
         
-        /*! @var	#String=%homeDir%musics musicsDir	ÓÃ»§ÒôÀÖÄ¿Â¼µÄÂ·¾¶. */
+        /*! @var	#String=%homeDir%musics musicsDir	ç”¨æˆ·éŸ³ä¹ç›®å½•çš„è·¯å¾„. */
         std::string musicsDir;
         
-        /*! @var	#String=%homeDir%pictures picturesDir	ÓÃ»§Í¼Æ¬Ä¿Â¼µÄÂ·¾¶. */
+        /*! @var	#String=%homeDir%pictures picturesDir	ç”¨æˆ·å›¾ç‰‡ç›®å½•çš„è·¯å¾„. */
         std::string picturesDir;
         
-        /*! @var	#String=%homeDir%videos videosDir	ÓÃ»§ÊÓÆµÄ¿Â¼µÄÂ·¾¶. */
+        /*! @var	#String=%homeDir%videos videosDir	ç”¨æˆ·è§†é¢‘ç›®å½•çš„è·¯å¾„. */
         std::string videosDir;
         
-        /*! @var	#String=drag dragClassName	ÍÏ×§ÒÆ¶¯´°¿ÚµÄÔªËØÀàÃû. */
+        /*! @var	#String=drag dragClassName	æ‹–æ‹½ç§»åŠ¨çª—å£çš„å…ƒç´ ç±»å. */
         std::string dragClassName;
         
-        /*! @var	#String=no-drag noDragClassName	½ûÖ¹´°¿ÚÔªËØÀàÃû. */
+        /*! @var	#String=no-drag noDragClassName	ç¦æ­¢çª—å£å…ƒç´ ç±»å. */
         std::string noDragClassName;
         
-        /*! @var	#String=%APPDATA% appDataDir µ±Ç°ÓÃ»§µÄÓ¦ÓÃÊı¾İÎÄ¼ş¼Ğ. */
+        /*! @var	#String=%APPDATA% appDataDir å½“å‰ç”¨æˆ·çš„åº”ç”¨æ•°æ®æ–‡ä»¶å¤¹. */
         std::string appDataDir;
         
-        /*!@var #String=%TEMP% temp	ÁÙÊ±ÎÄ¼ş¼Ğ. {@tag const}*/
+        /*!@var #String=%TEMP% temp	ä¸´æ—¶æ–‡ä»¶å¤¹. {@tag const}*/
         std::string temp;
         
-        /*! @var #String desktop µ±Ç°ÓÃ»§µÄ×ÀÃæÎÄ¼ş¼Ğ. {@tag const}*/
+        /*! @var #String desktop å½“å‰ç”¨æˆ·çš„æ¡Œé¢æ–‡ä»¶å¤¹. {@tag const}*/
         std::string desktop;
         /*!
-         * @var #String documents ÓÃ»§ÎÄµµÄ¿Â¼µÄÂ·¾¶. {@tag const} */
+         * @var #String documents ç”¨æˆ·æ–‡æ¡£ç›®å½•çš„è·¯å¾„. {@tag const} */
         std::string documents;
         
         /*!
-         * @var #Int startTime  Æô¶¯Ê±¼ä£¨±¾µØÊ±¼ä´Áms£©.
+         * @var #Int startTime  å¯åŠ¨æ—¶é—´ï¼ˆæœ¬åœ°æ—¶é—´æˆ³msï¼‰.
          */
         int64_t startTime;
         
         /*!
-         * @var #Boolean=true debugMode ÊÇ·ñÒÔµ÷ÊÔÄ£Ê½ÔËĞĞ,Ä¬ÈÏtrue.¸ÃÄ£Ê½ÏÂF12¿ÉÒÔ´ò¿ªµ÷ÊÔ´°¿Ú£¬F5¿ÉÒÔË¢ĞÂÒ³Ãæ
+         * @var #Boolean=true debugMode æ˜¯å¦ä»¥è°ƒè¯•æ¨¡å¼è¿è¡Œ,é»˜è®¤true.è¯¥æ¨¡å¼ä¸‹F12å¯ä»¥æ‰“å¼€è°ƒè¯•çª—å£ï¼ŒF5å¯ä»¥åˆ·æ–°é¡µé¢
          */
         bool debugMode;
         
-        /*! @var #Boolean=false clearCache ÊÇ·ñÔÚÓ¦ÓÃ³ÌĞòÆô¶¯Ê±Çå³ıä¯ÀÀÆ÷»º´æ£¨µ÷ÊÔÓÃ£©. {@tag const}*/
+        /*! @var #Boolean=false clearCache æ˜¯å¦åœ¨åº”ç”¨ç¨‹åºå¯åŠ¨æ—¶æ¸…é™¤æµè§ˆå™¨ç¼“å­˜ï¼ˆè°ƒè¯•ç”¨ï¼‰. {@tag const}*/
         bool clearCache;
         
         

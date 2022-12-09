@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "node/NodeDragHandler.h"
 #include "node/NodeHandlerHelper.h"
 

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "settings/NativeWindowSettings.h"
 
 
@@ -109,7 +109,7 @@ namespace amo {
         BOOL_ARGS_SETTING(disable_ime);
         BOOL_ARGS_SETTING(compute_cursor);
         
-        // Èç¹û²»ÄÜ¸Ä±ä´°¿Ú´óĞ¡£¬ÄÇÃ´maximizable=true;
+        // å¦‚æœä¸èƒ½æ”¹å˜çª—å£å¤§å°ï¼Œé‚£ä¹ˆmaximizable=true;
         if (!resizable) {
             DEFAULT_ARGS_SETTINGS(maximizable, true);
             

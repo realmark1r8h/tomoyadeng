@@ -1,14 +1,14 @@
-#ifndef MYOBJECT_H
+ï»¿#ifndef MYOBJECT_H
 #define MYOBJECT_H
 
 #include "nan/nan.h"
 
 class MyObject : public Nan::ObjectWrap {
 public:
-    // ³õÊ¼»¯º¯Êı
+    // åˆå§‹åŒ–å‡½æ•°
     static NAN_MODULE_INIT(Init);
     
-    // ¹¹Ôìº¯Êı
+    // æ„é€ å‡½æ•°
     static NAN_METHOD(New);
     
     static v8::Local<v8::Value> NewInstance() {

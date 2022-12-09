@@ -1,4 +1,4 @@
-// Created by amoylel on 06/13/2017.
+ï»¿// Created by amoylel on 06/13/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_V8EXTENTIONHANDLER_H__
@@ -31,14 +31,14 @@ namespace amo {
     /*!
      * @class	V8ExtentionHandler
      *
-     * @brief	À©Õ¹µ÷ÓÃÀà.
+     * @brief	æ‰©å±•è°ƒç”¨ç±».
      */
     
     class V8ExtentionHandler : public CefV8Handler {
     public:
         V8ExtentionHandler();
         ~V8ExtentionHandler();
-        // Ìí¼ÓÀà
+        // æ·»åŠ ç±»
         //void addClass(const std::string& strClass, FunctionWrapperMgr& mgr);
         
         /*!
@@ -76,7 +76,7 @@ namespace amo {
          * 		const std::string& strClass,
          * 		CefRefPtr<CefBrowser> browser);
          *
-         * @brief	´ÓÀàÖĞ´´½¨Handler.
+         * @brief	ä»ç±»ä¸­åˆ›å»ºHandler.
          *
          * @param	strClass	The class.
          * @param	browser 	The browser.
@@ -172,14 +172,14 @@ namespace amo {
         /**
          * @fn	void V8ExtentionHandler::OnProcessDestory();
          *
-         * @brief	½ø³ÌÒªÍË³öÖ®Ç°µ÷ÓÃ´Ëº¯Êı£¬É¾³ıËùÓĞµÚÈı·½Transfer.
+         * @brief	è¿›ç¨‹è¦é€€å‡ºä¹‹å‰è°ƒç”¨æ­¤å‡½æ•°ï¼Œåˆ é™¤æ‰€æœ‰ç¬¬ä¸‰æ–¹Transfer.
          */
         
         void OnProcessDestory();
         /**
          * @fn	void V8ExtentionHandler::triggerEventOnRendererThread(IPCMessage::SmartType msg);
          *
-         * @brief	ÔÚÖ÷äÖÈ¾Ïß³ÌÖĞÖ´ĞĞº¯Êı£¬µ±Ç°Ïß³Ì¿ÉÄÜ·ÇäÖÈ¾Ïß³Ì.
+         * @brief	åœ¨ä¸»æ¸²æŸ“çº¿ç¨‹ä¸­æ‰§è¡Œå‡½æ•°ï¼Œå½“å‰çº¿ç¨‹å¯èƒ½éæ¸²æŸ“çº¿ç¨‹.
          *
          * @param	msg	The message.
          */
@@ -189,7 +189,7 @@ namespace amo {
         /**
          * @fn	void V8ExtentionHandler::triggerEventOnRendererThreadImpl(IPCMessage::SmartType msg);
          *
-         * @brief	ÔÚÖ÷äÖÈ¾Ïß³ÌÖĞÖ´ĞĞº¯ÊıÊµÏÖº¯Êı£¬´ËÏß³ÌÎªäÖÈ¾Ïß³Ì.
+         * @brief	åœ¨ä¸»æ¸²æŸ“çº¿ç¨‹ä¸­æ‰§è¡Œå‡½æ•°å®ç°å‡½æ•°ï¼Œæ­¤çº¿ç¨‹ä¸ºæ¸²æŸ“çº¿ç¨‹.
          *
          * @param	msg	The message.
          */
@@ -201,7 +201,7 @@ namespace amo {
     private:
         //std::unordered_map<std::pair<std::string, int>,
         //    CefRefPtr<JsV8Handler>, pair_hash<std::string, int> > m_oClassHandler;
-        //std::unordered_map<std::string, FunctionWrapperMgr > m_oClassSet;							//!< ±£´æËù¸øÀàµÄËùÓĞ³ÉÔ±º¯Êı
+        //std::unordered_map<std::string, FunctionWrapperMgr > m_oClassSet;							//!< ä¿å­˜æ‰€ç»™ç±»çš„æ‰€æœ‰æˆå‘˜å‡½æ•°
         std::unordered_map<std::string, std::shared_ptr<ClassTransfer> > m_oClassTransferMap;
         
         /*! @brief	Set the module belongs to. */
@@ -209,7 +209,7 @@ namespace amo {
         
         CefRefPtr<UtilityV8Handler> m_pUtilityV8Handler;
         
-        /** @brief	¼ÓÔØËùÓĞrenderer_modulesÖĞµÄtransfer. */
+        /** @brief	åŠ è½½æ‰€æœ‰renderer_modulesä¸­çš„transfer. */
         
         std::set<int> m_oRegisteredSet;
         

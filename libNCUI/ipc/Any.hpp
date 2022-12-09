@@ -1,4 +1,4 @@
-// Created by amoylel on 05/18/2017.
+ï»¿// Created by amoylel on 05/18/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_ANY_HPP__
@@ -28,47 +28,47 @@ namespace amo {
     /*!
      * @typedef	amo::nil Nil
      *
-     * @brief	º¯ÊıÎŞ·µ»ØÖµÊ±£¬Ïß³Ì/½ø³ÌÖ®¼äÍ¬²½Ê± ·µ»ØNil±íÊ¾void.
-     * 			¶ÔÓ¦JSÖĞµÄnull
+     * @brief	å‡½æ•°æ— è¿”å›å€¼æ—¶ï¼Œçº¿ç¨‹/è¿›ç¨‹ä¹‹é—´åŒæ­¥æ—¶ è¿”å›Nilè¡¨ç¤ºvoid.
+     * 			å¯¹åº”JSä¸­çš„null
      */
     typedef amo::nil Nil;
     
     /*!
      * @class	Undefined
      *
-     * @brief	µ÷ÓÃC++Ê±·µ»ØUndefined¶ÔÓ¦JSÖĞµÄundefined.
+     * @brief	è°ƒç”¨C++æ—¶è¿”å›Undefinedå¯¹åº”JSä¸­çš„undefined.
      */
     class Undefined {};
     
     /*!
      * @class	NonReturn
      *
-     * @brief	JSµ÷ÓÃC++²»ĞèÒªÏòJS·µ»Ø½á¹û£¬ÈçÒì²½»Øµ÷º¯Êı.
+     * @brief	JSè°ƒç”¨C++ä¸éœ€è¦å‘JSè¿”å›ç»“æœï¼Œå¦‚å¼‚æ­¥å›è°ƒå‡½æ•°.
      */
     class NonReturn {};
     
     /*!
      * @class	Nothing
      *
-     * @brief	JSµ÷ÓÃC++²»ĞèÒªÏòJS·µ»Ø½á¹û£¬¸úNonReturn²î²»¶à£¬·Ö²»ÇåÁË.
+     * @brief	JSè°ƒç”¨C++ä¸éœ€è¦å‘JSè¿”å›ç»“æœï¼Œè·ŸNonReturnå·®ä¸å¤šï¼Œåˆ†ä¸æ¸…äº†.
      */
     class Nothing {};
     
     /**
      * @class	Deadlock
      *
-     * @brief	½ø³ÌËÀËøÊ±µÄ·µ»ØÀàĞÍ.
+     * @brief	è¿›ç¨‹æ­»é”æ—¶çš„è¿”å›ç±»å‹.
      */
     
     class Deadlock {};
     /*!
      * @class	Unknown
      *
-     * @brief	Î´Öª½á¹û£¬Õı³£²»»á³öÏÖ.
+     * @brief	æœªçŸ¥ç»“æœï¼Œæ­£å¸¸ä¸ä¼šå‡ºç°.
      */
     class Unknown {};
     
-    // Ç°ÖÃÉùÃ÷
+    // å‰ç½®å£°æ˜
     class Any;
     class IPCMessage;
     class IPCResult;
@@ -76,10 +76,10 @@ namespace amo {
     /*!
      * @fn	template<typename T> static std::string valueToString(const T& val)
      *
-     * @brief	½«ÀàĞÍ×ª»»³É×Ö·û´®.
+     * @brief	å°†ç±»å‹è½¬æ¢æˆå­—ç¬¦ä¸².
      *
-     * @tparam	T	ÀàĞÍ.
-     * @param	val	ÀàĞÍÊµÀı.
+     * @tparam	T	ç±»å‹.
+     * @param	val	ç±»å‹å®ä¾‹.
      *
      * @return	std::string.
      */
@@ -91,11 +91,11 @@ namespace amo {
     /*!
      * @fn	template<typename T> static std::string AnyToString(const T& val);
      *
-     * @brief	½«ÈÎÒâÀàĞÍ×ª»»ÎªString.
-     * 			½«º¯Êı²»ÄÜ±»µ÷ÓÃ£¬Ö»ÄÜÊ¹ÓÃÌØ»¯°æ±¾
+     * @brief	å°†ä»»æ„ç±»å‹è½¬æ¢ä¸ºString.
+     * 			å°†å‡½æ•°ä¸èƒ½è¢«è°ƒç”¨ï¼Œåªèƒ½ä½¿ç”¨ç‰¹åŒ–ç‰ˆæœ¬
      *
-     * @tparam	T	ÀàĞÍ.
-     * @param	val	ÀàĞÍÊµÀı.
+     * @tparam	T	ç±»å‹.
+     * @param	val	ç±»å‹å®ä¾‹.
      *
      * @return	std::string.
      */
@@ -147,12 +147,12 @@ namespace amo {
     /*!
      * @fn	template<typename T> static T stringToValue(const std::string& val)
      *
-     * @brief	½«×Ö·û´®×ª»»ÎªËù¸øÀàĞÍ.
+     * @brief	å°†å­—ç¬¦ä¸²è½¬æ¢ä¸ºæ‰€ç»™ç±»å‹.
      *
-     * @tparam	T	ÀàĞÍ.
-     * @param	val	ÊäÈë×Ö·û´®.
+     * @tparam	T	ç±»å‹.
+     * @param	val	è¾“å…¥å­—ç¬¦ä¸².
      *
-     * @return	Ä¿±êÀàĞÍÖµ.
+     * @return	ç›®æ ‡ç±»å‹å€¼.
      */
     template<typename T> static T stringToValue(const std::string& val) {
         amo::json json(val);
@@ -161,12 +161,12 @@ namespace amo {
     /*!
      * @fn	template<typename T> static T stringToAny(const std::string& val);
      *
-     * @brief	½«×Ö·û´®×ª»»ÎªÈÎÒâÀàĞÍ.
+     * @brief	å°†å­—ç¬¦ä¸²è½¬æ¢ä¸ºä»»æ„ç±»å‹.
      *
-     * @tparam	T	Ä¿±êÀàĞÍ.
-     * @param	val	ÊäÈë×Ö·û´®.
+     * @tparam	T	ç›®æ ‡ç±»å‹.
+     * @param	val	è¾“å…¥å­—ç¬¦ä¸².
      *
-     * @return	Ä¿±êÀàĞÍÖµ.
+     * @return	ç›®æ ‡ç±»å‹å€¼.
      */
     template<typename T> static T stringToAny(const std::string& val);
     template<> static bool stringToAny(const std::string& val) {
@@ -214,7 +214,7 @@ namespace amo {
     /*!
      * @struct	AnyValueType
      *
-     * @brief	AnyÀàĞÍÅĞ¶ÏÀà.
+     * @brief	Anyç±»å‹åˆ¤æ–­ç±».
      *
      * @tparam	T	Generic type parameter.
      */
@@ -256,7 +256,7 @@ namespace amo {
         static const char value = 8;
     };
     
-    // ¸¨ÖúÀà
+    // è¾…åŠ©ç±»
     template<> struct AnyValueType <Nil> {
         static const char value = 21;
     };
@@ -279,7 +279,7 @@ namespace amo {
         static const char value = 32;
     };
     
-    // ×Ô¶¨ÒåÀàĞÍ
+    // è‡ªå®šä¹‰ç±»å‹
     template<> struct AnyValueType <std::map<std::string, std::string> > {
         static const char value = 40;
     };
@@ -296,19 +296,19 @@ namespace amo {
     /*!
      * @class	AnyData
      *
-     * @brief	any Êı¾İ.
+     * @brief	any æ•°æ®.
      */
     class AnyData {
     public:
-        /*! @brief	Êµ¼ÊÀàĞÍ. */
+        /*! @brief	å®é™…ç±»å‹. */
         char type;
-        /*! @brief	ĞòÁĞ»¯ºóµÄ×Ö·û´®. */
+        /*! @brief	åºåˆ—åŒ–åçš„å­—ç¬¦ä¸². */
         std::string value;
     };
     /*!
      * @class	Any
      *
-     * @brief	AnyÀà£¬ÓÃÓÚ½ø³Ì¼äÊı¾İÍ¨ĞÅÍ³Ò»ÀàĞÍ.
+     * @brief	Anyç±»ï¼Œç”¨äºè¿›ç¨‹é—´æ•°æ®é€šä¿¡ç»Ÿä¸€ç±»å‹.
      */
     class Any  {
     public:
@@ -337,7 +337,7 @@ namespace amo {
         /*!
          * @fn	template<typename T> Any::Any(const T& val_)
          *
-         * @brief	Ê¹ÓÃÈÎÒâÀàĞÍ³õÊ¼»¯.
+         * @brief	ä½¿ç”¨ä»»æ„ç±»å‹åˆå§‹åŒ–.
          *
          * @tparam	T	Generic type parameter.
          * @param	val_	The value.
@@ -351,7 +351,7 @@ namespace amo {
         /*!
          * @fn	Any::Any(const char* val_)
          *
-         * @brief	Ê¹ÓÃ×Ö·û´®³õÊ¼»¯.
+         * @brief	ä½¿ç”¨å­—ç¬¦ä¸²åˆå§‹åŒ–.
          *
          * @param	val_	The value.
          */
@@ -373,7 +373,7 @@ namespace amo {
             return type() != AnyValueType<Nothing>::value;
         }
         
-        // ÀàĞÍ×ª»»
+        // ç±»å‹è½¬æ¢
         template<typename R> operator R() const {
             return stringToAny<R>(m_pData->value);
         }
@@ -381,12 +381,12 @@ namespace amo {
             return stringToAny<R>(m_pData->value);
         }
         
-        // ÀàĞÍÅĞ¶Ï
+        // ç±»å‹åˆ¤æ–­
         template<typename T> bool is() const {
             return (type() == AnyValueType<T>::value);
         }
         
-        // ÀàĞÍ
+        // ç±»å‹
         
         char& type() {
             return m_pData->type;
@@ -400,7 +400,7 @@ namespace amo {
             m_pData->type = t;
         }
         
-        // Êı¾İ
+        // æ•°æ®
         
         std::string& value() {
             return m_pData->value;
@@ -431,14 +431,14 @@ namespace amo {
             return Any(type(), value());
         }
         
-        /*! @brief	Êµ¼ÊÀàĞÍÊı¾İ. */
+        /*! @brief	å®é™…ç±»å‹æ•°æ®. */
         std::shared_ptr<AnyData> m_pData;
     };
     
     /*!
      * @class	AnyArgsList
      *
-     * @brief	½ø³ÌÏûÏ¢ÖĞµÄÏûÏ¢²ÎÊıÁĞ±í.
+     * @brief	è¿›ç¨‹æ¶ˆæ¯ä¸­çš„æ¶ˆæ¯å‚æ•°åˆ—è¡¨.
      */
     class AnyArgsList {
     public:
@@ -448,10 +448,10 @@ namespace amo {
         /*!
          * @fn	void AnyArgsList::setValue(const int& index, const Any& val)
          *
-         * @brief	Ëù¸øÎ»ÖÃÉèÖÃÖµ.
+         * @brief	æ‰€ç»™ä½ç½®è®¾ç½®å€¼.
          *
-         * @param	index	Î»ÖÃ.
-         * @param	val  	Öµ.
+         * @param	index	ä½ç½®.
+         * @param	val  	å€¼.
          */
         void setValue(const int& index, const Any& val) {
             m_oMap[index] = val;
@@ -459,7 +459,7 @@ namespace amo {
         /*!
          * @fn	void AnyArgsList::ClearValue(const int& index)
          *
-         * @brief	É¾³ıËù¸øÎ»ÖÃµÄ²ÎÊıÖµ.
+         * @brief	åˆ é™¤æ‰€ç»™ä½ç½®çš„å‚æ•°å€¼.
          *
          * @param	index	Zero-based index of the.
          */
@@ -469,7 +469,7 @@ namespace amo {
         /*!
          * @fn	void AnyArgsList::ClearValue(const int& nBegin, const int& nEnd)
          *
-         * @brief	É¾³ıËù¸ø·¶Î§Öµ.
+         * @brief	åˆ é™¤æ‰€ç»™èŒƒå›´å€¼.
          *
          * @param	nBegin	The begin.
          * @param	nEnd  	The end.
@@ -483,12 +483,12 @@ namespace amo {
                 m_oMap.erase(i);
             }
             
-            // TODO: Ã»ÓĞ´¦ÀíARGSLENGTH
+            // TODO: æ²¡æœ‰å¤„ç†ARGSLENGTH
         }
         /*!
          * @fn	size_t AnyArgsList::GetSize() const
          *
-         * @brief	»ñÈ¡µ±Ç°ÁĞ±íµÄËùÓĞ²ÎÊı¸öÊı.
+         * @brief	è·å–å½“å‰åˆ—è¡¨çš„æ‰€æœ‰å‚æ•°ä¸ªæ•°.
          *
          * @return	The size.
          */
@@ -502,7 +502,7 @@ namespace amo {
         /*!
          * @fn	int AnyArgsList::getArgsSize() const
          *
-         * @brief	»ñÈ¡µ±Ç°ÁĞ±íÖĞº¯Êı²ÎÊı¸öÊı.
+         * @brief	è·å–å½“å‰åˆ—è¡¨ä¸­å‡½æ•°å‚æ•°ä¸ªæ•°.
          *
          * @return	The arguments size.
          */
@@ -521,9 +521,9 @@ namespace amo {
         /*!
          * @fn	Any& AnyArgsList::GetValue(const int& index)
          *
-         * @brief	»ñÈ¡Ëù¸øÎ»ÖÃÖµ.
+         * @brief	è·å–æ‰€ç»™ä½ç½®å€¼.
          *
-         * @param	index	Ë÷Òı.
+         * @param	index	ç´¢å¼•.
          *
          * @return	The value.
          */
@@ -540,7 +540,7 @@ namespace amo {
         /*!
          * @fn	amo::json AnyArgsList::toJson() const
          *
-         * @brief	·µ»Øµ±Ç°¶ÔÏóµÄJSON¶ÔÏó£¬½«²ÎÊıÁĞ±í×ª»»ÎªJSONÊı×é.
+         * @brief	è¿”å›å½“å‰å¯¹è±¡çš„JSONå¯¹è±¡ï¼Œå°†å‚æ•°åˆ—è¡¨è½¬æ¢ä¸ºJSONæ•°ç»„.
          *
          * @return	This object as an amo::json.
          */
@@ -562,7 +562,7 @@ namespace amo {
         /*!
          * @fn	static std::shared_ptr<AnyArgsList> AnyArgsList::fromJson(amo::json& json)
          *
-         * @brief	½«JSON×ª»»ÎªAnyArgsList.
+         * @brief	å°†JSONè½¬æ¢ä¸ºAnyArgsList.
          *
          * @param [in]	json	The JSON.
          *
@@ -614,7 +614,7 @@ namespace amo {
         /*!
          * @fn	bool AnyArgsList::IsValid(const int& nIndex)
          *
-         * @brief	Ëù¸øË÷Òı²ÎÊıÊÇ·ñ´æÔÚ.
+         * @brief	æ‰€ç»™ç´¢å¼•å‚æ•°æ˜¯å¦å­˜åœ¨.
          *
          * @param	nIndex	The index.
          *
@@ -652,7 +652,7 @@ namespace amo {
     /*!
      * @class	IPCMessage
      *
-     * @brief	½ø³ÌÏûÏ¢·â×°.
+     * @brief	è¿›ç¨‹æ¶ˆæ¯å°è£….
      */
     class IPCMessage {
     public:
@@ -661,9 +661,9 @@ namespace amo {
         /*!
          * @fn	static int IPCMessage::GetProcessMessageID()
          *
-         * @brief	Éú³ÉÏûÏ¢ID.
+         * @brief	ç”Ÿæˆæ¶ˆæ¯ID.
          *
-         * @return	Éú³ÉµÄID.
+         * @return	ç”Ÿæˆçš„ID.
          */
         static int getProcessMessageID() {
             static int id = 0;
@@ -685,9 +685,9 @@ namespace amo {
         /*!
          * @fn	int IPCMessage::getID() const
          *
-         * @brief	»ñÈ¡ÏûÏ¢ID.
+         * @brief	è·å–æ¶ˆæ¯ID.
          *
-         * @return	ÏûÏ¢ID.
+         * @return	æ¶ˆæ¯ID.
          */
         int getID() const {
             return m_nID;
@@ -700,7 +700,7 @@ namespace amo {
         /*!
          * @fn	static IPCMessage IPCMessage::fromJson(amo::json& json)
          *
-         * @brief	½«JSON×ª»»ÎªIPCMessage.
+         * @brief	å°†JSONè½¬æ¢ä¸ºIPCMessage.
          *
          * @param [in]	json	The JSON.
          *
@@ -721,9 +721,9 @@ namespace amo {
         /*!
          * @fn	const std::string& IPCMessage::getMessageName() const
          *
-         * @brief	»ñÈ¡ÏûÏ¢Ãû³Æ.
+         * @brief	è·å–æ¶ˆæ¯åç§°.
          *
-         * @return	ÏûÏ¢Ãû³Æ.
+         * @return	æ¶ˆæ¯åç§°.
          */
         const std::string& getMessageName() const {
             return m_strMessageName;
@@ -732,9 +732,9 @@ namespace amo {
         /*!
          * @fn	const std::string& IPCMessage::GetName() const
          *
-         * @brief	»ñÈ¡ÏûÏ¢Ãû³Æ.
+         * @brief	è·å–æ¶ˆæ¯åç§°.
          *
-         * @return	ÏûÏ¢Ãû³Æ.
+         * @return	æ¶ˆæ¯åç§°.
          */
         const std::string& getName() const {
             return m_strMessageName;
@@ -743,9 +743,9 @@ namespace amo {
         /*!
          * @fn	void IPCMessage::setMessageName(const std::string& name)
          *
-         * @brief	ÉèÖÃÏûÏ¢Ãû³Æ.
+         * @brief	è®¾ç½®æ¶ˆæ¯åç§°.
          *
-         * @param	name	ÏûÏ¢Ãû³Æ.
+         * @param	name	æ¶ˆæ¯åç§°.
          */
         void setMessageName(const std::string& name) {
             m_strMessageName = name;
@@ -754,7 +754,7 @@ namespace amo {
         /*!
          * @fn	std::shared_ptr<AnyArgsList>& IPCMessage::GetArgumentList()
          *
-         * @brief	»ñÈ¡²ÎÊıÁĞ±í.
+         * @brief	è·å–å‚æ•°åˆ—è¡¨.
          *
          * @return	std::shared_ptr<AnyArgsList>.
          */
@@ -765,7 +765,7 @@ namespace amo {
         /*!
          * @fn	void IPCMessage::SetArgumentList(std::shared_ptr<AnyArgsList> list)
          *
-         * @brief	ÉèÖÃÏûÏ¢ÁĞ±í.
+         * @brief	è®¾ç½®æ¶ˆæ¯åˆ—è¡¨.
          *
          * @param	list	The list.
          */
@@ -785,22 +785,22 @@ namespace amo {
             SmartType msg(new IPCMessage());
             msg->setMessageName(m_strMessageName);
             msg->setArgumentList(m_pMessageList->clone());
-            msg->setID(getID()); // ¿¼ÂÇÕâ¸öÒª²»Òª¸´ÖÆ
+            msg->setID(getID()); // è€ƒè™‘è¿™ä¸ªè¦ä¸è¦å¤åˆ¶
             return msg;
         }
     private:
-        /*! @brief	ÏûÏ¢Ãû. */
+        /*! @brief	æ¶ˆæ¯å. */
         std::string m_strMessageName;
-        /*! @brief	²ÎÊıÁĞ±í. */
+        /*! @brief	å‚æ•°åˆ—è¡¨. */
         std::shared_ptr<AnyArgsList> m_pMessageList;
-        /*! @brief	ÏûÏ¢ID. */
+        /*! @brief	æ¶ˆæ¯ID. */
         int m_nID;
     };
     
     /*!
      * @class	IPCResult
      *
-     * @brief	Ö´ĞĞ½á¹û.
+     * @brief	æ‰§è¡Œç»“æœ.
      */
     class IPCResult {
     public:
@@ -810,7 +810,7 @@ namespace amo {
         /*!
          * @fn	static IPCResult IPCResult::fromJson(amo::json& json)
          *
-         * @brief	½«JSON×ª»»ÎªIPCResult.
+         * @brief	å°†JSONè½¬æ¢ä¸ºIPCResult.
          *
          * @param [in]	json	The JSON.
          *
@@ -829,7 +829,7 @@ namespace amo {
         /*!
          * @fn	const int& IPCResult::getID() const
          *
-         * @brief	»ñÈ¡ÏûÏ¢ID£¬ÓëIPCMessageÖĞµÄÏûÏ¢IDÏàÍ¬.
+         * @brief	è·å–æ¶ˆæ¯IDï¼Œä¸IPCMessageä¸­çš„æ¶ˆæ¯IDç›¸åŒ.
          *
          * @return	The identifier.
          */
@@ -840,7 +840,7 @@ namespace amo {
         /*!
          * @fn	void IPCResult::setID(const int& id)
          *
-         * @brief	ÉèÖÃÏûÏ¢ID.
+         * @brief	è®¾ç½®æ¶ˆæ¯ID.
          *
          * @param	id	The identifier.
          */
@@ -851,7 +851,7 @@ namespace amo {
         /*!
          * @fn	Any& IPCResult::GetResult()
          *
-         * @brief	»ñÈ¡ÕæÕıµÄ·µ»ØÖµ.
+         * @brief	è·å–çœŸæ­£çš„è¿”å›å€¼.
          *
          * @return	The result.
          */
@@ -862,7 +862,7 @@ namespace amo {
         /*!
          * @fn	void IPCResult::SetResult(const Any& val)
          *
-         * @brief	ÉèÖÃ·µ»ØÖµ.
+         * @brief	è®¾ç½®è¿”å›å€¼.
          *
          * @param	val	The value.
          */
@@ -873,7 +873,7 @@ namespace amo {
         /*!
          * @fn	amo::json IPCResult::toJson() const
          *
-         * @brief	½«IPCResult×ª»»ÎªJSON.
+         * @brief	å°†IPCResultè½¬æ¢ä¸ºJSON.
          *
          * @return	This object as an amo::json.
          */
@@ -889,9 +889,9 @@ namespace amo {
             return json;
         }
     private:
-        /*! @brief	ÏûÏ¢ID£¨ÓëÖ´ĞĞµÄIPCMessageÖĞµÄÏûÏ¢IDÏàÍ¬£©. */
+        /*! @brief	æ¶ˆæ¯IDï¼ˆä¸æ‰§è¡Œçš„IPCMessageä¸­çš„æ¶ˆæ¯IDç›¸åŒï¼‰. */
         int m_nID;
-        /*! @brief	Êµ¼Ê·µ»ØÖµ. */
+        /*! @brief	å®é™…è¿”å›å€¼. */
         Any m_val;
     };
     

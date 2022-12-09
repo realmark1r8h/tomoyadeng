@@ -1,4 +1,4 @@
-// Created by amoylel on 31/05/2018.
+﻿// Created by amoylel on 31/05/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef _ZIPFILEMANAGER_FC0545A3_D3E6_4654_A628_BEA17FA3ED8F_H__

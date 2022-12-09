@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "transfer/IPCTransfer.h"
 #include "ipc/UIMessageBroadcaster.hpp"
 #include <memory>

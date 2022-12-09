@@ -1,4 +1,4 @@
-// Created by amoylel on 05/19/2017.
+ï»¿// Created by amoylel on 05/19/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_TRANSFERMGR_H__
@@ -22,7 +22,7 @@ namespace amo {
     /*!
      * @class	TransferMap
      *
-     * @brief	±£´æÒ»¸öä¯ÀÀÆ÷µÄËùÓĞTransferÀà£¨ÕâÀïÖ»±£´æÀà£¬²»±£´æÀàµÄÊµÀı£©.
+     * @brief	ä¿å­˜ä¸€ä¸ªæµè§ˆå™¨çš„æ‰€æœ‰Transferç±»ï¼ˆè¿™é‡Œåªä¿å­˜ç±»ï¼Œä¸ä¿å­˜ç±»çš„å®ä¾‹ï¼‰.
      */
     class TransferMap {
     public:
@@ -33,7 +33,7 @@ namespace amo {
         /*!
          * @fn	void TransferMap::addTransfer(Transfer* pTransfer)
          *
-         * @brief	Ìí¼ÓTransfer.
+         * @brief	æ·»åŠ Transfer.
          *
          * @param 	pTransfer	If non-null, the transfer.
          */
@@ -46,7 +46,7 @@ namespace amo {
         /*!
          * @fn	void TransferMap::addTransfer(std::shared_ptr<Transfer> pTransfer)
          *
-         * @brief	Ìí¼ÓTransfer.
+         * @brief	æ·»åŠ Transfer.
          *
          * @param	pTransfer	The transfer.
          */
@@ -60,9 +60,9 @@ namespace amo {
         /*!
          * @fn	void TransferMap::removeTransfer(const std::string& strName)
          *
-         * @brief	Í¨¹ıÃû³ÆÒÆ³ıTransfer.
+         * @brief	é€šè¿‡åç§°ç§»é™¤Transfer.
          *
-         * @param	strName	TransferÃû.
+         * @param	strName	Transferå.
          */
         void removeTransfer(const std::string& strName) {
             m_oTransferMap.erase(strName);
@@ -78,9 +78,9 @@ namespace amo {
         /*!
          * @fn	Transfer* TransferMap::FinTransfer(const std::string& strName)
          *
-         * @brief	Í¨¹ıÃû³Æ²éÕÒTransfer.
+         * @brief	é€šè¿‡åç§°æŸ¥æ‰¾Transfer.
          *
-         * @param	strName	TransferÃû.
+         * @param	strName	Transferå.
          *
          * @return	null if it fails, else a pointer to a Transfer.
          */
@@ -103,7 +103,7 @@ namespace amo {
         /*!
          * @fn	Any TransferMap::onMessageTransfer(IPCMessage::SmartType msg)
          *
-         * @brief	±éÀúTransfer²¢ÕÒµ½¶ÔÓ¦µÄº¯ÊıÖ´ĞĞ.
+         * @brief	éå†Transferå¹¶æ‰¾åˆ°å¯¹åº”çš„å‡½æ•°æ‰§è¡Œ.
          *
          * @param	msg	The message.
          *
@@ -114,7 +114,7 @@ namespace amo {
             int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
             std::string messageName = msg->getName();
             
-            // Ö»´¦ÀíÕâÈıÖÖÏûÏ¢
+            // åªå¤„ç†è¿™ä¸‰ç§æ¶ˆæ¯
             if (messageName == MSG_NATIVE_EXECUTE
                     || messageName == MSG_NATIVE_SYNC_EXECUTE
                     || messageName == MSG_NATIVE_ASYNC_EXECUTE) {
@@ -126,25 +126,25 @@ namespace amo {
                         Any ret = p.second->onMessageTransfer(msg);
                         
                         if (ret.isValid()) {
-                            // Èç¹û·µ»ØÖµÓĞĞ§£¬Ö±½Ó·µ»Ø½á¹û
+                            // å¦‚æœè¿”å›å€¼æœ‰æ•ˆï¼Œç›´æ¥è¿”å›ç»“æœ
                             return ret;
                         }
                         
-                        // ·µ»ØÖµÎŞĞ§£¬¼ÌĞø±éÀú£¨Êµ¼ÊÉÏÓ¦¸ÃÖ±½Ó·µ»Ø£©
+                        // è¿”å›å€¼æ— æ•ˆï¼Œç»§ç»­éå†ï¼ˆå®é™…ä¸Šåº”è¯¥ç›´æ¥è¿”å›ï¼‰
                     }
                 }
                 
                 return onDefaultMessageTransfer(msg);
             }
             
-            // ·µ»ØÎŞĞ§½á¹û
+            // è¿”å›æ— æ•ˆç»“æœ
             return amo::Nothing();
         }
         
         /*!
          * @fn	amo::json TransferMap::toJson()
          *
-         * @brief	½«¶ÔÏó×ª»»ÎªJSON£¨Êı×é£©.
+         * @brief	å°†å¯¹è±¡è½¬æ¢ä¸ºJSONï¼ˆæ•°ç»„ï¼‰.
          *
          * @return	This object as an amo::json.
          */
@@ -162,7 +162,7 @@ namespace amo {
         /*!
          * @fn	std::unordered_map<std::string, Transfer*>& TransferMap::transferMap()
          *
-         * @brief	»ñÈ¡Ô­Ê¼Transfer map.
+         * @brief	è·å–åŸå§‹Transfer map.
          *
          * @return	null if it fails, else a reference to a std::unordered_map&lt;std::string,
          * 			Transfer*&gt;
@@ -189,11 +189,11 @@ namespace amo {
         }
         
     private:
-        /*! @brief	±£´æÍ¨¹ıÆÕÍ¨Ö¸ÕëÌí¼ÓµÄTransfer. */
+        /*! @brief	ä¿å­˜é€šè¿‡æ™®é€šæŒ‡é’ˆæ·»åŠ çš„Transfer. */
         std::unordered_map<std::string, Transfer*> m_oTransferMap;
-        /*! @brief	±£´æÍ¨¹ıÖÇÄÜÖ¸ÕëÌí¼ÓµÄTransfer. */
+        /*! @brief	ä¿å­˜é€šè¿‡æ™ºèƒ½æŒ‡é’ˆæ·»åŠ çš„Transfer. */
         std::unordered_map<std::string, std::shared_ptr<Transfer> > m_oSmartMap;
-        /** @brief	Ä¬ÈÏÏûÏ¢´¦Àíº¯Êı£¬Èç¹ûÃ»ÓĞÕÒµ½ÏûÏ¢´¦Àíº¯Êı½«´¥·¢¸Ãº¯Êı. */
+        /** @brief	é»˜è®¤æ¶ˆæ¯å¤„ç†å‡½æ•°ï¼Œå¦‚æœæ²¡æœ‰æ‰¾åˆ°æ¶ˆæ¯å¤„ç†å‡½æ•°å°†è§¦å‘è¯¥å‡½æ•°. */
         SmartEventFnType m_fnDefaultMsgFunc;
         
         std::function<void(IPCMessage::SmartType)> m_fnDefaultTriggerEventFunc;
@@ -201,7 +201,7 @@ namespace amo {
     /*!
      * @class	TransferMgr
      *
-     * @brief	¹ÜÀíËùÓĞµÄTransfer.
+     * @brief	ç®¡ç†æ‰€æœ‰çš„Transfer.
      */
     class TransferMgr {
     public:
@@ -214,7 +214,7 @@ namespace amo {
          * @fn	void TransferMgr::addTransfer(int nBrowserID,
          * 		Transfer* pTransfer)
          *
-         * @brief	Ìí¼ÓÒ»¸öTransferµ½Ö¸¶¨µÄTransferMap.
+         * @brief	æ·»åŠ ä¸€ä¸ªTransferåˆ°æŒ‡å®šçš„TransferMap.
          *
          * @param	nBrowserID		 	Identifier for the browser.
          * @param 	pTransfer	If non-null, the transfer.
@@ -227,7 +227,7 @@ namespace amo {
          * @fn	void TransferMgr::addTransfer(int nBrowserID,
          * 		 std::shared_ptr<Transfer> pTransfer)
          *
-         * @brief	Ìí¼ÓÒ»¸öTransferµ½Ö¸¶¨µÄTransferMap.
+         * @brief	æ·»åŠ ä¸€ä¸ªTransferåˆ°æŒ‡å®šçš„TransferMap.
          *
          * @param	nBrowserID	Identifier for the browser.
          * @param	pTransfer 	The transfer.
@@ -275,7 +275,7 @@ namespace amo {
         /*!
          * @fn	TransferMap& TransferMgr::getTransferMap(int nBrowserID)
          *
-         * @brief	»ñÈ¡Ö¸¶¨IDµÄTransferMap.
+         * @brief	è·å–æŒ‡å®šIDçš„TransferMap.
          *
          * @param	nBrowserID	Identifier for the browser.
          *
@@ -297,7 +297,7 @@ namespace amo {
         /*!
          * @fn	virtual void TransferMgr::returnSyncResult(int nBrowserID, amo::IPCResult& ret)
          *
-         * @brief	·µ»ØÍ¬²½µ÷ÓÃ½á¹û.
+         * @brief	è¿”å›åŒæ­¥è°ƒç”¨ç»“æœ.
          *
          * @exception	std::runtime_error	Raised when a runtime error condition occurs.
          *
@@ -305,7 +305,7 @@ namespace amo {
          * @param 	ret	The ret.
          */
         virtual void returnSyncResult(int nBrowserID, amo::IPCResult& ret) {
-            throw std::runtime_error("ÎŞ·¨·µ»ØÍ¬²½ÏûÏ¢");
+            throw std::runtime_error("æ— æ³•è¿”å›åŒæ­¥æ¶ˆæ¯");
         }
         
         /*!
@@ -314,12 +314,12 @@ namespace amo {
          * 		  int id,
          * 		  int frame_id)
          *
-         * @brief	·µ»ØÒì²½µ÷ÓÃ½á¹û.
+         * @brief	è¿”å›å¼‚æ­¥è°ƒç”¨ç»“æœ.
          *
          * @exception	std::runtime_error	Raised when a runtime error condition occurs.
          *
-         * @param	nBrowserID 	ä¯ÀÀÆ÷ID.
-         * @param 	ret			Òì²½µ÷ÓÃµÄÖ´ĞĞ½á¹û.
+         * @param	nBrowserID 	æµè§ˆå™¨ID.
+         * @param 	ret			å¼‚æ­¥è°ƒç”¨çš„æ‰§è¡Œç»“æœ.
          * @param	id		   	IPCMessage ID.
          * @param	frame_id   	Frame ID.
          */
@@ -327,13 +327,13 @@ namespace amo {
                                        Any& ret,
                                        int id,
                                        int frame_id) {
-            throw std::runtime_error("ÎŞ·¨·µ»ØÒì²½ÏûÏ¢");
+            throw std::runtime_error("æ— æ³•è¿”å›å¼‚æ­¥æ¶ˆæ¯");
         }
         
         /*!
          * @fn	virtual void TransferMgr::registerClass(int nBrowserID)
          *
-         * @brief	ÏòËù¸øä¯ÀÀÆ÷×¢²á¿ÉÒÔÊµÀı»¯µÄÀàTransfer.
+         * @brief	å‘æ‰€ç»™æµè§ˆå™¨æ³¨å†Œå¯ä»¥å®ä¾‹åŒ–çš„ç±»Transfer.
          *
          * @param	nBrowserID	Identifier for the browser.
          */
@@ -344,7 +344,7 @@ namespace amo {
         /*!
          * @fn	Any TransferMgr::onMessageTransfer(IPCMessage::SmartType msg)
          *
-         * @brief	±éÀúTransferÖ´ĞĞÏûÏ¢´¦Àí.
+         * @brief	éå†Transferæ‰§è¡Œæ¶ˆæ¯å¤„ç†.
          *
          * @param	msg	The message.
          *
@@ -359,12 +359,12 @@ namespace amo {
             
             
             
-            /*     $clog(amo::cdevel << func_orient << "´¦ÀíÏûÏ¢£º" << msg->toJson().to_string() << amo::endl;);
-                 $clog(amo::cdevel << func_orient << "´¦Àí½á¹û£º" << ret.value() << amo::endl;);*/
+            /*     $clog(amo::cdevel << func_orient << "å¤„ç†æ¶ˆæ¯ï¼š" << msg->toJson().to_string() << amo::endl;);
+                 $clog(amo::cdevel << func_orient << "å¤„ç†ç»“æœï¼š" << ret.value() << amo::endl;);*/
             
             if (!ret.isValid()) {
                 if (strMessageName == MSG_NATIVE_SYNC_EXECUTE) {
-                    // ²»Ó¦¸Ã·µ»ØÎŞĞ§, BUG??
+                    // ä¸åº”è¯¥è¿”å›æ— æ•ˆ, BUG??
                     ret = Undefined();
                 } else {
                     return ret;
@@ -377,12 +377,12 @@ namespace amo {
             int nFrameID = args->getInt(IPCArgsPosInfo::FrameID);
             
             if (strMessageName == MSG_NATIVE_EXECUTE) {
-                // ÆÕÍ¨µ÷ÓÃ²»ĞèÒª·µ»Ø½á¹û
+                // æ™®é€šè°ƒç”¨ä¸éœ€è¦è¿”å›ç»“æœ
             } else if (strMessageName == MSG_NATIVE_SYNC_EXECUTE)	{
                 int nFlag = args->getInt(IPCArgsPosInfo::CrossProcessFlag);
                 
                 if (nFlag != 1) {
-                    // Í¨¹ı¹ÜµÀÏòÒ³ÃæÍ¬²½·µ»Ø½á¹û
+                    // é€šè¿‡ç®¡é“å‘é¡µé¢åŒæ­¥è¿”å›ç»“æœ
                     returnSyncResult(nBrowserID, result);
                 }
                 
@@ -392,7 +392,7 @@ namespace amo {
                 
                 if (nFlag != 1) {
                 
-                    // Í¨¹ı·¢ËÍIPCMessageÏòÒ³ÃæÒì²½·µ»Ø½á¹û
+                    // é€šè¿‡å‘é€IPCMessageå‘é¡µé¢å¼‚æ­¥è¿”å›ç»“æœ
                     returnAsyncResult(nBrowserID,
                                       ret,
                                       args->getInt(IPCArgsPosInfo::AsyncCallback),
@@ -443,10 +443,10 @@ namespace amo {
         }
         
     private:
-        /*! @brief	±£´æ¸÷ä¯ÀÀÆ÷µÄTransferMap. */
+        /*! @brief	ä¿å­˜å„æµè§ˆå™¨çš„TransferMap. */
         std::unordered_map<int, TransferMap> m_oTransferMap;
         
-        /** @brief	Ä¬ÈÏÏûÏ¢´¦Àíº¯Êı£¬Èç¹ûÃ»ÓĞÕÒµ½ÏûÏ¢´¦Àíº¯Êı½«´¥·¢¸Ãº¯Êı. */
+        /** @brief	é»˜è®¤æ¶ˆæ¯å¤„ç†å‡½æ•°ï¼Œå¦‚æœæ²¡æœ‰æ‰¾åˆ°æ¶ˆæ¯å¤„ç†å‡½æ•°å°†è§¦å‘è¯¥å‡½æ•°. */
         SmartEventFnType m_fnDefaultMsgFunc;
         
         std::function<void(IPCMessage::SmartType)> m_fnDefaultTriggerEventFunc;

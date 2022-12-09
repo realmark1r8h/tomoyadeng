@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "node/NodeMessageHandler.h"
 
 #include <mutex>
@@ -71,17 +71,17 @@ namespace amo {
         
         if (message_name == MSG_CREATE_PIPE_CLIENT) {
             std::shared_ptr<amo::pipe<amo::pipe_type::server> >
-            m_pBrowserPipeServer;			//ÏûÏ¢¹ÜµÀÖ÷½ø³Ì·şÎñ¶Ë
+            m_pBrowserPipeServer;			//æ¶ˆæ¯ç®¡é“ä¸»è¿›ç¨‹æœåŠ¡ç«¯
             
             std::shared_ptr<amo::pipe<amo::pipe_type::client> >
-            m_pRenderPipeClient;			//ÏûÏ¢¹ÜµÀÖ÷½ø³Ì¿Í»§¶Ë
+            m_pRenderPipeClient;			//æ¶ˆæ¯ç®¡é“ä¸»è¿›ç¨‹å®¢æˆ·ç«¯
             std::shared_ptr<ProcessExchanger> m_pBrowserProcessExchanger(
-                new ProcessExchanger());			//ÏûÏ¢¹ÜµÀÊı¾İ½»»»Àà
+                new ProcessExchanger());			//æ¶ˆæ¯ç®¡é“æ•°æ®äº¤æ¢ç±»
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             int id = -9999;
             std::string strPipeClientName = RendererPipePrefix + (std::string)
                                             args->getString(0);
-            $clog(amo::cdevel << func_orient << "Á¬½Ó¹ÜµÀ£º" << strPipeClientName <<
+            $clog(amo::cdevel << func_orient << "è¿æ¥ç®¡é“ï¼š" << strPipeClientName <<
                   amo::endl;);
             std::string strPipeServerName = BrowserPipePrefix + (std::string)
                                             args->getString(0);
@@ -91,12 +91,12 @@ namespace amo {
                                        (strPipeServerName, DefaultPipeSize));
             bool bOK = m_pRenderPipeClient->connect();
             
-            $clog(amo::cdevel << func_orient << "¹ÜµÀÁ¬½Ó" << (bOK ? "³É¹¦" :
-                    "Ê§°Ü") << amo::endl;);
+            $clog(amo::cdevel << func_orient << "ç®¡é“è¿æ¥" << (bOK ? "æˆåŠŸ" :
+                    "å¤±è´¥") << amo::endl;);
                     
             bOK = m_pBrowserPipeServer->connect();
-            $clog(amo::cdevel << func_orient << "Ö÷½ø³Ì¹ÜµÀ·şÎñÁ¬½Ó" <<
-                  (bOK ? "³É¹¦" : "Ê§°Ü") << amo::endl;);
+            $clog(amo::cdevel << func_orient << "ä¸»è¿›ç¨‹ç®¡é“æœåŠ¡è¿æ¥" <<
+                  (bOK ? "æˆåŠŸ" : "å¤±è´¥") << amo::endl;);
             m_pBrowserProcessExchanger->setPipeClient(m_pRenderPipeClient);
             m_pBrowserProcessExchanger->setPipeServer(m_pBrowserPipeServer);
             m_pBrowserProcessExchanger->setBrowserID(id);
@@ -125,7 +125,7 @@ namespace amo {
         if (strMessageName == MSG_NATIVE_EXECUTE
                 || strMessageName == MSG_NATIVE_SYNC_EXECUTE
                 || strMessageName ==
-                MSG_NATIVE_ASYNC_EXECUTE)	{									//JSµ÷ÓÃC++£¬´ËÏûÏ¢²»ÏòÒ³Ãæ·µ»Ø½á¹û
+                MSG_NATIVE_ASYNC_EXECUTE)	{									//JSè°ƒç”¨C++ï¼Œæ­¤æ¶ˆæ¯ä¸å‘é¡µé¢è¿”å›ç»“æœ
             CefString handlerName = msg->getArgumentList()->getString(
                                         IPCArgsPosInfo::CustomArgs);
                                         
@@ -308,7 +308,7 @@ namespace amo {
         } catch (std::exception& e) {
             $clog(amo::cerr << e.what() << amo::endl;);
             closeMessageQueue();
-            MessageBox(NULL, L"ÏûÏ¢´ò¿ªÊ§°Ü", L"Error", MB_OK);
+            MessageBox(NULL, L"æ¶ˆæ¯æ‰“å¼€å¤±è´¥", L"Error", MB_OK);
             return;
         }
         

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include <msctf.h>
 
 #include "ui/win/Imm32Manager.h"
@@ -59,7 +59,7 @@ namespace amo {
         ImmGetCompositionString(imm_context,
                                 GCS_RESULTSTR,
                                 (void*)lpstr,
-                                string_size);// ÔÙµ÷ÓÃÒ»
+                                string_size);// å†è°ƒç”¨ä¸€
         return amo::string(lpstr);
         
     }
@@ -105,7 +105,7 @@ namespace amo {
         }
         
         COMPOSITIONFORM Composition;
-        Composition.dwStyle = CFS_POINT;						//×¢ÒâÕâ¸öÖµ£¬Èç¹û²»¶Ô¹â±ê¿ÉÄÜ»á³öÏÖÎÊÌâ CFS_POINT
+        Composition.dwStyle = CFS_POINT;						//æ³¨æ„è¿™ä¸ªå€¼ï¼Œå¦‚æœä¸å¯¹å…‰æ ‡å¯èƒ½ä¼šå‡ºç°é—®é¢˜ CFS_POINT
         Composition.ptCurrentPos.x = pt.x;
         Composition.ptCurrentPos.y = pt.y;
         ImmSetCompositionWindow(imm_context, &Composition);

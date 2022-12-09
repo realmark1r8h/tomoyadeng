@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_REQUESTHANDLER_H__
@@ -19,7 +19,7 @@ namespace amo {
     /*!
      * @class	RequestHandlerDelegate
      *
-     * @brief	ä¯ÀÀÆ÷ÇëÇóÏà¹ØµÄÊÂ¼ş´¦ÀíÀà.
+     * @brief	æµè§ˆå™¨è¯·æ±‚ç›¸å…³çš„äº‹ä»¶å¤„ç†ç±».
      */
     
     class RequestHandlerDelegate {
@@ -148,7 +148,7 @@ namespace amo {
     /*!
      * @class	RequestHandler
      *
-     * @brief	ä¯ÀÀÆ÷ÇëÇóÏà¹ØµÄÊÂ¼ş´¦ÀíÀà.
+     * @brief	æµè§ˆå™¨è¯·æ±‚ç›¸å…³çš„äº‹ä»¶å¤„ç†ç±».
      */
     
     class RequestHandler : public CefRequestHandler
@@ -165,8 +165,8 @@ namespace amo {
          * 		CefRefPtr<CefRequest> request,
          * 		bool is_redirect);
          *
-         * @brief	ä¯ÀÀÆ÷µ¼º½Ç°´¥·¢
-         * 			request ÔÚµ±Ç°º¯ÊıÖĞ½ûÖ¹ĞŞ¸Ä
+         * @brief	æµè§ˆå™¨å¯¼èˆªå‰è§¦å‘
+         * 			request åœ¨å½“å‰å‡½æ•°ä¸­ç¦æ­¢ä¿®æ”¹
          * 			B UI.
          *
          * @param	browser	   	The browser.
@@ -192,7 +192,7 @@ namespace amo {
          * 		CefRefPtr<CefRequest> request,
          * 		CefRefPtr<CefRequestCallback> callback);
          *
-         * @brief	×ÊÔ´ÇëÇó±»¼ÓÔØÖ®Ç°´¥·¢
+         * @brief	èµ„æºè¯·æ±‚è¢«åŠ è½½ä¹‹å‰è§¦å‘
          * 			B IO.
          *
          * @param	browser 	The browser.
@@ -220,7 +220,7 @@ namespace amo {
          * 		CefRefPtr<CefFrame> frame,
          * 		CefRefPtr<CefRequest> request);
          *
-         * @brief	×ÊÔ´ÇëÇó±»¼ÓÔØÖ®Ç°´¥·¢£¬¿É×Ô¶¨ÒåResourceHandler
+         * @brief	èµ„æºè¯·æ±‚è¢«åŠ è½½ä¹‹å‰è§¦å‘ï¼Œå¯è‡ªå®šä¹‰ResourceHandler
          * 			B IO.
          *
          * @param	browser	The browser.
@@ -242,7 +242,7 @@ namespace amo {
          * 		const CefString& old_url,
          * 		CefString& new_url);
          *
-         * @brief	×ÊÔ´ÖØ¶¨ÏòÊ±´¥·¢
+         * @brief	èµ„æºé‡å®šå‘æ—¶è§¦å‘
          * 			B IO.
          *
          * @param	browser		   	The browser.
@@ -281,7 +281,7 @@ namespace amo {
          * 		const CefString& scheme,
          * 		CefRefPtr<CefAuthCallback> callback);
          *
-         * @brief	µ±ä¯ÀÀÆ÷ĞèÒªÓÃ»§Æ¾¾İÊ±´¥
+         * @brief	å½“æµè§ˆå™¨éœ€è¦ç”¨æˆ·å‡­æ®æ—¶è§¦
          * 			B IO.
          *
          * @param	browser 	The browser.
@@ -315,7 +315,7 @@ namespace amo {
          * 		int64 new_size,
          * 		CefRefPtr<CefRequestCallback> callback);
          *
-         * @brief	µ±JavaScriptÇëÇóÒ»¸öÌØ¶¨µÄ´æ´¢Åä¶îÊ±´¥·¢
+         * @brief	å½“JavaScriptè¯·æ±‚ä¸€ä¸ªç‰¹å®šçš„å­˜å‚¨é…é¢æ—¶è§¦å‘
          * 			B IO.
          *
          * @param	browser   	The browser.
@@ -343,7 +343,7 @@ namespace amo {
          * 		const CefString& url,
          * 		bool& allow_os_execution);
          *
-         * @brief	request url Î´ÖªĞ­ÒéÊ±´¥·¢
+         * @brief	request url æœªçŸ¥åè®®æ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser					  	The browser.
@@ -400,7 +400,7 @@ namespace amo {
          * 		const CefString& policy_url,
          * 		CefRefPtr<CefWebPluginInfo> info);
          *
-         * @brief	²å¼ş¼ÓÔØÇ°´¥·¢
+         * @brief	æ’ä»¶åŠ è½½å‰è§¦å‘
          * 			B IO.
          *
          * @param	browser   	The browser.
@@ -428,7 +428,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		const CefString& plugin_path);
          *
-         * @brief	²å¼ş±ÀÀ£Ê±´¥·¢
+         * @brief	æ’ä»¶å´©æºƒæ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser	   	The browser.
@@ -443,7 +443,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		TerminationStatus status);
          *
-         * @brief	äÖÈ¾½ø³ÌÖÕÖ¹Ê±´¥·¢
+         * @brief	æ¸²æŸ“è¿›ç¨‹ç»ˆæ­¢æ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser	The browser.

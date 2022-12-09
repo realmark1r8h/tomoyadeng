@@ -1,4 +1,4 @@
-// Created by amoylel on 07/20/2017.
+ï»¿// Created by amoylel on 07/20/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_URLREQUESTTRANSFER_H__
@@ -25,8 +25,8 @@ namespace amo {
     /*!
      * @class	URLRequest
      *
-     * @brief	ÍøÂçÇëÇóÀà.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	ç½‘ç»œè¯·æ±‚ç±».<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      */
     
     class URLRequestTransfer
@@ -40,13 +40,13 @@ namespace amo {
          *
          * @tag constructor
          *
-         * @brief	´´½¨Ò»¸öÍøÂçÇëÇó¶ÔÏó.
+         * @brief	åˆ›å»ºä¸€ä¸ªç½‘ç»œè¯·æ±‚å¯¹è±¡.
          *
-         * @param	#JsonObject	´´½¨URLRequestËùĞèÒªµÄ²ÎÊı.
+         * @param	#JsonObject	åˆ›å»ºURLRequestæ‰€éœ€è¦çš„å‚æ•°.
          *
-         * @param	#Int=0 ÍøÂç³¬Ê±Ê±¼ä.
+         * @param	#Int=0 ç½‘ç»œè¶…æ—¶æ—¶é—´.
          *
-         * @return #URLRequest Ò»¸örequest¶ÔÏó
+         * @return #URLRequest ä¸€ä¸ªrequestå¯¹è±¡
          */
         
         URLRequestTransfer(CefRefPtr<CefURLRequest> pURLRequest,
@@ -113,7 +113,7 @@ namespace amo {
         std::shared_ptr<RequestSettings> m_pRequestSettings;
         std::string m_downloadData;
         amo::timer m_timer;
-        bool  m_bTimeOut;  // ÊÇ·ñ³¬Ê±
+        bool  m_bTimeOut;  // æ˜¯å¦è¶…æ—¶
         
     };
 }

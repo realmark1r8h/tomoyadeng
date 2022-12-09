@@ -1,4 +1,4 @@
-// Created by amoylel on 06/19/2017.
+ï»¿// Created by amoylel on 06/19/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_RCEDITTRANSFER_H__
@@ -21,7 +21,7 @@ namespace amo {
      *
      * @chapter extend
      *
-     * @brief	×ÊÔ´±à¼­Æ÷£¬ÓÃÀ´Éú³Éexe³ÌĞò.
+     * @brief	èµ„æºç¼–è¾‘å™¨ï¼Œç”¨æ¥ç”Ÿæˆexeç¨‹åº.
      */
     
     class RceditTransfer
@@ -38,20 +38,20 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	´Ó´ÅÅÌÖĞ¼ÓÔØÅäÖÃÎÄ¼ş£¬ÅäÖÃÎÄ¼ş°üº¬ËÄ¸öÊı¾İ¶Î£¬ÆäÖĞÈı¸ö¶ÎÄÚÈİÓëmanifest.jsonÏàÍ¬£¬Ö»Ôö¼ÓÁËÒ»¸öÎÄ¼ş¶ÎÃèÊöEXEÎÄ¼şµÄ»ù±¾ĞÅÏ¢£¬¶ÎÃû"fileSettings",¿ÉÓÃÖµÈçÏÂ£º<br>
-         *			&nbsp; **CompanyName**: ¹«Ë¾Ãû³Æ£¬Ä¬ÈÏÖµ"NCUI"<br>
-         *			&nbsp; **FileDescription**: ÎÄ¼şÃèÊö£¬Ä¬ÈÏÖµ"NCUIÑİÊ¾³ÌĞò"<br>
-         *			&nbsp; **FileVersion**:ÎÄ¼ş°æ±¾£¬Ä¬ÈÏÖµ"1.0.0.0"<br>
-         *			&nbsp; **InternalName**:ÄÚ²¿Ãû³Æ£¬Ä¬ÈÏÖµ"NCUIDemo.exe"<br>
-         *			&nbsp; **LegalCopyright**:·¨ÂÉÖø×÷È¨£¬Ä¬ÈÏÖµ"Copyright (C) 2017"<br>
-         *			&nbsp; **OriginalFileName**:Ô­Ê¼ÎÄ¼şÃû³Æ£¬Ä¬ÈÏÖµ"NCUIDemo.exe"<br>
-         *			&nbsp; **ProductName**:²úÆ·Ãû³Æ£¬Ä¬ÈÏÖµ"NCUIÑİÊ¾³ÌĞò"<br>
-         *			&nbsp; **ProductVersion**:²úÆ·°æ±¾£¬Ä¬ÈÏÖµ"1.0.0.0"<br>
-         *			&nbsp; **Icon**:Í¼±êÂ·¾¶£¬Ä¬ÈÏÊ¹ÓÃµ±Ç°³ÌĞòµÄÍ¼±ê<br>
+         * @brief	ä»ç£ç›˜ä¸­åŠ è½½é…ç½®æ–‡ä»¶ï¼Œé…ç½®æ–‡ä»¶åŒ…å«å››ä¸ªæ•°æ®æ®µï¼Œå…¶ä¸­ä¸‰ä¸ªæ®µå†…å®¹ä¸manifest.jsonç›¸åŒï¼Œåªå¢åŠ äº†ä¸€ä¸ªæ–‡ä»¶æ®µæè¿°EXEæ–‡ä»¶çš„åŸºæœ¬ä¿¡æ¯ï¼Œæ®µå"fileSettings",å¯ç”¨å€¼å¦‚ä¸‹ï¼š<br>
+         *			&nbsp; **CompanyName**: å…¬å¸åç§°ï¼Œé»˜è®¤å€¼"NCUI"<br>
+         *			&nbsp; **FileDescription**: æ–‡ä»¶æè¿°ï¼Œé»˜è®¤å€¼"NCUIæ¼”ç¤ºç¨‹åº"<br>
+         *			&nbsp; **FileVersion**:æ–‡ä»¶ç‰ˆæœ¬ï¼Œé»˜è®¤å€¼"1.0.0.0"<br>
+         *			&nbsp; **InternalName**:å†…éƒ¨åç§°ï¼Œé»˜è®¤å€¼"NCUIDemo.exe"<br>
+         *			&nbsp; **LegalCopyright**:æ³•å¾‹è‘—ä½œæƒï¼Œé»˜è®¤å€¼"Copyright (C) 2017"<br>
+         *			&nbsp; **OriginalFileName**:åŸå§‹æ–‡ä»¶åç§°ï¼Œé»˜è®¤å€¼"NCUIDemo.exe"<br>
+         *			&nbsp; **ProductName**:äº§å“åç§°ï¼Œé»˜è®¤å€¼"NCUIæ¼”ç¤ºç¨‹åº"<br>
+         *			&nbsp; **ProductVersion**:äº§å“ç‰ˆæœ¬ï¼Œé»˜è®¤å€¼"1.0.0.0"<br>
+         *			&nbsp; **Icon**:å›¾æ ‡è·¯å¾„ï¼Œé»˜è®¤ä½¿ç”¨å½“å‰ç¨‹åºçš„å›¾æ ‡<br>
          *
-         * @param	#String ÅäÖÃÎÄ¼şÂ·¾¶£¬ÎÄ¼şÄÚÈİ±ØĞëÎªJSON¸ñÊ½.
+         * @param	#String é…ç½®æ–‡ä»¶è·¯å¾„ï¼Œæ–‡ä»¶å†…å®¹å¿…é¡»ä¸ºJSONæ ¼å¼.
          *
-         * @return	#Boolean true ³É¹¦/ false Ê§°Ü.
+         * @return	#Boolean true æˆåŠŸ/ false å¤±è´¥.
          */
         
         amo::Any loadDiskSettings(IPCMessage::SmartType msg);
@@ -59,7 +59,7 @@ namespace amo {
         /*!
          * @fn	amo::Any RceditTransfer::getDefaultFileSettings(IPCMessage::SmartType msg);
          * @tag static sync
-         * @brief	»ñÈ¡Ä¬ÈÏµÄÎÄ¼ş²ÎÊı.
+         * @brief	è·å–é»˜è®¤çš„æ–‡ä»¶å‚æ•°.
          *
          *
          * @return	#JsonObject.
@@ -70,7 +70,7 @@ namespace amo {
         /*!
          * @fn	amo::Any RceditTransfer::getDefaultAppSettings(IPCMessage::SmartType msg);
          * @tag static sync
-         * @brief	»ñÈ¡Ä¬ÈÏµÄAPPÆô¶¯²ÎÊı.
+         * @brief	è·å–é»˜è®¤çš„APPå¯åŠ¨å‚æ•°.
          *
          * @return	#JsonObject.
          */
@@ -80,7 +80,7 @@ namespace amo {
         /*!
          * @fn	amo::Any RceditTransfer::getDefaultBrowserSettings(IPCMessage::SmartType msg);
          *
-         * @brief	»ñÈ¡Ä¬ÈÏµÄä¯ÀÀÆ÷´°¿ÚÆô¶¯²ÎÊı.
+         * @brief	è·å–é»˜è®¤çš„æµè§ˆå™¨çª—å£å¯åŠ¨å‚æ•°.
          *
          * @return	#JsonObject.
          */
@@ -90,7 +90,7 @@ namespace amo {
         /*!
          * @fn	amo::Any RceditTransfer::getDefaultSplashSettings(IPCMessage::SmartType msg);
          * @tag static sync
-         * @brief	»ñÈ¡Ä¬ÈÏµÄÆô¶¯»­Ãæ.
+         * @brief	è·å–é»˜è®¤çš„å¯åŠ¨ç”»é¢.
          *
          * @return	#JsonObject.
          */
@@ -100,7 +100,7 @@ namespace amo {
         /**
          * @fn	amo::Any RceditTransfer::getDefaultSettings(IPCMessage::SmartType msg);
          * @tag static sync
-         * @brief	»ñÈ¡Ä¬ÈÏµÄ³ÌĞòÅäÖÃ.
+         * @brief	è·å–é»˜è®¤çš„ç¨‹åºé…ç½®.
          *
          * @return	#JsonObject.
          */
@@ -110,13 +110,13 @@ namespace amo {
         /*!
          * @fn	amo::Any RceditTransfer::commit(IPCMessage::SmartType msg);
          * @tag static sync
-         * @brief	Éú³ÉEXEÎÄ¼ş£¬Õâ¸öº¯Êı½«°ÑÅäÖÃºÃµÄ²ÎÊıĞ´ÈëEXEÎÄ¼şÖĞ.
-         * 			×¢Òâ:**ÊäÈëµÄ²ÎÊı¶¼ÊÇJSON¸ñÊ½µÄ×Ö·û´®£¬²»ÊÇJSON¶ÔÏó**
+         * @brief	ç”ŸæˆEXEæ–‡ä»¶ï¼Œè¿™ä¸ªå‡½æ•°å°†æŠŠé…ç½®å¥½çš„å‚æ•°å†™å…¥EXEæ–‡ä»¶ä¸­.
+         * 			æ³¨æ„:**è¾“å…¥çš„å‚æ•°éƒ½æ˜¯JSONæ ¼å¼çš„å­—ç¬¦ä¸²ï¼Œä¸æ˜¯JSONå¯¹è±¡**
          *
-         * @param	#String EXEÎÄ¼şĞÅÏ¢£¬JSON×Ö·û´®£¬¿ÉÓÃ¼û{@link loadDiskSettings=rcedit.loadDiskSettings}.
-         * @param	#String Æô¶¯²ÎÊı,JSON×Ö·û´®£¬¿ÉÓÃÖµ¼û{@link Æô¶¯²ÎÊı}.
-         * @param	#String ä¯ÀÀÆ÷´°¿Ú²ÎÊı,JSON×Ö·û´®£¬¿ÉÓÃÖµ¼û{@link ä¯ÀÀÆ÷´°¿Ú²ÎÊı}.
-         * @param	#String Æô¶¯»­Ãæ²ÎÊı,JSON×Ö·û´®£¬¿ÉÓÃÖµ¼û{@link Æô¶¯»­Ãæ}.
+         * @param	#String EXEæ–‡ä»¶ä¿¡æ¯ï¼ŒJSONå­—ç¬¦ä¸²ï¼Œå¯ç”¨è§{@link loadDiskSettings=rcedit.loadDiskSettings}.
+         * @param	#String å¯åŠ¨å‚æ•°,JSONå­—ç¬¦ä¸²ï¼Œå¯ç”¨å€¼è§{@link å¯åŠ¨å‚æ•°}.
+         * @param	#String æµè§ˆå™¨çª—å£å‚æ•°,JSONå­—ç¬¦ä¸²ï¼Œå¯ç”¨å€¼è§{@link æµè§ˆå™¨çª—å£å‚æ•°}.
+         * @param	#String å¯åŠ¨ç”»é¢å‚æ•°,JSONå­—ç¬¦ä¸²ï¼Œå¯ç”¨å€¼è§{@link å¯åŠ¨ç”»é¢}.
          *
          * @return	#Boolean true/false.
          * @example
@@ -139,7 +139,7 @@ namespace amo {
         /*!
         * @fn	amo::Any RceditTransfer::commit(IPCMessage::SmartType msg);
         * @tag static sync
-        * @brief	Éú³ÉEXEÎÄ¼ş£¬Õâ¸öº¯Êı½«°ÑÅäÖÃºÃµÄ²ÎÊıĞ´ÈëEXEÎÄ¼şÖĞ.
+        * @brief	ç”ŸæˆEXEæ–‡ä»¶ï¼Œè¿™ä¸ªå‡½æ•°å°†æŠŠé…ç½®å¥½çš„å‚æ•°å†™å…¥EXEæ–‡ä»¶ä¸­.
         *
         * @return	#Boolean .
         * @example

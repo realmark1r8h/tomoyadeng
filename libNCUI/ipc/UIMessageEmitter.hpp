@@ -1,4 +1,4 @@
-// Created by amoylel on 06/30/2017.
+Ôªø// Created by amoylel on 06/30/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_UIMESSAGEEMITTER_HPP__
@@ -22,7 +22,7 @@ namespace amo {
     public:
         UIMessageEmitter(CefRefPtr<CefFrame> frame)
             : m_pFrame(frame) {
-            // frame ø…“‘≤ª¥Ê‘⁄£¨ƒ«√¥»´œÚNodeJS∑¢ÀÕœ˚œ¢
+            // frame ÂèØ‰ª•‰∏çÂ≠òÂú®ÔºåÈÇ£‰πàÂÖ®ÂêëNodeJSÂèëÈÄÅÊ∂àÊÅØ
             if (!m_pFrame) {
                 return;
             }
@@ -179,7 +179,7 @@ namespace amo {
             args->setValue(IPCArgsPosInfo::FrameID, m_nFrameID);
         }
     protected:
-        /*! @brief	“≥√ÊFrame÷∏’Î. */
+        /*! @brief	È°µÈù¢FrameÊåáÈíà. */
         CefRefPtr<CefFrame> m_pFrame;
         
     };

@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+ï»¿#include "stdAfx.h"
 
 #include "handler/RenderProcessHandler.h"
 
@@ -105,7 +105,7 @@ namespace amo {
             return;
         }
         
-        // Ö»ÔÚÀëÆÁÄ£Ê½ÏÂ¼ÆËãÔªËØÎ»ÖÃ
+        // åªåœ¨ç¦»å±æ¨¡å¼ä¸‹è®¡ç®—å…ƒç´ ä½ç½®
         if (!iter->second->offscreen) {
             return;
         }
@@ -247,7 +247,7 @@ namespace amo {
         if (navigation_type == NAVIGATION_BACK_FORWARD) {
             auto iter = m_browserSettingsMap.find(browser->GetIdentifier());
             
-            // ÅĞ¶ÏÊÇ·ñÔÊĞíÇ°½øºóÍË ÆÁ±ÎBackSpace»ØÍËÒ³Ãæ
+            // åˆ¤æ–­æ˜¯å¦å…è®¸å‰è¿›åé€€ å±è”½BackSpaceå›é€€é¡µé¢
             if (iter != m_browserSettingsMap.end()
                     && !iter->second->back_forword) {
                 return true;
@@ -255,7 +255,7 @@ namespace amo {
         } else    if (navigation_type == NAVIGATION_RELOAD) {
             auto iter = m_browserSettingsMap.find(browser->GetIdentifier());
             
-            // ÅĞ¶ÏÊÇ·ñÔÊĞíÒ³ÃæË¢ĞÂ
+            // åˆ¤æ–­æ˜¯å¦å…è®¸é¡µé¢åˆ·æ–°
             if (iter != m_browserSettingsMap.end()
                     && !iter->second->reload) {
                 return true;
@@ -278,7 +278,7 @@ namespace amo {
     
     CefRefPtr<CefLoadHandler> RenderProcessHandler::GetLoadHandler() {
     
-        $clog(amo::cdevel << func_orient << "GetLoadHandler¡£" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "GetLoadHandlerã€‚" << amo::endl;);
         CefRefPtr<CefLoadHandler> load_handler;
         DelegateSet::iterator it = m_Delegates.begin();
         
@@ -295,7 +295,7 @@ namespace amo {
     
     void RenderProcessHandler::OnBrowserDestroyed(CefRefPtr<CefBrowser> browser) {
     
-        $clog(amo::cdevel << func_orient << "ä¯ÀÀÆ÷Ïú»Ù¡£" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "æµè§ˆå™¨é”€æ¯ã€‚" << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         m_browserSettingsMap.erase(browser->GetIdentifier());
@@ -334,14 +334,14 @@ namespace amo {
         /* CefPostTask(TID_RENDERER, NewCefRunnableMethod(this,
                      &RenderProcessHandler::afterCreatePipe,
                      browser, pExchanger));*/
-        $clog(amo::cdevel << func_orient << ", ×¼±¸" << amo::endl;);
-        //MessageBoxA(NULL, "ÉÁÍ¼", __FUNCTION__, MB_OK);
+        $clog(amo::cdevel << func_orient << ", å‡†å¤‡" << amo::endl;);
+        //MessageBoxA(NULL, "é—ªå›¾", __FUNCTION__, MB_OK);
         
     }
     
     void RenderProcessHandler::afterCreatePipe(CefRefPtr<CefBrowser> browser,
             std::shared_ptr<ProcessExchanger> pExchanger, Any ret) {
-        $clog(amo::cdevel << func_orient << ", ¿ªÊ¼" << amo::endl;);
+        $clog(amo::cdevel << func_orient << ", å¼€å§‹" << amo::endl;);
         int nBrowserID = browser->GetIdentifier();
         auto exchangerMgr = RendererProcessExchangerManager::getInstance();
         exchangerMgr->addExchanger(nBrowserID, pExchanger);
@@ -350,13 +350,13 @@ namespace amo {
             ret = exchangerMgr->exchange <Any>(nBrowserID);
         }
         
-        $clog(amo::cdevel << func_orient << "×¢²á£º" << browser->GetIdentifier() <<
+        $clog(amo::cdevel << func_orient << "æ³¨å†Œï¼š" << browser->GetIdentifier() <<
               amo::endl;);
               
-        // ¹ÜµÀ´´½¨³É¹¦ºóÔÙ×¢²áBrowser
+        // ç®¡é“åˆ›å»ºæˆåŠŸåå†æ³¨å†ŒBrowser
         RegisterBrowser(browser);
         
-        // ×¢²áHandler
+        // æ³¨å†ŒHandler
         auto manager = V8HandlerManager::getInstance();
         manager->Register(nBrowserID, new  DragWindowV8Handler());
         manager->Register(nBrowserID, new EventEmitterV8Handler());
@@ -388,12 +388,12 @@ namespace amo {
         pTransfer->setWorkOnRenderer(true);
         amo::RendererTransferMgr::getInstance()->addTransfer(browser->GetIdentifier(),
                 pTransfer);
-        // Õâ¸öIPCRendererV8HandlerÒ²Ó¦¸Ã¼Ó½øÈ¥µÄ¡£
+        // è¿™ä¸ªIPCRendererV8Handlerä¹Ÿåº”è¯¥åŠ è¿›å»çš„ã€‚
         RendererTransferMgr::getInstance()->registerClass(nBrowserID);
         
         auto classManager = ClassMethodMgr::getInstance();
         
-        // Ìí¼ÓäÖÈ¾½ø³ÌµÄtransfer
+        // æ·»åŠ æ¸²æŸ“è¿›ç¨‹çš„transfer
         auto rendererTransferMap = RendererTransferMgr::getInstance()->getTransferMap(
                                        nBrowserID);
                                        
@@ -409,11 +409,11 @@ namespace amo {
         browser->SendProcessMessage(PID_BROWSER, msg);
         //bool bOk  = (bool)exchangerMgr->Exchange <Any>(nBrowserID);
         
-        $clog(amo::cdevel << func_orient << ", ½áÊø" << amo::endl;);
+        $clog(amo::cdevel << func_orient << ", ç»“æŸ" << amo::endl;);
     }
     
     void RenderProcessHandler::RenderThreadActivityDetector() {
-        //$clog(amo::cdevel << func_orient << "äÖÈ¾½ø³Ì»î×Å" << amo::endl;);
+        //$clog(amo::cdevel << func_orient << "æ¸²æŸ“è¿›ç¨‹æ´»ç€" << amo::endl;);
 #if CHROME_VERSION_BUILD >=2704
         CefPostDelayedTask(TID_RENDERER,
                            base::Bind(&RenderProcessHandler::RenderThreadActivityDetector, this),
@@ -430,7 +430,7 @@ namespace amo {
     void RenderProcessHandler::OnBrowserCreated(CefRefPtr<CefBrowser> browser) {
     
         AMO_TIMER_ELAPSED();
-        $clog(amo::cdevel << func_orient << "ä¯ÀÀÆ÷´´½¨³É¹¦¡£" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "æµè§ˆå™¨åˆ›å»ºæˆåŠŸã€‚" << amo::endl;);
         amo::timer t;
         int nBrowserID = browser->GetIdentifier();
         
@@ -460,10 +460,10 @@ namespace amo {
                 new amo::pipe<amo::pipe_type::client>(strPipeClientName));
                 
             //browser->SendProcessMessage(PID_BROWSER, msg);
-            $clog(amo::cdevel << func_orient << "´´½¨¹ÜµÀ·şÎñ¶Ë£º" <<
+            $clog(amo::cdevel << func_orient << "åˆ›å»ºç®¡é“æœåŠ¡ç«¯ï¼š" <<
                   strPipeServerName << amo::endl;);
                   
-            ////µÈ´ı¹ÜµÀ½¨Á¢
+            ////ç­‰å¾…ç®¡é“å»ºç«‹
             //bool rec = m_pRenderPipeServer->connect();
             //bool bOk = m_pBrowserPipeClient->connect();
             
@@ -489,7 +489,7 @@ namespace amo {
                 int nBrowserID = browser->GetIdentifier();
                 runner->execute("createPipeClient", str.str(), nBrowserID);
                 
-                // Èç¹ûÊÇµ±Ç°½ø³ÌµÄµÚÒ»¸öBrowser,£¬ÄÇÃ´Ö±½Ó´´½¨¹ÜµÀ
+                // å¦‚æœæ˜¯å½“å‰è¿›ç¨‹çš„ç¬¬ä¸€ä¸ªBrowser,ï¼Œé‚£ä¹ˆç›´æ¥åˆ›å»ºç®¡é“
                 createPipe(browser->GetIdentifier(), pExchanger);
                 AMO_TIMER_ELAPSED();
                 Any ret;
@@ -499,8 +499,8 @@ namespace amo {
                 /* std::shared_ptr<RenderMessageEmitter> runner;
                  runner.reset(new RenderMessageEmitter(pBrowser->GetMainFrame()));
                  runner->setValue(IPCArgsPosInfo::TransferName, "ipcMain");*/
-                // ÔÚµ¥¶ÀµÄÏß³ÌÖĞÁ¬½Ó¹ÜµÀ
-                // ²»ÖªÊ²Ã´Ô­Òò£¬std::async²»ÄÜ´´½¨Ïß³Ì
+                // åœ¨å•ç‹¬çš„çº¿ç¨‹ä¸­è¿æ¥ç®¡é“
+                // ä¸çŸ¥ä»€ä¹ˆåŸå› ï¼Œstd::asyncä¸èƒ½åˆ›å»ºçº¿ç¨‹
                 /*    std::async(std::launch::async,
                 			   std::bind(&RenderProcessHandler::createPipe,
                 						 this,
@@ -508,7 +508,7 @@ namespace amo {
                 						 pExchanger));*/
                 int nBrowserID = browser->GetIdentifier();
                 
-                // ÔÙËÀËø,¾ÍÖ»ÄÜÁ½¸ö½ø³Ì¶¼·Åµ½µ¥¶ÀµÄÏß³ÌÀï½øĞĞ¹ÜµÀÁ¬½Ó
+                // å†æ­»é”,å°±åªèƒ½ä¸¤ä¸ªè¿›ç¨‹éƒ½æ”¾åˆ°å•ç‹¬çš„çº¿ç¨‹é‡Œè¿›è¡Œç®¡é“è¿æ¥
                 //
                 if (ClientHandler::SingleProcessMode()) {
                     auto emitter = RenderMessageEmitter(pBrowser->GetMainFrame());
@@ -522,7 +522,7 @@ namespace amo {
                     afterCreatePipe(browser, pExchanger, ret);
                 } else {
                     //MessageBoxA(NULL, "8888", "", MB_OK);
-                    //// ´Ó½ø³ÌÄ£Ê½ÏÂ¿ÉÒÔ·¢ËÍÍ¬²½ÏûÏ¢´´½¨¹ÜµÀ,ÕâÀï¿ÉÒÔÓÀÔ¶µ÷ÓÃ²»µ½
+                    //// ä»è¿›ç¨‹æ¨¡å¼ä¸‹å¯ä»¥å‘é€åŒæ­¥æ¶ˆæ¯åˆ›å»ºç®¡é“,è¿™é‡Œå¯ä»¥æ°¸è¿œè°ƒç”¨ä¸åˆ°
                     //std::thread th(std::bind(&RenderProcessHandler::createPipe,
                     //                         this,
                     //                         nBrowserID,
@@ -563,14 +563,14 @@ namespace amo {
         std::string s_extension(skinNCUI);
         
         $clog(amo::cdevel << func_orient <<
-              "WebKit³õÊ¼»¯Íê³É£¬¿ªÊ¼×¢²áNativeJS¡£" << amo::endl;);
+              "WebKitåˆå§‹åŒ–å®Œæˆï¼Œå¼€å§‹æ³¨å†ŒNativeJSã€‚" << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
             (*it)->OnWebKitInitialized();
         }
         
-        //´´½¨Render½ø³ÌMessageRouter
+        //åˆ›å»ºRenderè¿›ç¨‹MessageRouter
         CefMessageRouterConfig config;
         m_pMessageRouter = CefMessageRouterRendererSide::Create(config);
         
@@ -579,7 +579,7 @@ namespace amo {
     
     void RenderProcessHandler::OnRenderThreadCreated(CefRefPtr<CefListValue>
             extra_info) {
-        $clog(amo::cdevel << func_orient << "äÖÈ¾½ø³Ì´´½¨¡£" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "æ¸²æŸ“è¿›ç¨‹åˆ›å»ºã€‚" << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         for (; it != m_Delegates.end(); ++it) {
@@ -590,7 +590,7 @@ namespace amo {
         args->SetProgram(CefCommandLine::GetGlobalCommandLine()->GetProgram());
         
         OnNodeCefCreated(*args.get());
-        // Ïß³Ì»î¶¯¼ì²â
+        // çº¿ç¨‹æ´»åŠ¨æ£€æµ‹
         RenderThreadActivityDetector();
     }
     

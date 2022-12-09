@@ -1,4 +1,4 @@
-// Created by amoylel on 07/17/2018.
+ï»¿// Created by amoylel on 07/17/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef AMO_ACTIONTRANSFER_32C4DC11_6CBC_4D06_86C2_CBB3DC621A17_H__
@@ -13,7 +13,7 @@ namespace amo {
     /*!
      * @class	action
      *
-     * @brief	ÄÚÖÃÊÂ¼ş.
+     * @brief	å†…ç½®äº‹ä»¶.
      */
     
     class ActionTransfer
@@ -26,18 +26,18 @@ namespace amo {
         /*!
          * @fn	Any ActionTransfer::execute(IPCMessage::SmartType msg);
          * @tag static
-         * @brief	Ö´ĞĞÒ»¸öÄÚÖÃ¶¯×÷£¬¿ÉÒÔÖ§³ÖÊÂ¼ş²Î¿¼{@link Ô¤ÖÃÊÂ¼ş}.
+         * @brief	æ‰§è¡Œä¸€ä¸ªå†…ç½®åŠ¨ä½œï¼Œå¯ä»¥æ”¯æŒäº‹ä»¶å‚è€ƒ{@link é¢„ç½®äº‹ä»¶}.
          *
-         * @param	#String ¶¯×÷.
+         * @param	#String åŠ¨ä½œ.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
          ```
         	include('action');
-        	// ×îĞ¡»¯µ±Ç°´°¿Ú
+        	// æœ€å°åŒ–å½“å‰çª—å£
         	action.execute('minimize');
-        	// ×î´ó»¯µ±Ç°´°¿Ú
+        	// æœ€å¤§åŒ–å½“å‰çª—å£
         	action.execute('maximize');
          ```
          */

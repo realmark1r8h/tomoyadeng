@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "ui/win//LocalWindow.h"
 #include "settings/NativeWindowSettings.h"
 #include "ipc/Any.hpp"
@@ -28,7 +28,7 @@ namespace amo {
                                    BOOL& bHandled) {
                                    
                                    
-        // ÒÆ³ýÓ³Éä
+        // ç§»é™¤æ˜ å°„
         for (auto& p : m_oTransferedSet) {
             auto manager = TransferMappingMgr<ControlTransfer>::getInstance();
             manager->removeMapping(p);
@@ -55,22 +55,22 @@ namespace amo {
         //$cdevel("LPARAM:0x{}", amo::string::from_number((int)wParam, 16).str());
         
         // 0xf014 == SC_
-        // ½ûÖ¹¸Ä±ä´óÐ¡
+        // ç¦æ­¢æ”¹å˜å¤§å°
         if (!m_pNativeSettings->resizable && (wParam == SC_MAXIMIZE)) {
             return TRUE;
         }
         
-        // ½ûÖ¹×îÐ¡»¯
+        // ç¦æ­¢æœ€å°åŒ–
         if (!m_pNativeSettings->minimizable
                 && (wParam == SC_MINIMIZE || wParam == 0xf022)) {
             return TRUE;
         }
         
-        // Èç¹ûÉèÖÃÁË×î´ó¿í¸ß£¬ÄÇÃ´²»ÔÊÐí´°¿Ú×î´ó»¯
+        // å¦‚æžœè®¾ç½®äº†æœ€å¤§å®½é«˜ï¼Œé‚£ä¹ˆä¸å…è®¸çª—å£æœ€å¤§åŒ–
         bool hasSetMaximize =
             (m_PaintManager.GetMaxInfo().cx > 0 || m_PaintManager.GetMaxInfo().cy > 0);
             
-        // ½ûÖ¹×î´ó»¯
+        // ç¦æ­¢æœ€å¤§åŒ–
         if ((!m_pNativeSettings->maximizable || hasSetMaximize) &&
                 (wParam == SC_MAXIMIZE || wParam == 0xf032)) {
             // || wParam == 0xf014
@@ -83,9 +83,9 @@ namespace amo {
             $cdevel("LPARAM:0x{}", amo::string::from_number((int)wParam, 16).str());
         }
         
-        // ½ûÖ¹¹Ø±Õ
+        // ç¦æ­¢å…³é—­
         if (!m_pNativeSettings->closable && wParam == SC_CLOSE) {
-            // 255 Ç¿ÖÆ¹Ø±Õ´°¿Ú
+            // 255 å¼ºåˆ¶å…³é—­çª—å£
             if (wParam != 255) {
                 return TRUE;
             }
@@ -235,7 +235,7 @@ namespace amo {
         std::string strName = amo::string(msg.pSender->GetName()).to_utf8();
         std::string eventType = amo::string(msg.sType).to_utf8();
         
-        // ¼ÓÁË¼ÆÊ±Æ÷ timer ´¥·¢ Ì«¶à£¬ÏÈÆÁ±Îµô
+        // åŠ äº†è®¡æ—¶å™¨ timer è§¦å‘ å¤ªå¤šï¼Œå…ˆå±è”½æŽ‰
         if (eventType != "timer") {
             json.put("name", strName);
             json.put("type", eventType);
@@ -258,7 +258,7 @@ namespace amo {
     
     Any LocalWindow::showTitleBar(IPCMessage::SmartType msg) {
     
-        // ÓÉBrowserWindow ¼Ì³ÐÊµÏÖ
+        // ç”±BrowserWindow ç»§æ‰¿å®žçŽ°
         return Undefined();
     }
     Any LocalWindow::topmost(IPCMessage::SmartType msg) {
@@ -279,7 +279,7 @@ namespace amo {
         bool bFull = msg->getArgumentList()->getBool(0);
         
         if (bFull && !m_pNativeSettings->fullscreenable) {
-            // ½ûÖ¹È«ÆÁ
+            // ç¦æ­¢å…¨å±
             return Undefined();
         }
         
@@ -300,7 +300,7 @@ namespace amo {
             width = height = 0;
         }
         
-        // DEBUG Ä£Ê½ÏÂ²»ÄÜÎª0£¬»á±»¶ÏÑÔ
+        // DEBUG æ¨¡å¼ä¸‹ä¸èƒ½ä¸º0ï¼Œä¼šè¢«æ–­è¨€
 #ifdef _DEBUG
         
         if (width == 0 || height == 0) {
@@ -339,7 +339,7 @@ namespace amo {
             width = height = 0;
         }
         
-        // DEBUG Ä£Ê½ÏÂ²»ÄÜÎª0£¬»á±»¶ÏÑÔ
+        // DEBUG æ¨¡å¼ä¸‹ä¸èƒ½ä¸º0ï¼Œä¼šè¢«æ–­è¨€
 #ifdef _DEBUG
         
         if (width == 0 || height == 0) {
@@ -381,7 +381,7 @@ namespace amo {
         
         bool resizeable = args->getBool(0);
         m_pNativeSettings->resizable = resizeable;
-        //¸²¸ÇµômaximizableÖ®ÓÐÉèÖÃ
+        //è¦†ç›–æŽ‰maximizableä¹‹æœ‰è®¾ç½®
         m_pNativeSettings->maximizable = true;
         
         

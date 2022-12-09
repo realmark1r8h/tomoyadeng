@@ -1,4 +1,4 @@
-// Created by amoylel on 05/20/2017.
+ï»¿// Created by amoylel on 05/20/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_IPCRENDERERV8HANDLER_H__
@@ -12,7 +12,7 @@
 
 namespace amo {
 
-    // JS Òì²½µ÷ÓÃC++ ½á¹û»Øµ÷º¯Êı´¦ÀíÀà
+    // JS å¼‚æ­¥è°ƒç”¨C++ ç»“æœå›è°ƒå‡½æ•°å¤„ç†ç±»
     class IPCRendererV8Handler : public JsClassObjectV8Handler
         , public ClassTransfer {
         
@@ -24,7 +24,7 @@ namespace amo {
         /*!
          * @fn	Any IPCRendererV8Handler::asyncExecuteResult(IPCMessage::SmartType msg);
          *
-         * @brief	Òì²½µ÷ÓÃC++½á¹û»Øµ÷´¦Àíº¯Êı.
+         * @brief	å¼‚æ­¥è°ƒç”¨C++ç»“æœå›è°ƒå¤„ç†å‡½æ•°.
          *
          * @param	msg	The message.
          *
@@ -35,7 +35,7 @@ namespace amo {
         /*!
          * @fn	Any IPCRendererV8Handler::runJSFunction(IPCMessage::SmartType msg);
          *
-         * @brief	µ÷ÓÃJSº¯Êı.
+         * @brief	è°ƒç”¨JSå‡½æ•°.
          *
          * @param	msg	The message.
          *
@@ -47,7 +47,7 @@ namespace amo {
         /*!
          * @fn	Any IPCRendererV8Handler::runJsFragment(IPCMessage::SmartType msg);
          *
-         * @brief	ÔËĞĞJSÆ¬¶Î.
+         * @brief	è¿è¡ŒJSç‰‡æ®µ.
          *
          * @param	msg	The message.
          *
@@ -58,7 +58,7 @@ namespace amo {
         /*!
          * @fn	Any IPCRendererV8Handler::triggerEvent(IPCMessage::SmartType msg);
          *
-         * @brief	´¥·¢ÊÂ¼ş.
+         * @brief	è§¦å‘äº‹ä»¶.
          *
          * @param	msg	The message.
          *
@@ -69,8 +69,8 @@ namespace amo {
         /*!
          * @fn	Any IPCRendererV8Handler::triggerEventAllFrame(IPCMessage::SmartType msg);
          *
-         * @brief	´¥·¢ËùÓĞµ±Ç°BrowserÖĞËùÓĞFrame×¢²áµÄÊÂ¼ş
-         * 			Ö¸¶¨Browser£¬ ²»Ö¸¶¨Frame.
+         * @brief	è§¦å‘æ‰€æœ‰å½“å‰Browserä¸­æ‰€æœ‰Frameæ³¨å†Œçš„äº‹ä»¶
+         * 			æŒ‡å®šBrowserï¼Œ ä¸æŒ‡å®šFrame.
          *
          * @param	msg	The message.
          *
@@ -88,7 +88,7 @@ namespace amo {
         /*!
          * @fn	CefRefPtr<CefBrowser> IPCRendererV8Handler::getBrowser() const
          *
-         * @brief	»ñÈ¡Browser.
+         * @brief	è·å–Browser.
          *
          * @return	The browser.
          */
@@ -97,7 +97,7 @@ namespace amo {
         /*!
          * @fn	void IPCRendererV8Handler::setBrowser(CefRefPtr<CefBrowser> pBrowser);
          *
-         * @brief	ÉèÖÃµ±Ç°¶ÔÏóËùÊôBrowser..
+         * @brief	è®¾ç½®å½“å‰å¯¹è±¡æ‰€å±Browser..
          *
          * @param	pBrowser	The browser.
          */
@@ -120,7 +120,7 @@ namespace amo {
         AMO_CEF_END_OBJECT_FACTORY()
         
     protected:
-        /*! @brief	The browser Ã»Ê²Ã´ÓÃ£¬BrowserÏÖÔÚ¿ÉÒÔ´ÓIPCMessageÀïÃæ»ñÈ¡. */
+        /*! @brief	The browser æ²¡ä»€ä¹ˆç”¨ï¼ŒBrowserç°åœ¨å¯ä»¥ä»IPCMessageé‡Œé¢è·å–. */
         CefRefPtr<CefBrowser> m_pBrowser;
         
     };

@@ -1,4 +1,4 @@
-// Created by amoylel on 07/29/2018.
+ï»¿// Created by amoylel on 07/29/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef AMO_APPGEN_35F727A0_B608_4AC6_88F9_AE8884AE9E52_HPP__
@@ -7,19 +7,19 @@
 namespace amo {
 
     /*!
-     * @class	Ó¦ÓÃÉú³É
+     * @class	åº”ç”¨ç”Ÿæˆ
      * @chapter basic
      *
-     * @brief	¿ÉÒÔÍ¨¹ı¸ÃÄ£¿éÉú³É×Ô¶¨Òå³ÌĞò.
+     * @brief	å¯ä»¥é€šè¿‡è¯¥æ¨¡å—ç”Ÿæˆè‡ªå®šä¹‰ç¨‹åº.
      * 	@script	../../example/js/appGen.js
      */
     
     class AppGen {
     
         /*!
-         * @section	ÅäÖÃÎÄ¼ş
+         * @section	é…ç½®æ–‡ä»¶
          *
-         * @brief	±à¼­³ÌĞòÅäÖÃÎÄ¼ş£¬ÓÒ¼ü±à¼­¿ò¿ÉÒÔÉú³É³ÌĞò£¬ÏêÏ¸ÄÚÈİ¿É²Î¿¼{@link rcedit}.
+         * @brief	ç¼–è¾‘ç¨‹åºé…ç½®æ–‡ä»¶ï¼Œå³é”®ç¼–è¾‘æ¡†å¯ä»¥ç”Ÿæˆç¨‹åºï¼Œè¯¦ç»†å†…å®¹å¯å‚è€ƒ{@link rcedit}.
          *
          * @see rcedit
          *

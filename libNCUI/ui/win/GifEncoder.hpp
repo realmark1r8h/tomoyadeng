@@ -1,4 +1,4 @@
-// Created by amoylel on 14/09/2018.
+﻿// Created by amoylel on 14/09/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBNCUI_GIFENCODER_58821034_5413_44EA_8E45_CA678392C0B4_HPP__

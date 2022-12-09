@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "transfer/BrowserHostTransfer.h"
 #include "transfer/BrowserTransfer.h"
 

@@ -1,4 +1,4 @@
-// Created by amoylel on 07/10/2017.
+ï»¿// Created by amoylel on 07/10/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_IPCNODEV8HANDLER_H__
@@ -12,7 +12,7 @@
 
 namespace amo {
 
-    // JS Òì²½µ÷ÓÃC++ ½á¹û»Øµ÷º¯Êı´¦ÀíÀà
+    // JS å¼‚æ­¥è°ƒç”¨C++ ç»“æœå›è°ƒå‡½æ•°å¤„ç†ç±»
     class IPCNodeV8Handler   : public ClassTransfer {
     
     public:
@@ -20,22 +20,22 @@ namespace amo {
         
         virtual ~IPCNodeV8Handler();
         
-        // Òì²½µ÷ÓÃC++½á¹û»Øµ÷´¦Àíº¯Êı
+        // å¼‚æ­¥è°ƒç”¨C++ç»“æœå›è°ƒå¤„ç†å‡½æ•°
         amo::Any asyncExecuteResult(IPCMessage::SmartType msg);
         
-        // µ÷ÓÃJSº¯Êı
+        // è°ƒç”¨JSå‡½æ•°
         amo::Any runJSFunction(IPCMessage::SmartType msg);
         
-        // ÔËĞĞJSÆ¬¶Î
+        // è¿è¡ŒJSç‰‡æ®µ
         amo::Any runJsFragment(IPCMessage::SmartType msg);
         
-        // ´¥·¢ÊÂ¼ş
+        // è§¦å‘äº‹ä»¶
         amo::Any triggerEvent(IPCMessage::SmartType msg);
         
-        // ´¥·¢ËùÓĞµ±Ç°BrowserÖĞËùÓĞFrame×¢²áµÄÊÂ¼ş £¬Ö¸¶¨Browser£¬ ²»Ö¸¶¨Frame
+        // è§¦å‘æ‰€æœ‰å½“å‰Browserä¸­æ‰€æœ‰Frameæ³¨å†Œçš„äº‹ä»¶ ï¼ŒæŒ‡å®šBrowserï¼Œ ä¸æŒ‡å®šFrame
         amo::Any emitEventAllFrame(IPCMessage::SmartType msg);
         
-        // »ñÈ¡²ÎÊı¸öÊı
+        // è·å–å‚æ•°ä¸ªæ•°
         int getArgsSize(std::shared_ptr<AnyArgsList> args) const;
         
         // for transfer

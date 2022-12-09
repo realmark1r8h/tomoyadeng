@@ -1,4 +1,4 @@
-// Created by amoylel on 07/21/2018.
+Ôªø// Created by amoylel on 07/21/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef AMO_DEMOS_23600CEC_4293_46F8_9F25_1C0648F046ED_HPP__
@@ -7,10 +7,10 @@
 namespace amo {
 
     /*!
-     * @class	—› æ≥Ã–Ú
-     * @desc	—› æ≥Ã–Ú
+     * @class	ÊºîÁ§∫Á®ãÂ∫è
+     * @desc	ÊºîÁ§∫Á®ãÂ∫è
      * @chapter basic
-     * @brief	“ª–©Demo∑Ω±„¡ÀΩ‚NCUI.
+     * @brief	‰∏Ä‰∫õDemoÊñπ‰æø‰∫ÜËß£NCUI.
      */
     
     class Demos {

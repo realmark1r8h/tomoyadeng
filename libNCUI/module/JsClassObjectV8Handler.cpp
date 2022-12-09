@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "module/JsClassObjectV8Handler.h"
 
 #include "module/basic/V8HandlerManager.h"
@@ -50,12 +50,12 @@ namespace amo {
     CefRefPtr<CefV8Value> JsClassObjectV8Handler::getV8Object(
         CefRefPtr<CefV8Value> object /*= NULL*/) {
         
-        // ²»Àí»áobjectÊÇ·ñÎª¿Õ£¬ÎÒÃÇÏÖÔÚ´´½¨µÄÊÇÒ»¸öÀà
+        // ä¸ç†ä¼šobjectæ˜¯å¦ä¸ºç©ºï¼Œæˆ‘ä»¬ç°åœ¨åˆ›å»ºçš„æ˜¯ä¸€ä¸ªç±»
         CefRefPtr<CefV8Value> _object;
         
         
         
-        // ´´½¨JSÀàµÄ¹¹Ôìº¯Êı
+        // åˆ›å»ºJSç±»çš„æ„é€ å‡½æ•°
 #if CHROME_VERSION_BUILD >= 2840
         _object = CefV8Value::CreateObject(m_pAccessor, NULL);
 #else
@@ -75,17 +75,17 @@ namespace amo {
         std::string strObjectName = getFuncMgr().getObjectName();
         bool bAssitObject = (strObjectName.find("CLASS.") == 0);
         
-        //CLASS.¶ÔÏóÓÃÀ´´úÌæCLASSÀ´µÄÊôĞÔÎŞ·¨ÉèÖÃµÄ¹¦ÄÜ£¬ËùÓĞÓ¦¸Ã¾ßÓĞÕâĞ©ÀàµÄ¹¦ÄÜ
+        //CLASS.å¯¹è±¡ç”¨æ¥ä»£æ›¿CLASSæ¥çš„å±æ€§æ— æ³•è®¾ç½®çš„åŠŸèƒ½ï¼Œæ‰€æœ‰åº”è¯¥å…·æœ‰è¿™äº›ç±»çš„åŠŸèƒ½
         //CefRefPtr<CefV8Handler> pFuncHandler(new JSExecV8Handler(getID()));
         
         for (auto& p : m_oFuncMgr.toMap()) {
-            // Àà
+            // ç±»
             if (bAssitObject) {
                 if (p.second.functionType() == TransferFuncStatic) {
                     CefRefPtr<CefV8Value> pFunc = CefV8Value::CreateFunction(p.second.m_strName,
                                                   JSExecV8Handler::GetHandler());
                     pFunc->SetUserData(this);
-                    // ´´½¨¾²Ì¬º¯Êı
+                    // åˆ›å»ºé™æ€å‡½æ•°
                     object->SetValue(p.second.m_strName,
                                      pFunc,
                                      V8_PROPERTY_ATTRIBUTE_NONE);
@@ -100,7 +100,7 @@ namespace amo {
                                      V8_PROPERTY_ATTRIBUTE_NONE);
                 }
             } else {
-                // ¶ÔÏó
+                // å¯¹è±¡
                 if (p.second.functionType() == TransferFuncNormal) {
                     CefRefPtr<CefV8Value> pFunc = CefV8Value::CreateFunction(p.second.m_strName,
                                                   JSExecV8Handler::GetHandler());
@@ -123,7 +123,7 @@ namespace amo {
         int nBrowserID = pContext->GetBrowser()->GetIdentifier();
         auto manager = V8HandlerManager::getInstance();
         
-        // Ìí¼ÓÒÀÀµÄ£¿é
+        // æ·»åŠ ä¾èµ–æ¨¡å—
         for (auto& moduleName : m_oFuncMgr.getModules()) {
             CefRefPtr<JsV8Handler> pHandler;
             pHandler = manager->createV8Handler(nBrowserID, moduleName);
@@ -154,8 +154,8 @@ namespace amo {
         object->SetValue("transferJson",
                          CefV8Value::CreateString(jsonStr),
                          V8_PROPERTY_ATTRIBUTE_READONLY);
-        // ÔÚTypeConvertor::ParseJsonToObject ÖĞÒÑ¾­½«¸Ã¶ÔÏó¼ÓÈëÁË»º´æ£¬
-        // ÕâÀï²»ĞèÒªÖØ¸´Ìí¼Ó addClassObject(getID(), object);
+        // åœ¨TypeConvertor::ParseJsonToObject ä¸­å·²ç»å°†è¯¥å¯¹è±¡åŠ å…¥äº†ç¼“å­˜ï¼Œ
+        // è¿™é‡Œä¸éœ€è¦é‡å¤æ·»åŠ  addClassObject(getID(), object);
     }
     
     

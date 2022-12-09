@@ -1,4 +1,4 @@
-// Created by amoylel on 12/27/2017.
+ï»¿// Created by amoylel on 12/27/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_PROCESSTRANSFER_H__
@@ -18,8 +18,8 @@ namespace amo {
      *
      * @chapter extend
      *
-     * @brief	×Ó½ø³ÌÀà£¬±¾Ä£¿éµÄ´ó²¿·Öº¯Êı¶¼±È½ÏÂı£¬¾¡¿ÉÄÜµÄ·Åµ½Ïß³ÌÀïÃæÈ¥Ö´ĞĞ<br>
-     * 			¹¤×÷Ïß³Ì**RendererÏß³Ì**
+     * @brief	å­è¿›ç¨‹ç±»ï¼Œæœ¬æ¨¡å—çš„å¤§éƒ¨åˆ†å‡½æ•°éƒ½æ¯”è¾ƒæ…¢ï¼Œå°½å¯èƒ½çš„æ”¾åˆ°çº¿ç¨‹é‡Œé¢å»æ‰§è¡Œ<br>
+     * 			å·¥ä½œçº¿ç¨‹**Rendererçº¿ç¨‹**
      */
     
     class ProcessTransfer
@@ -31,10 +31,10 @@ namespace amo {
         /*!
          * @fn	ProcessTransfer::Process(const std::string& strAppPath);
          * @tag constructor sync
-         * @brief	´´½¨Ò»¸ö½ø³ÌÀà.
+         * @brief	åˆ›å»ºä¸€ä¸ªè¿›ç¨‹ç±».
          *
-         * @param	#String ½ø³ÌÂ·¾¶ .
-         * @return  #Process ½ø³Ì¶ÔÏó.
+         * @param	#String è¿›ç¨‹è·¯å¾„ .
+         * @return  #Process è¿›ç¨‹å¯¹è±¡.
          * @example
          *
          ```
@@ -55,11 +55,11 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	Í¨¹ı³ÌĞòÃû³Æ²éÕÒ½ø³Ì.
+         * @brief	é€šè¿‡ç¨‹åºåç§°æŸ¥æ‰¾è¿›ç¨‹.
          *
-         * @param	#String ³ÌĞòÃû.
+         * @param	#String ç¨‹åºå.
          *
-         * @return	#Array Óë³ÌĞòÃûÆ¥ÅäµÄ½ø³ÌIDÁĞ±í.
+         * @return	#Array ä¸ç¨‹åºååŒ¹é…çš„è¿›ç¨‹IDåˆ—è¡¨.
          * @example
          *
          ```
@@ -73,15 +73,15 @@ namespace amo {
         /*!
          * @fn	Any ProcessTransfer::terminateProcessByName(IPCMessage::SmartType msg);
          *
-         * @brief	Í¨¹ı³ÌĞòÃû³Æ½áÊø½ø³Ì.
+         * @brief	é€šè¿‡ç¨‹åºåç§°ç»“æŸè¿›ç¨‹.
          *
-         * @param	#String ³ÌĞòÃû.
+         * @param	#String ç¨‹åºå.
          *
-         * @return	#Boolean true³É¹¦/falseÊ§°Ü.
-         * @example ÖÕÖ¹³ÌĞò
+         * @return	#Boolean trueæˆåŠŸ/falseå¤±è´¥.
+         * @example ç»ˆæ­¢ç¨‹åº
          *
          ```
-        	// ×¢Òâ£¬ÔËĞĞ¸ÃÊ¾Àı½«½áÊøµ±Ç°³ÌĞò
+        	// æ³¨æ„ï¼Œè¿è¡Œè¯¥ç¤ºä¾‹å°†ç»“æŸå½“å‰ç¨‹åº
         	include('Process');
         
         	Process.terminateProcessByName('NCUI.exe');
@@ -93,17 +93,17 @@ namespace amo {
         /*!
          * @fn	Any ProcessTransfer::killProcessByName(IPCMessage::SmartType msg);
          *
-         * @brief	Í¨¹ı³ÌĞòÃûÉ±ËÀ½ø³Ì.
+         * @brief	é€šè¿‡ç¨‹åºåæ€æ­»è¿›ç¨‹.
          *
-         * @param	#String ³ÌĞòÃû.
-         * @param	#Boolean=true ÊÇ·ñÉ±ËÀ×Ó½ø³Ì.
+         * @param	#String ç¨‹åºå.
+         * @param	#Boolean=true æ˜¯å¦æ€æ­»å­è¿›ç¨‹.
          *
-         * @return	#Boolean true³É¹¦/falseÊ§°Ü.
+         * @return	#Boolean trueæˆåŠŸ/falseå¤±è´¥.
          *
-         * @example ÖÕÖ¹³ÌĞò
+         * @example ç»ˆæ­¢ç¨‹åº
          *
          ```
-        	 // ×¢Òâ£¬ÔËĞĞ¸ÃÊ¾Àı½«½áÊøµ±Ç°³ÌĞò
+        	 // æ³¨æ„ï¼Œè¿è¡Œè¯¥ç¤ºä¾‹å°†ç»“æŸå½“å‰ç¨‹åº
         	 include('Process');
         
         	 Process.killProcessByName('NCUI.exe');
@@ -115,13 +115,13 @@ namespace amo {
         /*!
          * @fn	Any ProcessTransfer::start(IPCMessage::SmartType msg);
          *
-         * @brief	ÔËĞĞ×Ó³ÌĞò.
+         * @brief	è¿è¡Œå­ç¨‹åº.
          *
-         * @param	#String Æô¶¯²ÎÊı.
+         * @param	#String å¯åŠ¨å‚æ•°.
          *
-         * @return	#Boolean true³É¹¦/falseÊ§°Ü.
+         * @return	#Boolean trueæˆåŠŸ/falseå¤±è´¥.
          *
-         * @example ÖÕÖ¹³ÌĞò
+         * @example ç»ˆæ­¢ç¨‹åº
          *
          ```
         
@@ -137,9 +137,9 @@ namespace amo {
         /*!
          * @fn	Any ProcessTransfer::getResult(IPCMessage::SmartType msg);
          *
-         * @brief	»ñÈ¡×Ó½ø³ÌÖ´ĞĞ½á¹û£¬¸Ãº¯ÊıÓ¦¸Ã·Åµ½Ïß³ÌÀïÃæÈ¥Ö´ĞĞ£¬²»È»»á½«äÖÈ¾½ø³Ì×èÈû.
+         * @brief	è·å–å­è¿›ç¨‹æ‰§è¡Œç»“æœï¼Œè¯¥å‡½æ•°åº”è¯¥æ”¾åˆ°çº¿ç¨‹é‡Œé¢å»æ‰§è¡Œï¼Œä¸ç„¶ä¼šå°†æ¸²æŸ“è¿›ç¨‹é˜»å¡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
          ```

@@ -1,4 +1,4 @@
-// Created by amoylel on 05/21/2017.
+ï»¿// Created by amoylel on 05/21/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_ASYNCFUNCTIONMANAGER_HPP__
@@ -18,7 +18,7 @@ namespace amo {
     /*!
      * @class	AsyncFunctionWrapper
      *
-     * @brief	js Òì²½µ÷ÓÃC++½á¹û»Øµ÷º¯Êý.
+     * @brief	js å¼‚æ­¥è°ƒç”¨C++ç»“æžœå›žè°ƒå‡½æ•°.
      */
     
     class AsyncFunctionWrapper {

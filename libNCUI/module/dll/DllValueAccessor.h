@@ -1,4 +1,4 @@
-// Created by amoylel on 03/22/2017.
+ï»¿// Created by amoylel on 03/22/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_DLLVALUEACCESSOR_H__
@@ -78,7 +78,7 @@ namespace amo {
         int64_t m_nID;
     };
     
-    // ÕûÐÍ int8 int16 int32 int64 long,  long long  uint8 ...
+    // æ•´åž‹ int8 int16 int32 int64 long,  long long  uint8 ...
     template<typename T>
     class DllIntegerAccessor : public JsV8Handler {
     public:
@@ -136,7 +136,7 @@ namespace amo {
         int64_t m_nID;
     };
     
-    // ¸¡µãÐÍ float double long double
+    // æµ®ç‚¹åž‹ float double long double
     template<typename T>
     class DllFloatAccessor : public JsV8Handler {
     public:
@@ -370,7 +370,7 @@ namespace amo {
     
     // bool
     template<> class DllValueAccessor<bool> : public DllBoolAccessor {};
-    // ÕûÐÍ
+    // æ•´åž‹
     
     template<> class DllValueAccessor<int8_t> : public DllIntegerAccessor<int8_t> {};
     template<> class DllValueAccessor<int16_t> : public DllIntegerAccessor<int16_t> {};
@@ -388,7 +388,7 @@ namespace amo {
     template<> class DllValueAccessor<long> : public DllIntegerAccessor<long> {};
     template<> class DllValueAccessor<unsigned long> : public DllIntegerAccessor < unsigned long > {};
     
-    // ¸¡µãÐÍ
+    // æµ®ç‚¹åž‹
     template<> class DllValueAccessor<float> : public DllFloatAccessor<float> {};
     template<> class DllValueAccessor<double> : public DllFloatAccessor<double> {};
     template<> class DllValueAccessor<long double> : public DllFloatAccessor<long double> {};
@@ -396,10 +396,10 @@ namespace amo {
     // string
     template<> class DllValueAccessor<std::string> : public DllStringAccessor {};
     
-    // void ÀàÐÍ
+    // void ç±»åž‹
     template<> class DllValueAccessor<amo::nil> : public DllNilAccessor < amo::nil > {};
     
-    // ÕûÐÍÖ¸Õë
+    // æ•´åž‹æŒ‡é’ˆ
     template<> class DllValueAccessor<int8_t*> : public DllIntegerPointerAccessor < int8_t* > {};
     template<> class DllValueAccessor<int16_t*> : public DllIntegerPointerAccessor < int16_t* > {};
     template<> class DllValueAccessor<int32_t*> : public DllIntegerPointerAccessor < int32_t* > {};

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "transfer/KeyboardTransfer.h"
 #include <atlconv.h>
 
@@ -101,7 +101,7 @@ namespace amo {
         input[0].ki.wVk = 0;
         input[0].ki.wScan = data;
         input[0].ki.dwFlags = KEYEVENTF_UNICODE;
-        input[0].ki.time = 0;  // ²»ÄÜÌî£¿£¿
+        input[0].ki.time = 0;  // ä¸èƒ½å¡«ï¼Ÿï¼Ÿ
         
         
         

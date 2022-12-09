@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_FOCUSHANDLER_H__
@@ -13,7 +13,7 @@ namespace amo {
     /*!
     * @class	FocusHandlerDelegate
     *
-    * @brief	½¹µãÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+    * @brief	ç„¦ç‚¹äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
     */
     
     class FocusHandlerDelegate {
@@ -42,7 +42,7 @@ namespace amo {
     /*!
     * @class	FocusHandler
     *
-    * @brief	½¹µãÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+    * @brief	ç„¦ç‚¹äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
     */
     
     class FocusHandler : public CefFocusHandler
@@ -57,7 +57,7 @@ namespace amo {
         * 		CefRefPtr<CefBrowser> browser,
         * 		bool next);
         *
-        * @brief	ÇĞ»»½¹µãÊ±´¥·¢
+        * @brief	åˆ‡æ¢ç„¦ç‚¹æ—¶è§¦å‘
         * 			B UI.
         *
         * @param	browser	The browser.
@@ -72,7 +72,7 @@ namespace amo {
         * 		CefRefPtr<CefBrowser> browser,
         * 		FocusSource source);
         *
-        * @brief	Ò³ÃæÇëÇóÉèÖÃ½¹µãÊ±´¥·¢
+        * @brief	é¡µé¢è¯·æ±‚è®¾ç½®ç„¦ç‚¹æ—¶è§¦å‘
         * 			B UI.
         *
         * @param	browser	The browser.
@@ -87,7 +87,7 @@ namespace amo {
         /*!
         * @fn	virtual void FocusHandler::OnGotFocus(CefRefPtr<CefBrowser> browser);
         *
-        * @brief	Ò³Ãæ»ñµÃ½¹µãÊ±´¥·¢
+        * @brief	é¡µé¢è·å¾—ç„¦ç‚¹æ—¶è§¦å‘
         * 			B UI.
         *
         * @param	browser	The browser.

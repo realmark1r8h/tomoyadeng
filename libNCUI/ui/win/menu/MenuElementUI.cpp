@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "ui/win/menu/MenuElementUI.h"
 #include "ui/win/menu/MenuWindow.h"
 #include "settings/MenuWindowSettings.h"
@@ -335,7 +335,7 @@ namespace amo {
                     param.wParam = 3;
                     param.data = this;
                     param.text = GetText();
-                    s_context_menu_observer.RBroadcast(param); // ֪ͨ����¼�
+                    s_context_menu_observer.RBroadcast(param); // 通知点击事件
                     
                     param.wParam = 1;
                     s_context_menu_observer.RBroadcast(param);

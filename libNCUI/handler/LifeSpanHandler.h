@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_LIFESPANHANDLER_H__
@@ -15,7 +15,7 @@ namespace amo {
     /*!
      * @class	LifeSpanHandlerDelegate
      *
-     * @brief	Éú³ÉÖÜÆÚÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ´ó²¿·Ö·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ£¬³ı·ÇÖ¸¶¨.
+     * @brief	ç”Ÿæˆå‘¨æœŸäº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„å¤§éƒ¨åˆ†æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨ï¼Œé™¤éæŒ‡å®š.
      */
     
     class LifeSpanHandlerDelegate {
@@ -81,7 +81,7 @@ namespace amo {
     /*!
      * @class	LifeSpanHandler
      *
-     * @brief	Éú³ÉÖÜÆÚÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ´ó²¿·Ö·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ£¬³ı·ÇÖ¸¶¨.
+     * @brief	ç”Ÿæˆå‘¨æœŸäº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„å¤§éƒ¨åˆ†æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨ï¼Œé™¤éæŒ‡å®š.
      */
     
     class LifeSpanHandler : public CefLifeSpanHandler
@@ -112,7 +112,7 @@ namespace amo {
          * 		CefBrowserSettings& settings,
          * 		bool* no_javascript_access);
          *
-         * @brief	ĞÂä¯ÀÀÆ÷´°¿Ú´´½¨Ç°´¥·¢
+         * @brief	æ–°æµè§ˆå™¨çª—å£åˆ›å»ºå‰è§¦å‘
          * 			B IO.
          *
          * @param	browser							The browser.
@@ -157,7 +157,7 @@ namespace amo {
          * @fn	virtual void LifeSpanHandler::OnAfterCreated(
          * 		CefRefPtr<CefBrowser> browser);
          *
-         * @brief	ä¯ÀÀÆ÷´´½¨ºó´¥·¢
+         * @brief	æµè§ˆå™¨åˆ›å»ºåè§¦å‘
          * 			B UI.
          *
          * @param	browser	The browser.
@@ -171,7 +171,7 @@ namespace amo {
         * @fn	virtual bool LifeSpanHandler::RunModal(
         * 		CefRefPtr<CefBrowser> browser);
         *
-        * @brief	ÏÔÊ¾Ò»¸öÄ£Ê½¶Ô»°¿òÊ±´¥·¢
+        * @brief	æ˜¾ç¤ºä¸€ä¸ªæ¨¡å¼å¯¹è¯æ¡†æ—¶è§¦å‘
         * 			B UI.
         *
         * @param	browser	The browser.
@@ -201,7 +201,7 @@ namespace amo {
          * @fn	virtual void LifeSpanHandler::OnBeforeClose(
          * 		CefRefPtr<CefBrowser> browser);
          *
-         * @brief	ä¯ÀÀÆ÷Ïú»ÙÇ°´¥·¢
+         * @brief	æµè§ˆå™¨é”€æ¯å‰è§¦å‘
          * 			B UI.
          *
          * @param	browser	The browser.
@@ -213,7 +213,7 @@ namespace amo {
          * @fn	virtual void LifeSpanHandler::SetMessageRouter(
          * 		CefRefPtr<MessageRouterBrowserSide> router);
          *
-         * @brief	ÉèÖÃÏûÏ¢Â·ÓÉ
+         * @brief	è®¾ç½®æ¶ˆæ¯è·¯ç”±
          * 			B.
          *
          * @param	router	The router.

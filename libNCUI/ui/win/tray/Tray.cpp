@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "ui/win/tray/Tray.h"
 
 #include <functional>
@@ -47,7 +47,7 @@ namespace amo {
             std::shared_ptr<BrowserWindowSettings> pSettings;
             pSettings.reset(new BrowserWindowSettings());
             pSettings->center = false;
-            pSettings->show = false; // ²»ÏÔÊ¾´°¿Ú
+            pSettings->show = false; // ä¸æ˜¾ç¤ºçª—å£
             m_pNotifyWindow = new NotifyWindow(pSettings);
             m_hMessageWnd = m_pNotifyWindow->Create(::GetDesktopWindow(),
                                                     _T("NotifyWindow"),
@@ -73,10 +73,10 @@ namespace amo {
         createNotifyWindow();
         HICON hIcon = NULL;
         HINSTANCE hInst = ::GetModuleHandle(NULL);
-        //»ñÈ¡Í¼±ê£¬µÚ¶ş¸ö²ÎÊıÎªÒª»ñÈ¡µÚ¼¸¸öÍ¼±ê
+        //è·å–å›¾æ ‡ï¼Œç¬¬äºŒä¸ªå‚æ•°ä¸ºè¦è·å–ç¬¬å‡ ä¸ªå›¾æ ‡
         hIcon = ExtractIconA(hInst, amo::path::getFullExeName().c_str(), 0);
         setTrayIcon(hIcon);
-        // Ä¬ÈÏÒş²ØÍĞÅÌ, µ÷ÊÔÊ± ÏÔÊ¾
+        // é»˜è®¤éšè—æ‰˜ç›˜, è°ƒè¯•æ—¶ æ˜¾ç¤º
         show(false);
         setToolTip(("Chromium Embedded Framework (CEF)"));
         

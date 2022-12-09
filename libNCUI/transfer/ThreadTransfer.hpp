@@ -1,4 +1,4 @@
-// Created by amoylel on 09/27/2017.
+ï»¿// Created by amoylel on 09/27/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_THREADTRANSFER_HPP__
@@ -51,7 +51,7 @@ namespace amo {
     *
     * @unexport
     *
-    * @brief	Ïß³Ì»ùÀà.
+    * @brief	çº¿ç¨‹åŸºç±».
     */
     
     template<ThreadEnum>
@@ -104,7 +104,7 @@ namespace amo {
             m_pLooperExecutor.reset();
         }
         
-        // ´´½¨Ò»¸öĞÂÏß³Ì
+        // åˆ›å»ºä¸€ä¸ªæ–°çº¿ç¨‹
         
         std::shared_ptr<amo::looper_executor> createThread() {
             m_pLooperExecutor.reset(new amo::looper_executor());
@@ -115,7 +115,7 @@ namespace amo {
             return std::shared_ptr< TransferMgr>();
         }
         
-        // »ñÈ¡ËùÓĞÏß³Ì
+        // è·å–æ‰€æœ‰çº¿ç¨‹
         Any getAllThreads(IPCMessage::SmartType msg) {
             return Undefined();
         }
@@ -125,13 +125,13 @@ namespace amo {
         *
         * @tag static single
         *
-        * @brief	ÔÚÄ¬ÈÏÏß³ÌÖĞÖ´ĞĞÒ»¸öº¯Êı.
+        * @brief	åœ¨é»˜è®¤çº¿ç¨‹ä¸­æ‰§è¡Œä¸€ä¸ªå‡½æ•°.
         *
-        * @param	#Function ÒªÖ´ĞĞµÄº¯Êı.
+        * @param	#Function è¦æ‰§è¡Œçš„å‡½æ•°.
         *
-        * @param	#Args...	¸Ãº¯ÊıĞèÒª´«ÈëµÄ²ÎÊı£¬¾ßÌå²ÎÊı¼°¸öÊıÒÔĞèÒªµ÷ÓÃµÄº¯ÊıÎª×¼.
+        * @param	#Args...	è¯¥å‡½æ•°éœ€è¦ä¼ å…¥çš„å‚æ•°ï¼Œå…·ä½“å‚æ•°åŠä¸ªæ•°ä»¥éœ€è¦è°ƒç”¨çš„å‡½æ•°ä¸ºå‡†.
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         */
         
         Any Exec(IPCMessage::SmartType msg) {
@@ -143,13 +143,13 @@ namespace amo {
         *
         * @tag static sync single
         *
-        * @brief	ÔÚÄ¬ÈÏÏß³ÌÖĞÍ¬²½Ö´ĞĞÒ»¸öº¯Êı.
+        * @brief	åœ¨é»˜è®¤çº¿ç¨‹ä¸­åŒæ­¥æ‰§è¡Œä¸€ä¸ªå‡½æ•°.
         *
-        * @param	#Function ĞèÒªÖ´ĞĞµÄº¯Êı.
+        * @param	#Function éœ€è¦æ‰§è¡Œçš„å‡½æ•°.
         *
-        * @param	#Args=...	¸Ãº¯ÊıĞèÒª´«ÈëµÄ²ÎÊı£¬¾ßÌå²ÎÊı¼°¸öÊıÒÔĞèÒªµ÷ÓÃµÄº¯ÊıÎª×¼.
+        * @param	#Args=...	è¯¥å‡½æ•°éœ€è¦ä¼ å…¥çš„å‚æ•°ï¼Œå…·ä½“å‚æ•°åŠä¸ªæ•°ä»¥éœ€è¦è°ƒç”¨çš„å‡½æ•°ä¸ºå‡†.
         *
-        * @return	#Any ¸Ãº¯ÊıµÄÖ´ĞĞ½á¹û.
+        * @return	#Any è¯¥å‡½æ•°çš„æ‰§è¡Œç»“æœ.
         */
         
         Any Sync(IPCMessage::SmartType msg) {
@@ -162,9 +162,9 @@ namespace amo {
         /*!
          * @fn	Any ThreadTransfer::weakup(IPCMessage::SmartType msg)
          * @tag single
-         * @brief	»½ĞÑÏß³Ì£¬Ö»ÄÜÔÚä¯ÀÀÆ÷Ïß³Ì£¨UI/Renderer£©ÉÏÖ´ĞĞ.
+         * @brief	å”¤é†’çº¿ç¨‹ï¼Œåªèƒ½åœ¨æµè§ˆå™¨çº¿ç¨‹ï¼ˆUI/Rendererï¼‰ä¸Šæ‰§è¡Œ.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any weakup(IPCMessage::SmartType msg) {
@@ -176,10 +176,10 @@ namespace amo {
         /*!
          * @fn	Any ThreadTransfer::suspend(IPCMessage::SmartType msg)
          * @tag
-         * @brief	ÔİÍ£Ïß³Ì£¬²»ÄÜÔÚä¯ÀÀÆ÷Ïß³Ì£¨UI/Renderer£©ÉÏÖ´ĞĞ.
+         * @brief	æš‚åœçº¿ç¨‹ï¼Œä¸èƒ½åœ¨æµè§ˆå™¨çº¿ç¨‹ï¼ˆUI/Rendererï¼‰ä¸Šæ‰§è¡Œ.
          *
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any suspend(IPCMessage::SmartType msg) {
@@ -187,7 +187,7 @@ namespace amo {
                 return Undefined();
             }
             
-            // Ö»ÄÜÔÚ¹¤×÷Ïß³ÌÖĞ¹ÒÆğ×Ô¼º
+            // åªèƒ½åœ¨å·¥ä½œçº¿ç¨‹ä¸­æŒ‚èµ·è‡ªå·±
             if (m_pLooperExecutor->get_id() != std::this_thread::get_id()) {
                 return false;
             }
@@ -235,14 +235,14 @@ namespace amo {
                 return Undefined();
             }
             
-            //// ÒªÖ´ĞĞµÄtrnasfer±ØĞë¼Ì³ĞRunnableTransfer;
+            //// è¦æ‰§è¡Œçš„trnasferå¿…é¡»ç»§æ‰¿RunnableTransfer;
             //RunnableTransfer* pRunnableTransfer = dynamic_cast<RunnableTransfer*>(pTransfer);
             //
             //if (pRunnableTransfer == NULL) {
             //    return Undefined();
             //}
             //
-            ////TODO: ÕâÑù×öµÄ»°£¬Ò»¸öTransfer¾ÍÖ»ÄÜÓëÒ»¸öÏß³Ì¹Ò¹³£¬·ñÔò»á³ö´í
+            ////TODO: è¿™æ ·åšçš„è¯ï¼Œä¸€ä¸ªTransferå°±åªèƒ½ä¸ä¸€ä¸ªçº¿ç¨‹æŒ‚é’©ï¼Œå¦åˆ™ä¼šå‡ºé”™
             //pRunnableTransfer->setWeakup(std::bind(&ThreadTransfer::weakupThread, this));
             //pRunnableTransfer->setSuspend(std::bind(&ThreadTransfer::waitForWeakUp, this));
             
@@ -295,11 +295,11 @@ namespace amo {
          * @fn	Any ThreadTransfer::exec(IPCMessage::SmartType msg)
          * @tag single
          *
-         * @brief	Ö´ĞĞÒ»¸öº¯Êı.
+         * @brief	æ‰§è¡Œä¸€ä¸ªå‡½æ•°.
          *
-         * @param	#Function ÒªÖ´ĞĞµÄº¯Êı.
+         * @param	#Function è¦æ‰§è¡Œçš„å‡½æ•°.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any exec(IPCMessage::SmartType msg) {
@@ -310,9 +310,9 @@ namespace amo {
          * @fn	Any ThreadTransfer::sync(IPCMessage::SmartType msg)
          * @tag sync single
          *
-         * @brief	Í¬²½µ÷ÓÃÒ»¸öº¯Êı£¬²¢·µ»Ø¸Ãº¯ÊıµÄÖ´ĞĞ½á¹û.
+         * @brief	åŒæ­¥è°ƒç”¨ä¸€ä¸ªå‡½æ•°ï¼Œå¹¶è¿”å›è¯¥å‡½æ•°çš„æ‰§è¡Œç»“æœ.
          *
-         * @param	#Function ÒªÍ¬²½µ÷ÓÃµÄº¯Êı.
+         * @param	#Function è¦åŒæ­¥è°ƒç”¨çš„å‡½æ•°.
          *
          * @return	#Any.
          */
@@ -325,10 +325,10 @@ namespace amo {
          * @fn	Any ThreadTransfer::kill(IPCMessage::SmartType msg)
          * @tag single
          *
-         * @brief	É±ËÀµ±Ç°Ïß³Ì.
+         * @brief	æ€æ­»å½“å‰çº¿ç¨‹.
          *
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any kill(IPCMessage::SmartType msg) {
@@ -344,10 +344,10 @@ namespace amo {
          * @fn	Any ThreadTransfer::start(IPCMessage::SmartType msg)
          * @tag single
          *
-         * @brief	Æô¶¯Ïß³Ì£¬¸Ãº¯ÊıÒ»°ã²»ĞèÒªµ÷ÓÃ£¬Ïß³Ì»áÔÚ´´½¨Ê±×Ô¶¯Æô¶¯£¬³ı·ÇÄãµ÷ÓÃÁËstop.
+         * @brief	å¯åŠ¨çº¿ç¨‹ï¼Œè¯¥å‡½æ•°ä¸€èˆ¬ä¸éœ€è¦è°ƒç”¨ï¼Œçº¿ç¨‹ä¼šåœ¨åˆ›å»ºæ—¶è‡ªåŠ¨å¯åŠ¨ï¼Œé™¤éä½ è°ƒç”¨äº†stop.
          *
          *
-         * @return	#Boolean ÊÇ·ñÆô¶¯³É¹¦.
+         * @return	#Boolean æ˜¯å¦å¯åŠ¨æˆåŠŸ.
          */
         
         Any start(IPCMessage::SmartType msg) {
@@ -364,10 +364,10 @@ namespace amo {
         /*!
          * @fn	Any ThreadTransfer::stop(IPCMessage::SmartType msg)
          * @tag single
-         * @brief	Í£Ö¹µ±Ç°Ïß³Ì.
+         * @brief	åœæ­¢å½“å‰çº¿ç¨‹.
          *
          *
-         * @return	#Boolean ÊÇ·ñÍ£Ö¹³É¹¦.
+         * @return	#Boolean æ˜¯å¦åœæ­¢æˆåŠŸ.
          */
         
         Any stop(IPCMessage::SmartType msg) {
@@ -408,8 +408,8 @@ namespace amo {
     
         Any waitForWeakUp() {
             std::unique_lock<std::recursive_mutex> lock(m_mutex);
-            m_isPausedThread = true; // ÔİÍ£Ïß³Ì
-            // µÈ´ıÆäËûÏß³Ì½«¸ÃÏß³Ì»Ö¸´
+            m_isPausedThread = true; // æš‚åœçº¿ç¨‹
+            // ç­‰å¾…å…¶ä»–çº¿ç¨‹å°†è¯¥çº¿ç¨‹æ¢å¤
             m_condition_any.wait(lock,
                                  amo::bind(&ThreadTransfer::isResumeThread, this));
             Any ret = m_weakupData;
@@ -420,7 +420,7 @@ namespace amo {
         void weakupThread() {
             amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
             m_isPausedThread = false;
-            // Í¨ÖªÆäËûÏß³Ì
+            // é€šçŸ¥å…¶ä»–çº¿ç¨‹
             m_condition_any.notify_all();
         }
         
@@ -440,19 +440,19 @@ namespace amo {
         
     protected:
     
-        /** @brief	ËùÊôä¯ÀÀÆ÷id. */
+        /** @brief	æ‰€å±æµè§ˆå™¨id. */
         int m_nBrowserID;
-        /** @brief	ËùÊôFrame ID. */
+        /** @brief	æ‰€å±Frame ID. */
         int64_t m_nFrameID;
-        /** @brief	Ëø. */
+        /** @brief	é”. */
         std::recursive_mutex  m_mutex;
-        /** @brief	Ìõ¼ş±äÁ¿. */
+        /** @brief	æ¡ä»¶å˜é‡. */
         std::condition_variable_any m_condition_any;
-        /** @brief	µ±Ç°Ïß³ÌÊÇ·ñ´¦ÓÚÔİÍ£×´Ì¬. */
+        /** @brief	å½“å‰çº¿ç¨‹æ˜¯å¦å¤„äºæš‚åœçŠ¶æ€. */
         bool m_isPausedThread;
-        /** @brief	Ïß³Ì. */
+        /** @brief	çº¿ç¨‹. */
         std::shared_ptr<amo::looper_executor> m_pLooperExecutor;
-        /** @brief	»½ĞÑÏß³ÌÊ±¿ÉÒÔ´«µİµÄÊı¾İ. */
+        /** @brief	å”¤é†’çº¿ç¨‹æ—¶å¯ä»¥ä¼ é€’çš„æ•°æ®. */
         Any m_weakupData;
     };
     

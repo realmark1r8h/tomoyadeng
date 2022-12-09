@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "ui/win/ActionPreprocessor.h"
 
 #include <memory>
@@ -23,16 +23,16 @@ namespace amo {
             return false;
         }
         
-        // Èç¹ûËù¸øFrameIDĞ¡ÓÚ0£¬²éÕÒµ±Ç°Ëù»ñµÃ½¹µãµÄ´°¿Ú
+        // å¦‚æœæ‰€ç»™FrameIDå°äº0ï¼ŒæŸ¥æ‰¾å½“å‰æ‰€è·å¾—ç„¦ç‚¹çš„çª—å£
         auto manager = BrowserWindowManager::getInstance();
         
         
         std::shared_ptr<BrowserWindow> pWindow;
         
-        // ÏÈÍ¨¹ıID²éÕÒ
+        // å…ˆé€šè¿‡IDæŸ¥æ‰¾
         auto pLocalWindow = manager->findValidWindow(m_nBrowserID);
         
-        // ²»´æÔÚ£¬Ê¹ÓÃµ±Ç°½¹µã´°¿Ú
+        // ä¸å­˜åœ¨ï¼Œä½¿ç”¨å½“å‰ç„¦ç‚¹çª—å£
         if (!pLocalWindow) {
             return false;
         }
@@ -59,9 +59,9 @@ namespace amo {
         
         IPCMessage::SmartType msg(new IPCMessage());
         
-        // ¶ÔÒÑÓĞActionµÄÖ±½ÓÖ´ĞĞ²Ù×÷
+        // å¯¹å·²æœ‰Actionçš„ç›´æ¥æ‰§è¡Œæ“ä½œ
         
-        // Frame ²Ù×÷
+        // Frame æ“ä½œ
         if (action == "undo") {
             pFrame->Undo();
         } else if (action == "redo") {
@@ -78,26 +78,26 @@ namespace amo {
             pFrame->Delete();
         }
         
-        // ä¯ÀÀÆ÷²Ù×÷
+        // æµè§ˆå™¨æ“ä½œ
         else if (action == "goBack") {
-            // ºóÍË
+            // åé€€
             pBrowser->GoBack();
         } else if (action == "goForward") {
-            // Ç°½ø
+            // å‰è¿›
             pBrowser->GoForward();
         } else if (action == "reload") {
-            // reload - Õı³£ÖØĞÂ¼ÓÔØµ±Ç°´°¿Ú
+            // reload - æ­£å¸¸é‡æ–°åŠ è½½å½“å‰çª—å£
             pBrowser->Reload();
         } else if (action == "forceReload") {
-            // ºöÂÔ»º´æ²¢ÖØĞÂ¼ÓÔØµ±Ç°´°¿Ú
+            // å¿½ç•¥ç¼“å­˜å¹¶é‡æ–°åŠ è½½å½“å‰çª—å£
             pBrowser->ReloadIgnoreCache();
         } else if (action == "stopLoad") {
-            // Í£Ö¹¼ÓÔØ
+            // åœæ­¢åŠ è½½
             pBrowser->StopLoad();
         }
-        // HOST ²Ù×÷
+        // HOST æ“ä½œ
         else if (action == "print") {
-            //TODO: ´òÓ¡ÓĞBUG
+            //TODO: æ‰“å°æœ‰BUG
             pHost->Print();
         } else if (action == "printToPDF") {
             //pHost->PrintToPDF()
@@ -109,7 +109,7 @@ namespace amo {
             pHost->SetZoomLevel(pHost->GetZoomLevel() + 0.1);
         }
         
-        // ´°¿Ú²Ù×÷
+        // çª—å£æ“ä½œ
         else if (action == "show") {
             pWindow->show(msg);
         } else if (action == "hide") {

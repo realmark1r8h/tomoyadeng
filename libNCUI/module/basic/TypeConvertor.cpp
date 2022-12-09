@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "TypeConvertor.h"
 #include <amo/json.hpp>
 #include "module/JsClassObjectV8Handler.h"
@@ -35,7 +35,7 @@ namespace amo {
             pFrame = pContext->GetFrame();
         }
         
-        // Èç¹ûÊÇC++ÔÚµ÷ÓÃJS,ÄÇÃ´ĞèÒªContext»·¾³
+        // å¦‚æœæ˜¯C++åœ¨è°ƒç”¨JS,é‚£ä¹ˆéœ€è¦Contextç¯å¢ƒ
         pContext->Enter();
     }
     
@@ -53,7 +53,7 @@ namespace amo {
     
         CefRefPtr<CefV8Value> retval = CefV8Value::CreateUndefined();
         
-        // ·Ç·¨µÄJSON
+        // éæ³•çš„JSON
         if (!json.is_valid()) {
             return retval;
         }
@@ -95,7 +95,7 @@ namespace amo {
                 
             } else {
             
-                // ±éÀúJSON
+                // éå†JSON
                 for (auto iter = json.begin(); iter != json.end(); ++iter) {
                     amo::json p(iter->value);
                     std::string sb = p.to_string();
@@ -140,7 +140,7 @@ namespace amo {
             return
                 CefV8Value::CreateString(json.get<std::string>());
         } else if (json.is_object()) {
-            // ÏÈÅĞ¶ÏJSONÊÇ·ñÎªTransfer
+            // å…ˆåˆ¤æ–­JSONæ˜¯å¦ä¸ºTransfer
             bool bTransfer = false;
             
             if (json.contains_key("transferObject")
@@ -158,7 +158,7 @@ namespace amo {
                 int64_t nId = json.get<int64_t>("id");
                 std::string strClass = json.get<std::string>("name");
                 std::string strObjectName = json.get<std::string>("objectName");
-                // Í¨¹ıID²éÕÒ»º´æ
+                // é€šè¿‡IDæŸ¥æ‰¾ç¼“å­˜
                 CefRefPtr<CefV8Value> pValue = getClassObject(nId);
                 
                 if (pValue && pValue->IsObject()) {
@@ -167,25 +167,25 @@ namespace amo {
                 
                 
                 
-                // ²é¿´µ±Ç°ClassÊÇ·ñÊÇ¿ÉÒÔÊµÀıÍâµÄÀà
+                // æŸ¥çœ‹å½“å‰Classæ˜¯å¦æ˜¯å¯ä»¥å®ä¾‹å¤–çš„ç±»
                 auto classMethodMgr = ClassMethodMgr::getInstance();
                 
                 if (!classMethodMgr->hasClass(strClass)) {
                 
-                    // ²»ÊÇ£¬·µ»ØUndefined
+                    // ä¸æ˜¯ï¼Œè¿”å›Undefined
                     return
                         CefV8Value::CreateUndefined();
                 } else {
-                    // »ñÈ¡Ëù¸øÀàµÄ³ÉÔ±ĞÅÏ¢
+                    // è·å–æ‰€ç»™ç±»çš„æˆå‘˜ä¿¡æ¯
                     FunctionWrapperMgr mgr =
                         classMethodMgr->getClass(strClass);
                         
-                    // ÉèÖÃObjectID
+                    // è®¾ç½®ObjectID
                     mgr.setObjectID(nId);
                     mgr.setObjectName(strObjectName);
                     
                     {
-                        //// ´´½¨ĞÂµÄObject
+                        //// åˆ›å»ºæ–°çš„Object
                         //CefRefPtr<JsClassObjectV8Handler> pObjectHandler;
                         //pObjectHandler = new JsClassObjectV8Handler();
                         //pObjectHandler->setRendererClass(mgr.isRendererClass());
@@ -194,10 +194,10 @@ namespace amo {
                         //pObjectHandler->setFuncMgr(mgr);
                         //pObjectHandler->setID(nId);
                         //
-                        //// ÉèÖÃ·µ»ØÖµÎªĞÂ´´½¨µÄ¶ÔÏó
+                        //// è®¾ç½®è¿”å›å€¼ä¸ºæ–°åˆ›å»ºçš„å¯¹è±¡
                         //CefRefPtr<CefV8Value> pObject =
                         //    pObjectHandler->getV8Object();
-                        ////// Ìí¼Ó¶ÔÏó½ø»º´æ
+                        ////// æ·»åŠ å¯¹è±¡è¿›ç¼“å­˜
                         ////addClassObject(nId, pObject);
                         ////
                         ////CefRefPtr<CefV8Context> context = CefV8Context::GetCurrentContext();
@@ -214,7 +214,7 @@ namespace amo {
                         //
                         //}
                     }
-                    // ´´½¨ĞÂµÄObject
+                    // åˆ›å»ºæ–°çš„Object
                     CefRefPtr<JsClassObjectV8Handler> pObjectHandler;
                     pObjectHandler = new JsClassObjectV8Handler();
                     pObjectHandler->setRendererClass(mgr.isRendererClass());
@@ -223,10 +223,10 @@ namespace amo {
                     pObjectHandler->setFuncMgr(mgr);
                     pObjectHandler->setID(nId);
                     
-                    // ÉèÖÃ·µ»ØÖµÎªĞÂ´´½¨µÄ¶ÔÏó
+                    // è®¾ç½®è¿”å›å€¼ä¸ºæ–°åˆ›å»ºçš„å¯¹è±¡
                     CefRefPtr<CefV8Value> pObject =
                         pObjectHandler->getV8Object();
-                    // Ìí¼Ó¶ÔÏó½ø»º´æ
+                    // æ·»åŠ å¯¹è±¡è¿›ç¼“å­˜
                     addClassObject(nId, pObject);
                     
                     
@@ -527,7 +527,7 @@ namespace amo {
             
         case  AnyValueType<amo::json>::value: {
     
-            // ·µ»ØÒ»¸öJS Object
+            // è¿”å›ä¸€ä¸ªJS Object
             amo::json json = (amo::json)any;
             
             if (json.is_array()) {
@@ -643,7 +643,7 @@ namespace amo {
         for (auto& p : m_oObjectMap) {
             int nFrameID = p.first.first;
             
-            // Èç¹ûFrameIDÔÚËù¼¶µÄºÏ¼¯ÄÚ£¬ÄÇÃ´²éÕÒFrameÀïÃæÓĞÃ»ÓĞObjectID
+            // å¦‚æœFrameIDåœ¨æ‰€çº§çš„åˆé›†å†…ï¼Œé‚£ä¹ˆæŸ¥æ‰¾Frameé‡Œé¢æœ‰æ²¡æœ‰ObjectID
             if (std::find(frames.begin(), frames.end(), nFrameID) != frames.end()
                     && p.first.second == nID) {
                 vec.push_back(std::make_pair(p.first.first, p.second));
@@ -820,7 +820,7 @@ namespace amo {
         }
         
         if (pContext) {
-            // Èç¹ûÊÇC++ÔÚµ÷ÓÃJS,ÄÇÃ´ĞèÒªContext»·¾³
+            // å¦‚æœæ˜¯C++åœ¨è°ƒç”¨JS,é‚£ä¹ˆéœ€è¦Contextç¯å¢ƒ
             pContext->Enter();
         }
         

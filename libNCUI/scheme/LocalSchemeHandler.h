@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_SCHEMEHANDLER_H__
@@ -15,7 +15,7 @@ namespace amo {
     /*!
      * @class	LocalSchemeHandler
      *
-     * @brief	×Ô¶¨ÒåĞ­Òélocal://.
+     * @brief	è‡ªå®šä¹‰åè®®local://.
      */
     
     class LocalSchemeHandler : public CefResourceHandler {
@@ -73,7 +73,7 @@ namespace amo {
          * 		const CefString& scheme_name,
          * 		CefRefPtr<CefRequest> request) override;
          *
-         * @brief	´´½¨Ò»¸öĞÂµÄ scheme handler instance to handle the request.
+         * @brief	åˆ›å»ºä¸€ä¸ªæ–°çš„ scheme handler instance to handle the request.
          *
          * @param	browser	   	The browser.
          * @param	frame	   	The frame.

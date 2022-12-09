@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "transfer/MD5Transfer.h"
 #include <amo/md5.hpp>
 

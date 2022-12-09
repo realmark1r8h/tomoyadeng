@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "node/NodeKeyboardHandler.h"
 #include "node/NodeHandlerHelper.h"
 

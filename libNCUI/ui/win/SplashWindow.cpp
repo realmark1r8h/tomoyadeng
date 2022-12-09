@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "ui/win/SplashWindow.h"
 #include "ui/win/BrowserWindowSkin.h"
 #include "settings/SplashWindowSettings.h"
@@ -74,7 +74,7 @@ namespace amo {
     
     void SplashWindow::OnFinalMessage(HWND hWnd) {
         NativeWindow::OnFinalMessage(hWnd);
-        // ɾ��
+        // 删除
         delete this;
     }
     

@@ -1,4 +1,4 @@
-// Created by amoylel on 05/11/2017.
+ï»¿// Created by amoylel on 05/11/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_JSMESSAGEHANDLER_H__
@@ -86,7 +86,7 @@ namespace amo {
     };
     
     
-    // TransferÀàNode·â×°
+    // Transferç±»Nodeå°è£…
     template<NodeClassType>
     class NodeClassV8Handler : public NodeV8Handler {
     public:
@@ -103,12 +103,12 @@ namespace amo {
             return m_NodeClassName;
         }
         
-        // ¶ÔÏó ÊôĞÔ
+        // å¯¹è±¡ å±æ€§
         static NAN_GETTER(ExecuteObjectGetter) {
             NodeClassV8Handler* pClassHandler =
                 ObjectWrap::Unwrap<NodeClassV8Handler>(info.Holder());
                 
-            // Èç¹û¶ÔÏó²»´æÔÚ£¬·µ»ØUndefined
+            // å¦‚æœå¯¹è±¡ä¸å­˜åœ¨ï¼Œè¿”å›Undefined
             if (pClassHandler == NULL) {
                 return;
             }
@@ -120,7 +120,7 @@ namespace amo {
         }
         
         
-        // Àà¾²Ì¬³£Á¿ÊôĞÔ
+        // ç±»é™æ€å¸¸é‡å±æ€§
         static void ExecuteClassAttrGetter(v8::Local<v8::Name> v8Name,
                                            const v8::PropertyCallbackInfo<v8::Value>& info) {
                                            
@@ -131,7 +131,7 @@ namespace amo {
                 return;
             }
             
-            // ÏÈ¿´ÊÇ²»ÊÇ³£Á¿
+            // å…ˆçœ‹æ˜¯ä¸æ˜¯å¸¸é‡
             NodeTypeConvertor convertor;
             std::string attrName = convertor.toString(v8Name);
             
@@ -167,11 +167,11 @@ namespace amo {
                                            
         }
         
-        // ³õÊ¼»¯Àà
+        // åˆå§‹åŒ–ç±»
         static void Init(Local<Object> target, const std::string& strClassName) {
         
             getNodeClassName() = strClassName;
-            // ×¼±¸¹¹Ôìº¯ÊıÄ£°æ
+            // å‡†å¤‡æ„é€ å‡½æ•°æ¨¡ç‰ˆ
             v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
             tpl->SetClassName(Nan::New(strClassName).ToLocalChecked());
             tpl->InstanceTemplate()->SetInternalFieldCount(1);
@@ -194,23 +194,23 @@ namespace amo {
                                               
             for (auto& p : functions) {
                 if (p.functionType() == TransferFuncConstructor) {
-                    // ¹¹Ôìº¯Êı
+                    // æ„é€ å‡½æ•°
                     getClassObject()->setName(p.m_strName);
                 } else if (p.functionType() == TransferFuncStatic) {
-                    // ¾²Ì¬º¯Êı
+                    // é™æ€å‡½æ•°
                     Nan::SetMethod(tpl, p.m_strName.c_str(), ExecuteStaticFunc);
                 } else if (p.functionType() == TransferFuncNormal) {
-                    // ³ÉÔ±º¯Êı
+                    // æˆå‘˜å‡½æ•°
                     Nan::SetPrototypeMethod(tpl, p.m_strName.c_str(),
                                             ExecuteObjectFunc);
                 } else if (p.functionType() == TransferFuncClassProperty) {
-                    /// ÊôĞÔ
+                    /// å±æ€§
                     tpl->SetNativeDataProperty(Nan::New(p.m_strName).ToLocalChecked(),
                                                NodeClassV8Handler::ExecuteClassAttrGetter);
                 }
             }
             
-            // Éú³ÉÀà³£Á¿ÊôĞÔ
+            // ç”Ÿæˆç±»å¸¸é‡å±æ€§
             for (auto& p : iter->second.getAttributes()) {
                 amo::json json = p;
                 std::string strName = json.getString("name");
@@ -218,28 +218,28 @@ namespace amo {
                                            NodeClassV8Handler::ExecuteClassAttrGetter);
             }
             
-            // Ìí¼ÓÊÂ¼ş¼àÌıÏûÏ¢ EventEmitter
+            // æ·»åŠ äº‹ä»¶ç›‘å¬æ¶ˆæ¯ EventEmitter
             Nan::SetMethod(tpl, "on", OnStaticEvent);
             Nan::SetPrototypeMethod(tpl, "on", OnEvent);
             
             
-            // ¶ÔÏóµÄÊôĞÔ
+            // å¯¹è±¡çš„å±æ€§
             /* Nan::SetAccessor(itpl, Nan::New<v8::String>("prop2").ToLocalChecked(),
             				  NodeClassV8Handler::ExecuteObjectGetter);*/
             
-            // Éú³É¹¹Ôìº¯Êı
+            // ç”Ÿæˆæ„é€ å‡½æ•°
             std::shared_ptr<Nan::Persistent<v8::Function> > constructor;
             constructor.reset(new Nan::Persistent<v8::Function>());
             constructor->Reset(tpl->GetFunction());
-            //  ×¢²áÀà ¹¹Ôìº¯Êı
+            //  æ³¨å†Œç±» æ„é€ å‡½æ•°
             auto manager = ConstructorMgr::getInstance();
             manager->addConstructor(strClassName, constructor);
             
-            // ÉèÖÃÀàµ½µ¼³öº¯Êı£¬ Õâ¸ö²»»áÊ¹ÓÃ
+            // è®¾ç½®ç±»åˆ°å¯¼å‡ºå‡½æ•°ï¼Œ è¿™ä¸ªä¸ä¼šä½¿ç”¨
             target->Set(Nan::New(strClassName).ToLocalChecked(),
                         tpl->GetFunction());
                         
-            // Ö±½Óµ¼³öµ½È«¾Ö±äÁ¿
+            // ç›´æ¥å¯¼å‡ºåˆ°å…¨å±€å˜é‡
             v8::Local<v8::Object> globalObject
                 = v8::Isolate::GetCurrent()->GetCurrentContext()->Global();
             Handle<Object> global = Handle<Object>::Cast(
@@ -277,7 +277,7 @@ namespace amo {
                     
                     std::string str = std::string(*v8::String::Utf8Value(args[0]));
                     
-                    // ÅĞ¶ÏÊÇ·ñÎªÖ÷½ø³ÌÏûÏ¢ÖĞµÄ¶ÔÏó
+                    // åˆ¤æ–­æ˜¯å¦ä¸ºä¸»è¿›ç¨‹æ¶ˆæ¯ä¸­çš„å¯¹è±¡
                     if (str.find("transferObject") == -1) {
                         break;
                     }
@@ -290,7 +290,7 @@ namespace amo {
                     if (object == NULL) {
                         object = new NodeClassV8Handler(getClassObject()->getName());
                         object->setID(nID);
-                        NodeTypeConvertor::addClassObject(nID, object); // ¹ÜÀí
+                        NodeTypeConvertor::addClassObject(nID, object); // ç®¡ç†
                     }
                     
                     
@@ -306,7 +306,7 @@ namespace amo {
                     amo::json json = amo::stringToAny<amo::json>(out.value());
                     int64_t nID = json.get<int64_t>("id");
                     object->setID(nID);
-                    NodeTypeConvertor::addClassObject(nID, object); // ¹ÜÀí
+                    NodeTypeConvertor::addClassObject(nID, object); // ç®¡ç†
                 }
                 
                 
@@ -341,7 +341,7 @@ namespace amo {
         
         static void EventCall(const  Nan::FunctionCallbackInfo<v8::Value>& args) {
             v8::Local<v8::Value> var = args.Callee().As<v8::Function>()->GetName();
-            std::string strFunc = ObjectToString(var);	//»ñÈ¡º¯ÊıÃû
+            std::string strFunc = ObjectToString(var);	//è·å–å‡½æ•°å
             
             Isolate* isolate = args.GetIsolate();
             NodeClassV8Handler* object = ObjectWrap::Unwrap<NodeClassV8Handler>(args.Holder());
@@ -388,7 +388,7 @@ namespace amo {
         bool Execute(const Nan::FunctionCallbackInfo<Value>& args) {
         
             v8::Local<v8::Value> var = args.Callee().As<v8::Function>()->GetName();
-            std::string name = ObjectToString(var);	//»ñÈ¡º¯ÊıÃû
+            std::string name = ObjectToString(var);	//è·å–å‡½æ•°å
             
             auto& map = NodeProcessHandler::getClassMap();											//!< The map
             auto iter = map.find(getName());
@@ -430,7 +430,7 @@ namespace amo {
             
             return false;
         }
-        // ½Ó¿Ú
+        // æ¥å£
         
         void on(const  Nan::FunctionCallbackInfo<v8::Value>& args) {
             if (args.Length() != 2) {
@@ -470,7 +470,7 @@ namespace amo {
         virtual amo::Any emit(IPCMessage::SmartType anyMessage) override {
             //http://blog.chinaunix.net/uid-52437-id-3959324.html
             //  https://stackoverflow.com/questions/16701275/correct-use-of-handlescope-in-asynchronous-addon
-            Nan::HandleScope scope;   //·Ç³£ÖØÒª£¬²»¼ÓÎŞ·¨µ÷ÓÃJS
+            Nan::HandleScope scope;   //éå¸¸é‡è¦ï¼Œä¸åŠ æ— æ³•è°ƒç”¨JS
             
             Nan::TryCatch try_catch;
             
@@ -510,18 +510,18 @@ namespace amo {
         
     public:
         std::unordered_map<std::string,
-            std::shared_ptr<Nan::Callback> > m_callbackFunctionMap;					//!< »Øµ÷º¯Êı
+            std::shared_ptr<Nan::Callback> > m_callbackFunctionMap;					//!< å›è°ƒå‡½æ•°
             
         //std::shared_ptr<Nan::Persistent<Value> > m_oObject;
         
     };
     
     enum FuncType {
-        StaticFunction,  // ¾²Ì¬º¯Êı
-        StaticProproty, // ¾²Ì¬ÊôĞÔ
-        ConstructFunction, // ¹¹Ôìº¯Êı
-        ObjectFunction,  // ³ÉÔ±º¯Êı
-        ObjectProproty,  // ³ÉÔ±ÊôĞÔ
+        StaticFunction,  // é™æ€å‡½æ•°
+        StaticProproty, // é™æ€å±æ€§
+        ConstructFunction, // æ„é€ å‡½æ•°
+        ObjectFunction,  // æˆå‘˜å‡½æ•°
+        ObjectProproty,  // æˆå‘˜å±æ€§
     };
     template<FuncType>
     class Executor {

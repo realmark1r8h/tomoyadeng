@@ -1,4 +1,4 @@
-// Created by amoylel on 7/02/2017.
+ï»¿// Created by amoylel on 7/02/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 #ifndef AMO_RESOURCEBUNDLEHANDLER_H__
 #define AMO_RESOURCEBUNDLEHANDLER_H__
@@ -11,7 +11,7 @@ namespace amo {
     /*!
      * @class	ResourceBundleHandlerDelegate
      *
-     * @brief	×Ô¶¨Òå×ÊÔ´´¦ÀíÀà£¬¶àÏß³Ìµ÷ÓÃ.
+     * @brief	è‡ªå®šä¹‰èµ„æºå¤„ç†ç±»ï¼Œå¤šçº¿ç¨‹è°ƒç”¨.
      */
     
     class ResourceBundleHandlerDelegate {
@@ -43,7 +43,7 @@ namespace amo {
     /*!
      * @class	ResourceBundleHandler
      *
-     * @brief	×Ô¶¨Òå×ÊÔ´´¦ÀíÀà£¬¶àÏß³Ìµ÷ÓÃ.
+     * @brief	è‡ªå®šä¹‰èµ„æºå¤„ç†ç±»ï¼Œå¤šçº¿ç¨‹è°ƒç”¨.
      */
     
     class ResourceBundleHandler : public CefResourceBundleHandler
@@ -54,7 +54,7 @@ namespace amo {
          * @fn	virtual bool ResourceBundleHandler::GetLocalizedString(
          * 		int message_id, CefString& string);
          *
-         * @brief	»ñÈ¡±¾µØ»¯×Ö·û´®.
+         * @brief	è·å–æœ¬åœ°åŒ–å­—ç¬¦ä¸².
          *
          * @param	message_id	  	Identifier for the message.
          * @param 	string	The string.

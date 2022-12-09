@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+ï»¿#include "stdAfx.h"
 
 #include "handler/ClientHandler.h"
 
@@ -120,7 +120,7 @@ namespace amo {
             BrowserProcessExchangerManager::getInstance()->tryProcessMessage(
                 browser->GetIdentifier());
         } else if (message_name == MSG_IPC_READY) {
-            RegisterBrowser(browser); //Ìí¼Óä¯ÀÀÆ÷µ½¹ÜÀíÆ÷ÖĞ
+            RegisterBrowser(browser); //æ·»åŠ æµè§ˆå™¨åˆ°ç®¡ç†å™¨ä¸­
         }
         
         if (m_pMessageRouter) {
@@ -209,14 +209,14 @@ namespace amo {
         $clog(amo::cdevel << func_orient << "95271" << amo::endl;);
         
         std::shared_ptr<amo::pipe<amo::pipe_type::server> >
-        pBrowserPipeServer;			//ÏûÏ¢¹ÜµÀÖ÷½ø³Ì·şÎñ¶Ë
+        pBrowserPipeServer;			//æ¶ˆæ¯ç®¡é“ä¸»è¿›ç¨‹æœåŠ¡ç«¯
         std::shared_ptr<amo::pipe<amo::pipe_type::client> >
-        pRenderPipeClient;			//ÏûÏ¢¹ÜµÀÖ÷½ø³Ì¿Í»§¶Ë
+        pRenderPipeClient;			//æ¶ˆæ¯ç®¡é“ä¸»è¿›ç¨‹å®¢æˆ·ç«¯
         
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string strPipeClientName = RendererPipePrefix + (std::string)
                                         args->getString(0);
-        $clog(amo::cdevel << func_orient << "Á¬½Ó¹ÜµÀ£º" << strPipeClientName <<
+        $clog(amo::cdevel << func_orient << "è¿æ¥ç®¡é“ï¼š" << strPipeClientName <<
               amo::endl;);
         std::string strPipeServerName = BrowserPipePrefix + (std::string)
                                         args->getString(0);
@@ -228,16 +228,16 @@ namespace amo {
         
         int nBrowserID = args->getInt(1);
         
-        $clog(amo::cdevel << func_orient << "¹ÜµÀÁ¬½Ó" << (bOK ? "³É¹¦" :
-                "Ê§°Ü") << amo::endl;);
+        $clog(amo::cdevel << func_orient << "ç®¡é“è¿æ¥" << (bOK ? "æˆåŠŸ" :
+                "å¤±è´¥") << amo::endl;);
                 
         bOK = pBrowserPipeServer->connect();
-        $clog(amo::cdevel << func_orient << "Ö÷½ø³Ì¹ÜµÀ·şÎñÁ¬½Ó" <<
-              (bOK ? "³É¹¦" : "Ê§°Ü") << amo::endl;);
+        $clog(amo::cdevel << func_orient << "ä¸»è¿›ç¨‹ç®¡é“æœåŠ¡è¿æ¥" <<
+              (bOK ? "æˆåŠŸ" : "å¤±è´¥") << amo::endl;);
               
         ClientHandler::AddExchanger(nBrowserID);
         std::shared_ptr<ProcessExchanger>
-        pBrowserProcessExchanger;					//ÏûÏ¢¹ÜµÀÊı¾İ½»»»Àà
+        pBrowserProcessExchanger;					//æ¶ˆæ¯ç®¡é“æ•°æ®äº¤æ¢ç±»
         pBrowserProcessExchanger =
             BrowserProcessExchangerManager::getInstance()->findExchanger(nBrowserID);
         assert(pBrowserProcessExchanger);
@@ -260,7 +260,7 @@ namespace amo {
         
         if (nPipeID == nBrowserID) {
             ClientHandler::RegisterBrowser(info.pBrowser);
-            // Á½¸öIDÏàÍ¬£¬ÄÇÃ´ËµÃ÷ÊÇäÖÈ¾½ø³ÌµÄµÚÒ»¸öBrowser,Ã»ÓĞÍ¬²½µ÷ÓÃ
+            // ä¸¤ä¸ªIDç›¸åŒï¼Œé‚£ä¹ˆè¯´æ˜æ˜¯æ¸²æŸ“è¿›ç¨‹çš„ç¬¬ä¸€ä¸ªBrowser,æ²¡æœ‰åŒæ­¥è°ƒç”¨
             BrowserProcessExchangerManager::getInstance()->exchange(nBrowserID, arr);
             return Undefined();
         } else {
@@ -304,7 +304,7 @@ namespace amo {
         m_pLifeSpanHandler->SetMessageRouter(m_pMessageRouter);
         m_pRequestHandler->SetMessageRouter(m_pMessageRouter);
         
-        // ´ÓĞéÄâHandler¸´ÖÆ´úÀí¶ÔÏóµ½ ¸÷HandlerÖĞ
+        // ä»è™šæ‹ŸHandlerå¤åˆ¶ä»£ç†å¯¹è±¡åˆ° å„Handlerä¸­
         std::shared_ptr<DummyClientHandler> pDummyClientHandler =
             DummyClientHandler::getInstance();
         m_pContextMenuHandler->CopyDelegates(
@@ -384,20 +384,20 @@ namespace amo {
     
     
     bool ClientHandler::DoClose(CefRefPtr<CefBrowser> browser) {
-        //RemoveBrowserByID(browser->GetIdentifier()); // ÒÆ³ıä¯ÀÀÆ÷
+        //RemoveBrowserByID(browser->GetIdentifier()); // ç§»é™¤æµè§ˆå™¨
         //BrowserProcessExchangerManager::getInstance()->RemoveExchanger(browser->GetIdentifier());
         return false;
     }
     
     void ClientHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
-        RemoveBrowserByID(browser->GetIdentifier()); // ÒÆ³ıä¯ÀÀÆ÷
+        RemoveBrowserByID(browser->GetIdentifier()); // ç§»é™¤æµè§ˆå™¨
         RemoveBrowserFromTempByID(browser->GetIdentifier());
         BrowserProcessExchangerManager::getInstance()->removeExchanger(
             browser->GetIdentifier());
     }
     
     bool ClientHandler::ProcessSyncMessage(int nID, IPCMessage::SmartType msg) {
-        // ´¦ÀíÍ¬²½ÏûÏ¢
+        // å¤„ç†åŒæ­¥æ¶ˆæ¯
         CefRefPtr<CefProcessMessage> message = amo::createCefProcessMessage(msg);
         CefRefPtr<CefBrowser> pBrowser = GetBrowserByID(nID);
         

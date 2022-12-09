@@ -1,4 +1,4 @@
-
+ï»¿
 
 // Created by amoylel on 05/20/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
@@ -154,7 +154,7 @@ namespace amo {
         /*!
          * @fn	std::string TypeConvertor::V8ValueType(CefRefPtr<CefV8Value> object);
          *
-         * @brief	»ñÈ¡V8ÀàĞÍ.
+         * @brief	è·å–V8ç±»å‹.
          *
          * @param	object	The object.
          *
@@ -165,7 +165,7 @@ namespace amo {
         /*!
          * @fn	amo::json TypeConvertor::ObjectToJson(CefRefPtr<CefV8Value> pV8Value);
          *
-         * @brief	½«JS Object ×ª»»Îª JSON.
+         * @brief	å°†JS Object è½¬æ¢ä¸º JSON.
          *
          * @param	pV8Value	The v 8 value.
          *
@@ -176,7 +176,7 @@ namespace amo {
         /*!
          * @fn	CefRefPtr<CefV8Value> TypeConvertor::JsonToObject(const std::string& str);
          *
-         * @brief	½«ÆÕÍ¨µÄJSON¶ÔÏó×ª»»ÎªJS Object..
+         * @brief	å°†æ™®é€šçš„JSONå¯¹è±¡è½¬æ¢ä¸ºJS Object..
          *
          * @param	str	The string.
          *
@@ -188,7 +188,7 @@ namespace amo {
         /*!
          * @fn	CefRefPtr<CefV8Value> TypeConvertor::JsonToObject(amo::json& json);
          *
-         * @brief	½«ÆÕÍ¨µÄJSON¶ÔÏó×ª»»ÎªJS Object.
+         * @brief	å°†æ™®é€šçš„JSONå¯¹è±¡è½¬æ¢ä¸ºJS Object.
          *
          * @param 	json	The JSON.
          *
@@ -199,7 +199,7 @@ namespace amo {
         /*!
          * @fn	CefRefPtr<CefV8Value> TypeConvertor::Int64ToObject(int64_t nVal);
          *
-         * @brief	½«int64 ×ª»»ÎªObject.
+         * @brief	å°†int64 è½¬æ¢ä¸ºObject.
          *
          * @param	nVal	The value.
          *
@@ -210,7 +210,7 @@ namespace amo {
         /*!
          * @fn	Any TypeConvertor::toAny(CefRefPtr<CefV8Value> pValue);
          *
-         * @brief	½«JSÀàĞÍ×ª»»ÎªIPCMessage¿ÉÓÃµÄAnyÀàĞÍ.
+         * @brief	å°†JSç±»å‹è½¬æ¢ä¸ºIPCMessageå¯ç”¨çš„Anyç±»å‹.
          *
          * @param	pValue	The value.
          *
@@ -221,7 +221,7 @@ namespace amo {
         /*!
          * @fn	CefRefPtr<CefV8Value> TypeConvertor::toV8Value(std::shared_ptr<AnyArgsList> args, int index);
          *
-         * @brief	½«AnyÀàĞÍ×ª»»ÎªV8ÀàĞÍ.
+         * @brief	å°†Anyç±»å‹è½¬æ¢ä¸ºV8ç±»å‹.
          *
          * @param	args 	The arguments.
          * @param	index	Zero-based index of the.
@@ -233,7 +233,7 @@ namespace amo {
         /*!
          * @fn	CefRefPtr<CefV8Value> TypeConvertor::toV8Value(Any& any);
          *
-         * @brief	½«AnyÀàĞÍ×ª»»ÎªV8ÀàĞÍ.
+         * @brief	å°†Anyç±»å‹è½¬æ¢ä¸ºV8ç±»å‹.
          *
          * @param 	any	any.
          *
@@ -244,7 +244,7 @@ namespace amo {
         /*!
          * @fn	static CefRefPtr<CefV8Value> TypeConvertor::getClassObject(int64_t nID, CefRefPtr<CefFrame> frame = NULL);
          *
-         * @brief	±£´æJs¶ÔÏó.
+         * @brief	ä¿å­˜Jså¯¹è±¡.
          *
          * @param	nID  	The identifier.
          * @param	frame	(Optional) the frame.
@@ -285,7 +285,7 @@ namespace amo {
         /*!
          * @fn	static void TypeConvertor::addClassObject(int64_t nID, CefRefPtr<CefV8Value> pObject);
          *
-         * @brief	Ìí¼ÓObject¶ÔÏóµ½»º´æÖĞ.
+         * @brief	æ·»åŠ Objectå¯¹è±¡åˆ°ç¼“å­˜ä¸­.
          *
          * @param	nID	   	The identifier.
          * @param	pObject	The object.
@@ -294,8 +294,8 @@ namespace amo {
         /*!
          * @fn	static void TypeConvertor::clearClassObject(int64_t nFrameID);
          *
-         * @brief	É¾³ıËù¸øFrameµÄ»º´æObject.
-         * 			Ò»°ãÊÇÔÚFrame±»Ïú»ÙÊ±µ÷ÓÃ
+         * @brief	åˆ é™¤æ‰€ç»™Frameçš„ç¼“å­˜Object.
+         * 			ä¸€èˆ¬æ˜¯åœ¨Frameè¢«é”€æ¯æ—¶è°ƒç”¨
          *
          * @param	nFrameID	Identifier for the frame.
          */

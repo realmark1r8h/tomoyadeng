@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "node/NodeRequestHandler.h"
 #include "node/NodeHandlerHelper.h"
 #include "handler/MessageRouterBrowserSide.h"

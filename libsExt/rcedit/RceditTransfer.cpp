@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "RceditTransfer.h"
 #include <amo/loader.hpp>
 #include <amo/path.hpp>
@@ -166,7 +166,7 @@ namespace {
         }
         
         //updater->ChangeString(IDS_SIZE, L"640,480");
-        updater->SetVersionString(L"ProductName", L"²úÆ·Ãû³ÆÃû³ÆÃû³Æ");
+        updater->SetVersionString(L"ProductName", L"äº§å“åç§°åç§°åç§°");
         
         /* if (!updater->ChangeString(IDS_NORMAL, L"true")) {
         	 return print_error("Unable to change string");
@@ -197,7 +197,7 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
     std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
     
     
-    // Èç¹ûÃ»ÓĞÊäÈë²ÎÊı£¬ÄÇÃ´Ö±½ÓÊ¹ÓÃÄ¬ÈÏ²ÎÊıÉú³ÉÎÄ¼ş
+    // å¦‚æœæ²¡æœ‰è¾“å…¥å‚æ•°ï¼Œé‚£ä¹ˆç›´æ¥ä½¿ç”¨é»˜è®¤å‚æ•°ç”Ÿæˆæ–‡ä»¶
     amo::string strConfigFile(getDefaultFileSettings(msg).As<std::string>(), true);
     amo::string strConfigAppSettings(getDefaultAppSettings(msg).As<std::string>(),
                                      true);
@@ -244,7 +244,7 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
     oVersionSet.insert("ProductVersion");
     
     
-    // ½«µ±Ç°³ÌĞò¸´ÖÆÒ»·İ³öÀ´
+    // å°†å½“å‰ç¨‹åºå¤åˆ¶ä¸€ä»½å‡ºæ¥
     amo::loader loader;
     amo::path p(amo::path::getExeDir());
     std::string dist_file_name = oConfig.get<std::string>("OriginalFileName");
@@ -262,7 +262,7 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
         m_pUpdater->SetIcon(strIcon.to_unicode().c_str());
     }
     
-    // ÉèÖÃ°æ±¾ĞÅÏ¢
+    // è®¾ç½®ç‰ˆæœ¬ä¿¡æ¯
     for (auto iter = oConfig.begin(); iter != oConfig.end(); ++iter) {
     
     
@@ -301,13 +301,13 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
                                      amo::string(value).to_unicode().c_str());
     }
     
-    // ÉèÖÃÆô¶¯ĞÅÏ¢ AppSettings
+    // è®¾ç½®å¯åŠ¨ä¿¡æ¯ AppSettings
     m_pUpdater->ChangeString(IDS_APP_SETTINGS,
                              strConfigAppSettings.to_unicode().c_str());
-    // ½çÃæĞÅÏ¢ BrowserSettings
+    // ç•Œé¢ä¿¡æ¯ BrowserSettings
     m_pUpdater->ChangeString(IDS_BROWSER_SETTINGS,
                              strConfigBrowserSettinggs.to_unicode().c_str());
-    // Æô¶¯»­Ãæ SplashSettings
+    // å¯åŠ¨ç”»é¢ SplashSettings
     m_pUpdater->ChangeString(IDS_SPLASH_SETTINGS,
                              strConfigSplashSettinggs.to_unicode().c_str());
     bool bOk =  m_pUpdater->Commit();
@@ -396,12 +396,12 @@ amo::Any amo::RceditTransfer::getDefaultFileSettings(IPCMessage::SmartType
     oVersionSet.insert("ProductVersion");
     amo::json json;
     json.put("CompanyName", "NCUI");
-    json.put("FileDescription", "NCUIÑİÊ¾³ÌĞò");
+    json.put("FileDescription", "NCUIæ¼”ç¤ºç¨‹åº");
     json.put("FileVersion", "1.0.0.0");
     json.put("InternalName", "NCUIDemo.exe");
     json.put("LegalCopyright", "Copyright (C) 2017");
     json.put("OriginalFileName", "NCUIDemo.exe");
-    json.put("ProductName", "NCUIÑİÊ¾³ÌĞò");
+    json.put("ProductName", "NCUIæ¼”ç¤ºç¨‹åº");
     json.put("ProductVersion", "1.0.0.0");
     json.put("Icon", "");
     amo::json fileJson = m_oSettings.get_child("fileSettings");

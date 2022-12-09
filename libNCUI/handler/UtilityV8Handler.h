@@ -1,4 +1,4 @@
-// Created by amoylel on 10/09/2017.
+﻿// Created by amoylel on 10/09/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_UTILITYV8HANDLER_H__

@@ -1,4 +1,4 @@
-// Created by amoylel on 08/29/2017.
+ï»¿// Created by amoylel on 08/29/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_SHAREDMEMORY_H__
@@ -24,7 +24,7 @@ namespace amo {
         /*!
          * @fn	char SharedMemory::getInstanceCount();
          *
-         * @brief	»ñÈ¡ÊµÀıÊı.
+         * @brief	è·å–å®ä¾‹æ•°.
          *
          * @return	The instance count.
          */
@@ -36,7 +36,7 @@ namespace amo {
         /*!
          * @fn	void SharedMemory::incInstanceCount();
          *
-         * @brief	ÊµÀı×Ô¼Ó1.
+         * @brief	å®ä¾‹è‡ªåŠ 1.
          */
         
         void incInstanceCount();
@@ -44,7 +44,7 @@ namespace amo {
         /*!
          * @fn	void SharedMemory::decInstanceCount();
          *
-         * @brief	ÊµÀı×Ô¼õ.
+         * @brief	å®ä¾‹è‡ªå‡.
          */
         
         void decInstanceCount();

@@ -1,4 +1,4 @@
-// Created by amoylel on 08/15/2018.
+ï»¿// Created by amoylel on 08/15/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef AMO_OVERLAPSETTINGS_4D3BB806_6E0C_41DC_A8F6_C33E343EACDE_H__
@@ -25,7 +25,7 @@ namespace amo {
         int index;
         amo::rect src;
         amo::rect dst;
-        int renderMode;  // 0 Æ½ÆÌ 1 ¾ÓÖĞ 2 À­Éì
+        int renderMode;  // 0 å¹³é“º 1 å±…ä¸­ 2 æ‹‰ä¼¸
     };
     
     class OverlapRegions {
@@ -46,7 +46,7 @@ namespace amo {
         *
         * @ignore
         *
-        * @brief	³õÊ¼»¯Ä¬ÈÏÆô¶¯»­Ãæ²ÎÊı.
+        * @brief	åˆå§‹åŒ–é»˜è®¤å¯åŠ¨ç”»é¢å‚æ•°.
         */
         
         void initDefaultOverlapSettings();
@@ -94,34 +94,34 @@ namespace amo {
         void updateRectSettings(const std::string& name,
                                 std::shared_ptr<OverlapRegions>& ptr);
     public:
-        /*! @var #String name Í¼²ãÃû³Æ. */
+        /*! @var #String name å›¾å±‚åç§°. */
         std::string name;
-        /*! @var #Int width Í¼²ã¿í¶È. */
+        /*! @var #Int width å›¾å±‚å®½åº¦. */
         int width;
-        /*! @var #Int	imageHeight Í¼²ã¸ß¶È. */
+        /*! @var #Int	imageHeight å›¾å±‚é«˜åº¦. */
         int height;
         
-        int step;	// £¿£¿£¿
+        int step;	// ï¼Ÿï¼Ÿï¼Ÿ
         
-        /*! @var #Int=0 type Í¼²ãÀàĞÍ£¬0±íÊ¾Bitmap. */
+        /*! @var #Int=0 type å›¾å±‚ç±»å‹ï¼Œ0è¡¨ç¤ºBitmap. */
         int type;
         
-        /*! @var #Int length Êı¾İ³¤¶È. */
+        /*! @var #Int length æ•°æ®é•¿åº¦. */
         int length;
         
-        /** @var #Int index Í¼²ãµÄäÖÈ¾Ë³Ğò£¬regions ²»´æÔÚÊ±ÓĞĞ§. */
+        /** @var #Int index å›¾å±‚çš„æ¸²æŸ“é¡ºåºï¼Œregions ä¸å­˜åœ¨æ—¶æœ‰æ•ˆ. */
         int index;
         
-        /** @var #Int renderMode=0 Í¼²ãäÖÈ¾Ä£Ê½£¬regions²»´æÔÚÊ±ÓĞĞ§. */
+        /** @var #Int renderMode=0 å›¾å±‚æ¸²æŸ“æ¨¡å¼ï¼Œregionsä¸å­˜åœ¨æ—¶æœ‰æ•ˆ. */
         int renderMode;
         
-        /*! @var #Rect	regions Í¼²ãÇøÓò. */
+        /*! @var #Rect	regions å›¾å±‚åŒºåŸŸ. */
         std::shared_ptr<OverlapRegions> regions;
         
-        /*! @var #RectArray	defaultRegions Ä¬ÈÏÍ¼²ãÇøÓò£¬µ±Ç°regions²»´æÔÚÊ±Ê¹ÓÃ¸ÃÖµ£¬ÓÉ³ÌĞòÉèÖÃ. */
+        /*! @var #RectArray	defaultRegions é»˜è®¤å›¾å±‚åŒºåŸŸï¼Œå½“å‰regionsä¸å­˜åœ¨æ—¶ä½¿ç”¨è¯¥å€¼ï¼Œç”±ç¨‹åºè®¾ç½®. */
         std::shared_ptr<OverlapRegions> defaultRegions;
         
-        /*! @var #Rect	canvasRect »­²¼ÇøÓò. */
+        /*! @var #Rect	canvasRect ç”»å¸ƒåŒºåŸŸ. */
         amo::rect canvasRect;
         
     };

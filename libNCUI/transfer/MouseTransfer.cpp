@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "transfer/MouseTransfer.h"
 
 
@@ -266,7 +266,7 @@ namespace amo {
         input.mi.dwFlags = MOUSEEVENTF_ABSOLUTE
                            | MOUSEEVENTF_MOVE
                            | dwFlags;
-        input.mi.time = 0; // ²»ÉèÖÃÎª0µÄ»°ÏÔÊ¾Æ÷»áºÚÆÁ
+        input.mi.time = 0; // ä¸è®¾ç½®ä¸º0çš„è¯æ˜¾ç¤ºå™¨ä¼šé»‘å±
         SendInput(1, &input, sizeof(INPUT));
         return Undefined();
     }

@@ -1,4 +1,4 @@
-// Created by amoylel on 07/10/2017.
+ï»¿// Created by amoylel on 07/10/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_NODEV8HANDLER_H__
@@ -37,8 +37,8 @@ namespace amo{
 			return amo::Undefined();
 		}
 	protected:
-		int64_t m_nID;																					//!< ¶ÔÏóID
-		std::string m_strClassName;																	//!< µ±Ç°ÀàÃû
+		int64_t m_nID;																					//!< å¯¹è±¡ID
+		std::string m_strClassName;																	//!< å½“å‰ç±»å
 	};
 }
 

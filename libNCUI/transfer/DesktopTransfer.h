@@ -1,4 +1,4 @@
-// Created by amoylel on 08/20/2017.
+ï»¿// Created by amoylel on 08/20/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_DESKTOPTRANSFER_H__
@@ -17,8 +17,8 @@ namespace amo {
      *
      * @extend Object
      *
-     * @brief	ÓÃÓÚ»ñÈ¡×ÀÃæµÄ»ù±¾ĞÅÏ¢.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	ç”¨äºè·å–æ¡Œé¢çš„åŸºæœ¬ä¿¡æ¯.<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      */
     
     class DesktopTransfer
@@ -34,19 +34,19 @@ namespace amo {
          *
          * @tag sync static
          *
-         * @brief	»ñÈ¡ÆÁÄ»ĞÅÏ¢,°üÀ¨ÆÁÄ»´óĞ¡ºÍ¹¤×÷ÇøÓò´óĞ¡.
+         * @brief	è·å–å±å¹•ä¿¡æ¯,åŒ…æ‹¬å±å¹•å¤§å°å’Œå·¥ä½œåŒºåŸŸå¤§å°.
          *
          * @return	#JsonObject.
          *
-         * 			|#Int width  ×ÀÃæ¿í¶È
-         * 			|#Int height ×ÀÃæ¸ß¶È
-         * 			|#JsonObject rcWork ×ÀÃæ¹¤×÷ÇøÓòĞÅÏ¢
-         * 				||#Int left ¹¤×÷ÇøÓò×óÉÏ½Ç×ø±êX
-         * 				||#Int top ¹¤×÷ÇøÓò×óÉÏ½Ç×ø±êY
-         * 				||#Int right ¹¤×÷ÇøÓòÓÒÏÂ½Ç×ø±êX
-         * 				||#Int bottom ¹¤×÷ÇøÓòÓÒÏÂ½Ç×ø±êY
-         * 				||#Int width ¹¤×÷ÇøÓò¿í¶È
-         * 				||#Int height ¹¤×÷ÇøÓò¸ß¶È
+         * 			|#Int width  æ¡Œé¢å®½åº¦
+         * 			|#Int height æ¡Œé¢é«˜åº¦
+         * 			|#JsonObject rcWork æ¡Œé¢å·¥ä½œåŒºåŸŸä¿¡æ¯
+         * 				||#Int left å·¥ä½œåŒºåŸŸå·¦ä¸Šè§’åæ ‡X
+         * 				||#Int top å·¥ä½œåŒºåŸŸå·¦ä¸Šè§’åæ ‡Y
+         * 				||#Int right å·¥ä½œåŒºåŸŸå³ä¸‹è§’åæ ‡X
+         * 				||#Int bottom å·¥ä½œåŒºåŸŸå³ä¸‹è§’åæ ‡Y
+         * 				||#Int width å·¥ä½œåŒºåŸŸå®½åº¦
+         * 				||#Int height å·¥ä½œåŒºåŸŸé«˜åº¦
          *
          * @example
          *

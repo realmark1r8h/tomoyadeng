@@ -1,4 +1,4 @@
-// Created by amoylel on 09/15/2017.
+ï»¿// Created by amoylel on 09/15/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_V8HANDLERMANAGER_H__
@@ -15,7 +15,7 @@ namespace amo {
     /*!
      * @class	BuiltinModule
      *
-     * @brief	ÄÚÖÃÄ£¿é Handler.
+     * @brief	å†…ç½®æ¨¡å— Handler.
      */
     
     class BuiltinModule {
@@ -31,7 +31,7 @@ namespace amo {
     /*!
      * @class	V8HandlerManager
      *
-     * @brief	Ä£¿é¹ÜÀíÆ÷£¬¸÷¸öBrowserÊ¹ÓÃ²»Í¬µÄÈ«¾ÖHandler.
+     * @brief	æ¨¡å—ç®¡ç†å™¨ï¼Œå„ä¸ªBrowserä½¿ç”¨ä¸åŒçš„å…¨å±€Handler.
      */
     
     class V8HandlerManager : public amo::singleton<V8HandlerManager> {

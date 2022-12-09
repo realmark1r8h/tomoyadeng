@@ -1,4 +1,4 @@
-#include "stdafx.h"
+Ôªø#include "stdafx.h"
 #include "SystemInfo.h"
 
 namespace amo {
@@ -127,7 +127,7 @@ namespace amo {
                 switch (os.dwMinorVersion) {
                 case 0:
                     if (os.dwPlatformId == VER_PLATFORM_WIN32_NT) {
-                        osname = ("Microsoft Windows NT 4.0");    //1996ƒÍ7‘¬∑¢≤º
+                        osname = ("Microsoft Windows NT 4.0");    //1996Âπ¥7ÊúàÂèëÂ∏É
                     } else if (os.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS) {
                         osname = ("Microsoft Windows 95");
                     }
@@ -149,11 +149,11 @@ namespace amo {
             case 5: {
                 switch (os.dwMinorVersion) {
                 case 0:
-                    osname = ("Microsoft Windows 2000"); //1999ƒÍ12‘¬∑¢≤º
+                    osname = ("Microsoft Windows 2000"); //1999Âπ¥12ÊúàÂèëÂ∏É
                     break;
                     
                 case 1:
-                    osname = ("Microsoft Windows XP"); //2001ƒÍ8‘¬∑¢≤º
+                    osname = ("Microsoft Windows XP"); //2001Âπ¥8ÊúàÂèëÂ∏É
                     break;
                     
                 case 2:
@@ -161,7 +161,7 @@ namespace amo {
                             && info.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64) {
                         osname = ("Microsoft Windows XP Professional x64 Edition");
                     } else if (GetSystemMetrics(SM_SERVERR2) == 0) {
-                        osname = ("Microsoft Windows Server 2003");    //2003ƒÍ3‘¬∑¢≤º
+                        osname = ("Microsoft Windows Server 2003");    //2003Âπ¥3ÊúàÂèëÂ∏É
                     } else if (GetSystemMetrics(SM_SERVERR2) != 0) {
                         osname = ("Microsoft Windows Server 2003 R2");
                     }
@@ -178,7 +178,7 @@ namespace amo {
                     if (os.wProductType == VER_NT_WORKSTATION) {
                         osname = ("Microsoft Windows Vista");
                     } else {
-                        osname = ("Microsoft Windows Server 2008");    //∑˛ŒÒ∆˜∞Ê±æ
+                        osname = ("Microsoft Windows Server 2008");    //ÊúçÂä°Âô®ÁâàÊú¨
                     }
                     
                     break;

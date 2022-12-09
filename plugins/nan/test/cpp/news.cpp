@@ -1,4 +1,4 @@
-/*********************************************************************
+﻿/*********************************************************************
  * NAN - Native Abstractions for Node.js
  *
  * Copyright (c) 2017 NAN contributors
@@ -53,7 +53,7 @@ NAN_METHOD(NewUint32FromNegative) {
 }
 
 NAN_METHOD(NewUtf8String) {
-  const char s[] = "strïng";
+  const char s[] = "str茂ng";
   info.GetReturnValue().Set(New(s).ToLocalChecked());
 }
 
@@ -68,7 +68,7 @@ NAN_METHOD(NewUcs2String) {
 }
 
 NAN_METHOD(NewStdString) {
-  const std::string s = "strïng";
+  const std::string s = "str茂ng";
   info.GetReturnValue().Set(New<v8::String>(s).ToLocalChecked());
 }
 

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "node/NodeContextMenuHandler.h"
 #include "node/NodeHandlerHelper.h"
 

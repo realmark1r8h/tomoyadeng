@@ -1,4 +1,4 @@
-// Created by amoylel on 12/01/2017.
+ï»¿// Created by amoylel on 12/01/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 
@@ -27,7 +27,7 @@ namespace amo {
      *
      * @chapter extend
      *
-     * @brief	ÎÄ¼ş¶ÁĞ´Àà.
+     * @brief	æ–‡ä»¶è¯»å†™ç±».
      *
      * @extend	Runnable
      */
@@ -45,14 +45,14 @@ namespace amo {
          * @fn	FileTransfer::FileStream(const amo::string& fileName, int mode = 3)
          * @tag constructor
          * @index 1
-         * @brief	´´½¨»ò´ò¿ªÒ»¸öÎÄ¼ş.
+         * @brief	åˆ›å»ºæˆ–æ‰“å¼€ä¸€ä¸ªæ–‡ä»¶.
          *
-         * @param	#String ĞèÒª²Ù×÷ÎÄ¼şµÄÂ·¾¶.
-         * @param	#Int=3	ÎÄ¼ş´ò¿ª·½Ê½£¬¿ÉÒÔÑ¡ÔñÒÔÏÂÖµ£¬×éºÏÊ¹ÓÃ.<br>
-         * 					&nbsp;&nbsp;&nbsp;&nbsp; 1 ÒÔÖ»¶Á·½Ê½´ò¿ª£¬Èç¹ûÎÄ¼ş²»´æÔÚ£¬ÄÇÃ´½«´ò¿ªÊ§°Ü<br>
-         * 					&nbsp;&nbsp;&nbsp;&nbsp; 2 ÒÔĞ´·½Ê½´ò¿ª£¬Èç¹ûÎÄ¼ş²»´æÔÚÔò»á´´½¨ÎÄ¼ş<br>
-         * 					&nbsp;&nbsp;&nbsp;&nbsp; 8 ÒÔ×·¼Ó·½Ê½´ò¿ª<br>
-         * 					&nbsp;&nbsp;&nbsp;&nbsp; 32 ÒÔ¶ş½øÖÆ·½Ê½´ò¿ªÎÄ¼ş<br>
+         * @param	#String éœ€è¦æ“ä½œæ–‡ä»¶çš„è·¯å¾„.
+         * @param	#Int=3	æ–‡ä»¶æ‰“å¼€æ–¹å¼ï¼Œå¯ä»¥é€‰æ‹©ä»¥ä¸‹å€¼ï¼Œç»„åˆä½¿ç”¨.<br>
+         * 					&nbsp;&nbsp;&nbsp;&nbsp; 1 ä»¥åªè¯»æ–¹å¼æ‰“å¼€ï¼Œå¦‚æœæ–‡ä»¶ä¸å­˜åœ¨ï¼Œé‚£ä¹ˆå°†æ‰“å¼€å¤±è´¥<br>
+         * 					&nbsp;&nbsp;&nbsp;&nbsp; 2 ä»¥å†™æ–¹å¼æ‰“å¼€ï¼Œå¦‚æœæ–‡ä»¶ä¸å­˜åœ¨åˆ™ä¼šåˆ›å»ºæ–‡ä»¶<br>
+         * 					&nbsp;&nbsp;&nbsp;&nbsp; 8 ä»¥è¿½åŠ æ–¹å¼æ‰“å¼€<br>
+         * 					&nbsp;&nbsp;&nbsp;&nbsp; 32 ä»¥äºŒè¿›åˆ¶æ–¹å¼æ‰“å¼€æ–‡ä»¶<br>
          * @return #FileStream
          */
         
@@ -105,11 +105,11 @@ namespace amo {
         /**
          * @fn	Any FileTransfer::open(IPCMessage::SmartType msg)
          * @tag sync
-         * @brief	´ò¿ªÎÄ¼ş£¬´´½¨¶ÔÏóÊ±»áÄ¬ÈÏ´ò¿ªÎÄ¼ş£¬²»ĞèÒªÖØ¸´µ÷ÓÃ.
-         * 			Èç¹ûÄãµ÷ÓÃÁË{@link close=FileStream.close}º¯Êı£¬ÄÇÃ´¿ÉÒÔµ÷ÓÃ¸Ãº¯ÊıÖØĞÂ´ò¿ªÎÄ¼ş
+         * @brief	æ‰“å¼€æ–‡ä»¶ï¼Œåˆ›å»ºå¯¹è±¡æ—¶ä¼šé»˜è®¤æ‰“å¼€æ–‡ä»¶ï¼Œä¸éœ€è¦é‡å¤è°ƒç”¨.
+         * 			å¦‚æœä½ è°ƒç”¨äº†{@link close=FileStream.close}å‡½æ•°ï¼Œé‚£ä¹ˆå¯ä»¥è°ƒç”¨è¯¥å‡½æ•°é‡æ–°æ‰“å¼€æ–‡ä»¶
          *
-         * @param	#int=0 ÎÄ¼ş´ò¿ª·½Ê½£¬²Î¼û{@link ¹¹Ôìº¯Êı=FileStream.FileStream}µÄÄÚÈİ.
-         * 				   Èç¹û²»ÊäÈë¸Ã²ÎÊı£¬³ÌĞò»áÊ¹ÓÃ´´½¨¸Ã¶ÔÏóÊ±Ö¸¶¨µÄ´ò¿ª·½Ê½
+         * @param	#int=0 æ–‡ä»¶æ‰“å¼€æ–¹å¼ï¼Œå‚è§{@link æ„é€ å‡½æ•°=FileStream.FileStream}çš„å†…å®¹.
+         * 				   å¦‚æœä¸è¾“å…¥è¯¥å‚æ•°ï¼Œç¨‹åºä¼šä½¿ç”¨åˆ›å»ºè¯¥å¯¹è±¡æ—¶æŒ‡å®šçš„æ‰“å¼€æ–¹å¼
          *
          *
          * @return	#Boolean.
@@ -146,9 +146,9 @@ namespace amo {
          *
          * @tag sync deprecated
          *
-         * @brief	¶ÁÈ¡ËùÓĞÎÄ¼şÄÚÈİ.
+         * @brief	è¯»å–æ‰€æœ‰æ–‡ä»¶å†…å®¹.
          *
-         * @return	#String ¶ÁÈ¡µ½µÄ×Ö·û´®.
+         * @return	#String è¯»å–åˆ°çš„å­—ç¬¦ä¸².
          *
          * @see readSome=FileStream.readSome
          * @example
@@ -172,8 +172,8 @@ namespace amo {
         /**
          * @fn	Any FileTransfer::readAll(IPCMessage::SmartType msg)
          * @tag sync
-         * @brief	»ñÈ¡ËùÓĞ×Ö·û´®, readAll²ÉÓÃ²»Í¬µÄ»úÖÆ¶ÁÈ¡ÎÄ¼ş£¬¸Ã²Ù×÷Óëµ±Ç°Á÷ÎŞ¹Ø£¬
-         * 			ËùÒÔµ÷ÓÃ¸Ãº¯Êı²»»áÓ°ÏìÆäËû×´Ì¬º¯ÊıÈç{@link eof=FileStream.eof}.
+         * @brief	è·å–æ‰€æœ‰å­—ç¬¦ä¸², readAllé‡‡ç”¨ä¸åŒçš„æœºåˆ¶è¯»å–æ–‡ä»¶ï¼Œè¯¥æ“ä½œä¸å½“å‰æµæ— å…³ï¼Œ
+         * 			æ‰€ä»¥è°ƒç”¨è¯¥å‡½æ•°ä¸ä¼šå½±å“å…¶ä»–çŠ¶æ€å‡½æ•°å¦‚{@link eof=FileStream.eof}.
          *
          * @return	#String
          * @example
@@ -197,9 +197,9 @@ namespace amo {
         /**
          * @fn	Any FileTransfer::readSome(IPCMessage::SmartType msg)
          * @tag sync
-         * @brief	¶ÁÈ¡Ö¸¶¨ÊıÁ¿.
+         * @brief	è¯»å–æŒ‡å®šæ•°é‡.
          *
-         * @param	#Int ×î¶à¶ÁÈ¡¶àÉÙ¸ö×Ö·û.
+         * @param	#Int æœ€å¤šè¯»å–å¤šå°‘ä¸ªå­—ç¬¦.
          *
          * @return	#String.
          * @example
@@ -236,7 +236,7 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	¶ÁÈ¡Ò»ĞĞ,Ò»ĞĞ×î¶à4096¸ö×Ö·û£¬Èç¹û¶àÓÚÕâ¸öÖµÔò²»ÄÜ»ñÈ¡ÍêÕûÊı¾İ£¬²Î¿¼
+         * @brief	è¯»å–ä¸€è¡Œ,ä¸€è¡Œæœ€å¤š4096ä¸ªå­—ç¬¦ï¼Œå¦‚æœå¤šäºè¿™ä¸ªå€¼åˆ™ä¸èƒ½è·å–å®Œæ•´æ•°æ®ï¼Œå‚è€ƒ
          * 			{@link readSome=FileStream.readSome}.
          *
          * @return	#String.
@@ -263,11 +263,11 @@ namespace amo {
         /**
          * @fn	Any FileTransfer::write(IPCMessage::SmartType msg)
          * @tag sync
-         * @brief	ÏòÎÄ¼şÖĞĞ´Èë×Ö·û´®.
+         * @brief	å‘æ–‡ä»¶ä¸­å†™å…¥å­—ç¬¦ä¸².
          *
-         * @param	#String ĞèÒªĞ´ÈëµÄÊı¾İ.
+         * @param	#String éœ€è¦å†™å…¥çš„æ•°æ®.
          *
-         * @return	#Boolean true ³É¹¦/false Ê§°Ü.
+         * @return	#Boolean true æˆåŠŸ/false å¤±è´¥.
          * @example
          *
          ```
@@ -299,11 +299,11 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	½«Ò»¸öÎÄ¼şµÄÄÚÈİ×·¼Óµ½µ±Ç°ÎÄ¼şÖĞ.
+         * @brief	å°†ä¸€ä¸ªæ–‡ä»¶çš„å†…å®¹è¿½åŠ åˆ°å½“å‰æ–‡ä»¶ä¸­.
          *
-         * @param	#String ÎÄ¼şÂ·¾¶
+         * @param	#String æ–‡ä»¶è·¯å¾„
          *
-         * @return	#Boolean true ³É¹¦/false Ê§°Ü.
+         * @return	#Boolean true æˆåŠŸ/false å¤±è´¥.
          *
          * @example
          *
@@ -346,7 +346,7 @@ namespace amo {
         }
         
         
-        // ½«µ±Ç°ÎÄ¼ş×·¼Óµ½ÁíÒ»¸öÎÄ¼şÖĞÈ¥
+        // å°†å½“å‰æ–‡ä»¶è¿½åŠ åˆ°å¦ä¸€ä¸ªæ–‡ä»¶ä¸­å»
         Any appendTo(IPCMessage::SmartType msg) {
             return Undefined();
         }
@@ -354,10 +354,10 @@ namespace amo {
         /**
          * @fn	Any FileTransfer::close(IPCMessage::SmartType msg)
          * @tag sync
-         * @brief	¹Ø±ÕÎÄ¼ş£¬¹Ø±Õºó²»ÄÜÔÙµ÷ÓÃÆäËûAPI²Ù×÷ÎÄ¼ş.
+         * @brief	å…³é—­æ–‡ä»¶ï¼Œå…³é—­åä¸èƒ½å†è°ƒç”¨å…¶ä»–APIæ“ä½œæ–‡ä»¶.
          *
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see open=FileStream.open
          *
@@ -388,7 +388,7 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	ÅĞ¶ÏÎÄ¼şÊÇ·ñ´ò¿ª.
+         * @brief	åˆ¤æ–­æ–‡ä»¶æ˜¯å¦æ‰“å¼€.
          *
          * @return	#Boolean.
          * @example
@@ -415,7 +415,7 @@ namespace amo {
         /**
          * @fn	Any FileTransfer::size(IPCMessage::SmartType msg)
          * @tag sync
-         * @brief	»ñÈ¡ÎÄ¼ş´óĞ¡.
+         * @brief	è·å–æ–‡ä»¶å¤§å°.
          *
          * @return	#Int.
          * @example
@@ -447,9 +447,9 @@ namespace amo {
         /**
          * @fn	Any FileTransfer::Remove(IPCMessage::SmartType msg)
          * @tag sync static
-         * @brief É¾³ıÎÄ¼ş.
+         * @brief åˆ é™¤æ–‡ä»¶.
          *
-         * @param #String ÎÄ¼şÂ·¾¶.
+         * @param #String æ–‡ä»¶è·¯å¾„.
          *
          * @return	#Boolean.
          * @example
@@ -458,10 +458,10 @@ namespace amo {
         	include('FileStream');
         	var filestream = new FileStream('manifest2.json');
         	filestream.write('33');
-        	// ÎÄ¼ş±»Õ¼ÓÃ£¬ÎŞ·¨É¾³ı
+        	// æ–‡ä»¶è¢«å ç”¨ï¼Œæ— æ³•åˆ é™¤
         	console.assert(FileStream.Remove('manifest2.json') == false);
         	filestream.close();
-        	// ½â³ıÎÄ¼şÕ¼ÓÃ£¬¿ÉÒÔÉ¾³ı
+        	// è§£é™¤æ–‡ä»¶å ç”¨ï¼Œå¯ä»¥åˆ é™¤
         	console.assert(FileStream.Remove('manifest2.json') == true);
          ```
          */
@@ -476,17 +476,17 @@ namespace amo {
         /**
         * @fn	Any FileTransfer::remove(IPCMessage::SmartType msg)
         * @tag sync
-        * @brief É¾³ıµ±Ç°ÎÄ¼ş.
+        * @brief åˆ é™¤å½“å‰æ–‡ä»¶.
         *
         * @return	#Boolean.
         * @example
         *
         ```
         	include('FileStream');
-        	// ÒÔ¶ÁĞ´·½Ê½´ò¿ª£¬Èç¹ûÎÄ¼ş²»´æÔÚ£¬»á´´½¨ÎÄ¼ş
+        	// ä»¥è¯»å†™æ–¹å¼æ‰“å¼€ï¼Œå¦‚æœæ–‡ä»¶ä¸å­˜åœ¨ï¼Œä¼šåˆ›å»ºæ–‡ä»¶
         	var filestream = new FileStream('manifest2.json');
         	console.assert(filestream.remove() == true);
-        	// ÒÔÖ»¶Á·½Ê½´ò¿ª£¬Èç¹ûÎÄ¼ş²»´æÔÚ£¬Ôò²»»á´´½¨ÎÄ¼ş
+        	// ä»¥åªè¯»æ–¹å¼æ‰“å¼€ï¼Œå¦‚æœæ–‡ä»¶ä¸å­˜åœ¨ï¼Œåˆ™ä¸ä¼šåˆ›å»ºæ–‡ä»¶
         	var filestream2 = new FileStream('manifest2.json', 1);
         	console.assert(filestream.remove() == false);
         ```
@@ -501,16 +501,16 @@ namespace amo {
         /**
          * @fn	Any FileTransfer::eof(IPCMessage::SmartType msg)
          *
-         * @brief	ÅĞ¶ÏÊÇ·ñÒÑ¶ÁÈ¡µ½ÎÄ¼şÄ©Î².
+         * @brief	åˆ¤æ–­æ˜¯å¦å·²è¯»å–åˆ°æ–‡ä»¶æœ«å°¾.
          *
          *
-         * @return	#Boolean true Ä©Î²/ false ·ÇÄ©Î².
+         * @return	#Boolean true æœ«å°¾/ false éæœ«å°¾.
          * @example
          *
          ```
         	include('FileStream');
         	var filestream = new FileStream('manifest.json');
-        	filestream.readAll(); // readAll²»»áÓ°ÏìÄÚ²¿ÎÄ¼şÖ¸ÕëÎ»ÖÃ
+        	filestream.readAll(); // readAllä¸ä¼šå½±å“å†…éƒ¨æ–‡ä»¶æŒ‡é’ˆä½ç½®
         	console.assert(filestream.eof() ==false);
         	while(!filestream.eof()){
         		console.log(filestream.readSome(100));

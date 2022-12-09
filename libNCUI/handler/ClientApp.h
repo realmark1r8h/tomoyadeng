@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_CLIENTAPP_H__
@@ -33,7 +33,7 @@ namespace amo {
          * 		CefRefPtr<CefSchemeRegistrar> registrar,
          * 		std::vector<CefString>& cookiable_schemes);
          *
-         * @brief	×¢²á×Ô¶¨ÒåĞ­Òé
+         * @brief	æ³¨å†Œè‡ªå®šä¹‰åè®®
          * 			B.
          *
          * @param	registrar				 	The registrar.
@@ -57,7 +57,7 @@ namespace amo {
          * 		const CefString& domain_name,
          * 		CefRefPtr<CefSchemeHandlerFactory> factory);
          *
-         * @brief	×¢²á×Ô¶¨ÒåĞ­Òé´¦ÀíÀà
+         * @brief	æ³¨å†Œè‡ªå®šä¹‰åè®®å¤„ç†ç±»
          * 			B.
          *
          * @param	scheme_name	Name of the scheme.
@@ -81,7 +81,7 @@ namespace amo {
          * 		const CefString& process_type,
          * 		CefRefPtr<CefCommandLine> command_line);
          *
-         * @brief	ÔÚ½ø³Ì´´½¨Ç°¿ÉÍ¨¹ı´Ëº¯Êı²é¿´ÃüÁîĞĞ²ÎÊı»òĞŞ¸ÄÃüÁîĞĞ²ÎÊı
+         * @brief	åœ¨è¿›ç¨‹åˆ›å»ºå‰å¯é€šè¿‡æ­¤å‡½æ•°æŸ¥çœ‹å‘½ä»¤è¡Œå‚æ•°æˆ–ä¿®æ”¹å‘½ä»¤è¡Œå‚æ•°
          * 			 B R.
          *
          * @param	process_type	Type of the process.
@@ -95,8 +95,8 @@ namespace amo {
          * @fn	virtual void ClientApp::OnRegisterCustomSchemes(
          * 		CefRefPtr<CefSchemeRegistrar> registrar);
          *
-         * @brief	´Ëº¯ÊıÌá¹©×¢²á×Ô¶¨ÒåĞ­ÒéµÄ»ú»á£¬¿ÉÒÔÔÚ´Ë»Øµ÷º¯ÊıÖĞ×¢²á×Ô¶¨ÒåĞ­Òé£¬
-        //			¸Ã·½·¨Ö»ÄÜÔÚ½ø³ÌÖĞµÄÖ÷Ïß³ÌÖĞµ÷ÓÃ
+         * @brief	æ­¤å‡½æ•°æä¾›æ³¨å†Œè‡ªå®šä¹‰åè®®çš„æœºä¼šï¼Œå¯ä»¥åœ¨æ­¤å›è°ƒå‡½æ•°ä¸­æ³¨å†Œè‡ªå®šä¹‰åè®®ï¼Œ
+        //			è¯¥æ–¹æ³•åªèƒ½åœ¨è¿›ç¨‹ä¸­çš„ä¸»çº¿ç¨‹ä¸­è°ƒç”¨
         //			B R.
          *
          * @param	registrar	The registrar.
@@ -116,8 +116,8 @@ namespace amo {
         /*!
          * @fn	virtual CefRefPtr<CefResourceBundleHandler> ClientApp::GetResourceBundleHandler();
          *
-         * @brief	»ñÈ¡×ÊÔ´´¦Àí¾ä±ú
-         * 			Èç¹ûCefSettings.pack_loading_disabled Îªtrue, ÄÇÃ´´Ëº¯Êı²»ÄÜ·µ»ØNULL
+         * @brief	è·å–èµ„æºå¤„ç†å¥æŸ„
+         * 			å¦‚æœCefSettings.pack_loading_disabled ä¸ºtrue, é‚£ä¹ˆæ­¤å‡½æ•°ä¸èƒ½è¿”å›NULL
          * 			B R.
          *
          * @return	The resource bundle handler.
@@ -128,8 +128,8 @@ namespace amo {
         /*!
          * @fn	virtual CefRefPtr<CefBrowserProcessHandler> ClientApp::GetBrowserProcessHandler();
          *
-         * @brief	·µ»Øä¯ÀÀÆ÷Ö÷½ø³Ì´¦Àí¾ä±ú
-         * 			¿ÉÒÔÔÚÖ÷½ø³ÌÖĞµÄÈÎºÎÏß³ÌÖĞµ÷ÓÃ
+         * @brief	è¿”å›æµè§ˆå™¨ä¸»è¿›ç¨‹å¤„ç†å¥æŸ„
+         * 			å¯ä»¥åœ¨ä¸»è¿›ç¨‹ä¸­çš„ä»»ä½•çº¿ç¨‹ä¸­è°ƒç”¨
          * 			B.
          *
          * @return	The browser process handler.
@@ -140,7 +140,7 @@ namespace amo {
         /*!
          * @fn	virtual CefRefPtr<CefRenderProcessHandler> ClientApp::GetRenderProcessHandler();
          *
-         * @brief	·µ»ØäÖÈ¾½ø³Ì´¦Àí¾ä±ú Ö»ÄÜÔÚäÖÈ¾½ø³ÌÖĞµÄÖ÷Ïß³ÌÖĞµ÷ÓÃ
+         * @brief	è¿”å›æ¸²æŸ“è¿›ç¨‹å¤„ç†å¥æŸ„ åªèƒ½åœ¨æ¸²æŸ“è¿›ç¨‹ä¸­çš„ä¸»çº¿ç¨‹ä¸­è°ƒç”¨
          * 			R MAIN.
          *
          * @return	The render process handler.
@@ -152,8 +152,8 @@ namespace amo {
          * @fn	bool ClientApp::RegisterRenderProcessHandlerDelegate(
          * 		RenderProcessHandlerDelegate* delegate);
          *
-         * @brief	×¢²á CefRenderProcessHandler »Øµ÷´¦Àíº¯Êı
-         * 			¾¡Á¿ÔÚ´´½¨×Ó½ø³ÌÇ°µ÷ÓÃ£¬²»È»Ö»ÄÜÔÚäÖÈ¾½ø³ÌÖĞÑ°ÕÒÆäËûÎ»ÖÃµ÷ÓÃ
+         * @brief	æ³¨å†Œ CefRenderProcessHandler å›è°ƒå¤„ç†å‡½æ•°
+         * 			å°½é‡åœ¨åˆ›å»ºå­è¿›ç¨‹å‰è°ƒç”¨ï¼Œä¸ç„¶åªèƒ½åœ¨æ¸²æŸ“è¿›ç¨‹ä¸­å¯»æ‰¾å…¶ä»–ä½ç½®è°ƒç”¨
          * 			R MAIN.
          *
          * @param 	delegate	If non-null, the delegate.
@@ -168,7 +168,7 @@ namespace amo {
          * @fn	void ClientApp::UnregisterRenderProcessHandlerDelegate(
          * 		RenderProcessHandlerDelegate* delegate);
          *
-         * @brief	·´×¢²á CefRenderProcessHandler »Øµ÷´¦Àíº¯Êı
+         * @brief	åæ³¨å†Œ CefRenderProcessHandler å›è°ƒå¤„ç†å‡½æ•°
          * 			R.
          *
          * @param 	delegate	If non-null, the delegate.
@@ -181,7 +181,7 @@ namespace amo {
          * @fn	bool ClientApp::RegisterBrowserProcessHandlerDelegate(
          * 		BrowserProcessHandlerDelegate* delegate);
          *
-         * @brief	×¢²á CefBrowserProcessHandler »Øµ÷´¦Àíº¯Êı
+         * @brief	æ³¨å†Œ CefBrowserProcessHandler å›è°ƒå¤„ç†å‡½æ•°
          * 			B.
          *
          * @param 	delegate	If non-null, the delegate.
@@ -196,7 +196,7 @@ namespace amo {
          * @fn	void ClientApp::UnregisterBrowserProcessHandlerDelegate(
          * 		BrowserProcessHandlerDelegate* delegate);
          *
-         * @brief	×¢²á CefBrowserProcessHandler »Øµ÷´¦Àíº¯Êı
+         * @brief	æ³¨å†Œ CefBrowserProcessHandler å›è°ƒå¤„ç†å‡½æ•°
          * 			B.
          *
          * @param 	delegate	If non-null, the delegate.
@@ -222,13 +222,13 @@ namespace amo {
         
     private:
     
-        /*! @brief	äÖÈ¾½ø³Ì´¦Àí³ÌĞò. */
+        /*! @brief	æ¸²æŸ“è¿›ç¨‹å¤„ç†ç¨‹åº. */
         CefRefPtr<RenderProcessHandler> m_pRenderProcessHandler;
-        /*! @brief	Ö÷½ø³Ì´¦Àí³ÌĞò. */
+        /*! @brief	ä¸»è¿›ç¨‹å¤„ç†ç¨‹åº. */
         CefRefPtr<BrowserProcessHandler> m_pBrowserProcessHandler;
-        /*! @brief	×ÊÔ´´¦Àí³ÌĞò. */
+        /*! @brief	èµ„æºå¤„ç†ç¨‹åº. */
         CefRefPtr<ResourceBundleHandler> m_pResourceBundleHandler;
-        /*! @brief	ÔÊĞíCookieµÄĞ­Òé. */
+        /*! @brief	å…è®¸Cookieçš„åè®®. */
         std::vector<CefString> m_CookieableSchemes;
         
         

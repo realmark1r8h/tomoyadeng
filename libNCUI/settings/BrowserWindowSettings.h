@@ -1,4 +1,4 @@
-// Created by amoylel on 06/09/2017.
+ï»¿// Created by amoylel on 06/09/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_BROWSERSETTINGS_H__
@@ -10,12 +10,12 @@
 namespace amo {
 
     /**
-     * @class	ä¯ÀÀÆ÷´°¿Ú²ÎÊý
+     * @class	æµè§ˆå™¨çª—å£å‚æ•°
      *
      * @id settingsBrowserWindowSettings
      *
-     * @brief	´´½¨ä¯ÀÀÆ÷´°¿ÚÊ±¿ÉÓÃµÄÊôÐÔ.<br>
-     * 			ËµÃ÷£º**ÅäÖÃ²ÎÊý²»ÄÜÔÚ³ÌÐòÔËÐÐ¹ý³ÌÖÐÐÞ¸Ä£¬Ö»ÓÐ³ÌÐòÄÚ²¿º¯Êý¿ÉÒÔÐÞ¸ÄÕâÐ©Öµ¡£**
+     * @brief	åˆ›å»ºæµè§ˆå™¨çª—å£æ—¶å¯ç”¨çš„å±žæ€§.<br>
+     * 			è¯´æ˜Žï¼š**é…ç½®å‚æ•°ä¸èƒ½åœ¨ç¨‹åºè¿è¡Œè¿‡ç¨‹ä¸­ä¿®æ”¹ï¼Œåªæœ‰ç¨‹åºå†…éƒ¨å‡½æ•°å¯ä»¥ä¿®æ”¹è¿™äº›å€¼ã€‚**
      *
      * @chapter settings
      *
@@ -36,7 +36,7 @@ namespace amo {
          * @brief	Init default cef browser settings.
          */
         
-        void initDefaultCefBrowserSettings();  // ä¯ÀÀÆ÷Ä¬ÈÏ²ÎÊý
+        void initDefaultCefBrowserSettings();  // æµè§ˆå™¨é»˜è®¤å‚æ•°
         
         /*!
          * @fn	void BrowserWindowSettings::InitDefaultBrowserSettings();
@@ -51,14 +51,14 @@ namespace amo {
         
         virtual amo::json toJson() override;
     public:
-        /*! @var #Boolean=false main µ±Ç°´°¿ÚÊÇ·ñÎªÖ÷´°¿Ú.Ö÷´°¿ÚÖ»ÄÜÓÐÒ»¸ö£¬Èç¹ûÉèÖÃÎªÖ÷´°¿Ú½«È¡ÏûÖ®Ç°µÄÖ÷´°¿ÚÉè¶¨£¬ÐÂµÄÖ÷´°¿Ú»áÌæ´úÔ­À´µÄÖ÷´°¿Ú.
-         *	Äã¿ÉÒÔÔÚ³ÌÐòÔËÐÐ¹ý³ÌÖÐÐÞ¸Ä¸ÃÖµ£¬µ«Òª±£Ö¤ÈÎºÎÊ±ºò¶¼×î¶àÖ»ÄÜÓÐÒ»¸öä¯ÀÀÆ÷´°¿Ú±»±ê¼ÇÎªmain */
+        /*! @var #Boolean=false main å½“å‰çª—å£æ˜¯å¦ä¸ºä¸»çª—å£.ä¸»çª—å£åªèƒ½æœ‰ä¸€ä¸ªï¼Œå¦‚æžœè®¾ç½®ä¸ºä¸»çª—å£å°†å–æ¶ˆä¹‹å‰çš„ä¸»çª—å£è®¾å®šï¼Œæ–°çš„ä¸»çª—å£ä¼šæ›¿ä»£åŽŸæ¥çš„ä¸»çª—å£.
+         *	ä½ å¯ä»¥åœ¨ç¨‹åºè¿è¡Œè¿‡ç¨‹ä¸­ä¿®æ”¹è¯¥å€¼ï¼Œä½†è¦ä¿è¯ä»»ä½•æ—¶å€™éƒ½æœ€å¤šåªèƒ½æœ‰ä¸€ä¸ªæµè§ˆå™¨çª—å£è¢«æ ‡è®°ä¸ºmain */
         bool main;
         
-        /** @var #Boolean=false relad	ÊÇ·ñÔÊÐíÒ³ÃæË¢ÐÂ. Ä¬ÈÏfalse */
+        /** @var #Boolean=false relad	æ˜¯å¦å…è®¸é¡µé¢åˆ·æ–°. é»˜è®¤false */
         bool reload;
         
-        /** @var #Int=0	 dragBlackList	²»ÔÊÐíµÄÍÏ×§²Ù×÷ºÚÃûµ¥,Éè¶¨ºó¶ÔÓ¦ÀàÐÍµÄÍÏ×§½«²»±»ÔÊÐí¡£ÒÔÏÂÊÇ¿ÉÒÔÊ¹ÓÃµÄÖµ,¿ÉÒÔ×éºÏÊ¹ÓÃ<br>
+        /** @var #Int=0	 dragBlackList	ä¸å…è®¸çš„æ‹–æ‹½æ“ä½œé»‘åå•,è®¾å®šåŽå¯¹åº”ç±»åž‹çš„æ‹–æ‹½å°†ä¸è¢«å…è®¸ã€‚ä»¥ä¸‹æ˜¯å¯ä»¥ä½¿ç”¨çš„å€¼,å¯ä»¥ç»„åˆä½¿ç”¨<br>
         /** @brief  DRAG_OPERATION_NONE    = 0,<br>
         			DRAG_OPERATION_COPY    = 1,<br>
         			DRAG_OPERATION_LINK    = 2,<br>
@@ -69,10 +69,10 @@ namespace amo {
         			DRAG_OPERATION_EVERY   = 0xffffffff */
         int dragBlacklist;
         
-        /** @var #JsonArray=[]	cssList ÐèÒª×¢Èëµ½Ò³ÃæµÄÑùÊ½ÁÐ±í£¬±ØÐëÊÇÒ»¸öURL¡£ ³ÌÐò»áÔÚÖ÷Ò³Ãæ¼ÓÔØÍê³Éºó½«ÀïÃæµÄÎÄ¼þ×¢Èëµ½Ò³ÃæÖÐ. */
+        /** @var #JsonArray=[]	cssList éœ€è¦æ³¨å…¥åˆ°é¡µé¢çš„æ ·å¼åˆ—è¡¨ï¼Œå¿…é¡»æ˜¯ä¸€ä¸ªURLã€‚ ç¨‹åºä¼šåœ¨ä¸»é¡µé¢åŠ è½½å®ŒæˆåŽå°†é‡Œé¢çš„æ–‡ä»¶æ³¨å…¥åˆ°é¡µé¢ä¸­. */
         amo::json cssList;
         
-        /** @var #JsonArray=[] javascriptList ÐèÒª×¢Èëµ½Ò³ÃæµÄJavascriptÁÐ±í£¬±ØÐëÊÇÒ»¸öURL¡£ ³ÌÐò»áÔÚÖ÷Ò³Ãæ¼ÓÔØÍê³Éºó½«ÀïÃæµÄÎÄ¼þ×¢Èëµ½Ò³ÃæÖÐ. */
+        /** @var #JsonArray=[] javascriptList éœ€è¦æ³¨å…¥åˆ°é¡µé¢çš„Javascriptåˆ—è¡¨ï¼Œå¿…é¡»æ˜¯ä¸€ä¸ªURLã€‚ ç¨‹åºä¼šåœ¨ä¸»é¡µé¢åŠ è½½å®ŒæˆåŽå°†é‡Œé¢çš„æ–‡ä»¶æ³¨å…¥åˆ°é¡µé¢ä¸­. */
         amo::json javascriptList;
         
         

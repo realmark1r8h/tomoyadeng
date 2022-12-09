@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2012 Chris Lentini
 http://divergentcoder.com
 

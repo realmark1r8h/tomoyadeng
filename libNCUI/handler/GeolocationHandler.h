@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_GEOLOCATIONHANDLER_H__
@@ -12,7 +12,7 @@ namespace amo {
     /*!
      * @class	GeolocationHandlerDelegate
      *
-     * @brief	µØÀíÎ»ÖÃÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚIOÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	åœ°ç†ä½ç½®äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨IOçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class GeolocationHandlerDelegate {
@@ -61,7 +61,7 @@ namespace amo {
     /*!
      * @class	GeolocationHandler
      *
-     * @brief	µØÀíÎ»ÖÃÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚIOÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	åœ°ç†ä½ç½®äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨IOçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class GeolocationHandler : public CefGeolocationHandler
@@ -81,7 +81,7 @@ namespace amo {
          * 		int request_id,
          * 		CefRefPtr<CefGeolocationCallback> callback);
          *
-         * @brief	Ò³ÃæÇëÇó¶¨Î»Ê±´¥·¢
+         * @brief	é¡µé¢è¯·æ±‚å®šä½æ—¶è§¦å‘
          * 			B IO.
          *
          * @param	browser		  	The browser.
@@ -113,7 +113,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		int request_id);
          *
-         * @brief	Ò³ÃæÈ¡Ïû¶¨Î»Ê±´¥·¢
+         * @brief	é¡µé¢å–æ¶ˆå®šä½æ—¶è§¦å‘
          * 			B IO.
          *
          * @param	browser   	The browser.

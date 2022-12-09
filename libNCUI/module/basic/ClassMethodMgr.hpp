@@ -1,4 +1,4 @@
-// Created by amoylel on 07/12/2017.
+ï»¿// Created by amoylel on 07/12/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_CLASSMETHODMGR_HPP__
@@ -71,7 +71,7 @@ namespace amo {
             m_oClassMap.clear();
         }
     private:
-        /*! @brief	±£´æËù¸øÀàµÄËùÓĞ³ÉÔ±º¯Êı. */
+        /*! @brief	ä¿å­˜æ‰€ç»™ç±»çš„æ‰€æœ‰æˆå‘˜å‡½æ•°. */
         std::unordered_map<std::string, FunctionWrapperMgr > m_oClassMap;
         
     };

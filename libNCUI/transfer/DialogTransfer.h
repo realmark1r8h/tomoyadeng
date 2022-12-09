@@ -1,4 +1,4 @@
-// Created by amoylel on 08/14/2017.
+ï»¿// Created by amoylel on 08/14/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_DIALOGTRANSFER_H__
@@ -17,8 +17,8 @@ namespace amo {
      *
      * @extend Object
      *
-     * @brief	µ¯³ö¿ò£¬ÎÄ¼şÑ¡Ôñ¿ò.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	å¼¹å‡ºæ¡†ï¼Œæ–‡ä»¶é€‰æ‹©æ¡†.<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      *
      */
     
@@ -34,26 +34,26 @@ namespace amo {
          *
          * @tag async static
          *
-         * @brief	´ò¿ªÎÄ¼şÑ¡Ôñ¶Ô»°¿ò.
+         * @brief	æ‰“å¼€æ–‡ä»¶é€‰æ‹©å¯¹è¯æ¡†.
          *
-         * @param	#JsonObject ÎÄ¼ş´ò¿ª²ÎÊı.<br>
-         * 						[**String**]  title ±êÌâ.<br>
-         * 						[**String**]	model ¶Ô»°¿òÀàĞÍ£¬¿ÉÓÃµÄ{@link ¶Ô»°¿òÄ£Ê½=dialog.ÊôĞÔÁĞ±í}<br>
-         * 						[**String**]	defaultFilePath Ä¬ÈÏ¿ªÊ¼Ä¿Â¼<br>
-         * 						[**Array**]	acceptFilters, ¿É½ÓÊÜµÄÎÄ¼şÀàĞÍ<br>
-         * 						[**String**]	selectedAcceptFilter ¹ıÂËÆ÷
+         * @param	#JsonObject æ–‡ä»¶æ‰“å¼€å‚æ•°.<br>
+         * 						[**String**]  title æ ‡é¢˜.<br>
+         * 						[**String**]	model å¯¹è¯æ¡†ç±»å‹ï¼Œå¯ç”¨çš„{@link å¯¹è¯æ¡†æ¨¡å¼=dialog.å±æ€§åˆ—è¡¨}<br>
+         * 						[**String**]	defaultFilePath é»˜è®¤å¼€å§‹ç›®å½•<br>
+         * 						[**Array**]	acceptFilters, å¯æ¥å—çš„æ–‡ä»¶ç±»å‹<br>
+         * 						[**String**]	selectedAcceptFilter è¿‡æ»¤å™¨
          *
-         * @param	#Function  Ñ¡ÔñÍê³ÉºóµÄ»Øµ÷º¯Êı, ÓÃÓÚ´«µİÓÃ»§µÄÑ¡Ôñ½á¹û£¬½á¹ûÎªÒ»¸öArray.
+         * @param	#Function  é€‰æ‹©å®Œæˆåçš„å›è°ƒå‡½æ•°, ç”¨äºä¼ é€’ç”¨æˆ·çš„é€‰æ‹©ç»“æœï¼Œç»“æœä¸ºä¸€ä¸ªArray.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
         		 ```
         		 include('dialog');
-        		 // µ¥ÎÄ¼şÑ¡Ôñ
+        		 // å•æ–‡ä»¶é€‰æ‹©
         		 dialog.runFileDialog({
-        			 title: 'NCUIÎÄ¼şÑ¡Ôñ¶Ô»°¿ò',
+        			 title: 'NCUIæ–‡ä»¶é€‰æ‹©å¯¹è¯æ¡†',
         			 model: dialog.FILE_DIALOG_OPEN,
         			 defaultFilePath: '',
         			 acceptFilters: ['image/*'],
@@ -66,9 +66,9 @@ namespace amo {
          *
         		 ```
         		 include('dialog');
-        		 // ´ÓÎÄ¼şÑ¡Ôñ
+        		 // ä»æ–‡ä»¶é€‰æ‹©
         		 dialog.runFileDialog({
-        			 title: 'NCUIÎÄ¼şÑ¡Ôñ¶Ô»°¿ò',
+        			 title: 'NCUIæ–‡ä»¶é€‰æ‹©å¯¹è¯æ¡†',
         			 model: dialog.FILE_DIALOG_OPEN_MULTIPLE,
         			 defaultFilePath: '',
         			 acceptFilters: ['image/*'],
@@ -81,9 +81,9 @@ namespace amo {
         *
         		 ```
         		 include('dialog');
-        		 // ´ÓÎÄ¼şÑ¡Ôñ
+        		 // ä»æ–‡ä»¶é€‰æ‹©
         		 dialog.runFileDialog({
-        		 title: 'NCUIÎÄ¼şÑ¡Ôñ¶Ô»°¿ò',
+        		 title: 'NCUIæ–‡ä»¶é€‰æ‹©å¯¹è¯æ¡†',
         		 model: dialog.FILE_DIALOG_OPEN_MULTIPLE,
         		 defaultFilePath: '',
         		 acceptFilters: ['image/*'],
@@ -100,17 +100,17 @@ namespace amo {
          *
          * @tag sync static
          *
-         * @brief	µ¯³öÌáÊ¾¿ò£¬Ïà¹ØÓÚjsµÄalertº¯Êı.
+         * @brief	å¼¹å‡ºæç¤ºæ¡†ï¼Œç›¸å…³äºjsçš„alertå‡½æ•°.
          *
-         * @param	#String ĞèÒªÏÔÊ¾µÄÎÄ±¾.
+         * @param	#String éœ€è¦æ˜¾ç¤ºçš„æ–‡æœ¬.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
         		 ```
         		 include('dialog');
-        		 dialog.alert('ÎÒÊÇÒ»¸öµ¯³ö¿ò');
+        		 dialog.alert('æˆ‘æ˜¯ä¸€ä¸ªå¼¹å‡ºæ¡†');
         		 ```
          */
         
@@ -121,9 +121,9 @@ namespace amo {
          *
          * @tag sync static
          *
-         * @brief	Ñ¡Ôñ¶Ô»°¿ò£¬Ïàµ±ÓÚjsµÄconfirmº¯Êı.
+         * @brief	é€‰æ‹©å¯¹è¯æ¡†ï¼Œç›¸å½“äºjsçš„confirmå‡½æ•°.
          *
-         * @param	#String ĞèÒªÏÔÊ¾µÄÎÄ±¾.
+         * @param	#String éœ€è¦æ˜¾ç¤ºçš„æ–‡æœ¬.
          *
          * @return	#Boolean.
          *
@@ -131,7 +131,7 @@ namespace amo {
          *
         			 ```
         				include('dialog');
-        				var retval = dialog.confirm('ÊÇ·ñĞèÒªÍË³ö³ÌĞò');
+        				var retval = dialog.confirm('æ˜¯å¦éœ€è¦é€€å‡ºç¨‹åº');
         				console.log(retval);
         			 ```
          */
@@ -141,32 +141,32 @@ namespace amo {
         /*!
          * @fn	Any DialogTransfer::prompt(IPCMessage::SmartType msg);
          * @tag sync static
-         * @brief	»ñÈ¡ÓÃ»§ÊäÈëÖµ£¬Ïàµ±ÓÚjsµÄpromptº¯Êı.
+         * @brief	è·å–ç”¨æˆ·è¾“å…¥å€¼ï¼Œç›¸å½“äºjsçš„promptå‡½æ•°.
          *
-         * @param	#String ÌáÊ¾ÎÄ±¾.
-         * @param	#String Ä¬ÈÏÊäÈëÎÄ±¾£¬¿ÉÑ¡.
+         * @param	#String æç¤ºæ–‡æœ¬.
+         * @param	#String é»˜è®¤è¾“å…¥æ–‡æœ¬ï¼Œå¯é€‰.
          *
          * @return	#JsonObject.
-         * 			|#Boolean code ÓÃ»§µÄÑ¡Ôñ½á¹û,true /false.
-         * 			|#String text ÓÃ»§µÄÊäÈëÎÄ±¾.
+         * 			|#Boolean code ç”¨æˆ·çš„é€‰æ‹©ç»“æœ,true /false.
+         * 			|#String text ç”¨æˆ·çš„è¾“å…¥æ–‡æœ¬.
          * @example
          *
         			 ```
         			 include('dialog');
-        			 var retval = dialog.prompt('ÇëÊäÈëÄãµÄĞÕÃû', 'ÕÅÈı');
+        			 var retval = dialog.prompt('è¯·è¾“å…¥ä½ çš„å§“å', 'å¼ ä¸‰');
         			 console.log(retval);
         			 ```
          */
         
         Any prompt(IPCMessage::SmartType msg);
         
-        /*! @attr #Int=FILE_DIALOG_OPEN FILE_DIALOG_OPEN ÔÊĞíÑ¡ÔñÒ»¸ö´æÔÚµÄÎÄ¼ş. {@tag const static property}*/
-        /*! @attr #Int=FILE_DIALOG_OPEN_MULTIPLE FILE_DIALOG_OPEN_MULTIPLE ¿ÉÒÔÑ¡Ôñ¶à¸ö´æÔÚµÄÎÄ¼ş. {@tag const static property}*/
-        /*! @attr #Int=FILE_DIALOG_OPEN_FOLDER FILE_DIALOG_OPEN_FOLDER Ñ¡ÔñÎÄ¼ş¼Ğ. {@tag const static property}*/
-        /*! @attr #Int=FILE_DIALOG_SAVE FILE_DIALOG_SAVE ÔÊĞíÑ¡ÔñÒ»¸ö²»´æÔÚµÄÎÄ¼ş£¬Èç¹ûËùÑ¡ÔñµÄÎÄ¼ş´æÔÚ£¬ÄÇÃ´»áÌáÊ¾ÊÇ·ñ¸²¸Ç¸ÃÎÄ¼ş£¬Ò»°ãÓÃÀ´×öÎÄ¼ş±£´æÑ¡Ôñ. {@tag const static property}*/
+        /*! @attr #Int=FILE_DIALOG_OPEN FILE_DIALOG_OPEN å…è®¸é€‰æ‹©ä¸€ä¸ªå­˜åœ¨çš„æ–‡ä»¶. {@tag const static property}*/
+        /*! @attr #Int=FILE_DIALOG_OPEN_MULTIPLE FILE_DIALOG_OPEN_MULTIPLE å¯ä»¥é€‰æ‹©å¤šä¸ªå­˜åœ¨çš„æ–‡ä»¶. {@tag const static property}*/
+        /*! @attr #Int=FILE_DIALOG_OPEN_FOLDER FILE_DIALOG_OPEN_FOLDER é€‰æ‹©æ–‡ä»¶å¤¹. {@tag const static property}*/
+        /*! @attr #Int=FILE_DIALOG_SAVE FILE_DIALOG_SAVE å…è®¸é€‰æ‹©ä¸€ä¸ªä¸å­˜åœ¨çš„æ–‡ä»¶ï¼Œå¦‚æœæ‰€é€‰æ‹©çš„æ–‡ä»¶å­˜åœ¨ï¼Œé‚£ä¹ˆä¼šæç¤ºæ˜¯å¦è¦†ç›–è¯¥æ–‡ä»¶ï¼Œä¸€èˆ¬ç”¨æ¥åšæ–‡ä»¶ä¿å­˜é€‰æ‹©. {@tag const static property}*/
         /*! @attr #Int=FILE_DIALOG_TYPE_MASK FILE_DIALOG_TYPE_MASK General mask defining the bits used for the type values. {@tag const static property}*/
         /*! @attr #Int=FILE_DIALOG_OVERWRITEPROMPT_FLAG FILE_DIALOG_OVERWRITEPROMPT_FLAG Prompt to overwrite if the user selects an existing file with the Save dialog. {@tag const static property}*/
-        /*! @attr #Int=FILE_DIALOG_HIDEREADONLY_FLAG FILE_DIALOG_HIDEREADONLY_FLAG ²»ÏÔÊ¾Ö»¶ÁÎÄ¼ş. {@tag const static property}*/
+        /*! @attr #Int=FILE_DIALOG_HIDEREADONLY_FLAG FILE_DIALOG_HIDEREADONLY_FLAG ä¸æ˜¾ç¤ºåªè¯»æ–‡ä»¶. {@tag const static property}*/
         
         
         

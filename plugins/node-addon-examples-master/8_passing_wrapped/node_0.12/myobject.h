@@ -1,4 +1,4 @@
-#ifndef MYOBJECT_H
+﻿#ifndef MYOBJECT_H
 #define MYOBJECT_H
 
 #include <node.h>

@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_DRAGHANDLER_H__
@@ -12,7 +12,7 @@ namespace amo {
     /*!
      * @class	DragHandlerDelegate
      *
-     * @brief	ÍÏ×§ÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	æ‹–æ‹½äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     
@@ -40,7 +40,7 @@ namespace amo {
     /*!
      * @class	DragHandler
      *
-     * @brief	ÍÏ×§ÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	æ‹–æ‹½äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class DragHandler : public CefDragHandler
@@ -56,7 +56,7 @@ namespace amo {
          * 		CefRefPtr<CefDragData> dragData,
          * 		DragOperationsMask mask);
          *
-         * @brief	µ±ÓĞÍâ²¿ÍÏ×§ÊÂ¼ş½øÈëä¯ÀÀÆ÷´°¿ÚÊ±´¥·¢
+         * @brief	å½“æœ‰å¤–éƒ¨æ‹–æ‹½äº‹ä»¶è¿›å…¥æµè§ˆå™¨çª—å£æ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser 	The browser.

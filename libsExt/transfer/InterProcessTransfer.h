@@ -1,4 +1,4 @@
-// Created by amoylel on 12/04/2018.
+ï»¿// Created by amoylel on 12/04/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBNCUI_INTERPROCESSTRANSFER_50BCDD1C_0EAF_44CA_8475_776EE4B9A3EA_H__
@@ -22,7 +22,7 @@ namespace amo {
     /*!
      * @class	InterProcess
      * @chapter extend
-     * @brief	½ø³Ì¼äÍ¨ÐÅÀà.
+     * @brief	è¿›ç¨‹é—´é€šä¿¡ç±».
      */
     
     class InterProcessTransfer

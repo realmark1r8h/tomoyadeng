@@ -1,4 +1,4 @@
-// Created by amoylel on 06/30/2017.
+ï»¿// Created by amoylel on 06/30/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_UIMESSAGEBROADCASTER_HPP__
@@ -33,12 +33,12 @@ namespace amo {
         
             auto args = msg->getArgumentList();
             
-            //TODO: ¼ÓÈëNodeJSÖ§³Ö
+            //TODO: åŠ å…¥NodeJSæ”¯æŒ
             
             std::string strEventName = args->getString(IPCArgsPosInfo::FuncName);
             
             if (strEventName == "triggerEvent") {
-                // FrameID ºÍBrowserID ¶¼±ØĞè´æÔÚ
+                // FrameID å’ŒBrowserID éƒ½å¿…éœ€å­˜åœ¨
                 std::shared_ptr<UIMessageEmitter> runner(new UIMessageEmitter());
                 int64_t nFrameID = args->getInt64(IPCArgsPosInfo::FrameID);
                 runner->setIPCMessage(msg->clone());
@@ -46,7 +46,7 @@ namespace amo {
                 runner->execute();
             } else if (strEventName == "emitEventAllFrame"
                        || strEventName == "releaseAllTransfer") {
-                // ²»¹ÜFrameID,ËùÓĞµÄ¶¼È¥Ò»·İ
+                // ä¸ç®¡FrameID,æ‰€æœ‰çš„éƒ½å»ä¸€ä»½
                 std::unordered_map<int, CefRefPtr<CefBrowser> > mp
                     = BrowserManager<PID_BROWSER>::GetAllBrowser();
                     
@@ -102,7 +102,7 @@ namespace amo {
             int nIndex = 0;
             
             
-            // ÏòËùÓĞä¯ÀÀÆ÷¹ã²¥ÏûÏ¢
+            // å‘æ‰€æœ‰æµè§ˆå™¨å¹¿æ’­æ¶ˆæ¯
             for (auto& p : mp) {
                 ++nIndex;
                 runner->setFrame(p.second->GetMainFrame());
@@ -148,13 +148,13 @@ namespace amo {
             int nIndex = 0;
             
             
-            // ÏòËùÓĞä¯ÀÀÆ÷¹ã²¥ÏûÏ¢
+            // å‘æ‰€æœ‰æµè§ˆå™¨å¹¿æ’­æ¶ˆæ¯
             for (auto& p : mp) {
                 ++nIndex;
                 runner->setFrame(p.second->GetMainFrame());
                 ret = runner->syncExecute();
                 
-                // Èç¹û·µ»ØÖµÊÇÒ»¸öBOOLÀàĞÍÇÒÎªFalse£¬ÄÇÃ´Í£Ö¹Ñ­»·
+                // å¦‚æœè¿”å›å€¼æ˜¯ä¸€ä¸ªBOOLç±»å‹ä¸”ä¸ºFalseï¼Œé‚£ä¹ˆåœæ­¢å¾ªç¯
                 /*if (ret.is<bool>() && !ret.As<bool>()) {
                     break;
                 }*/

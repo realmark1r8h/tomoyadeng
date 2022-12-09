@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "transfer/URLRequestClientTransfer.h"
 #include "handler/URLRequestClient.h"
 #include "transfer/TransferMappingMgr.hpp"

@@ -1,4 +1,4 @@
-// sqlite3pp.h
+﻿// sqlite3pp.h
 //
 // The MIT License
 //

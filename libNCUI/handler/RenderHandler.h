@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_RENDERHANDLER_H__
@@ -12,7 +12,7 @@ namespace amo {
     /*!
      * @class	RenderHandlerDelegate
      *
-     * @brief	ÀëÆÁäÖÈ¾´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	ç¦»å±æ¸²æŸ“å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class RenderHandlerDelegate {
@@ -114,7 +114,7 @@ namespace amo {
         
     };
     
-    // ÀëÆÁäÖÈ¾´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ
+    // ç¦»å±æ¸²æŸ“å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨
     class RenderHandler : public CefRenderHandler
         , public HandlerDelegate < RenderHandlerDelegate > {
     public:
@@ -127,7 +127,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		CefRect& rect);
          *
-         * @brief	»ñÈ¡ä¯ÀÀÆ÷¸¸´°¿ÚÔÚÆÁÄ»ÖĞµÄÏÔÊ¾ÇøÓò
+         * @brief	è·å–æµè§ˆå™¨çˆ¶çª—å£åœ¨å±å¹•ä¸­çš„æ˜¾ç¤ºåŒºåŸŸ
          * 			B UI.
          *
          * @param	browser			The browser.
@@ -144,7 +144,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		CefRect& rect);
          *
-         * @brief	»ñÈ¡Ò³ÃæäÖÈ¾ÏÔÊ¾ÇøÓò
+         * @brief	è·å–é¡µé¢æ¸²æŸ“æ˜¾ç¤ºåŒºåŸŸ
          * 			B UI.
          *
          * @param	browser			The browser.
@@ -164,7 +164,7 @@ namespace amo {
          * 		int& screenX,
          * 		int& screenY);
          *
-         * @brief	×ª»»¿Í»§Çø×ø±êµ½ÆÁÄ»×ø±ê
+         * @brief	è½¬æ¢å®¢æˆ·åŒºåæ ‡åˆ°å±å¹•åæ ‡
          * 			B UI.
          *
          * @param	browser		   	The browser.
@@ -187,7 +187,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		CefScreenInfo& screen_info);
          *
-         * @brief	»ñÈ¡ÆÁÄ»ĞÅÏ¢
+         * @brief	è·å–å±å¹•ä¿¡æ¯
          * 			B UI.
          *
          * @param	browser			   	The browser.
@@ -204,7 +204,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		bool show);
          *
-         * @brief	ä¯ÀÀÆ÷ÒªÏÔÊ¾»òÒş²Øµ¯³ö´°¿ÚÊ±´¥·¢
+         * @brief	æµè§ˆå™¨è¦æ˜¾ç¤ºæˆ–éšè—å¼¹å‡ºçª—å£æ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser	The browser.
@@ -219,7 +219,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		const CefRect& rect);
          *
-         * @brief	Ò³ÃæÒªÒÆ¶¯»ò¸Ä±ä´°¿Ú´óĞ¡Ê±´¥·¢
+         * @brief	é¡µé¢è¦ç§»åŠ¨æˆ–æ”¹å˜çª—å£å¤§å°æ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser	The browser.
@@ -238,7 +238,7 @@ namespace amo {
          * 		int width,
          * 		int height);
          *
-         * @brief	Ò³ÃæÖØ»æÊ±´¥·¢
+         * @brief	é¡µé¢é‡ç»˜æ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser   	The browser.
@@ -284,7 +284,7 @@ namespace amo {
          * 		CursorType type,
          * 		const CefCursorInfo& custom_cursor_info);
          *
-         * @brief	¹â±ê·¢Éú¸Ä±äÊ±´¥·¢
+         * @brief	å…‰æ ‡å‘ç”Ÿæ”¹å˜æ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser			  	The browser.

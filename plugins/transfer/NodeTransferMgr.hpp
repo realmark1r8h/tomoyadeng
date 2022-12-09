@@ -1,4 +1,4 @@
-// Created by amoylel on 07/10/2017.
+ï»¿// Created by amoylel on 07/10/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_NODETRANSFERMGR_HPP__
@@ -11,7 +11,7 @@ namespace amo {
     class NodeTransferMgr : public TransferMgr, public amo::singleton < NodeTransferMgr > {
     public:
         virtual void returnSyncResult(int nBrowserID, amo::IPCResult& ret) {
-            // TODO: ·µ»ØÍ¬²½ÏûÏ¢
+            // TODO: è¿”å›žåŒæ­¥æ¶ˆæ¯
             auto mgr = NodeProcessExchangerManager::getInstance();
             mgr->exchange(nBrowserID, ret);
             return;

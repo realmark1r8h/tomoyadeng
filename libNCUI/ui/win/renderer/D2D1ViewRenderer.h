@@ -1,4 +1,4 @@
-// Created by amoylel on 21/09/2018.
+ï»¿// Created by amoylel on 21/09/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBNCUI_D2D1VIEWRENDERER_094266D4_B6A1_4B24_AC35_413B3992F271_H__
@@ -19,7 +19,7 @@ namespace amo {
      
     
     
-    //Ò³ÃæäÖÈ¾¿Ø¼ş
+    //é¡µé¢æ¸²æŸ“æ§ä»¶
     class ViewRenderer : public CControlUI {
     
     public:
@@ -91,13 +91,13 @@ namespace amo {
         std::shared_ptr<amo::d2d1::D2D1DCRenderer> m_dcRenderer;
         
         
-        /*! @brief	ÊÇ·ñÊ¹ÓÃÓ²¼ş¼ÓËÙ. */
+        /*! @brief	æ˜¯å¦ä½¿ç”¨ç¡¬ä»¶åŠ é€Ÿ. */
         bool m_accelerator;
         
-        int m_nCount;	// ×î½üÒ»ÃëÄÚäÖÈ¾µÄÖ¡Êı
-        int m_nLastFPS;	// ×î½üÒ»´ÎÓĞ¼ÇÂ¼µÄFPS
+        int m_nCount;	// æœ€è¿‘ä¸€ç§’å†…æ¸²æŸ“çš„å¸§æ•°
+        int m_nLastFPS;	// æœ€è¿‘ä¸€æ¬¡æœ‰è®°å½•çš„FPS
         
-        int64_t m_nLastTimestamp;  // ×î½üÒ»´ÎäÖÈ¾Ê±¼ä Ãë
+        int64_t m_nLastTimestamp;  // æœ€è¿‘ä¸€æ¬¡æ¸²æŸ“æ—¶é—´ ç§’
         
         bool m_bDrawBackground;
         

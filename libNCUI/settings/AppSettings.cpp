@@ -1,4 +1,4 @@
-#include "stdafx.h"
+Ôªø#include "stdafx.h"
 #include "settings/AppSettings.h"
 #include "settings/NativeWindowSettings.h"
 
@@ -14,7 +14,7 @@ namespace amo {
 
 
     AppSettings::AppSettings() {
-        AMO_TIMER_INIT(≥Ã–Úø™ º);
+        AMO_TIMER_INIT(Á®ãÂ∫èÂºÄÂßã);
         initDefaultCefSettings();
         initDefaultAppSettings();
         std::string str = settings.to_string();
@@ -22,69 +22,69 @@ namespace amo {
     
     void AppSettings::initDefaultCefSettings() {
         amo::string strAppPath =
-            amo::path::getExeDir();						//!< ªÒ»°µ±«∞ø…÷¥––Œƒº˛ƒø¬º
+            amo::path::getExeDir();						//!< Ëé∑ÂèñÂΩìÂâçÂèØÊâßË°åÊñá‰ª∂ÁõÆÂΩï
         std::string strLogFile = (strAppPath +
-                                  L"\\cef.log").to_utf8();			//!< »’÷æŒƒº˛
+                                  L"\\cef.log").to_utf8();			//!< Êó•ÂøóÊñá‰ª∂
         std::string strExeFullName =  amo::string(
-                                          amo::path::getFullExeName()).to_utf8();		//!< ÕÍ’˚¬∑æ∂µƒ≥Ã–Ú√˚
-        std::string strResourcesPath = (strAppPath + "").to_utf8();				//!< ◊ ‘¥ƒø¬º
+                                          amo::path::getFullExeName()).to_utf8();		//!< ÂÆåÊï¥Ë∑ØÂæÑÁöÑÁ®ãÂ∫èÂêç
+        std::string strResourcesPath = (strAppPath + "").to_utf8();				//!< ËµÑÊ∫êÁõÆÂΩï
         std::string strLocalesPath = (strAppPath +
-                                      "\\locales").to_utf8();		//!< Localƒø¬º
+                                      "\\locales").to_utf8();		//!< LocalÁõÆÂΩï
                                       
         DEFAULT_ARGS_SETTINGS(single_process,
-                              true);							//!< Ω˚÷πµ±Ω¯≥Ãƒ£ Ω £¨∏√∞Ê±æ π”√µ•Ω¯≥Ãƒ£ ΩŒﬁ∑®‰÷»æ“≥
-        DEFAULT_ARGS_SETTINGS(no_sandbox, true);								//!< …≥œ‰
+                              true);							//!< Á¶ÅÊ≠¢ÂΩìËøõÁ®ãÊ®°Âºè ÔºåËØ•ÁâàÊú¨‰ΩøÁî®ÂçïËøõÁ®ãÊ®°ÂºèÊó†Ê≥ïÊ∏≤ÊüìÈ°µ
+        DEFAULT_ARGS_SETTINGS(no_sandbox, true);								//!< Ê≤ôÁÆ±
         CEFSTRING_DEFAULT_ARGS_SETTINGS(browser_subprocess_path,
-                                        strExeFullName);	//!< ◊”Ω¯≥Ã¬∑æ∂Œƒº˛£¨ƒ¨»œ”Îµ±«∞≥Ã–ÚŒƒº˛œ‡Õ¨
+                                        strExeFullName);	//!< Â≠êËøõÁ®ãË∑ØÂæÑÊñá‰ª∂ÔºåÈªòËÆ§‰∏éÂΩìÂâçÁ®ãÂ∫èÊñá‰ª∂Áõ∏Âêå
         DEFAULT_ARGS_SETTINGS(multi_threaded_message_loop,
-                              false);				//!< Ω˚÷π∂‡œﬂ≥Ãœ˚œ¢—≠ª∑£¨ª·≥ˆŒ Ã‚
+                              false);				//!< Á¶ÅÊ≠¢Â§öÁ∫øÁ®ãÊ∂àÊÅØÂæ™ÁéØÔºå‰ºöÂá∫ÈóÆÈ¢ò
                               
         CEFSTRING_DEFAULT_ARGS_SETTINGS(resources_dir_path,
-                                        strResourcesPath);	//!< …Ë÷√◊ ‘¥ƒø¬º
+                                        strResourcesPath);	//!< ËÆæÁΩÆËµÑÊ∫êÁõÆÂΩï
         CEFSTRING_DEFAULT_ARGS_SETTINGS(locales_dir_path,
-                                        strLocalesPath);		//!< localƒø¬º
+                                        strLocalesPath);		//!< localÁõÆÂΩï
         CEFSTRING_DEFAULT_ARGS_SETTINGS(cache_path,
-                                        getCachePath().to_utf8());	//!< ƒ¨»œª∫¥Ê¬∑æ∂
+                                        getCachePath().to_utf8());	//!< ÈªòËÆ§ÁºìÂ≠òË∑ØÂæÑ
                                         
                                         
         CEFSTRING_DEFAULT_ARGS_SETTINGS(locale,
-                                        "zh-CN");						//!< ”Ô—‘ª∑æ≥ƒ¨»œ÷–Œƒ
+                                        "zh-CN");						//!< ËØ≠Ë®ÄÁéØÂ¢ÉÈªòËÆ§‰∏≠Êñá
         DEFAULT_ARGS_SETTINGS(background_color,
-                              0);					//!< “≥√ÊŒ¥º”‘ÿ«∞±≥æ∞…´
+                              0);					//!< È°µÈù¢Êú™Âä†ËΩΩÂâçËÉåÊôØËâ≤
                               
-        // œ¬√Êµƒ≤Œ ˝◊Ó∫√∂º≤ª“™»•∂Ø
+        // ‰∏ãÈù¢ÁöÑÂèÇÊï∞ÊúÄÂ•ΩÈÉΩ‰∏çË¶ÅÂéªÂä®
         //        DEFAULT_ARGS_SETTINGS(command_line_args_disabled,
-        //                              false);				//!< ‘ –Ì√¸¡Ó––≤Œ ˝
+        //                              false);				//!< ÂÖÅËÆ∏ÂëΩ‰ª§Ë°åÂèÇÊï∞
         //
         //        DEFAULT_ARGS_SETTINGS(persist_session_cookies, true);
         //
-        //        //CefString(&user_agent) , "chrome://version");							//!<  π”√ƒ¨»œ
-        //        //CefString(&product_version) , "v2.0");								//!< ≤ªƒ‹…Ë÷√∏√÷µ£¨ª·≥ˆŒ Ã‚£¨ π”√ƒ¨»œ°£‘⁄◊”Ω¯≥Ãµ˜”√ø…ƒ‹≥ˆœ÷¡ÀŒ Ã‚
+        //        //CefString(&user_agent) , "chrome://version");							//!< ‰ΩøÁî®ÈªòËÆ§
+        //        //CefString(&product_version) , "v2.0");								//!< ‰∏çËÉΩËÆæÁΩÆËØ•ÂÄºÔºå‰ºöÂá∫ÈóÆÈ¢òÔºå‰ΩøÁî®ÈªòËÆ§„ÄÇÂú®Â≠êËøõÁ®ãË∞ÉÁî®ÂèØËÉΩÂá∫Áé∞‰∫ÜÈóÆÈ¢ò
         //
-        //        CEFSTRING_DEFAULT_ARGS_SETTINGS(log_file, strLogFile);					//!< »’÷æŒƒº˛
+        //        CEFSTRING_DEFAULT_ARGS_SETTINGS(log_file, strLogFile);					//!< Êó•ÂøóÊñá‰ª∂
         //
         //
-        //        DEFAULT_ARGS_SETTINGS(log_severity, LOGSEVERITY_VERBOSE);				//!< »’÷æµ»º∂
+        //        DEFAULT_ARGS_SETTINGS(log_severity, LOGSEVERITY_VERBOSE);				//!< Êó•ÂøóÁ≠âÁ∫ß
         //        DEFAULT_ARGS_SETTINGS(log_severity,
-        //                              LOGSEVERITY_DISABLE);				//!< πÿ±’, »’÷æÃ´∂‡
-        //        //release_dcheck_enabled , true);										//!< ø™∆Ùrelease check, √ª ≤√¥”√
+        //                              LOGSEVERITY_DISABLE);				//!< ÂÖ≥Èó≠, Êó•ÂøóÂ§™Â§ö
+        //        //release_dcheck_enabled , true);										//!< ÂºÄÂêØrelease check, Ê≤°‰ªÄ‰πàÁî®
         //
-        //        //CefString(&javascript_flags) , "js-flags");							//!< ≤ª÷™µ¿‘ı√¥ÃÓ
+        //        //CefString(&javascript_flags) , "js-flags");							//!< ‰∏çÁü•ÈÅìÊÄé‰πàÂ°´
         //
         //        DEFAULT_ARGS_SETTINGS(pack_loading_disabled, false);					//!< .
-        //        DEFAULT_ARGS_SETTINGS(remote_debugging_port, 8088);						//!< µ˜ ‘∂Àø⁄
+        //        DEFAULT_ARGS_SETTINGS(remote_debugging_port, 8088);						//!< Ë∞ÉËØïÁ´ØÂè£
         //        DEFAULT_ARGS_SETTINGS(uncaught_exception_stack_size,
-        //                              1000);				//!< ≤ª÷™µ¿∏√…Ë÷√∂‡…Ÿ
+        //                              1000);				//!< ‰∏çÁü•ÈÅìËØ•ËÆæÁΩÆÂ§öÂ∞ë
         //
         //#if CHROME_VERSION_BUILD < 3071
         //        DEFAULT_ARGS_SETTINGS(context_safety_implementation, true);				//!< .
         //#endif
         //
         //        DEFAULT_ARGS_SETTINGS(ignore_certificate_errors,
-        //                              true);					//!< ∫ˆ¬‘÷§ È¥ÌŒÛ
-        //        //DEFAULT_ARGS_SETTINGS(background_color, 0xffffffff);					//!< “≥√ÊŒ¥º”‘ÿ«∞±≥æ∞…´
+        //                              true);					//!< ÂøΩÁï•ËØÅ‰π¶ÈîôËØØ
+        //        //DEFAULT_ARGS_SETTINGS(background_color, 0xffffffff);					//!< È°µÈù¢Êú™Âä†ËΩΩÂâçËÉåÊôØËâ≤
         //        DEFAULT_ARGS_SETTINGS(background_color,
-        //                              0x00ffffff);					//!< “≥√ÊŒ¥º”‘ÿ«∞±≥æ∞…´
+        //                              0x00ffffff);					//!< È°µÈù¢Êú™Âä†ËΩΩÂâçËÉåÊôØËâ≤
     }
     
     void AppSettings::initDefaultAppSettings() {
@@ -142,7 +142,7 @@ namespace amo {
     }
     
     amo::string AppSettings::getCachePath() {
-        TCHAR path[MAX_PATH];// ª∫¥Êƒø¬º
+        TCHAR path[MAX_PATH];// ÁºìÂ≠òÁõÆÂΩï
         ZeroMemory(path, MAX_PATH);
         SHGetSpecialFolderPath(NULL, path, CSIDL_LOCAL_APPDATA, FALSE);
         
@@ -166,9 +166,9 @@ namespace amo {
         p.remove_extension();
         
         amo::path pData(strUserDir);
-        pData.append(p);// …Ë÷√”√ªß ˝æ›∏˘ƒø¬º
+        pData.append(p);// ËÆæÁΩÆÁî®Êà∑Êï∞ÊçÆÊ†πÁõÆÂΩï
         
-        ::CreateDirectoryA(pData.c_str(), NULL);				// ¥¥Ω®ƒø¬º
+        ::CreateDirectoryA(pData.c_str(), NULL);				// ÂàõÂª∫ÁõÆÂΩï
         return amo::string(pData.c_str(), false);
     }
     
@@ -181,38 +181,38 @@ namespace amo {
     bool AppSettings::updateCefAppSettings() {
     
         BOOL_ARGS_SETTING(
-            single_process);										//!< Ω˚÷πµ±Ω¯≥Ãƒ£ Ω £¨∏√∞Ê±æ π”√µ•Ω¯≥Ãƒ£ ΩŒﬁ∑®‰÷»æ“≥
-        BOOL_ARGS_SETTING(no_sandbox);											//!< …≥œ‰
-        CEFSTRING_ARGS_SETTING(browser_subprocess_path);						//!< ◊”Ω¯≥Ã¬∑æ∂
+            single_process);										//!< Á¶ÅÊ≠¢ÂΩìËøõÁ®ãÊ®°Âºè ÔºåËØ•ÁâàÊú¨‰ΩøÁî®ÂçïËøõÁ®ãÊ®°ÂºèÊó†Ê≥ïÊ∏≤ÊüìÈ°µ
+        BOOL_ARGS_SETTING(no_sandbox);											//!< Ê≤ôÁÆ±
+        CEFSTRING_ARGS_SETTING(browser_subprocess_path);						//!< Â≠êËøõÁ®ãË∑ØÂæÑ
         BOOL_ARGS_SETTING(
-            multi_threaded_message_loop);							//!< Ω˚÷π∂‡œﬂ≥Ãœ˚œ¢—≠ª∑£¨ª·≥ˆŒ Ã‚
-        BOOL_ARGS_SETTING(command_line_args_disabled);							//!< ‘ –Ì√¸¡Ó––≤Œ ˝
-        CEFSTRING_ARGS_SETTING(cache_path);										//!< ª∫¥Ê¬∑æ∂
+            multi_threaded_message_loop);							//!< Á¶ÅÊ≠¢Â§öÁ∫øÁ®ãÊ∂àÊÅØÂæ™ÁéØÔºå‰ºöÂá∫ÈóÆÈ¢ò
+        BOOL_ARGS_SETTING(command_line_args_disabled);							//!< ÂÖÅËÆ∏ÂëΩ‰ª§Ë°åÂèÇÊï∞
+        CEFSTRING_ARGS_SETTING(cache_path);										//!< ÁºìÂ≠òË∑ØÂæÑ
         BOOL_ARGS_SETTING(persist_session_cookies);
         
-        //CefString(&user_agent) , "chrome://version");							//!<  π”√ƒ¨»œ
-        //CefString(&product_version) , "v2.0");								//!< ≤ªƒ‹…Ë÷√∏√÷µ£¨ª·≥ˆŒ Ã‚£¨ π”√ƒ¨»œ°£‘⁄◊”Ω¯≥Ãµ˜”√ø…ƒ‹≥ˆœ÷¡ÀŒ Ã‚
-        CEFSTRING_ARGS_SETTING(locale);											//!< ”Ô—‘ª∑æ≥
-        CEFSTRING_ARGS_SETTING(log_file);										//!< »’÷æŒƒº˛
+        //CefString(&user_agent) , "chrome://version");							//!< ‰ΩøÁî®ÈªòËÆ§
+        //CefString(&product_version) , "v2.0");								//!< ‰∏çËÉΩËÆæÁΩÆËØ•ÂÄºÔºå‰ºöÂá∫ÈóÆÈ¢òÔºå‰ΩøÁî®ÈªòËÆ§„ÄÇÂú®Â≠êËøõÁ®ãË∞ÉÁî®ÂèØËÉΩÂá∫Áé∞‰∫ÜÈóÆÈ¢ò
+        CEFSTRING_ARGS_SETTING(locale);											//!< ËØ≠Ë®ÄÁéØÂ¢É
+        CEFSTRING_ARGS_SETTING(log_file);										//!< Êó•ÂøóÊñá‰ª∂
         
         
-        //CEFSTRING_ARGS_SETTING(log_severity);										//!< »’÷æµ»º∂
-        //CEFSTRING_ARGS_SETTING(log_severity);										//!< πÿ±’
+        //CEFSTRING_ARGS_SETTING(log_severity);										//!< Êó•ÂøóÁ≠âÁ∫ß
+        //CEFSTRING_ARGS_SETTING(log_severity);										//!< ÂÖ≥Èó≠
         
-        //CefString(&javascript_flags) , "js-flags");							//!< ≤ª÷™µ¿‘ı√¥ÃÓ
-        CEFSTRING_ARGS_SETTING(resources_dir_path);								//!< …Ë÷√◊ ‘¥ƒø¬º
-        CEFSTRING_ARGS_SETTING(locales_dir_path);								//!< localƒø¬º
+        //CefString(&javascript_flags) , "js-flags");							//!< ‰∏çÁü•ÈÅìÊÄé‰πàÂ°´
+        CEFSTRING_ARGS_SETTING(resources_dir_path);								//!< ËÆæÁΩÆËµÑÊ∫êÁõÆÂΩï
+        CEFSTRING_ARGS_SETTING(locales_dir_path);								//!< localÁõÆÂΩï
         BOOL_ARGS_SETTING(pack_loading_disabled);								//!< .
-        INT_ARGS_SETTING(remote_debugging_port);								//!< µ˜ ‘∂Àø⁄
+        INT_ARGS_SETTING(remote_debugging_port);								//!< Ë∞ÉËØïÁ´ØÂè£
         INT_ARGS_SETTING(
-            uncaught_exception_stack_size);						//!< ≤ª÷™µ¿∏√…Ë÷√∂‡…Ÿ
+            uncaught_exception_stack_size);						//!< ‰∏çÁü•ÈÅìËØ•ËÆæÁΩÆÂ§öÂ∞ë
 #if CHROME_VERSION_BUILD < 3071
         BOOL_ARGS_SETTING(context_safety_implementation); //!< .
 #endif
         
         
-        BOOL_ARGS_SETTING(ignore_certificate_errors);							//!< ∫ˆ¬‘÷§ È¥ÌŒÛ
-        UINT_ARGS_SETTING(background_color);									//!< “≥√ÊŒ¥º”‘ÿ«∞±≥æ∞…´
+        BOOL_ARGS_SETTING(ignore_certificate_errors);							//!< ÂøΩÁï•ËØÅ‰π¶ÈîôËØØ
+        UINT_ARGS_SETTING(background_color);									//!< È°µÈù¢Êú™Âä†ËΩΩÂâçËÉåÊôØËâ≤
         
         return true;
     }
@@ -222,14 +222,14 @@ namespace amo {
     void AppSettings::afterUpdateArgsSettings() {
         AMO_TIMER_ELAPSED();
         
-        // »Áπ˚‘¥¥˙¬Îº∂≤ª÷ß≥÷manifest£¨ƒ«√¥≤ª‘ –Ì–ﬁ∏ƒ≥Ã–Ú∆Ù∂Ø≤Œ ˝
+        // Â¶ÇÊûúÊ∫ê‰ª£Á†ÅÁ∫ß‰∏çÊîØÊåÅmanifestÔºåÈÇ£‰πà‰∏çÂÖÅËÆ∏‰øÆÊîπÁ®ãÂ∫èÂêØÂä®ÂèÇÊï∞
         if (!manifest) {
             return;
         }
         
         bool enableDebugMode = true;
         
-        // »Áπ˚‘¥¥˙¬Îº∂Ω˚÷πµ˜ ‘ƒ£ Ω£¨ƒ«√¥≤ª‘ –Ìø™∆Ùµ˜ ‘π§æﬂ
+        // Â¶ÇÊûúÊ∫ê‰ª£Á†ÅÁ∫ßÁ¶ÅÊ≠¢Ë∞ÉËØïÊ®°ÂºèÔºåÈÇ£‰πà‰∏çÂÖÅËÆ∏ÂºÄÂêØË∞ÉËØïÂ∑•ÂÖ∑
         if (!debugMode) {
             DEFAULT_ARGS_SETTINGS(debugMode, false);
         }

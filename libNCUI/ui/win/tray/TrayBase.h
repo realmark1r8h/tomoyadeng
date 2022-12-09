@@ -1,4 +1,4 @@
-// Created by amoylel on 09/08/2017.
+ï»¿// Created by amoylel on 09/08/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_TRAYBASE_H__
@@ -13,8 +13,8 @@ namespace amo {
     /*!
      * @class	TrayBase
      *
-     * @brief	ÍĞÅÌ¸¨Öú£¬ÓÃÓÚÉú³É¼¸¸öÊó±êÏûÏ¢.
-     *     * À´×Ô http://www.codeguru.com/cpp/com-tech/activex/tutorials/article.php/c8115/How-to-Implement-a-Mouse-HoverLeave-Message-on-the-System-Tray.htm
+     * @brief	æ‰˜ç›˜è¾…åŠ©ï¼Œç”¨äºç”Ÿæˆå‡ ä¸ªé¼ æ ‡æ¶ˆæ¯.
+     *     * æ¥è‡ª http://www.codeguru.com/cpp/com-tech/activex/tutorials/article.php/c8115/How-to-Implement-a-Mouse-HoverLeave-Message-on-the-System-Tray.htm
      */
     class TrayBase {
     public:
@@ -45,19 +45,19 @@ namespace amo {
         /*!
          * @fn	virtual void TrayBase::onMouseEnter() = 0;
          *
-         * @brief	´¥·¢Êó±ê½øÈëÊÂ¼ş.
+         * @brief	è§¦å‘é¼ æ ‡è¿›å…¥äº‹ä»¶.
          */
         virtual void onMouseEnter() = 0;
         /*!
          * @fn	virtual void TrayBase::onMouseHover() = 0;
          *
-         * @brief	´¥·¢Êó±êĞüÍ£ÊÂ¼ş.
+         * @brief	è§¦å‘é¼ æ ‡æ‚¬åœäº‹ä»¶.
          */
         virtual void onMouseHover() = 0;
         /*!
          * @fn	virtual void TrayBase::onMouseLeave() = 0;
          *
-         * @brief	´¥·¢Êó±êÀë¿ªÊÂ¼ş.
+         * @brief	è§¦å‘é¼ æ ‡ç¦»å¼€äº‹ä»¶.
          */
         virtual void onMouseLeave() = 0;
     };

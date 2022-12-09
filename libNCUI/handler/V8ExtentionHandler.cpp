@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 
 #include "handler/V8ExtentionHandler.h"
 
@@ -36,19 +36,19 @@ namespace amo {
                 && name != "includes"
                 && name != "renderer_modules"
                 && name != "browser_modules") {
-            // ²»Ö§³ÖÆäËûNative Function
+            // ä¸æ”¯æŒå…¶ä»–Native Function
             
             return m_pUtilityV8Handler->Execute(name, object, arguments, retval, exception);
         }
         
         
         
-        // include Ö»ÄÜ¼ÓÔØÒ»¸öÄ£¿é
+        // include åªèƒ½åŠ è½½ä¸€ä¸ªæ¨¡å—
         if ((name == "include")
                 && (arguments.size() != 1
                     || !arguments.at(0)->IsString()
                     || arguments.at(0)->GetStringValue().empty())) {
-            exception = L"include µÄ²ÎÊıÖ»ÄÜÒÔ×Ö·û´®×é³ÉÇÒ²»ÄÜÎª¿Õ";
+            exception = L"include çš„å‚æ•°åªèƒ½ä»¥å­—ç¬¦ä¸²ç»„æˆä¸”ä¸èƒ½ä¸ºç©º";
             return true;
         }
         
@@ -100,7 +100,7 @@ namespace amo {
             CefRefPtr<CefV8Value> args = arguments.at(i);
             
             if (args->IsObject()) {
-                // includes ÓĞ¶à¸ö²ÎÊı½«»áÒÔobjectµÄ·½·¨ÎÒ´«µİ²ÎÊı
+                // includes æœ‰å¤šä¸ªå‚æ•°å°†ä¼šä»¥objectçš„æ–¹æ³•æˆ‘ä¼ é€’å‚æ•°
                 std::vector<CefString> keys;
                 args->GetKeys(keys);
                 
@@ -110,17 +110,17 @@ namespace amo {
             } else if (args->IsString()) {
                 list.push_back(args);
             } else {
-                exception = L"²ÎÊı±ØĞëÎª×Ö·û´®";
+                exception = L"å‚æ•°å¿…é¡»ä¸ºå­—ç¬¦ä¸²";
                 return false;
             }
         }
         
-        // µ¼ÈëÄ£¿é
+        // å¯¼å…¥æ¨¡å—
         for (size_t i = 0; i < list.size(); ++i) {
             CefRefPtr<CefV8Value> args = list.at(i);
             
             if (!args || !args->IsString() || args->GetStringValue().empty()) {
-                exception = L"²ÎÊı±ØĞëÎª×Ö·û´®ÇÒ²»ÄÜÎª¿Õ";
+                exception = L"å‚æ•°å¿…é¡»ä¸ºå­—ç¬¦ä¸²ä¸”ä¸èƒ½ä¸ºç©º";
                 return true;
             }
             
@@ -129,15 +129,15 @@ namespace amo {
             
             
             
-            // ÅĞ¶ÏÄ£¿éÃûÊÇ·ñºÏ·¨
+            // åˆ¤æ–­æ¨¡å—åæ˜¯å¦åˆæ³•
             if (module.size() > 255) {
-                exception = L"Ä£¿éÃûÌ«³¤£¨×î¶àÎª255¸ö×Ö·û£©";
+                exception = L"æ¨¡å—åå¤ªé•¿ï¼ˆæœ€å¤šä¸º255ä¸ªå­—ç¬¦ï¼‰";
                 return true;
             }
             
             
             
-            // ÏÈ¼ì²éÊÇ·ñÒÑ¾­¼ÓÔØ
+            // å…ˆæ£€æŸ¥æ˜¯å¦å·²ç»åŠ è½½
             CefRefPtr<CefV8Value> pGlobal = context->GetGlobal();
             
             if (!pGlobal) {
@@ -147,7 +147,7 @@ namespace amo {
             CefRefPtr<CefV8Value> pCache = CefV8Value::CreateUndefined();
             
             do {
-                // ÏÈ¿´µ±Ç°Ä£¿éÊÇ·ñÒÑ¾­¼ÓÔØµ½È«¾Ö±äÁ¿
+                // å…ˆçœ‹å½“å‰æ¨¡å—æ˜¯å¦å·²ç»åŠ è½½åˆ°å…¨å±€å˜é‡
                 pCache = pGlobal->GetValue(module);
                 
                 if (pCache && !pCache->IsUndefined()) {
@@ -156,7 +156,7 @@ namespace amo {
                 
                 auto cache = std::make_pair(module.ToString(), nFrameID);
                 
-                // ·ÀÖ¹ Depends ÖØÖÃ°üº¬ËÀÑ­»·
+                // é˜²æ­¢ Depends é‡ç½®åŒ…å«æ­»å¾ªç¯
                 if (m_oModuleSet.find(cache) != m_oModuleSet.end()) {
                     break;
                 }
@@ -164,7 +164,7 @@ namespace amo {
                 m_oModuleSet.insert(cache);
                 
                 
-                // ¿´ÄÚÖÃHandlerÀïÃæÓĞÃ»ÓĞ builtin
+                // çœ‹å†…ç½®Handleré‡Œé¢æœ‰æ²¡æœ‰ builtin
                 auto pHandlerManager = V8HandlerManager::getInstance();
                 CefRefPtr<JsV8Handler> pBuiltInHandler;
                 pBuiltInHandler = pHandlerManager->GetHandler(nBrowserID, module);
@@ -198,17 +198,17 @@ namespace amo {
             
             
             if (!pCache) {
-                exception = module.ToWString() + L": µ¼ÈëÄ£¿éÊ§°Ü";
+                exception = module.ToWString() + L": å¯¼å…¥æ¨¡å—å¤±è´¥";
                 return true;
             }
             
-            // ½«Ä£¿éÉèÖÃÎªÈ«¾Ö±äÁ¿
+            // å°†æ¨¡å—è®¾ç½®ä¸ºå…¨å±€å˜é‡
             bool bOK = pGlobal->SetValue(module,
                                          pCache,
                                          V8_PROPERTY_ATTRIBUTE_NONE);
                                          
             if (!bOK) {
-                exception = module.ToWString() + L": µ¼ÈëÄ£¿éÊ§°Ü";
+                exception = module.ToWString() + L": å¯¼å…¥æ¨¡å—å¤±è´¥";
                 return false;
             }
             
@@ -387,10 +387,10 @@ namespace amo {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
         if (args->getInt(IPCArgsPosInfo::BrowserID) > 0) {
-            // Èç¹ûÖ¸¶¨ÁËä¯ÀÀÆ÷ID£¬ÄÇÃ´Ö±½ÓÖ´ĞĞ
+            // å¦‚æœæŒ‡å®šäº†æµè§ˆå™¨IDï¼Œé‚£ä¹ˆç›´æ¥æ‰§è¡Œ
             RendererTransferMgr::getInstance()->onMessageTransfer(msg);
         } else {
-            // Èç¹ûÃ»ÓĞÖ¸¶¨ä¯ÀÀÆ÷ID£¬ÔòÏòËùÓĞä¯ÀÀÆ÷·¢ËÍ
+            // å¦‚æœæ²¡æœ‰æŒ‡å®šæµè§ˆå™¨IDï¼Œåˆ™å‘æ‰€æœ‰æµè§ˆå™¨å‘é€
             for (auto& p : mp) {
             
                 int nBrowserID = p.second->GetIdentifier();
@@ -418,7 +418,7 @@ namespace amo {
     void  V8ExtentionHandler::registerExternalTransfer(int nBrowserID,
             std::shared_ptr<ClassTransfer> pTransfer) {
             
-        // ¿ÉÄÜÕÒµ½´íÎóµÄDLL
+        // å¯èƒ½æ‰¾åˆ°é”™è¯¯çš„DLL
         if (pTransfer == NULL) {
             return  ;
         }
@@ -426,14 +426,14 @@ namespace amo {
         
         m_oClassTransferMap.insert(std::make_pair(pTransfer->transferName(),
                                    pTransfer));
-        // ÉèÖÃÊÂ¼ş»Øµ÷º¯Êı
+        // è®¾ç½®äº‹ä»¶å›è°ƒå‡½æ•°
         pTransfer->setTriggerEventFunc(
             std::bind(&V8ExtentionHandler::triggerEventOnRendererThread,
                       this,
                       std::placeholders::_1));
                       
-        //TODO:ÓĞ´óÎÊÌâ£¬ÕâÀïÖ»ÄÜ¼Óµ½Ò»¸öBrowserIDÀïÃæÈ¥£¬Êµ¼ÊÉÏĞèÒªÌí¼Óµ½ËùÓĞµÄÀïÃæÈ¥»¹ÊÇ²»ĞèÒª£¿£¿£¿
-        // ×¢²áÍâ²¿Ä£¿éµ½³ÌĞòÖĞ
+        //TODO:æœ‰å¤§é—®é¢˜ï¼Œè¿™é‡Œåªèƒ½åŠ åˆ°ä¸€ä¸ªBrowserIDé‡Œé¢å»ï¼Œå®é™…ä¸Šéœ€è¦æ·»åŠ åˆ°æ‰€æœ‰çš„é‡Œé¢å»è¿˜æ˜¯ä¸éœ€è¦ï¼Ÿï¼Ÿï¼Ÿ
+        // æ³¨å†Œå¤–éƒ¨æ¨¡å—åˆ°ç¨‹åºä¸­
         RendererTransferMgr::getInstance()->addTransfer(nBrowserID, pTransfer);
         
         
@@ -460,7 +460,7 @@ namespace amo {
             CefRefPtr<CefBrowser> browser) {
             
         AMO_TIMER_ELAPSED();
-        // ´Ó´ÅÅÌÖĞ¼ÓÔØÓëËù¸øÄ£¿éÍ¬Ãûdll
+        // ä»ç£ç›˜ä¸­åŠ è½½ä¸æ‰€ç»™æ¨¡å—åŒådll
         std::shared_ptr<amo::loader> pLoader;
         pLoader = DllManager<PID_RENDERER>::getInstance()->load(strClass);
         
@@ -469,7 +469,7 @@ namespace amo {
             return NULL;
         }
         
-        // Íâ²¿Ä£¿é±ØĞëÌá¹©registerTransferº¯Êı
+        // å¤–éƒ¨æ¨¡å—å¿…é¡»æä¾›registerTransferå‡½æ•°
         int nBrowserID = browser->GetIdentifier();
         std::shared_ptr< TransferRegister> info(new TransferRegister());
         info->nBrowserID = nBrowserID;
@@ -483,7 +483,7 @@ namespace amo {
                            "registerTransfer",
                            info);
                            
-        // ÅĞ¶ÏÍâ²¿Ä£¿éÊÇ·ñ×¢²á³É¹¦
+        // åˆ¤æ–­å¤–éƒ¨æ¨¡å—æ˜¯å¦æ³¨å†ŒæˆåŠŸ
         if (!options || !*options) {
             return false;
         }
@@ -496,11 +496,11 @@ namespace amo {
             strClass,
             CefRefPtr<CefBrowser> browser) {
             
-        // µ±Ç°ÎªÒ»¸öclass
+        // å½“å‰ä¸ºä¸€ä¸ªclass
         
         auto classMethodMgr = ClassMethodMgr::getInstance();
         
-        // ½«ÅĞ¶ÏÀà¹ÜÀíÆ÷ÖĞÊÇ·ñ´æÔÚµÄ¸øÀàĞÅÏ¢£¬Èç²»´æÔÚËµÃ÷ÊÇÒ»¸öÍâ²¿Àà
+        // å°†åˆ¤æ–­ç±»ç®¡ç†å™¨ä¸­æ˜¯å¦å­˜åœ¨çš„ç»™ç±»ä¿¡æ¯ï¼Œå¦‚ä¸å­˜åœ¨è¯´æ˜æ˜¯ä¸€ä¸ªå¤–éƒ¨ç±»
         if (!classMethodMgr->hasClass(strClass)) {
         
             if (!loadExternalTransfer(strClass, browser)) {
@@ -512,7 +512,7 @@ namespace amo {
             TransferMap& transferMap = mananger->getTransferMap(nBrowserID);
             Transfer* pTransfer = transferMap.findTransfer(strClass);
             
-            // ¿ÉÄÜÕÒµ½´íÎóµÄDLL
+            // å¯èƒ½æ‰¾åˆ°é”™è¯¯çš„DLL
             if (pTransfer == NULL) {
                 return NULL;
             }
@@ -534,12 +534,12 @@ namespace amo {
             
             FunctionWrapperMgr& mgr = classMethodMgr->getClass(strClass);
             
-            // ÅĞ¶ÏÊÇ·ñÎªÍâ²¿Ä£¿é
+            // åˆ¤æ–­æ˜¯å¦ä¸ºå¤–éƒ¨æ¨¡å—
             if (!mgr.isBuiltIn()) {
                 auto iter = m_oClassTransferMap.find(strClass);
                 
                 if (iter == m_oClassTransferMap.end()) {
-                    // ÖØĞÂ¼ÓÔØ
+                    // é‡æ–°åŠ è½½
                     
                     return NULL;
                 }
@@ -554,7 +554,7 @@ namespace amo {
             
             
             if (pTransfer != NULL && pTransfer->isWorkOnRenderer()) {
-                // ÉèÖÃÊÂ¼ş»Øµ÷º¯Êı
+                // è®¾ç½®äº‹ä»¶å›è°ƒå‡½æ•°
                 pTransfer->setTriggerEventFunc(
                     std::bind(&V8ExtentionHandler::triggerEventOnRendererThread,
                               this,
@@ -585,24 +585,24 @@ namespace amo {
         int nBrowserID = context->GetBrowser()->GetIdentifier();
         auto pHandlerManager = V8HandlerManager::getInstance();
         
-        // Àà class
+        // ç±» class
         CefRefPtr<JsV8Handler> pClassHandler;
         pClassHandler = fromClass(module, context->GetBrowser());
         
         if (pClassHandler) {
             includeDepends(pClassHandler->getFuncMgr().getDepends());
-            // ´ÓÕâÀïÃæÈ¡³öÀ´µÄHandler¿ÉÒÔÊÇÒ»¸öÀà£¬Ò²¿ÉÒÔÊÇÒ»¸öÈ«¾Ö¶ÔÏó£¬ËûÃÇÊÇ¿ÉÒÔ»º´æµÄ
+            // ä»è¿™é‡Œé¢å–å‡ºæ¥çš„Handlerå¯ä»¥æ˜¯ä¸€ä¸ªç±»ï¼Œä¹Ÿå¯ä»¥æ˜¯ä¸€ä¸ªå…¨å±€å¯¹è±¡ï¼Œä»–ä»¬æ˜¯å¯ä»¥ç¼“å­˜çš„
             pHandlerManager->Register(nBrowserID, pClassHandler);
             pCache = pClassHandler->getV8Object();
             return pCache;
         } else {
         
         
-            // ´Ó´ÅÅÌÖĞ²éÕÒ£¬ dll
+            // ä»ç£ç›˜ä¸­æŸ¥æ‰¾ï¼Œ dll
             
             amo::string dllName(module, true);
             std::vector<amo::string> vec;
-            // ´ÓdllÖĞµ¼³öcº¯ÊıÎªJSº¯Êı
+            // ä»dllä¸­å¯¼å‡ºcå‡½æ•°ä¸ºJSå‡½æ•°
             std::shared_ptr<amo::loader> pLoader;
             pLoader = DllManager<PID_RENDERER>::getInstance()->load(dllName);
             
@@ -624,7 +624,7 @@ namespace amo {
             CefRefPtr<DllV8Handler> retvalHandler;
             retvalHandler = new DllV8Handler(module);
             includeDepends(retvalHandler->getFuncMgr().getDepends());
-            //TODO: DLL ¹¦ÄÜÒÑ·ÅÆú
+            //TODO: DLL åŠŸèƒ½å·²æ”¾å¼ƒ
             //retvalHandler->setFunctions(functions);
             pCache = retvalHandler->getV8Object();
         }
@@ -661,7 +661,7 @@ namespace amo {
             return NULL;
         }
         
-        //Èç¹û·µ»ØµÄÊÇÒ»¸öÊı×é£¬ÄÇÃ´ËµÃ÷ÊÇDll
+        //å¦‚æœè¿”å›çš„æ˜¯ä¸€ä¸ªæ•°ç»„ï¼Œé‚£ä¹ˆè¯´æ˜æ˜¯Dll
         if (json.is_array()) {
             amo::string dllName(module, true);
             std::vector<amo::json> vec = json.to_array();
@@ -679,16 +679,16 @@ namespace amo {
             
             CefRefPtr<DllV8Handler> retvalHandler;
             retvalHandler = new DllV8Handler(module);
-            //TODO: DLL ¹¦ÄÜÒÑ·ÅÆú
+            //TODO: DLL åŠŸèƒ½å·²æ”¾å¼ƒ
             includeDepends(retvalHandler->getFuncMgr().getDepends());
             //retvalHandler->setFunctions(functions);
             pCache = retvalHandler->getV8Object();
         } else {
-            // ½âÎöÀàº¯Êı
+            // è§£æç±»å‡½æ•°
             FunctionWrapperMgr funcWrapperMgr = FunctionWrapperMgr::fromJson(json);
-            // ¼ÓÈëÀà¹ÜÀí
+            // åŠ å…¥ç±»ç®¡ç†
             ClassMethodMgr::getInstance()->addClass(module, funcWrapperMgr);
-            // ´ÓclassÖĞ´´½¨Handler
+            // ä»classä¸­åˆ›å»ºHandler
             CefRefPtr<JsV8Handler> pClassHandler;
             pClassHandler = fromClass(module, context->GetBrowser());
             

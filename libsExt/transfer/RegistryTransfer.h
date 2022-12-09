@@ -1,4 +1,4 @@
-// Created by amoylel on 14/04/2018.
+ï»¿// Created by amoylel on 14/04/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBSEXT_REGISTRYTRANSFER_91F3BC0D_B8D6_4BBA_984C_B861753B0CF0_H__
@@ -18,7 +18,7 @@ namespace amo {
      *
      * @extend Runnable
      *
-     * @brief	×¢²á±í²Ù×÷Àà.<br>¹¤×÷Ïß³Ì**RendererÏß³Ì**
+     * @brief	æ³¨å†Œè¡¨æ“ä½œç±».<br>å·¥ä½œçº¿ç¨‹**Rendererçº¿ç¨‹**
      */
     
     class RegistryTransfer
@@ -32,11 +32,11 @@ namespace amo {
          *
          * @tag constructor sync
          *
-         * @brief	´´½¨Ò»¸ö×¢²á±í²Ù×÷¶ÔÏó.
+         * @brief	åˆ›å»ºä¸€ä¸ªæ³¨å†Œè¡¨æ“ä½œå¯¹è±¡.
          *
-         * @param	#Int ¸ù¼ü .
+         * @param	#Int æ ¹é”® .
          *
-         * @return  #Registy ×¢²á±í²Ù×÷¶ÔÏó
+         * @return  #Registy æ³¨å†Œè¡¨æ“ä½œå¯¹è±¡
          *
          * @example
          *
@@ -57,16 +57,16 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	´´½¨Ò»¸ö×Ó¼ü.
+         * @brief	åˆ›å»ºä¸€ä¸ªå­é”®.
          *
-         * @param	#String ×Ó¼üÂ·¾¶.
+         * @param	#String å­é”®è·¯å¾„.
          *
-         * @return	#Boolean true³É¹¦/falseÊ§°Ü.
+         * @return	#Boolean trueæˆåŠŸ/falseå¤±è´¥.
          * @example
          *
          ```
-        	// ĞèÒªÏÈÔËĞĞ¹¹Ôìº¯ÊıÀïÃæµÄÀı×Ó
-        	// ´´½¨Ò»¸ö×Ó¼ü
+        	// éœ€è¦å…ˆè¿è¡Œæ„é€ å‡½æ•°é‡Œé¢çš„ä¾‹å­
+        	// åˆ›å»ºä¸€ä¸ªå­é”®
         	console.assert(registry.create('Software\\NCUI') == true);
          ```
          */
@@ -78,16 +78,16 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	´ò¿ª×Ó¼ü.
+         * @brief	æ‰“å¼€å­é”®.
          *
-         * @param	#String ×Ó¼üÂ·¾¶.
+         * @param	#String å­é”®è·¯å¾„.
          *
-         * @return	#Boolean true³É¹¦/falseÊ§°Ü.
+         * @return	#Boolean trueæˆåŠŸ/falseå¤±è´¥.
          * @example
          *
          ```
-        	// ĞèÒªÏÈÔËĞĞ¹¹Ôìº¯ÊıÀïÃæµÄÀı×Ó
-        	// ´ò¿ªÒ»¸ö×Ó¼ü
+        	// éœ€è¦å…ˆè¿è¡Œæ„é€ å‡½æ•°é‡Œé¢çš„ä¾‹å­
+        	// æ‰“å¼€ä¸€ä¸ªå­é”®
         	console.assert(registry.create('Software\\NCUI') == true);
          ```
          */
@@ -100,19 +100,19 @@ namespace amo {
          *
          * @tag	sync
          *
-         * @brief	¶ÁÈ¡¼üÖµ.
+         * @brief	è¯»å–é”®å€¼.
          *
-         * @param	#String ×Ó¼ü.
-         * @param	#String ¼üÃû.
+         * @param	#String å­é”®.
+         * @param	#String é”®å.
          *
-         * @return	#String ¶ÁÈ¡µ½µÄÖµ.
+         * @return	#String è¯»å–åˆ°çš„å€¼.
          * @example
          *
          ```
-        	// ĞèÒªÏÈÔËĞĞ¹¹Ôìº¯ÊıÀïÃæµÄÀı×Ó
-        	// Ğ´ÈëÖµ
+        	// éœ€è¦å…ˆè¿è¡Œæ„é€ å‡½æ•°é‡Œé¢çš„ä¾‹å­
+        	// å†™å…¥å€¼
         	console.assert(registry.write('Software\\NCUI', 'version', '1.0.0.0', true) == true);
-        	// ¶ÁÈ¡Öµ
+        	// è¯»å–å€¼
         	console.assert(registry.read('Software\\NCUI', 'version') ==  '1.0.0.0');
          ```
          */
@@ -125,21 +125,21 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	Ğ´Èë¼üÖµ.
+         * @brief	å†™å…¥é”®å€¼.
          *
-         * @param	#String ×Ó¼ü.
-         * @param	#String ¼üÃû.
-         * @param	#String ¼üÖµ.
-         * @param	#Boolean=false Èç¹û×Ó¼ü²»´æÔÚ£¬ÊÇ·ñ×Ô¼º´´½¨×Ó¼ü.
+         * @param	#String å­é”®.
+         * @param	#String é”®å.
+         * @param	#String é”®å€¼.
+         * @param	#Boolean=false å¦‚æœå­é”®ä¸å­˜åœ¨ï¼Œæ˜¯å¦è‡ªå·±åˆ›å»ºå­é”®.
          *
-         * @return	#Boolean true³É¹¦/falseÊ§°Ü.
+         * @return	#Boolean trueæˆåŠŸ/falseå¤±è´¥.
          * @example
          *
         		```
-        		// ĞèÒªÏÈÔËĞĞ¹¹Ôìº¯ÊıÀïÃæµÄÀı×Ó
-        		// Ğ´ÈëÖµ
+        		// éœ€è¦å…ˆè¿è¡Œæ„é€ å‡½æ•°é‡Œé¢çš„ä¾‹å­
+        		// å†™å…¥å€¼
         		console.assert(registry.write('Software\\NCUI', 'remark', 'Chromium Embedded Framework (CEF)', true) == true);
-        		// ¶ÁÈ¡Öµ
+        		// è¯»å–å€¼
         		console.assert(registry.read('Software\\NCUI', 'remark') ==  'Chromium Embedded Framework (CEF)');
         		```
          */
@@ -154,20 +154,20 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	É¾³ı×Ó¼ü»ò¼üÖµ.
+         * @brief	åˆ é™¤å­é”®æˆ–é”®å€¼.
          *
-         * @param	#String ×Ó¼ü.
-         * @param	#String ¼üÃû£¬Èç¹û²»ÊäÈë¸ÃÖµ£¬ÄÇÃ´½«É¾³ıÕû¸ö×Ó¼ü.
+         * @param	#String å­é”®.
+         * @param	#String é”®åï¼Œå¦‚æœä¸è¾“å…¥è¯¥å€¼ï¼Œé‚£ä¹ˆå°†åˆ é™¤æ•´ä¸ªå­é”®.
          *
-         * @return	#Boolean true³É¹¦/falseÊ§°Ü.
+         * @return	#Boolean trueæˆåŠŸ/falseå¤±è´¥.
          * @example
          *
         		 ```
-        		 // ĞèÒªÏÈÔËĞĞ¹¹Ôìº¯ÊıÀïÃæµÄÀı×Ó
-        		 // É¾³ıµ¥¸ö¼üÖµ
+        		 // éœ€è¦å…ˆè¿è¡Œæ„é€ å‡½æ•°é‡Œé¢çš„ä¾‹å­
+        		 // åˆ é™¤å•ä¸ªé”®å€¼
         		 console.assert(registry.remove('Software\\NCUI', 'version') ==true);
         		 registry.create('Software\\NCUI\\NCUI');
-        		 // É¾³ıÕû¸ö×Ó¼ü£¬
+        		 // åˆ é™¤æ•´ä¸ªå­é”®ï¼Œ
         		 console.assert(registry.remove('Software\\NCUI') == true);
         
         		 ```

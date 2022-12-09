@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "module/ConstantAttributeV8Handler.h"
 
 namespace amo {

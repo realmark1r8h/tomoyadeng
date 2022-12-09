@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "module/dll/DllV8Handler.h"
 
 #include "ipc/Any.hpp"
@@ -76,7 +76,7 @@ namespace amo {
         args->setValue(IPCArgsPosInfo::DllName, m_dllName.ToString());	// dll name
         args->setValue(IPCArgsPosInfo::DllFuncName, funcName); // function name
         args->setValue(IPCArgsPosInfo::DllRetalType,
-                       funcArgs.m_strRetal);// ·µ»ØÖµÀàĞÍ
+                       funcArgs.m_strRetal);// è¿”å›å€¼ç±»å‹
         args->setValue(IPCArgsPosInfo::FrameID, (int)pFrame->GetIdentifier());
         return msg;
     }

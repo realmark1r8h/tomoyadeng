@@ -1,4 +1,4 @@
-// Created by amoylel on 08/08/2017.
+ï»¿// Created by amoylel on 08/08/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_EVENTTRANSFER_H__
@@ -11,7 +11,7 @@
 #include "transfer/ClassTransfer.hpp"
 namespace amo {
 
-    // Ö»ÄÜÍ¬²½Ö´ĞĞ£¬Òª²»È»²»ÄÜÓĞĞ§×èÖ¹Ã°Åİ£¨¶à½ø³ÌÌõ¼şÏÂ£©
+    // åªèƒ½åŒæ­¥æ‰§è¡Œï¼Œè¦ä¸ç„¶ä¸èƒ½æœ‰æ•ˆé˜»æ­¢å†’æ³¡ï¼ˆå¤šè¿›ç¨‹æ¡ä»¶ä¸‹ï¼‰
     class EventTransfer
         : public ClassTransfer
         , public amo::singleton<EventTransfer> {
@@ -32,7 +32,7 @@ namespace amo {
         /*!
          * @fn	Any EventTransfer::getReturnValue(IPCMessage::SmartType msg);
          *
-         * @brief	ÊÂ¼ş·µ»ØÖµ.
+         * @brief	äº‹ä»¶è¿”å›å€¼.
          *
          * @param	msg	The message.
          *
@@ -56,7 +56,7 @@ namespace amo {
         /*!
          * @fn	Any EventTransfer::target(IPCMessage::SmartType msg);
          *
-         * @brief	´¥·¢ÊÂ¼şµÄ¶ÔÏó.
+         * @brief	è§¦å‘äº‹ä»¶çš„å¯¹è±¡.
          *
          * @param	msg	The message.
          *
@@ -68,7 +68,7 @@ namespace amo {
         /*!
          * @fn	Any EventTransfer::data(IPCMessage::SmartType msg);
          *
-         * @brief	Êı¾İ.
+         * @brief	æ•°æ®.
          *
          * @param	msg	The message.
          *
@@ -80,7 +80,7 @@ namespace amo {
         /*!
          * @fn	Any EventTransfer::stopPropagation(IPCMessage::SmartType msg);
          *
-         * @brief	×èÖ¹ÊÂ¼şÏòÏÂ´«µİ.
+         * @brief	é˜»æ­¢äº‹ä»¶å‘ä¸‹ä¼ é€’.
          *
          * @param	msg	The message.
          *
@@ -92,7 +92,7 @@ namespace amo {
         /*!
          * @fn	Any EventTransfer::isStopPropagation(IPCMessage::SmartType msg);
          *
-         * @brief	ÊÇ·ñÍ£Ö¹´¥·¢ÊÂ¼ş.
+         * @brief	æ˜¯å¦åœæ­¢è§¦å‘äº‹ä»¶.
          *
          * @param	msg	The message.
          *
@@ -115,10 +115,10 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     private:
-        bool m_bStopPropagation; // ÊÇ·ñÍ£Ö¹Ã°Åİ
-        IPCMessage::SmartType m_pMsg; // Êı¾İ
+        bool m_bStopPropagation; // æ˜¯å¦åœæ­¢å†’æ³¡
+        IPCMessage::SmartType m_pMsg; // æ•°æ®
         std::shared_ptr<ClassTransfer> m_pTarget; // target
-        Any retval; // ·µ»ØÖµ
+        Any retval; // è¿”å›å€¼
     };
 }
 

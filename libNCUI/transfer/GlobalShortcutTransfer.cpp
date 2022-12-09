@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "transfer/GlobalShortcutTransfer.h"
 #include "ui/win/tray/Tray.h"
 #include "ui/win/tray/NotifyWindow.h"

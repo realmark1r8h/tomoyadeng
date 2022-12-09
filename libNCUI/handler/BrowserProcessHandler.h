@@ -1,4 +1,4 @@
-// Created by amoylel on 06/13/2017.
+﻿// Created by amoylel on 06/13/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_BROWSERPROCESSHANDLER_H__

@@ -1,4 +1,4 @@
-// Created by amoylel on 06/14/2017.
+ï»¿// Created by amoylel on 06/14/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_CLASSMESSAGETRANSFER_HPP__
@@ -21,8 +21,8 @@ namespace amo {
      *
      * @chapter api
      *
-     * @brief	ËùÓĞJSÀ©Õ¹¶ÔÏóËù¶ÔÓ¦µÄC++Àà»ùÀà£»¸ÃÀà²»ÄÜ±»Ö±½ÓÊ¹ÓÃ,
-     * 			ĞèÒª±àĞ´C++À©Õ¹Ê±¼Ì³Ğ¸ÃÀà£¬²¢Ó³Éä³ÉJSÀàÊ¹ÓÃ.
+     * @brief	æ‰€æœ‰JSæ‰©å±•å¯¹è±¡æ‰€å¯¹åº”çš„C++ç±»åŸºç±»ï¼›è¯¥ç±»ä¸èƒ½è¢«ç›´æ¥ä½¿ç”¨,
+     * 			éœ€è¦ç¼–å†™C++æ‰©å±•æ—¶ç»§æ‰¿è¯¥ç±»ï¼Œå¹¶æ˜ å°„æˆJSç±»ä½¿ç”¨.
      */
     class ClassTransfer
         : public Transfer {
@@ -148,7 +148,7 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	´´½¨Ò»¸öĞÂµÄTransfer²¢×¢²áTransferµÄº¯Êı.
+         * @brief	åˆ›å»ºä¸€ä¸ªæ–°çš„Transferå¹¶æ³¨å†ŒTransferçš„å‡½æ•°.
          *
          * @tparam	T   	Generic type parameter.
          * @tparam	Args	Type of the arguments.
@@ -160,7 +160,7 @@ namespace amo {
         static std::shared_ptr<T> createTransfer(Args ... args) {
             std::unique_lock<std::recursive_mutex> lock(getMutex());
             std::shared_ptr<T> pTransfer(new T(args ...));
-            pTransfer->setTransferObject(true); //ÕâÀï´´½¨µÄÊÇ¶ÔÏó
+            pTransfer->setTransferObject(true); //è¿™é‡Œåˆ›å»ºçš„æ˜¯å¯¹è±¡
             pTransfer->registerFunction();
             
             addTransfer(pTransfer);
@@ -174,8 +174,8 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	´´½¨Ò»¸öµ¥¼şÀà£¬ÓÃÀ´ÊµÀı»¯ÆäËû¶ÔÏó£¬
-         * 			 ËùÓĞÄÜµ÷ÓÃĞ©º¯ÊıµÄTransfer¶¼±ØĞë¼Ì³Ğ×ÔTransferºÍsingleton.
+         * @brief	åˆ›å»ºä¸€ä¸ªå•ä»¶ç±»ï¼Œç”¨æ¥å®ä¾‹åŒ–å…¶ä»–å¯¹è±¡ï¼Œ
+         * 			 æ‰€æœ‰èƒ½è°ƒç”¨äº›å‡½æ•°çš„Transferéƒ½å¿…é¡»ç»§æ‰¿è‡ªTransferå’Œsingleton.
          *
          * @tparam	T	Generic type parameter.
          *
@@ -190,7 +190,7 @@ namespace amo {
                 return pTransfer;
             }
             
-            pTransfer->setTransferObject(false); //ÕâÀï´´½¨µÄÊÇÀà
+            pTransfer->setTransferObject(false); //è¿™é‡Œåˆ›å»ºçš„æ˜¯ç±»
             pTransfer->registerFunction();
             
             addTransfer(pTransfer);
@@ -204,14 +204,14 @@ namespace amo {
         
     public:
     
-        // ¾²Ì¬º¯Êı
+        // é™æ€å‡½æ•°
         
         /*!
          * @fn	static std::shared_ptr<ClassTransfer> ClassTransfer::findTransfer(const int64_t& nID)
          *
          * @ignore
          *
-         * @brief	Í¨¹ıID²éÕÒ Transfer
+         * @brief	é€šè¿‡IDæŸ¥æ‰¾ Transfer
          *
          * @param	nID	Transfer ID.
          *
@@ -240,7 +240,7 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	Í¨¹ı¶ÔÏóµÄÃû³Æ²éÕÒTransfer,·µ»ØµÚÒ»¸ö³É¹¦Æ¥ÅäµÄTransfer.
+         * @brief	é€šè¿‡å¯¹è±¡çš„åç§°æŸ¥æ‰¾Transfer,è¿”å›ç¬¬ä¸€ä¸ªæˆåŠŸåŒ¹é…çš„Transfer.
          *
          * @param	strObjectName	Name of the object.
          *
@@ -272,7 +272,7 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	Í¨¹ı¶ÔÏóµÄÃû³Æ²éÕÒTransfer,·µ»ØËùÓĞ³É¹¦Æ¥ÅäµÄTransfer..
+         * @brief	é€šè¿‡å¯¹è±¡çš„åç§°æŸ¥æ‰¾Transfer,è¿”å›æ‰€æœ‰æˆåŠŸåŒ¹é…çš„Transfer..
          *
          * @param	strObjectName	Name of the object.
          *
@@ -325,7 +325,7 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	Í¨¹ıÀàÃû²éÕÒ¶ÔÏó.
+         * @brief	é€šè¿‡ç±»åæŸ¥æ‰¾å¯¹è±¡.
          *
          * @param	strClassName	Name of the class.
          *
@@ -367,7 +367,7 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	Ìí¼ÓÒ»¸öTransferµ½¹ÜÀíÆ÷ÖĞ.
+         * @brief	æ·»åŠ ä¸€ä¸ªTransferåˆ°ç®¡ç†å™¨ä¸­.
          *
          * @param	transfer	The transfer.
          */
@@ -388,7 +388,7 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	Í¨¹ıIDÒÆ³ıÒ»¸ö¹ÜÀíÆ÷ÖĞµÄTransfer.
+         * @brief	é€šè¿‡IDç§»é™¤ä¸€ä¸ªç®¡ç†å™¨ä¸­çš„Transfer.
          *
          * @param	nID	The identifier.
          */
@@ -461,7 +461,7 @@ namespace amo {
             if (classMap) {
                 for (auto iter = classMap->begin(); iter != classMap->end();) {
                     if (iter->second->transferName() != "Thread") {
-                        $cdevel("ÇåÀíTransfer:{0}, {1} ",
+                        $cdevel("æ¸…ç†Transfer:{0}, {1} ",
                                 iter->first,
                                 iter->second->transferName());
                         iter->second->onBeforeRelease();
@@ -472,7 +472,7 @@ namespace amo {
                 }
                 
                 for (auto iter = classMap->begin(); iter != classMap->end();) {
-                    $cdevel("ÇåÀíTransfer:{0}, {1}, {2} ",
+                    $cdevel("æ¸…ç†Transfer:{0}, {1}, {2} ",
                             iter->first,
                             iter->second->transferName(),
                             iter->second->getObjectName());
@@ -505,7 +505,7 @@ namespace amo {
          *
          *@ignore
          *
-         * @brief	»ñÈ¡TransferÀàĞÍ .
+         * @brief	è·å–Transferç±»å‹ .
          *
          * @return	A TransferType.
          */
@@ -518,10 +518,10 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	×¢²áJSº¯Êı.
+         * @brief	æ³¨å†ŒJSå‡½æ•°.
          */
         virtual void registerFunction() {
-            //×¢²á¶ÔÏó´´½¨º¯Êı£¬Õâ¸öº¯ÊıÓëTransferÃû³ÆÏàÍ¬
+            //æ³¨å†Œå¯¹è±¡åˆ›å»ºå‡½æ•°ï¼Œè¿™ä¸ªå‡½æ•°ä¸Transferåç§°ç›¸åŒ
             registerTransfer(transferName(),
                              std::bind(&ClassTransfer::createClass, this,
                                        std::placeholders::_1),
@@ -577,7 +577,7 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	¼Ì³Ğ ´Ëº¯Êı ´´½¨Àà¶ÔÏó.
+         * @brief	ç»§æ‰¿ æ­¤å‡½æ•° åˆ›å»ºç±»å¯¹è±¡.
          *
          * @param	msg	The message.
          *
@@ -610,12 +610,12 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	ÊÍ·Å×ÊÔ´.
+         * @brief	é‡Šæ”¾èµ„æº.
          */
         
         virtual void onBeforeRelease() {
         
-            $cdevel("ÕıÔÚÊÍ·Å×ÊÔ´£ºtransferName = \"{0}\"£¬ objectName = \"{1}\"£¬ objectID = {2}",
+            $cdevel("æ­£åœ¨é‡Šæ”¾èµ„æºï¼štransferName = \"{0}\"ï¼Œ objectName = \"{1}\"ï¼Œ objectID = {2}",
                     transferName(), getObjectName(), getObjectID());
                     
                     
@@ -633,9 +633,9 @@ namespace amo {
          *
          * @tag static const property  single
          *
-         * @brief	»ñÈ¡µ±Ç°ÀàËù¶ÔÏóµÄ¶ÔÏó£¬µ÷ÓÃ¸Ã¶ÔÏóµÄº¯Êı½«»á×÷ÓÃµ½ÀàÉÏÃæÈ¥.
+         * @brief	è·å–å½“å‰ç±»æ‰€å¯¹è±¡çš„å¯¹è±¡ï¼Œè°ƒç”¨è¯¥å¯¹è±¡çš„å‡½æ•°å°†ä¼šä½œç”¨åˆ°ç±»ä¸Šé¢å».
          *
-         * @return	#Object ÀàËù¶ÔÏóµÄCLASS¶ÔÏó.
+         * @return	#Object ç±»æ‰€å¯¹è±¡çš„CLASSå¯¹è±¡.
          * @example
          *
          ```
@@ -665,11 +665,11 @@ namespace amo {
          *
          * @tag static single sync
          *
-         * @brief	Í¨¹ı¶ÔÏóÃû³Æ²éÕÒ¶ÔÏó.
+         * @brief	é€šè¿‡å¯¹è±¡åç§°æŸ¥æ‰¾å¯¹è±¡.
          *
-         * @param	#String ¶ÔÏóÃû³Æ.
+         * @param	#String å¯¹è±¡åç§°.
          *
-         * @return	#Object Èç¹û¶ÔÏó´æÔÚ£¬·µ»Ø¸Ã¶ÔÏó; Èç¹û²»´æÔÚ£¬·µ»ØUndefined.
+         * @return	#Object å¦‚æœå¯¹è±¡å­˜åœ¨ï¼Œè¿”å›è¯¥å¯¹è±¡; å¦‚æœä¸å­˜åœ¨ï¼Œè¿”å›Undefined.
          *
          * @see fromObjectID=Object.fromObjectID
          * @example
@@ -700,22 +700,22 @@ namespace amo {
          *
          * @tag static single sync
          *
-         * @brief	Í¨¹ı¶ÔÏóID²éÕÒ¶ÔÏó.
+         * @brief	é€šè¿‡å¯¹è±¡IDæŸ¥æ‰¾å¯¹è±¡.
          *
-         * @param	#Int ¶ÔÏóID.
+         * @param	#Int å¯¹è±¡ID.
          *
-         * @return	#Object Èç¹û¶ÔÏó´æÔÚ£¬·µ»Ø¸Ã¶ÔÏó; Èç¹û²»´æÔÚ£¬·µ»ØUndefined.
+         * @return	#Object å¦‚æœå¯¹è±¡å­˜åœ¨ï¼Œè¿”å›è¯¥å¯¹è±¡; å¦‚æœä¸å­˜åœ¨ï¼Œè¿”å›Undefined.
          */
         
         /**
         * @fn  static Any fromObjectID(IPCMessage::SmartType msg)
         * @tag static sync single
         *
-        * @brief	Í¨¹ı¶ÔÏóID²éÕÒ¶ÔÏó.
+        * @brief	é€šè¿‡å¯¹è±¡IDæŸ¥æ‰¾å¯¹è±¡.
         *
-        * @param	#String ¶ÔÏóID.
+        * @param	#String å¯¹è±¡ID.
         *
-        * @return	#Object Èç¹û¶ÔÏó´æÔÚ£¬·µ»Ø¸Ã¶ÔÏó; Èç¹û²»´æÔÚ£¬·µ»ØUndefined.
+        * @return	#Object å¦‚æœå¯¹è±¡å­˜åœ¨ï¼Œè¿”å›è¯¥å¯¹è±¡; å¦‚æœä¸å­˜åœ¨ï¼Œè¿”å›Undefined.
         *
         * @see	fromObjectName=Object.fromObjectName
         *
@@ -767,11 +767,11 @@ namespace amo {
          *
          * 	@tag
          *
-         * @brief	ÉèÖÃµ±Ç°¶ÔÏóÃû³Æ.
+         * @brief	è®¾ç½®å½“å‰å¯¹è±¡åç§°.
          *
-         * @param	#String ¶ÔÏóÃû³Æ.
+         * @param	#String å¯¹è±¡åç§°.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -792,7 +792,7 @@ namespace amo {
         /*!
          * @fn	virtual Any onGetObjectID(IPCMessage::SmartType msg)
          *
-         * @brief	»ñÈ¡µ±Ç°¶ÔÏóÃû³ÆID.IDÎªÒ»¸ö×Ö·û´®
+         * @brief	è·å–å½“å‰å¯¹è±¡åç§°ID.IDä¸ºä¸€ä¸ªå­—ç¬¦ä¸²
          *
          *
          * @return	#String.
@@ -818,10 +818,10 @@ namespace amo {
          *
          * 	@tag  single sync
          *
-         * @brief	»ñÈ¡µ±Ç°¶ÔÏóÃû³Æ.
+         * @brief	è·å–å½“å‰å¯¹è±¡åç§°.
          *
          *
-         * @return	#String ¶ÔÏóÃû³Æ.
+         * @return	#String å¯¹è±¡åç§°.
          *
          * @see getObjectID=Object.getObjectID, setObjectName=Object.setObjectName
          *
@@ -842,13 +842,13 @@ namespace amo {
         /**
          * @fn	virtual Any ClassTransfer::notify(IPCMessage::SmartType msg)
          *
-         * @brief	Ïò×Ô¼º·¢ËÍÒ»¸öÍ¨Öª£¬¿ÉÒÔ¼àÌıÕâ¸öÍ¨ÖªµÃµ½·µ»Ø½á¹û(µ±transferÔÚµ¥¶ÀµÄÏß³ÌÉÏÖ´ĞĞÊ±£¬¿ÉÒÔÍ¨¹ı×Ô¼º¶¨ÒåÏûÏ¢À´¼àÌıÖ´ĞĞ½ø¶È).
+         * @brief	å‘è‡ªå·±å‘é€ä¸€ä¸ªé€šçŸ¥ï¼Œå¯ä»¥ç›‘å¬è¿™ä¸ªé€šçŸ¥å¾—åˆ°è¿”å›ç»“æœ(å½“transferåœ¨å•ç‹¬çš„çº¿ç¨‹ä¸Šæ‰§è¡Œæ—¶ï¼Œå¯ä»¥é€šè¿‡è‡ªå·±å®šä¹‰æ¶ˆæ¯æ¥ç›‘å¬æ‰§è¡Œè¿›åº¦).
          *
-         * @param	#String Í¨ÖªÃû³Æ
-         * @param	#Object ÈÎÎñJavascriptËùÖ§³ÖµÄ»ù±¾ÀàĞÍ£¨Int Double String JsonObject Array£©£¬¿ÉÒÔ²»Ìî.
+         * @param	#String é€šçŸ¥åç§°
+         * @param	#Object ä»»åŠ¡Javascriptæ‰€æ”¯æŒçš„åŸºæœ¬ç±»å‹ï¼ˆInt Double String JsonObject Arrayï¼‰ï¼Œå¯ä»¥ä¸å¡«.
          *
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -880,9 +880,9 @@ namespace amo {
         /**
          * @fn	virtual Any relase(IPCMessage::SmartType msg) override
          * @tag single
-         * @brief	ÊÍ·Åµ±Ç°¶ÔÏóËù¶ÔÓ¦µÄC++¶ÔÏó£¬¸Ãº¯Êıµ÷ÓÃºóÒ³ÃæÉÏ¶ÔÓ¦µÄ¶ÔÏó½«ÎŞ·¨Ê¹ÓÃ
+         * @brief	é‡Šæ”¾å½“å‰å¯¹è±¡æ‰€å¯¹åº”çš„C++å¯¹è±¡ï¼Œè¯¥å‡½æ•°è°ƒç”¨åé¡µé¢ä¸Šå¯¹åº”çš„å¯¹è±¡å°†æ— æ³•ä½¿ç”¨
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         virtual Any onRelase(IPCMessage::SmartType msg) override {
@@ -908,19 +908,19 @@ namespace amo {
         *
         * @tag single sync
         *
-        * @brief	»ñÈ¡ÓÃ»§±£´æµÄ×Ô¶¨ÒåÊı¾İ.
+        * @brief	è·å–ç”¨æˆ·ä¿å­˜çš„è‡ªå®šä¹‰æ•°æ®.
         *
-        * @return	#JsonObject ËùÓĞÅäÖÃ²ÎÊı.
+        * @return	#JsonObject æ‰€æœ‰é…ç½®å‚æ•°.
         */
         
         /*!
         * @fn	Any AppTransfer::getUserData(IPCMessage::SmartType msg);
         *
-        * @brief	¸ù¾İÊäÈë×Ö¶Î·µ»ØÓÃ»§±£´æµÄ×Ô¶¨ÒåÊı¾İ.
+        * @brief	æ ¹æ®è¾“å…¥å­—æ®µè¿”å›ç”¨æˆ·ä¿å­˜çš„è‡ªå®šä¹‰æ•°æ®.
         *
-        * @param	#String ĞèÒª»ñÈ¡µÄ×Ö¶ÎÃû³Æ.
+        * @param	#String éœ€è¦è·å–çš„å­—æ®µåç§°.
         *
-        * @return	·µ»Ø×Ö¶ÎÃûËù¶ÔÓ¦µÄÊı¾İ¡£·µ»ØÀàĞÍÊÓÅäÖÃ²ÎÊıÀàĞÍ¶ø¶¨£¬ÎªJSËùÖ§³ÖµÄ»ù±¾Êı¾İÀàĞÍ.
+        * @return	è¿”å›å­—æ®µåæ‰€å¯¹åº”çš„æ•°æ®ã€‚è¿”å›ç±»å‹è§†é…ç½®å‚æ•°ç±»å‹è€Œå®šï¼Œä¸ºJSæ‰€æ”¯æŒçš„åŸºæœ¬æ•°æ®ç±»å‹.
         *
         * @see setUserData=Object.setUserData
         * @example
@@ -940,7 +940,7 @@ namespace amo {
             Any& val = args->getValue(0);
             
             if (val.type() == AnyValueType<Nil>::value) {
-                // ·µ»ØËùÓĞÉèÖÃ
+                // è¿”å›æ‰€æœ‰è®¾ç½®
                 return userData;
                 
             } else  if (val.type() == AnyValueType<std::string>::value) {
@@ -963,7 +963,7 @@ namespace amo {
                     return Undefined();
                 }
                 
-                // ·µ»Øµ¥ÏîÉèÖÃ
+                // è¿”å›å•é¡¹è®¾ç½®
             }
             
             return Undefined();
@@ -972,12 +972,12 @@ namespace amo {
         /*!
         * @fn	Any AppTransfer::setUserData(IPCMessage::SmartType msg);
         * @tag single
-        * @brief	±£´æ×Ô¶¨ÒåÊı¾İ.¸Ãº¯Êı²¢²»ÒªÇóÒ»¶¨ÒªÊäÈëËùÖ§³ÖµÄ²ÎÊı£¬
-        * 			ÄãÒ²¿ÉÒÔÉèÖÃ×Ô¶¨Òå²ÎÊı£¬²¢ÔÚgetUserDataÀïÃæ»ñÈ¡ËùÉèÖÃµÄÖµÓë{@link getUserData=Object.getUserData}Ïà¶ÔÓ¦.
+        * @brief	ä¿å­˜è‡ªå®šä¹‰æ•°æ®.è¯¥å‡½æ•°å¹¶ä¸è¦æ±‚ä¸€å®šè¦è¾“å…¥æ‰€æ”¯æŒçš„å‚æ•°ï¼Œ
+        * 			ä½ ä¹Ÿå¯ä»¥è®¾ç½®è‡ªå®šä¹‰å‚æ•°ï¼Œå¹¶åœ¨getUserDataé‡Œé¢è·å–æ‰€è®¾ç½®çš„å€¼ä¸{@link getUserData=Object.getUserData}ç›¸å¯¹åº”.
         *
-        * @param	#JsonObject ĞèÒªÉèÖÃµÄ²ÎÊı£¬¸ÃÖµÎªÒ»¸öJSON¶ÔÏó.
+        * @param	#JsonObject éœ€è¦è®¾ç½®çš„å‚æ•°ï¼Œè¯¥å€¼ä¸ºä¸€ä¸ªJSONå¯¹è±¡.
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         *
         * @see getUserData=Object.getUserData
         *
@@ -1003,7 +1003,7 @@ namespace amo {
             
             
             if (val.type() == AnyValueType<amo::json>::value) {
-                // ¸üĞÂAppSettings
+                // æ›´æ–°AppSettings
                 amo::json json = args->getJson(0);
                 
                 if (json.is_object()) {
@@ -1019,10 +1019,10 @@ namespace amo {
         /**
          * @fn	virtual Any All(IPCMessage::SmartType msg)
          * @tag single static sync
-         * @brief	»ñÈ¡µ±Ç°ÀàµÄËùÓĞ¶ÔÏó.
+         * @brief	è·å–å½“å‰ç±»çš„æ‰€æœ‰å¯¹è±¡.
          *
          *
-         * @return	#Array °üº¬µ±Ç°ÀàµÄËùÓĞ¶ÔÏó.
+         * @return	#Array åŒ…å«å½“å‰ç±»çš„æ‰€æœ‰å¯¹è±¡.
          * @example
          *
          ```
@@ -1049,7 +1049,7 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	Ö´ĞĞÏûÏ¢.
+         * @brief	æ‰§è¡Œæ¶ˆæ¯.
          *
          * @param	message	The message.
          *
@@ -1059,10 +1059,10 @@ namespace amo {
             std::shared_ptr<AnyArgsList> args = message->getArgumentList();
             int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
             int64_t nID = args->getInt64(IPCArgsPosInfo::TransferID);
-            // ²éÕÒTransfer
+            // æŸ¥æ‰¾Transfer
             std::shared_ptr<ClassTransfer> transfer = findTransfer(nID);
             
-            // Èç¹ûTransfer²»´æÔÚ»òÕßTransfer == this Ö´ĞĞ
+            // å¦‚æœTransferä¸å­˜åœ¨æˆ–è€…Transfer == this æ‰§è¡Œ
             if (!transfer || transfer == getDerivedClass<ClassTransfer>()) {
                 return Transfer::onMessageTransfer(message);
             }
@@ -1070,7 +1070,7 @@ namespace amo {
             std::string strObjectName = transfer->getObjectName();
             
             if (strObjectName.find("CLASS.") == 0) {
-                // ÖØ¶¨Ïòµ½ÀàµÄTransferÖĞÖ´ĞĞ
+                // é‡å®šå‘åˆ°ç±»çš„Transferä¸­æ‰§è¡Œ
                 std::shared_ptr<ClassTransfer>  pClassTransfer;
                 pClassTransfer = ClassTransfer::findClassTransfer(
                                      transfer->transferName());
@@ -1085,7 +1085,7 @@ namespace amo {
                 return pClassTransfer->onMessageTransfer(message);
             }
             
-            //µ÷ÓÃtransferµÄOnMessaggeTransfer
+            //è°ƒç”¨transferçš„OnMessaggeTransfer
             return transfer->onMessageTransfer(message);
         }
         

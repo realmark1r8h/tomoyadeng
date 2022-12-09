@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "NodeLifeSpanHandler.h"
 #include "transfer/TransferMappingMgr.hpp"
 #include "node/NodeHandlerHelper.h"

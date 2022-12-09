@@ -1,4 +1,4 @@
-// startup.cpp : ¶¨Òå DLL Ó¦ÓÃ³ÌĞòµÄµ¼³öº¯Êı¡£
+ï»¿// startup.cpp : å®šä¹‰ DLL åº”ç”¨ç¨‹åºçš„å¯¼å‡ºå‡½æ•°ã€‚
 //
 
 #include "stdafx.h"
@@ -118,15 +118,15 @@ public:
         m_bManifest = (strAppSettings.find("\"manifest\":true") != -1);
         
         
-        // ¶ÁÈ¡´ÅÅÌÖĞµÄÅäÖÃÎÄ¼ş
+        // è¯»å–ç£ç›˜ä¸­çš„é…ç½®æ–‡ä»¶
         if (m_bManifest) {
             amo::path p(amo::path::getExeDir());
             p.append("manifest.json");
             
             
             if (p.file_exists()) {
-                OutputDebugStringA("¶ÁÈ¡manifest.json\n");
-                //$cdevel("¶ÁÈ¡manifest.json");
+                OutputDebugStringA("è¯»å–manifest.json\n");
+                //$cdevel("è¯»å–manifest.json");
                 std::ifstream ifs(p.c_str());
                 std::stringstream buffer;
                 buffer << ifs.rdbuf();
@@ -134,8 +134,8 @@ public:
                 manifestJson = amo::json(strJson);
                 
                 if (!manifestJson.is_valid()) {
-                    OutputDebugStringA("manifest.jsonÎÄ¼ş¸ñÊ½´íÎó\n");
-                    //$cwarn("manifest.jsonÎÄ¼ş¸ñÊ½´íÎó");
+                    OutputDebugStringA("manifest.jsonæ–‡ä»¶æ ¼å¼é”™è¯¯\n");
+                    //$cwarn("manifest.jsonæ–‡ä»¶æ ¼å¼é”™è¯¯");
                     manifestJson = amo::json();
                 }
                 
@@ -144,8 +144,8 @@ public:
                 
                 //$cdevel(strJson.c_str());
             } else {
-                OutputDebugStringA("manifest.json²»´æÔÚ");
-                //$cdevel("manifest.json²»´æÔÚ");
+                OutputDebugStringA("manifest.jsonä¸å­˜åœ¨");
+                //$cdevel("manifest.jsonä¸å­˜åœ¨");
             }
         }
         
@@ -195,10 +195,10 @@ public:
         }
         
         amo::json appJson = amo::json(strAppSettings);
-        appJson.put("startTime", amo::timer::now());  //Ìí¼ÓÆô¶¯Ê±¼ä
+        appJson.put("startTime", amo::timer::now());  //æ·»åŠ å¯åŠ¨æ—¶é—´
         
         if (!m_bManifest) {
-            // ½«manifest¸ÄÎªtrue,ÒÔ·ÀÖ¹³ÌĞò²»¼ÓÔØresÀïÃæµÄÅäÖÃ
+            // å°†manifestæ”¹ä¸ºtrue,ä»¥é˜²æ­¢ç¨‹åºä¸åŠ è½½resé‡Œé¢çš„é…ç½®
             appJson.put("manifest", true);
             //m_bManifest = true;
         }
@@ -240,14 +240,14 @@ public:
     
     
     int parseArgsSettings() {
-        // ½âÎöÃüÁîĞĞ²ÎÊı
+        // è§£æå‘½ä»¤è¡Œå‚æ•°
         LPWSTR *szArgList = NULL;
         int argCount = 0;
         
         szArgList = CommandLineToArgvW(GetCommandLine(), &argCount);
         
         if (szArgList == NULL) {
-            // ÃüÁîĞĞ²ÎÊı²»ÄÜÎª¿Õ
+            // å‘½ä»¤è¡Œå‚æ•°ä¸èƒ½ä¸ºç©º
             MessageBox(NULL, L"Unable to parse command line", L"Error", MB_OK);
             return 10;
         }
@@ -256,10 +256,10 @@ public:
             std::wstring args = szArgList[i];
             
             if (args.find(L"--type=") != -1) {
-                // Èç¹ûÓĞ½ø³ÌÀàĞÍtypeËµÃ÷ÊÇCEFµÄ×Ó½ø³Ì
+                // å¦‚æœæœ‰è¿›ç¨‹ç±»å‹typeè¯´æ˜æ˜¯CEFçš„å­è¿›ç¨‹
                 bChildProcess = true;
             } else if (args.find(L"--message_queue=") != -1) {
-                // ÓĞmessage_queueËµÃ÷ÊÇCEFÖ÷½ø³Ì
+                // æœ‰message_queueè¯´æ˜æ˜¯CEFä¸»è¿›ç¨‹
                 int nIndex = args.find(L"--message_queue=");
                 std::wstring sbuStr = args.substr(nIndex + 16);
                 //MessageBox(NULL, sbuStr.c_str(), L"ErrorAAAAA", MB_OK);
@@ -271,7 +271,7 @@ public:
         return true;
     }
     
-    // ´´½¨¹²ÏíÄÚ´æ
+    // åˆ›å»ºå…±äº«å†…å­˜
     void createSharedMemory(DWORD nProcessID = 0) {
     
         DWORD id = nProcessID;
@@ -294,7 +294,7 @@ public:
         try {
             closeMessageQueue();
             
-            // Èç¹ûÊ¹ÓÃnodejs £¬ĞèÒªÊ¹ÓÃÏûÏ¢¶ÓÁĞ£¬Éú³É¶ÓÁĞÃû
+            // å¦‚æœä½¿ç”¨nodejs ï¼Œéœ€è¦ä½¿ç”¨æ¶ˆæ¯é˜Ÿåˆ—ï¼Œç”Ÿæˆé˜Ÿåˆ—å
             segment.reset(new managed_shared_memory(create_only,
                                                     strSharedMemoryName.c_str(),
                                                     1024));
@@ -312,24 +312,24 @@ public:
                                         
         } catch (std::exception& e) {
             std::cout << e.what() << std::endl;
-            MessageBox(NULL, _T("ÄÚ´´½¨Ê§°Ü"), _T(""), MB_OK);
+            MessageBox(NULL, _T("å†…åˆ›å»ºå¤±è´¥"), _T(""), MB_OK);
         }
         
     }
     
-    bool m_bManifest; // ÊÇ·ñ¶ÁÈ¡´ÅÅÌÅäÖÃÎÄ¼ş
+    bool m_bManifest; // æ˜¯å¦è¯»å–ç£ç›˜é…ç½®æ–‡ä»¶
     amo::json manifestJson;
     std::string m_strJsFile;
-    amo::string strMessageQueue;	//ÏûÏ¢¶ÓÁĞÃû³Æ
-    bool bChildProcess;		//½ø³ÌÀàĞÍ
-    std::string strAppSettings;	//³ÌĞòÉèÖÃ
-    std::string strBrowserSettings; //´°¿ÚÉèÖÃ
-    std::string strSplashSettings; //´°¿ÚÉèÖÃ
-    bool bUseNode;	// ÊÇ·ñÊ¹ÓÃNodeJS
-    bool bNodeProcess;// ÊÇ·ñÔÚµ¥¶ÀµÄ½ø³ÌÖĞÔËĞĞnodejs
-    bool bNodeDebug; // ÊÇ·ñµ÷ÓÃNodeJS
-    bool bShowSplash; // ÊÇ·ñÏÔÊ¾Splash
-    std::string strSharedMemoryName;		//¹²ÏíÄÚ´æÃû
+    amo::string strMessageQueue;	//æ¶ˆæ¯é˜Ÿåˆ—åç§°
+    bool bChildProcess;		//è¿›ç¨‹ç±»å‹
+    std::string strAppSettings;	//ç¨‹åºè®¾ç½®
+    std::string strBrowserSettings; //çª—å£è®¾ç½®
+    std::string strSplashSettings; //çª—å£è®¾ç½®
+    bool bUseNode;	// æ˜¯å¦ä½¿ç”¨NodeJS
+    bool bNodeProcess;// æ˜¯å¦åœ¨å•ç‹¬çš„è¿›ç¨‹ä¸­è¿è¡Œnodejs
+    bool bNodeDebug; // æ˜¯å¦è°ƒç”¨NodeJS
+    bool bShowSplash; // æ˜¯å¦æ˜¾ç¤ºSplash
+    std::string strSharedMemoryName;		//å…±äº«å†…å­˜å
     HINSTANCE hInstance;
     std::shared_ptr<managed_shared_memory> segment;
     std::shared_ptr<message_queue>  m_pMessageQueueReader;
@@ -339,7 +339,7 @@ public:
 std::shared_ptr<ArgsSettings> args;
 
 
-// ²»Ê¹ÓÃNodeJS
+// ä¸ä½¿ç”¨NodeJS
 void runCefInCefProcess() {
 
 
@@ -382,7 +382,7 @@ void runCefInCefProcess() {
 }
 
 
-// ÔÚµ±Ç°½ø³ÌÖĞÔËĞĞNodeJS
+// åœ¨å½“å‰è¿›ç¨‹ä¸­è¿è¡ŒNodeJS
 void runNodeInCefProcess() {
 
     if (args->bChildProcess) {
@@ -394,19 +394,19 @@ void runNodeInCefProcess() {
     
 }
 
-// ÔÚµ¥¶À½ø³ÌÖĞÔËĞĞNodeJS
+// åœ¨å•ç‹¬è¿›ç¨‹ä¸­è¿è¡ŒNodeJS
 void runNodeInNodeProcess() {
 
     if (args->bChildProcess) {
     
-        // Èç¹ûÊÇCefµÄ×Ó½ø³Ì£¬
+        // å¦‚æœæ˜¯Cefçš„å­è¿›ç¨‹ï¼Œ
         runCefInCefProcess();
     } else {
         if (!args->strMessageQueue.empty()) {
-            // cef Ö÷½ø³Ì
+            // cef ä¸»è¿›ç¨‹
             runCefInCefProcess();
         } else {
-            // µ÷ÓÃCef½ø³Ì
+            // è°ƒç”¨Cefè¿›ç¨‹
             if (args->bNodeDebug) {
                 amo::path::getExeDir();
                 amo::path p(amo::path::getExeDir());
@@ -420,9 +420,9 @@ void runNodeInNodeProcess() {
                 ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
                 ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
                 ShExecInfo.hwnd = NULL;
-                ShExecInfo.lpVerb = "open";//¶àÖÖÀà±ğÓĞ "explorer" "print" µÈ
-                ShExecInfo.lpFile = p.c_str();//exe Â·¾¶
-                ShExecInfo.lpParameters = strDebugParam.c_str();//²ÎÊı
+                ShExecInfo.lpVerb = "open";//å¤šç§ç±»åˆ«æœ‰ "explorer" "print" ç­‰
+                ShExecInfo.lpFile = p.c_str();//exe è·¯å¾„
+                ShExecInfo.lpParameters = strDebugParam.c_str();//å‚æ•°
                 ShExecInfo.lpDirectory = NULL;
                 ShExecInfo.nShow = SW_SHOW;//
                 ShExecInfo.hInstApp = NULL;
@@ -441,7 +441,7 @@ void runNodeInNodeProcess() {
                                 SW_SHOWNORMAL);
                                 
                 WaitForSingleObject(ShExecInfo.hProcess,
-                                    INFINITE);					//µÈ´ıÍê³É   µÚ¶ş¸ö²ÎÊıÊÇ³¬Ê±Ê±¼ä£¨ºÁÃë£©³¬Ê±ºó·µ»Ø³¬Ê±´úÂë
+                                    INFINITE);					//ç­‰å¾…å®Œæˆ   ç¬¬äºŒä¸ªå‚æ•°æ˜¯è¶…æ—¶æ—¶é—´ï¼ˆæ¯«ç§’ï¼‰è¶…æ—¶åè¿”å›è¶…æ—¶ä»£ç 
             } else {
             
                 args->createSharedMemory();

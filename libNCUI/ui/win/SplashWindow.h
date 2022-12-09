@@ -1,4 +1,4 @@
-// Created by amoylel on 10/06/2017.
+﻿// Created by amoylel on 10/06/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_SPLASHWINDOW_H__

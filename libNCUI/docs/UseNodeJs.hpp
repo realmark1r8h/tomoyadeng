@@ -1,4 +1,4 @@
-// Created by amoylel on 08/09/2018.
+ï»¿// Created by amoylel on 08/09/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef AMO_USENODEJS_A7E11AE8_5D40_48BA_BDBD_BD276B84F3E0_HPP__
@@ -7,28 +7,28 @@
 namespace amo {
 
     /*!
-     * @class	Ê¹ÓÃNode
+     * @class	ä½¿ç”¨Node
      *
      * @chapter	basic
      *
-     * @brief	NCUIÖ§³ÖÊ¹ÓÃNode.js¿ØÖÆ³ÌĞò£¬µ«Ä¿Ç°Ö»Õë¶Ô4.7.1½øĞĞ¹ı¿ª·¢£¬¸ü¸ß»ò¸üµÍµÄ°æ±¾¿ÉÄÜ²¢²»Ö§³Ö.
-     * 			Äã¿ÉÒÔÔÚNode.jsÖĞÊ¹ÓÃÎÄµµapi²¿·ÖËùÌá¹©µÄ¾ø´ó²¿·Ö½Ó¿Ú£¬ÆäËûÀàĞÍµÄ½Ó¿Ú²»±»Ö§³Ö.
+     * @brief	NCUIæ”¯æŒä½¿ç”¨Node.jsæ§åˆ¶ç¨‹åºï¼Œä½†ç›®å‰åªé’ˆå¯¹4.7.1è¿›è¡Œè¿‡å¼€å‘ï¼Œæ›´é«˜æˆ–æ›´ä½çš„ç‰ˆæœ¬å¯èƒ½å¹¶ä¸æ”¯æŒ.
+     * 			ä½ å¯ä»¥åœ¨Node.jsä¸­ä½¿ç”¨æ–‡æ¡£apiéƒ¨åˆ†æ‰€æä¾›çš„ç»å¤§éƒ¨åˆ†æ¥å£ï¼Œå…¶ä»–ç±»å‹çš„æ¥å£ä¸è¢«æ”¯æŒ.
      */
     
     class UserNodeJs {
     public:
     
         /*!
-         * @section ±à¼­ÅäÖÃÎÄ¼ş
+         * @section ç¼–è¾‘é…ç½®æ–‡ä»¶
          *
-         * @brief	Í¨¹ı±à¼­manifest.json¿ÉÒÔÊ¹³ÌĞò»ñµÃNode.jsÄÜÁ¦.<br>
-         * 			Äã¿ÉÒÔ±à¼­manifest.jsonÎÄ¼ş(useNode=true)À´»ñÈ¡Node.jsÖ§³Ö.Ä¬ÈÏÇé¿öÏÂNode.js»á×¢Èëµ½NCUIÖĞ£¬²¢ÔÚµ¥¶ÀµÄÏß³ÌÖĞÔËĞĞ.<br>
-         * 			Äã¿ÉÒÔ±à¼­manifest.jsonÎÄ¼ş(useNodeProcess=true)Ê¹Node.jsÔÚµ¥¶ÀµÄ½ø³ÌÖĞÖ´ĞĞ.<br>
+         * @brief	é€šè¿‡ç¼–è¾‘manifest.jsonå¯ä»¥ä½¿ç¨‹åºè·å¾—Node.jsèƒ½åŠ›.<br>
+         * 			ä½ å¯ä»¥ç¼–è¾‘manifest.jsonæ–‡ä»¶(useNode=true)æ¥è·å–Node.jsæ”¯æŒ.é»˜è®¤æƒ…å†µä¸‹Node.jsä¼šæ³¨å…¥åˆ°NCUIä¸­ï¼Œå¹¶åœ¨å•ç‹¬çš„çº¿ç¨‹ä¸­è¿è¡Œ.<br>
+         * 			ä½ å¯ä»¥ç¼–è¾‘manifest.jsonæ–‡ä»¶(useNodeProcess=true)ä½¿Node.jsåœ¨å•ç‹¬çš„è¿›ç¨‹ä¸­æ‰§è¡Œ.<br>
          *
          * @example
          *
         	```
-        			// Ö±½ÓÔÚNCUIÖĞÊ¹ÓÃNode.js
+        			// ç›´æ¥åœ¨NCUIä¸­ä½¿ç”¨Node.js
         			{
         				"appSettings":{
         					useNode: true,
@@ -37,7 +37,7 @@ namespace amo {
         				}
         			}
         
-        			// ÔÚµ¥¶ÀµÄ½ø³ÌÖĞÊ¹ÓÃNode.js
+        			// åœ¨å•ç‹¬çš„è¿›ç¨‹ä¸­ä½¿ç”¨Node.js
         			{
         				"appSettings":{
         					"useNode": true,
@@ -53,12 +53,12 @@ namespace amo {
         }
         
         /*!
-         * @section	±àĞ´Node.js´úÂë
+         * @section	ç¼–å†™Node.jsä»£ç 
          *
-         * @brief	±àĞ´manifest.jsonÖĞ"appSettings"ÖĞ"main"×Ö¶ÎËùÖ¸¶¨µÄÎÄ¼ş£¬ÎªNode.jsÌá¹©Èë¿Ú.<br>
-         * 			NCUIÍ¨¹ıNode À©Õ¹µÄ·½Ê½Ìá¹©ÎÄµµÖĞµÄËùÓĞµÄÄÚÖÃ½Ó¿Ú£¬Ö»ĞèÒªrequire(process.cwd() + '/ncui')¼´¿ÉÊ¹ÓÃ£¬²»ĞèÒªÊ¹ÓÃincludeÖ®ÀàµÄº¯Êı¼ÓÔØÄ£¿é.
-         * 			Í¬Node.js´úÂë²»ÄÜÊ¹ÓÃrenderer_modules»òÕßbrowser_modulesµÈÎÄ¼ş¼ĞÏÂÃæµÄÍâ²¿À©Õ¹.<br>
-         * 			×¢Òâ£º**Í¼ĞÎ½çÃæÏÂNCUIĞèÒªÖØ¶¨ÏòNode.jsµÄ¿ØÖÆÌ¨Êä³ö£¬·ñÔò½«ÎŞ·¨¼ÓÔØncui.node²å¼ş**
+         * @brief	ç¼–å†™manifest.jsonä¸­"appSettings"ä¸­"main"å­—æ®µæ‰€æŒ‡å®šçš„æ–‡ä»¶ï¼Œä¸ºNode.jsæä¾›å…¥å£.<br>
+         * 			NCUIé€šè¿‡Node æ‰©å±•çš„æ–¹å¼æä¾›æ–‡æ¡£ä¸­çš„æ‰€æœ‰çš„å†…ç½®æ¥å£ï¼Œåªéœ€è¦require(process.cwd() + '/ncui')å³å¯ä½¿ç”¨ï¼Œä¸éœ€è¦ä½¿ç”¨includeä¹‹ç±»çš„å‡½æ•°åŠ è½½æ¨¡å—.
+         * 			åŒNode.jsä»£ç ä¸èƒ½ä½¿ç”¨renderer_modulesæˆ–è€…browser_modulesç­‰æ–‡ä»¶å¤¹ä¸‹é¢çš„å¤–éƒ¨æ‰©å±•.<br>
+         * 			æ³¨æ„ï¼š**å›¾å½¢ç•Œé¢ä¸‹NCUIéœ€è¦é‡å®šå‘Node.jsçš„æ§åˆ¶å°è¾“å‡ºï¼Œå¦åˆ™å°†æ— æ³•åŠ è½½ncui.nodeæ’ä»¶**
          *
          * @example main.js
          *
@@ -98,15 +98,15 @@ namespace amo {
         }
         
         /*!
-         * @section µ÷ÊÔNode.js
+         * @section è°ƒè¯•Node.js
          *
-         * @brief	ÕıÊ½µÄNCUI³ÌĞò²»Ö§³Öµ÷ÊÔNode.js£¬µ«Äã¿ÉÒÔÍ¨¹ıÒÔÏÂ·½Ê½À´µ÷ÊÔNode.js´úÂë<br>
-         * 			&nbsp;&nbsp;&nbsp;&nbsp;1.±à¼­manifest.json£¬Ê¹Node.jsÔÚµ¥¶ÀµÄ½ø³ÌÖĞÔËĞĞ£º{"useNode": true, "useNodeProcess": true}<br>
-         * 			&nbsp;&nbsp;&nbsp;&nbsp;2.±à±àNode.jsµÄÈë¿ÚÎÄ¼ş£¬¼ÓÔØC++À©Õ¹ require(process.cwd() + '/ncui-dev').<br>
-         * 			&nbsp;&nbsp;&nbsp;&nbsp;3.¿ªÆônode-insepector·şÎñ.<br>
-         * 			&nbsp;&nbsp;&nbsp;&nbsp;3.ÔËĞĞNCUI-DEV.exe¼´¿ÉÔÚä¯ÀÀÆ÷ÖĞµ÷ÊÔNode.js´úÂë.<br>
-         * 			ËµÃ÷£º**NCUI-DEV.exeÎª¿ØÖÆÌ¨³ÌĞò£¬²»ĞèÒªÖØ¶¨ÏòNode.jsµÄ¿ØÖÆÌ¨Êä³ö.**
-         * 			ËµÃ÷£º**NCUI-DEV.exeÆô¶¯Ê±ÈÎÎñÀ¸Í¼±ê²»ÄÜÕıÈ·ÏÔÊ¾.**
+         * @brief	æ­£å¼çš„NCUIç¨‹åºä¸æ”¯æŒè°ƒè¯•Node.jsï¼Œä½†ä½ å¯ä»¥é€šè¿‡ä»¥ä¸‹æ–¹å¼æ¥è°ƒè¯•Node.jsä»£ç <br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;1.ç¼–è¾‘manifest.jsonï¼Œä½¿Node.jsåœ¨å•ç‹¬çš„è¿›ç¨‹ä¸­è¿è¡Œï¼š{"useNode": true, "useNodeProcess": true}<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;2.ç¼–ç¼–Node.jsçš„å…¥å£æ–‡ä»¶ï¼ŒåŠ è½½C++æ‰©å±• require(process.cwd() + '/ncui-dev').<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;3.å¼€å¯node-insepectoræœåŠ¡.<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;3.è¿è¡ŒNCUI-DEV.exeå³å¯åœ¨æµè§ˆå™¨ä¸­è°ƒè¯•Node.jsä»£ç .<br>
+         * 			è¯´æ˜ï¼š**NCUI-DEV.exeä¸ºæ§åˆ¶å°ç¨‹åºï¼Œä¸éœ€è¦é‡å®šå‘Node.jsçš„æ§åˆ¶å°è¾“å‡º.**
+         * 			è¯´æ˜ï¼š**NCUI-DEV.exeå¯åŠ¨æ—¶ä»»åŠ¡æ å›¾æ ‡ä¸èƒ½æ­£ç¡®æ˜¾ç¤º.**
          * @example
          *
          ```
@@ -136,9 +136,9 @@ namespace amo {
         }
         
         /*!
-         * @section	µ÷ÊÔ±êÖ¾
+         * @section	è°ƒè¯•æ ‡å¿—
          *
-         * @brief	µ÷ÊÔÄ£Ê½ÏÂµÄNode.js»á¼ÓÈëÃüÁîĞĞ²ÎÊı¡°--ncui-debug¡±£¬Äã¿ÉÒÔÍ¨¹ı¸Ã²ÎÊıÅĞ¶ÏNode.jsÊÇ·ñ´¦ÓÚµ÷ÊÔ×´Ì¬£¬À´¼ÓÔØÕıÈ·µÄc++À©Õ¹.
+         * @brief	è°ƒè¯•æ¨¡å¼ä¸‹çš„Node.jsä¼šåŠ å…¥å‘½ä»¤è¡Œå‚æ•°â€œ--ncui-debugâ€ï¼Œä½ å¯ä»¥é€šè¿‡è¯¥å‚æ•°åˆ¤æ–­Node.jsæ˜¯å¦å¤„äºè°ƒè¯•çŠ¶æ€ï¼Œæ¥åŠ è½½æ­£ç¡®çš„c++æ‰©å±•.
          * @example
          *
          ```

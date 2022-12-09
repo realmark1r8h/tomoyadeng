@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+Ôªø#include "stdAfx.h"
 
 #include "ui/win/PictureView.h"
 
@@ -31,7 +31,7 @@ namespace amo {
             width_first = false;
         }
         
-        //X÷·’º¬˙∆¡ƒª
+        //XËΩ¥Âç†Êª°Â±èÂπï
         double rate = (double)window_width / texture_width;
         int width = window_width;
         int height = static_cast<int>(texture_height * rate);
@@ -39,7 +39,7 @@ namespace amo {
         int top = window_height / 2 - height / 2;
         top /= 1000;
         
-        if (!width_first) {	//X÷·’º¬˙∆¡ƒª
+        if (!width_first) {	//XËΩ¥Âç†Êª°Â±èÂπï
             double rate = window_height / texture_height;
             height = window_height;
             width = static_cast<int>(texture_width * rate);
@@ -53,7 +53,7 @@ namespace amo {
         width /= 1000;
         height /= 1000;
         
-        //æ”÷–
+        //Â±Ö‰∏≠
         int x = left + windowRect.left;
         int y = top + windowRect.top;
         int x2 = x + width;

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "transfer/Base64Transfer.h"
 #include <amo/base64.hpp>
 

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 
 #include "context/AppContext.h"
 #include "ui/win/BrowserWindowManager.h"
@@ -52,10 +52,10 @@ namespace amo {
         CWPRETSTRUCT* pp = (CWPRETSTRUCT*)lParam;
         MSG* msg = (MSG*)lParam;
         
-        // ´¦ÀíÊó±êÏûÏ¢
+        // å¤„ç†é¼ æ ‡æ¶ˆæ¯
         if (msg->message >= WM_MOUSEFIRST && msg->message <= WM_MOUSELAST) {
             if (BrowserWindowManager::getInstance()->preTranslateMessage(msg)) {
-                return TRUE;		// ±íÊ¾ÒÑ¾­´¦Àí¹ı¸ÃÏûÏ¢£¬ÖĞ¶ÏÏûÏ¢Ñ­»·
+                return TRUE;		// è¡¨ç¤ºå·²ç»å¤„ç†è¿‡è¯¥æ¶ˆæ¯ï¼Œä¸­æ–­æ¶ˆæ¯å¾ªç¯
             }
         }
         
@@ -65,10 +65,10 @@ namespace amo {
     void AppContext::startNodeThread() {
     
         if (getDefaultAppSettings()->useNode) {
-            // ÔÊĞíÏòNode·¢ËÍÏûÏ¢
+            // å…è®¸å‘Nodeå‘é€æ¶ˆæ¯
             getNodeMessageHandler()->enableNodeJS();
             
-            // Èç¹û²»ÊÇÔÚµ¥¶ÀµÄ½ø³ÌÖĞÔËĞĞNode,ÄÇÃ´´´½¨Ò»¸öÏß³ÌÀ´ÔËĞĞËü
+            // å¦‚æœä¸æ˜¯åœ¨å•ç‹¬çš„è¿›ç¨‹ä¸­è¿è¡ŒNode,é‚£ä¹ˆåˆ›å»ºä¸€ä¸ªçº¿ç¨‹æ¥è¿è¡Œå®ƒ
             if (!getDefaultAppSettings()->useNodeProcess) {
                 pNodeThread.reset(new std::thread(
                                       std::bind(&AppContext::runNodeThread,
@@ -76,7 +76,7 @@ namespace amo {
                                                 
             }
             
-            //¿ªÊ¼½ÓÊÕNodeJSÏûÏ¢
+            //å¼€å§‹æ¥æ”¶NodeJSæ¶ˆæ¯
             getNodeMessageHandler()->startReadMessage();
         }
     }
@@ -88,7 +88,7 @@ namespace amo {
         
         amo::string exeDir = amo::path::getExeDir();
         
-        // NodeJS ÎÄ¼ş
+        // NodeJS æ–‡ä»¶
         amo::string mainJs(getDefaultAppSettings()->main, true);
         
         char** argv = new char*[argc + 1];
@@ -128,17 +128,17 @@ namespace amo {
     }
     
     void AppContext::onUpdateAppSettings(BasicSettings* settings) {
-        // Ö»´¦ÀíÖ÷½ø³ÌµÄ²ÎÊıÉèÖÃ
+        // åªå¤„ç†ä¸»è¿›ç¨‹çš„å‚æ•°è®¾ç½®
         if (getProcessType() == BrowserProcess) {
             if (!m_pSharedMemory) {
                 m_pSharedMemory.reset(new SharedMemory(m_pAppSettings->appID));
             }
             
-            // ÉèÖÃDuilibÆ¤·ôÄ¿Â¼
+            // è®¾ç½®Duilibçš®è‚¤ç›®å½•
             amo::string strSkin(m_pAppSettings->skinDir, true);
             CPaintManagerUI::SetResourcePath(strSkin.to_unicode().c_str());
             
-            // ¸üĞÂURLÓ³Éä
+            // æ›´æ–°URLæ˜ å°„
             auto appSettings = getDefaultAppSettings()->settings;
             auto pAppTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
             
@@ -176,7 +176,7 @@ namespace amo {
         
         if (pAppSettings->singleInstance
                 && m_pSharedMemory->getInstanceCount() > 1) {
-            // µ¥ÀıÄ£Ê½ÏÂÖ»ÔÊĞíÒ»¸öÊµÀı
+            // å•ä¾‹æ¨¡å¼ä¸‹åªå…è®¸ä¸€ä¸ªå®ä¾‹
             if (pAppSettings->useNode) {
                 manager->closeAllWindow(true);
                 return true;
@@ -193,7 +193,7 @@ namespace amo {
         
         if (pAppSettings->singleInstance
                 && m_pSharedMemory->getInstanceCount() > 1) {
-            // µ¥ÀıÄ£Ê½ÏÂÖ»ÔÊĞíÒ»¸öÊµÀı
+            // å•ä¾‹æ¨¡å¼ä¸‹åªå…è®¸ä¸€ä¸ªå®ä¾‹
             if (!pAppSettings->useNode) {
                 manager->closeAllWindow(true);
                 return true;
@@ -210,22 +210,22 @@ namespace amo {
     
     ProcessType AppContext::getProcessType() {
         if (!m_pCommandLine->HasSwitch(kProcessType)) {
-            //Ã»ÓĞÉèÖÃ½ø³ÌÀàĞÍ£¬ÄÇÃ´ÎªÖ÷½ø³Ì
+            //æ²¡æœ‰è®¾ç½®è¿›ç¨‹ç±»å‹ï¼Œé‚£ä¹ˆä¸ºä¸»è¿›ç¨‹
             return BrowserProcess;
         }
         
-        //Í¨¹ıkProcessType»ñÈ¡½ø³ÌÀàĞÍ
+        //é€šè¿‡kProcessTypeè·å–è¿›ç¨‹ç±»å‹
         const std::string& process_type = m_pCommandLine->GetSwitchValue(
                                               kProcessType);
                                               
         if (process_type == kRendererProcess) {
-            // äÖÈ¾½ø³Ì
+            // æ¸²æŸ“è¿›ç¨‹
             return RendererProcess;
         }
         
 #if defined(OS_LINUX)
         else if (process_type == kZygoteProcess) {
-            return ZygoteProcess;    //LINUXÏÂ¿ÉÓÃ£¬WINDOWSÏÂ²»ĞèÒª
+            return ZygoteProcess;    //LINUXä¸‹å¯ç”¨ï¼ŒWINDOWSä¸‹ä¸éœ€è¦
         }
         
 #endif
@@ -236,7 +236,7 @@ namespace amo {
         m_pCommandLine = CefCommandLine::CreateCommandLine();
         
         if (!m_pCommandLine) {
-            $cerr("ÎŞ·¨³õÊ¼»¯ÃüÁîĞĞ²ÎÊı");
+            $cerr("æ— æ³•åˆå§‹åŒ–å‘½ä»¤è¡Œå‚æ•°");
             return;
         }
         
@@ -307,7 +307,7 @@ namespace amo {
     
     int AppContext::executeProcess(CefMainArgs& main_args) {
         AMO_TIMER_ELAPSED();
-        //   spdlog ²»Ö§³ÖXP, Èç¹ûÔÚXPÏÂÊ¹ÓÃĞèÒª½ûÓÃlog
+        //   spdlog ä¸æ”¯æŒXP, å¦‚æœåœ¨XPä¸‹ä½¿ç”¨éœ€è¦ç¦ç”¨log
         amo::app::dump();
         
         if (!amo::log::initialize(false, true)) {
@@ -326,13 +326,13 @@ namespace amo {
         amo::log::set_level(amo::log::level::trace);
         amo::log::set_pattern("[%Y-%m-%d %H:%M:%S][%l] %v");
         
-        $clog(amo::cinfo << "ÈÕÖ¾³õÊ¼»¯³É¹¦" << amo::endl;);
+        $clog(amo::cinfo << "æ—¥å¿—åˆå§‹åŒ–æˆåŠŸ" << amo::endl;);
         
-        // ÉèÖÃ½ø³ÌÏûÏ¢³¬Ê±Ê±¼ä
+        // è®¾ç½®è¿›ç¨‹æ¶ˆæ¯è¶…æ—¶æ—¶é—´
         ProcessExchanger::ipcTimeOut() = getDefaultAppSettings()->ipcTimeout;
         
         void* sandbox_info = NULL;
-        // ²»Ê¹ÓÃÉ³Ïä
+        // ä¸ä½¿ç”¨æ²™ç®±
         //#if defined(CEF_USE_SANDBOX)
         //		CefScopedSandboxInfo scoped_sandbox;
         //		sandbox_info = scoped_sandbox.sandbox_info();
@@ -379,7 +379,7 @@ namespace amo {
     
     void AppContext::run(CefMainArgs& main_args) {
     
-        // ²»È¥µôµÄ»°´òÓ¡Ò³ÃæµÄÊ±ºò»á´¥·¢Òì³£´¦Àí³ÌĞò£¬µ¼ÖÂ³ÌĞò¹Ø±Õ
+        // ä¸å»æ‰çš„è¯æ‰“å°é¡µé¢çš„æ—¶å€™ä¼šè§¦å‘å¼‚å¸¸å¤„ç†ç¨‹åºï¼Œå¯¼è‡´ç¨‹åºå…³é—­
         // ::SetUnhandledExceptionFilter(OurSetUnhandledExceptionFilter);
         AMO_TIMER_ELAPSED();
         
@@ -407,14 +407,14 @@ namespace amo {
         settings.multi_threaded_message_loop = false;
         CefInitialize(main_args, settings, getClientApp().get(), sandbox_info);
         
-        // ×¢²á×Ô¶¨ÒåĞ­Òé
+        // æ³¨å†Œè‡ªå®šä¹‰åè®®
         amo::ClientApp::RegisterCustomSchemeFactory("local",
                 "file",
                 new amo::LocalSchemeHandlerFactory());
                 
 #if CHROME_VERSION_BUILD < 2704
-        // ¿ªÆôÏûÏ¢¹³×Ó,2704ÒÔÉÏµÄ°æ±¾¿ÉÒÔÊ¹ÓÃcefÌá¹©µÄOnDraggableRegionsChanged»Øµ÷º¯Êı½øĞĞ½çÃæ²Ù×÷
-        // 3029¼°ÒÔºóµÄ°æ±¾CHROMIUM²»ÔÙÂ©ÏûÏ¢³öÀ´ÁË£¬¹³×Ó´ÓÕâ¸ö°æ±¾¿ªÊ¼Ê§Ğ§
+        // å¼€å¯æ¶ˆæ¯é’©å­,2704ä»¥ä¸Šçš„ç‰ˆæœ¬å¯ä»¥ä½¿ç”¨cefæä¾›çš„OnDraggableRegionsChangedå›è°ƒå‡½æ•°è¿›è¡Œç•Œé¢æ“ä½œ
+        // 3029åŠä»¥åçš„ç‰ˆæœ¬CHROMIUMä¸å†æ¼æ¶ˆæ¯å‡ºæ¥äº†ï¼Œé’©å­ä»è¿™ä¸ªç‰ˆæœ¬å¼€å§‹å¤±æ•ˆ
         startHook();
 #endif
         
@@ -430,7 +430,7 @@ namespace amo {
         //bNeedQuit = true;
         
         if (!bNeedQuit) {
-            // ¿ªÆôÆô¶¯»­Ãæ
+            // å¼€å¯å¯åŠ¨ç”»é¢
             if (pAppSettings->showSplash) {
                 auto transfer = ClassTransfer::getUniqueTransfer<SplashTransfer>();
                 transfer->create(getDefaultSplashSettings());
@@ -438,29 +438,29 @@ namespace amo {
             
             
             if (!pAppSettings->useNode) {
-                //Í¨¹ı´°¿Ú¹ÜÀíÀà´´½¨Ö÷´°¿Ú²¢ÏÔÊ¾
+                //é€šè¿‡çª—å£ç®¡ç†ç±»åˆ›å»ºä¸»çª—å£å¹¶æ˜¾ç¤º
                 manager->createBrowserWindow(getDefaultBrowserSettings());
             } else {
-                // ÔËĞĞNode
+                // è¿è¡ŒNode
                 startNodeThread();
             }
             
             
             AMO_TIMER_ELAPSED();
-            // ¿ªÊ¼ÏûÏ¢Ñ­»·
+            // å¼€å§‹æ¶ˆæ¯å¾ªç¯
             CefRunMessageLoop();
         }
         
         ::CoUninitialize();
         amo::log::finalize();
 #if CHROME_VERSION_BUILD < 2704
-        // ¹Ø±Õ¹³×Ó
+        // å…³é—­é’©å­
         stopHook();
 #endif
         
         
         
-        // Í£Ö¹¼àÌıNodeÏûÏ¢
+        // åœæ­¢ç›‘å¬Nodeæ¶ˆæ¯
         if (getNodeMessageHandler()) {
             getNodeMessageHandler()->stopNodeProcess();
         }
@@ -473,7 +473,7 @@ namespace amo {
          if (classMap) {
              for (auto iter = classMap->begin(); iter != classMap->end();) {
                  if (iter->second->transferName() != "Thread") {
-                     amo::cdevel << "ÇåÀíTransfer: " << iter->first << ", " << iter->second->transferName() << amo::endl;
+                     amo::cdevel << "æ¸…ç†Transfer: " << iter->first << ", " << iter->second->transferName() << amo::endl;
                      iter->second->onBeforeRelease();
                      iter = classMap->erase(iter);
                  } else {
@@ -482,7 +482,7 @@ namespace amo {
              }
         
              for (auto iter = classMap->begin(); iter != classMap->end();) {
-                 amo::cdevel << "ÇåÀíTransfer: " << iter->first << ", " << iter->second->transferName() << ", " << iter->second->getObjectName() << amo::endl;
+                 amo::cdevel << "æ¸…ç†Transfer: " << iter->first << ", " << iter->second->transferName() << ", " << iter->second->getObjectName() << amo::endl;
                  iter->second->onBeforeRelease();
                  iter = classMap->erase(iter);
              }
@@ -493,7 +493,7 @@ namespace amo {
         int i = 0;
         std::cout << i << std::endl;
         
-        AMO_TIMER_ELAPSED_TEXT(run½áÊø);
+        AMO_TIMER_ELAPSED_TEXT(runç»“æŸ);
         amo::log::finalize();
         CefShutdown();
         
@@ -532,7 +532,7 @@ namespace amo {
             CPaintManagerUI::SetResourcePath(strSkin.to_unicode().c_str());
             
             
-            // É¾³ı»º´æ
+            // åˆ é™¤ç¼“å­˜
             if (getDefaultAppSettings()->clearCache) {
             
                 amo::string cachePath(CefString(

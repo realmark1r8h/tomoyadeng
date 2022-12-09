@@ -1,4 +1,4 @@
-#include "NodeProcessHandler.h"
+ï»¿#include "NodeProcessHandler.h"
 
 #include <amo/path.hpp>
 #include "ipc/Any.hpp"
@@ -103,7 +103,7 @@ namespace amo {
         //    //amo::log::add_sink(sink3);
         //    amo::log::set_level(amo::log::level::trace);
         //    amo::log::set_pattern("[%Y-%m-%d %H:%M:%S][%l] %v");
-        //    $clog(amo::endl amo::cinfo << "ÈÕÖ¾³õÊ¼»¯³É¹¦" << amo::endl);
+        //    $clog(amo::endl amo::cinfo << "æ—¥å¿—åˆå§‹åŒ–æˆåŠŸ" << amo::endl);
         //}
         //
         
@@ -138,7 +138,7 @@ namespace amo {
         
         
         if (res.first == NULL) {
-            MessageBoxA(NULL, "Ã»ÓĞÕÒµ½", ("Initialize"), MB_OK);
+            MessageBoxA(NULL, "æ²¡æœ‰æ‰¾åˆ°", ("Initialize"), MB_OK);
             return;
         } else {
             sss.clear();
@@ -176,16 +176,16 @@ namespace amo {
         
         SendMessageToUI(anyMessage);
         
-        $clog(amo::cdevel << func_orient << "´´½¨¹ÜµÀ·şÎñ¶Ë£º" << strPipeServerName << amo::endl);
+        $clog(amo::cdevel << func_orient << "åˆ›å»ºç®¡é“æœåŠ¡ç«¯ï¼š" << strPipeServerName << amo::endl);
         /* MessageBoxA(NULL, "3333", "223", MB_OK);*/
-        //µÈ´ı¹ÜµÀ½¨Á¢
+        //ç­‰å¾…ç®¡é“å»ºç«‹
         bool rec = m_pRenderPipeServer->connect();
         bool bOk = m_pBrowserPipeClient->connect();
         
         
         if (!rec || !bOk) {
-            $clog(amo::cdevel << "¹ÜµÀÁ¬½ÓÊ§°Ü" << amo::endl);
-            MessageBoxA(NULL, "¹ÜµÀÁ¬½ÓÊ§°Ü", "223", MB_OK);
+            $clog(amo::cdevel << "ç®¡é“è¿æ¥å¤±è´¥" << amo::endl);
+            MessageBoxA(NULL, "ç®¡é“è¿æ¥å¤±è´¥", "223", MB_OK);
         }
         
         
@@ -274,7 +274,7 @@ namespace amo {
         
         while (m_pMessageQueueReader->timed_receive(&str, 10000, recvd_size, priority, pt)) {
             if (recvd_size == 0) {
-                assert(false && "ÎŞĞ§Êı¾İ");
+                assert(false && "æ— æ•ˆæ•°æ®");
                 return;
             }
             
@@ -342,7 +342,7 @@ namespace amo {
         
         if (strMessageName == MSG_NATIVE_EXECUTE
                 || strMessageName == MSG_NATIVE_SYNC_EXECUTE
-                || strMessageName == MSG_NATIVE_ASYNC_EXECUTE) {				//JSµ÷ÓÃC++£¬´ËÏûÏ¢²»ÏòÒ³Ãæ·µ»Ø½á¹û
+                || strMessageName == MSG_NATIVE_ASYNC_EXECUTE) {				//JSè°ƒç”¨C++ï¼Œæ­¤æ¶ˆæ¯ä¸å‘é¡µé¢è¿”å›ç»“æœ
                 
             NodeTransferMgr::getInstance()->onMessageTransfer(anyMessage);
         }
@@ -351,7 +351,7 @@ namespace amo {
     }
     
     void NodeProcessHandler::OnBeforeNativeMessage(uv_work_t* r) {
-        // ÔÚµ¥¶ÀµÄ¹¤×÷Ïß³ÌÖĞ,²»ÄÜ´¦ÀíJS
+        // åœ¨å•ç‹¬çš„å·¥ä½œçº¿ç¨‹ä¸­,ä¸èƒ½å¤„ç†JS
         NodeTask* pTask = reinterpret_cast<NodeTask*>(r->data);
         //OnNativeMessageRecv(pTask->anyMessage);
     }

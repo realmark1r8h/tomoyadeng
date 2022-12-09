@@ -1,4 +1,4 @@
-// Created by amoylel on 11/03/2017.
+ï»¿// Created by amoylel on 11/03/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_TRANSFEREVENTINFO_HPP__
@@ -27,12 +27,12 @@ namespace amo {
             , frame(frame_) {
         }
         
-        // ÕâÀï½øÈ¥µÄÈç¹ûÊÇÒ»¸ö×Ö·û´®£¬»òÕßJSON£¬±ØĞëÊÇutf8±àÂëµÄ£¬£¨Êı¾İÔÚ´«Êä¹ı³ÌÖĞ²»»á½øĞĞ±àÂë×ª»»£©
+        // è¿™é‡Œè¿›å»çš„å¦‚æœæ˜¯ä¸€ä¸ªå­—ç¬¦ä¸²ï¼Œæˆ–è€…JSONï¼Œå¿…é¡»æ˜¯utf8ç¼–ç çš„ï¼Œï¼ˆæ•°æ®åœ¨ä¼ è¾“è¿‡ç¨‹ä¸­ä¸ä¼šè¿›è¡Œç¼–ç è½¬æ¢ï¼‰
         void setData(const Any& val) {
             data = val;
         }
         
-        // ÔİÊ±ÓÃ²»×Å
+        // æš‚æ—¶ç”¨ä¸ç€
         amo::json toJson() const {
             amo::json json;
             json.put("name", name);
@@ -68,17 +68,17 @@ namespace amo {
         }
         
     public:
-        /** @brief	ÊÂ¼şÃû³Æ. */
+        /** @brief	äº‹ä»¶åç§°. */
         std::string name;
-        /** @brief	ÔİÍ£Ïß³Ì. */
+        /** @brief	æš‚åœçº¿ç¨‹. */
         bool suspend;
-        /** @brief	·¢ËÍ¸øËùÓĞJS¶ÔÏó. */
+        /** @brief	å‘é€ç»™æ‰€æœ‰JSå¯¹è±¡. */
         bool toAll;
-        /** @brief	Êı¾İ. */
+        /** @brief	æ•°æ®. */
         Any data;
-        /** @brief	Ä¿±êä¯ÀÀÆ÷ID. */
+        /** @brief	ç›®æ ‡æµè§ˆå™¨ID. */
         int browser;
-        /** @brief	Ä¿±êFrameID. */
+        /** @brief	ç›®æ ‡FrameID. */
         int64_t frame;
         
     };

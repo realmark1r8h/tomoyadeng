@@ -1,4 +1,4 @@
-// Created by amoylel on 07/27/2017.
+ï»¿// Created by amoylel on 07/27/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_NATIVEWINDOWPROXY_H__
@@ -38,7 +38,7 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	»ñÈ¡´°¿ÚÃû.
+         * @brief	è·å–çª—å£å.
          *
          * @return	#String.
          *
@@ -54,16 +54,16 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::setName(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃ´°¿ÚÃû,Õâ¸öº¯ÊıÔİÊ±»¹Ã»ÓĞÊ²Ã´ÓÃ£¬Ö»ÊÇ°ÑÃû³Æ±£ÁôÏÂÀ´ÁË.
+         * @brief	è®¾ç½®çª—å£å,è¿™ä¸ªå‡½æ•°æš‚æ—¶è¿˜æ²¡æœ‰ä»€ä¹ˆç”¨ï¼Œåªæ˜¯æŠŠåç§°ä¿ç•™ä¸‹æ¥äº†.
          *
-         * @param	#String Ãû³Æ.
+         * @param	#String åç§°.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          * 		   ```
         			var win = BrowserWindow.current;
-        			win.setName('NCUI²âÊÔ´°¿Ú');
-        			console.assert(win.getName() == 'NCUI²âÊÔ´°¿Ú');
+        			win.setName('NCUIæµ‹è¯•çª—å£');
+        			console.assert(win.getName() == 'NCUIæµ‹è¯•çª—å£');
          * 		   ```
          */
         virtual Any setName(IPCMessage::SmartType msg);
@@ -71,11 +71,11 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::showTitleBar(IPCMessage::SmartType msg);
          *
-         * @brief	ÏÔÊ¾/Òş²Ø±êÌâÀ¸.
+         * @brief	æ˜¾ç¤º/éšè—æ ‡é¢˜æ .
          *
-         * @param	#Boolean=false  trueÏÔÊ¾/falseÒş²Ø.
+         * @param	#Boolean=false  trueæ˜¾ç¤º/falseéšè—.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
         
@@ -93,11 +93,11 @@ namespace amo {
         /*!
         * @fn	Any NativeWindowProxy::close(IPCMessage::SmartType msg);
         *
-        * @brief	³¢ÊÔ¹Ø±Õ´°¿Ú£¬¿ÉÒÔ±»ÓÃ»§È¡ÏûÈç£ºwindow.onload.<br>
-        * 			µ±{@link isClosable=BrowserWindow.isClosable}Îªtrue,¸Ãº¯ÊıÎŞĞ§.
+        * @brief	å°è¯•å…³é—­çª—å£ï¼Œå¯ä»¥è¢«ç”¨æˆ·å–æ¶ˆå¦‚ï¼šwindow.onload.<br>
+        * 			å½“{@link isClosable=BrowserWindow.isClosable}ä¸ºtrue,è¯¥å‡½æ•°æ— æ•ˆ.
         *
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         *
         * @see destroy=NativeWindowProxy.destroy setClosable=BrowserWindow.setClosable
         *
@@ -112,16 +112,16 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::destroy(IPCMessage::SmartType msg);
          *
-         * @brief	Ç¿ÖÆ¹Ø±Õ´°¿Ú,ÓÃ»§²»ÄÜÈ¡Ïû¸Ã²Ù×÷, µ«ÊÇËü±£Ö¤ÁË closed ´¥·¢.<br>
-         * 			µ±{@link isClosable=BrowserWindow.isClosable}Îªtrue,¸Ãº¯ÊıÎŞĞ§.
+         * @brief	å¼ºåˆ¶å…³é—­çª—å£,ç”¨æˆ·ä¸èƒ½å–æ¶ˆè¯¥æ“ä½œ, ä½†æ˜¯å®ƒä¿è¯äº† closed è§¦å‘.<br>
+         * 			å½“{@link isClosable=BrowserWindow.isClosable}ä¸ºtrue,è¯¥å‡½æ•°æ— æ•ˆ.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see close=NativeWindowProxy.close setClosable=BrowserWindow.setClosable
          *
          * @example
          * 		   ```
-        				// ´°¿Ú½«±»Ç¿ÖÆ¹Ø±Õ£¬ÓÃ»§²»ÄÜÈ¡Ïû¸Ã²Ù×÷
+        				// çª—å£å°†è¢«å¼ºåˆ¶å…³é—­ï¼Œç”¨æˆ·ä¸èƒ½å–æ¶ˆè¯¥æ“ä½œ
         				var win = BrowserWindow.current;
         				win.destroy();
          * 		   ```
@@ -133,9 +133,9 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::focus(IPCMessage::SmartType msg);
          *
-         * @brief	´°¿Ú»ñµÃ½¹µã.
+         * @brief	çª—å£è·å¾—ç„¦ç‚¹.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          * 		   ```
@@ -150,7 +150,7 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	ÅĞ¶Ï´°¿ÚÊÇ·ñ»ñµÃ½¹µã.
+         * @brief	åˆ¤æ–­çª—å£æ˜¯å¦è·å¾—ç„¦ç‚¹.
          *
          * @return	#Boolean .
          * @example
@@ -170,9 +170,9 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::show(IPCMessage::SmartType msg);
          *
-         * @brief	ÏÔÊ¾²¢ÇÒÊ¹´°¿Ú»ñµÃ½¹µã.
+         * @brief	æ˜¾ç¤ºå¹¶ä¸”ä½¿çª—å£è·å¾—ç„¦ç‚¹.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see hide=BrowserWindow.hide isVisible=BrowserWindow.isVisible showInactive=BrowserWindow.showInactive
          *
@@ -189,9 +189,9 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::showInactive(IPCMessage::SmartType msg);
          *
-         * @brief	ÏÔÊ¾´°¿Úµ«ÊÇ²»»ñµÃ½¹µã.µ«Èç¹û´°¿Ú±¾Éí¾ÍÒÑ¾­»ñµÃ½¹µã£¬µ÷ÓÃ¸Ãº¯Êıºó´°¿ÚÒÀÈ»ÓĞ½¹µã
+         * @brief	æ˜¾ç¤ºçª—å£ä½†æ˜¯ä¸è·å¾—ç„¦ç‚¹.ä½†å¦‚æœçª—å£æœ¬èº«å°±å·²ç»è·å¾—ç„¦ç‚¹ï¼Œè°ƒç”¨è¯¥å‡½æ•°åçª—å£ä¾ç„¶æœ‰ç„¦ç‚¹
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see hide=BrowserWindow.hide isVisible=BrowserWindow.isVisible show=BrowserWindow.show
          *
@@ -210,9 +210,9 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::hide(IPCMessage::SmartType msg);
          *
-         * @brief	Òş²Ø´°¿Ú.
+         * @brief	éšè—çª—å£.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see isVisible=BrowserWindow.isVisible show=BrowserWindow.show showInactive=BrowserWindow.showInactive
          *
@@ -223,7 +223,7 @@ namespace amo {
          * 			console.assert(win.isVisible() == false);
          *			console.assert(win.isFocused() == false);
          *
-         *			// ÏÔÊ¾µ«²»¼¤»î´°¿Ú
+         *			// æ˜¾ç¤ºä½†ä¸æ¿€æ´»çª—å£
          * 			win.showInactive();
          * 			console.assert(win.isFocused() == false);
          * 		   ```
@@ -235,7 +235,7 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	ÅĞ¶Ï´°¿ÚÊÇ·ñ¿É¼û.
+         * @brief	åˆ¤æ–­çª—å£æ˜¯å¦å¯è§.
          *
          * @return	#Boolean.
          *
@@ -261,9 +261,9 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::maximize(IPCMessage::SmartType msg);
          *
-         * @brief	´°¿Ú×î´ó»¯.
+         * @brief	çª—å£æœ€å¤§åŒ–.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see unmaximize=BrowserWindow.unmaximize restore=BrowserWindow.restore isMaximized=BrowserWindow.isMaximized
          * @example
@@ -278,9 +278,9 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::unmaximize(IPCMessage::SmartType msg);
          *
-         * @brief	È¡Ïû´°¿Ú×î´ó»¯£¬½¨ÒéÊ¹ÓÃ{@link restore=BrowserWindow.restore}´úÌæ
+         * @brief	å–æ¶ˆçª—å£æœ€å¤§åŒ–ï¼Œå»ºè®®ä½¿ç”¨{@link restore=BrowserWindow.restore}ä»£æ›¿
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see restore=BrowserWindow.restore
          *
@@ -299,7 +299,7 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	ÅĞ¶Ï´°¿ÚÊÇ·ñ×î´ó»¯.
+         * @brief	åˆ¤æ–­çª—å£æ˜¯å¦æœ€å¤§åŒ–.
          *
          *
          * @return	#Boolean.
@@ -320,9 +320,9 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::minimize(IPCMessage::SmartType msg);
          *
-         * @brief	´°¿Ú×îĞ¡»¯.
+         * @brief	çª—å£æœ€å°åŒ–.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see isMinimized=BrowserWindow.isMinimized restore=BrowserWindow.restore
          *
@@ -334,7 +334,7 @@ namespace amo {
         			win.minimize();
         			console.assert(win.isMinimized() == true);
         
-        			// »¹Ô­´°¿Ú
+        			// è¿˜åŸçª—å£
         			win.restore();
         			console.assert(win.isMinimized() == false);
         		```
@@ -344,9 +344,9 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::restore(IPCMessage::SmartType msg);
          *
-         * @brief	½«´°¿Ú»Ö¸´ÎªÖ®Ç°µÄ×´Ì¬,²»¹Ü´°¿ÚÖ®Ç°ÊÇ×îĞ¡»¯»¹ÊÇ×î´ó»¯.
+         * @brief	å°†çª—å£æ¢å¤ä¸ºä¹‹å‰çš„çŠ¶æ€,ä¸ç®¡çª—å£ä¹‹å‰æ˜¯æœ€å°åŒ–è¿˜æ˜¯æœ€å¤§åŒ–.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see  minimize=BrowserWindow.minimize maximize=BrowserWindow.maximize
          *
@@ -359,7 +359,7 @@ namespace amo {
         			 console.assert(win.isMinimized() == true);
         			 win.maximize();
         			 console.assert(win.isMaximized() == true);
-        			 // »¹Ô­´°¿Ú
+        			 // è¿˜åŸçª—å£
         			 win.restore();
         			 console.assert(win.isMinimized() == false);
         			 ```
@@ -372,7 +372,7 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief  ÅĞ¶Ï´°¿ÚÊÇ·ñ×îĞ¡»¯.
+         * @brief  åˆ¤æ–­çª—å£æ˜¯å¦æœ€å°åŒ–.
          *
          * @see minimize=BrowserWindow.minimize
          *
@@ -385,7 +385,7 @@ namespace amo {
         			 console.assert(win.isMinimized() == true);
         			 win.maximize();
         			 console.assert(win.isMaximized() == true);
-        			 // »¹Ô­´°¿Ú
+        			 // è¿˜åŸçª—å£
         			 win.restore();
         			 console.assert(win.isMinimized() == false);
         			 ```
@@ -398,11 +398,11 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::setFullScreen(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃÊÇ·ñÈ«ÆÁ.
+         * @brief	è®¾ç½®æ˜¯å¦å…¨å±.
          *
-         * @param	#Boolean=false È«ÆÁ/·ÇÈ«ÆÁ.
+         * @param	#Boolean=false å…¨å±/éå…¨å±.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see isFullScreen=BrowserWindow.isFullScreen toggleFullScreen=BrowserWindow.toggleFullScreen
          *
@@ -420,7 +420,7 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::isFullScreen(IPCMessage::SmartType msg);
          * @tag sync
-         * @brief	ÅĞ¶Ï´°¿ÚÊÇ·ñ´¦ÓÚÈ«ÆÁ×´Ì¬.
+         * @brief	åˆ¤æ–­çª—å£æ˜¯å¦å¤„äºå…¨å±çŠ¶æ€.
          *
          *
          * @return	#Boolean.
@@ -442,14 +442,14 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::setWindowRect(IPCMessage::SmartType msg);
          *
-         * @brief	ÖØĞÂÉèÖÃ´°¿ÚµÄ¿í¸ßÖµ£¬²¢ÇÒÒÆ¶¯µ½Ö¸¶¨µÄ x, y Î»ÖÃ,<br>
-         * 			µ±´°¿Ú´¦ÓÚÈ«ÆÁ»òÕß×î´ó»¯×´Ì¬Ê±£¬¸Ãº¯ÊıÎŞĞ§.<br>
-         * 			µ±Ëù¸ø¿í¸ßĞ¡ÓÚÏŞÖÆ¿í¸ßÊ±£¬ÒÔ×îĞ¡¿í¸ßÎª×¼<br>
-         * 			µ±Ëù¸ø¿í¸ß´óÓÚÏŞÖÆ¿í¸ßÊ±£¬ÒÔ×î´ó¿í¸ßÎª×¼
+         * @brief	é‡æ–°è®¾ç½®çª—å£çš„å®½é«˜å€¼ï¼Œå¹¶ä¸”ç§»åŠ¨åˆ°æŒ‡å®šçš„ x, y ä½ç½®,<br>
+         * 			å½“çª—å£å¤„äºå…¨å±æˆ–è€…æœ€å¤§åŒ–çŠ¶æ€æ—¶ï¼Œè¯¥å‡½æ•°æ— æ•ˆ.<br>
+         * 			å½“æ‰€ç»™å®½é«˜å°äºé™åˆ¶å®½é«˜æ—¶ï¼Œä»¥æœ€å°å®½é«˜ä¸ºå‡†<br>
+         * 			å½“æ‰€ç»™å®½é«˜å¤§äºé™åˆ¶å®½é«˜æ—¶ï¼Œä»¥æœ€å¤§å®½é«˜ä¸ºå‡†
          *
          * @param	#JsonObject .
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see  getWindowRect=BrowserWindow.getWindowRect
          *
@@ -473,16 +473,16 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	·µ»ØÒ»¸ö¶ÔÏó£¬Ëü°üº¬ÁË´°¿ÚµÄ¿í£¬¸ß£¬x×ø±ê£¬y×ø±ê.
+         * @brief	è¿”å›ä¸€ä¸ªå¯¹è±¡ï¼Œå®ƒåŒ…å«äº†çª—å£çš„å®½ï¼Œé«˜ï¼Œxåæ ‡ï¼Œyåæ ‡.
          *
          *
-         * @return	#JsonObject ´°¿ÚµÄ×ø±ê²ÎÊı.
-         *			|#Int x ´°¿Ú×óÉÏ½ÇX×ø±ê.
-         *			|#Int y ´°¿Ú×óÉÏ½ÇY×ø±ê.
-         *			|#Int r ´°¿ÚÓÒÏÂ½ÇX×ø±ê.
-         *			|#Int b ´°¿ÚÓÒÏÂ½ÇY×ø±ê.
-         *			|#Int width ´°¿Ú¿í¶È.
-         *			|#Int height ´°¿Ú¸ß¶È.
+         * @return	#JsonObject çª—å£çš„åæ ‡å‚æ•°.
+         *			|#Int x çª—å£å·¦ä¸Šè§’Xåæ ‡.
+         *			|#Int y çª—å£å·¦ä¸Šè§’Yåæ ‡.
+         *			|#Int r çª—å£å³ä¸‹è§’Xåæ ‡.
+         *			|#Int b çª—å£å³ä¸‹è§’Yåæ ‡.
+         *			|#Int width çª—å£å®½åº¦.
+         *			|#Int height çª—å£é«˜åº¦.
          *
          * @see setWindowRect=BrowserWindow.setWindowRect
          *
@@ -497,7 +497,7 @@ namespace amo {
         					height: 500,
         				});
         
-        				// »ñÈ¡´°Ìå×ø±ê
+        				// è·å–çª—ä½“åæ ‡
         				var winInfo = win.getWindowRect();
         				console.assert(winInfo.x == 100);
         				console.assert(winInfo.y == 100);
@@ -511,16 +511,16 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::setSize(IPCMessage::SmartType msg);
          *
-         * @brief	ÖØĞÂÉèÖÃ´°¿ÚµÄ¿í¸ßÖµ,´°¿ÚµÄX×ø±êºÍY×ø±ê±£³Ö²»±ä,<br>
-         * 			µ±´°¿Ú´¦ÓÚÈ«ÆÁ»òÕß×î´ó»¯×´Ì¬Ê±£¬¸Ãº¯ÊıÎŞĞ§<br>
-         * 			µ±Ëù¸ø¿í¸ßĞ¡ÓÚÏŞÖÆ¿í¸ßÊ±£¬ÒÔ×îĞ¡¿í¸ßÎª×¼<br>
-         * 			µ±Ëù¸ø¿í¸ß´óÓÚÏŞÖÆ¿í¸ßÊ±£¬ÒÔ×î´ó¿í¸ßÎª×¼.
+         * @brief	é‡æ–°è®¾ç½®çª—å£çš„å®½é«˜å€¼,çª—å£çš„Xåæ ‡å’ŒYåæ ‡ä¿æŒä¸å˜,<br>
+         * 			å½“çª—å£å¤„äºå…¨å±æˆ–è€…æœ€å¤§åŒ–çŠ¶æ€æ—¶ï¼Œè¯¥å‡½æ•°æ— æ•ˆ<br>
+         * 			å½“æ‰€ç»™å®½é«˜å°äºé™åˆ¶å®½é«˜æ—¶ï¼Œä»¥æœ€å°å®½é«˜ä¸ºå‡†<br>
+         * 			å½“æ‰€ç»™å®½é«˜å¤§äºé™åˆ¶å®½é«˜æ—¶ï¼Œä»¥æœ€å¤§å®½é«˜ä¸ºå‡†.
          *
-         * @param	#Int=0 ¿í.
+         * @param	#Int=0 å®½.
          *
-         * @param	#Int=0 ¸ß
+         * @param	#Int=0 é«˜
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see getSize=BrowserWindow.getSize
          *
@@ -537,20 +537,20 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::getSize(IPCMessage::SmartType msg);
          *
-         * @brief	»ñÈ¡´°¿Ú¿í¸ß.
+         * @brief	è·å–çª—å£å®½é«˜.
          *
          *
-         * @return	#JsonObject ´°¿ÚµÄ¿í¸ßÊı¾İ.
+         * @return	#JsonObject çª—å£çš„å®½é«˜æ•°æ®.
          *
          * @see setSize=BrowserWindow.setSize
          *
          * @example
          * 		   ```
         				var win = BrowserWindow.current;
-        				// ÉèÖÃ´°¿Ú¿í¸ß
+        				// è®¾ç½®çª—å£å®½é«˜
         				win.setSize(1000,500);
         
-        				// »ñÈ¡´°¿Ú¿í¸ß
+        				// è·å–çª—å£å®½é«˜
         				var info = win.getSize();
         				console.log(info);
         				console.assert(info.width == 1000);
@@ -563,17 +563,17 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::setMinimumSize(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃ´°¿Ú×îĞ¡»¯µÄ¿í¸ßÖµ£¬,µ±ÊäÈë¿í¸ßÎª0Ê±£¬½«È¡Ïû×îĞ¡¿í¸ßÏŞÖÆ.
+         * @brief	è®¾ç½®çª—å£æœ€å°åŒ–çš„å®½é«˜å€¼ï¼Œ,å½“è¾“å…¥å®½é«˜ä¸º0æ—¶ï¼Œå°†å–æ¶ˆæœ€å°å®½é«˜é™åˆ¶.
          *
-         * @param	#Int	×îĞ¡¿í¶È.
+         * @param	#Int	æœ€å°å®½åº¦.
          *
-         * @param	#Int	×îĞ¡¸ß¶È.
+         * @param	#Int	æœ€å°é«˜åº¦.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
           		   ```
-        				// ÉèÖÃ×îĞ¡¿í¸ß
+        				// è®¾ç½®æœ€å°å®½é«˜
         				var win = BrowserWindow.current;
         				win.setMinimumSize(1280,720);
           		   ```
@@ -583,21 +583,21 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::getMinimumSize(IPCMessage::SmartType msg);
          * @tag sync
-         * @brief	·µ»ØÒ»¸ö¶ÔÏó£¬Ëü°üº¬ÁË´°¿Ú×îĞ¡»¯µÄ¿í£¬¸ß.{width:100, height:200}
+         * @brief	è¿”å›ä¸€ä¸ªå¯¹è±¡ï¼Œå®ƒåŒ…å«äº†çª—å£æœ€å°åŒ–çš„å®½ï¼Œé«˜.{width:100, height:200}
          *
          *
-         * @return	#JsonObject ´°¿ÚµÄ×îĞ¡¿í¸ßĞÅÏ¢.
+         * @return	#JsonObject çª—å£çš„æœ€å°å®½é«˜ä¿¡æ¯.
          * @example
          * 		   ```
         				var win = BrowserWindow.current;
         				win.setMinimumSize(1280,720);
         
-        				// »ñÈ¡×îĞ¡¿í¸ß
+        				// è·å–æœ€å°å®½é«˜
         				var info = win.getMinimumSize();
         				console.assert(info.width == 1280);
         				console.assert(info.height == 720);
         
-        				// È¡ÏûÏŞÖÆ
+        				// å–æ¶ˆé™åˆ¶
         				win..setMinimumSize(0,0);
          * 		   ```
          *
@@ -607,18 +607,18 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::setMaximumSize(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃ´°¿Ú×î´ó¿í¸ßÖµ,µ±ÊäÈë¿í¸ßÎª0Ê±£¬½«È¡Ïû×î´ó¿í¸ßÏŞÖÆ<br>
-         * 			Èç¹ûÉèÖÃÁË×î´ó¿í¸ß£¬ÄÇÃ´´°¿Ú²»ÄÜ±»×î´ó»¯£¬²»¹ÜËù¸øµÄÖµÊÇ²»ÊÇ±ÈÆÁÄ»´°¿Ú´ó<br>
-         * 			´°¿ÚÈ«ÆÁ²»ÊÜ¸Ãº¯ÊıÓ°Ïì.
+         * @brief	è®¾ç½®çª—å£æœ€å¤§å®½é«˜å€¼,å½“è¾“å…¥å®½é«˜ä¸º0æ—¶ï¼Œå°†å–æ¶ˆæœ€å¤§å®½é«˜é™åˆ¶<br>
+         * 			å¦‚æœè®¾ç½®äº†æœ€å¤§å®½é«˜ï¼Œé‚£ä¹ˆçª—å£ä¸èƒ½è¢«æœ€å¤§åŒ–ï¼Œä¸ç®¡æ‰€ç»™çš„å€¼æ˜¯ä¸æ˜¯æ¯”å±å¹•çª—å£å¤§<br>
+         * 			çª—å£å…¨å±ä¸å—è¯¥å‡½æ•°å½±å“.
          *
-         * @param	#Int	×î´ó¿í¶È.
+         * @param	#Int	æœ€å¤§å®½åº¦.
          *
-         * @param	#Int	×î´ó¸ß¶È
+         * @param	#Int	æœ€å¤§é«˜åº¦
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
         		   ```
-        				// ÉèÖÃ×îĞ¡¿í¸ß
+        				// è®¾ç½®æœ€å°å®½é«˜
         				var win = BrowserWindow.current;
         				win.setMaximumSize(1280,720);
         		   ```
@@ -631,21 +631,21 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	·µ»ØÒ»¸ö¶ÔÏó£¬Ëü°üº¬ÁË´°¿Ú×î´ó»¯µÄ¿í£¬¸ß.{width:100, height:200}
+         * @brief	è¿”å›ä¸€ä¸ªå¯¹è±¡ï¼Œå®ƒåŒ…å«äº†çª—å£æœ€å¤§åŒ–çš„å®½ï¼Œé«˜.{width:100, height:200}
          *
-         * @return	#JsonObject ´°¿ÚµÄ×î´ó¿í¸ßĞÅÏ¢.
+         * @return	#JsonObject çª—å£çš„æœ€å¤§å®½é«˜ä¿¡æ¯.
          *
          * @example
          * 		   ```
         				var win = BrowserWindow.current;
         				win.setMaximumSize(1280,720);
         
-        				// »ñÈ¡×î´ó¿í¸ß
+        				// è·å–æœ€å¤§å®½é«˜
         				var info = win.getMaximumSize();
         				console.assert(info.width == 1280);
         				console.assert(info.height == 720);
         
-        				// È¡Ïû×î´ó»¯¿í¸ßÏŞÖÆ,DEBUGÄ£¿éÏÂÎŞĞ§
+        				// å–æ¶ˆæœ€å¤§åŒ–å®½é«˜é™åˆ¶,DEBUGæ¨¡å—ä¸‹æ— æ•ˆ
         				win.setMaximumSize(0,0);
         
         
@@ -656,18 +656,18 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::setResizable(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃ´°¿ÚÊÇ·ñ¿ÉÒÔ±»ÓÃ»§¸Ä±ä´°¿Ú´óĞ¡.<br>
-         * 			¸Ãº¯ÊıÓÅÏÈ¼¶¸ßÓÚsetMaximizable£¬Ö»Òªµ÷ÓÃÁËÕâ¸öº¯Êı£¬¶¼Ïà¹ØÓÚµ÷ÓÃÁËÒ»´Î{@link setMaximizable(true)=BrowserWindow.setMaximizable},
-         * 			maximizable»á±»ÖØÖÃÎªtrue
+         * @brief	è®¾ç½®çª—å£æ˜¯å¦å¯ä»¥è¢«ç”¨æˆ·æ”¹å˜çª—å£å¤§å°.<br>
+         * 			è¯¥å‡½æ•°ä¼˜å…ˆçº§é«˜äºsetMaximizableï¼Œåªè¦è°ƒç”¨äº†è¿™ä¸ªå‡½æ•°ï¼Œéƒ½ç›¸å…³äºè°ƒç”¨äº†ä¸€æ¬¡{@link setMaximizable(true)=BrowserWindow.setMaximizable},
+         * 			maximizableä¼šè¢«é‡ç½®ä¸ºtrue
          *
-         * @param	#Boolean=false trueÔÊĞí false²»ÔÊĞí .
+         * @param	#Boolean=false trueå…è®¸ falseä¸å…è®¸ .
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
         		```
-        		// ²»ÔÊĞí´°¿Ú¸Ä±ä´óĞ¡
+        		// ä¸å…è®¸çª—å£æ”¹å˜å¤§å°
         		var win = BrowserWindow.current;
         		win.setResizable(false);
         		console.assert(win.isResizable() == false);
@@ -680,7 +680,7 @@ namespace amo {
          * @fn	Any NativeWindowProxy::isResizable(IPCMessage::SmartType msg);
          * @tag sync
          *
-         * @brief	ÅĞ¶Ï´°¿ÚÊÇ·ñ¿ÉÒÔ±»ÓÃ»§¸Ä±ä´óĞ¡.
+         * @brief	åˆ¤æ–­çª—å£æ˜¯å¦å¯ä»¥è¢«ç”¨æˆ·æ”¹å˜å¤§å°.
          *
          * @return	#Boolean.
          *
@@ -690,7 +690,7 @@ namespace amo {
         			var win = BrowserWindow.current;
         			win.setResizable(false);
         			console.assert(win.isResizable()== false);
-        			// ÔÊĞí´°¿Ú¸Ä±ä´óĞ¡
+        			// å…è®¸çª—å£æ”¹å˜å¤§å°
         			win.setResizable(true);
         			console.assert(win.isResizable() == true);
         		 ```
@@ -700,15 +700,15 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::setMovable(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃ´°¿ÚÊÇ·ñ¿ÉÒÔ±»ÓÃ»§ÍÏ¶¯.
+         * @brief	è®¾ç½®çª—å£æ˜¯å¦å¯ä»¥è¢«ç”¨æˆ·æ‹–åŠ¨.
          *
-         * @param	#Boolean=false true¿ÉÒÔÒÆ¶¯£¬false²»ÄÜÒÆ¶¯´°¿ÚÎ»ÖÃ.
+         * @param	#Boolean=false trueå¯ä»¥ç§»åŠ¨ï¼Œfalseä¸èƒ½ç§»åŠ¨çª—å£ä½ç½®.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
         		 ```
-        			// ÍÏ¶¯´°¿ÚÊÔÊÔ
+        			// æ‹–åŠ¨çª—å£è¯•è¯•
         			var win = BrowserWindow.current;
         			win.setMovable(false);
         
@@ -721,7 +721,7 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	ÅĞ¶Ï´°¿ÚÊÇ·ñ¿ÉÒÔ±»ÓÃ»§ÍÏ¶¯.
+         * @brief	åˆ¤æ–­çª—å£æ˜¯å¦å¯ä»¥è¢«ç”¨æˆ·æ‹–åŠ¨.
          *
          * @return	#Boolean.
          *
@@ -731,7 +731,7 @@ namespace amo {
         			var win = BrowserWindow.current;
         			win.setMovable(false);
         			console.assert(win.isMovable() == false);
-        			// ÔÊĞí´°¿Ú±»¸Ä±äÎ»ÖÃ
+        			// å…è®¸çª—å£è¢«æ”¹å˜ä½ç½®
         			win.setMovable(true);
         			console.assert(win.isMovable() == true);
         
@@ -742,16 +742,16 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::setMinimizable(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃ´°¿ÚÊÇ·ñ¿ÉÒÔ×îĞ¡»¯.
+         * @brief	è®¾ç½®çª—å£æ˜¯å¦å¯ä»¥æœ€å°åŒ–.
          *
          * @param	#Boolean true/false.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
         		 ```
-        			// ÉèÖÃ´°¿Ú²»ÄÜ±»×îĞ¡»¯
+        			// è®¾ç½®çª—å£ä¸èƒ½è¢«æœ€å°åŒ–
         			var win = BrowserWindow.current;
         			win.setMinimizable(false);
         			console.assert(win.isMinimizable()== false);
@@ -762,19 +762,19 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::isMinimizable(IPCMessage::SmartType msg);
          * @tag sync
-         * @brief	ÅĞ¶Ï´°¿ÚÊÇ·ñ¿ÉÒÔ×îĞ¡»¯.
+         * @brief	åˆ¤æ–­çª—å£æ˜¯å¦å¯ä»¥æœ€å°åŒ–.
          *
          *
          * @return	#Boolean.
          * @example
          *
         	 ```
-        		 // ÉèÖÃ´°¿Ú²»ÄÜ±»×îĞ¡»¯
+        		 // è®¾ç½®çª—å£ä¸èƒ½è¢«æœ€å°åŒ–
         		 var win = BrowserWindow.current;
         		 win.setMinimizable(false);
         		 console.assert(win.isMinimizable() == false);
         
-        		 // ÉèÖÃ´°¿Ú¿ÉÒÔ±»×îĞ¡»¯
+        		 // è®¾ç½®çª—å£å¯ä»¥è¢«æœ€å°åŒ–
         		 win.setMinimizable(true);
         		 console.assert(win.isMinimizable() == true);
         	 ```
@@ -784,18 +784,18 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::setMaximizable(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃ´°¿ÚÊÇ·ñ¿ÉÒÔ×î´ó»¯. Èç¹û{@link isResizable=BrowserWindow.isResizable}==false£¬´Ëº¯ÊıÎŞĞ§
+         * @brief	è®¾ç½®çª—å£æ˜¯å¦å¯ä»¥æœ€å¤§åŒ–. å¦‚æœ{@link isResizable=BrowserWindow.isResizable}==falseï¼Œæ­¤å‡½æ•°æ— æ•ˆ
          *
          * @param	#Boolean true/false.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see setResizable=BrowserWindow.setResizable isMaximizable=BrowserWindow.isMaximizable
          *
          * @example
          *
         			```
-        			// ²»ÔÊĞí´°¿Ú×î´ó»¯
+        			// ä¸å…è®¸çª—å£æœ€å¤§åŒ–
         			var win = BrowserWindow.current;
         			win.setMaximizable(false);
         			console.assert(win.isMaximizable() == false);
@@ -809,18 +809,18 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	ÅĞ¶Ï´°¿ÚÊÇ·ñ¿ÉÒÔ×î´ó»¯.
+         * @brief	åˆ¤æ–­çª—å£æ˜¯å¦å¯ä»¥æœ€å¤§åŒ–.
          *
          *
          * @return	#Boolean.
          * @example
          *
         		 ```
-        			// ²»ÔÊĞí´°¿Ú×î´ó»¯
+        			// ä¸å…è®¸çª—å£æœ€å¤§åŒ–
         			var win = BrowserWindow.current;
         			win.setMaximizable(false);
         			console.assert(win.isMaximizable() == false);
-        			// ÔÊĞí´°¿Ú×î´ó»¯
+        			// å…è®¸çª—å£æœ€å¤§åŒ–
         			win.setMaximizable(true);
         			console.assert(win.isMaximizable() == true);
         
@@ -831,20 +831,20 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::setFullScreenable(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃ·ñ¿ÉÒÔÈ«ÆÁ.
+         * @brief	è®¾ç½®å¦å¯ä»¥å…¨å±.
          *
          * @param	#Boolean=false true/false.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
         			```
-        				// ²»ÔÊĞí´°¿ÚÈ«ÆÁ
+        				// ä¸å…è®¸çª—å£å…¨å±
         				var win = BrowserWindow.current;
         				win.setFullScreenable(false);
         				console.assert(win.isFullScreenable() == false);
-        				// ÎŞ·¨È«ÆÁ
+        				// æ— æ³•å…¨å±
         				win.setFullScreen(true);
         				console.assert(win.isFullScreen() == false);
         			```
@@ -857,24 +857,24 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	ÅĞ¶ÏÊÇ·ñÔÊĞíÈ«ÆÁ.
+         * @brief	åˆ¤æ–­æ˜¯å¦å…è®¸å…¨å±.
          *
          * @return	#Boolean.
          * @example
          *
          ```
-        		 // ²»ÔÊĞí´°¿ÚÈ«ÆÁ
+        		 // ä¸å…è®¸çª—å£å…¨å±
         		 var win = BrowserWindow.current;
         		 win.setFullScreenable(false);
         		 console.assert(win.isFullScreenable() == false);
-        		 // ÎŞ·¨È«ÆÁ
+        		 // æ— æ³•å…¨å±
         		 win.setFullScreen(true);
         		 console.assert(win.isFullScreen() == false);
         
-        		// ÔÊĞí´°¿ÚÈ«ÆÁ
+        		// å…è®¸çª—å£å…¨å±
         		 win.setFullScreenable(true);
         		 console.assert(win.isFullScreenable() == true);
-        		 // ¿ÉÒÔÈ«ÆÁ
+        		 // å¯ä»¥å…¨å±
         		 win.setFullScreen(true);
         		 console.assert(win.isFullScreen() == true);
         
@@ -885,17 +885,17 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::setClosable(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃ´°¿ÚÊÇ·ñ¿ÉÒÔÈËÎª¹Ø±Õ.
+         * @brief	è®¾ç½®çª—å£æ˜¯å¦å¯ä»¥äººä¸ºå…³é—­.
          *
-         * @param	#Boolean=false true¿ÉÒÔ¹Ø±Õ£¬false²»ÄÜ¹Ø±Õ.
+         * @param	#Boolean=false trueå¯ä»¥å…³é—­ï¼Œfalseä¸èƒ½å…³é—­.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
         			 ```
         			 var win = BrowserWindow.current;
         			 win.setClosable(false);
-        			 // ÏÖÔÚ´°¿Ú¹Ø²»µôÁË
+        			 // ç°åœ¨çª—å£å…³ä¸æ‰äº†
         			 console.assert(win.isClosable() == false);
         
         			 ```
@@ -907,7 +907,7 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	ÅĞ¶Ï´°¿ÚÊÇ·ñ¿ÉÒÔ¹Ø±Õ.
+         * @brief	åˆ¤æ–­çª—å£æ˜¯å¦å¯ä»¥å…³é—­.
          *
          * @return	#Boolean.
          *
@@ -929,15 +929,15 @@ namespace amo {
         /*!
          * @fn	Any NativeWindowProxy::setAlwaysOnTop(IPCMessage::SmartType msg);
          *
-         * @brief	ÊÇ·ñÉèÖÃÕâ¸ö´°¿ÚÊ¼ÖÕÔÚÆäËû´°¿ÚÖ®ÉÏ.
+         * @brief	æ˜¯å¦è®¾ç½®è¿™ä¸ªçª—å£å§‹ç»ˆåœ¨å…¶ä»–çª—å£ä¹‹ä¸Š.
          *
-         * @param	#Boolean trueÖÃ¶¥£¬falseÈ¡ÏûÖÃ¶¥.
+         * @param	#Boolean trueç½®é¡¶ï¼Œfalseå–æ¶ˆç½®é¡¶.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
         		 ```
-        		 // Ê¹´°¿ÚÖÃ¶¥
+        		 // ä½¿çª—å£ç½®é¡¶
         		 var win = BrowserWindow.current;
         		 win.setAlwaysOnTop(true);
         		 console.assert(win.isAlwaysOnTop() == true);
@@ -950,19 +950,19 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	·µ»Ø boolean,µ±Ç°´°¿ÚÊÇ·ñÊ¼ÖÕÔÚÆäËü´°¿ÚÖ®Ç°.
+         * @brief	è¿”å› boolean,å½“å‰çª—å£æ˜¯å¦å§‹ç»ˆåœ¨å…¶å®ƒçª—å£ä¹‹å‰.
          *
          * @return	#Boolean.
          *
          * @example
          *
         		 ```
-        		 // Ê¹´°¿ÚÖÃ¶¥
+        		 // ä½¿çª—å£ç½®é¡¶
         		 var win = BrowserWindow.current;
         		 win.setAlwaysOnTop(true);
         		 console.assert(win.isAlwaysOnTop() == true);
         
-        		 // È¡ÏûÖÃ¶¥
+        		 // å–æ¶ˆç½®é¡¶
         		 win.setAlwaysOnTop(false);
         		 console.assert(win.isAlwaysOnTop() == false);
         
@@ -973,9 +973,9 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::center(IPCMessage::SmartType msg);
          *
-         * @brief	´°¿Ú¾ÓÖĞ.
+         * @brief	çª—å£å±…ä¸­.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
         			 ```
         			 var win = BrowserWindow.current;
@@ -987,13 +987,13 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::setPosition(IPCMessage::SmartType msg);
          *
-         * @brief	ÒÆ¶¯´°¿Úµ½¶ÔÓ¦µÄ x and y ×ø±ê.
+         * @brief	ç§»åŠ¨çª—å£åˆ°å¯¹åº”çš„ x and y åæ ‡.
          *
-         * @param	#Int=0 x×ø±ê.
+         * @param	#Int=0 xåæ ‡.
          *
-         * @param	#Int=0 y×ø±ê.
+         * @param	#Int=0 yåæ ‡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -1008,7 +1008,7 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::getPosition(IPCMessage::SmartType msg);
          *
-         * @brief	 ·µ»ØÒ»¸ö°üº¬µ±Ç°´°¿ÚÎ»ÖÃµÄ¶ÔÏó,·µ»ØÄÚÈİÓë{@link getWindowRect=BrowserWindow.getWindowRect}ÏàÍ¬.
+         * @brief	 è¿”å›ä¸€ä¸ªåŒ…å«å½“å‰çª—å£ä½ç½®çš„å¯¹è±¡,è¿”å›å†…å®¹ä¸{@link getWindowRect=BrowserWindow.getWindowRect}ç›¸åŒ.
          *
          * @return	#JsonObject.
          *
@@ -1021,7 +1021,7 @@ namespace amo {
         
         		 win.setPosition( 100,200);
         
-        		 // »ñÈ¡´°Ìå×ø±ê
+        		 // è·å–çª—ä½“åæ ‡
         		 var winInfo = win.getPosition();
         
         		 console.assert(winInfo.x == 100);
@@ -1033,17 +1033,17 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::setTitle(IPCMessage::SmartType msg);
          *
-         * @brief	¸Ä±äÔ­´°¿ÚµÄtitle.
+         * @brief	æ”¹å˜åŸçª—å£çš„title.
          *
-         * @param	#String ±êÌâÀ¸Ãû³Æ.
+         * @param	#String æ ‡é¢˜æ åç§°.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
         	 ```
         	 var win = BrowserWindow.current;
-        	 win.setTitle("NCUI²âÊÔ´°¿Ú");
+        	 win.setTitle("NCUIæµ‹è¯•çª—å£");
         	 ```
          */
         virtual Any setTitle(IPCMessage::SmartType msg);
@@ -1052,7 +1052,7 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	·µ»ØÔ­´°¿ÚµÄtitle.
+         * @brief	è¿”å›åŸçª—å£çš„title.
          *
          *
          * @return	#String.
@@ -1063,8 +1063,8 @@ namespace amo {
          *
         		 ```
         			var win = BrowserWindow.current;
-        			win.setTitle("NCUI²âÊÔ´°¿Ú");
-        			console.assert(win.getTitle() == 'NCUI²âÊÔ´°¿Ú');
+        			win.setTitle("NCUIæµ‹è¯•çª—å£");
+        			console.assert(win.getTitle() == 'NCUIæµ‹è¯•çª—å£');
         		 ```
          */
         virtual Any getTitle(IPCMessage::SmartType msg);
@@ -1072,18 +1072,18 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::flashFrame(IPCMessage::SmartType msg);
          *
-         * @brief	¿ªÊ¼»òÍ£Ö¹ÉÁË¸´°¿ÚÀ´»ñµÃÓÃ»§µÄ¹Ø×¢.
+         * @brief	å¼€å§‹æˆ–åœæ­¢é—ªçƒçª—å£æ¥è·å¾—ç”¨æˆ·çš„å…³æ³¨.
          *
-         * @param	#Boolean=false trueÉÁË¸´°¿Ú£¬falseÍ£Ö¹ÉÁË¸.
+         * @param	#Boolean=false trueé—ªçƒçª—å£ï¼Œfalseåœæ­¢é—ªçƒ.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
         			 ```
         			 var win = BrowserWindow.current;
         			 win.flashFrame(true);
-        			 // Í£Ö¹
+        			 // åœæ­¢
         			 win.flashFrame(false);
         			 ```
          */
@@ -1092,11 +1092,11 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::setHasShadow(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃÊÇ·ñÏÔÊ¾´°¿ÚÒõÓ°
+         * @brief	è®¾ç½®æ˜¯å¦æ˜¾ç¤ºçª—å£é˜´å½±
          *
-         * @param	#Boolean=false  trueÏÔÊ¾´°¿ÚÒõÓ°£¬false²»ÏÔÊ¾´°¿ÚÒõÓ°.
+         * @param	#Boolean=false  trueæ˜¾ç¤ºçª—å£é˜´å½±ï¼Œfalseä¸æ˜¾ç¤ºçª—å£é˜´å½±.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -1112,7 +1112,7 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	·µ»Ø boolean,ÊÇ·ñÏÔÊ¾´°¿ÚÒõÓ°
+         * @brief	è¿”å› boolean,æ˜¯å¦æ˜¾ç¤ºçª—å£é˜´å½±
          *
          * @return	#Boolean.
          *
@@ -1120,11 +1120,11 @@ namespace amo {
          *
         		 ```
         			 var win = BrowserWindow.current;
-        			 // ²»ÏÔÊ¾ÒõÓ°
+        			 // ä¸æ˜¾ç¤ºé˜´å½±
         			 win.setHasShadow(false);
         			 console.assert(win.hasShadow() == false);
         
-        			 // ÏÔÊ¾ÒõÓ°
+        			 // æ˜¾ç¤ºé˜´å½±
         			 win.setHasShadow(true);
         			 console.assert(win.hasShadow() == true);
         
@@ -1135,18 +1135,18 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::topmost(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃ´°¿ÚÊÇ·ñÖÃ¶¥.
+         * @brief	è®¾ç½®çª—å£æ˜¯å¦ç½®é¡¶.
          *
-         * @param	#Boolean trueÖÃ¶¥/falseÈ¡ÏûÖÃ¶¥.
+         * @param	#Boolean trueç½®é¡¶/falseå–æ¶ˆç½®é¡¶.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see setAlwaysOnTop=BrowserWindow.setAlwaysOnTop isTopmost=BrowserWindow.isTopmost
          *
          * @example
          *
         			 ```
-        			 // Ê¹´°¿ÚÖÃ¶¥
+        			 // ä½¿çª—å£ç½®é¡¶
         			 var win = BrowserWindow.current;
         			 win.topmost(true);
         			 console.assert(win.isTopmost() == true);
@@ -1159,7 +1159,7 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	ÅĞ¶Ï´°¿ÚÊÇ·ñÖÃ¶¥.
+         * @brief	åˆ¤æ–­çª—å£æ˜¯å¦ç½®é¡¶.
          *
          *
          * @return	#Boolean.
@@ -1167,12 +1167,12 @@ namespace amo {
          * @example
          *
         		 ```
-        		 // Ê¹´°¿ÚÖÃ¶¥
+        		 // ä½¿çª—å£ç½®é¡¶
         		 var win = BrowserWindow.current;
         		 win.topmost(true);
         		 console.assert(win.isTopmost() == true);
         
-        		 // È¡ÏûÖÃ¶¥
+        		 // å–æ¶ˆç½®é¡¶
         		 win.topmost(false);
         		 console.assert(win.isTopmost() == false);
         		 ```
@@ -1182,9 +1182,9 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::toggleVisible(IPCMessage::SmartType msg);
          *
-         * @brief	ÏÔÊ¾/Òş²Ø´°¿Ú.
+         * @brief	æ˜¾ç¤º/éšè—çª—å£.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -1201,25 +1201,25 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::toggleFullScreen(IPCMessage::SmartType msg);
          *
-         * @brief	È«ÆÁ/·ÇÈ«ÆÁ´°¿Ú.
+         * @brief	å…¨å±/éå…¨å±çª—å£.
          *
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
         		 ```
         			 var win = BrowserWindow.current;
-        			 // ÉèÖÃ´°¿Ú¿ÉÒÔÈ«ÆÁÏÔÊ¾
+        			 // è®¾ç½®çª—å£å¯ä»¥å…¨å±æ˜¾ç¤º
         			 win.setFullScreenable(true);
-        			 // ÍË³öÈ«ÆÁ
+        			 // é€€å‡ºå…¨å±
         			 win.setFullScreen(false);
         
-        			 // È«ÆÁ
+        			 // å…¨å±
         			 win.toggleFullScreen();
         			 console.assert(win.isFullScreen() == true);
         
-        			 // ÍË³öÈ«ÆÁ
+        			 // é€€å‡ºå…¨å±
         			 win.toggleFullScreen();
         			 console.assert(win.isFullScreen() == false);
         
@@ -1232,10 +1232,10 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	µ±Ç°½Ó¿Ú²»ÄÜÕı³£Ê¹ÓÃ£¬Èç¹ûÒªÏÔÊ¾ÎªÄ£Ì¬´°¿Ú±ØĞëÔÚ´´½¨Ê±Ö¸¶¨.
+         * @brief	å½“å‰æ¥å£ä¸èƒ½æ­£å¸¸ä½¿ç”¨ï¼Œå¦‚æœè¦æ˜¾ç¤ºä¸ºæ¨¡æ€çª—å£å¿…é¡»åœ¨åˆ›å»ºæ—¶æŒ‡å®š.
          *
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any showModal(IPCMessage::SmartType msg);
@@ -1243,11 +1243,11 @@ namespace amo {
         /**
          * @fn	Any NativeWindowProxy::setIcon(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃ´°¿ÚÍ¼±ê.
+         * @brief	è®¾ç½®çª—å£å›¾æ ‡.
          *
-         * @param	#String Í¼±êÂ·¾¶.
+         * @param	#String å›¾æ ‡è·¯å¾„.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -1267,13 +1267,13 @@ namespace amo {
         /*!
         * @fn	static Any AppTransfer::setConfig(IPCMessage::SmartType msg);
         *
-        * @brief	ÉèÖÃ´°¿ÚÅäÖÃ²ÎÊı.¸Ãº¯Êı²¢²»ÒªÇóÒ»¶¨ÒªÊäÈëËùÖ§³ÖµÄ²ÎÊı£¬
-        * 			¸Ãº¯Êı¿ÉÒÔÓ°ÏìÒ»²¿·Ö´°¿ÚĞĞÎª£¬¾ßÌåÊÇÄÄĞ©»¹ÒªÔÙÈ·ÈÏ<br>
-        * 			Ò»°ãÓÃÀ´ÉèÖÃ×Ô¶¨Òå²ÎÊı£¬²¢ÔÚgetConfigÀïÃæ»ñÈ¡ËùÉèÖÃµÄÖµÓë{@link BrowserWindow.getConfig}Ïà¶ÔÓ¦.
+        * @brief	è®¾ç½®çª—å£é…ç½®å‚æ•°.è¯¥å‡½æ•°å¹¶ä¸è¦æ±‚ä¸€å®šè¦è¾“å…¥æ‰€æ”¯æŒçš„å‚æ•°ï¼Œ
+        * 			è¯¥å‡½æ•°å¯ä»¥å½±å“ä¸€éƒ¨åˆ†çª—å£è¡Œä¸ºï¼Œå…·ä½“æ˜¯å“ªäº›è¿˜è¦å†ç¡®è®¤<br>
+        * 			ä¸€èˆ¬ç”¨æ¥è®¾ç½®è‡ªå®šä¹‰å‚æ•°ï¼Œå¹¶åœ¨getConfigé‡Œé¢è·å–æ‰€è®¾ç½®çš„å€¼ä¸{@link BrowserWindow.getConfig}ç›¸å¯¹åº”.
         *
-        * @param	#JsonObject ĞèÒªÉèÖÃµÄ²ÎÊı£¬¸ÃÖµÎªÒ»¸öJSON¶ÔÏó.
+        * @param	#JsonObject éœ€è¦è®¾ç½®çš„å‚æ•°ï¼Œè¯¥å€¼ä¸ºä¸€ä¸ªJSONå¯¹è±¡.
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         *
         * @see getConfig=BrowserWindow.getConfig
         *
@@ -1296,9 +1296,9 @@ namespace amo {
         *
         * @tag sync
         *
-        * @brief	»ñÈ¡Ó¦ÓÃ³ÌĞòµÄËùÓĞÅäÖÃ²ÎÊı,¿É»ñÈ¡µÄÄÚÈİ¼û{@link ä¯ÀÀÆ÷´°¿Ú²ÎÊı=ä¯ÀÀÆ÷´°¿Ú²ÎÊı}.
+        * @brief	è·å–åº”ç”¨ç¨‹åºçš„æ‰€æœ‰é…ç½®å‚æ•°,å¯è·å–çš„å†…å®¹è§{@link æµè§ˆå™¨çª—å£å‚æ•°=æµè§ˆå™¨çª—å£å‚æ•°}.
         *
-        * @return	#JsonObject ËùÓĞÅäÖÃ²ÎÊı.
+        * @return	#JsonObject æ‰€æœ‰é…ç½®å‚æ•°.
         */
         
         
@@ -1307,23 +1307,23 @@ namespace amo {
         *
         * @tag sync
         *
-        * @brief	»ñÈ¡´°¿ÚµÄÖ¸¶¨ÅäÖÃ²ÎÊı.
+        * @brief	è·å–çª—å£çš„æŒ‡å®šé…ç½®å‚æ•°.
         *
-        * @param	#String ĞèÒª»ñÈ¡µÄ×Ö¶ÎÃû³Æ.
+        * @param	#String éœ€è¦è·å–çš„å­—æ®µåç§°.
         *
-        * @return	·µ»Ø×Ö¶ÎÃûËù¶ÔÓ¦µÄÅäÖÃ²ÎÊı¡£·µ»ØÀàĞÍÊÓÅäÖÃ²ÎÊıÀàĞÍ¶ø¶¨£¬ÎªJSËùÖ§³ÖµÄ»ù±¾Êı¾İÀàĞÍ.
+        * @return	è¿”å›å­—æ®µåæ‰€å¯¹åº”çš„é…ç½®å‚æ•°ã€‚è¿”å›ç±»å‹è§†é…ç½®å‚æ•°ç±»å‹è€Œå®šï¼Œä¸ºJSæ‰€æ”¯æŒçš„åŸºæœ¬æ•°æ®ç±»å‹.
         *
         * @see setConfig=BrowserWindow.setConfig
         *
         * @example
         			```
         
-        			//»ñÈ¡ä¯ÀÀÆ÷´°¿ÚµÄËùÓĞÅäÖÃ²ÎÊı
+        			//è·å–æµè§ˆå™¨çª—å£çš„æ‰€æœ‰é…ç½®å‚æ•°
         			var win = BrowserWindow.current;
         			var config = win.getConfig();
         			console.log(config);
         
-        			//»ñÈ¡ä¯ÀÀÆ÷´°¿ÚµÄÖ¸¶¨ÅäÖÃ²ÎÊı
+        			//è·å–æµè§ˆå™¨çª—å£çš„æŒ‡å®šé…ç½®å‚æ•°
         			var titleBar = win.getConfig('titleBar');
         			console.assert(titleBar == false);
         			```
@@ -1334,11 +1334,11 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::setOpacity(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃ´°¿Ú²»Í¸Ã÷¶È, ¸Ã·½·¨»á×÷ÓÃÔÚÕû¸ö´°¿Ú´°¿ÚÉÏ£¬Èç¹ûÏë²¿·ÖÍ¸Ã÷£¬ÄÇÃ´Ó¦µ±Ê¹ÓÃÀëÆÁäÖÈ¾¹¦ÄÜÀ´ÊµÏÖ.
+         * @brief	è®¾ç½®çª—å£ä¸é€æ˜åº¦, è¯¥æ–¹æ³•ä¼šä½œç”¨åœ¨æ•´ä¸ªçª—å£çª—å£ä¸Šï¼Œå¦‚æœæƒ³éƒ¨åˆ†é€æ˜ï¼Œé‚£ä¹ˆåº”å½“ä½¿ç”¨ç¦»å±æ¸²æŸ“åŠŸèƒ½æ¥å®ç°.
          *
-         * @param	#Int=255 ²»Í¸Ã÷¶È£¬È¡Öµ·¶Î§[0,255],ÖµÔ½´óÔ½²»Í¸Ã÷ 0±íÊ¾ÍêÈ«Í¸Ã÷£¬255±íÊ¾ÍêÈ«²»Í¸Ã÷.
+         * @param	#Int=255 ä¸é€æ˜åº¦ï¼Œå–å€¼èŒƒå›´[0,255],å€¼è¶Šå¤§è¶Šä¸é€æ˜ 0è¡¨ç¤ºå®Œå…¨é€æ˜ï¼Œ255è¡¨ç¤ºå®Œå…¨ä¸é€æ˜.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see getOpacity=BrowserWindow.getOpacity
          *
@@ -1359,10 +1359,10 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	»ñÈ¡µ±Ç°´°¿ÚµÄ²»Í¸Ã÷¶È.
+         * @brief	è·å–å½“å‰çª—å£çš„ä¸é€æ˜åº¦.
          *
          *
-         * @return	#Int ²»Í¸Ã÷¶È.
+         * @return	#Int ä¸é€æ˜åº¦.
          *
          * @see setOpacity=BrowserWindow.setOpacity
          *
@@ -1384,7 +1384,7 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::disableIME(IPCMessage::SmartType msg);
          *
-         * @brief	½ûÓÃÊäÈë·¨.
+         * @brief	ç¦ç”¨è¾“å…¥æ³•.
          *
          * @return	#Undefined.
          * @example
@@ -1401,7 +1401,7 @@ namespace amo {
         /*!
          * @fn	virtual Any NativeWindowProxy::enableIME(IPCMessage::SmartType msg);
          *
-         * @brief	¿ªÆôÊäÈë·¨.
+         * @brief	å¼€å¯è¾“å…¥æ³•.
          *
          *
          * @return	#Undefined.
@@ -1419,9 +1419,9 @@ namespace amo {
         /*!
         * @fn	virtual Any computeCursor(IPCMessage::SmartType msg);
         *
-        * @brief	ÉèÖÃÊÇ·ñ¼ÆËã¹â±êÎ»ÖÃ£¬¿ÉÒÔÓÃÀ´¶¨Î»ÊäÈë·¨´°¿Ú£¬ÀëÆÁÄ£Ê½£¨offscreen=true£©ÏÂÓĞĞ§.
+        * @brief	è®¾ç½®æ˜¯å¦è®¡ç®—å…‰æ ‡ä½ç½®ï¼Œå¯ä»¥ç”¨æ¥å®šä½è¾“å…¥æ³•çª—å£ï¼Œç¦»å±æ¨¡å¼ï¼ˆoffscreen=trueï¼‰ä¸‹æœ‰æ•ˆ.
         *
-        * @param	#Boolean=false true¼ÆËã¹â±êÎ»ÖÃ/false²»¼ÆËã¹â±ê¹â±êÎ»ÖÃ.
+        * @param	#Boolean=false trueè®¡ç®—å…‰æ ‡ä½ç½®/falseä¸è®¡ç®—å…‰æ ‡å…‰æ ‡ä½ç½®.
         *
         * @return	#Undefined.
         * @example
@@ -1429,7 +1429,7 @@ namespace amo {
         ```
         	include('BrowserWindow');
         	var win = BrowserWindow.current;
-        	// ½ûÓÃºó½«²»ÄÜ¶¨Î»ÊäÈë·¨
+        	// ç¦ç”¨åå°†ä¸èƒ½å®šä½è¾“å…¥æ³•
         	win.computeCursor(false);
         ```
         */
@@ -1440,7 +1440,7 @@ namespace amo {
          * @fn	virtual Any NativeWindowProxy::isComputeCursor(IPCMessage::SmartType msg);
          * @tag sync
          *
-         * @brief	ÅĞ¶ÏÊÇ·ñ¼ÆËã¹â±êÎ»ÖÃ.
+         * @brief	åˆ¤æ–­æ˜¯å¦è®¡ç®—å…‰æ ‡ä½ç½®.
          *
          *
          * @return	#Boolean true/false.
@@ -1462,7 +1462,7 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	»ñÈ¡´°¿ÚÔ­Éú¾ä±ú.
+         * @brief	è·å–çª—å£åŸç”Ÿå¥æŸ„.
          *
          * @param	args	The arguments.
          *
@@ -1474,7 +1474,7 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	»ñÈ¡´°¿ÚÔ­Éú¾ä±ú.
+         * @brief	è·å–çª—å£åŸç”Ÿå¥æŸ„.
          *
          * @return	The native hwnd.
          */
@@ -1484,7 +1484,7 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	»ñÈ¡´°¿ÚÅäÖÃ²ÎÊı.
+         * @brief	è·å–çª—å£é…ç½®å‚æ•°.
          *
          * @return	The browser settings.
          */

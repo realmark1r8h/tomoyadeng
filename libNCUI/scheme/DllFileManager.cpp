@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "scheme/DllFileManager.h"
 #include <amo/loader.hpp>
 

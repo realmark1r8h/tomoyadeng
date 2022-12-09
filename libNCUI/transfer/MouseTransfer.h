@@ -1,4 +1,4 @@
-// Created by amoylel on 08/20/2017.
+ï»¿// Created by amoylel on 08/20/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_MOUSETRANSFER_H__
@@ -15,8 +15,8 @@ namespace amo {
      *
      * @extend Object
      *
-     * @brief	Êó±ê¿ØÖÆÀà,ËùÓĞº¯Êı¾ùÎª¾²Ì¬º¯Êı.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	é¼ æ ‡æ§åˆ¶ç±»,æ‰€æœ‰å‡½æ•°å‡ä¸ºé™æ€å‡½æ•°.<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      */
     
     class MouseTransfer
@@ -28,12 +28,12 @@ namespace amo {
         /*!
         * @fn	Any MouseTransfer::click(IPCMessage::SmartType msg);
         *
-        * @brief	µ¥»÷Êó±ê×ó¼ü.
+        * @brief	å•å‡»é¼ æ ‡å·¦é”®.
         *
-        * @param	#Int=0 x×ø±ê
-        * @param	#Int=0 y×ø±ê
+        * @param	#Int=0 xåæ ‡
+        * @param	#Int=0 yåæ ‡
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         *
         * @see leftClick=mouse.leftClick
         *
@@ -42,11 +42,11 @@ namespace amo {
         		```
         			includes('BrowserWindow','mouse');
         			var win = BrowserWindow.current;
-        			// »ñÈ¡×î´ó»¯°´Å¥µÄÎ»ÖÃ
+        			// è·å–æœ€å¤§åŒ–æŒ‰é’®çš„ä½ç½®
         			var winRect = win.getWindowRect();
         			var x = winRect.r - 50;
         			var y = winRect.y + 10;
-        			// µã»÷×î´ó»¯°´Å¥
+        			// ç‚¹å‡»æœ€å¤§åŒ–æŒ‰é’®
         			mouse.click(x,y);
         		```
         */
@@ -58,12 +58,12 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	µ¥»÷×ó¼ü.
+         * @brief	å•å‡»å·¦é”®.
          *
-         * @param	#Int=0 x×ø±ê.
-         * @param	#Int=0 y×ø±ê.
+         * @param	#Int=0 xåæ ‡.
+         * @param	#Int=0 yåæ ‡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see click=mouse.click
          */
@@ -75,12 +75,12 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	°´ÏÂ×ó¼ü.
+         * @brief	æŒ‰ä¸‹å·¦é”®.
          *
-         * @param	#Int=0 x×ø±ê.
-         * @param	#Int=0 y×ø±ê.
+         * @param	#Int=0 xåæ ‡.
+         * @param	#Int=0 yåæ ‡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
         			 ```
@@ -92,7 +92,7 @@ namespace amo {
         			 var x = winRect.r - winRect.width / 2;
         			 var y = winRect.y + 20;
         
-        			 // ÒÆ¶¯Êó±êÊÔÊÔ
+        			 // ç§»åŠ¨é¼ æ ‡è¯•è¯•
         			 mouse.moveTo(x, y);
         			 mouse.leftDown(x,y);
         			 ```
@@ -105,12 +105,12 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	µ¯Æğ×ó¼ü.
+         * @brief	å¼¹èµ·å·¦é”®.
          *
-         * @param	#Int=0 x×ø±ê.
-         * @param	#Int=0 y×ø±ê.
+         * @param	#Int=0 xåæ ‡.
+         * @param	#Int=0 yåæ ‡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any leftUp(IPCMessage::SmartType msg);
@@ -120,12 +120,12 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	Ë«»÷×ó¼ü.
+         * @brief	åŒå‡»å·¦é”®.
          *
-         * @param	#Int=0 x×ø±ê.
-         * @param	#Int=0 y×ø±ê.
+         * @param	#Int=0 xåæ ‡.
+         * @param	#Int=0 yåæ ‡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -138,7 +138,7 @@ namespace amo {
         		 var x = winRect.r - winRect.width / 2;
         		 var y = winRect.y + 20;
         
-        		 // Ë«»÷±êÌâÀ¸×î´ó»¯´°¿Ú
+        		 // åŒå‡»æ ‡é¢˜æ æœ€å¤§åŒ–çª—å£
         		 mouse.moveTo(x, y)
         		 mouse.leftDoubleClick(x, y);
         		 ```
@@ -151,24 +151,24 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	µ¥»÷ÓÒ¼ü.
+         * @brief	å•å‡»å³é”®.
          *
-         * @param	#Int=0 x×ø±ê.
-         * @param	#Int=0 y×ø±ê.
+         * @param	#Int=0 xåæ ‡.
+         * @param	#Int=0 yåæ ‡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
         		 ```
         		 includes('BrowserWindow','mouse');
         		 var win = BrowserWindow.current;
         
-        		 // »ñÈ¡×î´ó»¯°´Å¥µÄÎ»ÖÃ
+        		 // è·å–æœ€å¤§åŒ–æŒ‰é’®çš„ä½ç½®
         		 var winRect = win.getWindowRect();
         		 var x = winRect.x + 150;
         		 var y = winRect.y + 20;
         
-        		 // ÓÒ¼ü
+        		 // å³é”®
         		 mouse.rightClick(x,y);
         		 ```
          */
@@ -180,12 +180,12 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	°´ÏÂÓÒ¼ü.
+         * @brief	æŒ‰ä¸‹å³é”®.
          *
-         * @param	#Int=0 x×ø±ê.
-         * @param	#Int=0 y×ø±ê.
+         * @param	#Int=0 xåæ ‡.
+         * @param	#Int=0 yåæ ‡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any rightDown(IPCMessage::SmartType msg);
@@ -195,12 +195,12 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	µ¯ÆğÓÒ¼ü.
+         * @brief	å¼¹èµ·å³é”®.
          *
-         * @param	#Int=0 x×ø±ê.
-         * @param	#Int=0 y×ø±ê.
+         * @param	#Int=0 xåæ ‡.
+         * @param	#Int=0 yåæ ‡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any rightUp(IPCMessage::SmartType msg);
@@ -210,12 +210,12 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	µ¥»÷ÖĞ¼ü.
+         * @brief	å•å‡»ä¸­é”®.
          *
-         * @param	#Int=0 x×ø±ê.
-         * @param	#Int=0 y×ø±ê.
+         * @param	#Int=0 xåæ ‡.
+         * @param	#Int=0 yåæ ‡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
         		 ```
@@ -240,12 +240,12 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÒÆ¶¯Êó±êµ½Ö¸¶¨Î»ÖÃ.
+         * @brief	ç§»åŠ¨é¼ æ ‡åˆ°æŒ‡å®šä½ç½®.
          *
-         * @param	#Int=0 x×ø±ê.
-         * @param	#Int=0 y×ø±ê.
+         * @param	#Int=0 xåæ ‡.
+         * @param	#Int=0 yåæ ‡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
         		 ```
@@ -269,12 +269,12 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÒÆ¶¯Êó±êµ½µ±Ç°Î»ÖÃµÄÏà¶ÔÎ»ÖÃ.
+         * @brief	ç§»åŠ¨é¼ æ ‡åˆ°å½“å‰ä½ç½®çš„ç›¸å¯¹ä½ç½®.
          *
-         * @param	#Int=0 x×ø±ê.
-         * @param	#Int=0 y×ø±ê.
+         * @param	#Int=0 xåæ ‡.
+         * @param	#Int=0 yåæ ‡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -299,11 +299,11 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	Êó±ê¹öÂÖ.
+         * @brief	é¼ æ ‡æ»šè½®.
          *
-         * @param	#Int=0 Æ«ÒÆÁ¿ >0 Ê±ÏòÉÏ¹ö¶¯£¬<0Ê±ÏòÏÂ¹ö¶¯.
+         * @param	#Int=0 åç§»é‡ >0 æ—¶å‘ä¸Šæ»šåŠ¨ï¼Œ<0æ—¶å‘ä¸‹æ»šåŠ¨.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -320,9 +320,9 @@ namespace amo {
         *
         * @tag static
         *
-        * @brief	±£´æµ±Ç°Êó±êÎ»ÖÃ.
+        * @brief	ä¿å­˜å½“å‰é¼ æ ‡ä½ç½®.
         *
-        * @return	ÎŞ.
+        * @return	æ— .
         * @example
         *
         			```
@@ -336,12 +336,12 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	±£´æÖ¸¶¨Êó±êÎ»ÖÃ.
+         * @brief	ä¿å­˜æŒ‡å®šé¼ æ ‡ä½ç½®.
          *
-         * @param	#Int=0 x×ø±ê.
-         * @param	#Int=0 y×ø±ê.
+         * @param	#Int=0 xåæ ‡.
+         * @param	#Int=0 yåæ ‡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
         		 ```
@@ -357,9 +357,9 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÒÆ¶¯Êó±êµ½ÉÏ´Î±£´æµÄÊó±êÎ»ÖÃ.
+         * @brief	ç§»åŠ¨é¼ æ ‡åˆ°ä¸Šæ¬¡ä¿å­˜çš„é¼ æ ‡ä½ç½®.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
         			 ```
@@ -373,9 +373,9 @@ namespace amo {
         /*!
          * @fn	Any MouseTransfer::lockMouse(IPCMessage::SmartType msg);
          *
-         * @brief	Ëø¶¨Êó±ê£¬½ûÖ¹ËùÓĞÊó±ê¹¦ÄÜ£¨Î´ÊµÏÖ£©.
+         * @brief	é”å®šé¼ æ ‡ï¼Œç¦æ­¢æ‰€æœ‰é¼ æ ‡åŠŸèƒ½ï¼ˆæœªå®ç°ï¼‰.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any lockMouse(IPCMessage::SmartType msg);
@@ -385,9 +385,9 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	½âËøÊó±ê£¨Î´ÊµÏÖ£©.
+         * @brief	è§£é”é¼ æ ‡ï¼ˆæœªå®ç°ï¼‰.
          * s
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any unlockMouse(IPCMessage::SmartType msg);
@@ -395,9 +395,9 @@ namespace amo {
         /*!
          * @fn	Any MouseTransfer::waitClick(IPCMessage::SmartType msg);
          *
-         * @brief	µÈ´ıÒ»ÏÂÊó±êÊÂ¼ş£¨Î´ÊµÏÖ£©.
+         * @brief	ç­‰å¾…ä¸€ä¸‹é¼ æ ‡äº‹ä»¶ï¼ˆæœªå®ç°ï¼‰.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any waitClick(IPCMessage::SmartType msg);
@@ -405,7 +405,7 @@ namespace amo {
         /*!
          * @fn	Any MouseTransfer::getLastClick(IPCMessage::SmartType msg);
          *
-         * @brief	»ñÈ¡ÉÏÒ»´Î°´¹ıµÄÊó±ê°´¼ü£¨Î´ÊµÏÖ£©.
+         * @brief	è·å–ä¸Šä¸€æ¬¡æŒ‰è¿‡çš„é¼ æ ‡æŒ‰é”®ï¼ˆæœªå®ç°ï¼‰.
          *
          *
          * @return	The last click.
@@ -416,12 +416,12 @@ namespace amo {
         /*!
          * @fn	Any MouseTransfer::getCursorPos(IPCMessage::SmartType msg);
          *
-         * @brief	»ñÈ¡µ±Ç°Êó±êÔÚÆÁÄ»ÉÏµÄÎ»ÖÃ.
+         * @brief	è·å–å½“å‰é¼ æ ‡åœ¨å±å¹•ä¸Šçš„ä½ç½®.
          *
          *
          * @return	#JsonObject.
-         * 			|#Int x Êó±êxÖá×ø±ê.
-         * 			|#Int y Êó±êyÖá×ø±ê.
+         * 			|#Int x é¼ æ ‡xè½´åæ ‡.
+         * 			|#Int y é¼ æ ‡yè½´åæ ‡.
          * @example
          *
         		 ```
@@ -436,12 +436,12 @@ namespace amo {
         /*!
          * @fn	Any MouseTransfer::setCursorPos(IPCMessage::SmartType msg);
          *
-         * @brief	ÉèÖÃÊó±êÎ»ÖÃ.
+         * @brief	è®¾ç½®é¼ æ ‡ä½ç½®.
          *
-         * @param	#Int=0 x xÖá×ø±ê.
-         * @param	#Int=0 y yÖá×ø±ê
+         * @param	#Int=0 x xè½´åæ ‡.
+         * @param	#Int=0 y yè½´åæ ‡
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see moveTo=mouse.moveTo
          *
@@ -458,14 +458,14 @@ namespace amo {
         /*!
          * @fn	Any MouseTransfer::screenToClient(IPCMessage::SmartType msg);
          *
-         * @brief	½«Ò»¸öÆÁÄ»×ø±ê×ª»»Îªµ±Ç°´°¿Ú×ø±ê.
+         * @brief	å°†ä¸€ä¸ªå±å¹•åæ ‡è½¬æ¢ä¸ºå½“å‰çª—å£åæ ‡.
          *
-         * @param	#Int=0 x×ø±ê.
-         * @param	#Int=0 y×ø±ê.
+         * @param	#Int=0 xåæ ‡.
+         * @param	#Int=0 yåæ ‡.
          *
          * @return	#JsonObject.
-         * 			|#Int x ×ª»»ºóµÄx×ø±ê
-         * 			|#Int y ×ª»»ºóµÄy×ø±ê
+         * 			|#Int x è½¬æ¢åçš„xåæ ‡
+         * 			|#Int y è½¬æ¢åçš„yåæ ‡
          * @example
          *
         			 ```
@@ -479,15 +479,15 @@ namespace amo {
         /*!
         * @fn	Any MouseTransfer::screenToClient(IPCMessage::SmartType msg);
         *
-        * @brief	½«Ò»¸öÆÁÄ»×ø±ê×ª»»ÎªÖ¸¶¨´°¿Ú×ø±ê.
+        * @brief	å°†ä¸€ä¸ªå±å¹•åæ ‡è½¬æ¢ä¸ºæŒ‡å®šçª—å£åæ ‡.
         *
-        * @param	#BrowserWindow ´°¿Ú¶ÔÏó
-        * @param	#Int=0 x×ø±ê.
-        * @param	#Int=0 y×ø±ê.
+        * @param	#BrowserWindow çª—å£å¯¹è±¡
+        * @param	#Int=0 xåæ ‡.
+        * @param	#Int=0 yåæ ‡.
         *
         * @return	#JsonObject.
-        * 			|#Int x ×ª»»ºóµÄx×ø±ê
-        * 			|#Int y ×ª»»ºóµÄy×ø±ê
+        * 			|#Int x è½¬æ¢åçš„xåæ ‡
+        * 			|#Int y è½¬æ¢åçš„yåæ ‡
         *
         * @example
         *
@@ -506,14 +506,14 @@ namespace amo {
         /*!
         * @fn	Any MouseTransfer::clientToScreen(IPCMessage::SmartType msg);
         *
-        * @brief	½«µ±Ç°´°¿Ú×ø±ê×ª»»ÎªÆÁÄ»×ø±ê.
+        * @brief	å°†å½“å‰çª—å£åæ ‡è½¬æ¢ä¸ºå±å¹•åæ ‡.
         *
-        * @param	#Int=0 x×ø±ê.
-        * @param	#Int=0 y×ø±ê.
+        * @param	#Int=0 xåæ ‡.
+        * @param	#Int=0 yåæ ‡.
         *
         * @return	#JsonObject.
-        * 			|#Int x ×ª»»ºóµÄx×ø±ê
-        * 			|#Int y ×ª»»ºóµÄy×ø±ê
+        * 			|#Int x è½¬æ¢åçš„xåæ ‡
+        * 			|#Int y è½¬æ¢åçš„yåæ ‡
         * @example
         *
         			```
@@ -527,15 +527,15 @@ namespace amo {
         /*!
         * @fn	Any MouseTransfer::clientToScreen(IPCMessage::SmartType msg);
         *
-        * @brief	½«Ò»¸öÖ¸¶¨´°¿Ú×ø±ê×ª»»ÎªÆÁÄ»×ø±ê.
+        * @brief	å°†ä¸€ä¸ªæŒ‡å®šçª—å£åæ ‡è½¬æ¢ä¸ºå±å¹•åæ ‡.
         *
-        * @param	#BrowserWindow ´°¿Ú¶ÔÏó
-        * @param	#Int=0 x×ø±ê.
-        * @param	#Int=0 y×ø±ê.
+        * @param	#BrowserWindow çª—å£å¯¹è±¡
+        * @param	#Int=0 xåæ ‡.
+        * @param	#Int=0 yåæ ‡.
         *
         * @return	#JsonObject.
-        * 			|#Int x ×ª»»ºóµÄx×ø±ê
-        * 			|#Int y ×ª»»ºóµÄy×ø±ê
+        * 			|#Int x è½¬æ¢åçš„xåæ ‡
+        * 			|#Int y è½¬æ¢åçš„yåæ ‡
         *
         * @example
         *
@@ -555,9 +555,9 @@ namespace amo {
         /*!
          * @fn	Any MouseTransfer::hideCursor(IPCMessage::SmartType msg);
          *
-         * @brief	Òş²ØÊó±ê£¬Ö»¶Ôµ±Ç°³ÌĞò´°¿ÚÓĞĞ§.
+         * @brief	éšè—é¼ æ ‡ï¼Œåªå¯¹å½“å‰ç¨‹åºçª—å£æœ‰æ•ˆ.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -575,9 +575,9 @@ namespace amo {
         /*!
          * @fn	Any MouseTransfer::showCursor(IPCMessage::SmartType msg);
          *
-         * @brief	ÏÔÊ¾Êó±ê.
+         * @brief	æ˜¾ç¤ºé¼ æ ‡.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -593,7 +593,7 @@ namespace amo {
         /*!
         * @event	Any MouseTransfer::showCursor(IPCMessage::SmartType msg);
         *
-        * @brief	ÏÔÊ¾Êó±ê.
+        * @brief	æ˜¾ç¤ºé¼ æ ‡.
         *
         *
         * @example
@@ -607,15 +607,15 @@ namespace amo {
         /*!
         * @event	Any MouseTransfer::clientToScreen(IPCMessage::SmartType msg);
         *
-        * @brief	½«Ò»¸öÖ¸¶¨´°¿Ú×ø±ê×ª»»ÎªÆÁÄ»×ø±ê.
+        * @brief	å°†ä¸€ä¸ªæŒ‡å®šçª—å£åæ ‡è½¬æ¢ä¸ºå±å¹•åæ ‡.
         *
-        * @param	#BrowserWindow ´°¿Ú¶ÔÏó
-        * @param	#Int=0 x×ø±ê.
-        * @param	#Int=0 y×ø±ê.
+        * @param	#BrowserWindow çª—å£å¯¹è±¡
+        * @param	#Int=0 xåæ ‡.
+        * @param	#Int=0 yåæ ‡.
         *
         * @return	#JsonObject.
-        * 			|#Int x ×ª»»ºóµÄx×ø±ê
-        * 			|#Int y ×ª»»ºóµÄy×ø±ê
+        * 			|#Int x è½¬æ¢åçš„xåæ ‡
+        * 			|#Int y è½¬æ¢åçš„yåæ ‡
         *
         * @example
         *

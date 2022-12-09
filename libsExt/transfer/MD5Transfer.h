@@ -1,4 +1,4 @@
-// Created by amoylel on 12/02/2017.
+ï»¿// Created by amoylel on 12/02/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_MD5TRANSFER_H__
@@ -17,8 +17,8 @@ namespace amo {
      * @class	md5
      * @chapter extend
      * @extend Runnable
-     * @brief	MD5¼ÓÃÜÀà.<br>
-     * 			¹¤×÷Ïß³Ì**RendererÏß³Ì**
+     * @brief	MD5åŠ å¯†ç±».<br>
+     * 			å·¥ä½œçº¿ç¨‹**Rendererçº¿ç¨‹**
      */
     
     class MD5Transfer
@@ -35,11 +35,11 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	MD5 ¼ÓÃÜ.
+         * @brief	MD5 åŠ å¯†.
          *
-         * @param	#String ĞèÒª¼ÓÃÜµÄ×Ö·û´®.
+         * @param	#String éœ€è¦åŠ å¯†çš„å­—ç¬¦ä¸².
          *
-         * @return	#String ¼ÓÃÜºóµÄ×Ö·û´®.
+         * @return	#String åŠ å¯†åçš„å­—ç¬¦ä¸².
          * @example
          *
          ```

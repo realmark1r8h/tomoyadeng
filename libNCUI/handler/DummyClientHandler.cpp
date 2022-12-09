@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+﻿#include "stdAfx.h"
 #include "handler/DummyClientHandler.h"
 
 #include "handler/HandlerDelegate.hpp"

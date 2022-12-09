@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "scheme/ZipFileHandler.h"
 #include "utility/libzippp.h"
 #include "scheme/ZipFileManager.h"
@@ -54,11 +54,11 @@ namespace amo {
         
         //AMO_TIMER_ELAPSED();
         auto entry =  zf->getEntry(strFile.to_utf8(), false, false);
-        /*  entry = zf->getEntry("ReactJs/images/ÁÐ±í01.png", false, false);
-          entry = zf->getEntry(amo::string("ReactJs/images/ÁÐ±í01.png").to_utf8());*/
+        /*  entry = zf->getEntry("ReactJs/images/åˆ—è¡¨01.png", false, false);
+          entry = zf->getEntry(amo::string("ReactJs/images/åˆ—è¡¨01.png").to_utf8());*/
         
         if (entry.isNull()) {
-            amo::cerr << "Î´ÄÜÕÒµ½×ÊÔ´ÎÄ¼þ£º" << strFile.to_ansi() << amo::endl;
+            amo::cerr << "æœªèƒ½æ‰¾åˆ°èµ„æºæ–‡ä»¶ï¼š" << strFile.to_ansi() << amo::endl;
             return false;
         }
         

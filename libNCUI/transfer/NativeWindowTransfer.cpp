@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "transfer/NativeWindowTransfer.h"
 #include "ui/win/NativeWindow.h"
 #include "ui/win/BrowserWindowManager.h"

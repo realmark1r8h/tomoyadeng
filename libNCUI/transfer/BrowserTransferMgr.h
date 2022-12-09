@@ -1,4 +1,4 @@
-// Created by amoylel on 14/02/2018.
+ï»¿// Created by amoylel on 14/02/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBNCUI_BROWSERTRANSFERMGR_4D82E6B8_6EAC_4447_B738_6DB5D94B7FAB_H__
@@ -11,7 +11,7 @@ namespace amo {
     /*!
     * @class	BrowserTransferMgr
     *
-    * @brief	¹ÜÀíä¯ÀÀÆ÷½ø³ÌµÄTransferMap.
+    * @brief	ç®¡ç†æµè§ˆå™¨è¿›ç¨‹çš„TransferMap.
     */
     class BrowserTransferMgr
         : public TransferMgr

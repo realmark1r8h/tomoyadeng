@@ -1,4 +1,4 @@
-// Created by amoylel on 07/12/2017.
+ï»¿// Created by amoylel on 07/12/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_NODEMESSAGEHANDLER_H__
@@ -39,15 +39,15 @@ namespace amo {
         NodeMessageHandler();
         ~NodeMessageHandler();
         
-        // ÔÊĞíÏòNodeJS·¢ËÍÏûÏ¢
+        // å…è®¸å‘NodeJSå‘é€æ¶ˆæ¯
         void enableNodeJS();
         
         bool processSyncMessage(int nID, IPCMessage::SmartType msg);
         
-        // ÉèÖÃC++µ÷ÓÃJSº¯Êı
+        // è®¾ç½®C++è°ƒç”¨JSå‡½æ•°
         void nativeMessageAdapter(std::function<bool(IPCMessage::SmartType)> cb);
         
-        // JSµ÷ÓÃC++
+        // JSè°ƒç”¨C++
         void onNodeMessageRecv(IPCMessage::SmartType msg);
         
         bool sendMessageToUI(IPCMessage::SmartType msg);
@@ -103,7 +103,7 @@ namespace amo {
         
         std::shared_ptr<UIMessageEmitter> m_pNodeRunner;
         
-        // ÏûÏ¢¶ÁÈ¡¶¨Ê±Æ÷
+        // æ¶ˆæ¯è¯»å–å®šæ—¶å™¨
         UINT m_nPickMessageTimer;
         
         std::shared_ptr<message_queue>  m_pMessageQueueReader;

@@ -1,4 +1,4 @@
-// Created by amoylel on 06/13/2017.
+ï»¿// Created by amoylel on 06/13/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_GRAPHIC_H__
@@ -49,7 +49,7 @@ extern "C" {
     /*!
      * @fn	NCUI_EXPORT int run(HINSTANCE hInstance);
      *
-     * @brief	ÔËĞĞApp.
+     * @brief	è¿è¡ŒApp.
      *
      * @param	hInstance	The instance.
      *
@@ -61,7 +61,7 @@ extern "C" {
     /*!
      * @fn	NCUI_EXPORT void updateAppSettings(const std::string& str);
      *
-     * @brief	ÉèÖÃApp²ÎÊı.
+     * @brief	è®¾ç½®Appå‚æ•°.
      *
      * @param	str	The string.
      */
@@ -71,7 +71,7 @@ extern "C" {
     /*!
      * @fn	NCUI_EXPORT void updateBrowserSettings(const std::string& str);
      *
-     * @brief	ÉèÖÃÄ¬ÈÏBrowserWindow²ÎÊı.
+     * @brief	è®¾ç½®é»˜è®¤BrowserWindowå‚æ•°.
      *
      * @param	str	The string.
      */
@@ -81,7 +81,7 @@ extern "C" {
     /*!
      * @fn	NCUI_EXPORT void updateSplashSettings(const std::string& str);
      *
-     * @brief	ÉèÖÃÄ¬ÈÏSplash²ÎÊı.
+     * @brief	è®¾ç½®é»˜è®¤Splashå‚æ•°.
      *
      * @param	str	The string.
      */
@@ -91,7 +91,7 @@ extern "C" {
     /*!
      * @fn	NCUI_EXPORT void setMessageQueue(const std::string& strName);
      *
-     * @brief	ÉèÖÃÓëNode½»»¥µÄÏûÏ¢¶ÓÁĞÃû.
+     * @brief	è®¾ç½®ä¸Nodeäº¤äº’çš„æ¶ˆæ¯é˜Ÿåˆ—å.
      *
      * @param	strName	The name.
      */
@@ -101,7 +101,7 @@ extern "C" {
     /*!
      * @fn	NCUI_EXPORT int runSample(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow);
      *
-     * @brief	CefSimple ²âÊÔ.
+     * @brief	CefSimple æµ‹è¯•.
      *
      * @param	hInstance	 	The instance.
      * @param	hPrevInstance	The previous instance.

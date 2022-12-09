@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "transfer/TrayTransfer.h"
 #include "ui/win/tray/Tray.h"
 #include "ipc/UIMessageBroadcaster.hpp"

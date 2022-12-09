@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+ï»¿#include "stdAfx.h"
 
 #include "scheme/LocalSchemeHandler.h"
 
@@ -80,7 +80,7 @@ namespace amo {
     
     template <typename T>
     int getArrayLen(T& array) {
-        //Ê¹ÓÃÄ£°å¶¨ÒåÒ» ¸öº¯ÊıgetArrayLen,¸Ãº¯Êı½«·µ»ØÊı×éarrayµÄ³¤¶È
+        //ä½¿ç”¨æ¨¡æ¿å®šä¹‰ä¸€ ä¸ªå‡½æ•°getArrayLen,è¯¥å‡½æ•°å°†è¿”å›æ•°ç»„arrayçš„é•¿åº¦
         return (sizeof(array) / sizeof(array[0]));
         
     }
@@ -216,7 +216,7 @@ namespace amo {
     bool LocalSchemeHandler::ReadNativeFile(const amo::string& strPath,
                                             CefRefPtr<CefCallback> callback) {
                                             
-        //»ñÈ¡ÎÄ¼şÀ©Õ¹Ãû
+        //è·å–æ–‡ä»¶æ‰©å±•å
         std::string ext = amo::path(strPath.c_str()).find_extension();
         
         if (ext == "json" || ext == ".json") {
@@ -224,12 +224,12 @@ namespace amo {
             ++cd;
         }
         
-        //¶ÁÈ¡ÎÄ¼ş
+        //è¯»å–æ–‡ä»¶
         std::ifstream tail_ifs(strPath.to_ansi(),
                                std::ios::ios_base::binary | std::ios::ios_base::in);
                                
         if (!tail_ifs.is_open()) {
-            return false;	//ÎÄ¼ş²»´æÔÚ
+            return false;	//æ–‡ä»¶ä¸å­˜åœ¨
         }
         
         std::stringstream tail_buffer;
@@ -238,7 +238,7 @@ namespace amo {
         m_strData = str;
         
         if (m_strData.empty()) {
-            return false;    //Ã»ÓĞ¶ÁÈ¡µ½Êı¾İ£¬·µ»Øfalse
+            return false;    //æ²¡æœ‰è¯»å–åˆ°æ•°æ®ï¼Œè¿”å›false
         }
         
         bool bHandled = readMimeType(ext);

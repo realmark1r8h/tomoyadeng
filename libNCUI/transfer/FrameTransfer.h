@@ -1,4 +1,4 @@
-// Created by amoylel on 07/03/2017.
+ï»¿// Created by amoylel on 07/03/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_FRAMETRANSFER_H__
@@ -18,8 +18,8 @@ namespace amo {
      *
      * @extend Object
      *
-     * @brief	CEF Frame ·â×°.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	CEF Frame å°è£….<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      */
     
     class FrameTransfer
@@ -35,11 +35,11 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::injectScript(IPCMessage::SmartType msg);
          *
-         * @brief	ÏòÒ³Ãæ×¢ÈëJS´úÂë.
+         * @brief	å‘é¡µé¢æ³¨å…¥JSä»£ç .
          *
-         * @param	#String JS´úÂë.
+         * @param	#String JSä»£ç .
          *
-         * @return	#Boolean true³É¹¦/falseÊ§°Ü.
+         * @return	#Boolean trueæˆåŠŸ/falseå¤±è´¥.
          * @example
          *
          ```
@@ -54,11 +54,11 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::injectCSS(IPCMessage::SmartType msg);
          *
-         * @brief	ÏòÒ³Ãæ×¢ÈëCSS´úÂë.
+         * @brief	å‘é¡µé¢æ³¨å…¥CSSä»£ç .
          *
-         * @param	#String CSS´úÂë.
+         * @param	#String CSSä»£ç .
          *
-         * @return	#Boolean true³É¹¦/falseÊ§°Ü.
+         * @return	#Boolean trueæˆåŠŸ/falseå¤±è´¥.
          *
          * @example
          *
@@ -74,10 +74,10 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::IsValid(IPCMessage::SmartType msg);
          * @tag sync
-         * @brief	µ±Ç°Ò³ÃæÊÇ·ñÓĞĞ§.
+         * @brief	å½“å‰é¡µé¢æ˜¯å¦æœ‰æ•ˆ.
          *
          *
-         * @return	#Boolean trueÓĞĞ§/falseÎŞĞ§.
+         * @return	#Boolean trueæœ‰æ•ˆ/falseæ— æ•ˆ.
          * @example
          *
          ```
@@ -93,9 +93,9 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::Undo(IPCMessage::SmartType msg);
          *
-         * @brief	³·Ïû£¬±à¼­¿òÄÚÓĞĞ§.
+         * @brief	æ’¤æ¶ˆï¼Œç¼–è¾‘æ¡†å†…æœ‰æ•ˆ.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          */
         
@@ -104,9 +104,9 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::Redo(IPCMessage::SmartType msg);
          *
-         * @brief	ÖØ×ö£¬±à¼­¿òÄÚÓĞĞ§.
+         * @brief	é‡åšï¼Œç¼–è¾‘æ¡†å†…æœ‰æ•ˆ.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any Redo(IPCMessage::SmartType msg);
@@ -114,10 +114,10 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::Cut(IPCMessage::SmartType msg);
          *
-         * @brief	¼ôÇĞ£¬±à¼­¿òÄÚÓĞĞ§.
+         * @brief	å‰ªåˆ‡ï¼Œç¼–è¾‘æ¡†å†…æœ‰æ•ˆ.
          *
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any Cut(IPCMessage::SmartType msg);
@@ -125,10 +125,10 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::Copy(IPCMessage::SmartType msg);
          *
-         * @brief	¸´ÖÆ£¬±à¼­¿òÄÚÓĞĞ§.
+         * @brief	å¤åˆ¶ï¼Œç¼–è¾‘æ¡†å†…æœ‰æ•ˆ.
          *
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any Copy(IPCMessage::SmartType msg);
@@ -136,10 +136,10 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::Paste(IPCMessage::SmartType msg);
          *
-         * @brief	Õ³Ìù£¬±à¼­¿òÄÚÓĞĞ§.
+         * @brief	ç²˜è´´ï¼Œç¼–è¾‘æ¡†å†…æœ‰æ•ˆ.
          *
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any Paste(IPCMessage::SmartType msg);
@@ -147,10 +147,10 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::Delete(IPCMessage::SmartType msg);
          *
-         * @brief	É¾³ı£¬±à¼­¿òÄÚÓĞĞ§.
+         * @brief	åˆ é™¤ï¼Œç¼–è¾‘æ¡†å†…æœ‰æ•ˆ.
          *
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any Delete(IPCMessage::SmartType msg);
@@ -158,9 +158,9 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::SelectAll(IPCMessage::SmartType msg);
          *
-         * @brief	È«Ñ¡.
+         * @brief	å…¨é€‰.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
          ```
@@ -175,9 +175,9 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::ViewSource(IPCMessage::SmartType msg);
          * @ignore
-         * @brief	²é¿´ÍøÒ³Ô´´úÂë.
+         * @brief	æŸ¥çœ‹ç½‘é¡µæºä»£ç .
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          */
         
         Any ViewSource(IPCMessage::SmartType msg);
@@ -187,7 +187,7 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	»ñÈ¡ÍøÒ³Ô´´úÂë.
+         * @brief	è·å–ç½‘é¡µæºä»£ç .
          *
          *
          * @return	#String.
@@ -202,11 +202,11 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::LoadURL(IPCMessage::SmartType msg);
          *
-         * @brief	¼ÓÔØURL.
+         * @brief	åŠ è½½URL.
          *
          * @param	#String URL.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
          ```
@@ -220,16 +220,16 @@ namespace amo {
         /**
          * @fn	Any FrameTransfer::LoadString(IPCMessage::SmartType msg);
          *
-         * @brief	¼ÓÔØHTML´úÂë.
+         * @brief	åŠ è½½HTMLä»£ç .
          *
-         * @param	#String HTML´úÂë.
-         * @param	#String="" URL,Ñ¡Ìî
+         * @param	#String HTMLä»£ç .
+         * @param	#String="" URL,é€‰å¡«
          *
          * @return	#Undefined.
          * @example
          *
          ```
-        	// vConsole×ª»»´æÔÚÎÊÌâ£¬³ÌĞòÖĞ¿ÉÒÔÕı³£Ê¹ÓÃ
+        	// vConsoleè½¬æ¢å­˜åœ¨é—®é¢˜ï¼Œç¨‹åºä¸­å¯ä»¥æ­£å¸¸ä½¿ç”¨
         	include('Frame');
         	Frame.current.LoadString(`
         		<!DOCTYPE html>
@@ -267,8 +267,8 @@ namespace amo {
         
         			<body>
         				<div class="container ">
-        					<h1>ÎÒÊÇÒ»¸öÆÕÍ¨ä¯ÀÀÆ÷´°¿Ú<a href="#" onclick="recoveryManifest();">µãÎÒ»Ö¸´manifest.json</a></h1>
-        					<h1>ÎÒÊÇÒ»¸öÆÕÍ¨ä¯ÀÀÆ÷´°¿Ú<a href="#" onclick="app.restart();">µãÎÒÖØÆôAPP</a></h1>
+        					<h1>æˆ‘æ˜¯ä¸€ä¸ªæ™®é€šæµè§ˆå™¨çª—å£<a href="#" onclick="recoveryManifest();">ç‚¹æˆ‘æ¢å¤manifest.json</a></h1>
+        					<h1>æˆ‘æ˜¯ä¸€ä¸ªæ™®é€šæµè§ˆå™¨çª—å£<a href="#" onclick="app.restart();">ç‚¹æˆ‘é‡å¯APP</a></h1>
         				</div>
         			</body>
         			<script type="text/javascript">
@@ -293,7 +293,7 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::IsMain(IPCMessage::SmartType msg);
          * @tag sync
-         * @brief	µ±Ç°Ò³ÃæÊÇ·ñÎªÖ÷Ò³Ãæ.
+         * @brief	å½“å‰é¡µé¢æ˜¯å¦ä¸ºä¸»é¡µé¢.
          *
          *
          * @return	#Boolean.
@@ -310,7 +310,7 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::IsFocused(IPCMessage::SmartType msg);
          * @tag sync
-         * @brief	µ±Ç°Ò³ÃæÊÇ·ñ»ñµÃ½¹µã.
+         * @brief	å½“å‰é¡µé¢æ˜¯å¦è·å¾—ç„¦ç‚¹.
          *
          * @return	#Boolean.
          *
@@ -327,9 +327,9 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::GetName(IPCMessage::SmartType msg);
          * @tag sync
-         * @brief	»ñÈ¡µ±Ç°Ò³ÃæµÄÃû³Æ.
+         * @brief	è·å–å½“å‰é¡µé¢çš„åç§°.
          *
-         * @return	#String Ò³ÃæÃû³Æ.
+         * @return	#String é¡µé¢åç§°.
          *
          * @example
          *
@@ -346,7 +346,7 @@ namespace amo {
          *
          * @tag sync
          *
-         * @brief	»ñÈ¡µ±Ç°Ò³ÃæµÄID.
+         * @brief	è·å–å½“å‰é¡µé¢çš„ID.
          *
          * @return	#Int identifier.
          *
@@ -363,9 +363,9 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::GetParent(IPCMessage::SmartType msg);
          * @tag sync
-         * @brief	»ñÈ¡µ±Ç°Ò³ÃæµÄ¸¸Ò³Ãæ.
+         * @brief	è·å–å½“å‰é¡µé¢çš„çˆ¶é¡µé¢.
          *
-         * @return	#Frame Èç¹û²»´æÔÚ·µ»ØUndefined.
+         * @return	#Frame å¦‚æœä¸å­˜åœ¨è¿”å›Undefined.
          *
          * @example
          *
@@ -380,7 +380,7 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::GetURL(IPCMessage::SmartType msg);
          * @tag sync
-         * @brief	»ñÈ¡µ±Ç°Ò³ÃæµÄURL.
+         * @brief	è·å–å½“å‰é¡µé¢çš„URL.
          *
          * @return	#String url.
          *
@@ -397,7 +397,7 @@ namespace amo {
         /*!
          * @fn	Any FrameTransfer::GetBrowser(IPCMessage::SmartType msg);
          * @tag sync
-         * @brief	»ñÈ¡µ±Ç°Ò³ÃæËùÊôµÄBrowser¶ÔÏó.
+         * @brief	è·å–å½“å‰é¡µé¢æ‰€å±çš„Browserå¯¹è±¡.
          *
          * @return	#Browser .
          * @example

@@ -1,4 +1,4 @@
-// Created by amoylel on 12/01/2017.
+ï»¿// Created by amoylel on 12/01/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_BASE64TRANSFER_H__
@@ -20,8 +20,8 @@ namespace amo {
      *
      * @extend Runnable
      *
-     * @brief	Base64 ±à½âÂë.<br>
-     * 			¹¤×÷Ïß³Ì**RendererÏß³Ì**
+     * @brief	Base64 ç¼–è§£ç .<br>
+     * 			å·¥ä½œçº¿ç¨‹**Rendererçº¿ç¨‹**
      *
      */
     
@@ -39,11 +39,11 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	Base64 ½âÂë.
+         * @brief	Base64 è§£ç .
          *
-         * @param	#String ĞèÒª½âÂëµÄ×Ö·û´®.
+         * @param	#String éœ€è¦è§£ç çš„å­—ç¬¦ä¸².
          *
-         * @return	#String ½âÂëºóµÄ×Ö·û´®.
+         * @return	#String è§£ç åçš„å­—ç¬¦ä¸².
          * @example
          *
         	 ```
@@ -59,11 +59,11 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	Base64 ±àÂë.
+         * @brief	Base64 ç¼–ç .
          *
-         * @param	#String ĞèÒª±àÂëµÄ×Ö·û´®.
+         * @param	#String éœ€è¦ç¼–ç çš„å­—ç¬¦ä¸².
          *
-         * @return	#String ±àÂëºóµÄ×Ö·û´®.
+         * @return	#String ç¼–ç åçš„å­—ç¬¦ä¸².
          * @example
          *
            ```

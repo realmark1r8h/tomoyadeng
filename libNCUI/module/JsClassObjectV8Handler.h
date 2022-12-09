@@ -1,4 +1,4 @@
-// Created by amoylel on 04/10/2017.
+ï»¿// Created by amoylel on 04/10/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_JSOBJECTV8HANDLER_H__
@@ -13,7 +13,7 @@ namespace amo {
     /*!
      * @class	JsClassObjectV8Handler
      *
-     * @brief	Transfer ¶ÔÓ¦µÄJS Object ÀàÊµÀı¶ÔÏó.
+     * @brief	Transfer å¯¹åº”çš„JS Object ç±»å®ä¾‹å¯¹è±¡.
      */
     class JsClassObjectV8Handler : public JsClassV8Handler {
     public:
@@ -38,7 +38,7 @@ namespace amo {
          * @fn	virtual void JsClassObjectV8Handler::onGetV8Object(
          * 		CefRefPtr<CefV8Value> object);
          *
-         * @brief	Ìí¼Ó³ÉÔ±º¯Êı.
+         * @brief	æ·»åŠ æˆå‘˜å‡½æ•°.
          *
          * @param	object	The object.
          */

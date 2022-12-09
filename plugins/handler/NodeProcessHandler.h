@@ -1,4 +1,4 @@
-// Created by amoylel on 07/04/2017.
+ï»¿// Created by amoylel on 07/04/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_NODEPROCESSHANDLER_H__
@@ -56,10 +56,10 @@ namespace amo {
         static std::shared_ptr<NodeMessageEmitter> getNativeRunner();
         static std::unordered_map<std::string, FunctionWrapperMgr >& getClassMap();
     public:
-        static std::shared_ptr<amo::loader> m_loader;												//!< ¶¯Ì¬¿âº¯Êýµ÷ÓÃÆ÷
-        static std::unordered_map<std::string, FunctionWrapperMgr > m_oClassMap;			//!< ÀàËù¶ÔÓ¦µÄº¯Êý
-        static uv_idle_t idler;																		//!< ¼àÊÓÆ÷£¬·ÀÖ¹NodeJSÍË³ö
-        static const int m_nPipeID = -9999;															//!< ÓÃÓÚÍ¬²½ÏûÏ¢Ê±µÄ¹ÜµÀID
+        static std::shared_ptr<amo::loader> m_loader;												//!< åŠ¨æ€åº“å‡½æ•°è°ƒç”¨å™¨
+        static std::unordered_map<std::string, FunctionWrapperMgr > m_oClassMap;			//!< ç±»æ‰€å¯¹åº”çš„å‡½æ•°
+        static uv_idle_t idler;																		//!< ç›‘è§†å™¨ï¼Œé˜²æ­¢NodeJSé€€å‡º
+        static const int m_nPipeID = -9999;															//!< ç”¨äºŽåŒæ­¥æ¶ˆæ¯æ—¶çš„ç®¡é“ID
         static std::shared_ptr<message_queue>  m_pMessageQueueReader;
         static std::shared_ptr<message_queue> m_pMessageQueueWriter;
         static std::string m_strMessageQueueName;

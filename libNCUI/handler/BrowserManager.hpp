@@ -1,4 +1,4 @@
-// Created by amoylel on 06/12/2017.
+ï»¿// Created by amoylel on 06/12/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_BROWSERMANAGER_HPP__
@@ -12,9 +12,9 @@ namespace amo {
     /*!
      * @class	BrowserManager
      *
-     * @brief	¹ÜÀíËùÓĞµÄä¯ÀÀÆ÷.
+     * @brief	ç®¡ç†æ‰€æœ‰çš„æµè§ˆå™¨.
      *
-     * @tparam	cef_process_id_t	½ø³ÌÀàĞÍ.
+     * @tparam	cef_process_id_t	è¿›ç¨‹ç±»å‹.
      */
     template<cef_process_id_t>
     class BrowserManager {
@@ -23,7 +23,7 @@ namespace amo {
         /*!
          * @fn	static CefRefPtr<CefBrowser> BrowserManager::GetAnyBrowser()
          *
-         * @brief	»ñÈ¡Ò»¸öBrowserr ÈÎÒâÒ»¸ö¶¼¿ÉÒÔ.
+         * @brief	è·å–ä¸€ä¸ªBrowserr ä»»æ„ä¸€ä¸ªéƒ½å¯ä»¥.
          *
          * @return	any browser.
          */
@@ -41,7 +41,7 @@ namespace amo {
         /*!
          * @fn	static CefRefPtr<CefBrowser> BrowserManager::GetBrowserByID(int nBrowserID)
          *
-         * @brief	Í¨¹ıä¯ÀÀÆ÷ID²éÕÒä¯ÀÀÆ÷CefBrowser.
+         * @brief	é€šè¿‡æµè§ˆå™¨IDæŸ¥æ‰¾æµè§ˆå™¨CefBrowser.
          *
          * @param	nBrowserID	Identifier for the browser.
          *
@@ -65,7 +65,7 @@ namespace amo {
         /*!
          * @fn	static CefRefPtr<CefBrowser> BrowserManager::GetBrowserByFrmeID(int nFrameID)
          *
-         * @brief	Í¨¹ıCefFrame ID²éÕÒCefBrowser.
+         * @brief	é€šè¿‡CefFrame IDæŸ¥æ‰¾CefBrowser.
          *
          * @param	nFrameID	Identifier for the frame.
          *
@@ -88,7 +88,7 @@ namespace amo {
         /*!
          * @fn	static CefRefPtr<CefFrame> BrowserManager::GetFrameByID(int nFrameID)
          *
-         * @brief	Í¨¹ıCefFrame ID ²éÕÒCefFrame.
+         * @brief	é€šè¿‡CefFrame ID æŸ¥æ‰¾CefFrame.
          *
          * @param	nFrameID	Identifier for the frame.
          *
@@ -113,8 +113,8 @@ namespace amo {
         /*!
          * @fn	static void BrowserManager::RemoveBrowserByID(int nBrowserID)
          *
-         * @brief   Í¨¹ıCefBrowser ID ÒÆ³ı CefBrowser.
-         * 			Ò»°ãÔÚDoCloseº¯ÊıÖĞÒÆ³ı¹ÜÀí
+         * @brief   é€šè¿‡CefBrowser ID ç§»é™¤ CefBrowser.
+         * 			ä¸€èˆ¬åœ¨DoCloseå‡½æ•°ä¸­ç§»é™¤ç®¡ç†
          *
          * @param	nBrowserID	Identifier for the browser.
          */
@@ -125,8 +125,8 @@ namespace amo {
         /*!
          * @fn	static void BrowserManager::RegisterBrowser(CefRefPtr<CefBrowser> pBrowser)
          *
-         * @brief	Ìí¼ÓCefBrowserµ½¹ÜÀíÆ÷ÖĞ.
-         * 			Ò»°ãÔÚOnAfterCreateº¯ÊıÖĞÌí¼Ó¹ÜÀí
+         * @brief	æ·»åŠ CefBrowseråˆ°ç®¡ç†å™¨ä¸­.
+         * 			ä¸€èˆ¬åœ¨OnAfterCreateå‡½æ•°ä¸­æ·»åŠ ç®¡ç†
          *
          * @param	pBrowser	The browser.
          */
@@ -138,7 +138,7 @@ namespace amo {
         /*!
          * @fn	static std::unordered_map<int, CefRefPtr<CefBrowser> >& BrowserManager::GetAllBrowser()
          *
-         * @brief	»ñÈ¡¹ÜÀíÆ÷ÖĞµÄËùÓĞCefBrowser.
+         * @brief	è·å–ç®¡ç†å™¨ä¸­çš„æ‰€æœ‰CefBrowser.
          *
          * @return	all browser.
          */
@@ -150,10 +150,10 @@ namespace amo {
         static std::unordered_map<int, CefRefPtr<CefBrowser> > m_oBrowserMap;
     };
     
-    /*! @brief	³õÊ¼»¯¾²Ì¬±äÁ¿. */
+    /*! @brief	åˆå§‹åŒ–é™æ€å˜é‡. */
     std::unordered_map<int, CefRefPtr<CefBrowser> >
     BrowserManager<PID_BROWSER>::m_oBrowserMap;
-    /*! @brief	³õÊ¼»¯¾²Ì¬±äÁ¿. */
+    /*! @brief	åˆå§‹åŒ–é™æ€å˜é‡. */
     std::unordered_map<int, CefRefPtr<CefBrowser> >
     BrowserManager<PID_RENDERER>::m_oBrowserMap;
 }

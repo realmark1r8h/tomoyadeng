@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "sqlite/SqliteTransfer.h"
 
 #include <iostream>
@@ -16,9 +16,9 @@
 
 
 const static std::string SQLITE_INVALID_CONNECTION =
-    "ÎŞĞ§µÄÊı¾İ¿âÁ¬½Ó";
-const static std::string SQLITE_EMPTY_SQL = "SQLÓï¾äÎª¿Õ";
-const static std::string SQLITE_INVALID_SQL = "ÎŞĞ§µÄSQLÓï¾ä";
+    "æ— æ•ˆçš„æ•°æ®åº“è¿æ¥";
+const static std::string SQLITE_EMPTY_SQL = "SQLè¯­å¥ä¸ºç©º";
+const static std::string SQLITE_INVALID_SQL = "æ— æ•ˆçš„SQLè¯­å¥";
 
 namespace amo {
 
@@ -213,7 +213,7 @@ namespace amo {
     Any SqliteTransfer::query(IPCMessage::SmartType msg) {
     
         amo::json queryJson;
-        // »ñÈ¡Êı¾İ
+        // è·å–æ•°æ®
         amo::json jsonArr;
         jsonArr.set_array();
         
@@ -227,14 +227,14 @@ namespace amo {
         bool bNeedPagging = false;
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
-        // Èç¹ûµÚÈı¸ö²ÎÊıÊÇÒ»¸öJSON,ÄÇÃ´ÈÏÎªÊÇ·ÖÒ³ĞÅÏ¢
+        // å¦‚æœç¬¬ä¸‰ä¸ªå‚æ•°æ˜¯ä¸€ä¸ªJSON,é‚£ä¹ˆè®¤ä¸ºæ˜¯åˆ†é¡µä¿¡æ¯
         if (args->getValue(2).type() == AnyValueType<amo::json>::value) {
             bNeedPagging = true;
             queryJson = args->getJson(2);
             queryJson = getPaggingInfo(queryJson);
         }
         
-        // Éú³ÉSQLÓï¾ä
+        // ç”ŸæˆSQLè¯­å¥
         std::string sql = makeSql(msg);
         
         if (sql.empty()) {
@@ -244,7 +244,7 @@ namespace amo {
         }
         
         if (bNeedPagging) {
-            // ²éÑ¯·ÖÒ³
+            // æŸ¥è¯¢åˆ†é¡µ
             bool bOk = queryCountImpl(sql, queryJson);
             
             if (!bOk) {
@@ -268,7 +268,7 @@ namespace amo {
                 
                 bool bQueryData = true;
                 
-                // »ñÈ¡ÀàĞÍÃû³Æ¡¢×Ö¶ÎÃû
+                // è·å–ç±»å‹åç§°ã€å­—æ®µå
                 for (int i = 0; i < qry.column_count(); ++i) {
                     const char* columnName = qry.column_name(i);
                     
@@ -287,14 +287,14 @@ namespace amo {
                     } else {
                         bQueryData = false;
                         types.push_back("TEXT");
-                        amo::cwarn << func_orient << "Êı¾İ±íÁĞÎ´ÖªÀàĞÍ£º" << columnName <<
+                        amo::cwarn << func_orient << "æ•°æ®è¡¨åˆ—æœªçŸ¥ç±»å‹ï¼š" << columnName <<
                                    amo::endl;
                         //break;
                     }
                 }
                 
                 if (!bQueryData) {
-                    //TODO: ´¦Àí
+                    //TODO: å¤„ç†
                     //return Undefined();
                 }
                 
@@ -350,7 +350,7 @@ namespace amo {
                             //int len = strlen(cc);
                             //std::string sb(cc, bytes);
                             //
-                            //// Èç¹û²»ÏàµÈ£¬ËµÃ÷×Ö·û´®ÖĞµÄ\0;
+                            //// å¦‚æœä¸ç›¸ç­‰ï¼Œè¯´æ˜å­—ç¬¦ä¸²ä¸­çš„\0;
                             //if (len != bytes) {
                             //
                             //}
@@ -438,7 +438,7 @@ namespace amo {
     Any SqliteTransfer::containsTable(IPCMessage::SmartType msg) {
         std::string tableName = msg->getArgumentList()->getString(0);
         
-        // Õâ¸ö±äÁ¿ÓĞ¶¾£¬ ²»ÄÜÖ±½ÓÉèÖÃµ½msgÀïÃæÈ¥£¬CloneÒ»ÏÂ¾ÍºÃÁË£¬ÎªÉ¶£¿
+        // è¿™ä¸ªå˜é‡æœ‰æ¯’ï¼Œ ä¸èƒ½ç›´æ¥è®¾ç½®åˆ°msgé‡Œé¢å»ï¼ŒCloneä¸€ä¸‹å°±å¥½äº†ï¼Œä¸ºå•¥ï¼Ÿ
         std::string sql =
             "select count(1) from sqlite_master where type='table' and name='" + tableName +
             "';";
@@ -543,7 +543,7 @@ namespace amo {
         ansiTableName.trim_right(" ");
         std::vector<amo::string> tables = ansiTableName.split(" ");
         
-        // Èç¹û²ğ·Ö³öÀ´²»Ö»Ò»Ïî,ÄÇÃ´ÈÏÎª²»ÊÇÒ»¸ö±íÃû
+        // å¦‚æœæ‹†åˆ†å‡ºæ¥ä¸åªä¸€é¡¹,é‚£ä¹ˆè®¤ä¸ºä¸æ˜¯ä¸€ä¸ªè¡¨å
         if (tables.size() > 1) {
         
             return "";
@@ -575,7 +575,7 @@ namespace amo {
     
     std::string SqliteTransfer::makeInsertSqlFromJson(const std::string&
             utf8TableName, amo::json& utf8Json) {
-        // Èç¹û²»ÊÇÒ»¸öºÏ·¨µÄJSON£¬·µ»Ø""
+        // å¦‚æœä¸æ˜¯ä¸€ä¸ªåˆæ³•çš„JSONï¼Œè¿”å›""
         if (!utf8Json.is_valid() || utf8Json.size() <= 0) {
             return "";
         }
@@ -589,7 +589,7 @@ namespace amo {
         streamValues << "(";
         
         for (size_t i = 0; i < keys.size(); ++i) {
-            // Èç¹ûËù¸ø×Ö¶ÎÔÚ±íÖĞ²»´æÔÚ£¬ÄÇÃ´Ìø¹ı´Ë×Ö¶Î£¬ÕâÀï×Ö·û¼¯ÓĞµãÂÒ
+            // å¦‚æœæ‰€ç»™å­—æ®µåœ¨è¡¨ä¸­ä¸å­˜åœ¨ï¼Œé‚£ä¹ˆè·³è¿‡æ­¤å­—æ®µï¼Œè¿™é‡Œå­—ç¬¦é›†æœ‰ç‚¹ä¹±
             if (!containsFieldImpl(utf8TableName, keys[i])) {
                 continue;
             }
@@ -621,7 +621,7 @@ namespace amo {
         ansiTableName.trim_right(" ");
         std::vector<amo::string> tables = ansiTableName.split(" ");
         
-        // Èç¹û²ğ·Ö³öÀ´²»Ö»Ò»Ïî,ÄÇÃ´ÈÏÎª²»ÊÇÒ»¸ö±íÃû
+        // å¦‚æœæ‹†åˆ†å‡ºæ¥ä¸åªä¸€é¡¹,é‚£ä¹ˆè®¤ä¸ºä¸æ˜¯ä¸€ä¸ªè¡¨å
         if (tables.size() > 1) {
         
             return "";
@@ -629,7 +629,7 @@ namespace amo {
         
         amo::json utf8Json = args->getJson(1);
         
-        // Èç¹û²»ÊÇÒ»¸öºÏ·¨µÄJSON£¬·µ»Ø""
+        // å¦‚æœä¸æ˜¯ä¸€ä¸ªåˆæ³•çš„JSONï¼Œè¿”å›""
         if (!utf8Json.is_valid()) {
             return "";
         }
@@ -678,7 +678,7 @@ namespace amo {
         ansiTableName.trim_right(" ");
         std::vector<amo::string> tables = ansiTableName.split(" ");
         
-        // Èç¹û²ğ·Ö³öÀ´²»Ö»Ò»Ïî,ÄÇÃ´ÈÏÎª²»ÊÇÒ»¸ö±íÃû
+        // å¦‚æœæ‹†åˆ†å‡ºæ¥ä¸åªä¸€é¡¹,é‚£ä¹ˆè®¤ä¸ºä¸æ˜¯ä¸€ä¸ªè¡¨å
         if (tables.size() > 1) {
         
             return "";
@@ -686,7 +686,7 @@ namespace amo {
         
         amo::json utf8Json = args->getJson(1);
         
-        // Èç¹û²»ÊÇÒ»¸öºÏ·¨µÄJSON£¬·µ»Ø""
+        // å¦‚æœä¸æ˜¯ä¸€ä¸ªåˆæ³•çš„JSONï¼Œè¿”å›""
         if (!utf8Json.is_valid() || !utf8Json.is_object()) {
             return "";
         }
@@ -699,7 +699,7 @@ namespace amo {
         stream << " ";
         
         for (size_t i = 0; i < keys.size(); ++i) {
-            // Èç¹ûËù¸ø×Ö¶ÎÔÚ±íÖĞ²»´æÔÚ£¬ÄÇÃ´Ìø¹ı´Ë×Ö¶Î£¬ÕâÀï×Ö·û¼¯ÓĞµãÂÒ
+            // å¦‚æœæ‰€ç»™å­—æ®µåœ¨è¡¨ä¸­ä¸å­˜åœ¨ï¼Œé‚£ä¹ˆè·³è¿‡æ­¤å­—æ®µï¼Œè¿™é‡Œå­—ç¬¦é›†æœ‰ç‚¹ä¹±
             if (!containsFieldImpl(utf8TableName, keys[i])) {
                 continue;
             }
@@ -717,7 +717,7 @@ namespace amo {
         
         std::stringstream whereStream;
         
-        // ½âÎö WHERE
+        // è§£æ WHERE
         if (args->isValid(2)) {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             Any val = args->getValue(3);
@@ -732,7 +732,7 @@ namespace amo {
                 amo::string sqlWhere(args->getString(2), true);
                 whereStream << formatArgsByArr(sqlWhere, vec).to_utf8();
             } else if (!val.isValid() || val.is<Nil>()) {
-                // Èç¹û¸ñÊ½»¯²ÎÊı²»´æÔÚ£¬ÄÇÃ´Ê¹ÓÃµÚ¶ş¸ö²ÎÊı
+                // å¦‚æœæ ¼å¼åŒ–å‚æ•°ä¸å­˜åœ¨ï¼Œé‚£ä¹ˆä½¿ç”¨ç¬¬äºŒä¸ªå‚æ•°
                 amo::string sqlWhere(args->getString(2), true);
                 amo::json json = args->getJson(1);
                 amo::string jsonString(json.to_string(), true);
@@ -775,7 +775,7 @@ namespace amo {
             return formatArgsByArr(sql, vec).to_utf8();
         }
         
-        // ·µ»ØÔ­Ê¼SQL
+        // è¿”å›åŸå§‹SQL
         return args->getString(0);
     }
     
@@ -924,7 +924,7 @@ namespace amo {
     
         std::string str2 = json.to_string();
         
-        // ²»ÖØĞÂ¼ÆËã£¬Ö±½Ó·µ»Ø
+        // ä¸é‡æ–°è®¡ç®—ï¼Œç›´æ¥è¿”å›
         if (!json.getBool("refresh")) {
             return true;
         }
@@ -958,13 +958,13 @@ namespace amo {
                 break;
             }
             
-            setLastError("ÎŞĞ§µÄSELECT COUNT(*) Óï¾ä");
+            setLastError("æ— æ•ˆçš„SELECT COUNT(*) è¯­å¥");
             return false;
         }
         
-        // ÅĞ¶ÏÊÇ·ñÎªSelectÓï¾ä
+        // åˆ¤æ–­æ˜¯å¦ä¸ºSelectè¯­å¥
         if (!bCountSql) {
-            setLastError("ÎŞĞ§µÄSELECT COUNT(*) Óï¾ä");
+            setLastError("æ— æ•ˆçš„SELECT COUNT(*) è¯­å¥");
             return false;
         }
         
@@ -989,9 +989,9 @@ namespace amo {
                         rows = 1;
                     }
                     
-                    int maxpage = ceil(total / (double)rows); //ÖØĞÂ¼ÆËã×ÜÒ³Êı
+                    int maxpage = ceil(total / (double)rows); //é‡æ–°è®¡ç®—æ€»é¡µæ•°
                     
-                    // ÖØĞÂ¼ÆËãµ±Ç°Ò³
+                    // é‡æ–°è®¡ç®—å½“å‰é¡µ
                     if (page < 1) {
                         page = 1;
                     }
@@ -1001,7 +1001,7 @@ namespace amo {
                         page = maxpage;
                     }
                     
-                    // ¸üĞÂ·ÖÒ³Êı¾İ
+                    // æ›´æ–°åˆ†é¡µæ•°æ®
                     json.put("page", page);
                     json.put("rows", rows);
                     json.put("total", (*iter).get<int>(i));
@@ -1029,11 +1029,11 @@ namespace amo {
             return -1;
         }
         
-        // Éú³ÉSQLÓï¾ä
+        // ç”ŸæˆSQLè¯­å¥
         std::string sql = makeSql(msg);
         
         if (sql.empty()) {
-            // -1 ±íÊ¾»ñÈ¡Ê§°Ü¡£
+            // -1 è¡¨ç¤ºè·å–å¤±è´¥ã€‚
             setLastError(SQLITE_EMPTY_SQL);
             return -1;
         }
@@ -1046,7 +1046,7 @@ namespace amo {
             for (sqlite3pp::query::iterator iter = qry.begin();
                     iter != qry.end();
                     ++iter) {
-                // Ö»ÄÜÓĞÒ»ÁĞ£¬»¹Ö»ÄÜÓĞÒ»ĞĞ
+                // åªèƒ½æœ‰ä¸€åˆ—ï¼Œè¿˜åªèƒ½æœ‰ä¸€è¡Œ
                 if (qry.column_count() != 1) {
                     return -1;
                 }
@@ -1071,12 +1071,12 @@ namespace amo {
     amo::json SqliteTransfer::getPaggingInfo(amo::json& other) {
         std::string ss = other.to_string();
         amo::json json;
-        json.put("page", 1); // µ±Ç°Ò³ÂëÊı
-        json.put("rows", 10);		// Ã¿Ò³ÌõÊı
-        json.put("total", 0);		// Êı¾İ×ÜÌõÊı
-        json.put("maxpage", 0);		// ×ÜÒ³Êı
-        json.put("startrow", 0);	// ¿ªÊ¼ĞĞ
-        json.put("refresh", true);  //ÖØĞÂ¼ÆËã·ÖÒ³
+        json.put("page", 1); // å½“å‰é¡µç æ•°
+        json.put("rows", 10);		// æ¯é¡µæ¡æ•°
+        json.put("total", 0);		// æ•°æ®æ€»æ¡æ•°
+        json.put("maxpage", 0);		// æ€»é¡µæ•°
+        json.put("startrow", 0);	// å¼€å§‹è¡Œ
+        json.put("refresh", true);  //é‡æ–°è®¡ç®—åˆ†é¡µ
         
         if (other.contains_key("page")) {
             json.put("page", other.getInt("page"));
@@ -1134,7 +1134,7 @@ namespace amo {
             
             bool bQueryData = true;
             
-            // »ñÈ¡ÀàĞÍÃû³Æ¡¢×Ö¶ÎÃû
+            // è·å–ç±»å‹åç§°ã€å­—æ®µå
             for (int i = 0; i < qry.column_count(); ++i) {
                 const char* columnName = qry.column_name(i);
                 

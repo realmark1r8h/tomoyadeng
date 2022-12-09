@@ -1,4 +1,4 @@
-// Created by amoylel on 05/22/2017.
+ï»¿// Created by amoylel on 05/22/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_DLLEXTENSIONMANAGER_H__
@@ -23,9 +23,9 @@ namespace amo {
     
     class FunctionArgs {
     public:
-        std::string m_strFunctionName; // º¯ÊıÃû
-        std::string m_strRetal;	//·µ»ØÖµ
-        std::vector<std::string> m_vecArgsList; // ²ÎÊıÁĞ±í
+        std::string m_strFunctionName; // å‡½æ•°å
+        std::string m_strRetal;	//è¿”å›å€¼
+        std::vector<std::string> m_vecArgsList; // å‚æ•°åˆ—è¡¨
         
     };
     class DllFunctionWrapper {
@@ -42,9 +42,9 @@ namespace amo {
         }
         
         void addArgsList(const std::string& argsList) {
-            std::regex retval("\\w+\\b");    // ·µ»ØÖµÀàĞÍ
-            std::regex funcName("\\w+\\b");  // º¯ÊıÃû
-            std::regex args("\\w+\\b"); // ²ÎÊıÁĞ±í
+            std::regex retval("\\w+\\b");    // è¿”å›å€¼ç±»å‹
+            std::regex funcName("\\w+\\b");  // å‡½æ•°å
+            std::regex args("\\w+\\b"); // å‚æ•°åˆ—è¡¨
             std::smatch m;
             FunctionArgs func;
             std::string s = argsList;
@@ -81,8 +81,8 @@ namespace amo {
             return iter->second;
         }
     private:
-        std::unordered_map<std::string, FunctionArgs > m_oArgsListMap; // ²ÎÊıÁĞ±í
-        std::string m_strDllName;	//dllÃû³Æ
+        std::unordered_map<std::string, FunctionArgs > m_oArgsListMap; // å‚æ•°åˆ—è¡¨
+        std::string m_strDllName;	//dllåç§°
     };
     
     class DllManagerBase  {
@@ -95,10 +95,10 @@ namespace amo {
          * @fn	std::shared_ptr<amo::loader> DllExtensionManager::load(const amo::string& name);
          *
          * @brief	Loads the given name.
-         * 			¼ÓÔØ¸ñÊ½1 libraryName
-         * 			¼ÓÔØ¸ñÊ½2 libraryName.dll
-         * 			¼ÓÔØ¸ñÊ½3 C:/libraryName[.dll]*
-         * 			¶Ô¶¯Ì¬¿âµÄ²éÕÒÍ¨¹ıÏà¶ÔÂ·¾¶ºÍ¾ø¶ÔÂ·¾¶Á½ÖÖ
+         * 			åŠ è½½æ ¼å¼1 libraryName
+         * 			åŠ è½½æ ¼å¼2 libraryName.dll
+         * 			åŠ è½½æ ¼å¼3 C:/libraryName[.dll]*
+         * 			å¯¹åŠ¨æ€åº“çš„æŸ¥æ‰¾é€šè¿‡ç›¸å¯¹è·¯å¾„å’Œç»å¯¹è·¯å¾„ä¸¤ç§
          *
          * @param	name	The name to load.
          *
@@ -108,12 +108,12 @@ namespace amo {
         
         void unload(const amo::string& name);
         
-        // »ñÈ¡Ëù¸øÂ·¾¶µÄ¾ø¶ÔÂ·¾¶
+        // è·å–æ‰€ç»™è·¯å¾„çš„ç»å¯¹è·¯å¾„
         amo::string getFullPath(const amo::string& name);
         
         std::shared_ptr<amo::loader> get(const amo::string& name);
         
-        // Ìí¼Óºó×ºÃû
+        // æ·»åŠ åç¼€å
         amo::string addSuffix(const amo::string& name);
         
         void addArgsList(const std::string& dllName, const std::string& argsList);

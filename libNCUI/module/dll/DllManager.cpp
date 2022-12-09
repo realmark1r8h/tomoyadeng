@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "module/dll/DllManager.h"
 #include <amo/path.hpp>
 #include <amo/loader.hpp>
@@ -60,30 +60,30 @@ namespace amo {
     }
     
     amo::string DllManagerBase::getFullPath(const amo::string& str) {
-        // Ìí¼Óºó×ºÃû
+        // æ·»åŠ åç¼€å
         amo::string name = addSuffix(str);
         amo::path p(name);
         
-        // ÅĞ¶Ïµ±Ç°Â·¾¶ÊÇ·ñÎª¾ø¶ÔÂ·¾¶£¬Èç¹ûÊÇÄÇÃ´Ö±½Ó·µ»Ø
+        // åˆ¤æ–­å½“å‰è·¯å¾„æ˜¯å¦ä¸ºç»å¯¹è·¯å¾„ï¼Œå¦‚æœæ˜¯é‚£ä¹ˆç›´æ¥è¿”å›
         if (!p.is_relative()) {
             return name;
         }
         
-        // Èç¹û²»ÊÇ£¬ÄÇÃ´ÒÔµ±Ç°³ÌĞòËùÔÚÄ¿Â¼Îªµ±Ç°Ä¿Â¼
+        // å¦‚æœä¸æ˜¯ï¼Œé‚£ä¹ˆä»¥å½“å‰ç¨‹åºæ‰€åœ¨ç›®å½•ä¸ºå½“å‰ç›®å½•
         amo::string exeDir = amo::path::getExeDir();
         amo::path pa(exeDir);
         
-        // 1. ¼ÙÉèËùdllÔÚµ±Ç°Ä¿Â¼
+        // 1. å‡è®¾æ‰€dllåœ¨å½“å‰ç›®å½•
         pa.append(name.str());
         $clog(amo::cdevel << pa.c_str() << amo::endl;);
         
-        // Èç¹ûÕâ¸ödll´æÔÚ£¬ÄÇÃ´·µ»Ø
+        // å¦‚æœè¿™ä¸ªdllå­˜åœ¨ï¼Œé‚£ä¹ˆè¿”å›
         if (pa.file_exists()) {
             return amo::string(pa.c_str(), false);
         }
         
         pa = amo::path(exeDir);
-        // 2. ÔÚÀ©Õ¹Ä¿Â¼ÏÂ²éÕÒ
+        // 2. åœ¨æ‰©å±•ç›®å½•ä¸‹æŸ¥æ‰¾
         pa.append(getExtensionDir().str()).append(name.str());
         $clog(amo::cdevel << pa.c_str() << amo::endl;);
         
@@ -91,7 +91,7 @@ namespace amo {
             return amo::string(pa.c_str(), false);
         }
         
-        // 3. µ½ÏµÍ³Ä¿Â¼ÏÂ²éÕÒ
+        // 3. åˆ°ç³»ç»Ÿç›®å½•ä¸‹æŸ¥æ‰¾
         pa = amo::path("C:\\windows\\system32\\");
         pa.append(name.str());
         $clog(amo::cdevel << pa.c_str() << amo::endl;);

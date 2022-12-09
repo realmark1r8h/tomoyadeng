@@ -1,4 +1,4 @@
-// Created by amoylel on 03/12/2017.
+ï»¿// Created by amoylel on 03/12/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_JSV8HANDLER_H__
@@ -38,8 +38,8 @@ static CefRefPtr<CefV8Value> DefCreateV8Object(CefRefPtr<CefV8Value> _object) {
     return _object;
 }
 
-// CefV8Value object¶ÔÏóÉú³É
-// Éú³ÉJS¶ÔÏó Ïàµ±ÓÚvar a = {};
+// CefV8Value objectå¯¹è±¡ç”Ÿæˆ
+// ç”ŸæˆJSå¯¹è±¡ ç›¸å½“äºvar a = {};
 #define AMO_CEF_BEGIN_OBJECT_FACTORY(ClassName)\
 	public:\
 		IMPLEMENT_REFCOUNTING(ClassName);\
@@ -50,12 +50,12 @@ static CefRefPtr<CefV8Value> DefCreateV8Object(CefRefPtr<CefV8Value> _object) {
 		CefRefPtr<CefV8Value> _object = object;\
 		_object = DefCreateV8Object(_object);
 
-// ½áÊø¶ÔÏóÉú³É£¬ÕâÀïµ÷ÓÃonGetV8Object½«Éú³ÉµÄObject½»¸øÆäËûµØ·½´¦Àí
+// ç»“æŸå¯¹è±¡ç”Ÿæˆï¼Œè¿™é‡Œè°ƒç”¨onGetV8Objectå°†ç”Ÿæˆçš„Objectäº¤ç»™å…¶ä»–åœ°æ–¹å¤„ç†
 #define AMO_CEF_END_OBJECT_FACTORY() \
 		onGetV8Object(_object);\
         return _object; \
 	}
-// ÏòObjectÖĞÌí¼Óº¯Êı
+// å‘Objectä¸­æ·»åŠ å‡½æ•°
 #define AMO_CEF_MAP_OBJECT_FUNCTION(Func)\
 	 this->addFunction(#Func, std::bind(&ClassType::Func,\
 										this,\
@@ -67,7 +67,7 @@ static CefRefPtr<CefV8Value> DefCreateV8Object(CefRefPtr<CefV8Value> _object) {
 					  CefV8Value::CreateFunction(#Func, this), \
 					  V8_PROPERTY_ATTRIBUTE_NONE);
 
-// ÏòObjectÌí¼ÓString
+// å‘Objectæ·»åŠ String
 #define AMO_CEF_MAP_OBJECT_STRING(Func)\
 	_object->SetValue(#Func,\
 					 CefV8Value::CreateString(Func()), \
@@ -85,8 +85,8 @@ namespace amo {
     /*!
      * @class	JsV8Handler
      *
-     * @brief	JS µ÷ÓÃC++ »ùÀà.
-     * 			½«Transfer ×ª»»Îª V8 Object
+     * @brief	JS è°ƒç”¨C++ åŸºç±».
+     * 			å°†Transfer è½¬æ¢ä¸º V8 Object
      */
     class JsV8Handler : public CefV8Handler {
     public:
@@ -94,7 +94,7 @@ namespace amo {
         /*!
          * @typedef	std::function < void(CefRefPtr<CefV8Value>, const CefV8ValueList&, CefRefPtr<CefV8Value>&, CefString&) > FuncType
          *
-         * @brief	JSº¯Êıµ÷ÓÃ¶ÔÓ¦C++µÄº¯ÊıÀàĞÍ.
+         * @brief	JSå‡½æ•°è°ƒç”¨å¯¹åº”C++çš„å‡½æ•°ç±»å‹.
          */
         
         typedef std::function < void(CefRefPtr<CefV8Value>,
@@ -105,7 +105,7 @@ namespace amo {
         /*!
          * @typedef	std::function<void(CefRefPtr<CefListValue>&, const CefV8ValueList&, int)> OnCopyParamsType
          *
-         * @brief	×Ô¶¨Òå´¦Àí²ÎÊı¸´ÖÆ»Øµ÷º¯Êı.
+         * @brief	è‡ªå®šä¹‰å¤„ç†å‚æ•°å¤åˆ¶å›è°ƒå‡½æ•°.
          */
         
         typedef std::function<void(CefRefPtr<CefListValue>&,
@@ -122,7 +122,7 @@ namespace amo {
         /*!
          * @fn	virtual CefRefPtr<JsV8Handler> JsV8Handler::createV8Handler()
          *
-         * @brief	ÓÉÅÉÉúÀà¼Ì³Ğ´´½¨ĞÂµÄHandler.
+         * @brief	ç”±æ´¾ç”Ÿç±»ç»§æ‰¿åˆ›å»ºæ–°çš„Handler.
          *
          * @return	The new v 8 handler.
          */
@@ -131,7 +131,7 @@ namespace amo {
         /*!
          * @fn	void JsV8Handler::setHandlerName(const std::string& strName)
          *
-         * @brief	ÉèÖÃHandlerÀàÃû.
+         * @brief	è®¾ç½®Handlerç±»å.
          *
          * @param	strName	The name.
          */
@@ -140,7 +140,7 @@ namespace amo {
         /*!
          * @fn	const std::string& JsV8Handler::getHandlerName() const
          *
-         * @brief	»ñÈ¡HandlerÀàÃû.
+         * @brief	è·å–Handlerç±»å.
          *
          * @return	The handler name.
          */
@@ -150,7 +150,7 @@ namespace amo {
         // * @fn	virtual void JsV8Handler::setFunctions(
         // * 		const std::vector<FunctionWrapper>& vec)
         // *
-        // * @brief	ÉèÖÃJSº¯ÊıÃû³Æ¼¯ºÏ£¬Í¨³£ÎªÖ÷½ø³ÌÖĞµÄC++º¯Êı.
+        // * @brief	è®¾ç½®JSå‡½æ•°åç§°é›†åˆï¼Œé€šå¸¸ä¸ºä¸»è¿›ç¨‹ä¸­çš„C++å‡½æ•°.
         // *
         // * @param	vec	The vector.
         // */
@@ -159,20 +159,20 @@ namespace amo {
         ///*!
         // * @fn	virtual std::vector<amo::FunctionWrapper>& JsV8Handler::getFunctions()
         // *
-        // * @brief	»ñÈ¡ËùÓĞµÄº¯Êı.
+        // * @brief	è·å–æ‰€æœ‰çš„å‡½æ•°.
         // *
         // * @return	The functions.
         // */
         //virtual std::vector<amo::FunctionWrapper>& getFunctions();
         
-        //// ÉèÖÃµ±Ç°HandlerËùÓÃµÄÄÚÖÃÄ£¿é¼¯ºÏ£¬ÓÃµ½ÄÄĞ©Ä£¿é
+        //// è®¾ç½®å½“å‰Handleræ‰€ç”¨çš„å†…ç½®æ¨¡å—é›†åˆï¼Œç”¨åˆ°å“ªäº›æ¨¡å—
         //
         //virtual void setModules(const std::vector<std::string>& vec);
         //
         ///*!
         // * @fn	virtual std::vector<std::string>& JsV8Handler::getModules()
         // *
-        // * @brief	»ñÈ¡µ±Ç°HandlerËùÒÀÀµµÄÄÚÖÃÄ£¿é.
+        // * @brief	è·å–å½“å‰Handleræ‰€ä¾èµ–çš„å†…ç½®æ¨¡å—.
         // *
         // * @return	The modules.
         // */
@@ -182,8 +182,8 @@ namespace amo {
          * @fn	virtual CefRefPtr<CefV8Value> JsV8Handler::getV8Object(
          * 		 CefRefPtr<CefV8Value> object = NULL)
          *
-         * @brief	Ä£¿éJS´úÂë »ñÈ¡µ±Ç°HandlerµÄJs¶ÔÏó Í¨³£ÓÃºêÉú³É£¬
-         * 			Èç¹ûobject== NULL ½«´´½¨ĞÂµÄ¶ÔÏó£¬·ñÔòÊ¹ÓÃÒÑÓĞµÄ¶ÔÏó.
+         * @brief	æ¨¡å—JSä»£ç  è·å–å½“å‰Handlerçš„Jså¯¹è±¡ é€šå¸¸ç”¨å®ç”Ÿæˆï¼Œ
+         * 			å¦‚æœobject== NULL å°†åˆ›å»ºæ–°çš„å¯¹è±¡ï¼Œå¦åˆ™ä½¿ç”¨å·²æœ‰çš„å¯¹è±¡.
          *
          * @param	object	(Optional) the object.
          *
@@ -195,7 +195,7 @@ namespace amo {
         /*!
          * @fn	virtual void JsV8Handler::onGetV8Object(CefRefPtr<CefV8Value> object)
          *
-         * @brief	Í¨¹ıÖØÔØ¸Ãº¯ÊıÀ´À©Õ¹object.
+         * @brief	é€šè¿‡é‡è½½è¯¥å‡½æ•°æ¥æ‰©å±•object.
          *
          * @param	object	The object.
          */
@@ -208,7 +208,7 @@ namespace amo {
          * 		CefRefPtr<CefV8Value>& retval,
          * 		 CefString& exception) OVERRIDE
          *
-         * @brief	JSµ÷ÓÃC++Ê±ËùÖ´ĞĞµÄº¯Êı.
+         * @brief	JSè°ƒç”¨C++æ—¶æ‰€æ‰§è¡Œçš„å‡½æ•°.
          *
          * @param	name			 	The name.
          * @param	object			 	The object.
@@ -227,7 +227,7 @@ namespace amo {
         /*!
          * @fn	void JsV8Handler::addFunction(const std::string& key, FuncType fn)
          *
-         * @brief	×¢²áJSº¯Êı.
+         * @brief	æ³¨å†ŒJSå‡½æ•°.
          *
          * @param	key	The key.
          * @param	fn 	The function.
@@ -237,7 +237,7 @@ namespace amo {
         /*!
          * @fn	std::vector<std::string> JsV8Handler::getAllKeys()
          *
-         * @brief	»ñÈ¡ËùÓĞµÄJSº¯ÊıÃû³Æ.
+         * @brief	è·å–æ‰€æœ‰çš„JSå‡½æ•°åç§°.
          *
          * @return	all keys.
          */
@@ -268,18 +268,18 @@ namespace amo {
         
     protected:
     
-        /*! @brief ¶ÔÓ¦C++ÖĞµÄTransfer objectID. */
+        /*! @brief å¯¹åº”C++ä¸­çš„Transfer objectID. */
         int64_t m_nID;
-        /*! @brief	ĞèÒªÖ´ĞĞµÄº¯Êı, ´ÓUIÏß³Ì´«µİ¹ıÀ´µÄº¯ÊıÃû. */
+        /*! @brief	éœ€è¦æ‰§è¡Œçš„å‡½æ•°, ä»UIçº¿ç¨‹ä¼ é€’è¿‡æ¥çš„å‡½æ•°å. */
         std::vector<amo::FunctionWrapper> m_vecFunctions;
-        /*! @brief	ĞèÒªÓÃµ½µÄÄ£¿é. */
+        /*! @brief	éœ€è¦ç”¨åˆ°çš„æ¨¡å—. */
         std::vector<std::string> m_vecModules;
-        /*! @brief	Ä£¿éÃû. */
+        /*! @brief	æ¨¡å—å. */
         std::string m_strHandlerName;
         
         FunctionWrapperMgr m_oFuncMgr;
         
-        /*! @brief	Ä£¿éÖĞËù×¢²áµÄº¯Êı. */
+        /*! @brief	æ¨¡å—ä¸­æ‰€æ³¨å†Œçš„å‡½æ•°. */
         std::unordered_map < std::string, FuncType> m_oFuncMap;
         
     };

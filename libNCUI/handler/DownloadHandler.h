@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_DOWNLOADHANDLER_H__
@@ -12,7 +12,7 @@ namespace amo {
     /*!
      * @class	DownloadHandlerDelegate
      *
-     * @brief	ÏÂÔØÏà¹ØÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	ä¸‹è½½ç›¸å…³äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class DownloadHandlerDelegate {
@@ -39,7 +39,7 @@ namespace amo {
     /*!
      * @class	DownloadHandler
      *
-     * @brief	ÏÂÔØÏà¹ØÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	ä¸‹è½½ç›¸å…³äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class DownloadHandler : public CefDownloadHandler
@@ -58,8 +58,8 @@ namespace amo {
          * 		const CefString& suggested_name,
          * 		CefRefPtr<CefBeforeDownloadCallback> callback);
          *
-         * @brief	ÎÄ¼şÏÂÔØÇ°´¥·¢£¬Ä¬ÈÏ»áÈ¡ÏûÏÂÔØ
-         * 			Ö´ĞĞcallbackÊ¹ÏÂÔØÉúĞ§£¬ ²»ÄÜ±£Áô download_item µÄÒıÓÃ
+         * @brief	æ–‡ä»¶ä¸‹è½½å‰è§¦å‘ï¼Œé»˜è®¤ä¼šå–æ¶ˆä¸‹è½½
+         * 			æ‰§è¡Œcallbackä½¿ä¸‹è½½ç”Ÿæ•ˆï¼Œ ä¸èƒ½ä¿ç•™ download_item çš„å¼•ç”¨
          * 			B UI.
          *
          * @param	browser		  	The browser.
@@ -79,8 +79,8 @@ namespace amo {
          * 		CefRefPtr<CefDownloadItem> download_item,
          * 		CefRefPtr<CefDownloadItemCallback> callback);
          *
-         * @brief	ÎÄ¼şÏÂÔØ×´Ì¬»Øµ÷
-         * 			²»ÄÜ±£Áô download_item µÄÒıÓÃ
+         * @brief	æ–‡ä»¶ä¸‹è½½çŠ¶æ€å›è°ƒ
+         * 			ä¸èƒ½ä¿ç•™ download_item çš„å¼•ç”¨
          * 			B UI.
          *
          * @param	browser		 	The browser.

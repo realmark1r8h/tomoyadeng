@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "transfer/DialogTransfer.h"
 #include "context/AppContext.h"
 #include "settings/AppSettings.h"
@@ -18,7 +18,7 @@ namespace amo {
         int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
         int64_t nFrameID = args->getInt64(IPCArgsPosInfo::FrameID);
         int nCallbackID = args->getInt(IPCArgsPosInfo::AsyncCallback);
-        // Èç¹ûËù¸øFrameIDĞ¡ÓÚ0£¬²éÕÒµ±Ç°Ëù»ñµÃ½¹µãµÄ´°¿Ú
+        // å¦‚æœæ‰€ç»™FrameIDå°äº0ï¼ŒæŸ¥æ‰¾å½“å‰æ‰€è·å¾—ç„¦ç‚¹çš„çª—å£
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<LocalWindow> pLocalWindow
             = manager->findValidWindow(nBrowserID);
@@ -87,10 +87,10 @@ namespace amo {
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<BrowserWindow> pWindow;
         
-        // ÏÈÍ¨¹ıID²éÕÒ
+        // å…ˆé€šè¿‡IDæŸ¥æ‰¾
         auto pLocalWindow = manager->findValidWindow(nBrowserID);
         
-        // ²»´æÔÚ£¬Ê¹ÓÃµ±Ç°½¹µã´°¿Ú
+        // ä¸å­˜åœ¨ï¼Œä½¿ç”¨å½“å‰ç„¦ç‚¹çª—å£
         if (!pLocalWindow) {
             return false;
         }
@@ -111,10 +111,10 @@ namespace amo {
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<BrowserWindow> pWindow;
         
-        // ÏÈÍ¨¹ıID²éÕÒ
+        // å…ˆé€šè¿‡IDæŸ¥æ‰¾
         auto pLocalWindow = manager->findValidWindow(nBrowserID);
         
-        // ²»´æÔÚ£¬Ê¹ÓÃµ±Ç°½¹µã´°¿Ú
+        // ä¸å­˜åœ¨ï¼Œä½¿ç”¨å½“å‰ç„¦ç‚¹çª—å£
         if (!pLocalWindow) {
             return false;
         }
@@ -123,7 +123,7 @@ namespace amo {
         
         int nRet = MessageWindow::Show(hWnd,
                                        strMsg.to_unicode().c_str(),
-                                       _T("ÌáÊ¾"),
+                                       _T("æç¤º"),
                                        MB_OKCANCEL);
         return nRet == 1;
     }
@@ -137,10 +137,10 @@ namespace amo {
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<BrowserWindow> pWindow;
         
-        // ÏÈÍ¨¹ıID²éÕÒ
+        // å…ˆé€šè¿‡IDæŸ¥æ‰¾
         auto pLocalWindow = manager->findValidWindow(nBrowserID);
         
-        // ²»´æÔÚ£¬Ê¹ÓÃµ±Ç°½¹µã´°¿Ú
+        // ä¸å­˜åœ¨ï¼Œä½¿ç”¨å½“å‰ç„¦ç‚¹çª—å£
         if (!pLocalWindow) {
             return false;
         }

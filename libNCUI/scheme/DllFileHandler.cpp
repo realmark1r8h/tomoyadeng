@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "scheme/DllFileHandler.h"
 #include "scheme/DllFileManager.h"
 
@@ -52,7 +52,7 @@ namespace amo {
                                      filePath.c_str(), &val);
                                      
         if (!retval || *retval == 0 || val == NULL) {
-            amo::cerr << "Î´ÄÜÕÒµ½×ÊÔ´ÎÄ¼þ£º" << strFile.to_ansi() << amo::endl;
+            amo::cerr << "æœªèƒ½æ‰¾åˆ°èµ„æºæ–‡ä»¶ï¼š" << strFile.to_ansi() << amo::endl;
             return false;
         }
         

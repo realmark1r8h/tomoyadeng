@@ -1,4 +1,4 @@
-#include "stdAfx.h"
+Ôªø#include "stdAfx.h"
 
 #include "ui/win/MessageWindow.h"
 
@@ -34,11 +34,11 @@ namespace amo {
         BOOL bIconic = IsIconic(pMainWnd);
         
         if (bVisible == FALSE) {
-            ::ShowWindow(pMainWnd, SW_SHOW);    //œ‘ æ“˛≤ÿ¥∞ø⁄
+            ::ShowWindow(pMainWnd, SW_SHOW);    //ÊòæÁ§∫ÈöêËóèÁ™óÂè£
         }
         
         if (bIconic == TRUE) {
-            ::ShowWindow(pMainWnd, SW_RESTORE);    //œ‘ æ◊Ó–°ªØ¥∞ø⁄
+            ::ShowWindow(pMainWnd, SW_RESTORE);    //ÊòæÁ§∫ÊúÄÂ∞èÂåñÁ™óÂè£
         }
         
         msgBox->Create(pMainWnd, lpCaption, UI_WNDSTYLE_DIALOG, WS_EX_WINDOWEDGE);
@@ -56,7 +56,7 @@ namespace amo {
     UINT MessageWindow::ShowPrompt(HWND pMainWnd,
                                    LPCTSTR lpText,
                                    CDuiString* lpdefaultPrompt /*= _T("")*/,
-                                   LPCTSTR lpCaption /*= _T("Ã· æ")*/,
+                                   LPCTSTR lpCaption /*= _T("ÊèêÁ§∫")*/,
                                    UINT uType /*= MB_OK*/,
                                    UINT uIcon /*= MB_ICONWARNING*/) {
         std::shared_ptr<NativeWindowSettings> pSettings;
@@ -171,7 +171,7 @@ namespace amo {
             hWnd = hWndCenter;
         }
         
-        // ¥¶¿Ì∂‡œ‘ æ∆˜ƒ£ Ωœ¬∆¡ƒªæ”÷–
+        // Â§ÑÁêÜÂ§öÊòæÁ§∫Âô®Ê®°Âºè‰∏ãÂ±èÂπïÂ±Ö‰∏≠
         MONITORINFO oMonitor = {};
         oMonitor.cbSize = sizeof(oMonitor);
         ::GetMonitorInfo(::MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST), &oMonitor);
@@ -238,9 +238,9 @@ namespace amo {
         ASSERT(m_pEditPrompt != NULL);
         ASSERT(m_pLabelCaption != NULL);
         
-        m_pButtonOK->SetText(_T("»∑∂®"));
+        m_pButtonOK->SetText(_T("Á°ÆÂÆö"));
         m_pButtonOK->SetHotBkColor(0xff0A67FB);
-        m_pButtonCancel->SetText(_T("»°œ˚"));
+        m_pButtonCancel->SetText(_T("ÂèñÊ∂à"));
         
         m_pButtonCancel->SetHotBkColor(0xff3280fc);
         m_pButtonCancel->SetHotTextColor(0xffffffff);
@@ -300,7 +300,7 @@ namespace amo {
             }
             
         } else if (uType == MB_OKCANCEL) {
-            //±£≥÷ƒ¨»œxml≈‰÷√
+            //‰øùÊåÅÈªòËÆ§xmlÈÖçÁΩÆ
         } else {
             return ;
         }
@@ -316,9 +316,9 @@ namespace amo {
             pTextControl->SetFixedHeight(80);
         }
         
-        //msg = _T("adsfads<n>adsf234<n>3485345<n> ‘⁄“ª‘⁄‘⁄d");
+        //msg = _T("adsfads<n>adsf234<n>3485345<n> Âú®‰∏ÄÂú®Âú®d");
         if (pTextControl != NULL) {
-            //‘⁄œ‘ æHTMLµƒ ±∫Ú£¨◊÷ÃÂ…Ë÷√Ω´ ß–ß£¨÷ªƒ‹ π”√ƒ¨»œ◊÷ÃÂ
+            //Âú®ÊòæÁ§∫HTMLÁöÑÊó∂ÂÄôÔºåÂ≠ó‰ΩìËÆæÁΩÆÂ∞ÜÂ§±ÊïàÔºåÂè™ËÉΩ‰ΩøÁî®ÈªòËÆ§Â≠ó‰Ωì
             if (m_pStrPrompt != NULL) {
                 pTextControl->SetAttribute(_T("textcolor"), _T("#ff999999"));
                 pTextControl->SetFont(3);

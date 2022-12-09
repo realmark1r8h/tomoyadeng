@@ -1,4 +1,4 @@
-// Created by amoylel on 06/11/2017.
+ï»¿// Created by amoylel on 06/11/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_LAYEREDWINDOW_H__
@@ -67,15 +67,15 @@ namespace amo {
         void setTopmost(bool bTopmost);
         void setIcon(const std::string& strPath);
         
-        // ÔÊĞíÍÏ×§±êÌâÀ¸×î´ó»¯/»¹Ô­´°¿Ú
+        // å…è®¸æ‹–æ‹½æ ‡é¢˜æ æœ€å¤§åŒ–/è¿˜åŸçª—å£
         void enableResizeInCaption();
-        // ½ûÖ¹ÍÏ×§±êÌâÀ¸×î´ó»¯/»¹Ô­´°¿Ú
+        // ç¦æ­¢æ‹–æ‹½æ ‡é¢˜æ æœ€å¤§åŒ–/è¿˜åŸçª—å£
         void disableResizeInCaption();
         
         void resizableInCaption(bool resizable = true);
         
         
-        // ×¢²á¿ì½İ¼ü
+        // æ³¨å†Œå¿«æ·é”®
         std::shared_ptr<GlobalShortcutSettings> createSettingByString(
             const std::string& strKey) const;
             
@@ -109,41 +109,41 @@ namespace amo {
     
         /*! @brief	BLENDFUNCTION. */
         BLENDFUNCTION m_Blend;
-        /*! @brief	·Ö²ã Í¸Ã÷´°¿Ú. */
+        /*! @brief	åˆ†å±‚ é€æ˜çª—å£. */
         bool m_bLayered;
         /*! @brief	The message map. */
         std::unordered_map<uint32_t, amo::function<void()> > m_oMsgMap;
         /*! @brief	The mutex. */
         amo::recursive_mutex  m_mutex;
-        /*! @brief	×Ô¶¨ÒåÏûÏ¢Ë÷Òı. */
+        /*! @brief	è‡ªå®šä¹‰æ¶ˆæ¯ç´¢å¼•. */
         uint32_t m_nMsgIndex;
         
-        /*! @brief	ÊÇ·ñÖÃ¶¥. */
+        /*! @brief	æ˜¯å¦ç½®é¡¶. */
         bool m_isTopmost;
         
-        // È«ÆÁÏà¹Ø
+        // å…¨å±ç›¸å…³
         
-        /*! @brief	ÊÇ·ñÔÚÈ«ÆÁÄ£Ê½. */
+        /*! @brief	æ˜¯å¦åœ¨å…¨å±æ¨¡å¼. */
         bool m_isFullScreen;
-        /*! @brief	Õı³£ÏÔÊ¾. */
+        /*! @brief	æ­£å¸¸æ˜¾ç¤º. */
         WINDOWPLACEMENT m_wpNormalScreen;
-        /*! @brief	¼ÇÂ¼´°¿ÚÏÔÊ¾×´Ì¬ĞÅÏ¢. */
+        /*! @brief	è®°å½•çª—å£æ˜¾ç¤ºçŠ¶æ€ä¿¡æ¯. */
         WINDOWPLACEMENT m_wpFullScreen;
-        /*! @brief	´°¿Ú×ø±ê. */
+        /*! @brief	çª—å£åæ ‡. */
         RECT m_rectWindow;
-        /*! @brief	¿Í»§Çø×ø±ê. */
+        /*! @brief	å®¢æˆ·åŒºåæ ‡. */
         RECT m_rectClient;
-        /*! @brief	ÆÁÄ»È«ÆÁÊ±´°¿ÚÎ»ÖÃ. */
+        /*! @brief	å±å¹•å…¨å±æ—¶çª—å£ä½ç½®. */
         RECT m_rectFullScreen;
-        /*! @brief	×óÉÏ½Ç×ø±ê. */
+        /*! @brief	å·¦ä¸Šè§’åæ ‡. */
         POINT m_ptUpLeft;
-        /*! @brief	ÓÒÏÂ½Ç×ø±ê. */
+        /*! @brief	å³ä¸‹è§’åæ ‡. */
         POINT m_ptDownRight;
-        /*! @brief	ÏÔÊ¾Æ÷·Ö±æÂÊ. */
+        /*! @brief	æ˜¾ç¤ºå™¨åˆ†è¾¨ç‡. */
         int m_nScreenWidth;
-        /*! @brief	ÏÔÊ¾Æ÷·Ö±æÂÊ. */
+        /*! @brief	æ˜¾ç¤ºå™¨åˆ†è¾¨ç‡. */
         int m_nScreenHeight;
-        /*! @brief	¼ÇÂ¼´°¿Ú×îĞ¡×î´óĞÅÏ¢. */
+        /*! @brief	è®°å½•çª—å£æœ€å°æœ€å¤§ä¿¡æ¯. */
         MINMAXINFO* pmmi;
         
         /*! @brief	The hot key container. */
@@ -152,16 +152,16 @@ namespace amo {
         /*! @brief	The hot key map. */
         std::unordered_map<int32_t, std::shared_ptr<GlobalShortcutSettings> >
         m_oHotKeyMap;
-        /*! @brief	È«¾ÖÈÈ¼ü»Øµ÷. */
+        /*! @brief	å…¨å±€çƒ­é”®å›è°ƒ. */
         std::function<bool(int32_t, amo::json)> m_fnHotKeyEventCallback;
         
-        /*! @brief	´°¿ÚÒõÓ°¿Ø¼ş. */
+        /*! @brief	çª—å£é˜´å½±æ§ä»¶. */
         ShadowWindow m_Shadow;
         
-        /*! @brief	ä¯ÀÀÆ÷²ÎÊı. */
+        /*! @brief	æµè§ˆå™¨å‚æ•°. */
         std::shared_ptr<NativeWindowSettings> m_pNativeSettings;
         
-        /*! @brief	´°¿Ú¹Ø±ÕÊ±»Øµ÷º¯Êı. */
+        /*! @brief	çª—å£å…³é—­æ—¶å›è°ƒå‡½æ•°. */
         ClosedCbType m_fnClosedCallback;
         
         std::shared_ptr<IMM32Manager> imm32_manager_;

@@ -1,4 +1,4 @@
-// Created by amoylel on 06/26/2017.
+ï»¿// Created by amoylel on 06/26/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_TRAYTRANSFER_H__
@@ -17,8 +17,8 @@ namespace amo {
      *
      * @extend Object
      *
-     * @brief	ÍĞÅÌ²Ù×÷Àà.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì**.
+     * @brief	æ‰˜ç›˜æ“ä½œç±».<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹**.
      *
      */
     
@@ -37,9 +37,9 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÏÔÊ¾ÍĞÅÌ.
+         * @brief	æ˜¾ç¤ºæ‰˜ç›˜.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -55,9 +55,9 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	Òş²ØÍĞÅÌ.
+         * @brief	éšè—æ‰˜ç›˜.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
         			 ```
@@ -72,11 +72,11 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÉèÖÃÍĞÅÌÍ¼±ê.
+         * @brief	è®¾ç½®æ‰˜ç›˜å›¾æ ‡.
          *
-         * @param	#String Í¼±ê±¾µØÂ·¾¶.
+         * @param	#String å›¾æ ‡æœ¬åœ°è·¯å¾„.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -92,11 +92,11 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÉèÖÃÍĞÅÌÌáÊ¾ÎÄ±¾.
+         * @brief	è®¾ç½®æ‰˜ç›˜æç¤ºæ–‡æœ¬.
          *
-         * @param	#String ĞèÒªÏÔÊ¾µÄÌáÊ¾ÎÄ±¾.
+         * @param	#String éœ€è¦æ˜¾ç¤ºçš„æç¤ºæ–‡æœ¬.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -112,11 +112,11 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÉÁË¸ÍĞÅÌ.
+         * @brief	é—ªçƒæ‰˜ç›˜.
          *
-         * @param	#Boolean=false trueÉÁË¸/falseÍ£Ö¹ÉÁË¸.
+         * @param	#Boolean=false trueé—ªçƒ/falseåœæ­¢é—ªçƒ.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @see isBlink=tray.isBlink
          * @example
@@ -133,7 +133,7 @@ namespace amo {
          *
          * @tag static
          *
-         * @brief	ÅĞ¶ÏÍĞÅÌÊÇ·ñÉÁË¸.
+         * @brief	åˆ¤æ–­æ‰˜ç›˜æ˜¯å¦é—ªçƒ.
          *
          * @return	#Boolean.
          *
@@ -157,7 +157,7 @@ namespace amo {
         *
         * @tag static
         *
-        * @brief	Êó±ê×ó¼ü°´ÏÂÊ±´¥·¢.
+        * @brief	é¼ æ ‡å·¦é”®æŒ‰ä¸‹æ—¶è§¦å‘.
         *
         * @example
         *
@@ -174,7 +174,7 @@ namespace amo {
         *
         * @tag static
         *
-        * @brief	Êó±ê×ó¼üµ¯ÆğÊ±´¥·¢.
+        * @brief	é¼ æ ‡å·¦é”®å¼¹èµ·æ—¶è§¦å‘.
         *
         * @example
         *
@@ -191,7 +191,7 @@ namespace amo {
         *
         * @tag static
         *
-        * @brief	Êó±êÓÒ¼ü°´ÏÂÊ±´¥·¢.
+        * @brief	é¼ æ ‡å³é”®æŒ‰ä¸‹æ—¶è§¦å‘.
         *
         * @example
         *
@@ -208,7 +208,7 @@ namespace amo {
         *
         * @tag static
         *
-        * @brief	Êó±êÓÒ¼üµ¯ÆğÊ±´¥·¢.
+        * @brief	é¼ æ ‡å³é”®å¼¹èµ·æ—¶è§¦å‘.
         *
         * @example
         *
@@ -225,7 +225,7 @@ namespace amo {
         *
         * @tag static
         *
-        * @brief	Êó±ê×ó¼üµ¥»÷Ê±´¥·¢.
+        * @brief	é¼ æ ‡å·¦é”®å•å‡»æ—¶è§¦å‘.
         *
         * @example
         *
@@ -242,7 +242,7 @@ namespace amo {
         *
         * @tag static
         *
-        * @brief	Êó±ê×ó¼üË«»÷Ê±´¥·¢.
+        * @brief	é¼ æ ‡å·¦é”®åŒå‡»æ—¶è§¦å‘.
         *
         * @example
         *
@@ -259,7 +259,7 @@ namespace amo {
         *
         * @tag static
         *
-        * @brief	Êó±êĞüÍ£Ê±´¥·¢.
+        * @brief	é¼ æ ‡æ‚¬åœæ—¶è§¦å‘.
         *
         * @example
         *
@@ -276,7 +276,7 @@ namespace amo {
         *
         * @tag static
         *
-        * @brief	Êó±êÀë¿ªÊ±´¥·¢.
+        * @brief	é¼ æ ‡ç¦»å¼€æ—¶è§¦å‘.
         *
         * @example
         *

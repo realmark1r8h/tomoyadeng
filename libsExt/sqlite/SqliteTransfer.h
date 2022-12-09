@@ -1,4 +1,4 @@
-// Created by amoylel on 08/03/2017.
+ï»¿// Created by amoylel on 08/03/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_SQLITETRANSFER_H__
@@ -19,19 +19,19 @@ namespace amo {
      *
      * @chapter extend
      *
-     * @brief	Sqlite3 Êı¾İ¿â·â×°Àà£¬ÓÃÓÚ²Ù×÷±¾µØÊı¾İ¿âÎÄ¼ş.<br>
-     * 			¹¤×÷Ïß³Ì**RendererÏß³Ì**
+     * @brief	Sqlite3 æ•°æ®åº“å°è£…ç±»ï¼Œç”¨äºæ“ä½œæœ¬åœ°æ•°æ®åº“æ–‡ä»¶.<br>
+     * 			å·¥ä½œçº¿ç¨‹**Rendererçº¿ç¨‹**
      */
     
     class SqliteTransfer
         : public ClassTransfer,
           public amo::singleton<SqliteTransfer> {
     public:
-        // ²»¸Ä±ä×Ö¶ÎÃû
+        // ä¸æ”¹å˜å­—æ®µå
         const static int FieldNormal = 0;
-        // ×Ö¶Î×Ö´óĞ´
+        // å­—æ®µå­—å¤§å†™
         const static int FieldUpper = 1;
-        // ×Ö¶ÎÃûĞ¡Ğ´
+        // å­—æ®µåå°å†™
         const static int FieldLower = 2;
         
         
@@ -44,11 +44,11 @@ namespace amo {
          *
          * @tag constructor
          *
-         * @brief	´´½¨Ò»¸öSqlite¶ÔÏó.
+         * @brief	åˆ›å»ºä¸€ä¸ªSqliteå¯¹è±¡.
          *
-         * @param	#String Êı¾İ¿âÎÄ¼şÂ·¾¶£¬Èç¹û¸ÃÊı¾İ¿â²»´æÔÚ£¬ÄÇÃ´½«´´½¨Ò»¸öĞÂµÄÊı¾İ¿â.
+         * @param	#String æ•°æ®åº“æ–‡ä»¶è·¯å¾„ï¼Œå¦‚æœè¯¥æ•°æ®åº“ä¸å­˜åœ¨ï¼Œé‚£ä¹ˆå°†åˆ›å»ºä¸€ä¸ªæ–°çš„æ•°æ®åº“.
          *
-         * @return  #Object Sqlite ÊµÀı¶ÔÏó.
+         * @return  #Object Sqlite å®ä¾‹å¯¹è±¡.
          * @example
          *
         		```
@@ -64,11 +64,11 @@ namespace amo {
         /*!
         * @fn	virtual Any SqliteTransfer::import(IPCMessage::SmartType msg);
         *
-        * @brief	´ÓÎÄ¼şÖĞÖ´ĞĞSQLÓï¾ä.
+        * @brief	ä»æ–‡ä»¶ä¸­æ‰§è¡ŒSQLè¯­å¥.
         *
-        * @param	#String ÎÄ¼şÂ·¾¶.
+        * @param	#String æ–‡ä»¶è·¯å¾„.
         *
-        * @return	#Int/Undefined Èç¹û³ÉÎª·µ»ØÊÜÓ°ÏìµÄĞĞÊı£¬·ñÔò·µ»ØUndefined.
+        * @return	#Int/Undefined å¦‚æœæˆä¸ºè¿”å›å—å½±å“çš„è¡Œæ•°ï¼Œå¦åˆ™è¿”å›Undefined.
         *
         * @example
         *
@@ -84,11 +84,11 @@ namespace amo {
         /*!
          * @fn	virtual Any SqliteTransfer::execute(IPCMessage::SmartType msg);
          *
-         * @brief	Ö´ĞĞÔ­Éúsql.
+         * @brief	æ‰§è¡ŒåŸç”Ÿsql.
          *
-         * @param	#String ĞèÒªÖ´ĞĞµÄSQLÓï¾ä.
+         * @param	#String éœ€è¦æ‰§è¡Œçš„SQLè¯­å¥.
          *
-         * @return	#Int/Undefined Èç¹û³ÉÎª·µ»ØÊÜÓ°ÏìµÄĞĞÊı£¬·ñÔò·µ»ØUndefined.
+         * @return	#Int/Undefined å¦‚æœæˆä¸ºè¿”å›å—å½±å“çš„è¡Œæ•°ï¼Œå¦åˆ™è¿”å›Undefined.
          * @example
          *
         	 ```
@@ -102,24 +102,24 @@ namespace amo {
         /*!
         * @fn	virtual Any SqliteTransfer::insert(IPCMessage::SmartType msg);
         *
-        * @brief	²åÈëÊı¾İ.
+        * @brief	æ’å…¥æ•°æ®.
         *
-        * @param	#String Êı¾İ¿â±íÃû.
+        * @param	#String æ•°æ®åº“è¡¨å.
         *
-        * @param	#JsonObject Òª²åÈëµÄÊı¾İ.
+        * @param	#JsonObject è¦æ’å…¥çš„æ•°æ®.
         *
-        * @return	#Int/Undefined Èç¹û³ÉÎª·µ»ØÊÜÓ°ÏìµÄĞĞÊı£¬·ñÔò·µ»ØUndefined.
+        * @return	#Int/Undefined å¦‚æœæˆä¸ºè¿”å›å—å½±å“çš„è¡Œæ•°ï¼Œå¦åˆ™è¿”å›Undefined.
         * @example
         *
         		```
         			var val = {
-        				name: 'ÕÅÈı',
+        				name: 'å¼ ä¸‰',
         				age:18,
         				score:99,
-        				remark:'²âÊÔÊı¾İ'
+        				remark:'æµ‹è¯•æ•°æ®'
         			};
         			console.assert(db.insert('table1', val) ==1);
-        			console.assert(db.insert('table1', {name:'ÀîËÄ'}) ==1);
+        			console.assert(db.insert('table1', {name:'æå››'}) ==1);
         
         		```
         */
@@ -129,28 +129,28 @@ namespace amo {
         /*!
          * @fn	virtual Any SqliteTransfer::update(IPCMessage::SmartType msg);
          *
-         * @brief	¸üĞÂÊı¾İ.
+         * @brief	æ›´æ–°æ•°æ®.
          *
-         * @param	#String Êı¾İ¿â±íÃû.
+         * @param	#String æ•°æ®åº“è¡¨å.
          *
-         * @param	#JsonObject ĞèÒª¸üĞÂµÄÊı¾İ.
+         * @param	#JsonObject éœ€è¦æ›´æ–°çš„æ•°æ®.
          *
-         * @param	#String Ìõ¼şÓï¾ä(Èç¹ûµÚËÄ¸ö²ÎÊı´æÔÚ£¬ÄÇÃ´Ê¹ÓÃµÚËÄ¸ö²ÎÊı¸ñÊ½»¯¸Ã×Ö·û´®£¬Èç¹û²»´æÔÚ£¬ÄÇÃ´Ê¹ÓÃµÚ¶ş¸ö²ÎÊı¸ñÊ½»¯×Ö·û´®).
+         * @param	#String æ¡ä»¶è¯­å¥(å¦‚æœç¬¬å››ä¸ªå‚æ•°å­˜åœ¨ï¼Œé‚£ä¹ˆä½¿ç”¨ç¬¬å››ä¸ªå‚æ•°æ ¼å¼åŒ–è¯¥å­—ç¬¦ä¸²ï¼Œå¦‚æœä¸å­˜åœ¨ï¼Œé‚£ä¹ˆä½¿ç”¨ç¬¬äºŒä¸ªå‚æ•°æ ¼å¼åŒ–å­—ç¬¦ä¸²).
          *
-         * @param	#JsonObject=Undefined Ìõ¼şÓï¾ä¸ñÊ½»¯²ÎÊı.
+         * @param	#JsonObject=Undefined æ¡ä»¶è¯­å¥æ ¼å¼åŒ–å‚æ•°.
          *
-         * @return	#Int/Undefined Èç¹û³ÉÎª·µ»ØÊÜÓ°ÏìµÄĞĞÊı£¬·ñÔò·µ»ØUndefined.
+         * @return	#Int/Undefined å¦‚æœæˆä¸ºè¿”å›å—å½±å“çš„è¡Œæ•°ï¼Œå¦åˆ™è¿”å›Undefined.
          * @example
          *
         	 ```
-        	 // Ö±½ÓÖ¸¶¨Ìõ¼şÓï¾ä
-        	var retval=  db.update('table1', {remark: 'ÀîËÄµÄÊı¾İ'}, 'name=ÀîËÄ');
+        	 // ç›´æ¥æŒ‡å®šæ¡ä»¶è¯­å¥
+        	var retval=  db.update('table1', {remark: 'æå››çš„æ•°æ®'}, 'name=æå››');
         	console.log(retval);
-        	 // Ê¹ÓÃ¸ñÊ½»¯²ÎÊı
-        	retval =  db.update('table1', {score: 77, age: 22}, 'name={name}', {name:'ÀîËÄ'});
+        	 // ä½¿ç”¨æ ¼å¼åŒ–å‚æ•°
+        	retval =  db.update('table1', {score: 77, age: 22}, 'name={name}', {name:'æå››'});
         	 console.log(retval);
-        	 // Ê¹ÓÃ¸üĞÂÊı¾İÖĞµÄ²ÎÊı¸ñÊ½»¯Ìõ¼şÓï¾ä
-        	 retval = db.update('table1', {score: 77, age: 22, name: 'ÕÅÈı'}, 'name={name}');
+        	 // ä½¿ç”¨æ›´æ–°æ•°æ®ä¸­çš„å‚æ•°æ ¼å¼åŒ–æ¡ä»¶è¯­å¥
+        	 retval = db.update('table1', {score: 77, age: 22, name: 'å¼ ä¸‰'}, 'name={name}');
         	 console.log(retval);
         	 ```
          */
@@ -160,11 +160,11 @@ namespace amo {
         /*!
          * @fn	virtual Any SqliteTransfer::backup(IPCMessage::SmartType msg);
          *
-         * @brief	±¸·İÊı¾İ¿â.
+         * @brief	å¤‡ä»½æ•°æ®åº“.
          *
-         * @param	#String ±¸·İÎÄ¼şÂ·¾¶.
+         * @param	#String å¤‡ä»½æ–‡ä»¶è·¯å¾„.
          *
-         * @return	#Boolean true³É¹¦/falseÊ§°Ü.
+         * @return	#Boolean trueæˆåŠŸ/falseå¤±è´¥.
          */
         
         virtual Any backup(IPCMessage::SmartType msg);
@@ -172,28 +172,28 @@ namespace amo {
         /*!
          * @fn	virtual Any SqliteTransfer::query(IPCMessage::SmartType msg);
          *
-         * @brief	²éÑ¯Êı¾İ.
+         * @brief	æŸ¥è¯¢æ•°æ®.
          *
-         * @param	#String SQLÓï¾ä.
+         * @param	#String SQLè¯­å¥.
          *
-         * @param	#JsonObject={} ¸ñÊ½»¯²ÎÊı£¬¿ÉÒÔ²»Ìî.
+         * @param	#JsonObject={} æ ¼å¼åŒ–å‚æ•°ï¼Œå¯ä»¥ä¸å¡«.
          *
-         * @param	#JsonObject=Undefined ·ÖÒ³²ÎÊı£¬¿ÉÒÔ²»Ìî(²»Ìî½«²»»áÊ¹ÓÃ·ÖÒ³¹¦ÄÜ).<br>
-         * 						 [**Int**] page µ±Ç°Ò³ÂëÊı£¬Ä¬ÈÏÎª1.<br>
-         * 						 [**Int**] rows Ã¿Ò³ÌõÊı£¬Ä¬ÈÏÎª10.<br>
-         * 						 [**Int**] total Êı¾İ×ÜÏµÊı£¬ÓÉ³ÌĞò·µ»Ø<br>
-         * 						 [**Int**] maxpage ×ÜÒ³Êı£¬ÓÉ³ÌĞò·µ»Ø<br>
-         * 						 [**Int**] startrow ¿ªÊ¼ĞĞ£¬<br>
-         * 						 [**Boolean**] refresh ÊÇ·ñÖØĞÂ¼ÆËã·ÖÒ³£¬Ä¬ÈÏÎªtrue.<br>
+         * @param	#JsonObject=Undefined åˆ†é¡µå‚æ•°ï¼Œå¯ä»¥ä¸å¡«(ä¸å¡«å°†ä¸ä¼šä½¿ç”¨åˆ†é¡µåŠŸèƒ½).<br>
+         * 						 [**Int**] page å½“å‰é¡µç æ•°ï¼Œé»˜è®¤ä¸º1.<br>
+         * 						 [**Int**] rows æ¯é¡µæ¡æ•°ï¼Œé»˜è®¤ä¸º10.<br>
+         * 						 [**Int**] total æ•°æ®æ€»ç³»æ•°ï¼Œç”±ç¨‹åºè¿”å›<br>
+         * 						 [**Int**] maxpage æ€»é¡µæ•°ï¼Œç”±ç¨‹åºè¿”å›<br>
+         * 						 [**Int**] startrow å¼€å§‹è¡Œï¼Œ<br>
+         * 						 [**Boolean**] refresh æ˜¯å¦é‡æ–°è®¡ç®—åˆ†é¡µï¼Œé»˜è®¤ä¸ºtrue.<br>
          *
-         * @return	#JsonObject ²éÑ¯µ½µÄÊı¾İ.
-         * 						 |#Int page µ±Ç°Ò³ÂëÊı£¬·ÖÒ³²éÑ¯Ê±·µ»Ø.
-         * 						 |#Int rows Ã¿Ò³ÌõÊı£¬·ÖÒ³²éÑ¯Ê±·µ»Ø.
-         * 						 |#Int total Êı¾İ×ÜÏµÊı£¬·ÖÒ³²éÑ¯Ê±·µ»Ø.
-         * 						 |#Int maxpage ×ÜÒ³Êı£¬·ÖÒ³²éÑ¯Ê±·µ»Ø.
-         * 						 |#Int startrow ¿ªÊ¼ĞĞ£¬·ÖÒ³²éÑ¯Ê±·µ»Ø.
-         * 						 |#Boolean refresh ÊÇ·ñÖØĞÂ¼ÆËã·ÖÒ³£¬·ÖÒ³²éÑ¯Ê±·µ»Ø.
-         * 						 |#JsonArray data ²éÑ¯µ½µÄÊı¾İ.
+         * @return	#JsonObject æŸ¥è¯¢åˆ°çš„æ•°æ®.
+         * 						 |#Int page å½“å‰é¡µç æ•°ï¼Œåˆ†é¡µæŸ¥è¯¢æ—¶è¿”å›.
+         * 						 |#Int rows æ¯é¡µæ¡æ•°ï¼Œåˆ†é¡µæŸ¥è¯¢æ—¶è¿”å›.
+         * 						 |#Int total æ•°æ®æ€»ç³»æ•°ï¼Œåˆ†é¡µæŸ¥è¯¢æ—¶è¿”å›.
+         * 						 |#Int maxpage æ€»é¡µæ•°ï¼Œåˆ†é¡µæŸ¥è¯¢æ—¶è¿”å›.
+         * 						 |#Int startrow å¼€å§‹è¡Œï¼Œåˆ†é¡µæŸ¥è¯¢æ—¶è¿”å›.
+         * 						 |#Boolean refresh æ˜¯å¦é‡æ–°è®¡ç®—åˆ†é¡µï¼Œåˆ†é¡µæŸ¥è¯¢æ—¶è¿”å›.
+         * 						 |#JsonArray data æŸ¥è¯¢åˆ°çš„æ•°æ®.
          */
         
         
@@ -203,15 +203,15 @@ namespace amo {
         /*!
          * @fn	virtual Any SqliteTransfer::remove(IPCMessage::SmartType msg);
          *
-         * @brief	É¾³ıÊı¾İ.
+         * @brief	åˆ é™¤æ•°æ®.
          *
-         * @param	#String ±íÃû.
+         * @param	#String è¡¨å.
          *
-         * @param	#String Ìõ¼şÓï¾ä.
+         * @param	#String æ¡ä»¶è¯­å¥.
          *
-         * @param	#JsonObject={}  Ìõ¼ş²ÎÊı£¬¿ÉÒÔ²»Ìî.
+         * @param	#JsonObject={}  æ¡ä»¶å‚æ•°ï¼Œå¯ä»¥ä¸å¡«.
          *
-         * @return	#Int/Undefined Èç¹û³ÉÎª·µ»ØÊÜÓ°ÏìµÄĞĞÊı£¬·ñÔò·µ»ØUndefined.
+         * @return	#Int/Undefined å¦‚æœæˆä¸ºè¿”å›å—å½±å“çš„è¡Œæ•°ï¼Œå¦åˆ™è¿”å›Undefined.
          */
         
         virtual Any remove(IPCMessage::SmartType msg);
@@ -219,13 +219,13 @@ namespace amo {
         /*!
          * @fn	virtual Any SqliteTransfer::queryCount(IPCMessage::SmartType msg);
          *
-         * @brief	²éÑ¯Êı¾İÌõÊı.
+         * @brief	æŸ¥è¯¢æ•°æ®æ¡æ•°.
          *
-         * @param	#String SQLÓï¾ä.
+         * @param	#String SQLè¯­å¥.
          *
-         * @param	#JsonObject={} Ìõ¼ş²ÎÊı.
+         * @param	#JsonObject={} æ¡ä»¶å‚æ•°.
          *
-         * @return	#Int ³É¹¦·µ»ØÊı¾İÌõÊı£¬Ê§°Ü·µ»Ø-1.
+         * @return	#Int æˆåŠŸè¿”å›æ•°æ®æ¡æ•°ï¼Œå¤±è´¥è¿”å›-1.
          */
         
         virtual Any queryCount(IPCMessage::SmartType msg);
@@ -233,9 +233,9 @@ namespace amo {
         /*!
          * @fn	virtual Any SqliteTransfer::getLastInsertRowID(IPCMessage::SmartType msg);
          *
-         * @brief	·µ»Ø×î½üÒ»´ÎSQLÓï¾äËùÓ°ÏìµÄĞĞÊı£¬Èç²åÈë¡¢É¾³ı¡¢¸üĞÂµÈ²Ù×÷ºó¿ÉÒÔµ÷ÓÃ¸Ãº¯Êı»ñÈ¡Êı¾İ.
+         * @brief	è¿”å›æœ€è¿‘ä¸€æ¬¡SQLè¯­å¥æ‰€å½±å“çš„è¡Œæ•°ï¼Œå¦‚æ’å…¥ã€åˆ é™¤ã€æ›´æ–°ç­‰æ“ä½œåå¯ä»¥è°ƒç”¨è¯¥å‡½æ•°è·å–æ•°æ®.
          *
-         * @return	#Int/Undefined Èç¹û³ÉÎª·µ»ØÊÜÓ°ÏìµÄĞĞÊı£¬·ñÔò·µ»ØUndefined.
+         * @return	#Int/Undefined å¦‚æœæˆä¸ºè¿”å›å—å½±å“çš„è¡Œæ•°ï¼Œå¦åˆ™è¿”å›Undefined.
          */
         
         virtual Any getLastInsertRowID(IPCMessage::SmartType msg);
@@ -243,11 +243,11 @@ namespace amo {
         /*!
          * @fn	virtual Any SqliteTransfer::containsTable(IPCMessage::SmartType msg);
          *
-         * @brief	Êı¾İ¿âÖĞÊÇ·ñ´æÔÚÖ¸¶¨µÄ±í.
+         * @brief	æ•°æ®åº“ä¸­æ˜¯å¦å­˜åœ¨æŒ‡å®šçš„è¡¨.
          *
-         * @param	#String ±íÃû.
+         * @param	#String è¡¨å.
          *
-         * @return	#Boolean true´æÔÚ/falseÊ§°Ü»ò²»´æÔÚ.
+         * @return	#Boolean trueå­˜åœ¨/falseå¤±è´¥æˆ–ä¸å­˜åœ¨.
          */
         
         virtual Any containsTable(IPCMessage::SmartType msg);
@@ -255,12 +255,12 @@ namespace amo {
         /*!
          * @fn	virtual Any SqliteTransfer::containsField(IPCMessage::SmartType msg);
          *
-         * @brief	Ö¸¶¨±íÖĞÊÇ·ñ°üº¬Ä³×Ö¶Î.
+         * @brief	æŒ‡å®šè¡¨ä¸­æ˜¯å¦åŒ…å«æŸå­—æ®µ.
          *
-         * @param	#String		±íÃû.
-         * @param	#String	×Ö¶ÎÃû.
+         * @param	#String		è¡¨å.
+         * @param	#String	å­—æ®µå.
          *
-         * @return	#Boolean. true´æÔÚ/falseÊ§°Ü»ò²»´æÔÚ.
+         * @return	#Boolean. trueå­˜åœ¨/falseå¤±è´¥æˆ–ä¸å­˜åœ¨.
          */
         
         virtual Any containsField(IPCMessage::SmartType msg);
@@ -268,11 +268,11 @@ namespace amo {
         /*!
          * @fn	virtual Any SqliteTransfer::getTableFields(IPCMessage::SmartType msg);
          *
-         * @brief	»ñÈ¡Ö¸¶¨±íÖĞµÄËùÓĞ×Ö¶Î.
+         * @brief	è·å–æŒ‡å®šè¡¨ä¸­çš„æ‰€æœ‰å­—æ®µ.
          *
-         * @param	#String ±íÃû.
+         * @param	#String è¡¨å.
          *
-         * @return	#Array °üº¬ËùÓĞ×Ö¶ÎÃûµÄÊı×é.
+         * @return	#Array åŒ…å«æ‰€æœ‰å­—æ®µåçš„æ•°ç»„.
          */
         
         virtual Any getTableFields(IPCMessage::SmartType msg);
@@ -338,7 +338,7 @@ namespace amo {
         /*!
         * @fn	amo::json Sqlite::getPaggingInfo(amo::json& other);
         * @ignore
-        * @brief	ºÏ²¢·ÖÒ³ĞÅÏ¢.
+        * @brief	åˆå¹¶åˆ†é¡µä¿¡æ¯.
         *
         * @param [in,out]	other	The other.
         *
@@ -350,7 +350,7 @@ namespace amo {
         /**
         * @fn	bool Sqlite::getTableFieldImpl(const std::string& table);
         * @ignore
-        * @brief	»ñÈ¡Êı¾İ¿â±íµÄËùÓĞ×Ö¶Î.
+        * @brief	è·å–æ•°æ®åº“è¡¨çš„æ‰€æœ‰å­—æ®µ.
         *
         * @param	table	The table.
         *
@@ -362,7 +362,7 @@ namespace amo {
         /**
         * @fn	bool Sqlite::containsFieldImpl(const std::string& table, const std::string& field);
         * @ignore
-        * @brief	ÅĞ¶ÏËù¸ø×Ö¶ÎÊÇ·ñ´æÔÚÓÚ±íÖĞ.
+        * @brief	åˆ¤æ–­æ‰€ç»™å­—æ®µæ˜¯å¦å­˜åœ¨äºè¡¨ä¸­.
         *
         * @param	table	The table.
         * @param	field	The field.
@@ -374,7 +374,7 @@ namespace amo {
         
         
     private:
-        /*! @brief	µ±Ç°Êı¾İ¿âÁ¬½ÓÊÇ·ñÓĞĞ§. */
+        /*! @brief	å½“å‰æ•°æ®åº“è¿æ¥æ˜¯å¦æœ‰æ•ˆ. */
         bool m_bValid;
         std::string m_strLastError;
         std::string m_strDBPath;

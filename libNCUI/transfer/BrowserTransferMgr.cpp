@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "transfer/BrowserTransferMgr.h"
 #include "ipc/UIMessageEmitter.hpp"
 #include "ipc/RenderMessageEmitter.hpp"
@@ -59,7 +59,7 @@ namespace amo {
     }
     
     void BrowserTransferMgr::registerClass(int nBrowserID) {
-        // Ìí¼ÓËùÓĞÀàÌí¼Óµ½¹ÜÀíÆ÷ÖĞ
+        // æ·»åŠ æ‰€æœ‰ç±»æ·»åŠ åˆ°ç®¡ç†å™¨ä¸­
         addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<BrowserWindowTransfer>());
         addTransfer(nBrowserID,

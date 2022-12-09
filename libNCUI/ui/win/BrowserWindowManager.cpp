@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 
 #include "ui/win/BrowserWindowManager.h"
 
@@ -27,7 +27,7 @@ namespace amo {
         
         std::shared_ptr<BrowserWindow> window(new BrowserWindow(info));
         
-        // Èç¹ûµ±Ç°´°¿ÚÊÇÒ»¸öÖ÷´°¿Ú£¬ÄÇÃ´Çå³ıÖ®Ç°µÄÖ÷´°¿Ú
+        // å¦‚æœå½“å‰çª—å£æ˜¯ä¸€ä¸ªä¸»çª—å£ï¼Œé‚£ä¹ˆæ¸…é™¤ä¹‹å‰çš„ä¸»çª—å£
         if (info->main) {
             clearMainWindow();
         }
@@ -57,7 +57,7 @@ namespace amo {
         }
         
         
-        // ¸¸´°¿Ú¾ä±ú
+        // çˆ¶çª—å£å¥æŸ„
         HWND wnd = NULL;
         
         if (pParent) {
@@ -68,8 +68,8 @@ namespace amo {
         }
         
         if (!m_WindowMap.empty()) {
-            // Èç¹û×îºóÒ»¸ö´°¿ÚÊÇÒ»¸öÄ£Ì¬´°¿Ú£¬ÄÇÃ´µ±Ç°´°¿ÚÒ²±ØĞëÊÇÒ»¸ö¾²Ì¬´°¿Ú
-            // ÕâÑù´¦Àí¼òµ¥Ò»µã
+            // å¦‚æœæœ€åä¸€ä¸ªçª—å£æ˜¯ä¸€ä¸ªæ¨¡æ€çª—å£ï¼Œé‚£ä¹ˆå½“å‰çª—å£ä¹Ÿå¿…é¡»æ˜¯ä¸€ä¸ªé™æ€çª—å£
+            // è¿™æ ·å¤„ç†ç®€å•ä¸€ç‚¹
             auto pWindow = *m_WindowMap.rbegin();
             
             if (pWindow->getNativeSettings()->modal) {
@@ -89,8 +89,8 @@ namespace amo {
                            NULL,
                            0, 0, 0, 0);
         } else {
-            // UI_WNDSTYLE_DIALOG ¿ÉÒÔ²»ÏìÓ¦HTCAPTIONÖ®ÀàµÄÏûÏ¢£¬
-            // µ±Ç°Êó±êÍÏ×§´°¿Úµ½×ÀÃæ±ßÔµÊ±²»»¯¸Ä±ä ´°¿Ú´óĞ¡
+            // UI_WNDSTYLE_DIALOG å¯ä»¥ä¸å“åº”HTCAPTIONä¹‹ç±»çš„æ¶ˆæ¯ï¼Œ
+            // å½“å‰é¼ æ ‡æ‹–æ‹½çª—å£åˆ°æ¡Œé¢è¾¹ç¼˜æ—¶ä¸åŒ–æ”¹å˜ çª—å£å¤§å°
             window->Create(wnd,
                            title.to_unicode().c_str(),
                            UI_WNDSTYLE_DIALOG,
@@ -167,7 +167,7 @@ namespace amo {
             this->coseAllWindow(true);
         }
         
-        // Èç¹ûËùÓĞµÄä¯ÀÀÆ÷´°¿Ú¶¼±»¹Ø±Õ£¬ÄÇÃ´´¥·¢»Øµ÷º¯Êı
+        // å¦‚æœæ‰€æœ‰çš„æµè§ˆå™¨çª—å£éƒ½è¢«å…³é—­ï¼Œé‚£ä¹ˆè§¦å‘å›è°ƒå‡½æ•°
         
         
         if (hasBrowserWindow()) {
@@ -206,7 +206,7 @@ namespace amo {
     
         bool bHandled = false;
         
-        // Ö»´¦ÀíÈİÆ÷ÖĞµÄ´°¿Ú£¬µ÷ÊÔ´°¿Ú¼°ÆäËû´°¿Ú²»´¦Àí
+        // åªå¤„ç†å®¹å™¨ä¸­çš„çª—å£ï¼Œè°ƒè¯•çª—å£åŠå…¶ä»–çª—å£ä¸å¤„ç†
         for (auto iter = m_WindowMap.begin(); iter != m_WindowMap.end(); ++iter) {
             auto p = *iter;
             std::shared_ptr<BrowserWindow> pBrowserWindow = p->toBrowserWindow();
@@ -243,7 +243,7 @@ namespace amo {
     }
     
     void BrowserWindowCreator::quitMessageLoop() {
-        CefQuitMessageLoop();	// ÍË³ö³ÌĞò
+        CefQuitMessageLoop();	// é€€å‡ºç¨‹åº
     }
     
     std::shared_ptr<LocalWindow>
@@ -343,7 +343,7 @@ namespace amo {
     }
     
     bool BrowserWindowCreator::hasBrowserWindow() const {
-        // ÅĞ¶ÏÊÇ·ñ»¹´æÔÚä¯ÀÀÆ÷´°¿Ú£¬²»°üº¬µ÷ÊÔ´°¿Ú
+        // åˆ¤æ–­æ˜¯å¦è¿˜å­˜åœ¨æµè§ˆå™¨çª—å£ï¼Œä¸åŒ…å«è°ƒè¯•çª—å£
         bool hasWindow = false;
         
         for (auto& p : m_WindowMap) {
@@ -383,7 +383,7 @@ namespace amo {
     }
     
     void BrowserWindowManager::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
-        CEF_REQUIRE_UI_THREAD();														//UIÏß³Ì
+        CEF_REQUIRE_UI_THREAD();														//UIçº¿ç¨‹
         m_BrowserCount--;
         
         if (m_BrowserCount == 0) {
@@ -400,7 +400,7 @@ namespace amo {
     
     
     void BrowserWindowManager::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
-        CEF_REQUIRE_UI_THREAD();														//UIÏß³Ì
+        CEF_REQUIRE_UI_THREAD();														//UIçº¿ç¨‹
         m_BrowserCount++;
     }
     class task2 : public CefTask {
@@ -424,7 +424,7 @@ namespace amo {
             CefRefPtr<CefClient>& client,
             CefBrowserSettings& settings,
             bool* no_javascript_access) {
-        CEF_REQUIRE_IO_THREAD();														//ÔËĞĞÔÚIOÏß³ÌÉÏ
+        CEF_REQUIRE_IO_THREAD();														//è¿è¡Œåœ¨IOçº¿ç¨‹ä¸Š
         $clog(amo::cdevel << func_orient
               << amo::string(target_url.ToString(), true).str()
               << amo::endl;);
@@ -458,7 +458,7 @@ namespace amo {
         
         pBrowserSettings->url = (u8Url);
         
-        // ÔÚUIÏß³ÌÉÏ´´½¨´°¿Ú
+        // åœ¨UIçº¿ç¨‹ä¸Šåˆ›å»ºçª—å£
 #if CHROME_VERSION_BUILD >= 2704
         
         CefPostTask(TID_UI, CLOSUER_HELPER(std::bind(
@@ -482,7 +482,7 @@ namespace amo {
             CefRefPtr<CefClient>& client,
             CefBrowserSettings& settings,
             bool* no_javascript_access) {
-        CEF_REQUIRE_IO_THREAD();														//ÔËĞĞÔÚIOÏß³ÌÉÏ
+        CEF_REQUIRE_IO_THREAD();														//è¿è¡Œåœ¨IOçº¿ç¨‹ä¸Š
         $clog(amo::cdevel << func_orient
               << amo::string(target_url.ToString(), true).str()
               << amo::endl;);
@@ -514,7 +514,7 @@ namespace amo {
         pBrowserSettings->url = (u8Url);
     
     
-        // ÔÚUIÏß³ÌÉÏ´´½¨´°¿Ú
+        // åœ¨UIçº¿ç¨‹ä¸Šåˆ›å»ºçª—å£
     
         CefPostTask(TID_UI, NewCefRunnableMethod(m_pWindowCreator.get(),
                     &BrowserWindowCreator::createBrowserWindow,
@@ -535,7 +535,7 @@ namespace amo {
                 && m_pWindowCreator
                 && m_pWindowCreator->allBrowserWindow().size() == 0) {
                 
-            // Èç¹ûÃ»ÓĞ´´½¨´°¿Ú£¬Ö±½ÓÍË³ö³ÌĞò
+            // å¦‚æœæ²¡æœ‰åˆ›å»ºçª—å£ï¼Œç›´æ¥é€€å‡ºç¨‹åº
             Tray::getInstance()->destory();
             CefQuitMessageLoop();
         }
@@ -622,20 +622,20 @@ namespace amo {
         int nBrowserID) {
         std::shared_ptr<BrowserWindow> pWindow;
         
-        // ÏÈÍ¨¹ıID²éÕÒ
+        // å…ˆé€šè¿‡IDæŸ¥æ‰¾
         auto pLocalWindow = findWindow(nBrowserID);
         
-        // ²»´æÔÚ£¬Ê¹ÓÃµ±Ç°½¹µã´°¿Ú
+        // ä¸å­˜åœ¨ï¼Œä½¿ç”¨å½“å‰ç„¦ç‚¹çª—å£
         if (!pLocalWindow) {
             pLocalWindow = getFocusedWindow();
         }
         
-        // ²»´æÔÚ£¬Ê¹ÓÃÖ÷´°¿Ú
+        // ä¸å­˜åœ¨ï¼Œä½¿ç”¨ä¸»çª—å£
         if (!pLocalWindow) {
             pLocalWindow = getMainWindow();
         }
         
-        // Ê¹ÓÃµÚÒ»¸öä¯ÀÀÆ÷´°¿Ú
+        // ä½¿ç”¨ç¬¬ä¸€ä¸ªæµè§ˆå™¨çª—å£
         if (!pLocalWindow) {
             pLocalWindow = getFirstWindow();
         }

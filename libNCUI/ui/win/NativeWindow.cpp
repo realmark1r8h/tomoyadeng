@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "ui/win/NativeWindow.h"
 #include "ui/win/BrowserWindowSkin.h"
 #include "ipc/UIMessageEmitter.hpp"

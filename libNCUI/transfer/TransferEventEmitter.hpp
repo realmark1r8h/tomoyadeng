@@ -1,4 +1,4 @@
-// Created by amoylel on 11/27/2017.
+ï»¿// Created by amoylel on 11/27/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_TRANSFEREVENTEMITTER_HPP__
@@ -72,8 +72,8 @@ namespace amo {
             return Undefined();
         }
         
-        // status 0 Õý³£
-        // status 1 Ê§°Ü
+        // status 0 æ­£å¸¸
+        // status 1 å¤±è´¥
         //
         Any collectProcessEvent(const amo::string& processName, int pec,
                                 int status = 0) {
@@ -147,7 +147,7 @@ namespace amo {
         std::function<Any(const TransferEventInfo&)> m_fnEventCallback;
         bool m_bDefaultToAll;
         std::shared_ptr<bool> m_bToAll;		// to all
-        std::shared_ptr<bool> m_bSuspend;	// ¹ÒÆðÏß³Ì
+        std::shared_ptr<bool> m_bSuspend;	// æŒ‚èµ·çº¿ç¨‹
         
     };
 }

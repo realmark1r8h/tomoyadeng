@@ -1,4 +1,4 @@
-// Created by amoylel on 17/07/2018.
+ï»¿// Created by amoylel on 17/07/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBNCUI_QUICKSTART_51E7465A_7BD9_422B_BADB_9E3D479E949E_HPP__
@@ -8,33 +8,33 @@
 namespace amo {
 
     /**
-     * @class	¿ìËÙ¿ªÊ¼
-     * @desc ¿ìËÙ¿ªÊ¼
+     * @class	å¿«é€Ÿå¼€å§‹
+     * @desc å¿«é€Ÿå¼€å§‹
      *
      * @chapter basic
      *
-     * @brief	¿ªÊ¼Ê¹ÓÃNCUI.
+     * @brief	å¼€å§‹ä½¿ç”¨NCUI.
      */
     
     class QuickStart {
     
         /**
-         * @section	±à¼­ÅäÖÃÎÄ¼ş
+         * @section	ç¼–è¾‘é…ç½®æ–‡ä»¶
          *
-         * @brief	±à¼­³ÌĞòËùÔÚÄ¿Â¼ÏÂµÄmanifest.jsonÎÄ¼ş¿ÉÒÔ×Ô¶¨ÒåÉèÖÃ³ÌĞòµÄÆô¶¯·½Ê½¡£<br>
-         * 			ÍêÕûµÄmanifest°üº¬Èı¸ö¶Î£¬·Ö±ğÎª appSettings£¬ browserWindowSettings£¬ splashWindowSettings;<br>
-         * 			¶ÔÓ¦¿ÉÒÔÉèÖÃ{@link Æô¶¯²ÎÊı}£¬{@link Æô¶¯ä¯ÀÀÆ÷´°¿Ú²ÎÊı=ä¯ÀÀÆ÷´°¿Ú²ÎÊı}£¬{@link ³ÌĞòÆô¶¯»­Ãæ=Æô¶¯»­Ãæ}<br>
-         * 			manifest²»ÊÇ±ØĞëµÄ£¬Èç¹û²»´æÔÚ£¬ÄÇÃ´³ÌĞò½«Ê¹ÓÃÄ¬ÈÏÅäÖÃ.<br>
-         * 			NCUI¹²ÓĞÈı¸öµØ·½±£´æ³ÌĞòµÄÆô¶¯²ÎÊı£¬ÓÅÏÈ¼¶´Ó1µ½3£¬·Ö±ğÎª£º<br>
-         * 			&nbsp;&nbsp;&nbsp;&nbsp;1. manifest.json£¬¿ÉÒÔÍ¨¹ı±à¼­¸ÃÎÄ¼şĞŞ¸ÄÆô¶¯²ÎÊı<br>
-         * 			&nbsp;&nbsp;&nbsp;&nbsp;2. exe³ÌĞòÖĞµÄ×ÊÔ´ÎÄ¼ş£¬¿ÉÒÔÍ¨¹ı±à¼­exe³ÌĞòĞŞ¸ÄÆô¶¯²ÎÊı,²Î¿¼{@link ×ÊÔ´±à¼­=rcedit}¡¢{@link Ó¦ÓÃÉú³É}<br>
-         * 			&nbsp;&nbsp;&nbsp;&nbsp;3. Ô´´úÂëÖĞµÄÄ¬ÈÏÆô¶¯²ÎÊı£¬Ö»ÄÜÍ¨¹ıĞŞ¸ÄÔ´´úÂëÀ´¸ü¸ÄÆô¶¯²ÎÊı<br>
-         * 			×¢Òâ£º**manifest.jsonÖ»Ö§³ÖANSI±àÂë£¬ÆäËûÀàĞÍµÄ±àÂë¿ÉÄÜ²»»á±»ÕıÈ·Ê¶±ğ**
+         * @brief	ç¼–è¾‘ç¨‹åºæ‰€åœ¨ç›®å½•ä¸‹çš„manifest.jsonæ–‡ä»¶å¯ä»¥è‡ªå®šä¹‰è®¾ç½®ç¨‹åºçš„å¯åŠ¨æ–¹å¼ã€‚<br>
+         * 			å®Œæ•´çš„manifeståŒ…å«ä¸‰ä¸ªæ®µï¼Œåˆ†åˆ«ä¸º appSettingsï¼Œ browserWindowSettingsï¼Œ splashWindowSettings;<br>
+         * 			å¯¹åº”å¯ä»¥è®¾ç½®{@link å¯åŠ¨å‚æ•°}ï¼Œ{@link å¯åŠ¨æµè§ˆå™¨çª—å£å‚æ•°=æµè§ˆå™¨çª—å£å‚æ•°}ï¼Œ{@link ç¨‹åºå¯åŠ¨ç”»é¢=å¯åŠ¨ç”»é¢}<br>
+         * 			manifestä¸æ˜¯å¿…é¡»çš„ï¼Œå¦‚æœä¸å­˜åœ¨ï¼Œé‚£ä¹ˆç¨‹åºå°†ä½¿ç”¨é»˜è®¤é…ç½®.<br>
+         * 			NCUIå…±æœ‰ä¸‰ä¸ªåœ°æ–¹ä¿å­˜ç¨‹åºçš„å¯åŠ¨å‚æ•°ï¼Œä¼˜å…ˆçº§ä»1åˆ°3ï¼Œåˆ†åˆ«ä¸ºï¼š<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;1. manifest.jsonï¼Œå¯ä»¥é€šè¿‡ç¼–è¾‘è¯¥æ–‡ä»¶ä¿®æ”¹å¯åŠ¨å‚æ•°<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;2. exeç¨‹åºä¸­çš„èµ„æºæ–‡ä»¶ï¼Œå¯ä»¥é€šè¿‡ç¼–è¾‘exeç¨‹åºä¿®æ”¹å¯åŠ¨å‚æ•°,å‚è€ƒ{@link èµ„æºç¼–è¾‘=rcedit}ã€{@link åº”ç”¨ç”Ÿæˆ}<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;3. æºä»£ç ä¸­çš„é»˜è®¤å¯åŠ¨å‚æ•°ï¼Œåªèƒ½é€šè¿‡ä¿®æ”¹æºä»£ç æ¥æ›´æ”¹å¯åŠ¨å‚æ•°<br>
+         * 			æ³¨æ„ï¼š**manifest.jsonåªæ”¯æŒANSIç¼–ç ï¼Œå…¶ä»–ç±»å‹çš„ç¼–ç å¯èƒ½ä¸ä¼šè¢«æ­£ç¡®è¯†åˆ«**
          *
          * @example
          *
          ```
-        		 // Ò»¸ö¼òµ¥µÄÅäÖÃÎÄ¼ş,Ö»°üº¬Æô¶¯´°¿ÚµÄ²ÎÊıÅäÖÃ¶Î£¬ ÉèÖÃ³ÌĞòÆôÊ±Òª´ò¿ªµÄURL
+        		 // ä¸€ä¸ªç®€å•çš„é…ç½®æ–‡ä»¶,åªåŒ…å«å¯åŠ¨çª—å£çš„å‚æ•°é…ç½®æ®µï¼Œ è®¾ç½®ç¨‹åºå¯æ—¶è¦æ‰“å¼€çš„URL
         		 {
         			 "browserWindowSettings":{
         			 "titleBar": true,
@@ -46,7 +46,7 @@ namespace amo {
          * @example
          *
          ```
-        		 // Ò»¸ö°üº¬ËùÓĞ¶ÎµÄµÄÅäÖÃÎÄ¼ş
+        		 // ä¸€ä¸ªåŒ…å«æ‰€æœ‰æ®µçš„çš„é…ç½®æ–‡ä»¶
         		{
         			"appSettings":{
         				"single_process": true,
@@ -61,13 +61,13 @@ namespace amo {
         			 }
         		}
          ```
-         * @example ĞŞ¸Ämanifest.json
+         * @example ä¿®æ”¹manifest.json
          *
          ```
         	 includes('Path','FileStream', 'app');
         	 var path = new Path('manifest.json');
-        	 path.copyTo('manifest2.json');// ±¸·İmanifest.json£¬Äã¿ÉÒÔÔÙ²é¿´Ğ§¹ûºóÊÖ¶¯»Ö¸´¸ÃÎÄ¼ş
-        	 var filestream = new FileStream('manifest.json', 2 + 32); // 2 ÒÔĞ´Èë·½Ê½´ò¿ª£¬32 ÒÔ¶ş½øÖÆ·½Ê½´ò¿ª
+        	 path.copyTo('manifest2.json');// å¤‡ä»½manifest.jsonï¼Œä½ å¯ä»¥å†æŸ¥çœ‹æ•ˆæœåæ‰‹åŠ¨æ¢å¤è¯¥æ–‡ä»¶
+        	 var filestream = new FileStream('manifest.json', 2 + 32); // 2 ä»¥å†™å…¥æ–¹å¼æ‰“å¼€ï¼Œ32 ä»¥äºŒè¿›åˆ¶æ–¹å¼æ‰“å¼€
         	 filestream.write(`
         		 {
         			 "appSettings":{
@@ -91,12 +91,12 @@ namespace amo {
         	 filestream.close();
         	 app.restart();
          ```
-         * @example ĞŞ¸Ämanifest.json
+         * @example ä¿®æ”¹manifest.json
          *
          ```
         			include('Path');
         			var path = new Path('manifest.json');
-        			path.copyTo('manifest2.json');// ±¸·İmanifest.json£¬Äã¿ÉÒÔÔÙ²é¿´Ğ§¹ûºóÊÖ¶¯»Ö¸´¸ÃÎÄ¼ş
+        			path.copyTo('manifest2.json');// å¤‡ä»½manifest.jsonï¼Œä½ å¯ä»¥å†æŸ¥çœ‹æ•ˆæœåæ‰‹åŠ¨æ¢å¤è¯¥æ–‡ä»¶
         			include('shell');
         			shell.exec('open', 'notepad', 'manifest.json');
         			sleep(1000);
@@ -134,14 +134,14 @@ namespace amo {
         }
         
         /*!
-         * @section	´´½¨ä¯ÀÀÆ÷´°¿Ú
+         * @section	åˆ›å»ºæµè§ˆå™¨çª—å£
          *
-         * @brief	³ÌĞòÆô¶¯Ê±»á´´½¨Ò»¸öÄ¬ÈÏµÄä¯ÀÀÆ÷´°¿Ú£¬¸Ã´°¿ÚµÄ²ÎÊı¿ÉÒÔÍ¨¹ı±à¼­manifest.jsonÎÄ¼ş½øĞĞÅäÖÃ.<br>
-         *			Èç¹ûĞèÒªÔÚÒ³ÃæÉÏ´´½¨´°¿Ú£¬¿ÉÒÔÍ¨¹ı{@link BrowserWindow}µÄ{@link ¹¹Ôìº¯Êı=BrowserWindow.BrowserWindow}´´½¨Ò»¸öĞÂµÄä¯ÀÀÆ÷´°¿Ú¡£<br>
-         *			³ı´ËÖ®Íâ£¬ä¯ÀÀÆ÷Ä¬ÈÏµÄ´°¿Ú´´½¨¶¯×÷£¨Èç£º**a±êÇ©**¡¢**window.open**µÈ£©³öÀ´µÄ´°¿Ú½«Ê¹ÓÃÄ¬ÈÏµÄ{@link ä¯ÀÀÆ÷´°¿Ú²ÎÊı},
-         *			Õâ¿ÉÄÜ»áÓ°ÏìÄãµÄÕı³£Ê¹ÓÃ£¨±ÈÈçÃ»ÓĞ±êÌâÀ¸£¬²»ÄÜÍÏ¶¯´°¿Ú£©£¬¿ÉÒÔ{@link Ô¤ÉèÖÃä¯ÀÀÆ÷´°¿Ú²ÎÊı=BrowserWindow.addBrowserWindowSettings}À´±ÜÃâ¸ÃÎÊÌâ
+         * @brief	ç¨‹åºå¯åŠ¨æ—¶ä¼šåˆ›å»ºä¸€ä¸ªé»˜è®¤çš„æµè§ˆå™¨çª—å£ï¼Œè¯¥çª—å£çš„å‚æ•°å¯ä»¥é€šè¿‡ç¼–è¾‘manifest.jsonæ–‡ä»¶è¿›è¡Œé…ç½®.<br>
+         *			å¦‚æœéœ€è¦åœ¨é¡µé¢ä¸Šåˆ›å»ºçª—å£ï¼Œå¯ä»¥é€šè¿‡{@link BrowserWindow}çš„{@link æ„é€ å‡½æ•°=BrowserWindow.BrowserWindow}åˆ›å»ºä¸€ä¸ªæ–°çš„æµè§ˆå™¨çª—å£ã€‚<br>
+         *			é™¤æ­¤ä¹‹å¤–ï¼Œæµè§ˆå™¨é»˜è®¤çš„çª—å£åˆ›å»ºåŠ¨ä½œï¼ˆå¦‚ï¼š**aæ ‡ç­¾**ã€**window.open**ç­‰ï¼‰å‡ºæ¥çš„çª—å£å°†ä½¿ç”¨é»˜è®¤çš„{@link æµè§ˆå™¨çª—å£å‚æ•°},
+         *			è¿™å¯èƒ½ä¼šå½±å“ä½ çš„æ­£å¸¸ä½¿ç”¨ï¼ˆæ¯”å¦‚æ²¡æœ‰æ ‡é¢˜æ ï¼Œä¸èƒ½æ‹–åŠ¨çª—å£ï¼‰ï¼Œå¯ä»¥{@link é¢„è®¾ç½®æµè§ˆå™¨çª—å£å‚æ•°=BrowserWindow.addBrowserWindowSettings}æ¥é¿å…è¯¥é—®é¢˜
          *	@see BrowserWindow.addBrowserWindowSettings
-         *	@example ´´½¨ä¯ÀÀÆ÷´°¿Ú
+         *	@example åˆ›å»ºæµè§ˆå™¨çª—å£
          *
          ```
         	include('BrowserWindow');
@@ -157,48 +157,48 @@ namespace amo {
         }
         
         /*!
-         * @section	µ¼ÈëÄ£¿é
+         * @section	å¯¼å…¥æ¨¡å—
          *
-         * @brief	Èç¹ûÒªÊ¹ÓÃNCUIÌá¹©µÄÄ£¿é£¬ÄÇÃ´±ØĞëÔÚÊ¹ÓÃÖ®¼äÇ°½«ĞèÒªµÄÄ£¿éµ¼Èëµ½Ò³ÃæÖĞ£¬Äã¿ÉÒÔÍ¨¹ıÒÔÏÂ·½Ê½µ¼ÈëĞèÒªµÄÄ£¿é¡£**ËùÓĞ±»µ¼ÈëµÄÄ£¿é¶¼»á±»×¢Èëµ½Ò³ÃæµÄÈ«¾Ö±äÁ¿ÖĞ£¬¿ÉÄÜ»áÓëÒ³ÃæÖĞµÄ±äÁ¿³åÍ»**<br>
-         * 			Ê¹ÓÃ**include**µ¼Èëµ¥¸öÄ£¿é.<br>
-         * 			Ê¹ÓÃ**includes**µ¼Èë¶à¸öÄ£¿é.<br>
-         * 			Èç¹ûÄÚÖÃÄ£¿é²»´æÔÚ£¬½«»áµ¼Èërenderer_modulesÎÄ¼ş¼ĞÏÂÄ£¿é£¬Èç¹û»¹ÊÇ²»´æÔÚ»áµ¼Èëbrowser_modulesÎÄ¼ş¼ĞÏÂÄ£¿é.
-         * 			renderer_modulesÎÄ¼ş¼ĞÏÂµÄÀ©Õ¹ÔÚRendererÏß³ÌÉÏÔËĞĞ£¬browser_modulesÎÄ¼ş¼ĞÏÂµÄÀ©Õ¹ÔÚUIÏß³ÌÉÏÔËĞĞ.<br>
-         * 			Ê¹ÓÃ**renderer_modules**µ¼Èërenderer_modulesÎÄ¼ş¼ĞÏÂµÄÄ£¿é£¬Èç¹ûÄ£¿é´æÔÚÒÀÀµÄÇÃ´£¬»áÊ¹ÓÃincludes¼ÓÔØÒÀÀµÄ£¿é<br>
-         * 			Ê¹ÓÃ**browser_modules**¿ÉÒÔÌø¹ırenderer_modulesÎÄ¼ş¼ĞÏÂµÄÄ£¿é£¬Ö±½Óµ¼Èëbrowser_modulesÎÄ¼ş¼ĞÏÂµÄÄ£¿é£¬Èç¹ûÄ£¿é´æÔÚÒÀÀµÄÇÃ´£¬»áÊ¹ÓÃincludes¼ÓÔØÒÀÀµÄ£¿é<br>
-         * 			ËµÃ÷£º<br>
-         * 			&nbsp;&nbsp;&nbsp;&nbsp;**Ò»¸öiframeÖĞÍ¬Ò»¸öÄ£¿éÖ»ĞèÒª¼ÓÔØÒ»´Î¼´¿ÉÔÚÈÎÒâµØ·½Ê¹ÓÃ**<br>
-         * 			&nbsp;&nbsp;&nbsp;&nbsp;**ÈçÎŞÌØÊâĞèÇó£¬¶¼Ó¦¸ÃÊ¹ÓÃinclude »ò inclcudes ¼ÓÔØÄ£¿é**<br>
-         * 			&nbsp;&nbsp;&nbsp;&nbsp;**¾¡Á¿²»Òª±àĞ´ÓëÆäËûÄ£¿éÃûÏàÍ¬µÄC++À©Õ¹Ä£¿é**<br>
-         * 			&nbsp;&nbsp;&nbsp;&nbsp;**renderer_modulesºÍbrowser_modulesÍ¬Ñù¿ÉÒÔµ¼ÈëÄÚÖÃÄ£¿é£¬µ«²»½¨ÒéÓÃÕâÁ½¸öº¯ÊıÀ´µ¼ÈëÄÚÖÃÄ£¿é**<br>
-         * @example µ¼Èëµ¥¸öÄ£¿é
+         * @brief	å¦‚æœè¦ä½¿ç”¨NCUIæä¾›çš„æ¨¡å—ï¼Œé‚£ä¹ˆå¿…é¡»åœ¨ä½¿ç”¨ä¹‹é—´å‰å°†éœ€è¦çš„æ¨¡å—å¯¼å…¥åˆ°é¡µé¢ä¸­ï¼Œä½ å¯ä»¥é€šè¿‡ä»¥ä¸‹æ–¹å¼å¯¼å…¥éœ€è¦çš„æ¨¡å—ã€‚**æ‰€æœ‰è¢«å¯¼å…¥çš„æ¨¡å—éƒ½ä¼šè¢«æ³¨å…¥åˆ°é¡µé¢çš„å…¨å±€å˜é‡ä¸­ï¼Œå¯èƒ½ä¼šä¸é¡µé¢ä¸­çš„å˜é‡å†²çª**<br>
+         * 			ä½¿ç”¨**include**å¯¼å…¥å•ä¸ªæ¨¡å—.<br>
+         * 			ä½¿ç”¨**includes**å¯¼å…¥å¤šä¸ªæ¨¡å—.<br>
+         * 			å¦‚æœå†…ç½®æ¨¡å—ä¸å­˜åœ¨ï¼Œå°†ä¼šå¯¼å…¥renderer_modulesæ–‡ä»¶å¤¹ä¸‹æ¨¡å—ï¼Œå¦‚æœè¿˜æ˜¯ä¸å­˜åœ¨ä¼šå¯¼å…¥browser_modulesæ–‡ä»¶å¤¹ä¸‹æ¨¡å—.
+         * 			renderer_modulesæ–‡ä»¶å¤¹ä¸‹çš„æ‰©å±•åœ¨Rendererçº¿ç¨‹ä¸Šè¿è¡Œï¼Œbrowser_modulesæ–‡ä»¶å¤¹ä¸‹çš„æ‰©å±•åœ¨UIçº¿ç¨‹ä¸Šè¿è¡Œ.<br>
+         * 			ä½¿ç”¨**renderer_modules**å¯¼å…¥renderer_modulesæ–‡ä»¶å¤¹ä¸‹çš„æ¨¡å—ï¼Œå¦‚æœæ¨¡å—å­˜åœ¨ä¾èµ–é‚£ä¹ˆï¼Œä¼šä½¿ç”¨includesåŠ è½½ä¾èµ–æ¨¡å—<br>
+         * 			ä½¿ç”¨**browser_modules**å¯ä»¥è·³è¿‡renderer_modulesæ–‡ä»¶å¤¹ä¸‹çš„æ¨¡å—ï¼Œç›´æ¥å¯¼å…¥browser_modulesæ–‡ä»¶å¤¹ä¸‹çš„æ¨¡å—ï¼Œå¦‚æœæ¨¡å—å­˜åœ¨ä¾èµ–é‚£ä¹ˆï¼Œä¼šä½¿ç”¨includesåŠ è½½ä¾èµ–æ¨¡å—<br>
+         * 			è¯´æ˜ï¼š<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;**ä¸€ä¸ªiframeä¸­åŒä¸€ä¸ªæ¨¡å—åªéœ€è¦åŠ è½½ä¸€æ¬¡å³å¯åœ¨ä»»æ„åœ°æ–¹ä½¿ç”¨**<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;**å¦‚æ— ç‰¹æ®Šéœ€æ±‚ï¼Œéƒ½åº”è¯¥ä½¿ç”¨include æˆ– inclcudes åŠ è½½æ¨¡å—**<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;**å°½é‡ä¸è¦ç¼–å†™ä¸å…¶ä»–æ¨¡å—åç›¸åŒçš„C++æ‰©å±•æ¨¡å—**<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;**renderer_moduleså’Œbrowser_modulesåŒæ ·å¯ä»¥å¯¼å…¥å†…ç½®æ¨¡å—ï¼Œä½†ä¸å»ºè®®ç”¨è¿™ä¸¤ä¸ªå‡½æ•°æ¥å¯¼å…¥å†…ç½®æ¨¡å—**<br>
+         * @example å¯¼å…¥å•ä¸ªæ¨¡å—
          *
          ```
-        		// µ¼Èëµ¥¸öÄ£¿é
+        		// å¯¼å…¥å•ä¸ªæ¨¡å—
         		include('BrowserWindow');
         		BrowserWindow.current.maximize();
          ```
-         * @example µ¼Èë¶à¸ö¸öÄ£¿é
+         * @example å¯¼å…¥å¤šä¸ªä¸ªæ¨¡å—
          *
          ```
-        		// µ¼Èë¶à¸ö¸öÄ£¿é
+        		// å¯¼å…¥å¤šä¸ªä¸ªæ¨¡å—
         		includes('BrowserWindow', 'app');
         		BrowserWindow.current.maximize();
         		BrowserWindow.current.restore();
-        		// ³¢ÊÔÍË³ö³ÌĞò
+        		// å°è¯•é€€å‡ºç¨‹åº
         		app.quit();
          ```
          * @example renderer_modules
          *
          ```
-        	 // µ¼Èë¶à¸ö¸öÄ£¿é
+        	 // å¯¼å…¥å¤šä¸ªä¸ªæ¨¡å—
         	 renderer_modules('BrowserWindow', 'md5');
         
          ```
          * @example browser_modules
          *
          ```
-        	 // µ¼Èë¶à¸ö¸öÄ£¿é
+        	 // å¯¼å…¥å¤šä¸ªä¸ªæ¨¡å—
         	 browser_modules('BrowserWindow', 'Path');
         
          ```

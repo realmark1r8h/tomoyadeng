@@ -1,4 +1,4 @@
-// Created by amoylel on 06/29/2017.
+ï»¿// Created by amoylel on 06/29/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_MENUWINDOW_H__
@@ -22,8 +22,8 @@ namespace amo {
     struct ContextMenuParam {
         // 1: remove all
         // 2: remove the sub menu
-        // 3: ²Ëµ¥µã»÷ÊÂ¼ş
-        // 4: ´°¿Ú¹Ø±ÕÊÂ¼ş WM_CLOSE
+        // 3: èœå•ç‚¹å‡»äº‹ä»¶
+        // 4: çª—å£å…³é—­äº‹ä»¶ WM_CLOSE
         WPARAM wParam;
         HWND hWnd;
         CDuiString text;

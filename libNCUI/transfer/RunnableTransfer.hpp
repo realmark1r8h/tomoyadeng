@@ -1,4 +1,4 @@
-// Created by amoylel on 11/03/2017.
+ï»¿// Created by amoylel on 11/03/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_RUNABLETRANSFER_HPP__
@@ -17,8 +17,8 @@ namespace amo {
     /**
      * @class	Runnable
      *
-     * @brief	Èç¹ûÒ»¸öÀàÏëÒªÔÚÏß³ÌÖĞÔËĞĞµÄ»°£¬ĞèÒª¼Ì³Ğ×ÔRunable.<br>
-     * 			¹¤×÷Ïß³Ì£º**UIÏß³Ì** »ò **RendererÏß³Ì**.
+     * @brief	å¦‚æœä¸€ä¸ªç±»æƒ³è¦åœ¨çº¿ç¨‹ä¸­è¿è¡Œçš„è¯ï¼Œéœ€è¦ç»§æ‰¿è‡ªRunable.<br>
+     * 			å·¥ä½œçº¿ç¨‹ï¼š**UIçº¿ç¨‹** æˆ– **Rendererçº¿ç¨‹**.
      *
      * @extend Object
      */
@@ -57,8 +57,8 @@ namespace amo {
             
             if (multiType(args->getString(IPCArgsPosInfo::FuncName)) ==
                     TransferMultiDisabled) {
-                // new ²»ÄÜÔÚ¶àÏß³ÌÖĞÖ´ĞĞ
-                // weakup Êµ¼ÊÉÏÊÇthreadÉÏµÄº¯Êı£¬ÕâÀïÊÇÎªÁË·½±ã
+                // new ä¸èƒ½åœ¨å¤šçº¿ç¨‹ä¸­æ‰§è¡Œ
+                // weakup å®é™…ä¸Šæ˜¯threadä¸Šçš„å‡½æ•°ï¼Œè¿™é‡Œæ˜¯ä¸ºäº†æ–¹ä¾¿
                 return ClassTransfer::onMessageTransfer(msg);
             } else if (m_nThreadID == 0) {
                 return ClassTransfer::onMessageTransfer(msg);
@@ -97,11 +97,11 @@ namespace amo {
         /**
          * @fn	Any RunnableTransfer::attach(IPCMessage::SmartType msg)
          *
-         * @brief	½«µ±Ç°¶ÔÏó¸½¼Óµ½Ò»¸öÏß³ÌÖĞ.
+         * @brief	å°†å½“å‰å¯¹è±¡é™„åŠ åˆ°ä¸€ä¸ªçº¿ç¨‹ä¸­.
          *
-         * @param	#Object ĞèÒª¸½¼ÓµÄÏß³Ì
+         * @param	#Object éœ€è¦é™„åŠ çš„çº¿ç¨‹
          *
-         * @return	#Boolean true³É¹¦/falseÊ§°Ü.
+         * @return	#Boolean trueæˆåŠŸ/falseå¤±è´¥.
          * @example
          *
          ```
@@ -112,7 +112,7 @@ namespace amo {
         	demo.attach(thread);
         	demo.unique('Demo.add',function(info){
         		console.log(info);
-        		console.log('ÔÚÏß³ÌÖĞÖ´ĞĞº¯ÊıµÄ·µ»Ø½á¹û£º' + info.data);
+        		console.log('åœ¨çº¿ç¨‹ä¸­æ‰§è¡Œå‡½æ•°çš„è¿”å›ç»“æœï¼š' + info.data);
         	});
         	console.log(demo.add(1,2));
          ```
@@ -141,9 +141,9 @@ namespace amo {
         /**
          * @fn	Any RunnableTransfer::detach(IPCMessage::SmartType msg)
          *
-         * @brief	½«µ±Ç°¶ÔÏó´ÓÒ»¸öÏß³ÌÖĞ·ÖÀë.
+         * @brief	å°†å½“å‰å¯¹è±¡ä»ä¸€ä¸ªçº¿ç¨‹ä¸­åˆ†ç¦».
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          *
          * @example
          *
@@ -155,7 +155,7 @@ namespace amo {
         	 demo.attach(thread);
         	 demo.unique('Demo.add',function(info){
         		 console.log(info);
-        		 console.log('ÔÚÏß³ÌÖĞÖ´ĞĞº¯ÊıµÄ·µ»Ø½á¹û£º' + info.data);
+        		 console.log('åœ¨çº¿ç¨‹ä¸­æ‰§è¡Œå‡½æ•°çš„è¿”å›ç»“æœï¼š' + info.data);
         	 });
         	 console.log(demo.add(1,2));
         	 demo.detach();
@@ -171,9 +171,9 @@ namespace amo {
         /**
          * @fn	Any RunnableTransfer::weakup(IPCMessage::SmartType msg)
          * @tag single
-         * @brief	»½ĞÑµ±Ç°¶ÔÏóËù¸½¼ÓµÄÏß³Ì.
+         * @brief	å”¤é†’å½“å‰å¯¹è±¡æ‰€é™„åŠ çš„çº¿ç¨‹.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
          ```
@@ -188,7 +188,7 @@ namespace amo {
         	 }, 3000);
         	 demo.unique('Demo.add',function(info){
         		 console.log(info);
-        		 console.log('ÔÚÏß³ÌÖĞÖ´ĞĞº¯ÊıµÄ·µ»Ø½á¹û£º' + info.data);
+        		 console.log('åœ¨çº¿ç¨‹ä¸­æ‰§è¡Œå‡½æ•°çš„è¿”å›ç»“æœï¼š' + info.data);
         	 });
         	 console.log(demo.add(1,3));
         
@@ -223,9 +223,9 @@ namespace amo {
         /**
          * @fn	Any RunnableTransfer::suspend(IPCMessage::SmartType msg)
          *
-         * @brief	¹ÒÆğËù¸½¼ÓÏß³Ì£¬²»ÄÜÔÚä¯ÀÀÆ÷Ïß³Ì£¨UI/Renderer£©ÉÏÖ´ĞĞ.
+         * @brief	æŒ‚èµ·æ‰€é™„åŠ çº¿ç¨‹ï¼Œä¸èƒ½åœ¨æµè§ˆå™¨çº¿ç¨‹ï¼ˆUI/Rendererï¼‰ä¸Šæ‰§è¡Œ.
          *
-         * @return	ÎŞ.
+         * @return	æ— .
          * @example
          *
          ```
@@ -234,14 +234,14 @@ namespace amo {
         	 var thread = new Thread();
         	 console.log(demo.add(1,2));
         	 demo.attach(thread);
-        	 demo.suspend();   // Èç¹ûÃ»ÓĞattach£¬²»ÄÜÔÚäÖÈ¾Ïß³ÌÉÏµ÷ÓÃ¸Ãº¯Êı£¬·ñÔò»á×èÈûäÖÈ¾Ïß³Ì
+        	 demo.suspend();   // å¦‚æœæ²¡æœ‰attachï¼Œä¸èƒ½åœ¨æ¸²æŸ“çº¿ç¨‹ä¸Šè°ƒç”¨è¯¥å‡½æ•°ï¼Œå¦åˆ™ä¼šé˜»å¡æ¸²æŸ“çº¿ç¨‹
         	 setTimeout(function(){
         		demo.weakup();
         	 }, 3000);
         	 demo.unique('Demo.add',function(info){
-        		// 3Ãëºó²ÅÄÜµÃµ½½á¹û
+        		// 3ç§’åæ‰èƒ½å¾—åˆ°ç»“æœ
         		 console.log(info);
-        		 console.log('ÔÚÏß³ÌÖĞÖ´ĞĞº¯ÊıµÄ·µ»Ø½á¹û£º' + info.data);
+        		 console.log('åœ¨çº¿ç¨‹ä¸­æ‰§è¡Œå‡½æ•°çš„è¿”å›ç»“æœï¼š' + info.data);
         	 });
         
         	 demo.add(1,4);
@@ -281,7 +281,7 @@ namespace amo {
          *
          * @ignore
          *
-         * @brief	ÏòÒ³Ãæ·¢ËÍÊı¾İ£¬Èç¹ûÒªÇóÏß³Ì¹ÒÆğµÄ»°£¬ÔİÍ£µ±Ç°Ïß³Ì.
+         * @brief	å‘é¡µé¢å‘é€æ•°æ®ï¼Œå¦‚æœè¦æ±‚çº¿ç¨‹æŒ‚èµ·çš„è¯ï¼Œæš‚åœå½“å‰çº¿ç¨‹.
          *
          * @param	info	The information.
          *
@@ -307,10 +307,10 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     protected:
-        /** @brief	ÊÂ¼ş»Øµ÷º¯Êı. */
+        /** @brief	äº‹ä»¶å›è°ƒå‡½æ•°. */
         //EventCallbackFunc m_fnEventCallback;
         
-        /*! @brief	¸½¼Óµ½µÄÏß³ÌID. */
+        /*! @brief	é™„åŠ åˆ°çš„çº¿ç¨‹ID. */
         int64_t m_nThreadID;
     };
     

@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_DISPLAYHANDLER_H__
@@ -13,7 +13,7 @@ namespace amo {
     /*!
      * @class	DisplayHandlerDelegate
      *
-     * @brief	ä¯ÀÀÆ÷ÏÔÊ¾Ïà¹ØÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	æµè§ˆå™¨æ˜¾ç¤ºç›¸å…³äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class DisplayHandlerDelegate {
@@ -67,7 +67,7 @@ namespace amo {
     /*!
      * @class	DisplayHandler
      *
-     * @brief	ä¯ÀÀÆ÷ÏÔÊ¾Ïà¹ØÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	æµè§ˆå™¨æ˜¾ç¤ºç›¸å…³äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class DisplayHandler : public CefDisplayHandler
@@ -83,7 +83,7 @@ namespace amo {
          * 		CefRefPtr<CefFrame> frame,
          * 		const CefString& url);
          *
-         * @brief	URL ·¢Éú¸Ä±äÊ±´¥·¢
+         * @brief	URL å‘ç”Ÿæ”¹å˜æ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser	The browser.
@@ -100,7 +100,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		const CefString& title);
          *
-         * @brief	TITLE ·¢Éú¸Ä±äÊ±´¥·¢
+         * @brief	TITLE å‘ç”Ÿæ”¹å˜æ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser	The browser.
@@ -115,7 +115,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		CefString& text);
          *
-         * @brief	ÏÔÊ¾ToolTip ´¥·¢
+         * @brief	æ˜¾ç¤ºToolTip è§¦å‘
          * 			B UI.
          *
          * @param	browser			The browser.
@@ -132,7 +132,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		const CefString& value);
          *
-         * @brief	µ±ä¯ÀÀÆ÷ÊÕµ½×´Ì¬ÏûÏ¢Ê±´¥·¢
+         * @brief	å½“æµè§ˆå™¨æ”¶åˆ°çŠ¶æ€æ¶ˆæ¯æ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser	The browser.
@@ -149,7 +149,7 @@ namespace amo {
          * 		const CefString& source,
          * 		int line);
          *
-         * @brief	ä¯ÀÀÆ÷ĞèÒªÏÔÊ¾ConsoleÏûÏ¢Ê±´¥·¢
+         * @brief	æµè§ˆå™¨éœ€è¦æ˜¾ç¤ºConsoleæ¶ˆæ¯æ—¶è§¦å‘
          * 			B UI.
          *
          * @param	browser	The browser.

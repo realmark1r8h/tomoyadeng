@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "TransferMgr.h"
 #include "ipc/UIMessageEmitter.hpp"
 #include "handler/BrowserManager.hpp"

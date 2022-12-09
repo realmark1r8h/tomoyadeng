@@ -1,4 +1,4 @@
-// Created by amoylel on 06/13/2017.
+ï»¿// Created by amoylel on 06/13/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_CEFPROCESSEXCHANGER_HPP__
@@ -9,14 +9,14 @@
 #include "ipc/ProcessExchanger.hpp"
 #include "ipc/Any.hpp"
 
-// Í¨¹ı¹ÜµÀÏûÏ¢ ´´½¨½ø³ÌÏûÏ¢
+// é€šè¿‡ç®¡é“æ¶ˆæ¯ åˆ›å»ºè¿›ç¨‹æ¶ˆæ¯
 namespace amo {
 
     /*!
      * @fn	static CefRefPtr<CefProcessMessage> createCefProcessMessage(
      * 		IPCMessage::SmartType msg)
      *
-     * @brief	IPCMessage ×ª CefProcessMessage
+     * @brief	IPCMessage è½¬ CefProcessMessage
      *
      * @param	msg	The message.
      *
@@ -35,7 +35,7 @@ namespace amo {
      * @fn	static ::SmartType createAnyProcessMessage(
      * 		CefRefPtr<CefProcessMessage> message)
      *
-     * @brief	CefProcessMessage ×ª IPCMessage.
+     * @brief	CefProcessMessage è½¬ IPCMessage.
      *
      * @param	message	The message.
      *

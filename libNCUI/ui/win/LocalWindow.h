@@ -1,4 +1,4 @@
-// Created by amoylel on 08/07/2017.
+ï»¿// Created by amoylel on 08/07/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_LOCALWINDOW_H__
@@ -107,8 +107,8 @@ namespace amo {
                               
     protected:
         bool m_bNativeWindow;
-        int64_t m_nTransferClassID;  // ËùÊôÀàID
-        int64_t m_nTransferObjectID; // ËùÊô¶ÔÏóID
+        int64_t m_nTransferClassID;  // æ‰€å±ç±»ID
+        int64_t m_nTransferObjectID; // æ‰€å±å¯¹è±¡ID
         std::set<CControlUI*> m_oTransferedSet;
         bool m_bIPCReady;
     };

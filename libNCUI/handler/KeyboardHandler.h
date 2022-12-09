@@ -1,4 +1,4 @@
-// Created by amoylel on 6/22/2017.
+ï»¿// Created by amoylel on 6/22/2017.
 // Copyright (c) 2017 amoylel. All rights reserved.
 
 #ifndef AMO_KEYBOARDHANDLER_H__
@@ -13,7 +13,7 @@ namespace amo {
     /*!
      * @class	KeyboardHandlerDelegate
      *
-     * @brief	¼üÅÌÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	é”®ç›˜äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class KeyboardHandlerDelegate {
@@ -43,7 +43,7 @@ namespace amo {
     /*!
      * @class	KeyboardHandler
      *
-     * @brief	¼üÅÌÊÂ¼ş´¦ÀíÀà£¬¸ÃÀàÖĞµÄ·½·¨»áÔÚUIÏß³ÌÖĞ±»µ÷ÓÃ.
+     * @brief	é”®ç›˜äº‹ä»¶å¤„ç†ç±»ï¼Œè¯¥ç±»ä¸­çš„æ–¹æ³•ä¼šåœ¨UIçº¿ç¨‹ä¸­è¢«è°ƒç”¨.
      */
     
     class KeyboardHandler : public CefKeyboardHandler
@@ -60,7 +60,7 @@ namespace amo {
          * 		CefEventHandle os_event,
          * 		bool* is_keyboard_shortcut);
          *
-         * @brief	¼üÅÌÊÂ¼şËÍÈëÒ³ÃæÇ°´¥·¢ ½âÅÌÊÂ¼şÔ¤´¦Àí
+         * @brief	é”®ç›˜äº‹ä»¶é€å…¥é¡µé¢å‰è§¦å‘ è§£ç›˜äº‹ä»¶é¢„å¤„ç†
          * 			B UI.
          *
          * @param	browser							The browser.
@@ -82,7 +82,7 @@ namespace amo {
          * 		const CefKeyEvent& event,
          * 		CefEventHandle os_event);
          *
-         * @brief	Ò³ÃæÊÕµ½¼üÅÌÊÂ¼şºó´¥·¢ ¼üÅÌÊÂ¼ş´¦Àí
+         * @brief	é¡µé¢æ”¶åˆ°é”®ç›˜äº‹ä»¶åè§¦å‘ é”®ç›˜äº‹ä»¶å¤„ç†
          * 			B UI.
          *
          * @param	browser 	The browser.
@@ -101,7 +101,7 @@ namespace amo {
          * 		CefRefPtr<CefBrowser> browser,
          * 		const CefKeyEvent& event);
          *
-         * @brief	ÈÈ¼ü´¦Àí.
+         * @brief	çƒ­é”®å¤„ç†.
          *
          * @param	browser	The browser.
          * @param	event  	The event.
@@ -119,7 +119,7 @@ namespace amo {
          * 		int& iVirtualKey,
          * 		int iKey = 0);
          *
-         * @brief	×é×°ÈÈ¼üÃèÊö.
+         * @brief	ç»„è£…çƒ­é”®æè¿°.
          *
          * @param 	strTotalHotkey	The total hotkey.
          * @param	strCurHotkey		  	The current hotkey.

@@ -1,4 +1,4 @@
-// Created by amoylel on 06/30/2017.
+ï»¿// Created by amoylel on 06/30/2017.
 // Copyright (c) 2017 amoylel All rights reserved.
 
 #ifndef AMO_NODEMESSAGEEMITTER_HPP__
@@ -16,7 +16,7 @@
 
 namespace amo {
 
-    // ÏòNodeJS·¢ËÍÏûÏ¢
+    // å‘NodeJSå‘é€æ¶ˆæ¯
     class NodeMessageEmitter : public MessageLauncher {
     public:
     

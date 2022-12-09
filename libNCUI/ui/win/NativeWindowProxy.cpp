@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "ui/win/NativeWindowProxy.h"
 #include <amo/string.hpp>
 
@@ -22,13 +22,13 @@ namespace amo {
     }
     
     Any NativeWindowProxy::showTitleBar(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
     Any NativeWindowProxy::destroy(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        // 255 Ç¿ÖÆ¹Ø±Õ´°¿Ú
+        // 255 å¼ºåˆ¶å…³é—­çª—å£
         ::PostMessage(getNativeHWND(args), WM_CLOSE, 255, 0);
         return Undefined();
     }
@@ -126,12 +126,12 @@ namespace amo {
     }
     
     Any NativeWindowProxy::setFullScreen(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
     Any NativeWindowProxy::isFullScreen(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
@@ -186,27 +186,27 @@ namespace amo {
     
     Any NativeWindowProxy::setMinimumSize(IPCMessage::SmartType msg) {
     
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
     Any NativeWindowProxy::getMinimumSize(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
     Any NativeWindowProxy::setMaximumSize(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
     Any NativeWindowProxy::getMaximumSize(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
     Any NativeWindowProxy::setResizable(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
@@ -237,7 +237,7 @@ namespace amo {
     }
     
     Any NativeWindowProxy::setMaximizable(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindow ¼Ì³Ğ
+        // ç”±LocalWindow ç»§æ‰¿
         return Undefined();
     }
     
@@ -276,7 +276,7 @@ namespace amo {
     }
     
     Any NativeWindowProxy::center(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
@@ -316,7 +316,7 @@ namespace amo {
     }
     
     Any NativeWindowProxy::flashFrame(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         bool bFlahFrame = args->getBool(0);
         
@@ -341,7 +341,7 @@ namespace amo {
     
     
     Any NativeWindowProxy::setHasShadow(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
@@ -350,30 +350,30 @@ namespace amo {
     }
     
     Any NativeWindowProxy::topmost(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
     Any NativeWindowProxy::isTopmost(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
     
     Any NativeWindowProxy::toggleVisible(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
     Any NativeWindowProxy::toggleFullScreen(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
     
     
     Any NativeWindowProxy::showModal(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
@@ -401,7 +401,7 @@ namespace amo {
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         
         if (val.type() == AnyValueType<amo::json>::value) {
-            // ¸üĞÂAppSettings
+            // æ›´æ–°AppSettings
             std::string strConfig = args->getString(0);
             getNativeSettings()->updateArgsSettings(strConfig);
         }
@@ -416,7 +416,7 @@ namespace amo {
         auto pSettings = getNativeSettings();
         
         if (val.type() == AnyValueType<Nil>::value) {
-            // ·µ»ØËùÓĞÉèÖÃ
+            // è¿”å›æ‰€æœ‰è®¾ç½®
             return pSettings->toJson();
             
         } else  if (val.type() == AnyValueType<std::string>::value) {
@@ -440,39 +440,39 @@ namespace amo {
                 return Undefined();
             }
             
-            // ·µ»Øµ¥ÏîÉèÖÃ
+            // è¿”å›å•é¡¹è®¾ç½®
         }
         
         return Undefined();
     }
     
     Any NativeWindowProxy::setOpacity(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
     Any NativeWindowProxy::getOpacity(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return 255;
     }
     
     Any NativeWindowProxy::disableIME(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
     
     Any NativeWindowProxy::enableIME(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
     Any NativeWindowProxy::computeCursor(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     Any NativeWindowProxy::isComputeCursor(IPCMessage::SmartType msg) {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return Undefined();
     }
     
@@ -487,7 +487,7 @@ namespace amo {
     }
     
     std::shared_ptr<NativeWindowSettings> NativeWindowProxy::getNativeSettings() {
-        // ÓÉLocalWindowÀàÖØÔØ
+        // ç”±LocalWindowç±»é‡è½½
         return  std::shared_ptr<NativeWindowSettings>();
     }
     
