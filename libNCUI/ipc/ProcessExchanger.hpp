@@ -115,11 +115,11 @@ namespace amo {
                     break;
                 }
                 
-                //$clog(amo::cdevel << func_orient << "数据读取成功：：" << std::string((char*)msg.data()) << amo::endl;);
+                //$clog(amo::cdevel << func_orient << "数据读取成功::" << std::string((char*)msg.data()) << amo::endl;);
                 return Any(value_type, std::string((char*)msg.data()));		// 返回Any类型
             } while (false);
             
-            $clog(amo::cdevel << func_orient << "数据读取失败 " << amo::endl;);
+            $clog(amo::cdevel << func_orient << "read data error " << amo::endl;);
             return Nothing();
         }
         
@@ -214,7 +214,7 @@ namespace amo {
                 return true;
             } while (false);
             
-            $clog(amo::cdevel << func_orient << "数据写入失败:: " << anyToString(
+            $clog(amo::cdevel << func_orient << "write data error:: " << anyToString(
                       t) << amo::endl;);
             return false;
         }
@@ -281,7 +281,7 @@ namespace amo {
                 return true;
             } while (false);
             
-            $clog(amo::cdevel << func_orient << "数据写入失败:: " << t.value() <<
+            $clog(amo::cdevel << func_orient << "write data error:: " << t.value() <<
                   amo::endl;);
             return false;
         }
@@ -290,7 +290,7 @@ namespace amo {
             const IPCMessage::SmartType&  t) {
             std::unique_lock<std::recursive_mutex> lock(m_mutexClient);
             
-            //$clog(amo::cdevel << func_orient << "开始写入数据：" << t->toJson().to_string() << amo::endl;);
+            //$clog(amo::cdevel << func_orient << "开始写入数据:" << t->toJson().to_string() << amo::endl;);
             
             do {
                 int nCount = 0;
@@ -340,11 +340,11 @@ namespace amo {
                     break;
                 }
                 
-                //$clog(amo::cdevel << func_orient << "数据写入成功：" << t->toJson().to_string() << amo::endl;);
+                //$clog(amo::cdevel << func_orient << "数据写入成功:" << t->toJson().to_string() << amo::endl;);
                 return true;
             } while (false);
             
-            $clog(amo::cdevel << func_orient << "数据写入失败:: " <<
+            $clog(amo::cdevel << func_orient << "write data error:: " <<
                   t->toJson().to_string() << amo::endl;);
             return false;
             
@@ -595,10 +595,10 @@ namespace amo {
                 int iii = 44;
                 ++iii;
                 
-                throw std::runtime_error("处理到不应该出现的消息，只能收到ProcessMessage类");
+                throw std::runtime_error("invalid message , only support ProcessMessage");
             }
             
-            $clog(amo::cdevel << func_orient << "tryProcessMessage 失败::: " <<
+            $clog(amo::cdevel << func_orient << "tryProcessMessage error::: " <<
                   any.value() << amo::endl;);
             return Nothing();
         }
@@ -647,7 +647,7 @@ namespace amo {
             }
             
             R ret = iter->second->exchange<R>();
-            //$clog(amo::cdevel << "管道：：" << m_nN << ", "  << ret << amo::endl;);
+            //$clog(amo::cdevel << "管道::" << m_nN << ", "  << ret << amo::endl;);
             return ret;
         }
         
@@ -670,7 +670,7 @@ namespace amo {
             }
             
             Any ret = iter->second->exchange<Any>();
-            //$clog(amo::cdevel << "管道：：" << m_nN << ", " << ret.value() << amo::endl;);
+            //$clog(amo::cdevel << "管道::" << m_nN << ", " << ret.value() << amo::endl;);
             return ret;
         }
         
@@ -701,7 +701,7 @@ namespace amo {
             auto iter = m_mpBrowserExchanger.find(id);
             
             if (iter == m_mpBrowserExchanger.end() || !iter->second) {
-                $clog(amo::cdevel << func_orient << "没有找到管道 " << amo::endl;);
+                $clog(amo::cdevel << func_orient << "not found pipe " << amo::endl;);
                 return false;
             }
             
@@ -784,16 +784,16 @@ namespace amo {
                 if (m_nTimeout > 0) {
                     if (t.elapsed() > m_nTimeout) {
                     
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
                               message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
-                              message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
-                              message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
-                              message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
-                              message_id << amo::endl;);
+						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+							message_id << amo::endl;);
+						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+							message_id << amo::endl;);
+						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+							message_id << amo::endl;);
+						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+							message_id << amo::endl;);
                         m_oDeadlockIDs.insert(std::make_pair(id, message_id));
                         
                         if (getDeadlockCallback()) {
@@ -805,16 +805,16 @@ namespace amo {
                 } else {
                     if (t.elapsed() > 5000) {
                         // 打印消息出来提示死锁
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
-                              message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
-                              message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
-                              message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
-                              message_id << amo::endl;);
-                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", 死锁， ID: " <<
-                              message_id << amo::endl;);
+						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+							message_id << amo::endl;);
+						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+							message_id << amo::endl;);
+						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+							message_id << amo::endl;);
+						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+							message_id << amo::endl;);
+						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+							message_id << amo::endl;);
                               
                     }
                 }
@@ -840,7 +840,7 @@ namespace amo {
                             amo::IPCResult result = ret;
                             
                             if (result.getID() == message_id) {
-                                $clog(amo::cdevel << __FUNCTION__ << ", " << result.getID() << amo::endl;);
+                                $clog(amo::cdevel << func_orient  << result.getID() << amo::endl;);
                                 return result.getResult();
                             }
                             
@@ -886,7 +886,7 @@ namespace amo {
         
             if (m_oDeadlockIDs.find(std::make_pair(browserID,
                                                    messageID)) != m_oDeadlockIDs.end()) {
-                $cwarn("处理到已放弃的死锁ID，该消息不会被缓存");
+                $cwarn("invalid  message ID, discard ");
                 m_oDeadlockIDs.erase(std::make_pair(browserID, messageID));
                 return;
             }
@@ -907,7 +907,7 @@ namespace amo {
                 p[messageID] = ret;
                 
                 if (p.size() > 200) {
-                    //$cdevel("移除缓存：{0}", p.begin()->first);
+                    //$cdevel("移除缓存:{0}", p.begin()->first);
                     p.erase(p.begin());
                 }
                 

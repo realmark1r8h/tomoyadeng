@@ -1,13 +1,13 @@
 # BrowserWindow
 
-  浏览器窗口创建及控制.<br>工作线程：**UI线程**.
+  浏览器窗口创建及控制.<br>工作线程:**UI线程**.
   
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
 
 ## addBrowserWindowSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
-  为一个URL预设置窗口参数，当这个URL对应及其子路径的浏览器窗口由浏览器触发创建时，将使用该方法预设置的参数.<br>说明：**该方法并不能影响new BrowserWindow() 创建的浏览器窗口**
+  为一个URL预设置窗口参数，当这个URL对应及其子路径的浏览器窗口由浏览器触发创建时，将使用该方法预设置的参数.<br>说明:**该方法并不能影响new BrowserWindow() 创建的浏览器窗口**
   
 * **函数参数**
 
@@ -2356,7 +2356,7 @@ win.showTitleBar(!titleBar);
 
 
 ## close &nbsp;
-  尝试关闭窗口，可以被用户取消如：window.onload.<br>当<a href="#api/apiBrowserWindow/38">isClosable</a>为true,该函数无效.
+  尝试关闭窗口，可以被用户取消如:window.onload.<br>当<a href="#api/apiBrowserWindow/38">isClosable</a>为true,该函数无效.
   
 * **函数参数**  无
 
@@ -2441,7 +2441,7 @@ win.saveImageToFile('1.png', true);
 		<tr>
 	<td>JsonObject </td>
 	<td></td>
-	<td>录制参数.<br>| #String filename gif文件保存目录<br>| #Int=10	delay 帧间隔（注意单位为：百分一秒）<br>| #Int=20	total 最多录制帧数<br></td>
+	<td>录制参数.<br>| #String filename gif文件保存目录<br>| #Int=10	delay 帧间隔（注意单位为:百分一秒）<br>| #Int=20	total 最多录制帧数<br></td>
 </tr>
 	</tbody>
 </table>

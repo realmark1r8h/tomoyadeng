@@ -16,7 +16,7 @@ namespace amo {
      * @class	net
      *
      * @brief	网络相关类.<br>
-     * 			工作线程：**UI线程**.
+     * 			工作线程:**UI线程**.
      */
     
     class NetTransfer

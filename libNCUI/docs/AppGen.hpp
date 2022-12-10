@@ -9,7 +9,7 @@ namespace amo {
     /*!
      * @class	应用生成
      * @chapter basic
-     *
+     * @id basicAppGen
      * @brief	可以通过该模块生成自定义程序.
      * 	@script	../../example/js/appGen.js
      */

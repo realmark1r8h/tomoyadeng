@@ -18,7 +18,7 @@ namespace amo {
      * @extend Object
      *
      * @brief	弹出框，文件选择框.<br>
-     * 			工作线程：**UI线程**.
+     * 			工作线程:**UI线程**.
      *
      */
     

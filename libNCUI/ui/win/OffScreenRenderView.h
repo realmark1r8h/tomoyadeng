@@ -75,7 +75,7 @@ public:
             std::regex rgb("\\w+\\b");
             
             if (std::regex_search(ss, m, rgbName)) {
-                std::cout << "返回值：" << m[0].str() << std::endl;
+                std::cout << "retval:" << m[0].str() << std::endl;
                 ss = m.suffix();
             } else {
                 break;

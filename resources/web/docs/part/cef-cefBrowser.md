@@ -1,6 +1,6 @@
 # Browser
 
-  CEF提供的浏览器类封装.<br>工作线程：**UI线程**.
+  CEF提供的浏览器类封装.<br>工作线程:**UI线程**.
   
 ## GetHost &nbsp;<span class="label label-sync">同步</span> 
 

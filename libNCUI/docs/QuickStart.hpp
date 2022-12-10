@@ -9,6 +9,9 @@ namespace amo {
 
     /**
      * @class	快速开始
+     * 			
+     * @id basicQuickStart
+     * 	   
      * @desc 快速开始
      *
      * @chapter basic
@@ -25,11 +28,11 @@ namespace amo {
          * 			完整的manifest包含三个段，分别为 appSettings， browserWindowSettings， splashWindowSettings;<br>
          * 			对应可以设置{@link 启动参数}，{@link 启动浏览器窗口参数=浏览器窗口参数}，{@link 程序启动画面=启动画面}<br>
          * 			manifest不是必须的，如果不存在，那么程序将使用默认配置.<br>
-         * 			NCUI共有三个地方保存程序的启动参数，优先级从1到3，分别为：<br>
+         * 			NCUI共有三个地方保存程序的启动参数，优先级从1到3，分别为:<br>
          * 			&nbsp;&nbsp;&nbsp;&nbsp;1. manifest.json，可以通过编辑该文件修改启动参数<br>
          * 			&nbsp;&nbsp;&nbsp;&nbsp;2. exe程序中的资源文件，可以通过编辑exe程序修改启动参数,参考{@link 资源编辑=rcedit}、{@link 应用生成}<br>
          * 			&nbsp;&nbsp;&nbsp;&nbsp;3. 源代码中的默认启动参数，只能通过修改源代码来更改启动参数<br>
-         * 			注意：**manifest.json只支持ANSI编码，其他类型的编码可能不会被正确识别**
+         * 			注意:**manifest.json只支持ANSI编码，其他类型的编码可能不会被正确识别**
          *
          * @example
          *
@@ -138,7 +141,7 @@ namespace amo {
          *
          * @brief	程序启动时会创建一个默认的浏览器窗口，该窗口的参数可以通过编辑manifest.json文件进行配置.<br>
          *			如果需要在页面上创建窗口，可以通过{@link BrowserWindow}的{@link 构造函数=BrowserWindow.BrowserWindow}创建一个新的浏览器窗口。<br>
-         *			除此之外，浏览器默认的窗口创建动作（如：**a标签**、**window.open**等）出来的窗口将使用默认的{@link 浏览器窗口参数},
+         *			除此之外，浏览器默认的窗口创建动作（如:**a标签**、**window.open**等）出来的窗口将使用默认的{@link 浏览器窗口参数},
          *			这可能会影响你的正常使用（比如没有标题栏，不能拖动窗口），可以{@link 预设置浏览器窗口参数=BrowserWindow.addBrowserWindowSettings}来避免该问题
          *	@see BrowserWindow.addBrowserWindowSettings
          *	@example 创建浏览器窗口
@@ -166,7 +169,7 @@ namespace amo {
          * 			renderer_modules文件夹下的扩展在Renderer线程上运行，browser_modules文件夹下的扩展在UI线程上运行.<br>
          * 			使用**renderer_modules**导入renderer_modules文件夹下的模块，如果模块存在依赖那么，会使用includes加载依赖模块<br>
          * 			使用**browser_modules**可以跳过renderer_modules文件夹下的模块，直接导入browser_modules文件夹下的模块，如果模块存在依赖那么，会使用includes加载依赖模块<br>
-         * 			说明：<br>
+         * 			说明:<br>
          * 			&nbsp;&nbsp;&nbsp;&nbsp;**一个iframe中同一个模块只需要加载一次即可在任意地方使用**<br>
          * 			&nbsp;&nbsp;&nbsp;&nbsp;**如无特殊需求，都应该使用include 或 inclcudes 加载模块**<br>
          * 			&nbsp;&nbsp;&nbsp;&nbsp;**尽量不要编写与其他模块名相同的C++扩展模块**<br>

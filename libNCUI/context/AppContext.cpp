@@ -236,7 +236,7 @@ namespace amo {
         m_pCommandLine = CefCommandLine::CreateCommandLine();
         
         if (!m_pCommandLine) {
-            $cerr("无法初始化命令行参数");
+            $cerr("unable to initialize command line parameters");
             return;
         }
         
@@ -326,7 +326,7 @@ namespace amo {
         amo::log::set_level(amo::log::level::trace);
         amo::log::set_pattern("[%Y-%m-%d %H:%M:%S][%l] %v");
         
-        $clog(amo::cinfo << "日志初始化成功" << amo::endl;);
+        $clog(amo::cinfo << "log initialize success" << amo::endl;);
         
         // 设置进程消息超时时间
         ProcessExchanger::ipcTimeOut() = getDefaultAppSettings()->ipcTimeout;
@@ -493,7 +493,7 @@ namespace amo {
         int i = 0;
         std::cout << i << std::endl;
         
-        AMO_TIMER_ELAPSED_TEXT(run结束);
+        AMO_TIMER_ELAPSED_TEXT(runend);
         amo::log::finalize();
         CefShutdown();
         

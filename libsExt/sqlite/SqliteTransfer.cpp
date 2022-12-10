@@ -16,9 +16,9 @@
 
 
 const static std::string SQLITE_INVALID_CONNECTION =
-    "无效的数据库连接";
-const static std::string SQLITE_EMPTY_SQL = "SQL语句为空";
-const static std::string SQLITE_INVALID_SQL = "无效的SQL语句";
+    "invalid database connection";
+const static std::string SQLITE_EMPTY_SQL = "empty SQL";
+const static std::string SQLITE_INVALID_SQL = "invalid SQL";
 
 namespace amo {
 
@@ -287,7 +287,7 @@ namespace amo {
                     } else {
                         bQueryData = false;
                         types.push_back("TEXT");
-                        amo::cwarn << func_orient << "数据表列未知类型：" << columnName <<
+                        amo::cwarn << func_orient << "unknown type of table:" << columnName <<
                                    amo::endl;
                         //break;
                     }
@@ -958,13 +958,13 @@ namespace amo {
                 break;
             }
             
-            setLastError("无效的SELECT COUNT(*) 语句");
+            setLastError("invalid SELECT COUNT(*) sql");
             return false;
         }
         
         // 判断是否为Select语句
         if (!bCountSql) {
-            setLastError("无效的SELECT COUNT(*) 语句");
+            setLastError("invalid SELECT COUNT(*) sql");
             return false;
         }
         

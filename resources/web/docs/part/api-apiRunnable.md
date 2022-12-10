@@ -1,6 +1,6 @@
 # Runnable
 
-  如果一个类想要在线程中运行的话，需要继承自Runable.<br>工作线程：**UI线程** 或 **Renderer线程**.
+  如果一个类想要在线程中运行的话，需要继承自Runable.<br>工作线程:**UI线程** 或 **Renderer线程**.
   
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
@@ -40,7 +40,7 @@ console.log(demo.add(1,2));
 demo.attach(thread);
 demo.unique('Demo.add',function(info){
     console.log(info);
-    console.log('在线程中执行函数的返回结果：' + info.data);
+    console.log('在线程中执行函数的返回结果:' + info.data);
 });
 console.log(demo.add(1,2));
 
@@ -68,7 +68,7 @@ console.log(demo.add(1,2));
 demo.attach(thread);
 demo.unique('Demo.add',function(info){
     console.log(info);
-    console.log('在线程中执行函数的返回结果：' + info.data);
+    console.log('在线程中执行函数的返回结果:' + info.data);
 });
 console.log(demo.add(1,2));
 demo.detach();
@@ -103,7 +103,7 @@ setTimeout(function(){
 }, 3000);
 demo.unique('Demo.add',function(info){
     console.log(info);
-    console.log('在线程中执行函数的返回结果：' + info.data);
+    console.log('在线程中执行函数的返回结果:' + info.data);
 });
 console.log(demo.add(1,3));
 
@@ -137,7 +137,7 @@ includes('Demo', 'Thread');
  demo.unique('Demo.add',function(info){
     // 3秒后才能得到结果
      console.log(info);
-     console.log('在线程中执行函数的返回结果：' + info.data);
+     console.log('在线程中执行函数的返回结果:' + info.data);
  });
 
  demo.add(1,4);

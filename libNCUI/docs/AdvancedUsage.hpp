@@ -9,6 +9,7 @@ namespace amo {
     /*!
      * @class	高级用法
      * @desc	高级用法
+     * @id basicAdvancedUsage
      * @chapter basic
      * @brief	NCUI进阶教程.
      */

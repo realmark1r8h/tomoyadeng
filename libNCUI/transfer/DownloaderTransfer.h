@@ -22,7 +22,7 @@ namespace amo {
      * @extend  Object
      *
      * @brief	文件下载类，使用浏览器的下载功能下载文件.<br>
-     * 			工作线程：**UI线程**.
+     * 			工作线程:**UI线程**.
      */
     
     class DownloaderTransfer
@@ -93,7 +93,7 @@ namespace amo {
         		 });
         
         		 window.downloader.on('update', function(item){
-        			console.log('下载进度：' + item.percentComplete);
+        			console.log('下载进度:' + item.percentComplete);
         		 });
         
         		 window.downloader.on('complete', function(item){

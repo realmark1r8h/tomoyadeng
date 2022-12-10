@@ -1,6 +1,6 @@
 # dialog
 
-  弹出框，文件选择框.<br>工作线程：**UI线程**.
+  弹出框，文件选择框.<br>工作线程:**UI线程**.
   
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;

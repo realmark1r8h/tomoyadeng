@@ -15,7 +15,7 @@ namespace amo {
     /**
      * @class	HTTP请求参数
      *
-     * @id RequestSettings
+     * @id settingsRequestSettings
      *
      * @chapter settings
      *

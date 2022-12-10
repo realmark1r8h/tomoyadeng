@@ -8,7 +8,9 @@ namespace amo {
 
     /*!
      * @class	使用Node
-     *
+     * 			
+     * @id basicUserNodeJs
+     * 	   
      * @chapter	basic
      *
      * @brief	NCUI支持使用Node.js控制程序，但目前只针对4.7.1进行过开发，更高或更低的版本可能并不支持.
@@ -58,7 +60,7 @@ namespace amo {
          * @brief	编写manifest.json中"appSettings"中"main"字段所指定的文件，为Node.js提供入口.<br>
          * 			NCUI通过Node 扩展的方式提供文档中的所有的内置接口，只需要require(process.cwd() + '/ncui')即可使用，不需要使用include之类的函数加载模块.
          * 			同Node.js代码不能使用renderer_modules或者browser_modules等文件夹下面的外部扩展.<br>
-         * 			注意：**图形界面下NCUI需要重定向Node.js的控制台输出，否则将无法加载ncui.node插件**
+         * 			注意:**图形界面下NCUI需要重定向Node.js的控制台输出，否则将无法加载ncui.node插件**
          *
          * @example main.js
          *
@@ -101,12 +103,12 @@ namespace amo {
          * @section 调试Node.js
          *
          * @brief	正式的NCUI程序不支持调试Node.js，但你可以通过以下方式来调试Node.js代码<br>
-         * 			&nbsp;&nbsp;&nbsp;&nbsp;1.编辑manifest.json，使Node.js在单独的进程中运行：{"useNode": true, "useNodeProcess": true}<br>
+         * 			&nbsp;&nbsp;&nbsp;&nbsp;1.编辑manifest.json，使Node.js在单独的进程中运行:{"useNode": true, "useNodeProcess": true}<br>
          * 			&nbsp;&nbsp;&nbsp;&nbsp;2.编编Node.js的入口文件，加载C++扩展 require(process.cwd() + '/ncui-dev').<br>
          * 			&nbsp;&nbsp;&nbsp;&nbsp;3.开启node-insepector服务.<br>
          * 			&nbsp;&nbsp;&nbsp;&nbsp;3.运行NCUI-DEV.exe即可在浏览器中调试Node.js代码.<br>
-         * 			说明：**NCUI-DEV.exe为控制台程序，不需要重定向Node.js的控制台输出.**
-         * 			说明：**NCUI-DEV.exe启动时任务栏图标不能正确显示.**
+         * 			说明:**NCUI-DEV.exe为控制台程序，不需要重定向Node.js的控制台输出.**
+         * 			说明:**NCUI-DEV.exe启动时任务栏图标不能正确显示.**
          * @example
          *
          ```

@@ -125,7 +125,7 @@ public:
             
             
             if (p.file_exists()) {
-                OutputDebugStringA("读取manifest.json\n");
+                OutputDebugStringA("read manifest.json\n");
                 //$cdevel("读取manifest.json");
                 std::ifstream ifs(p.c_str());
                 std::stringstream buffer;
@@ -134,7 +134,7 @@ public:
                 manifestJson = amo::json(strJson);
                 
                 if (!manifestJson.is_valid()) {
-                    OutputDebugStringA("manifest.json文件格式错误\n");
+                    OutputDebugStringA("invalid manifest.json\n");
                     //$cwarn("manifest.json文件格式错误");
                     manifestJson = amo::json();
                 }
@@ -144,7 +144,7 @@ public:
                 
                 //$cdevel(strJson.c_str());
             } else {
-                OutputDebugStringA("manifest.json不存在");
+                OutputDebugStringA("manifest.json not exist");
                 //$cdevel("manifest.json不存在");
             }
         }
@@ -312,7 +312,7 @@ public:
                                         
         } catch (std::exception& e) {
             std::cout << e.what() << std::endl;
-            MessageBox(NULL, _T("内创建失败"), _T(""), MB_OK);
+            MessageBox(NULL, _T("create shared memory failed "), _T(""), MB_OK);
         }
         
     }

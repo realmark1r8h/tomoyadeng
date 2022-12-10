@@ -15,7 +15,7 @@ namespace amo {
      * @id settingsBrowserWindowSettings
      *
      * @brief	创建浏览器窗口时可用的属性.<br>
-     * 			说明：**配置参数不能在程序运行过程中修改，只有程序内部函数可以修改这些值。**
+     * 			说明:**配置参数不能在程序运行过程中修改，只有程序内部函数可以修改这些值。**
      *
      * @chapter settings
      *

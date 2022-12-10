@@ -1,6 +1,6 @@
 # app
 
-  控制程序程序的生命周期，并提供一些与程序相关的功能.<br>工作线程：**UI线程**.
+  控制程序程序的生命周期，并提供一些与程序相关的功能.<br>工作线程:**UI线程**.
   
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
@@ -51,7 +51,7 @@ console.log(config);
 
 //获取应用程序的指定配置参数
 var single_process = app.getConfig('single_process');
-console.log('单进程模式：' + single_process);
+console.log('单进程模式:' + single_process);
 
 ```
 
@@ -105,7 +105,7 @@ app.setConfig({
 
 ## toAbsolutePath &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
-  将一个路径转为绝对路径如：%web%.
+  将一个路径转为绝对路径如:%web%.
   
 * **函数参数**
 
@@ -475,7 +475,7 @@ console.assert(app.isAutoRun() == false);
 
 ```html
 var elapsed = app.elapsed();
-console.log('程序已运行：' + elapsed + ' ms');
+console.log('程序已运行:' + elapsed + ' ms');
 
 ```
 

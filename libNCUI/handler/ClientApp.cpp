@@ -31,21 +31,21 @@ namespace amo {
 #if CHROME_VERSION_BUILD >= 3029
     void ClientApp::RegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar> registrar,
                                           std::vector<CefString>& cookiable_schemes) {
-        $clog(amo::cdevel << func_orient << "注册自定义协议:" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "register custom protocol:" << amo::endl;);
         registrar->AddCustomScheme("local", true, false, false, false, true, false);
         cookiable_schemes.push_back("local");
     }
 #elif CHROME_VERSION_BUILD >= 2987
     void ClientApp::RegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar> registrar,
                                           std::vector<CefString>& cookiable_schemes) {
-        $clog(amo::cdevel << func_orient << "注册自定义协议:" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "register custom protocol:" << amo::endl;);
         registrar->AddCustomScheme("local", true, false, false, false, true);
         cookiable_schemes.push_back("local");
     }
 #else
     void ClientApp::RegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar> registrar,
                                           std::vector<CefString>& cookiable_schemes) {
-        $clog(amo::cdevel << func_orient << "注册自定义协议:" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "register custom protocol:" << amo::endl;);
         registrar->AddCustomScheme("local", true, false, false);
         cookiable_schemes.push_back("local");
     }
@@ -56,8 +56,7 @@ namespace amo {
     
     
     ClientApp::ClientApp() {
-        $clog(amo::cdevel << func_orient << "ClientApp 构造函数" << amo::endl;);
-        
+		$clog(amo::cdevel << func_orient << amo::endl;);
         m_pBrowserProcessHandler = NULL;
         m_pRenderProcessHandler = NULL;
         m_pResourceBundleHandler = NULL;
@@ -258,14 +257,13 @@ namespace amo {
         //      //command_line->AppendSwitch("--register-netscape-plugins = \"E:\\amoylel-Out\\Binary.UR32\\plugins\\npaemo.dll;application/x-demo-a\"");
         //      //command_line->AppendArgument("--register-pepper-plugins = \"E:\\amoylel-Out\\Binary.UR32\\plugins\\npaemo.dll;application/x-demo-a\"");
         
-        $clog(amo::cdevel << func_orient << "自定义CommandLine" << amo::endl;);
+        $clog(amo::cdevel << func_orient << "custom CommandLine" << amo::endl;);
         return;
     }
     
     
     void ClientApp::OnContextInitialized() {
-        $clog(amo::cdevel << func_orient << "Context初始化完成回调" << amo::endl;
-             );
+        $clog(amo::cdevel << func_orient << "OnContextInitialized" << amo::endl; );
 #if CHROME_VERSION_BUILD >= 2357
         CefRefPtr<CefCookieManager> manager = CefCookieManager::GetGlobalManager(NULL);
 #else
@@ -313,8 +311,8 @@ namespace amo {
             const CefString& domain_name,
             CefRefPtr<CefSchemeHandlerFactory> factory) {
         $clog(amo::cdevel << func_orient <<
-              "注册自定义协议工厂类，协议名："
-              << amo::string(scheme_name.ToString(), true).str() << "域名："
+              "register custom protocol factory class, protocol name"
+              << amo::string(scheme_name.ToString(), true).str() << "domain :"
               << amo::string(domain_name.ToString(), true).str() << amo::endl;);
         return CefRegisterSchemeHandlerFactory(scheme_name, domain_name, factory);
     }

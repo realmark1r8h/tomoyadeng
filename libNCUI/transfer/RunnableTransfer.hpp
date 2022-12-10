@@ -18,7 +18,7 @@ namespace amo {
      * @class	Runnable
      *
      * @brief	如果一个类想要在线程中运行的话，需要继承自Runable.<br>
-     * 			工作线程：**UI线程** 或 **Renderer线程**.
+     * 			工作线程:**UI线程** 或 **Renderer线程**.
      *
      * @extend Object
      */
@@ -112,7 +112,7 @@ namespace amo {
         	demo.attach(thread);
         	demo.unique('Demo.add',function(info){
         		console.log(info);
-        		console.log('在线程中执行函数的返回结果：' + info.data);
+        		console.log('在线程中执行函数的返回结果:' + info.data);
         	});
         	console.log(demo.add(1,2));
          ```
@@ -155,7 +155,7 @@ namespace amo {
         	 demo.attach(thread);
         	 demo.unique('Demo.add',function(info){
         		 console.log(info);
-        		 console.log('在线程中执行函数的返回结果：' + info.data);
+        		 console.log('在线程中执行函数的返回结果:' + info.data);
         	 });
         	 console.log(demo.add(1,2));
         	 demo.detach();
@@ -188,7 +188,7 @@ namespace amo {
         	 }, 3000);
         	 demo.unique('Demo.add',function(info){
         		 console.log(info);
-        		 console.log('在线程中执行函数的返回结果：' + info.data);
+        		 console.log('在线程中执行函数的返回结果:' + info.data);
         	 });
         	 console.log(demo.add(1,3));
         
@@ -241,7 +241,7 @@ namespace amo {
         	 demo.unique('Demo.add',function(info){
         		// 3秒后才能得到结果
         		 console.log(info);
-        		 console.log('在线程中执行函数的返回结果：' + info.data);
+        		 console.log('在线程中执行函数的返回结果:' + info.data);
         	 });
         
         	 demo.add(1,4);

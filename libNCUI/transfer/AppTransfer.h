@@ -18,7 +18,7 @@ namespace amo {
      * @extend  Object
      *
      * @brief	控制程序程序的生命周期，并提供一些与程序相关的功能.<br>
-     * 			工作线程：**UI线程**.
+     * 			工作线程:**UI线程**.
      */
     
     class AppTransfer
@@ -69,7 +69,7 @@ namespace amo {
         
         				//获取应用程序的指定配置参数
         				var single_process = app.getConfig('single_process');
-        				console.log('单进程模式：' + single_process);
+        				console.log('单进程模式:' + single_process);
         			```
         */
         
@@ -107,7 +107,7 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	将一个路径转为绝对路径如：%web%.
+         * @brief	将一个路径转为绝对路径如:%web%.
          *
          * @param	#String 需要转换的路径.
          *
@@ -427,7 +427,7 @@ namespace amo {
          * @example
         			```
         			var elapsed = app.elapsed();
-        			console.log('程序已运行：' + elapsed + ' ms');
+        			console.log('程序已运行:' + elapsed + ' ms');
         			```
          */
         

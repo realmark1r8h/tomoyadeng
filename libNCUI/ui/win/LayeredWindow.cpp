@@ -345,7 +345,7 @@ namespace amo {
         amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
         
         if (m_hWnd == NULL) {
-            $clog(amo::cwarn << "RunOnUiThread 无句柄支持" << amo::endl;);
+            $clog(amo::cwarn << "RunOnUiThread INVALID HWND" << amo::endl;);
             return;
         }
         

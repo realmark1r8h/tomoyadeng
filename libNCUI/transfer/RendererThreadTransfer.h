@@ -18,8 +18,8 @@ namespace amo {
     *
     *
     * @brief 线程类，该类构建的实例会在渲染进程上执行,可以使一个由C++编写的扩展在线程上运行.<br>
-    * 		 工作线程：**Renderer线程**.
-    * 		 说明：**虽然没有限制，但还是不建议将内置接口放到线程上去执行**
+    * 		 工作线程:**Renderer线程**.
+    * 		 说明:**虽然没有限制，但还是不建议将内置接口放到线程上去执行**
     */
     class RendererThreadTransfer : public ThreadTransfer<ThreadRenderer>
         , public amo::singleton<RendererThreadTransfer> {

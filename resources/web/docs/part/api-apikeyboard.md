@@ -2,7 +2,7 @@
 
 <script src="docs/js/../../example/js/keyboard.js" type="text/javascript" charset="utf-8"></script>
  
-  键盘操作类.<br>工作线程：**UI线程**.
+  键盘操作类.<br>工作线程:**UI线程**.
   
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;

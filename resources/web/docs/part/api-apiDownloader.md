@@ -1,6 +1,6 @@
 # Downloader
 
-  文件下载类，使用浏览器的下载功能下载文件.<br>工作线程：**UI线程**.
+  文件下载类，使用浏览器的下载功能下载文件.<br>工作线程:**UI线程**.
   
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
@@ -241,7 +241,7 @@ window.downloader.on('canceled', function(item){
 });
 
 window.downloader.on('update', function(item){
-   console.log('下载进度：' + item.percentComplete);
+   console.log('下载进度:' + item.percentComplete);
 });
 
 window.downloader.on('complete', function(item){

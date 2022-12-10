@@ -58,7 +58,7 @@ namespace amo {
           entry = zf->getEntry(amo::string("ReactJs/images/列表01.png").to_utf8());*/
         
         if (entry.isNull()) {
-            amo::cerr << "未能找到资源文件：" << strFile.to_ansi() << amo::endl;
+            amo::cerr << "failed to find resource file:" << strFile.to_ansi() << amo::endl;
             return false;
         }
         

@@ -93,7 +93,7 @@ namespace amo {
         /*!
         * @fn	Any NativeWindowProxy::close(IPCMessage::SmartType msg);
         *
-        * @brief	尝试关闭窗口，可以被用户取消如：window.onload.<br>
+        * @brief	尝试关闭窗口，可以被用户取消如:window.onload.<br>
         * 			当{@link isClosable=BrowserWindow.isClosable}为true,该函数无效.
         *
         *

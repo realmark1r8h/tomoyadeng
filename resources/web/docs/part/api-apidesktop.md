@@ -1,6 +1,6 @@
 # desktop
 
-  用于获取桌面的基本信息.<br>工作线程：**UI线程**.
+  用于获取桌面的基本信息.<br>工作线程:**UI线程**.
   
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;

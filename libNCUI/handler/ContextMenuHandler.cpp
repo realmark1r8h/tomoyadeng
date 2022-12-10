@@ -53,7 +53,7 @@ namespace amo {
             CefRefPtr<CefContextMenuParams> params,
             CefRefPtr<CefMenuModel> model) {
             
-        $clog(amo::cdevel << func_orient << params->GetEditStateFlags()  << "\t" << params->GetMediaStateFlags() << "\t" << params->GetTypeFlags() << amo::endl;);
+        //$clog(amo::cdevel << func_orient << params->GetEditStateFlags()  << "\t" << params->GetMediaStateFlags() << "\t" << params->GetTypeFlags() << amo::endl;);
         DelegateSet::iterator it = m_Delegates.begin();
         
         int count = model->GetCount();
@@ -73,7 +73,7 @@ namespace amo {
             bool ctrl;
             bool alt;
             model->GetAcceleratorAt(i, key_code, shift, ctrl, alt);
-            $cdevel("type:{}, value:{}, keycode:{}, shift:{}, ctrl:{}, alt:{}, command:{}", (int)model->GetTypeAt(i), amo::string(model->GetLabelAt(i).ToString(), true).to_ansi(), key_code, shift, ctrl, alt, model->GetCommandIdAt(i));
+            //$cdevel("type:{}, value:{}, keycode:{}, shift:{}, ctrl:{}, alt:{}, command:{}", (int)model->GetTypeAt(i), amo::string(model->GetLabelAt(i).ToString(), true).to_ansi(), key_code, shift, ctrl, alt, model->GetCommandIdAt(i));
         }
         
         for (; it != m_Delegates.end(); ++it) {

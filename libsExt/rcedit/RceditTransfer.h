@@ -38,7 +38,7 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	从磁盘中加载配置文件，配置文件包含四个数据段，其中三个段内容与manifest.json相同，只增加了一个文件段描述EXE文件的基本信息，段名"fileSettings",可用值如下：<br>
+         * @brief	从磁盘中加载配置文件，配置文件包含四个数据段，其中三个段内容与manifest.json相同，只增加了一个文件段描述EXE文件的基本信息，段名"fileSettings",可用值如下:<br>
          *			&nbsp; **CompanyName**: 公司名称，默认值"NCUI"<br>
          *			&nbsp; **FileDescription**: 文件描述，默认值"NCUI演示程序"<br>
          *			&nbsp; **FileVersion**:文件版本，默认值"1.0.0.0"<br>

@@ -305,7 +305,7 @@ namespace amo {
          * @param 	ret	The ret.
          */
         virtual void returnSyncResult(int nBrowserID, amo::IPCResult& ret) {
-            throw std::runtime_error("无法返回同步消息");
+            throw std::runtime_error("unable return sync msg");
         }
         
         /*!
@@ -327,7 +327,7 @@ namespace amo {
                                        Any& ret,
                                        int id,
                                        int frame_id) {
-            throw std::runtime_error("无法返回异步消息");
+            throw std::runtime_error("unable return async msg");
         }
         
         /*!
@@ -359,8 +359,8 @@ namespace amo {
             
             
             
-            /*     $clog(amo::cdevel << func_orient << "处理消息：" << msg->toJson().to_string() << amo::endl;);
-                 $clog(amo::cdevel << func_orient << "处理结果：" << ret.value() << amo::endl;);*/
+            /*     $clog(amo::cdevel << func_orient << "处理消息:" << msg->toJson().to_string() << amo::endl;);
+                 $clog(amo::cdevel << func_orient << "处理结果:" << ret.value() << amo::endl;);*/
             
             if (!ret.isValid()) {
                 if (strMessageName == MSG_NATIVE_SYNC_EXECUTE) {

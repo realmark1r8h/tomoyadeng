@@ -19,7 +19,7 @@ namespace amo {
      * @chapter cef
      *
      * @brief	CEF提供的浏览器类封装.<br>
-     * 			工作线程：**UI线程**.
+     * 			工作线程:**UI线程**.
      */
     
     class BrowserTransfer

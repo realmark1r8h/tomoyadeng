@@ -53,7 +53,7 @@ namespace amo {
         } while (false);
         
         
-        exception == L"函数调用失败";
+        exception == L"call function  failed";
         return false;
     }
     

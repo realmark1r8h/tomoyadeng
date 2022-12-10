@@ -1,6 +1,6 @@
 # Frame
 
-  CEF Frame 封装.<br>工作线程：**UI线程**.
+  CEF Frame 封装.<br>工作线程:**UI线程**.
   
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;

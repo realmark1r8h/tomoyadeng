@@ -461,7 +461,7 @@ namespace amo {
             if (classMap) {
                 for (auto iter = classMap->begin(); iter != classMap->end();) {
                     if (iter->second->transferName() != "Thread") {
-                        $cdevel("清理Transfer:{0}, {1} ",
+                        $cdevel("release Transfer:{0}, {1} ",
                                 iter->first,
                                 iter->second->transferName());
                         iter->second->onBeforeRelease();
@@ -472,7 +472,7 @@ namespace amo {
                 }
                 
                 for (auto iter = classMap->begin(); iter != classMap->end();) {
-                    $cdevel("清理Transfer:{0}, {1}, {2} ",
+                    $cdevel("release Transfer:{0}, {1}, {2} ",
                             iter->first,
                             iter->second->transferName(),
                             iter->second->getObjectName());
@@ -615,7 +615,7 @@ namespace amo {
         
         virtual void onBeforeRelease() {
         
-            $cdevel("正在释放资源：transferName = \"{0}\"， objectName = \"{1}\"， objectID = {2}",
+            $cdevel("release transfer :transferName = \"{0}\"， objectName = \"{1}\"， objectID = {2}",
                     transferName(), getObjectName(), getObjectID());
                     
                     

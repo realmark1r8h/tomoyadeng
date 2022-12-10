@@ -1,6 +1,6 @@
 # tray
 
-  托盘操作类.<br>工作线程：**UI线程**.
+  托盘操作类.<br>工作线程:**UI线程**.
   
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;

@@ -79,8 +79,8 @@ namespace amo {
         }
         
         if (wParam == SC_MAXIMIZE) {
-            int i = 23;
-            $cdevel("LPARAM:0x{}", amo::string::from_number((int)wParam, 16).str());
+            //int i = 23;
+            //$cdevel("LPARAM:0x{}", amo::string::from_number((int)wParam, 16).str());
         }
         
         // 禁止关闭
@@ -92,7 +92,7 @@ namespace amo {
         }
         
         if (wParam == 0xf014) {
-            $cdevel("LPARAM:0x{}", amo::string::from_number((int)wParam, 16).str());
+            //$cdevel("LPARAM:0x{}", amo::string::from_number((int)wParam, 16).str());
         }
         
         BOOL bZoomed = ::IsZoomed(*this);
@@ -169,7 +169,7 @@ namespace amo {
         }
         
         case WM_WINDOWPOSCHANGING: {
-            $cdevel("WM_WINDOWPOSCHANGING");
+            //$cdevel("WM_WINDOWPOSCHANGING");
             /*WINDOWPOS * winPos = (LPWINDOWPOS)lParam;
             ::MoveWindow(NULL, winPos->x, winPos->y, winPos->cx, winPos->cy, TRUE);*/
             break;

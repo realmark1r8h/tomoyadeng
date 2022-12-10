@@ -37,7 +37,7 @@ using Nan::Set;
 
 
 void terminateTest() {
-    std::cout << "程序正在结束..." << std::endl;
+    std::cout << "bye bye..." << std::endl;
 }
 static void OnFatalError(const char* location, const char* message) {
     /* if (location) {

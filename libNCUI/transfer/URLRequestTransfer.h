@@ -26,7 +26,7 @@ namespace amo {
      * @class	URLRequest
      *
      * @brief	网络请求类.<br>
-     * 			工作线程：**UI线程**.
+     * 			工作线程:**UI线程**.
      */
     
     class URLRequestTransfer

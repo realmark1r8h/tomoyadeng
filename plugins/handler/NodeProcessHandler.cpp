@@ -138,7 +138,7 @@ namespace amo {
         
         
         if (res.first == NULL) {
-            MessageBoxA(NULL, "没有找到", ("Initialize"), MB_OK);
+            MessageBoxA(NULL, "not found", ("Initialize"), MB_OK);
             return;
         } else {
             sss.clear();
@@ -176,7 +176,7 @@ namespace amo {
         
         SendMessageToUI(anyMessage);
         
-        $clog(amo::cdevel << func_orient << "创建管道服务端：" << strPipeServerName << amo::endl);
+        $clog(amo::cdevel << func_orient << "create pipe service:" << strPipeServerName << amo::endl);
         /* MessageBoxA(NULL, "3333", "223", MB_OK);*/
         //等待管道建立
         bool rec = m_pRenderPipeServer->connect();
@@ -184,8 +184,8 @@ namespace amo {
         
         
         if (!rec || !bOk) {
-            $clog(amo::cdevel << "管道连接失败" << amo::endl);
-            MessageBoxA(NULL, "管道连接失败", "223", MB_OK);
+            $clog(amo::cdevel << "connect pipe fail" << amo::endl);
+            MessageBoxA(NULL, "connect pipe fail", "223", MB_OK);
         }
         
         
@@ -274,7 +274,7 @@ namespace amo {
         
         while (m_pMessageQueueReader->timed_receive(&str, 10000, recvd_size, priority, pt)) {
             if (recvd_size == 0) {
-                assert(false && "无效数据");
+                assert(false && "invalid data");
                 return;
             }
             

@@ -206,7 +206,6 @@ namespace amo {
             nBrowserID);*/
         
         
-        $clog(amo::cdevel << func_orient << "95271" << amo::endl;);
         
         std::shared_ptr<amo::pipe<amo::pipe_type::server> >
         pBrowserPipeServer;			//消息管道主进程服务端
@@ -216,7 +215,7 @@ namespace amo {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string strPipeClientName = RendererPipePrefix + (std::string)
                                         args->getString(0);
-        $clog(amo::cdevel << func_orient << "连接管道：" << strPipeClientName <<
+        $clog(amo::cdevel << func_orient << "connect pipe:" << strPipeClientName <<
               amo::endl;);
         std::string strPipeServerName = BrowserPipePrefix + (std::string)
                                         args->getString(0);
@@ -228,12 +227,12 @@ namespace amo {
         
         int nBrowserID = args->getInt(1);
         
-        $clog(amo::cdevel << func_orient << "管道连接" << (bOK ? "成功" :
-                "失败") << amo::endl;);
+        $clog(amo::cdevel << func_orient << "connect pipe" << (bOK ? "success" :
+                "fail") << amo::endl;);
                 
         bOK = pBrowserPipeServer->connect();
-        $clog(amo::cdevel << func_orient << "主进程管道服务连接" <<
-              (bOK ? "成功" : "失败") << amo::endl;);
+        $clog(amo::cdevel << func_orient << "main process pipe service connect" <<
+              (bOK ? "success" : "fail") << amo::endl;);
               
         ClientHandler::AddExchanger(nBrowserID);
         std::shared_ptr<ProcessExchanger>

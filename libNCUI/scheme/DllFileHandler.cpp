@@ -52,7 +52,7 @@ namespace amo {
                                      filePath.c_str(), &val);
                                      
         if (!retval || *retval == 0 || val == NULL) {
-            amo::cerr << "未能找到资源文件：" << strFile.to_ansi() << amo::endl;
+            amo::cerr << "failed to find resource file:" << strFile.to_ansi() << amo::endl;
             return false;
         }
         

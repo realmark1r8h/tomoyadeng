@@ -774,7 +774,7 @@ namespace amo {
             std::shared_ptr<ClassTransfer> pTransfer) {
         // 注册外部模块到程序中
         BrowserTransferMgr::getInstance()->addTransfer(nBrowserID, pTransfer);
-        // TODO： UI线程同时加载多个外部模块
+        // TODO: UI线程同时加载多个外部模块
     }
     
     void WebkitView::triggerEventOnUIThread(IPCMessage::SmartType msg) {
@@ -912,7 +912,7 @@ namespace amo {
         //std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         //std::string strPipeClientName = RendererPipePrefix + (std::string)
         //                                args->getString(0);
-        //$clog(amo::cdevel << func_orient << "连接管道：" << strPipeClientName <<
+        //$clog(amo::cdevel << func_orient << "连接管道:" << strPipeClientName <<
         //      amo::endl;);
         //std::string strPipeServerName = BrowserPipePrefix + (std::string)
         //                                args->getString(0);
@@ -1422,7 +1422,7 @@ namespace amo {
         }
         
         if (status == TS_PROCESS_CRASHED) {
-            MessageWindow::Show(m_hBrowserWnd, _T("页面崩溃了。"));
+            MessageWindow::Show(m_hBrowserWnd, _T("the page crashed."));
             
         }
         

@@ -81,7 +81,7 @@ namespace amo {
             int id = -9999;
             std::string strPipeClientName = RendererPipePrefix + (std::string)
                                             args->getString(0);
-            $clog(amo::cdevel << func_orient << "连接管道：" << strPipeClientName <<
+            $clog(amo::cdevel << func_orient << "connect pipe:" << strPipeClientName <<
                   amo::endl;);
             std::string strPipeServerName = BrowserPipePrefix + (std::string)
                                             args->getString(0);
@@ -91,12 +91,12 @@ namespace amo {
                                        (strPipeServerName, DefaultPipeSize));
             bool bOK = m_pRenderPipeClient->connect();
             
-            $clog(amo::cdevel << func_orient << "管道连接" << (bOK ? "成功" :
-                    "失败") << amo::endl;);
+            $clog(amo::cdevel << func_orient << "connect pipe" << (bOK ? "success" :
+                    "fail") << amo::endl;);
                     
             bOK = m_pBrowserPipeServer->connect();
-            $clog(amo::cdevel << func_orient << "主进程管道服务连接" <<
-                  (bOK ? "成功" : "失败") << amo::endl;);
+            $clog(amo::cdevel << func_orient << "connect main process pipe service" <<
+                  (bOK ? "success" : "fail") << amo::endl;);
             m_pBrowserProcessExchanger->setPipeClient(m_pRenderPipeClient);
             m_pBrowserProcessExchanger->setPipeServer(m_pBrowserPipeServer);
             m_pBrowserProcessExchanger->setBrowserID(id);

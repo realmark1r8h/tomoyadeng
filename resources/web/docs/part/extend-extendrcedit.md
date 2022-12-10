@@ -4,7 +4,7 @@
   
 ## loadDiskSettings &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
-  从磁盘中加载配置文件，配置文件包含四个数据段，其中三个段内容与manifest.json相同，只增加了一个文件段描述EXE文件的基本信息，段名"fileSettings",可用值如下：<br>&nbsp; **CompanyName**: 公司名称，默认值"NCUI"<br>&nbsp; **FileDescription**: 文件描述，默认值"NCUI演示程序"<br>&nbsp; **FileVersion**:文件版本，默认值"1.0.0.0"<br>&nbsp; **InternalName**:内部名称，默认值"NCUIDemo.exe"<br>&nbsp; **LegalCopyright**:法律著作权，默认值"Copyright (C) 2017"<br>&nbsp; **OriginalFileName**:原始文件名称，默认值"NCUIDemo.exe"<br>&nbsp; **ProductName**:产品名称，默认值"NCUI演示程序"<br>&nbsp; **ProductVersion**:产品版本，默认值"1.0.0.0"<br>&nbsp; **Icon**:图标路径，默认使用当前程序的图标<br>
+  从磁盘中加载配置文件，配置文件包含四个数据段，其中三个段内容与manifest.json相同，只增加了一个文件段描述EXE文件的基本信息，段名"fileSettings",可用值如下:<br>&nbsp; **CompanyName**: 公司名称，默认值"NCUI"<br>&nbsp; **FileDescription**: 文件描述，默认值"NCUI演示程序"<br>&nbsp; **FileVersion**:文件版本，默认值"1.0.0.0"<br>&nbsp; **InternalName**:内部名称，默认值"NCUIDemo.exe"<br>&nbsp; **LegalCopyright**:法律著作权，默认值"Copyright (C) 2017"<br>&nbsp; **OriginalFileName**:原始文件名称，默认值"NCUIDemo.exe"<br>&nbsp; **ProductName**:产品名称，默认值"NCUI演示程序"<br>&nbsp; **ProductVersion**:产品版本，默认值"1.0.0.0"<br>&nbsp; **Icon**:图标路径，默认使用当前程序的图标<br>
   
 * **函数参数**
 

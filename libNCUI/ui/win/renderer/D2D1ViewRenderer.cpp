@@ -311,7 +311,7 @@ namespace amo {
                 ntotal += p;
             }
             
-            $cdevel("渲染用时：{}", ntotal / vec.size());
+            $cdevel("rendering time:{}", ntotal / vec.size());
             
             vec.clear();
         }
@@ -508,7 +508,7 @@ namespace amo {
                 ntotal += p;
             }
             
-            $cdevel("渲染用时：{}", ntotal / vec.size());
+            $cdevel("rendering time:{}", ntotal / vec.size());
             
             vec.clear();
         }

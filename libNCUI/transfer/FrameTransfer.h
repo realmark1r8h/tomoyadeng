@@ -19,7 +19,7 @@ namespace amo {
      * @extend Object
      *
      * @brief	CEF Frame 封装.<br>
-     * 			工作线程：**UI线程**.
+     * 			工作线程:**UI线程**.
      */
     
     class FrameTransfer

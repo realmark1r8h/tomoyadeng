@@ -1,6 +1,6 @@
 # URLRequest
 
-  网络请求类.<br>工作线程：**UI线程**.
+  网络请求类.<br>工作线程:**UI线程**.
   
 ## URLRequest &nbsp;<span class="label label-constructor">构造</span> 
 

@@ -1,6 +1,6 @@
 # BrowserHost
 
-  CEF BrowserHost 对象封装.<br>工作线程：**UI线程**.
+  CEF BrowserHost 对象封装.<br>工作线程:**UI线程**.
   
 ## click &nbsp;
   向页面发送单击事件.

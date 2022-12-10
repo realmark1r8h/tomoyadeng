@@ -1,6 +1,6 @@
 # net
 
-  网络相关类.<br>工作线程：**UI线程**.
+  网络相关类.<br>工作线程:**UI线程**.
   
 ## download &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 

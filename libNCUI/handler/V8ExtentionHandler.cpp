@@ -48,7 +48,7 @@ namespace amo {
                 && (arguments.size() != 1
                     || !arguments.at(0)->IsString()
                     || arguments.at(0)->GetStringValue().empty())) {
-            exception = L"include 的参数只能以字符串组成且不能为空";
+            exception = L"include parameters can only be composed of strings and cannot be empty.";
             return true;
         }
         
@@ -110,7 +110,7 @@ namespace amo {
             } else if (args->IsString()) {
                 list.push_back(args);
             } else {
-                exception = L"参数必须为字符串";
+                exception = L"the parameter must be a string.";
                 return false;
             }
         }
@@ -120,7 +120,7 @@ namespace amo {
             CefRefPtr<CefV8Value> args = list.at(i);
             
             if (!args || !args->IsString() || args->GetStringValue().empty()) {
-                exception = L"参数必须为字符串且不能为空";
+                exception = L"the parameter must be a string and cannot be empty.";
                 return true;
             }
             
@@ -131,7 +131,7 @@ namespace amo {
             
             // 判断模块名是否合法
             if (module.size() > 255) {
-                exception = L"模块名太长（最多为255个字符）";
+                exception = L"module name is too long(>255).";
                 return true;
             }
             
@@ -198,7 +198,7 @@ namespace amo {
             
             
             if (!pCache) {
-                exception = module.ToWString() + L": 导入模块失败";
+                exception = module.ToWString() + L": failure of import module";
                 return true;
             }
             
@@ -208,7 +208,7 @@ namespace amo {
                                          V8_PROPERTY_ATTRIBUTE_NONE);
                                          
             if (!bOK) {
-                exception = module.ToWString() + L": 导入模块失败";
+                exception = module.ToWString() + L": failure of import module";
                 return false;
             }
             

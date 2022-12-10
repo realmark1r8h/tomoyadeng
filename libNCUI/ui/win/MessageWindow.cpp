@@ -238,9 +238,9 @@ namespace amo {
         ASSERT(m_pEditPrompt != NULL);
         ASSERT(m_pLabelCaption != NULL);
         
-        m_pButtonOK->SetText(_T("确定"));
+        m_pButtonOK->SetText(DuiLib::CDuiString(L"确定"));
         m_pButtonOK->SetHotBkColor(0xff0A67FB);
-        m_pButtonCancel->SetText(_T("取消"));
+        m_pButtonCancel->SetText(DuiLib::CDuiString(L"取消"));
         
         m_pButtonCancel->SetHotBkColor(0xff3280fc);
         m_pButtonCancel->SetHotTextColor(0xffffffff);

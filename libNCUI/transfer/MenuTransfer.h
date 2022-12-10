@@ -18,7 +18,7 @@ namespace amo {
      * @extend Object
      *
      * @brief	弹出菜单.<br>
-     * 			工作线程：**UI线程**.
+     * 			工作线程:**UI线程**.
      */
     
     class MenuTransfer
@@ -36,7 +36,7 @@ namespace amo {
          * @param	#JsonObject 创建菜单所用到的参数<br>
          * 						[**Int**]		lineHeight 菜单项行高，默认为32<br>
          * 						[**String**]	separatorColor 分隔条颜色，默认"0xffe8e8e8"<br>
-         * 						[**JsonObject**] menu 所有菜单项,具体内容参考：<br>
+         * 						[**JsonObject**] menu 所有菜单项,具体内容参考:<br>
          * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	id 当前菜单项ID,一个菜单里面的菜单项ID应该是唯一的<br>
          * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	text 当前菜单项所显示的文本<br>
          * 							&nbsp;&nbsp;&nbsp;&nbsp;[**String**]	String 当前菜单项的预定义动作，如果有效则执且不会向页面返回菜单选择事件<br>
@@ -106,7 +106,7 @@ namespace amo {
         				]
         			});
         			menu.on('select', function(item) {
-        				alert('触发菜单：' + item.text);
+        				alert('触发菜单:' + item.text);
         			})
         		 ```
         * @example
@@ -179,7 +179,7 @@ namespace amo {
         			]
         		});
         		menu.on('select', function(item) {
-        			alert('触发菜单：' + item.text);
+        			alert('触发菜单:' + item.text);
         		})
         		return false;
         	};
@@ -207,7 +207,7 @@ namespace amo {
         				 ]
         			 });
         			 menu.on('select', function(item) {
-        				alert('触发菜单：' + item.text);
+        				alert('触发菜单:' + item.text);
         			 })
         			 return false;
         		 };
