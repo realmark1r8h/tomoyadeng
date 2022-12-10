@@ -64,6 +64,11 @@ namespace amo {
             return std::string();
         }
         
+        int nIndex = url.find("?");
+        
+        if (nIndex != -1) {
+            url.substr(0, nIndex);
+        }
         
         url = util::getUrlFromUtf8(url).to_utf8();
         amo::string_utils::trim_right(url, "/\\");

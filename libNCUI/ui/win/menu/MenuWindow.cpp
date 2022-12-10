@@ -67,7 +67,8 @@ namespace amo {
         
         s_context_menu_observer.AddReceiver(this);
         
-        Create((m_pOwner == NULL) ? m_hParent : m_pOwner->GetManager()->GetPaintWindow(), NULL,
+        Create((m_pOwner == NULL) ? m_hParent :
+               m_pOwner->GetManager()->GetPaintWindow(), NULL,
                WS_POPUP, WS_EX_TOOLWINDOW | WS_EX_TOPMOST, CDuiRect());
         // HACK: Don't deselect the parent's caption
         HWND hWndParent = m_hWnd;
@@ -132,10 +133,13 @@ namespace amo {
         
         if (m_pOwner != NULL) {
             for (int i = 0; i < m_pOwner->GetCount(); i++) {
-                if (static_cast<MenuElementUI*>(m_pOwner->GetItemAt(i)->GetInterface(kMenuElementUIInterfaceName)) != NULL) {
-                    (static_cast<MenuElementUI*>(m_pOwner->GetItemAt(i)))->SetOwner(m_pOwner->GetParent());
+                if (static_cast<MenuElementUI*>(m_pOwner->GetItemAt(i)->GetInterface(
+                                                    kMenuElementUIInterfaceName)) != NULL) {
+                    (static_cast<MenuElementUI*>(m_pOwner->GetItemAt(i)))->SetOwner(
+                        m_pOwner->GetParent());
                     (static_cast<MenuElementUI*>(m_pOwner->GetItemAt(i)))->SetVisible(false);
-                    (static_cast<MenuElementUI*>(m_pOwner->GetItemAt(i)->GetInterface(kMenuElementUIInterfaceName)))->SetInternVisible(false);
+                    (static_cast<MenuElementUI*>(m_pOwner->GetItemAt(i)->GetInterface(
+                                                     kMenuElementUIInterfaceName)))->SetInternVisible(false);
                 }
             }
             
@@ -153,9 +157,10 @@ namespace amo {
         
     }
     
-    LRESULT MenuWindow::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
-    
-    
+    LRESULT MenuWindow::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                            BOOL& bHandled) {
+                                            
+                                            
         if (uMsg == WM_RBUTTONDOWN || uMsg == WM_CONTEXTMENU
                 || uMsg == WM_RBUTTONUP || uMsg == WM_RBUTTONDBLCLK) {
             bHandled = TRUE;
@@ -173,7 +178,8 @@ namespace amo {
         return LayeredWindow::HandleCustomMessage(uMsg, wParam, lParam, bHandled);
     }
     
-    LRESULT MenuWindow::CreateMainMenuWindow(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT MenuWindow::CreateMainMenuWindow(UINT uMsg, WPARAM wParam,
+            LPARAM lParam, BOOL& bHandled) {
         LayeredWindow::OnCreate(uMsg, wParam, lParam, bHandled);
         CControlUI* control = m_PaintManager.FindControl(_T("menu"));
         m_pLayout = dynamic_cast<CMenuUI*>(control);
@@ -182,7 +188,8 @@ namespace amo {
 #if defined(WIN32) && !defined(UNDER_CE)
         MONITORINFO oMonitor = {};
         oMonitor.cbSize = sizeof(oMonitor);
-        ::GetMonitorInfo(::MonitorFromWindow(*this, MONITOR_DEFAULTTOPRIMARY), &oMonitor);
+        ::GetMonitorInfo(::MonitorFromWindow(*this, MONITOR_DEFAULTTOPRIMARY),
+                         &oMonitor);
         CDuiRect rcWork = oMonitor.rcWork;
 #else
         CDuiRect rcWork;
@@ -230,12 +237,14 @@ namespace amo {
         
         SetForegroundWindow(m_hWnd);
         MoveWindow(m_hWnd, rc.left, rc.top, rc.GetWidth(), rc.GetHeight(), FALSE);
-        SetWindowPos(m_hWnd, HWND_TOPMOST, rc.left, rc.top, rc.GetWidth(), rc.GetHeight(), SWP_SHOWWINDOW);
-        
+        SetWindowPos(m_hWnd, HWND_TOPMOST, rc.left, rc.top, rc.GetWidth(),
+                     rc.GetHeight(), SWP_SHOWWINDOW);
+                     
         return TRUE;
     }
     
-    LRESULT MenuWindow::CreateSubMenuWindow(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT MenuWindow::CreateSubMenuWindow(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                            BOOL& bHandled) {
         LayeredWindow::OnCreate(uMsg, wParam, lParam, bHandled);
         CControlUI* control = m_PaintManager.FindControl(_T("menu"));
         m_pLayout = dynamic_cast<CMenuUI*>(control);
@@ -266,7 +275,8 @@ namespace amo {
 #if defined(WIN32) && !defined(UNDER_CE)
         MONITORINFO oMonitor = {};
         oMonitor.cbSize = sizeof(oMonitor);
-        ::GetMonitorInfo(::MonitorFromWindow(*this, MONITOR_DEFAULTTOPRIMARY), &oMonitor);
+        ::GetMonitorInfo(::MonitorFromWindow(*this, MONITOR_DEFAULTTOPRIMARY),
+                         &oMonitor);
         CDuiRect rcWork = oMonitor.rcWork;
 #else
         CDuiRect rcWork;
@@ -275,7 +285,8 @@ namespace amo {
         SIZE szAvailable = { rcWork.right - rcWork.left, rcWork.bottom - rcWork.top };
         
         for (int it = 0; it < m_pOwner->GetCount(); it++) {
-            if (m_pOwner->GetItemAt(it)->GetInterface(kMenuElementUIInterfaceName) != NULL) {
+            if (m_pOwner->GetItemAt(it)->GetInterface(kMenuElementUIInterfaceName) !=
+                    NULL) {
                 CControlUI* pControl = static_cast<CControlUI*>(m_pOwner->GetItemAt(it));
                 SIZE sz = pControl->EstimateSize(szAvailable);
                 cyFixed += sz.cy;
@@ -305,7 +316,8 @@ namespace amo {
         LONG chBottomAlgin = 0;
         
         RECT rcPreWindow = { 0 };
-        ContextMenuObserver::Iterator<BOOL, ContextMenuParam> iterator(s_context_menu_observer);
+        ContextMenuObserver::Iterator<BOOL, ContextMenuParam> iterator(
+            s_context_menu_observer);
         ReceiverImplBase<BOOL, ContextMenuParam>* pReceiver = iterator.next();
         
         while (pReceiver != NULL) {
@@ -359,11 +371,13 @@ namespace amo {
             rc.right = rc.left + cxFixed;
         }
         
-        MoveWindow(m_hWnd, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top, FALSE);
+        MoveWindow(m_hWnd, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top,
+                   FALSE);
         return TRUE;
     }
     
-    LRESULT MenuWindow::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT MenuWindow::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                 BOOL& bHandled) {
         if (m_pOwner != NULL) {
             CreateSubMenuWindow(uMsg, wParam, lParam, bHandled);
         } else {
@@ -380,7 +394,8 @@ namespace amo {
         return TRUE;
     }
     
-    LRESULT MenuWindow::OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT MenuWindow::OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                BOOL& bHandled) {
         if (m_pOwner != NULL && m_pLayout != NULL) {
             for (int i = 0; i < m_pLayout->GetCount(); i++) {
                 if (m_pLayout->GetItemAt(i) != NULL) {
@@ -408,14 +423,16 @@ namespace amo {
         return LayeredWindow::OnClose(uMsg, wParam, lParam, bHandled);
     }
     
-    LRESULT MenuWindow::OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+    LRESULT MenuWindow::OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                    BOOL& bHandled) {
         HWND hFocusWnd = (HWND)wParam;
         
         BOOL bInMenuWindowList = FALSE;
         ContextMenuParam param;
         param.hWnd = GetHWND();
         
-        ContextMenuObserver::Iterator<BOOL, ContextMenuParam> iterator(s_context_menu_observer);
+        ContextMenuObserver::Iterator<BOOL, ContextMenuParam> iterator(
+            s_context_menu_observer);
         ReceiverImplBase<BOOL, ContextMenuParam>* pReceiver = iterator.next();
         
         while (pReceiver != NULL) {
@@ -438,14 +455,16 @@ namespace amo {
         return TRUE;
     }
     
-    LRESULT MenuWindow::OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
-    
-    
-    
+    LRESULT MenuWindow::OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                  BOOL& bHandled) {
+                                  
+                                  
+                                  
         if (wParam >= 'A' && wParam <= 'z') {
         
-            CDuiPtrArray* arr = m_PaintManager.FindSubControlsByClass(m_pLayout, kMenuElementUIClassName);
-            
+            CDuiPtrArray* arr = m_PaintManager.FindSubControlsByClass(m_pLayout,
+                                kMenuElementUIClassName);
+                                
             for (int i = 0; i < arr->GetSize(); ++i) {
                 MenuElementUI* element = NULL;
                 element = reinterpret_cast<MenuElementUI*>(arr->GetAt(i));
@@ -609,6 +628,7 @@ namespace amo {
             amo::string skinTemplate(skinMenuWindow, false);
             skin = skinTemplate.format(m_pMenuSettings->settings);
             //skin = amo::format(skinMenuWindow, m_pMenuSettings->m_json);
+            //auto ssss = amo::string_utils::utf8_to_wide(skin.to_utf8());
             return skin.to_unicode().c_str();
             
         } else {
@@ -616,6 +636,7 @@ namespace amo {
             amo::json json;
             amo::string skinTemplate(skinMenuWindow, false);
             amo::string  skin = skinTemplate.format(json);
+            //auto ssss = amo::string_utils::utf8_to_wide(skin.to_utf8());
             return skin.to_unicode().c_str();
         }
     }

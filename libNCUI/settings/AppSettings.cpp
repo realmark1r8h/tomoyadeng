@@ -14,7 +14,8 @@ namespace amo {
 
 
     AppSettings::AppSettings() {
-        AMO_TIMER_INIT(程序开始);
+        //AMO_TIMER_INIT(程序开始);
+        amo::timer::start_timer_foo("app start running");
         initDefaultCefSettings();
         initDefaultAppSettings();
         std::string str = settings.to_string();

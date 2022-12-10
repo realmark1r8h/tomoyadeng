@@ -1199,21 +1199,39 @@ namespace amo {
                     
                 case	MENUITEMTYPE_COMMAND: {
                     std::string label = model->GetLabelAt(i);
+                    
+                    auto ssss = amo::string_utils::utf8_to_wide(label);
                     int commandid = model->GetCommandIdAt(i);
                     int editFlags = params->GetEditStateFlags();
                     std::string shortcut;
-                    std::regex reg("\\(&.+?\\)");
-                    std::smatch m;
+                    std::regex reg1("\\(&[a-zA-Z]\\)");
+                    std::regex reg2("&[a-zA-Z]");
+                    std::smatch m1;
+                    std::smatch m2;
                     
-                    while (std::regex_search(label, m, reg)) {
-                        shortcut = m[0].str();
+                    if (std::regex_search(label, m1, reg1)) {
+                        shortcut = m1[0].str();
+                        amo::string_utils::trim_left(shortcut, "(&");
+                        amo::string_utils::trim_right(shortcut, ")");
+                        label = std::regex_replace(label, reg1, "");
                         
-                        shortcut = shortcut.substr(2);
-                        shortcut = shortcut.substr(0, shortcut.size() - 1);
-                        break;
+                    } else if (std::regex_search(label, m2, reg2)) {
+                        shortcut = m2[0].str();
+                        amo::string_utils::trim_left(shortcut, "&");
+                        label = std::regex_replace(label, std::regex("&"), "");
                     }
                     
-                    label = std::regex_replace(label, reg, "");
+                    
+                    //while (std::regex_search(label, m1, reg1)) {
+                    //    shortcut = m1[0].str();
+                    //    amo::string_utils::trim_left(shortcut, "(");
+                    //    amo::string_utils::trim_right(shortcut, ")");
+                    //    shortcut = shortcut.substr(1);
+                    //    //shortcut = shortcut.substr(0, shortcut.size() - 1);
+                    //    break;
+                    //}
+                    //
+                    //label = std::regex_replace(label, reg, "");
                     
                     amo::json item;
                     item.put("id", std::to_string(commandid));
@@ -1261,6 +1279,7 @@ namespace amo {
             }
             
             json.put("menu", menu);
+            
             auto menuTransfer = ClassTransfer::getUniqueTransfer<MenuTransfer>();
             std::shared_ptr<IPCMessage> msg = IPCMessage::Empty();
             

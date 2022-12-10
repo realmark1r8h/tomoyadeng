@@ -14,11 +14,32 @@ namespace amo {
 
     class util {
     public:
+		static std::string decodeUrl(const std::string &value) noexcept {
+			std::string result;
+			result.reserve(value.size() / 3 + (value.size() % 3)); // Minimum size of result
+
+			for (std::size_t i = 0; i < value.size(); ++i) {
+				auto &chr = value[i];
+				if (chr == '%' && i + 2 < value.size()) {
+					auto hex = value.substr(i + 1, 2);
+					auto decoded_chr = static_cast<char>(std::strtol(hex.c_str(), nullptr, 16));
+					result += decoded_chr;
+					i += 2;
+				}
+				else if (chr == '+')
+					result += ' ';
+				else
+					result += chr;
+			}
+
+			return result;
+		}
+
         static amo::string getUrlFromUtf8(const std::string& url) {
             std::string ss = url;
-            std::string sd;
+            std::string sd = decodeUrl(ss);
             
-            while (!ss.empty()) {
+            /*while (!ss.empty()) {
                 int index = ss.find_first_of('%');
                 
                 if (index == -1) {
@@ -38,7 +59,7 @@ namespace amo {
                     std::cout << b << std::endl;
                 }
             }
-            
+            */
             return amo::string(sd, true);
         }
         
