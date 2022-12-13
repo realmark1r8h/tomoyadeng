@@ -524,7 +524,7 @@ namespace amo {
             for (auto& p : vec) {
                 std::string sb = p.to_string();
                 $clog(amo::cdevel << sb << amo::endl;);
-                amo::string menuElenent(skinMenuElement, true);
+                amo::u8string menuElenent(skinMenuElement, true);
                 
                 if (!p.contains_key("enabled")) {
                     p.put("enabled", true);
@@ -586,9 +586,9 @@ namespace amo {
                 
                 
                 if (!json.empty()) {
-                    amo::string misc(skinMenuElementMisc, true);
+                    amo::u8string misc(skinMenuElementMisc, true);
                     misc = misc.format(json);
-                    p.put("misc", misc.to_ansi());
+                    p.put("misc", misc.to_utf8());
                 }
                 
                 
@@ -601,7 +601,7 @@ namespace amo {
                 //	p.put("separator", "0x00ffffff");
                 //}
                 
-                strMenu += menuElenent.format(p).to_ansi();
+                strMenu += menuElenent.format(p).to_utf8();
                 
                 
             }
@@ -622,10 +622,12 @@ namespace amo {
                 menuSettings += ParseSkinFile(menu);
             }
             
-            amo::string skin(menuSettings, true);
-            m_pMenuSettings->settings.put("element", skin.to_ansi());
+            std::wstring ws = amo::string_utils::utf8_to_wide(menu.to_string());
+            std::wstring ws2 = amo::string_utils::utf8_to_wide(menuSettings);
+            amo::u8string skin(menuSettings, true);
+            m_pMenuSettings->settings.put("element", skin.to_utf8());
             
-            amo::string skinTemplate(skinMenuWindow, false);
+            amo::u8string skinTemplate(skinMenuWindow, true);
             skin = skinTemplate.format(m_pMenuSettings->settings);
             //skin = amo::format(skinMenuWindow, m_pMenuSettings->m_json);
             //auto ssss = amo::string_utils::utf8_to_wide(skin.to_utf8());
@@ -634,8 +636,8 @@ namespace amo {
         } else {
         
             amo::json json;
-            amo::string skinTemplate(skinMenuWindow, false);
-            amo::string  skin = skinTemplate.format(json);
+            amo::u8string skinTemplate(skinMenuWindow, true);
+            amo::u8string  skin = skinTemplate.format(json);
             //auto ssss = amo::string_utils::utf8_to_wide(skin.to_utf8());
             return skin.to_unicode().c_str();
         }

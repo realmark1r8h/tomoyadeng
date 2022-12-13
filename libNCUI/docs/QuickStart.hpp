@@ -9,9 +9,8 @@ namespace amo {
 
     /**
      * @class	快速开始
-     * 			
-     * @id basicQuickStart
-     * 	   
+     *
+     *
      * @desc 快速开始
      *
      * @chapter basic

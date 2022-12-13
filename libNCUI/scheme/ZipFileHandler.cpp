@@ -24,13 +24,13 @@ namespace amo {
     bool ZipFileHandler::ProcessRequest(CefRefPtr<CefRequest> request,
                                         CefRefPtr<CefCallback> callback) {
         //AMO_TIMER_ELAPSED();
-        amo::string url = amo::util().getUrlFromUtf8(request->GetURL());
+        amo::u8string url = amo::util().getUrlFromUtf8(request->GetURL());
         
         if (url != m_strUrl) {
             return false;
         }
         
-        amo::string zipPath = m_strZip;
+        amo::u8string zipPath = m_strZip;
         zipPath.replace("\\", "/");
         //zipPath = "web/web.zip";
         
@@ -41,9 +41,9 @@ namespace amo {
             return false;
         }
         
-        amo::path p(m_strFile);
+        amo::u8path p(m_strFile);
         p.remove_front_backslash();
-        amo::string strFile(p.c_str(), false);
+        amo::u8string strFile(p.c_str(), false);
         strFile.replace("\\", "/");
         //amo::path dirPath = p.remove_file_spec_c().remove_front_backslash();
         std::vector<libzippp::ZipEntry>  vec = zf->getEntries();

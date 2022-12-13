@@ -20,8 +20,9 @@ namespace amo {
             return false;
         }
         
-        amo::string strPath(m_strFile, true);
-        
+        amo::u8string strPath(m_strFile, true);
+        OutputDebugStringW(strPath.to_wide().c_str());
+        OutputDebugStringW(L"\n");
         return ReadNativeFile(strPath, callback);
         
     }

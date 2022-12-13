@@ -44,9 +44,9 @@ namespace amo {
         IMPLEMENT_REFCOUNTING(DllFileHandler);
         
     private:
-        amo::string m_strUrl; //
-        amo::string m_strFile; //
-        amo::string m_strZip; //
+        amo::u8string m_strUrl; //
+        amo::u8string m_strFile; //
+        amo::u8string m_strZip; //
     };
 }
 

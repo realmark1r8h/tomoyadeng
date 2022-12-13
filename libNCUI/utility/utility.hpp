@@ -14,53 +14,30 @@ namespace amo {
 
     class util {
     public:
-		static std::string decodeUrl(const std::string &value) noexcept {
-			std::string result;
-			result.reserve(value.size() / 3 + (value.size() % 3)); // Minimum size of result
-
-			for (std::size_t i = 0; i < value.size(); ++i) {
-				auto &chr = value[i];
-				if (chr == '%' && i + 2 < value.size()) {
-					auto hex = value.substr(i + 1, 2);
-					auto decoded_chr = static_cast<char>(std::strtol(hex.c_str(), nullptr, 16));
-					result += decoded_chr;
-					i += 2;
-				}
-				else if (chr == '+')
-					result += ' ';
-				else
-					result += chr;
-			}
-
-			return result;
-		}
-
-        static amo::string getUrlFromUtf8(const std::string& url) {
-            std::string ss = url;
-            std::string sd = decodeUrl(ss);
+        static std::string decodeUrl(const std::string &value) noexcept {
+            std::string result;
+            result.reserve(value.size() / 3 + (value.size() % 3)); // Minimum size of result
             
-            /*while (!ss.empty()) {
-                int index = ss.find_first_of('%');
+            for (std::size_t i = 0; i < value.size(); ++i) {
+                auto &chr = value[i];
                 
-                if (index == -1) {
-                    sd += ss;
-                    ss = "";
+                if (chr == '%' && i + 2 < value.size()) {
+                    auto hex = value.substr(i + 1, 2);
+                    auto decoded_chr = static_cast<char>(std::strtol(hex.c_str(), nullptr, 16));
+                    result += decoded_chr;
+                    i += 2;
+                } else if (chr == '+') {
+                    result += ' ';
                 } else {
-                    sd += ss.substr(0, index);
-                    ss = ss.substr(index + 1);
-                    std::stringstream str;
-                    str << std::hex << ss.substr(0, 2);
-                    std::string sc = str.str();
-                    int b = 0;
-                    
-                    str >> b;
-                    sd += (char)(b & 0xff);
-                    ss = ss.substr(2);
-                    std::cout << b << std::endl;
+                    result += chr;
                 }
             }
-            */
-            return amo::string(sd, true);
+            
+            return result;
+        }
+        
+        static amo::u8string getUrlFromUtf8(const std::string& url) {
+            return amo::u8string(decodeUrl(url), true);
         }
         
         static bool isDevUrl(const std::string& url) {

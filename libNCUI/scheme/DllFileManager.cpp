@@ -8,7 +8,7 @@ namespace amo {
     
     }
     
-    std::shared_ptr<amo::loader> DllFileManager::get(const amo::string&
+    std::shared_ptr<amo::loader> DllFileManager::get(const amo::u8string&
             strPath) {
         auto iter = m_map.find(strPath);
         
@@ -27,7 +27,7 @@ namespace amo {
         return std::shared_ptr<amo::loader>();
     }
     
-    bool DllFileManager::add(const amo::string& strPath,
+    bool DllFileManager::add(const amo::u8string& strPath,
                              std::shared_ptr<amo::loader> dll) {
                              
         m_map[strPath] = dll;

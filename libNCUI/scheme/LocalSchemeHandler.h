@@ -43,7 +43,7 @@ namespace amo {
                                   
         IMPLEMENT_REFCOUNTING(LocalSchemeHandler);
     protected:
-        bool ReadNativeFile(const amo::string& strPath,
+        bool ReadNativeFile(const amo::u8string& strPath,
                             CefRefPtr<CefCallback> callback);
                             
         bool readMimeType(const std::string& str);

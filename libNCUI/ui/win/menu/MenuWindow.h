@@ -51,14 +51,19 @@ namespace amo {
         virtual CControlUI* CreateControl(LPCTSTR pstrClass) override;
         virtual void OnFinalMessage(HWND hWnd) override;
         virtual void InitWindow() override;
-        virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
-        virtual LRESULT OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
+        virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                            BOOL& bHandled) override;
+        virtual LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                 BOOL& bHandled) override;
+        virtual LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                BOOL& bHandled) override;
+        virtual LRESULT OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                    BOOL& bHandled) override;
+        virtual LRESULT OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                  BOOL& bHandled) override;
         virtual CDuiString GetSkinFolder() override;
         virtual CDuiString GetSkinFile() override;
-
+        
         std::string ParseSkinFile(amo::json& menu);
         
         
@@ -71,8 +76,10 @@ namespace amo {
         
         virtual BOOL Receive(ContextMenuParam param) override;
     protected:
-        LRESULT CreateMainMenuWindow(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT CreateSubMenuWindow(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT CreateMainMenuWindow(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                     BOOL& bHandled);
+        LRESULT CreateSubMenuWindow(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                    BOOL& bHandled);
     public:
         //ShadowWindow m_Shadow;
         HWND m_hParent;

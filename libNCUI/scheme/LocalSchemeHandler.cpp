@@ -182,7 +182,7 @@ namespace amo {
         	int nCount = pPostData->GetElementCount();*/
         bool bHandled = false;
         
-        amo::string strUrl = util::getUrlFromUtf8(request->GetURL());
+        amo::u8string strUrl = util::getUrlFromUtf8(request->GetURL());
         strUrl.replace("\\", "/");
         int nIndex = strUrl.find("local://file/");
         
@@ -190,9 +190,9 @@ namespace amo {
             strUrl = strUrl.substr(nIndex + 13);
         }
         
-        if (!amo::path(strUrl).is_absolute()) {
-            strUrl = amo::string(AppSettings::getInstance()->toAbsolutePath(
-                                     std::string("%webDir%") + strUrl.to_utf8()), true);
+        if (!amo::u8path(strUrl).is_absolute()) {
+            strUrl = amo::u8string(AppSettings::getInstance()->toAbsolutePath(
+                                       std::string("%webDir%") + strUrl.to_utf8()), true);
         }
         
         strUrl.replace("\\", "/");
@@ -203,9 +203,9 @@ namespace amo {
             strUrl = strUrl.substr(nIndex + 9);
         }
         
-        if (!amo::path(strUrl).is_absolute()) {
-            strUrl = amo::string(AppSettings::getInstance()->toAbsolutePath(
-                                     std::string("%webDir%") + strUrl.to_utf8()), true);
+        if (!amo::u8path(strUrl).is_absolute()) {
+            strUrl = amo::u8string(AppSettings::getInstance()->toAbsolutePath(
+                                       std::string("%webDir%") + strUrl.to_utf8()), true);
         }
         
         return ReadNativeFile(strUrl, callback);
@@ -213,22 +213,26 @@ namespace amo {
     }
     
     
-    bool LocalSchemeHandler::ReadNativeFile(const amo::string& strPath,
+    bool LocalSchemeHandler::ReadNativeFile(const amo::u8string& strPath,
                                             CefRefPtr<CefCallback> callback) {
                                             
         //获取文件扩展名
-        std::string ext = amo::path(strPath.c_str()).find_extension();
+        std::string ext = amo::u8path(strPath.c_str()).find_extension();
         
         if (ext == "json" || ext == ".json") {
             int cd = 32;
             ++cd;
         }
         
+        $func_orient;
+        OutputDebugStringW(strPath.to_wide().c_str());
+        OutputDebugStringW(L"\n");
         //读取文件
-        std::ifstream tail_ifs(strPath.to_ansi(),
+        std::ifstream tail_ifs(strPath.to_wide(),
                                std::ios::ios_base::binary | std::ios::ios_base::in);
                                
         if (!tail_ifs.is_open()) {
+            OutputDebugStringA("111\n");
             return false;	//文件不存在
         }
         
@@ -238,6 +242,7 @@ namespace amo {
         m_strData = str;
         
         if (m_strData.empty()) {
+            OutputDebugStringA("222\n");
             return false;    //没有读取到数据，返回false
         }
         
@@ -249,6 +254,7 @@ namespace amo {
             return true;
         }
         
+        OutputDebugStringA("333\n");
         return false;
     }
     

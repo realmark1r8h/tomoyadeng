@@ -48,7 +48,7 @@ namespace amo {
     }
     
     std::shared_ptr<libzippp::ZipArchive> ZipFileManager::get(
-        const amo::string& strPath) {
+        const amo::u8string& strPath) {
         auto iter = m_map.find(strPath);
         
         if (iter != m_map.end()) {
@@ -81,7 +81,7 @@ namespace amo {
         return std::shared_ptr<libzippp::ZipArchive>();
     }
     
-    bool ZipFileManager::add(const amo::string& strPath,
+    bool ZipFileManager::add(const amo::u8string& strPath,
                              std::shared_ptr<libzippp::ZipArchive> zf) {
         m_map[strPath] = zf;
         return true;

@@ -11,10 +11,12 @@
 
 
 #include <transfer/RunnableTransfer.hpp>
+#include <amo/path.hpp>
+
 namespace amo {
 
-    class path;
-    
+
+
     /*!
      * @class	Path
      * @chapter extend

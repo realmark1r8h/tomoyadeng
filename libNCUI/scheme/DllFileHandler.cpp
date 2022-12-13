@@ -11,9 +11,9 @@ namespace amo {
     DllFileHandler::DllFileHandler(const std::string& url,
                                    const std::string& u8ZipPath,
                                    const std::string& u8File)
-        : m_strUrl(url)
-        , m_strFile(u8File)
-        , m_strZip(u8ZipPath) {
+        : m_strUrl(url, true)
+        , m_strFile(u8File, true)
+        , m_strZip(u8ZipPath, true) {
         
         
         m_strUrl = amo::util().getUrlFromUtf8(m_strUrl);
@@ -24,13 +24,13 @@ namespace amo {
     bool DllFileHandler::ProcessRequest(CefRefPtr<CefRequest> request,
                                         CefRefPtr<CefCallback> callback) {
         //AMO_TIMER_ELAPSED();
-        amo::string url = amo::util().getUrlFromUtf8(request->GetURL());
+        amo::u8string url = amo::util().getUrlFromUtf8(request->GetURL());
         
         if (url != m_strUrl) {
             return false;
         }
         
-        amo::string dllPath = m_strZip;
+        amo::u8string dllPath = m_strZip;
         dllPath.replace("\\", "/");
         //zipPath = "web/web.zip";
         
@@ -41,9 +41,9 @@ namespace amo {
             return false;
         }
         
-        amo::path p(m_strFile);
+        amo::u8path p(m_strFile);
         p.remove_front_backslash();
-        amo::string strFile(p.c_str(), false);
+        amo::u8string strFile(p.c_str(), false);
         strFile.replace("\\", "/");
         
         std::string filePath = strFile;

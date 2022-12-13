@@ -1280,6 +1280,8 @@ namespace amo {
             
             json.put("menu", menu);
             
+            std::string ssss = json.to_string();
+            std::wstring ws3 = amo::string_utils::utf8_to_wide(ssss);
             auto menuTransfer = ClassTransfer::getUniqueTransfer<MenuTransfer>();
             std::shared_ptr<IPCMessage> msg = IPCMessage::Empty();
             

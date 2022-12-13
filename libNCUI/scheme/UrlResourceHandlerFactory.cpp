@@ -19,7 +19,11 @@ namespace amo {
         pTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
         Any ret = pTransfer->urlToNativePath(msg);
         
+        $func_orient;
         std::string u8File = ret.As<std::string>();
+        OutputDebugStringW(amo::string_utils::utf8_to_wide(u8File).c_str());
+        OutputDebugStringW(L"\n");
+        
         
         if (u8File.empty()) {
             return NULL;

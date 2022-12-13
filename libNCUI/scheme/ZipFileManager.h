@@ -15,10 +15,11 @@ namespace amo {
     class ZipFileManager : public amo::singleton<ZipFileManager> {
     public:
         ZipFileManager();
-        std::shared_ptr<libzippp::ZipArchive> get(const amo::string& u8Path);
-        bool add(const amo::string& strPath, std::shared_ptr<libzippp::ZipArchive> zf);
+        std::shared_ptr<libzippp::ZipArchive> get(const amo::u8string& u8Path);
+        bool add(const amo::u8string& strPath,
+                 std::shared_ptr<libzippp::ZipArchive> zf);
     private:
-        std::unordered_map<amo::string, std::shared_ptr<libzippp::ZipArchive> > m_map;
+        std::unordered_map<amo::u8string, std::shared_ptr<libzippp::ZipArchive> > m_map;
     };
 }
 

@@ -70,7 +70,16 @@ namespace amo {
             url.substr(0, nIndex);
         }
         
+        $func_orient;
+        OutputDebugStringW(amo::string_utils::utf8_to_wide(url).c_str());
+        OutputDebugStringW(L"\n");
+        $func_orient;
+        
         url = util::getUrlFromUtf8(url).to_utf8();
+        
+        OutputDebugStringW(amo::string_utils::utf8_to_wide(url).c_str());
+        OutputDebugStringW(L"\n");
+        
         amo::string_utils::trim_right(url, "/\\");
         
         
