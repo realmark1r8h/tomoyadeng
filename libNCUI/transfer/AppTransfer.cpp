@@ -67,7 +67,7 @@ namespace amo {
         int nIndex = url.find("?");
         
         if (nIndex != -1) {
-            url.substr(0, nIndex);
+          url =  url.substr(0, nIndex);
         }
         
         $func_orient;
@@ -89,27 +89,21 @@ namespace amo {
             
             if (nFirst != 0) {
                 continue;
-            }
+            } 
             
-            int nLast = url.find("?");
-            
-            if (nLast == -1) {
-                nLast = url.size();
-            }
-            
-            amo::string file(url.substr(p.first.size(), nLast - p.first.size()), true);
-            amo::string strNativeFile(p.second, true);
-            amo::path path2(file);
-            amo::path path(strNativeFile);
+            amo::u8string file(url.substr(p.first.size(), url.size() - p.first.size()), true);
+            amo::u8string strNativeFile(p.second, true);
+            amo::u8path path2(file);
+            amo::u8path path(strNativeFile);
             path.append(path2);
             
             if (!bNeedExsit) {
-                return amo::string(path.c_str(), false).to_utf8();
+                return amo::u8string(path.c_str(), true).to_utf8();
             }
             
             // 判断文件是否存在,且不能为目录
             if (!path.is_directory() && path.file_exists()) {
-                return  amo::string(path.c_str(), false).to_utf8();
+                return  amo::u8string(path.c_str(), true).to_utf8();
             }
             
             return std::string();

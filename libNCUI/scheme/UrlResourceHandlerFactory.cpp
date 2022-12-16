@@ -55,9 +55,9 @@ namespace amo {
             return pHandler;
         }
         
-        amo::string ansiPath(u8File, true);
+        amo::u8string ansiPath(u8File, true);
         
-        if (amo::path(ansiPath).file_exists()) {
+        if (amo::u8path(ansiPath).file_exists()) {
             return new NativeFileHandler(url, u8File);
         }
         
