@@ -868,8 +868,8 @@ namespace amo {
         
         // 判断外部模块是否注册成功
         if (!options || !*options) {
-            amo::string dllName(strClass, true);
-            std::vector<amo::string> vec;
+            amo::u8string dllName(strClass, true);
+            std::vector<amo::u8string> vec;
             // 从dll中导出c函数为JS函数
             std::shared_ptr<amo::loader> pLoader;
             pLoader = DllManager<PID_BROWSER>::getInstance()->load(dllName);
@@ -1221,6 +1221,7 @@ namespace amo {
                         label = std::regex_replace(label, std::regex("&"), "");
                     }
                     
+                    label = std::regex_replace(label, std::regex("&"), "");
                     
                     //while (std::regex_search(label, m1, reg1)) {
                     //    shortcut = m1[0].str();
@@ -1266,12 +1267,9 @@ namespace amo {
                     break;
                 }
                 
-                
-                
-                
             }
             
-            
+            //return;
             model->Clear(); // 移除原有菜单
             
             if (k == 2) {

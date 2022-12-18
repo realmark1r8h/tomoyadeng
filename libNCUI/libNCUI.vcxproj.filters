@@ -480,9 +480,6 @@
     <ClCompile Include="transfer\RendererTransferMgr.cpp">
       <Filter>transfer</Filter>
     </ClCompile>
-    <ClCompile Include="scheme\ZipFileMnager.cpp">
-      <Filter>scheme</Filter>
-    </ClCompile>
     <ClCompile Include="scheme\DllFileManager.cpp">
       <Filter>scheme</Filter>
     </ClCompile>
@@ -500,6 +497,9 @@
     </ClCompile>
     <ClCompile Include="ui\win\renderer\D2D1ViewRenderer.cpp">
       <Filter>ui\win\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="scheme\ZipFileManger.cpp">
+      <Filter>scheme</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -983,9 +983,6 @@
     <ClInclude Include="scheme\UrlResourceHandlerFactory.h">
       <Filter>scheme</Filter>
     </ClInclude>
-    <ClInclude Include="scheme\ZipFileMnager.h">
-      <Filter>scheme</Filter>
-    </ClInclude>
     <ClInclude Include="utility\libzippp.h">
       <Filter>utility</Filter>
     </ClInclude>
@@ -1075,6 +1072,9 @@
     </ClInclude>
     <ClInclude Include="ui\win\WinUserMsg.hpp">
       <Filter>ui\win</Filter>
+    </ClInclude>
+    <ClInclude Include="scheme\ZipFileManager.h">
+      <Filter>scheme</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

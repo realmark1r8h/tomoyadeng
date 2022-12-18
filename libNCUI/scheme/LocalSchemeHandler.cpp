@@ -89,7 +89,7 @@ namespace amo {
     std::string FindMimeType(const MimeInfo* mappings,
                              size_t mappings_len,
                              const std::string& ext) {
-        amo::string str(ext, false);
+        amo::u8string str(ext, true);
         str.to_lower();
         
         for (size_t i = 0; i < mappings_len; ++i) {
@@ -219,20 +219,12 @@ namespace amo {
         //获取文件扩展名
         std::string ext = amo::u8path(strPath.c_str()).find_extension();
         
-        if (ext == "json" || ext == ".json") {
-            int cd = 32;
-            ++cd;
-        }
-        
-        $func_orient;
-        OutputDebugStringW(strPath.to_wide().c_str());
-        OutputDebugStringW(L"\n");
         //读取文件
         std::ifstream tail_ifs(strPath.to_wide(),
                                std::ios::ios_base::binary | std::ios::ios_base::in);
                                
         if (!tail_ifs.is_open()) {
-            OutputDebugStringA("111\n");
+        
             return false;	//文件不存在
         }
         
@@ -242,7 +234,7 @@ namespace amo {
         m_strData = str;
         
         if (m_strData.empty()) {
-            OutputDebugStringA("222\n");
+        
             return false;    //没有读取到数据，返回false
         }
         
@@ -254,7 +246,7 @@ namespace amo {
             return true;
         }
         
-        OutputDebugStringA("333\n");
+        
         return false;
     }
     

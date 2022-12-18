@@ -24,8 +24,6 @@ namespace amo {
         std::shared_ptr<amo::loader> get(const amo::u8string& u8Path);
         bool add(const amo::u8string& strPath, std::shared_ptr<amo::loader> zf);
         
-        /* std::shared_ptr<amo::loader> get(const amo::string& u8Path);
-         bool add(const amo::string& strPath, std::shared_ptr<amo::loader> zf);*/
         
     private:
         std::unordered_map<amo::u8string, std::shared_ptr<amo::loader> > m_map;

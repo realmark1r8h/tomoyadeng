@@ -80,7 +80,7 @@ namespace amo {
             
         }
         
-        amo::string title(info->title, true);
+        amo::u8string title(info->title, true);
         
         if (info->resizable && info->maximizable) {
             window->Create(wnd,
@@ -452,9 +452,9 @@ namespace amo {
             u8Url = target_url.ToString();
         }
         
-        amo::path p(amo::string(u8Url, true));
+        amo::u8path p(u8Url);
         p.canonicalize(false);
-        u8Url = amo::string(p.string(), false).to_utf8();
+        u8Url = amo::u8string(p.string(), true).to_utf8();
         
         pBrowserSettings->url = (u8Url);
         
@@ -507,9 +507,9 @@ namespace amo {
             u8Url = target_url.ToString();
         }
     
-        amo::path p(amo::string(u8Url, true));
+        amo::u8path p(amo::u8string(u8Url, true));
         p.canonicalize(false);
-        u8Url = amo::string(p.string(), false).to_utf8();
+        u8Url = amo::u8string(p.string(), true).to_utf8();
     
         pBrowserSettings->url = (u8Url);
     

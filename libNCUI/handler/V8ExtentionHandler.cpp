@@ -48,7 +48,8 @@ namespace amo {
                 && (arguments.size() != 1
                     || !arguments.at(0)->IsString()
                     || arguments.at(0)->GetStringValue().empty())) {
-            exception = L"include parameters can only be composed of strings and cannot be empty.";
+            exception =
+                L"include parameters can only be composed of strings and cannot be empty.";
             return true;
         }
         
@@ -75,8 +76,8 @@ namespace amo {
         
         if (m_oRegisteredSet.find(nBrowserID) == m_oRegisteredSet.end()) {
             m_oRegisteredSet.insert(nBrowserID);
-            amo::directory dir(amo::path::getFullPathInExeDir("renderer_modules"));
-            dir.transfer([&](amo::path & p) {
+            amo::u8directory dir(amo::u8path::getFullPathInExeDir("renderer_modules"));
+            dir.transfer([&](amo::u8path & p) {
                 if (p.is_directory()) {
                     return ;
                 }
@@ -86,7 +87,7 @@ namespace amo {
                 }
                 
                 
-                amo::string module = p.strip_path().remove_extension();
+                amo::u8string module = p.strip_path().remove_extension();
                 loadExternalTransfer(module, pBrowser);
             }, false);
             
@@ -456,13 +457,13 @@ namespace amo {
         classMethodMgr->addClass(strClass, mgr2);
     }
     
-    bool V8ExtentionHandler::loadExternalTransfer(const std::string& strClass,
+    bool V8ExtentionHandler::loadExternalTransfer(const std::string& u8ClassName,
             CefRefPtr<CefBrowser> browser) {
             
         AMO_TIMER_ELAPSED();
         // 从磁盘中加载与所给模块同名dll
         std::shared_ptr<amo::loader> pLoader;
-        pLoader = DllManager<PID_RENDERER>::getInstance()->load(strClass);
+        pLoader = DllManager<PID_RENDERER>::getInstance()->load(u8ClassName);
         
         
         if (!pLoader) {
@@ -477,7 +478,7 @@ namespace amo {
                                      this,
                                      std::placeholders::_1,
                                      std::placeholders::_2);
-        info->moduleName = strClass;
+        info->moduleName = u8ClassName;
         
         auto options = pLoader->exec<bool, std::shared_ptr<TransferRegister>> (
                            "registerTransfer",
@@ -600,8 +601,8 @@ namespace amo {
         
             // 从磁盘中查找， dll
             
-            amo::string dllName(module, true);
-            std::vector<amo::string> vec;
+            amo::u8string dllName(module, true);
+            std::vector<amo::u8string> vec;
             // 从dll中导出c函数为JS函数
             std::shared_ptr<amo::loader> pLoader;
             pLoader = DllManager<PID_RENDERER>::getInstance()->load(dllName);
@@ -663,7 +664,7 @@ namespace amo {
         
         //如果返回的是一个数组，那么说明是Dll
         if (json.is_array()) {
-            amo::string dllName(module, true);
+            amo::u8string dllName(module, true);
             std::vector<amo::json> vec = json.to_array();
             
             
@@ -672,7 +673,7 @@ namespace amo {
             
             for (auto& p : vec) {
                 FunctionWrapper fw;
-                fw.m_strName = amo::string(p.to_string(), false).to_utf8();
+                fw.m_strName = amo::u8string(p.to_string(), true).to_utf8();
                 fw.m_nExecType = 0;
                 functions.push_back(fw);
             }

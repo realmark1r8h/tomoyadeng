@@ -90,9 +90,9 @@ namespace amo {
         DllManagerBase();
         ~DllManagerBase();
         
-        std::vector<amo::string> exports(const amo::string& name);
+        std::vector<amo::u8string> exports(const amo::u8string& name);
         /*!
-         * @fn	std::shared_ptr<amo::loader> DllExtensionManager::load(const amo::string& name);
+         * @fn	std::shared_ptr<amo::loader> DllExtensionManager::load(const amo::u8string& name);
          *
          * @brief	Loads the given name.
          * 			加载格式1 libraryName
@@ -104,32 +104,32 @@ namespace amo {
          *
          * @return	An std::shared_ptr&lt;amo::loader&gt;
          */
-        std::shared_ptr<amo::loader> load(const amo::string& name);
+        std::shared_ptr<amo::loader> load(const amo::u8string& name);
         
-        void unload(const amo::string& name);
+        void unload(const amo::u8string& name);
         
         // 获取所给路径的绝对路径
-        amo::string getFullPath(const amo::string& name);
+        amo::u8string getFullPath(const amo::u8string& name);
         
-        std::shared_ptr<amo::loader> get(const amo::string& name);
+        std::shared_ptr<amo::loader> get(const amo::u8string& name);
         
         // 添加后缀名
-        amo::string addSuffix(const amo::string& name);
+        amo::u8string addSuffix(const amo::u8string& name);
         
         void addArgsList(const std::string& dllName, const std::string& argsList);
         
         DllFunctionWrapper& getDllFunctionWrapper(const std::string& dllName);
-        amo::string getExtensionDir() const;
-        void setExtensionDir(amo::string val);
+        amo::u8string getExtensionDir() const;
+        void setExtensionDir(amo::u8string val);
         bool getRunOnRenderThread() const;
         void setRunOnRenderThread(bool val);
         void clear();
         
         
     private:
-        std::unordered_map<amo::string, std::shared_ptr<amo::loader> > m_oMap;
-        amo::string m_strExtensionDir;
-        std::unordered_map<amo::string, DllFunctionWrapper > m_oDllArgsMap;
+        std::unordered_map<amo::u8string, std::shared_ptr<amo::loader> > m_oMap;
+        amo::u8string m_strExtensionDir;
+        std::unordered_map<amo::u8string, DllFunctionWrapper > m_oDllArgsMap;
         bool m_bRunOnRenderThread;
     };
     

@@ -220,8 +220,8 @@ namespace amo {
     
         AMO_TIMER_ELAPSED();
         //获取图标，第二个参数为要获取第几个图标
-        HICON hIcon = ExtractIconA(m_PaintManager.GetInstance(),
-                                   amo::path::getFullExeName().c_str(), 0);
+        HICON hIcon = ExtractIconW(m_PaintManager.GetInstance(),
+                                   amo::u8path::fullAppName().generic_wstring().c_str(), 0);
         ::SendMessage(m_hWnd, WM_SETICON, (WPARAM)false, (LPARAM)hIcon);
         // 添加到Transfer管理,如果不是用JS创建的，则没有添加进
         addTransfer(getDerivedClass<ClassTransfer>());
@@ -623,7 +623,7 @@ namespace amo {
     
         auto args = msg->getArgumentList();
         
-        amo::string filename(args->getString(0), true);
+        amo::u8string filename(args->getString(0), true);
         
         bool containsTitleBar = args->getBool(1);
         
@@ -632,7 +632,7 @@ namespace amo {
         }
         
         
-        amo::path p(filename);
+        amo::u8path p(filename);
         std::string ext = p.find_extension();
         
         std::string fileformat = GetFormatByExt(ext);
@@ -692,7 +692,7 @@ namespace amo {
         
         SaveHBitmapToFile(hBitmap,
                           filename.to_unicode().c_str(),
-                          amo::string(fileformat).to_unicode().c_str());
+                          amo::u8string(fileformat, true).to_unicode().c_str());
                           
                           
         ::SelectObject(memDC, hOldBitmap);
@@ -833,14 +833,14 @@ namespace amo {
     
     DuiLib::CDuiString BrowserWindow::GetSkinFile() {
     
-        return amo::string(skinBrowserWindow).format(
+        return amo::u8string(skinBrowserWindow).format(
                    m_pBrowserSettings->settings).to_unicode().c_str();
     }
     
     LPCTSTR BrowserWindow::GetWindowClassName() const {
     
         return _T("BrowserWindow");
-        return amo::string(m_pBrowserSettings->windowClass).to_unicode().c_str();
+        return amo::u8string(m_pBrowserSettings->windowClass).to_unicode().c_str();
     }
     
     
@@ -916,7 +916,7 @@ namespace amo {
     void BrowserWindow::OnTitleChange(CefRefPtr<CefBrowser> browser,
                                       const CefString& title) {
                                       
-        amo::string str(title.ToString(), true);
+        amo::u8string str(title.ToString(), true);
         m_pBrowserSettings->title = str.to_utf8();
         SetWindowText(m_hWnd, str.to_unicode().c_str());
     }

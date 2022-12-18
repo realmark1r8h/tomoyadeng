@@ -40,7 +40,7 @@ Copyright (C) ShineEnergy Corporation. All rights reserved.
 		<SingleFolder Condition="'$(SingleFolder)' == ''">false</SingleFolder>
 		<LibraryFolder >$(SolutionDir)../$(SolutionName)-Library\</LibraryFolder>
 		<SDKFolder >D:\SDK\</SDKFolder>
-		<BoostFolder>$(SDKFolder)boost_1_67_0\</BoostFolder>
+		<BoostFolder>$(SDKFolder)boost_1_63_0\</BoostFolder>
 		<NodeGypFolder>$(LibraryFolder).node-gyp\4.7.1\</NodeGypFolder>
 		<!--<NodeGypFolder>C:\Users\1123456\.node-gyp\4.7.1\</NodeGypFolder>-->
 		<ThirdPartyFolder>$(SolutionDir)\third_party\</ThirdPartyFolder>

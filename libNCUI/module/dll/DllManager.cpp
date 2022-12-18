@@ -16,9 +16,9 @@ namespace amo {
         clear();
     }
     
-    std::vector<amo::string> DllManagerBase::exports(const amo::string& name) {
+    std::vector<amo::u8string> DllManagerBase::exports(const amo::u8string& name) {
         std::shared_ptr<amo::loader> ptr = load(name);
-        std::vector<amo::string> vec;
+        std::vector<amo::u8string> vec;
         
         if (!ptr) {
             return vec;
@@ -28,8 +28,8 @@ namespace amo {
         return vec;
     }
     
-    std::shared_ptr<amo::loader> DllManagerBase::load(const amo::string& name) {
-        amo::string path = getFullPath(name);
+    std::shared_ptr<amo::loader> DllManagerBase::load(const amo::u8string& name) {
+        amo::u8string path = getFullPath(name);
         
         if (path.empty()) {
             return  std::shared_ptr<amo::loader>();
@@ -55,14 +55,14 @@ namespace amo {
         return ptr;
     }
     
-    void DllManagerBase::unload(const amo::string& name) {
+    void DllManagerBase::unload(const amo::u8string& name) {
     
     }
     
-    amo::string DllManagerBase::getFullPath(const amo::string& str) {
+    amo::u8string DllManagerBase::getFullPath(const amo::u8string& str) {
         // 添加后缀名
-        amo::string name = addSuffix(str);
-        amo::path p(name);
+        amo::u8string name = addSuffix(str);
+        amo::u8path p(name);
         
         // 判断当前路径是否为绝对路径，如果是那么直接返回
         if (!p.is_relative()) {
@@ -70,8 +70,8 @@ namespace amo {
         }
         
         // 如果不是，那么以当前程序所在目录为当前目录
-        amo::string exeDir = amo::path::getExeDir();
-        amo::path pa(exeDir);
+        amo::u8string exeDir(amo::u8path::getExeDir(), true);
+        amo::u8path pa(exeDir);
         
         // 1. 假设所dll在当前目录
         pa.append(name.str());
@@ -79,38 +79,38 @@ namespace amo {
         
         // 如果这个dll存在，那么返回
         if (pa.file_exists()) {
-            return amo::string(pa.c_str(), false);
+            return amo::u8string(pa.c_str(), true);
         }
         
-        pa = amo::path(exeDir);
+        pa = amo::u8path(exeDir);
         // 2. 在扩展目录下查找
         pa.append(getExtensionDir().str()).append(name.str());
         $clog(amo::cdevel << pa.c_str() << amo::endl;);
         
         if (pa.file_exists()) {
-            return amo::string(pa.c_str(), false);
+            return amo::u8string(pa.c_str(), true);
         }
         
         // 3. 到系统目录下查找
-        pa = amo::path("C:\\windows\\system32\\");
+        pa = amo::u8path("C:\\windows\\system32\\");
         pa.append(name.str());
         $clog(amo::cdevel << pa.c_str() << amo::endl;);
         
         if (pa.file_exists()) {
-            return amo::string(pa.c_str(), false);
+            return amo::u8string(pa.c_str(), true);
         }
         
         return "";
     }
     
-    std::shared_ptr<amo::loader> DllManagerBase::get(const amo::string& name) {
-        amo::string str = getFullPath(name);
+    std::shared_ptr<amo::loader> DllManagerBase::get(const amo::u8string& name) {
+        amo::u8string str = getFullPath(name);
         auto iter = m_oMap.find(str);
         return iter->second;
     }
     
-    amo::string DllManagerBase::addSuffix(const amo::string& name) {
-        amo::string str = name;
+    amo::u8string DllManagerBase::addSuffix(const amo::u8string& name) {
+        amo::u8string str = name;
         
         if (!str.end_with(".dll")) {
             str += ".dll";
@@ -138,11 +138,11 @@ namespace amo {
         return iter->second;
     }
     
-    amo::string DllManagerBase::getExtensionDir() const {
+    amo::u8string DllManagerBase::getExtensionDir() const {
         return m_strExtensionDir;
     }
     
-    void DllManagerBase::setExtensionDir(amo::string val) {
+    void DllManagerBase::setExtensionDir(amo::u8string val) {
         m_strExtensionDir = val;
     }
     
