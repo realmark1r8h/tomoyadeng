@@ -307,12 +307,8 @@ namespace amo {
                     amo::u8json json;
                     
                     for (int j = 0; j < qry.column_count(); ++j) {
-                        /* OutputDebugStringA(keys[j].c_str());
-                         OutputDebugStringA("  :  ");
-                         OutputDebugStringA(types[j].c_str());
-                         OutputDebugStringA("\n");
-                         */
-                        
+                    
+                    
                         const char* data = (*iter).get<const char*>(j);
                         
                         if (types.at(j) == "Boolean") {

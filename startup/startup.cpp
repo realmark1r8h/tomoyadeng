@@ -36,9 +36,10 @@ public:
     StringLoader(HINSTANCE hInstance) {
         m_hInstance = hInstance;
     }
-    std::string load(UINT id) {
-        char str[32768] = { 0 };
-        ::LoadStringA(m_hInstance, id, str, 32768);
+    
+    std::wstring load(UINT id) {
+        wchar_t str[32768] = { 0 };
+        ::LoadStringW(m_hInstance, id, str, 32768);
         return str;
     }
 private:
@@ -111,9 +112,9 @@ public:
         bNodeDebug = false;
         bShowSplash = false;
         
-        strAppSettings = strLoader.load(108);
-        strBrowserSettings = strLoader.load(110);
-        strSplashSettings = strLoader.load(111);
+        strAppSettings = amo::string_utils::wide_to_utf8(strLoader.load(108));
+        strBrowserSettings = amo::string_utils::wide_to_utf8(strLoader.load(110));
+        strSplashSettings = amo::string_utils::wide_to_utf8(strLoader.load(111));
         
         
         m_bManifest = (strAppSettings.find("\"manifest\":true") != -1);
@@ -204,13 +205,14 @@ public:
             //m_bManifest = true;
         }
         
-        amo::string strApp(appJson.to_string(), false);
-        strAppSettings = strApp.replace(amo::string(" ", false), amo::string("", false)).to_ansi();
-        amo::string strBrowser(strBrowserSettings, false);
-        strBrowserSettings = strBrowser.replace(amo::string(" ", false), amo::string("", false));
+        amo::u8string strApp(appJson.to_string(), true);
+        strAppSettings = strApp.replace(amo::u8string(" ", true), amo::u8string("", true)).to_utf8();
         
-        amo::string strSplash(strSplashSettings, false);
-        strSplashSettings = strSplash.replace(amo::string(" ", false), amo::string("", false));
+        amo::u8string strBrowser(strBrowserSettings, true);
+        strBrowserSettings = strBrowser.replace(amo::u8string(" ", true), amo::u8string("", true));
+        
+        amo::u8string strSplash(strSplashSettings, true);
+        strSplashSettings = strSplash.replace(amo::u8string(" ", true), amo::u8string("", true));
         
         
         bUseNode = (strAppSettings.find("\"useNode\":true") != -1);
@@ -320,12 +322,12 @@ public:
     
     bool m_bManifest; // 是否读取磁盘配置文件
     amo::u8json manifestJson;
-    std::string m_strJsFile;
+    std::string m_strJsFile; // utf8
     amo::u8string strMessageQueue;	//消息队列名称
     bool bChildProcess;		//进程类型
-    std::string strAppSettings;	//程序设置
-    std::string strBrowserSettings; //窗口设置
-    std::string strSplashSettings; //窗口设置
+    std::string strAppSettings;	//程序设置, utf8
+    std::string strBrowserSettings; //窗口设置, utf8
+    std::string strSplashSettings; //窗口设置, utf8
     bool bUseNode;	// 是否使用NodeJS
     bool bNodeProcess;// 是否在单独的进程中运行nodejs
     bool bNodeDebug; // 是否调用NodeJS
@@ -486,7 +488,7 @@ void runNodeInNodeProcess() {
                 p.append("node_runner.dll");
                 amo::loader nodeLoader;
                 bool bOk2 = nodeLoader.load(p.generic_wstring());
-                std::vector<amo::string> vec;
+                std::vector<amo::u8string> vec;
                 nodeLoader.exports(vec);
                 nodeLoader.exec<int>("Start", argc, argv);
             }
