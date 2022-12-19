@@ -42,7 +42,7 @@ namespace amo {
             return vecRetval;
         }
         
-        amo::json json = args->getJson(0);
+        amo::u8json json = args->getJson(0);
         
         if (!json.is_valid()) {
             return false;
@@ -53,8 +53,8 @@ namespace amo {
         const CefString& title = json.getString("title", "");
         const CefString& default_file_path
             = json.getString("defaultFilePath");
-        std::vector<amo::json> filters
-            = json.get<amo::json>("acceptFilters").to_array();
+        std::vector<amo::u8json> filters
+            = json.get<amo::u8json>("acceptFilters").to_array();
             
         std::vector<CefString> accept_filters;
         
@@ -81,7 +81,7 @@ namespace amo {
     
     Any DialogTransfer::alert(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::string strMsg(args->getString(0), true);
+        amo::u8string strMsg(args->getString(0), true);
         int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
         
         auto manager = BrowserWindowManager::getInstance();
@@ -106,7 +106,7 @@ namespace amo {
     
     Any DialogTransfer::confirm(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::string strMsg(args->getString(0), true);
+        amo::u8string strMsg(args->getString(0), true);
         int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<BrowserWindow> pWindow;
@@ -130,8 +130,8 @@ namespace amo {
     
     Any DialogTransfer::prompt(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::string strMsg(args->getString(0), true);
-        amo::string strPrompt(args->getString(1), true);
+        amo::u8string strMsg(args->getString(0), true);
+        amo::u8string strPrompt(args->getString(1), true);
         CDuiString strPromptText = strPrompt.to_unicode().c_str();
         int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
         auto manager = BrowserWindowManager::getInstance();
@@ -154,8 +154,8 @@ namespace amo {
                                              &strPromptText,
                                              strMsg.to_unicode().c_str(),
                                              MB_OKCANCEL);
-        std::string strRetval = amo::string(strPromptText.GetData()).to_utf8();
-        amo::json json;
+        std::string strRetval = amo::u8string(strPromptText.GetData()).to_utf8();
+        amo::u8json json;
         json.put("code", nRet == 1);
         json.put("text", strRetval);
         return json;

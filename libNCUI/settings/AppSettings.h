@@ -38,22 +38,22 @@ namespace amo {
         
         virtual void afterUpdateArgsSettings();
         
-        virtual amo::json toJson()   override;
+        virtual amo::u8json toJson()   override;
     private:
         void initDefaultCefSettings();
         
         void initDefaultAppSettings();
         
-        amo::string getCachePath();
+        amo::u8string getCachePath();
         
         /*!
-         * @fn	amo::string AppSettings::getUserHomeDir();
+         * @fn	amo::u8string AppSettings::getUserHomeDir();
          * @ignore
          * @brief	用户数据根目录.
          *
          * @return	The user home dir.
          */
-        amo::string getUserHomeDir();
+        amo::u8string getUserHomeDir();
         
         /*!
          * @fn	std::string AppSettings::getSpecialFolder(int nType);

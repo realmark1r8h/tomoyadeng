@@ -133,8 +133,8 @@ namespace amo {
             val = RendererTransferMgr::getInstance()->onMessageTransfer(msg);
         }
         
-        if (val.is<amo::json>()) {
-            runner->execute(MSG_FOCUSED_NODE_CHANGED, isEditable, val.As<amo::json>());
+        if (val.is<amo::u8json>()) {
+            runner->execute(MSG_FOCUSED_NODE_CHANGED, isEditable, val.As<amo::u8json>());
         } else {
             runner->execute(MSG_FOCUSED_NODE_CHANGED, isEditable);
         }
@@ -361,8 +361,8 @@ namespace amo {
         manager->Register(nBrowserID, new  DragWindowV8Handler());
         manager->Register(nBrowserID, new EventEmitterV8Handler());
         
-        amo::json jsonArr(ret.value());
-        std::vector<amo::json> arr = jsonArr.to_array();
+        amo::u8json jsonArr(ret.value());
+        std::vector<amo::u8json> arr = jsonArr.to_array();
         
         for (auto& json : arr) {
             FunctionWrapperMgr mgr = FunctionWrapperMgr::fromJson(json);

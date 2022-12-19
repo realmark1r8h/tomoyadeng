@@ -10,7 +10,7 @@ namespace amo {
         
     }
     
-    InterProcessTransfer::InterProcessTransfer(const amo::json& json) :
+    InterProcessTransfer::InterProcessTransfer(const amo::u8json& json) :
         RunnableTransfer("InterProcess") {
         addModule("EventEmitter");
         settings = json;
@@ -41,7 +41,7 @@ namespace amo {
     
     Any InterProcessTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::json settings = args->getJson(0);
+        amo::u8json settings = args->getJson(0);
         auto pTransfer = ClassTransfer::createTransfer<InterProcessTransfer>(settings);
         return pTransfer->getFuncMgr().toSimplifiedJson();
     }
@@ -101,7 +101,7 @@ namespace amo {
     amo::any InterProcessTransfer::onMsg(amo::ipc_msg::SmartType msg) {
         try {
             auto args = msg->getArgumentList();
-            amo::json json = msg->getArgumentList()->getJson(1);
+            amo::u8json json = msg->getArgumentList()->getJson(1);
             size_t size = args->getArgsSize();
             std::vector<Any> vec;
             

@@ -31,7 +31,7 @@ namespace amo {
         
     public:
         InterProcessTransfer();
-        InterProcessTransfer(const amo::json& json);
+        InterProcessTransfer(const amo::u8json& json);
         
         Any onCreateClass(IPCMessage::SmartType msg) override;
         virtual std::string getClass() const override;
@@ -48,7 +48,7 @@ namespace amo {
     
         amo::any onMsg(amo::ipc_msg::SmartType msg);
     private:
-        amo::json settings; // u8settings
+        amo::u8json settings; // u8settings
         std::shared_ptr<amo::ipc::server> m_server;
         std::shared_ptr<amo::ipc::client> m_client;
         std::shared_ptr<std::thread> m_pThread;

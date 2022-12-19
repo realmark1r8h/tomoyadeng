@@ -57,7 +57,7 @@ namespace amo {
         
         std::shared_ptr<libzippp::ZipArchive> zf;
         
-        if (strPath.end_with(".res")) {
+        if (strPath.end_with(amo::u8string(".res", true))) {
             int id = strPath.substr(0, strPath.size() - 4).to_number<int>();
             auto resoure = make_memory_resource(id);
             

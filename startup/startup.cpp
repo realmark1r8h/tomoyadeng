@@ -62,7 +62,8 @@ public:
     
     bool load(const std::string& lib_name) {
 #if defined(WIN32)
-        lib_handle = LoadLibraryA(lib_name.c_str());
+        std::wstring str = amo::string_utils::utf8_to_wide(lib_name);
+        lib_handle = LoadLibraryW(str.c_str());
 #else
         lib_handle = dlopen(lib_name.c_str(), RTLD_LAZY);
 #endif
@@ -120,23 +121,23 @@ public:
         
         // 读取磁盘中的配置文件
         if (m_bManifest) {
-            amo::path p(amo::path::getExeDir());
+            amo::u8path p(amo::u8path::getExeDir());
             p.append("manifest.json");
             
             
             if (p.file_exists()) {
                 OutputDebugStringA("read manifest.json\n");
                 //$cdevel("读取manifest.json");
-                std::ifstream ifs(p.c_str());
+                std::ifstream ifs(p.generic_wstring());
                 std::stringstream buffer;
                 buffer << ifs.rdbuf();
                 std::string strJson(buffer.str());
-                manifestJson = amo::json(strJson);
+                manifestJson = amo::u8json(strJson);
                 
                 if (!manifestJson.is_valid()) {
                     OutputDebugStringA("invalid manifest.json\n");
                     //$cwarn("manifest.json文件格式错误");
-                    manifestJson = amo::json();
+                    manifestJson = amo::u8json();
                 }
                 
                 
@@ -152,18 +153,18 @@ public:
         std::string sss = manifestJson.to_string();
         
         if (m_bManifest && manifestJson.is_valid() && !manifestJson.empty()) {
-            amo::json appSettingsJson = manifestJson.get_child("appSettings");
-            amo::json browserWindowSettingsJson =
+            amo::u8json appSettingsJson = manifestJson.get_child("appSettings");
+            amo::u8json browserWindowSettingsJson =
                 manifestJson.get_child("browserWindowSettings");
                 
-            amo::json splashWindowSettingsJson =
+            amo::u8json splashWindowSettingsJson =
                 manifestJson.get_child("splashWindowSettings");
                 
             if (appSettingsJson.is_valid()) {
-                amo::json json(strAppSettings);
+                amo::u8json json(strAppSettings);
                 
                 if (!json.is_valid()) {
-                    json = amo::json();
+                    json = amo::u8json();
                 }
                 
                 json.join(appSettingsJson);
@@ -171,10 +172,10 @@ public:
             }
             
             if (browserWindowSettingsJson.is_valid()) {
-                amo::json json(strBrowserSettings);
+                amo::u8json json(strBrowserSettings);
                 
                 if (!json.is_valid()) {
-                    json = amo::json();
+                    json = amo::u8json();
                 }
                 
                 json.join(browserWindowSettingsJson);
@@ -182,10 +183,10 @@ public:
             }
             
             if (splashWindowSettingsJson.is_valid()) {
-                amo::json json(strSplashSettings);
+                amo::u8json json(strSplashSettings);
                 
                 if (!json.is_valid()) {
-                    json = amo::json();
+                    json = amo::u8json();
                 }
                 
                 json.join(splashWindowSettingsJson);
@@ -194,7 +195,7 @@ public:
             
         }
         
-        amo::json appJson = amo::json(strAppSettings);
+        amo::u8json appJson = amo::u8json(strAppSettings);
         appJson.put("startTime", amo::timer::now());  //添加启动时间
         
         if (!m_bManifest) {
@@ -204,12 +205,12 @@ public:
         }
         
         amo::string strApp(appJson.to_string(), false);
-        strAppSettings = strApp.replace(" ", "").to_ansi();
+        strAppSettings = strApp.replace(amo::string(" ", false), amo::string("", false)).to_ansi();
         amo::string strBrowser(strBrowserSettings, false);
-        strBrowserSettings = strBrowser.replace(" ", "");
+        strBrowserSettings = strBrowser.replace(amo::string(" ", false), amo::string("", false));
         
         amo::string strSplash(strSplashSettings, false);
-        strSplashSettings = strSplash.replace(" ", "");
+        strSplashSettings = strSplash.replace(amo::string(" ", false), amo::string("", false));
         
         
         bUseNode = (strAppSettings.find("\"useNode\":true") != -1);
@@ -218,7 +219,7 @@ public:
         bShowSplash = (strAppSettings.find("\"showSplash\":true") != -1);
         
         if (bUseNode) {
-            m_strJsFile = amo::json(strAppSettings).getString("main");
+            m_strJsFile = amo::u8json(strAppSettings).getString("main");
         }
         
         parseArgsSettings();
@@ -283,7 +284,7 @@ public:
         
         //strMessageQueue = amo::uid().to_string();
         //strMessageQueue = amo::uuid().to_string();
-        strMessageQueue = amo::string::from_number(id);
+        strMessageQueue = amo::u8string::from_number(id);
         std::stringstream stream;
         stream << "libNCUI_process_" << id;
         
@@ -318,9 +319,9 @@ public:
     }
     
     bool m_bManifest; // 是否读取磁盘配置文件
-    amo::json manifestJson;
+    amo::u8json manifestJson;
     std::string m_strJsFile;
-    amo::string strMessageQueue;	//消息队列名称
+    amo::u8string strMessageQueue;	//消息队列名称
     bool bChildProcess;		//进程类型
     std::string strAppSettings;	//程序设置
     std::string strBrowserSettings; //窗口设置
@@ -345,7 +346,7 @@ void runCefInCefProcess() {
 
 
     LoaderLite loader;
-    amo::path p(amo::path::getExeDir());
+    amo::u8path p(amo::u8path::getExeDir());
     p.append("libNCUI.dll");
     loader.load(p.c_str());
     typedef bool(*FuncUpdateConfig)(const std::string&);
@@ -353,21 +354,21 @@ void runCefInCefProcess() {
     // app
     FuncUpdateConfig fnUpdateAppSettings = (FuncUpdateConfig)
                                            loader.load_symbol("updateAppSettings");
-    std::string strAppArgs = amo::string(args->strAppSettings, false).to_utf8();
+    std::string strAppArgs = amo::u8string(args->strAppSettings, true).to_utf8();
     fnUpdateAppSettings(strAppArgs);
     
     // BrowserWindow
     FuncUpdateConfig fnUpdateBrowserSettings = (FuncUpdateConfig)
             loader.load_symbol("updateBrowserSettings");
-    std::string strBrowserArgs = amo::string(args->strBrowserSettings,
-                                 false).to_utf8();
+    std::string strBrowserArgs = amo::u8string(args->strBrowserSettings,
+                                 true).to_utf8();
     fnUpdateBrowserSettings(strBrowserArgs);
     
     // SplashWindow
     FuncUpdateConfig fnUpdateSplashSettings = (FuncUpdateConfig)
             loader.load_symbol("updateSplashSettings");
-    std::string strSplashArgs = amo::string(args->strSplashSettings,
-                                            false).to_utf8();
+    std::string strSplashArgs = amo::u8string(args->strSplashSettings,
+                                true).to_utf8();
     fnUpdateSplashSettings(strSplashArgs);
     
     fnSetMessageQueue setMessageQueue = (fnSetMessageQueue)
@@ -408,35 +409,35 @@ void runNodeInNodeProcess() {
         } else {
             // 调用Cef进程
             if (args->bNodeDebug) {
-                amo::path::getExeDir();
-                amo::path p(amo::path::getExeDir());
+                amo::u8path::getExeDir();
+                amo::u8path p(amo::u8path::getExeDir());
                 p.append("node.exe");
                 
-                amo::string strDebugParam = "--debug-brk ";
-                strDebugParam += args->m_strJsFile;
-                strDebugParam += " --ncui-debug ";
+                amo::u8string strDebugParam("--debug-brk ", true);
+                strDebugParam += amo::u8string(args->m_strJsFile, true);
+                strDebugParam += amo::u8string(" --ncui-debug ", true);
                 
-                SHELLEXECUTEINFOA ShExecInfo = { 0 };
+                SHELLEXECUTEINFOW ShExecInfo = { 0 };
                 ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
                 ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
                 ShExecInfo.hwnd = NULL;
-                ShExecInfo.lpVerb = "open";//多种类别有 "explorer" "print" 等
-                ShExecInfo.lpFile = p.c_str();//exe 路径
-                ShExecInfo.lpParameters = strDebugParam.c_str();//参数
+                ShExecInfo.lpVerb = L"open";//多种类别有 "explorer" "print" 等
+                ShExecInfo.lpFile = p.generic_wstring().c_str();//exe 路径
+                ShExecInfo.lpParameters = strDebugParam.to_wide().c_str();//参数
                 ShExecInfo.lpDirectory = NULL;
                 ShExecInfo.nShow = SW_SHOW;//
                 ShExecInfo.hInstApp = NULL;
-                ShellExecuteExA(&ShExecInfo);
+                ShellExecuteExW(&ShExecInfo);
                 
                 DWORD id = GetProcessId(ShExecInfo.hProcess);
                 args->createSharedMemory(id);
-                amo::string exeName = amo::path::getFullExeName();
-                std::string params = "--message_queue=";
+                amo::u8string exeName(amo::u8path::getFullExeName(), true);
+                amo::u8string params("--message_queue=", true);
                 params += args->strMessageQueue;
-                ::ShellExecuteA(NULL,
-                                "open",
-                                exeName.c_str(),
-                                params.c_str(),
+                ::ShellExecuteW(NULL,
+                                L"open",
+                                exeName.to_wide().c_str(),
+                                params.to_wide().c_str(),
                                 NULL,
                                 SW_SHOWNORMAL);
                                 
@@ -445,18 +446,18 @@ void runNodeInNodeProcess() {
             } else {
             
                 args->createSharedMemory();
-                amo::string exeName = amo::path::getFullExeName();
-                std::string params = "--message_queue=";
+                amo::u8string exeName(amo::u8path::getFullExeName(), true);
+                amo::u8string params("--message_queue=", true);
                 params += args->strMessageQueue;
-                ::ShellExecuteA(NULL,
-                                "open",
-                                exeName.c_str(),
-                                params.c_str(),
+                ::ShellExecuteW(NULL,
+                                L"open",
+                                exeName.to_wide().c_str(),
+                                params.to_wide().c_str(),
                                 NULL,
                                 SW_SHOWNORMAL);
                                 
                 int argc = 4;
-                amo::string fullExeName = amo::path::getFullExeName();
+                amo::u8string fullExeName(amo::u8path::getFullExeName(), true);
                 
                 char** argv = new char*[argc + 1];
                 
@@ -466,7 +467,7 @@ void runNodeInNodeProcess() {
                     memset(argv[i], 1000, 0);
                     
                     if (i == 0) {
-                        strcpy(argv[i], fullExeName.c_str());
+                        strcpy(argv[i], fullExeName.to_ansi().c_str());
                     }
                     
                     /*  if (i == 1) {
@@ -481,10 +482,10 @@ void runNodeInNodeProcess() {
                 
                 argv[argc] = nullptr;
                 
-                amo::path p(amo::path::getExeDir());
+                amo::u8path p(amo::u8path::getExeDir());
                 p.append("node_runner.dll");
                 amo::loader nodeLoader;
-                bool bOk2 = nodeLoader.load(p.c_str());
+                bool bOk2 = nodeLoader.load(p.generic_wstring());
                 std::vector<amo::string> vec;
                 nodeLoader.exports(vec);
                 nodeLoader.exec<int>("Start", argc, argv);
@@ -501,7 +502,7 @@ STARTUP_API int run(void) {
 
 
     HINSTANCE hInstance = ::GetModuleHandle(NULL);
-    ::SetCurrentDirectoryA(amo::path::getExeDir().c_str());
+    amo::u8path::set_work_path_to_app_path();
     
     args.reset(new ArgsSettings(hInstance));
     

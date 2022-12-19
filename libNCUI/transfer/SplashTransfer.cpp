@@ -89,8 +89,8 @@ namespace amo {
         std::shared_ptr<SplashWindowSettings> pSettings(new SplashWindowSettings());
         Any& val = msg->getArgumentList()->getValue(0);
         
-        if (val.type() == AnyValueType<amo::json>::value) {
-            amo::json json = val;
+        if (val.type() == AnyValueType<amo::u8json>::value) {
+            amo::u8json json = val;
             pSettings->updateArgsSettings(json);
             create(pSettings);
         }

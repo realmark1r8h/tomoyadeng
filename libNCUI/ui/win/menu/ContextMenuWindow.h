@@ -28,7 +28,7 @@ namespace amo {
         
         virtual BOOL Receive(ContextMenuParam param) override;
         
-        bool onBeforeCallback(const amo::string& action);
+        bool onBeforeCallback(const amo::u8string& action);
         
         int getBrowserID() const;
         void setBrowserID(int val);

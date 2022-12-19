@@ -30,7 +30,7 @@ namespace amo {
         }
         
         amo::u8string zipPath = m_strZip;
-        zipPath.replace("\\", "/");
+        zipPath.replace(amo::u8string("\\", true), amo::u8string("/", true));
         
         std::shared_ptr<libzippp::ZipArchive> zf;
         zf = ZipFileManager::getInstance()->get(zipPath);
@@ -42,7 +42,7 @@ namespace amo {
         amo::u8path p(m_strFile);
         p.remove_front_backslash();
         amo::u8string strFile(p.c_str(), true);
-        strFile.replace("\\", "/");
+        strFile.replace(amo::u8string("\\", true), amo::u8string("/", true));
         
         std::vector<libzippp::ZipEntry>  vec = zf->getEntries();
         

@@ -143,7 +143,7 @@ namespace amo {
     Any URLRequestTransfer::onCreateClass(IPCMessage::SmartType msg) {
     
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::json json = args->getJson(0);
+        amo::u8json json = args->getJson(0);
         std::string test = json.to_string();
         std::shared_ptr<RequestSettings> pSettings;
         pSettings.reset(new RequestSettings());

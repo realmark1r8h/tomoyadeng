@@ -77,23 +77,23 @@ namespace amo {
                 return true;
             }
             
-            amo::string id =  element->GetAttribute(_T("id"));
-            amo::string action = element->GetAttribute(_T("action"));
-            amo::string text = element->GetAttribute(_T("string"));
+            amo::u8string id(element->GetAttribute(_T("id")));
+            amo::u8string action(element->GetAttribute(_T("action")));
+            amo::u8string text(element->GetAttribute(_T("string")));
             
             if (onBeforeCallback(action)) {
                 return result;
             }
             
-            amo::json json;
+            amo::u8json json;
             json.put("id", id.to_utf8());
             json.put("text", text.to_utf8());
             json.put("action", action.to_utf8());
             
-            runner->execute<std::string, amo::json>("triggerEvent",
-                                                    "select",
-                                                    json);
-                                                    
+            runner->execute<std::string, amo::u8json>("triggerEvent",
+                    "select",
+                    json);
+                    
         } else if ((param.wParam == 4) && !m_bClosed && param.hWnd == m_hWnd) {
         
             m_bClosed = true;
@@ -103,7 +103,7 @@ namespace amo {
         return result;
     }
     
-    bool ContextMenuWindow::onBeforeCallback(const amo::string& action) {
+    bool ContextMenuWindow::onBeforeCallback(const amo::u8string& action) {
     
         ActionPreprocessor processor(m_nBrowserID, m_nFrameID);
         return processor.process(action);

@@ -80,7 +80,7 @@ namespace amo {
         }
         
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::string params = args->getString(0);
+        amo::string params(args->getString(0), true);
         return  m_pPorcess->start(params);
     }
     
@@ -91,7 +91,7 @@ namespace amo {
         
         TransferEventInfo info;
         info.name = "process.result";
-        info.data = m_pPorcess->getResult()->toJson();
+        info.data = (amo::u8json)(m_pPorcess->getResult()->toJson());
         triggerEvent(info);
         return  Undefined();
     }

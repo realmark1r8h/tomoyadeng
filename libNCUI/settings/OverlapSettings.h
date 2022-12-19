@@ -53,7 +53,7 @@ namespace amo {
         
         virtual void afterUpdateArgsSettings() override;
         
-        virtual amo::json toJson() override;
+        virtual amo::u8json toJson() override;
         
         void setCanvasRect(const amo::rect& rt) {
             canvasRect = rt;

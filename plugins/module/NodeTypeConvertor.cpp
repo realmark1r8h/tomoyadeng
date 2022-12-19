@@ -8,7 +8,7 @@ namespace amo {
     
     }
     
-    void NodeTypeConvertor::ParseJsonToObject(amo::json& json, v8::Local<v8::Value>& retval) {
+    void NodeTypeConvertor::ParseJsonToObject(amo::u8json& json, v8::Local<v8::Value>& retval) {
     
     }
     
@@ -69,8 +69,8 @@ namespace amo {
             retval = Nan::New(any.As<std::string>()).ToLocalChecked();
             break;
             
-        case  AnyValueType<amo::json>::value: {
-            amo::json json = (amo::json)any;
+        case  AnyValueType<amo::u8json>::value: {
+            amo::u8json json = (amo::u8json)any;
             bool transferObject = json.get<bool>("transferObject");
             std::string strClassName = json.get<std::string>("name");
             int64_t nObjectID = json.get<int64_t>("id");

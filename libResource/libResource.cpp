@@ -26,10 +26,10 @@ ClibResource::ClibResource() {
 
 LIBRESOURCE_API int readAsText(const char* path, char** retval) {
 
-    amo::path p = amo::path::fullPathInAppDir("web");
+    amo::u8path p = amo::u8path::fullPathInAppDir("web");
     p.append(path);
     
-    std::fstream ifs(p.c_str(), std::ios::in | std::ios::binary);
+    std::fstream ifs(p.generic_wstring(), std::ios::in | std::ios::binary);
     
     if (!ifs.is_open()) {
         return 0;

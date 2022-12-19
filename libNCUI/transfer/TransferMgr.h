@@ -142,14 +142,14 @@ namespace amo {
         }
         
         /*!
-         * @fn	amo::json TransferMap::toJson()
+         * @fn	amo::u8json TransferMap::toJson()
          *
          * @brief	将对象转换为JSON（数组）.
          *
-         * @return	This object as an amo::json.
+         * @return	This object as an amo::u8json.
          */
-        amo::json toJson() {
-            amo::json jsonArr;
+        amo::u8json toJson() {
+            amo::u8json jsonArr;
             jsonArr.set_array();
             
             for (auto& transfer : m_oTransferMap) {
@@ -355,7 +355,7 @@ namespace amo {
             int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
             Any ret =  getTransferMap(nBrowserID).onMessageTransfer(msg);
             
-            amo::string strMessageName = msg->getMessageName();
+            amo::u8string strMessageName(msg->getMessageName(), true);
             
             
             

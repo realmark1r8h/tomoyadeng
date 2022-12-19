@@ -8,7 +8,7 @@ namespace amo {
     }
     
     bool BasicSettings::updateArgsSettings(const std::string& json_string) {
-        amo::json json1(json_string);
+        amo::u8json json1(json_string);
         return updateArgsSettings(json1);
         /*
         if (!json1.is_valid()) {
@@ -17,12 +17,12 @@ namespace amo {
         
         m_json.join(json1);
         afterUpdateArgsSettings();
-        amo::json json2 = m_json;
+        amo::u8json json2 = m_json;
         m_json.join(json2);
         return true;*/
     }
     
-    bool BasicSettings::updateArgsSettings(amo::json& config) {
+    bool BasicSettings::updateArgsSettings(amo::u8json& config) {
         if (!config.is_valid()) {
             return false;
         }
@@ -39,7 +39,7 @@ namespace amo {
             m_fnUpdateArgsCallback(this);
         }
         
-        amo::json json2 = settings;
+        amo::u8json json2 = settings;
         settings.join(json2);
         
         
@@ -55,15 +55,15 @@ namespace amo {
     }
     
     std::string BasicSettings::toAbsolutePath(const std::string& str) {
-        amo::string strClassList(str, true);
+        amo::u8string strClassList(str, true);
         std::regex reg("^%\\w+%");
         std::smatch m;
         std::vector<std::string> class_list;
         
         if (std::regex_search(str, m, reg)) {
             for (auto x = m.begin(); x != m.end(); x++) {
-                amo::string key(x->str(), true);
-                key.replace("%", "");
+                amo::u8string key(x->str(), true);
+                key.replace(amo::u8string("%", true), amo::u8string("", true));
                 
                 std::string ss = settings.getString(key);
                 
@@ -71,15 +71,15 @@ namespace amo {
                     return str;
                 }
                 
-                amo::string subStr = strClassList.substr(x->str().size());
-                subStr.trim_left("\\");
-                subStr.trim_left("/");
+                amo::u8string subStr = strClassList.substr(x->str().size());
+                subStr.trim_left(amo::u8string("\\", true));
+                subStr.trim_left(amo::u8string("/", true));
                 
-                amo::path subPath(subStr);
-                amo::path p(amo::string(ss, true));
+                amo::u8path subPath(subStr);
+                amo::u8path p(amo::u8string(ss, true));
                 
                 p.append(subStr.str());
-                return toAbsolutePath(amo::string(p.c_str(), false).to_utf8());
+                return toAbsolutePath(amo::u8string(p.c_str(), true).to_utf8());
             }
         }
         

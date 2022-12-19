@@ -10,9 +10,9 @@
 
 #include "ui/win/LayeredWindow.h"
 #include "ui/win/menu/ObserverImplBase.hpp"
-
+#include <amo/json.hpp>
 namespace amo {
-    class json;
+
     class CMenuUI;
     class MenuElementUI;
     class MenuWindowSettings;
@@ -64,7 +64,7 @@ namespace amo {
         virtual CDuiString GetSkinFolder() override;
         virtual CDuiString GetSkinFile() override;
         
-        std::string ParseSkinFile(amo::json& menu);
+        std::string ParseSkinFile(amo::u8json& menu);
         
         
         DWORD GetBkColor() const;

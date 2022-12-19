@@ -84,7 +84,7 @@ namespace amo {
                 return std::shared_ptr<T>();
             }
             
-            amo::json data = val;
+            amo::u8json data = val;
             return T::fromJson(data);
         }
         
@@ -97,8 +97,8 @@ namespace amo {
                 return Undefined();
             }
             
-            amo::json json = val;
-            std::vector<amo::json> arr = json.getJson("data").to_array();
+            amo::u8json json = val;
+            std::vector<amo::u8json> arr = json.getJson("data").to_array();
             
             if (arr.size() < 1) {
                 return Undefined();

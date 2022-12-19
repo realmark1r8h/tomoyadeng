@@ -14,7 +14,7 @@ namespace amo {
     
     Any NativeWindowTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::string str(args->getString(0));
+        amo::u8string str(args->getString(0), true);
         
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<NativeWindowSettings> pSettings(new NativeWindowSettings());

@@ -161,7 +161,7 @@ namespace amo {
         case WM_MOVE: {
             int x = LOWORD(lParam);
             int y = HIWORD(lParam);
-            amo::json json;
+            amo::u8json json;
             json.put("x", x);
             json.put("y", y);
             broadcastMessage(getTransferObjectID(), "move", json);
@@ -178,7 +178,7 @@ namespace amo {
         case WM_SIZE: {
             int width = LOWORD(lParam);
             int height = HIWORD(lParam);
-            amo::json json;
+            amo::u8json json;
             json.put("width", width);
             json.put("height", height);
             
@@ -231,9 +231,9 @@ namespace amo {
     
     
         auto controlMgr = TransferMappingMgr<ControlTransfer>::getInstance();
-        amo::json json;
-        std::string strName = amo::string(msg.pSender->GetName()).to_utf8();
-        std::string eventType = amo::string(msg.sType).to_utf8();
+        amo::u8json json;
+        std::string strName = amo::u8string(msg.pSender->GetName().GetData()).to_utf8();
+        std::string eventType = amo::u8string(msg.sType.GetData()).to_utf8();
         
         // 加了计时器 timer 触发 太多，先屏蔽掉
         if (eventType != "timer") {
@@ -324,7 +324,7 @@ namespace amo {
     
     Any LocalWindow::getMinimumSize(IPCMessage::SmartType msg) {
         SIZE sz = m_PaintManager.GetMinInfo();
-        amo::json json;
+        amo::u8json json;
         json.put("width", sz.cx);
         json.put("height", sz.cy);
         return json;
@@ -370,7 +370,7 @@ namespace amo {
     
     Any LocalWindow::getMaximumSize(IPCMessage::SmartType msg) {
         SIZE sz = m_PaintManager.GetMaxInfo();
-        amo::json json;
+        amo::u8json json;
         json.put("width", sz.cx);
         json.put("height", sz.cy);
         return json;
@@ -597,7 +597,7 @@ namespace amo {
     
     void LocalWindow::syncBroadcastMessage(const int64_t& nID,
                                            const std::string & msg,
-                                           amo::json & data) {
+                                           amo::u8json & data) {
         /*     return;*/
         
         std::shared_ptr<UIMessageBroadcaster> runner;
@@ -624,7 +624,7 @@ namespace amo {
     
     void LocalWindow::broadcastMessage(const int64_t& nID,
                                        const std::string & msg,
-                                       amo::json & data) {
+                                       amo::u8json & data) {
         /*     return;*/
         
         std::shared_ptr<UIMessageBroadcaster> runner;

@@ -315,28 +315,28 @@ namespace amo {
     protected:
         Any executeSql(const std::string& sql);
         std::string makeSql(IPCMessage::SmartType msg);
-        std::string getValuesFromJson(amo::json& json, const std::string& key);
+        std::string getValuesFromJson(amo::u8json& json, const std::string& key);
         std::string makeInsertSql(IPCMessage::SmartType msg);
         std::string makeInsertSqlFromJson(const std::string& utf8TableName,
-                                          amo::json& utf8Json);
+                                          amo::u8json& utf8Json);
         std::string makeRemoveSql(IPCMessage::SmartType msg);
         std::string makeUpdateSql(IPCMessage::SmartType msg);
         std::string formatArgs(IPCMessage::SmartType msg);
         
         
         
-        //amo::string formatUpdateSql(const amo::string& sql, amo::json& json);
+        //amo::u8string formatUpdateSql(const amo::u8string& sql, amo::u8json& json);
         
-        amo::string formatArgsByAnsiJson(const amo::string& sql, amo::json& json);
-        amo::string formatArgsByU8Json(const amo::string& sql, amo::json& json);
-        amo::string formatArgsByArr(const amo::string& sql,
-                                    std::vector<amo::string>& vec);
-        std::string formatPagging(amo::json& json);
-        std::vector<amo::string> anyToStringVec(Any& vec);
-        bool queryCountImpl(const std::string& str, amo::json& json);
+        amo::u8string formatArgsByAnsiJson(const amo::u8string& sql, amo::u8json& json);
+        amo::u8string formatArgsByU8Json(const amo::u8string& sql, amo::u8json& json);
+        amo::u8string formatArgsByArr(const amo::u8string& sql,
+                                      std::vector<amo::u8string>& vec);
+        std::string formatPagging(amo::u8json& json);
+        std::vector<amo::u8string> anyToStringVec(Any& vec);
+        bool queryCountImpl(const std::string& str, amo::u8json& json);
         
         /*!
-        * @fn	amo::json Sqlite::getPaggingInfo(amo::json& other);
+        * @fn	amo::u8json Sqlite::getPaggingInfo(amo::u8json& other);
         * @ignore
         * @brief	合并分页信息.
         *
@@ -345,7 +345,7 @@ namespace amo {
         * @return	The pagging information.
         */
         
-        amo::json getPaggingInfo(amo::json& other);
+        amo::u8json getPaggingInfo(amo::u8json& other);
         
         /**
         * @fn	bool Sqlite::getTableFieldImpl(const std::string& table);

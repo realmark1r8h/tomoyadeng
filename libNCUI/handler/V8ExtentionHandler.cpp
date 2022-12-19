@@ -87,7 +87,7 @@ namespace amo {
                 }
                 
                 
-                amo::u8string module = p.strip_path().remove_extension();
+                amo::u8string module(p.strip_path().remove_extension(), true);
                 loadExternalTransfer(module, pBrowser);
             }, false);
             
@@ -295,7 +295,7 @@ namespace amo {
                 std::shared_ptr<amo::loader> loader;
                 
                 if (!moduleName.empty()) {
-                    loader = DllManager<PID_RENDERER>::getInstance()->load(moduleName);
+                    loader = DllManager<PID_RENDERER>::getInstance()->load(amo::u8string(moduleName, true));
                 }
                 
                 if (loader) {
@@ -355,7 +355,7 @@ namespace amo {
             std::shared_ptr<amo::loader> loader;
             
             if (!moduleName.empty()) {
-                loader = DllManager<PID_RENDERER>::getInstance()->load(moduleName);
+                loader = DllManager<PID_RENDERER>::getInstance()->load(amo::u8string(moduleName, true));
             }
             
             if (loader) {
@@ -463,7 +463,7 @@ namespace amo {
         AMO_TIMER_ELAPSED();
         // 从磁盘中加载与所给模块同名dll
         std::shared_ptr<amo::loader> pLoader;
-        pLoader = DllManager<PID_RENDERER>::getInstance()->load(u8ClassName);
+        pLoader = DllManager<PID_RENDERER>::getInstance()->load(amo::u8string(u8ClassName, true));
         
         
         if (!pLoader) {
@@ -656,16 +656,16 @@ namespace amo {
             return NULL;
         }
         
-        amo::json json = (amo::json)ret;
+        amo::u8json json = (amo::u8json)ret;
         
-        if (ret.type() != AnyValueType<amo::json>::value) {
+        if (ret.type() != AnyValueType<amo::u8json>::value) {
             return NULL;
         }
         
         //如果返回的是一个数组，那么说明是Dll
         if (json.is_array()) {
             amo::u8string dllName(module, true);
-            std::vector<amo::json> vec = json.to_array();
+            std::vector<amo::u8json> vec = json.to_array();
             
             
             

@@ -42,7 +42,7 @@ namespace amo {
     Any DownloaderTransfer::onCreateClass(IPCMessage::SmartType msg) {
     
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::json json = args->getJson(0);
+        amo::u8json json = args->getJson(0);
         std::shared_ptr<DownloaderSettings> pSettings;
         pSettings.reset(new DownloaderSettings());
         pSettings->updateArgsSettings(json);
@@ -213,7 +213,7 @@ namespace amo {
             }
             
             callback->Continue(m_pDownloaderSettings->file, false);
-            amo::json json = downloadItemToJson(download_item);
+            amo::u8json json = downloadItemToJson(download_item);
             getMessageEmitter()->execute("triggerEvent", "start", json);
             
             // 如果文件已经存在 ，，那么怎么办，自动重命名，覆盖？
@@ -248,7 +248,7 @@ namespace amo {
                 return true;
             }
             
-            amo::json json = downloadItemToJson(download_item);
+            amo::u8json json = downloadItemToJson(download_item);
             
             if (m_nCommand == DL_CANCEL) {
                 if (!download_item->IsCanceled()) {
@@ -300,8 +300,8 @@ namespace amo {
         return false;
     }
     
-    amo::json DownloaderTransfer::downloadItemToJson(CefRefPtr<CefDownloadItem>& item) {
-        amo::json json;
+    amo::u8json DownloaderTransfer::downloadItemToJson(CefRefPtr<CefDownloadItem>& item) {
+        amo::u8json json;
         json.put("isValid", item->IsValid());
         json.put("isInProgress", item->IsInProgress());
         json.put("isComplete", item->IsComplete());

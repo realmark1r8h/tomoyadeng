@@ -49,7 +49,7 @@ namespace amo {
     
     
     
-    CefRefPtr<CefV8Value> TypeConvertor::ParseJsonToObject(amo::json& json) {
+    CefRefPtr<CefV8Value> TypeConvertor::ParseJsonToObject(amo::u8json& json) {
     
         CefRefPtr<CefV8Value> retval = CefV8Value::CreateUndefined();
         
@@ -86,7 +86,7 @@ namespace amo {
             
             if (json.is_array()) {
             
-                std::vector<amo::json> vec = json.to_array();
+                std::vector<amo::u8json> vec = json.to_array();
                 pObject = CefV8Value::CreateArray(vec.size());
                 
                 for (size_t i = 0; i < vec.size(); ++i) {
@@ -97,7 +97,7 @@ namespace amo {
             
                 // 遍历JSON
                 for (auto iter = json.begin(); iter != json.end(); ++iter) {
-                    amo::json p(iter->value);
+                    amo::u8json p(iter->value);
                     std::string sb = p.to_string();
                     std::string name = iter->name.GetString();
                     pObject->SetValue(name,
@@ -115,7 +115,7 @@ namespace amo {
         
     }
     
-    CefRefPtr<CefV8Value> TypeConvertor::ParseSingleJsonToObject(amo::json& json) {
+    CefRefPtr<CefV8Value> TypeConvertor::ParseSingleJsonToObject(amo::u8json& json) {
         std::string sb = json.to_string();
         
         if (!json.is_valid()) {
@@ -258,7 +258,7 @@ namespace amo {
             
             
         } else if (json.is_array()) {
-            std::vector<amo::json> vec = json.to_array();
+            std::vector<amo::u8json> vec = json.to_array();
             CefRefPtr<CefV8Value> pArray = CefV8Value::CreateArray(vec.size());
             
             for (size_t i = 0; i < vec.size(); ++i) {
@@ -275,7 +275,7 @@ namespace amo {
     
     
     Any TypeConvertor::ParseObjectToJson(CefRefPtr<CefV8Value> pObject) {
-        amo::json json;
+        amo::u8json json;
         
         if (!pObject || !pObject->IsObject()) {
             return  json;
@@ -285,8 +285,8 @@ namespace amo {
             std::string transferJson = transferObject(pObject);
             
             if (!transferJson.empty()) {
-                amo::json transfer(transferJson);
-                amo::string id = amo::string::from_number<int64_t>(transfer.getInt64("id"));
+                amo::u8json transfer(transferJson);
+                amo::u8string id = amo::u8string::from_number<int64_t>(transfer.getInt64("id"));
                 return id.to_utf8();
             }
         }
@@ -310,17 +310,17 @@ namespace amo {
                 Any ret = ParseSingleObjectToAny(pValue);
                 AddAnyToJson(json, vec[i].ToString(), ret);
                 /* amo::cdevel << json.to_string() << amo::endl;
-                 amo::cdevel << amo::string(json.to_string(), true).str() << amo::endl;*/
+                 amo::cdevel << amo::u8string(json.to_string(), true).str() << amo::endl;*/
             } else {
-                amo::json transfer(transferJson);
-                amo::string id = amo::string::from_number<int64_t>(transfer.getInt64("id"));
+                amo::u8json transfer(transferJson);
+                amo::u8string id = amo::u8string::from_number<int64_t>(transfer.getInt64("id"));
                 json.put(vec[i].ToString(), id.to_utf8());
             }
         }
         
         /*       std::string u8String = json.to_string();
                amo::cdevel << func_orient << u8String << amo::endl;
-               amo::cdevel << func_orient << amo::string(json.to_string(), true).str() << amo::endl;*/
+               amo::cdevel << func_orient << amo::u8string(json.to_string(), true).str() << amo::endl;*/
         return json;
     }
     
@@ -353,7 +353,7 @@ namespace amo {
         return Nothing();
     }
     
-    void TypeConvertor::AddAnyToJson(amo::json& json, const std::string& key,
+    void TypeConvertor::AddAnyToJson(amo::u8json& json, const std::string& key,
                                      Any& val) {
         return amo::util().addAnyToJson(json, key, val);
         
@@ -379,12 +379,12 @@ namespace amo {
              json.put(key, val.As<std::string>());
              break;
         
-         case  AnyValueType<amo::json>::value:
-             json.put(key, val.As<amo::json>());
+         case  AnyValueType<amo::u8json>::value:
+             json.put(key, val.As<amo::u8json>());
              break;
         
          case  AnyValueType<std::vector<Any> >::value: {
-             amo::json arr;
+             amo::u8json arr;
              arr.set_array();
              std::vector<Any> vec = val;
         
@@ -403,7 +403,7 @@ namespace amo {
         
     }
     
-    void TypeConvertor::AddAnyToJsonArray(amo::json& json, Any& val) {
+    void TypeConvertor::AddAnyToJsonArray(amo::u8json& json, Any& val) {
         return amo::util().addAnyToJsonArray(json, val);
         /*switch (val.type()) {
         case  AnyValueType<Undefined>::value:
@@ -427,8 +427,8 @@ namespace amo {
             json.push_back(val.As<std::string>());
             break;
         
-        case  AnyValueType<amo::json>::value:
-            json.push_back(val.As<amo::json>());
+        case  AnyValueType<amo::u8json>::value:
+            json.push_back(val.As<amo::u8json>());
             break;
         
         default:
@@ -525,17 +525,17 @@ namespace amo {
             
             
             
-        case  AnyValueType<amo::json>::value: {
+        case  AnyValueType<amo::u8json>::value: {
     
             // 返回一个JS Object
-            amo::json json = (amo::json)any;
+            amo::u8json json = (amo::u8json)any;
             
             if (json.is_array()) {
-                std::vector<amo::json> vec = json.to_array();
+                std::vector<amo::u8json> vec = json.to_array();
                 CefRefPtr<CefV8Value> retvalArr = CefV8Value::CreateArray(vec.size());
                 
                 for (size_t i = 0; i < vec.size(); ++i) {
-                    amo::json& p = vec[i];
+                    amo::u8json& p = vec[i];
 #if CHROME_VERSION_BUILD >= 2840
                     CefRefPtr<CefV8Value> object = CefV8Value::CreateObject(NULL, NULL);
 #else
@@ -655,7 +655,7 @@ namespace amo {
     }
     
     
-    amo::json TypeConvertor::ObjectToJson(CefRefPtr<CefV8Value> pV8Value) {
+    amo::u8json TypeConvertor::ObjectToJson(CefRefPtr<CefV8Value> pV8Value) {
     
         if (!pFrame) {
             pFrame = pContext->GetFrame();
@@ -688,13 +688,13 @@ namespace amo {
         list);
         
         if (val->IsString()) {
-        return amo::json(val->GetStringValue());
+        return amo::u8json(val->GetStringValue());
         } else {
-        return amo::json();
+        return amo::u8json();
         }
         
         } else {
-        return amo::json();
+        return amo::u8json();
         }
         }*/
         
@@ -718,11 +718,11 @@ namespace amo {
                                                     list);
                                                     
             if (val->IsString()) {
-                return amo::json(val->GetStringValue());
+                return amo::u8json(val->GetStringValue());
             }
         }
         
-        return amo::json();
+        return amo::u8json();
     }
     
     CefRefPtr<CefV8Value> TypeConvertor::JsonToObject(const std::string& str) {
@@ -738,7 +738,7 @@ namespace amo {
         return stringToObject->ExecuteFunction(stringToObject, list);
     }
     
-    CefRefPtr<CefV8Value> TypeConvertor::JsonToObject(amo::json& json) {
+    CefRefPtr<CefV8Value> TypeConvertor::JsonToObject(amo::u8json& json) {
         std::string str = json.to_string();
         return JsonToObject(str);
     }

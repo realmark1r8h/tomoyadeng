@@ -54,8 +54,8 @@ namespace amo {
         int x = 0;
         int y = 0;
         
-        if (args->getValue(0).type() == AnyValueType<amo::json>::value) {
-            amo::json json = args->getJson(0);
+        if (args->getValue(0).type() == AnyValueType<amo::u8json>::value) {
+            amo::u8json json = args->getJson(0);
             x = json.getInt("x");
             y = json.getInt("y");
             
@@ -92,8 +92,8 @@ namespace amo {
             int x = 0;
             int y = 0;
             
-            if (args->getValue(0).type() == AnyValueType<amo::json>::value) {
-                amo::json json = args->getJson(0);
+            if (args->getValue(0).type() == AnyValueType<amo::u8json>::value) {
+                amo::u8json json = args->getJson(0);
                 x = json.getInt("x");
                 y = json.getInt("y");
                 
@@ -135,7 +135,7 @@ namespace amo {
     Any MouseTransfer::getCursorPos(IPCMessage::SmartType msg) {
         POINT pt = { 0 };
         ::GetCursorPos(&pt);
-        amo::json json;
+        amo::u8json json;
         json.put("x", (int)pt.x);
         json.put("y", (int)pt.y);
         return json;
@@ -147,8 +147,8 @@ namespace amo {
         int x = 0;
         int y = 0;
         
-        if (args->getValue(0).type() == AnyValueType<amo::json>::value) {
-            amo::json json = args->getJson(0);
+        if (args->getValue(0).type() == AnyValueType<amo::u8json>::value) {
+            amo::u8json json = args->getJson(0);
             x = json.getInt("x");
             y = json.getInt("y");
             
@@ -189,7 +189,7 @@ namespace amo {
             return Undefined();
         }
         
-        amo::json json;
+        amo::u8json json;
         POINT pt = { x, y };
         ::ScreenToClient(pWindow->GetHWND(), &pt);
         json.put("x", (int)pt.x);
@@ -204,7 +204,7 @@ namespace amo {
         int y = args->getInt(2);
         auto manager = BrowserWindowManager::getInstance();
         std::shared_ptr<LocalWindow> pWindow = manager->findWindow(strID);
-        amo::json json;
+        amo::u8json json;
         
         if (!pWindow) {
             return Undefined();

@@ -13,61 +13,61 @@ namespace amo {
     
     Any ShellTransfer::exec(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::string strOperation(args->getString(0), true);
-        amo::string strFileName(args->getString(1), true);
-        amo::string strParam(args->getString(2), true);
-        amo::string stsrDir(args->getString(3), true);
+        amo::u8string strOperation(args->getString(0), true);
+        amo::u8string strFileName(args->getString(1), true);
+        amo::u8string strParam(args->getString(2), true);
+        amo::u8string stsrDir(args->getString(3), true);
         int nShowCmd = SW_SHOWNORMAL;
         
         if (args->isValid(4)) {
             nShowCmd = args->getInt(4);
         }
         
-        return (int)::ShellExecuteA(NULL,
-                                    strOperation.c_str(),
-                                    strFileName.c_str(),
-                                    strParam.c_str(),
-                                    stsrDir.c_str(),
+        return (int)::ShellExecuteW(NULL,
+                                    strOperation.to_unicode().c_str(),
+                                    strFileName.to_unicode().c_str(),
+                                    strParam.to_unicode().c_str(),
+                                    stsrDir.to_unicode().c_str(),
                                     nShowCmd);
     }
     
     
     Any ShellTransfer::open(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::string strFileName(args->getString(0), true);
-        amo::string strParam(args->getString(1), true);
-        amo::string stsrDir(args->getString(3), true);
-        return (int)::ShellExecuteA(NULL,
-                                    "open",
-                                    strFileName.c_str(),
-                                    strParam.c_str(),
-                                    stsrDir.c_str(),
+        amo::u8string strFileName(args->getString(0), true);
+        amo::u8string strParam(args->getString(1), true);
+        amo::u8string stsrDir(args->getString(3), true);
+        return (int)::ShellExecuteW(NULL,
+                                    L"open",
+                                    strFileName.to_unicode().c_str(),
+                                    strParam.to_unicode().c_str(),
+                                    stsrDir.to_unicode().c_str(),
                                     SW_SHOWNORMAL);
     }
     
     Any ShellTransfer::print(IPCMessage::SmartType msg) {
-        amo::string str(msg->getArgumentList()->getString(0), true);
-        return (int)::ShellExecuteA(NULL,
-                                    "print",
-                                    str.c_str(),
+        amo::u8string str(msg->getArgumentList()->getString(0), true);
+        return (int)::ShellExecuteW(NULL,
+                                    L"print",
+                                    str.to_unicode().c_str(),
                                     NULL,
                                     NULL,
                                     SW_SHOWNORMAL);
     }
     
     Any ShellTransfer::showItemInFolder(IPCMessage::SmartType msg) {
-        amo::string str(msg->getArgumentList()->getString(0), true);
-        amo::string strParam("/e, /select, ");
+        amo::u8string str(msg->getArgumentList()->getString(0), true);
+        amo::u8string strParam(amo::u8string("/e, /select, ", true));
         strParam += str;
-        return (int)::ShellExecuteA(NULL,
-                                    "open",
-                                    "explorer.exe",
-                                    strParam.c_str(),
+        return (int)::ShellExecuteW(NULL,
+                                    L"open",
+                                    L"explorer.exe",
+                                    strParam.to_wide().c_str(),
                                     NULL,
                                     SW_SHOWNORMAL);
     }
     
-    int ShellTransfer::StringToShowCmd(const amo::string& str) {
+    int ShellTransfer::StringToShowCmd(const amo::u8string& str) {
         if (str == "SW_HIDE") {
             //隐藏窗口，活动状态给令一个窗口
             return SW_HIDE;

@@ -52,7 +52,7 @@ namespace amo {
          *
          * @param	tipMsg	Message describing the tip.
          */
-        void setToolTip(const std::string& tipMsg);
+        void setToolTip(const std::wstring& tipMsg);
         
         /*!
          * @fn	void Tray::setBlink(bool isBlink);
@@ -87,30 +87,30 @@ namespace amo {
          */
         void setTrayIcon(HICON val);
         /*!
-         * @fn	void Tray::setTrayIcon(const amo::string& strPath);
+         * @fn	void Tray::setTrayIcon(const amo::u8string& strPath);
          *
          * @brief	设置托盘图标.
          *
          * @param	strPath	Full pathname of the file.
          */
-        void setTrayIcon(const amo::string& strPath);
+        void setTrayIcon(const amo::u8string& strPath);
         
         /*!
-         * @fn	NOTIFYICONDATAA& Tray::getNotifyCondata();
+         * @fn	NOTIFYICONDATAW& Tray::getNotifyCondata();
          *
          * @brief	托盘数据结构.
          *
          * @return	The notify condata.
          */
-        NOTIFYICONDATAA& getNotifyCondata();
+        NOTIFYICONDATAW& getNotifyCondata();
         /*!
-         * @fn	void Tray::setNotifyCondata(NOTIFYICONDATAA val);
+         * @fn	void Tray::setNotifyCondata(NOTIFYICONDATAW val);
          *
          * @brief	设置托盘数据.
          *
          * @param	val	The value.
          */
-        void setNotifyCondata(NOTIFYICONDATAA val);
+        void setNotifyCondata(NOTIFYICONDATAW val);
         
         /*!
          * @fn	std::function<void(const std::string&)> getEventCallback() const;
@@ -153,7 +153,7 @@ namespace amo {
     private:
     
         /*! @brief	托盘数据. */
-        NOTIFYICONDATAA m_notifyCondata;
+        NOTIFYICONDATA m_notifyCondata;
         /*! @brief	消息循环句柄. */
         HWND m_hMessageWnd;
         /*托盘图标*/

@@ -390,16 +390,16 @@ namespace amo {
                                CefRefPtr<CefDownloadItemCallback>& callback);
                                
         /*!
-         * @fn	amo::json DownloaderTransfer::downloadItemToJson(CefRefPtr<CefDownloadItem>& item);
+         * @fn	amo::u8json DownloaderTransfer::downloadItemToJson(CefRefPtr<CefDownloadItem>& item);
          * @ignore
          * @brief	Downloads the item to JSON described by item.
          *
          * @param [in,out]	item	The item.
          *
-         * @return	An amo::json.
+         * @return	An amo::u8json.
          */
         
-        amo::json downloadItemToJson(CefRefPtr<CefDownloadItem>& item);
+        amo::u8json downloadItemToJson(CefRefPtr<CefDownloadItem>& item);
     private:
     
         /*! @brief	The frame. */

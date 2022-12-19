@@ -18,8 +18,8 @@ namespace amo {
         for (auto iter = m_oBuiltin.begin(); iter != m_oBuiltin.end(); ++iter) {
             CefRefPtr<JsV8Handler> ptr = *iter;
             CefString name = ptr->getHandlerName();
-            amo::string s1(name.ToString(), true);
-            amo::string s2(id.ToString(), true);
+            amo::u8string s1(name.ToString(), true);
+            amo::u8string s2(id.ToString(), true);
             
             if (s1 == s2) {
                 return ptr;

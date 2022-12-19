@@ -112,7 +112,7 @@ namespace amo {
                 BrowserProcessExchangerManager::getInstance()->exchange(m_nBrowserID, false);
             } else {
                 auto manager = amo::BrowserTransferMgr::getInstance();
-                amo::json arr = manager->getTransferMap(m_nBrowserID).toJson();
+                amo::u8json arr = manager->getTransferMap(m_nBrowserID).toJson();
                 BrowserProcessExchangerManager::getInstance()->exchange(m_nBrowserID, arr);
             }
             
@@ -246,7 +246,7 @@ namespace amo {
                 return false;
             }
             
-            amo::json json(str);
+            amo::u8json json(str);
             IPCMessage::SmartType ipcMessage(new IPCMessage());
             *ipcMessage = IPCMessage::fromJson(json);
             

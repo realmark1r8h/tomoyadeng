@@ -379,7 +379,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     private:
-        std::shared_ptr<amo::path>  m_pPath;
+        std::shared_ptr<amo::u8path>  m_pPath;
         
     };
 }

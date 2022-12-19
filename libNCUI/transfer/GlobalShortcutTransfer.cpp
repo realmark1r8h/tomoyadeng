@@ -20,7 +20,7 @@ namespace amo {
         
         std::string strKey = msg->getArgumentList()->getString(0);
         
-        if (msg->getArgumentList()->getValue(0).type() == AnyValueType<amo::json>::value) {
+        if (msg->getArgumentList()->getValue(0).type() == AnyValueType<amo::u8json>::value) {
             std::shared_ptr<GlobalShortcutSettings> pSettings;
             pSettings.reset(new GlobalShortcutSettings());
             pSettings->updateArgsSettings(strKey);

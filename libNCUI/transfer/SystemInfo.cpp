@@ -33,8 +33,8 @@ namespace amo {
         return bSucceed;
     }
     
-    amo::json SystemInfo::getSystemResource() {
-        amo::json json;
+    amo::u8json SystemInfo::getSystemResource() {
+        amo::u8json json;
         SYSTEM_INFO systemInfo;
         
         std::string systembit, systemName;

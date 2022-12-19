@@ -8,13 +8,13 @@ namespace amo {
 
     PathTransfer::PathTransfer()
         : RunnableTransfer("Path") {
-        m_pPath.reset(new path());
+        m_pPath.reset(new u8path());
     }
     
-    PathTransfer::PathTransfer(const std::string& ansiPath)
+    PathTransfer::PathTransfer(const std::string& u8Path)
         : RunnableTransfer("Path") {
         
-        m_pPath.reset(new path(ansiPath));
+        m_pPath.reset(new u8path(u8Path));
         
     }
     
@@ -25,8 +25,8 @@ namespace amo {
     Any PathTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string u8Path = args->getString(0);
-        amo::string ansiPath(u8Path, true);
-        std::shared_ptr<PathTransfer> pTransfer(new PathTransfer(ansiPath));
+        
+        std::shared_ptr<PathTransfer> pTransfer(new PathTransfer(u8Path));
         
         pTransfer->registerFunction();
         addTransfer(pTransfer);
@@ -37,8 +37,8 @@ namespace amo {
     
     
     Any PathTransfer::toString(IPCMessage::SmartType msg) {
-        amo::string ansiPath(m_pPath->c_str(), false);
-        TransferEventInfo info("success", false, true);
+        amo::u8string ansiPath(m_pPath->c_str(), true);
+        TransferEventInfo info(amo::u8string("success", true), false, true);
         info.data = "fffff";
         //broadcastEvent(info);
         triggerEvent(info);
@@ -51,9 +51,9 @@ namespace amo {
     
     Any PathTransfer::append(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::string ansiPath(args->getString(0), true);
+        amo::u8string ansiPath(args->getString(0), true);
         
-        amo::path p(ansiPath);
+        amo::u8path p(ansiPath);
         m_pPath->append(p);
         
         // 返回this
@@ -71,14 +71,14 @@ namespace amo {
     }
     
     Any PathTransfer::getFullAppDir(IPCMessage::SmartType msg) {
-        amo::string ansiPath = amo::path::getExeDir();
+        amo::u8string u8Path(amo::u8path::getExeDir(), true);
         IPCMessage::SmartType cloneMsg = msg->clone();
-        cloneMsg->getArgumentList()->setValue(0, ansiPath.to_utf8());
+        cloneMsg->getArgumentList()->setValue(0, u8Path.to_utf8());
         return onCreateClass(cloneMsg);
     }
     
     Any PathTransfer::getFullAppName(IPCMessage::SmartType msg) {
-        amo::string ansiPath = amo::path::getFullExeName();
+        amo::u8string ansiPath(amo::u8path::getFullExeName(), true);
         IPCMessage::SmartType cloneMsg = msg->clone();
         cloneMsg->getArgumentList()->setValue(0, ansiPath.to_utf8());
         return onCreateClass(cloneMsg);
@@ -86,18 +86,18 @@ namespace amo {
     
     
     Any PathTransfer::fileExsit(IPCMessage::SmartType msg) {
-        amo::string strPath(msg->getArgumentList()->getString(0));
-        return amo::path(strPath).file_exists();
+        amo::u8string strPath(msg->getArgumentList()->getString(0), true);
+        return amo::u8path(strPath).file_exists();
     }
     
     Any PathTransfer::Remove(IPCMessage::SmartType msg) {
-        amo::string strPath(msg->getArgumentList()->getString(0));
-        return amo::path(strPath).remove();
+        amo::u8string strPath(msg->getArgumentList()->getString(0), true);
+        return amo::u8path(strPath).remove();
     }
     
     Any PathTransfer::RemoveAll(IPCMessage::SmartType msg) {
-        amo::string strPath(msg->getArgumentList()->getString(0));
-        return amo::path(strPath).remove_all();
+        amo::u8string strPath(msg->getArgumentList()->getString(0), true);
+        return amo::u8path(strPath).remove_all();
     }
     
     Any PathTransfer::copyTo(IPCMessage::SmartType msg) {
@@ -105,13 +105,13 @@ namespace amo {
             return false;
         }
         
-        amo::string p(msg->getArgumentList()->getString(0), true);
+        amo::u8string p(msg->getArgumentList()->getString(0), true);
         
         if (p.empty()) {
             return false;
         }
         
-        amo::path dstPath(p);
+        amo::u8path dstPath(p);
         return m_pPath->copy_to(dstPath);
     }
     
@@ -120,14 +120,14 @@ namespace amo {
             return false;
         }
         
-        amo::string p(msg->getArgumentList()->getString(0), true);
+        amo::u8string p(msg->getArgumentList()->getString(0), true);
         
         if (p.empty()) {
             return false;
         }
         
-        amo::path dstPath(p);
-        return m_pPath->move_to(dstPath);
+        amo::u8path dstPath(p);
+        return m_pPath->move_to(dstPath.generic_wstring());
     }
     
     Any PathTransfer::remove(IPCMessage::SmartType msg) {

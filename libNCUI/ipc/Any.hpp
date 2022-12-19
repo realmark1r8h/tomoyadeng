@@ -84,7 +84,7 @@ namespace amo {
      * @return	std::string.
      */
     template<typename T> static std::string valueToString(const T& val) {
-        amo::json json;
+        amo::u8json json;
         json.put(val);
         return json.to_string();
     }
@@ -134,7 +134,7 @@ namespace amo {
     template<> static std::string anyToString<Deadlock>(const Deadlock& val) {
         return valueToString<std::string>("deadlock");
     }
-    template<> static std::string anyToString<amo::json>(const amo::json& val) {
+    template<> static std::string anyToString<amo::u8json>(const amo::u8json& val) {
         return val.to_string();
     }
     template<> static std::string anyToString<Nothing>(const Nothing& val) {
@@ -155,7 +155,7 @@ namespace amo {
      * @return	目标类型值.
      */
     template<typename T> static T stringToValue(const std::string& val) {
-        amo::json json(val);
+        amo::u8json json(val);
         return json.get<T>();
     }
     /*!
@@ -190,9 +190,10 @@ namespace amo {
     template<> static std::string stringToAny(const std::string& val) {
         return val;
     }
-    template<> static amo::json stringToAny(const std::string& val) {
-        return amo::json(val);
+    template<> static amo::u8json stringToAny(const std::string& val) {
+        return amo::u8json(val);
     }
+    
     template<> static Nil stringToAny(const std::string& val) {
         return Nil();
     }
@@ -283,9 +284,12 @@ namespace amo {
     template<> struct AnyValueType <std::map<std::string, std::string> > {
         static const char value = 40;
     };
-    template<> struct AnyValueType <amo::json> {
+    template<> struct AnyValueType <amo::u8json> {
         static const char value = 41;
     };
+    /*  template<> struct AnyValueType <amo::u8json> {
+          static const char value = 44;
+      };*/
     
     template<> struct AnyValueType<std::vector<Any> > {
         static const char value = 42;
@@ -414,14 +418,14 @@ namespace amo {
             m_pData->value = val;
         }
         
-        static Any fromJson(amo::json& json) {
+        static Any fromJson(amo::u8json& json) {
             char type = json.get<char>("type");
             std::string val = json.get<std::string>("value");
             return Any(type, val);
         }
         
-        amo::json toJson() const {
-            amo::json json;
+        amo::u8json toJson() const {
+            amo::u8json json;
             json.put("type", m_pData->type);
             json.put("value", m_pData->value);
             return json;
@@ -538,18 +542,18 @@ namespace amo {
         }
         
         /*!
-         * @fn	amo::json AnyArgsList::toJson() const
+         * @fn	amo::u8json AnyArgsList::toJson() const
          *
          * @brief	返回当前对象的JSON对象，将参数列表转换为JSON数组.
          *
-         * @return	This object as an amo::json.
+         * @return	This object as an amo::u8json.
          */
-        amo::json toJson() const {
-            amo::json json;
+        amo::u8json toJson() const {
+            amo::u8json json;
             json.set_array();
             
             for (auto& p : m_oMap) {
-                amo::json args;
+                amo::u8json args;
                 args.put("index", p.first);
                 args.put("type", p.second.type());
                 args.put("value", p.second.value());
@@ -560,7 +564,7 @@ namespace amo {
         }
         
         /*!
-         * @fn	static std::shared_ptr<AnyArgsList> AnyArgsList::fromJson(amo::json& json)
+         * @fn	static std::shared_ptr<AnyArgsList> AnyArgsList::fromJson(amo::u8json& json)
          *
          * @brief	将JSON转换为AnyArgsList.
          *
@@ -568,14 +572,14 @@ namespace amo {
          *
          * @return	std::shared_ptr<AnyArgsList>.
          */
-        static std::shared_ptr<AnyArgsList> fromJson(amo::json& json) {
+        static std::shared_ptr<AnyArgsList> fromJson(amo::u8json& json) {
             std::shared_ptr<AnyArgsList> list(new AnyArgsList());
             
             if (!json.is_array()) {
                 return list;
             }
             
-            std::vector<amo::json> vec = json.to_array();
+            std::vector<amo::u8json> vec = json.to_array();
             
             for (auto& p : vec) {
                 Any val;
@@ -629,7 +633,7 @@ namespace amo {
             
             return true;
         }
-        amo::json getJson(const int& nIndex) {
+        amo::u8json getJson(const int& nIndex) {
             return getValue(nIndex);
         }
         
@@ -698,7 +702,7 @@ namespace amo {
         }
         
         /*!
-         * @fn	static IPCMessage IPCMessage::fromJson(amo::json& json)
+         * @fn	static IPCMessage IPCMessage::fromJson(amo::u8json& json)
          *
          * @brief	将JSON转换为IPCMessage.
          *
@@ -706,11 +710,11 @@ namespace amo {
          *
          * @return	An IPCMessage.
          */
-        static IPCMessage fromJson(amo::json& json) {
+        static IPCMessage fromJson(amo::u8json& json) {
             IPCMessage message;
             message.m_strMessageName = json.get<std::string>("name");
             message.m_nID = json.get<int>("id");
-            amo::json args = json.get<amo::json>("args");
+            amo::u8json args = json.get<amo::u8json>("args");
             message.m_pMessageList = AnyArgsList::fromJson(args);
             return message;
         }
@@ -773,8 +777,8 @@ namespace amo {
             m_pMessageList = list;
         }
         
-        amo::json toJson() const {
-            amo::json json;
+        amo::u8json toJson() const {
+            amo::u8json json;
             json.put("name", m_strMessageName);
             json.put("id", m_nID);
             json.put_child("args", m_pMessageList->toJson());
@@ -808,7 +812,7 @@ namespace amo {
         ~IPCResult() {}
         
         /*!
-         * @fn	static IPCResult IPCResult::fromJson(amo::json& json)
+         * @fn	static IPCResult IPCResult::fromJson(amo::u8json& json)
          *
          * @brief	将JSON转换为IPCResult.
          *
@@ -816,10 +820,10 @@ namespace amo {
          *
          * @return	An IPCResult.
          */
-        static IPCResult fromJson(amo::json& json) {
+        static IPCResult fromJson(amo::u8json& json) {
             IPCResult result;
             result.m_nID = json.get<int>("id");
-            amo::json args = json.get<amo::json>("args");
+            amo::u8json args = json.get<amo::u8json>("args");
             char type = args.get<char>("type");
             std::string value = args.get<std::string>("value");
             result.m_val = Any(type, value);;
@@ -871,17 +875,17 @@ namespace amo {
         }
         
         /*!
-         * @fn	amo::json IPCResult::toJson() const
+         * @fn	amo::u8json IPCResult::toJson() const
          *
          * @brief	将IPCResult转换为JSON.
          *
-         * @return	This object as an amo::json.
+         * @return	This object as an amo::u8json.
          */
-        amo::json toJson() const {
-            amo::json json;
+        amo::u8json toJson() const {
+            amo::u8json json;
             json.put("id", m_nID);
             
-            amo::json args;
+            amo::u8json args;
             args.put("type", m_val.type());
             args.put("value", m_val.value());
             json.put_child("args", args);
@@ -900,10 +904,10 @@ namespace amo {
     }
     
     template<> static IPCMessage stringToAny(const std::string& val) {
-        return IPCMessage::fromJson(amo::json(val));
+        return IPCMessage::fromJson(amo::u8json(val));
     }
     template<> static IPCResult stringToAny(const std::string& val) {
-        return IPCResult::fromJson(amo::json(val));
+        return IPCResult::fromJson(amo::u8json(val));
     }
     
     template<> static std::string anyToString<IPCMessage>(const IPCMessage& val) {
@@ -915,13 +919,13 @@ namespace amo {
     
     template<> static std::vector<Any> stringToAny(const std::string& val) {
         std::vector<Any> vec;
-        amo::json json(val);
+        amo::u8json json(val);
         
         if (!json.is_array()) {
             return vec;
         }
         
-        std::vector<amo::json> jsonArr = json.to_array();
+        std::vector<amo::u8json> jsonArr = json.to_array();
         
         for (auto& p : jsonArr) {
             vec.push_back(Any::fromJson(p));
@@ -931,7 +935,7 @@ namespace amo {
     }
     
     template<> static std::string anyToString(const std::vector<Any>& val) {
-        amo::json jsonArr;
+        amo::u8json jsonArr;
         jsonArr.set_array();
         
         for (auto p : val) {

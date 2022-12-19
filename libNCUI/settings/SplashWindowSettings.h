@@ -40,7 +40,7 @@ namespace amo {
         
         virtual void afterUpdateArgsSettings() override;
         
-        virtual amo::json toJson() override;
+        virtual amo::u8json toJson() override;
     public:
         /*! @var #String image 启动窗口显示图片. */
         std::string image;

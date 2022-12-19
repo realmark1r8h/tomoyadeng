@@ -45,11 +45,11 @@ namespace amo {
         }
         
         
-        static  void addAnyToJsonArray(amo::json& json, const Any& val)   {
+        static  void addAnyToJsonArray(amo::u8json& json, const Any& val)   {
             switch (val.type()) {
             case  AnyValueType<Undefined>::value:
             case  AnyValueType<Nil>::value:
-                json.push_back(val.toJson());
+                json.push_back((amo::u8json)val.toJson());
                 break;
                 
             case  AnyValueType<bool>::value:
@@ -68,12 +68,13 @@ namespace amo {
                 json.push_back(val.As<std::string>());
                 break;
                 
-            case  AnyValueType<amo::json>::value:
-                json.push_back(val.As<amo::json>());
+                
+            case  AnyValueType<amo::u8json>::value:
+                json.push_back(val.As<amo::u8json>());
                 break;
                 
             case AnyValueType<std::vector<Any>>::value: {
-                amo::json arr;
+                amo::u8json arr;
                 arr.set_array();
                 std::vector<Any> vec = val;
                 
@@ -91,18 +92,18 @@ namespace amo {
             return;
         }
         
-        static  void addAnyToJson(amo::json& json, const std::string& key,
+        static  void addAnyToJson(amo::u8json& json, const std::string& key,
                                   const Any& val)   {
             switch (val.type()) {
             case  AnyValueType<Undefined>::value: {
-                amo::json child = val.toJson();
+                amo::u8json child = val.toJson();
                 child.put("a02c2b36-3d70-44f6-9456-85dab0e0ddb5", 0);
                 json.put(key, child);
                 break;
             }
             
             case  AnyValueType<Nil>::value: {
-                amo::json child = val.toJson();
+                amo::u8json child = val.toJson();
                 child.put("a02c2b36-3d70-44f6-9456-85dab0e0ddb5", 1);
                 json.put(key, child);
                 break;
@@ -133,12 +134,14 @@ namespace amo {
                 json.put(key, val.As<std::string>());
                 break;
                 
-            case  AnyValueType<amo::json>::value:
-                json.put(key, val.As<amo::json>());
+            case  AnyValueType<amo::u8json>::value:
+                json.put(key, val.As<amo::u8json>());
                 break;
                 
+                
+                
             case  AnyValueType<std::vector<Any> >::value: {
-                amo::json arr;
+                amo::u8json arr;
                 arr.set_array();
                 std::vector<Any> vec = val;
                 
@@ -157,7 +160,7 @@ namespace amo {
             
         }
         
-        static Any jsonToAny(const amo::json& json)   {
+        static Any jsonToAny(const amo::u8json& json)   {
             if (json.is_bool()) {
                 return json.get<bool>();
             } else if (json.is_int()) {
@@ -174,8 +177,8 @@ namespace amo {
                 return Undefined();
             }
         }
-        static  Any jsonToAny(const amo::json& json, const std::string& key)  {
-            amo::json val = json.getJson(key);
+        static  Any jsonToAny(const amo::u8json& json, const std::string& key)  {
+            amo::u8json val = json.getJson(key);
             return jsonToAny(val);
             
         }

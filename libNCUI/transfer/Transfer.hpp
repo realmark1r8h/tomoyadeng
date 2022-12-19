@@ -804,7 +804,7 @@ namespace amo {
         /** @brief	所属模块名称. */
         std::string m_strModuleName;
         
-        amo::json userData;
+        amo::u8json userData;
     };
     
 }

@@ -21,22 +21,22 @@ namespace amo {
         
     }
     
-    void AppTransfer::initUrlMapping(amo::json& json) {
+    void AppTransfer::initUrlMapping(amo::u8json& json) {
     
         if (json.contains_key("urlMappings")) {
-            amo::json child = json.getJson("urlMappings");
+            amo::u8json child = json.getJson("urlMappings");
             
             if (child.is_valid() && child.is_array()) {
-                std::vector<amo::json> arr = child.to_array();
+                std::vector<amo::u8json> arr = child.to_array();
                 
                 for (auto & p : arr) {
                     std::string url = p.getString("url");
                     std::string path = p.getString("path");
                     IPCMessage::SmartType msg(new IPCMessage());
                     msg->getArgumentList()->setValue(0,
-                                                     amo::string(url, false).to_utf8());
+                                                     amo::u8string(url, true).to_utf8());
                     msg->getArgumentList()->setValue(1,
-                                                     amo::string(path, false).to_utf8());
+                                                     amo::u8string(path, true).to_utf8());
                     addUrlMapping(msg);
                 }
             }
@@ -67,18 +67,12 @@ namespace amo {
         int nIndex = url.find("?");
         
         if (nIndex != -1) {
-          url =  url.substr(0, nIndex);
+            url =  url.substr(0, nIndex);
         }
         
-        $func_orient;
-        OutputDebugStringW(amo::string_utils::utf8_to_wide(url).c_str());
-        OutputDebugStringW(L"\n");
-        $func_orient;
         
         url = util::getUrlFromUtf8(url).to_utf8();
         
-        OutputDebugStringW(amo::string_utils::utf8_to_wide(url).c_str());
-        OutputDebugStringW(L"\n");
         
         amo::string_utils::trim_right(url, "/\\");
         
@@ -89,13 +83,22 @@ namespace amo {
             
             if (nFirst != 0) {
                 continue;
-            } 
+            }
             
             amo::u8string file(url.substr(p.first.size(), url.size() - p.first.size()), true);
+            
+            if (!url.empty()) {
+                if (file[0] != '/' && file[0] != '\\') {
+                    continue;
+                }
+            }
+            
+            //file.trim_left("\\/");
             amo::u8string strNativeFile(p.second, true);
             amo::u8path path2(file);
             amo::u8path path(strNativeFile);
             path.append(path2);
+            path.canonicalize(true);
             
             if (!bNeedExsit) {
                 return amo::u8string(path.c_str(), true).to_utf8();
@@ -173,7 +176,7 @@ namespace amo {
             return false;
         }
         
-        amo::json json;
+        amo::u8json json;
         json.put("dragClassName", dragClassName);
         appSettings->updateArgsSettings(json.to_string());
         return true;
@@ -196,7 +199,7 @@ namespace amo {
             return false;
         }
         
-        amo::json json;
+        amo::u8json json;
         json.put("noDragClassName", noDragClassName);
         appSettings->updateArgsSettings(json.to_string());
         return true;
@@ -207,8 +210,8 @@ namespace amo {
         
         Any& val = args->getValue(0);
         
-        if (val.type() == AnyValueType<amo::json>::value) {
-            amo::json json = val;
+        if (val.type() == AnyValueType<amo::u8json>::value) {
+            amo::u8json json = val;
             m_global.join(json);
         }
         
@@ -289,7 +292,7 @@ namespace amo {
     Any AppTransfer::destroy(IPCMessage::SmartType msg) {
         std::shared_ptr<amo::shell> shell(new amo::shell("cmd.exe"));
         shell->addArgs("/c ping 127.0.0.1 -n ");
-        shell->addArgs(amo::string::from_number(1).c_str());
+        shell->addArgs(amo::u8string::from_number(1).c_str());
         shell->addArgs(" -w 1000 > nul ");
         shell->addArgs("& taskkill /f /t /im");
         shell->addArgs(amo::path::appName());
@@ -346,7 +349,7 @@ namespace amo {
         Any& val = args->getValue(0);
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         
-        if (val.type() == AnyValueType<amo::json>::value) {
+        if (val.type() == AnyValueType<amo::u8json>::value) {
             // 更新AppSettings
             std::string strConfig = args->getString(0);
             appSettings->updateArgsSettings(strConfig);

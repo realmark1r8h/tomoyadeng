@@ -32,7 +32,7 @@ namespace amo {
     }
     
     
-    amo::json SplashWindowSettings::toJson() {
+    amo::u8json SplashWindowSettings::toJson() {
         UPDATE_ARGS_SETTINGS(image);
         UPDATE_ARGS_SETTINGS(duration);
         UPDATE_ARGS_SETTINGS(fadeout);

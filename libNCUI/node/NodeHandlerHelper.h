@@ -32,8 +32,8 @@ namespace amo {
         std::shared_ptr<BrowserTransfer> getTransfer(CefRefPtr<CefBrowser> pBrowser);
         std::shared_ptr<FrameTransfer> getTransfer(CefRefPtr<CefFrame> pFrame);
         
-        amo::json getJson(CefRefPtr<CefBrowser> pBrowser);
-        amo::json getJson(CefRefPtr<CefFrame> pFrame);
+        amo::u8json getJson(CefRefPtr<CefBrowser> pBrowser);
+        amo::u8json getJson(CefRefPtr<CefFrame> pFrame);
         
     protected:
         int64_t m_nObjectID;

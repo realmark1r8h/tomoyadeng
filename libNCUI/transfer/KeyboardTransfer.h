@@ -213,7 +213,7 @@ namespace amo {
         void SendKeyDown(char data);
         void SendKeyUp(char data);
         void SendUnicode(wchar_t data);
-        void SendKeys(const amo::string& msg, int interval = 5);
+        void SendKeys(const amo::u8string& msg, int interval = 5);
         
         std::vector<char> getKeys(IPCMessage::SmartType msg);
     private:

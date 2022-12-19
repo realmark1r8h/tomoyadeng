@@ -17,13 +17,13 @@
 
 namespace amo {
 
-    std::function<bool(int32_t, amo::json)> LayeredWindow::getHotKeyEventCallback()
+    std::function<bool(int32_t, amo::u8json)> LayeredWindow::getHotKeyEventCallback()
     const {
         return m_fnHotKeyEventCallback;
     }
     
     void LayeredWindow::setHotKeyEventCallback(
-        std::function<bool(int32_t, amo::json)> val) {
+        std::function<bool(int32_t, amo::u8json)> val) {
         m_fnHotKeyEventCallback = val;
     }
     
@@ -448,8 +448,8 @@ namespace amo {
         }
         
         if (!m_pNativeSettings->title.empty()) {
-            amo::string str(m_pNativeSettings->title, true);
-            SetWindowText(m_hWnd, str.to_unicode().c_str());
+            amo::u8string str(m_pNativeSettings->title, true);
+            SetWindowTextW(m_hWnd, str.to_unicode().c_str());
         }
         
         if (m_pNativeSettings->fullscreen && m_pNativeSettings->fullscreenable) {
@@ -660,24 +660,24 @@ namespace amo {
     
     std::shared_ptr<GlobalShortcutSettings> LayeredWindow::createSettingByString(
         const std::string& strKey)  const {
-        amo::string sKey(strKey, true);
-        sKey = sKey.replace(" ", ""); // 移除所有空格
+        amo::u8string sKey(strKey, true);
+        sKey = sKey.replace(amo::u8string(" ", true), amo::u8string("", true)); // 移除所有空格
         
-        std::vector<amo::string> vec = sKey.split("+");
+        std::vector<amo::u8string> vec = sKey.split(amo::u8string("+", true));
         
         std::shared_ptr<GlobalShortcutSettings> pSettings;
         pSettings.reset(new GlobalShortcutSettings());
         
-        amo::json json;
+        amo::u8json json;
         
         for (size_t i = 0; i < vec.size(); ++i) {
-            if (vec[i] == "MOD_CONTROL") {
+            if (vec[i] == amo::u8string("MOD_CONTROL", true)) {
                 json.put("ctrl", true);
-            } else if (vec[i] == "MOD_SHIFT") {
+            } else if (vec[i] == amo::u8string("MOD_SHIFT", true)) {
                 json.put("shift", true);
-            } else if (vec[i] == "MOD_WIN") {
+            } else if (vec[i] == amo::u8string("MOD_WIN", true)) {
                 json.put("win", true);
-            } else if (vec[i] == "MOD_ALT") {
+            } else if (vec[i] == amo::u8string("MOD_ALT", true)) {
                 json.put("alt", true);
             } else if (vec[i].size() == 1) {
                 json.put("key", vec[i].str());

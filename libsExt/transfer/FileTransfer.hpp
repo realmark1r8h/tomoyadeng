@@ -56,7 +56,7 @@ namespace amo {
          * @return #FileStream
          */
         
-        FileTransfer(const amo::string& fileName, int mode = 3)
+        FileTransfer(const amo::u8string& fileName, int mode = 3)
             : RunnableTransfer("FileStream") {
             
             
@@ -88,7 +88,7 @@ namespace amo {
         
         virtual  Any onCreateClass(IPCMessage::SmartType msg) override {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-            amo::string fileName(args->getString(0), true);
+            amo::u8string fileName(args->getString(0), true);
             int nMode = 3;
             Any& val = args->getValue(1);
             
@@ -134,7 +134,7 @@ namespace amo {
                 return false;
             }
             
-            amo::path p(m_filename);
+            amo::u8path p(m_filename);
             m_file.reset(new amo::file(p));
             m_filestream = m_file->get_filestream(mode);
             
@@ -319,8 +319,8 @@ namespace amo {
         
         Any append(IPCMessage::SmartType msg) {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-            amo::string str(args->getString(0), true);
-            amo::path p(str);
+            amo::u8string str(args->getString(0), true);
+            amo::u8path p(str);
             
             if (!p.file_exists()) {
                 return false;
@@ -437,7 +437,7 @@ namespace amo {
         
         Any size(IPCMessage::SmartType msg) {
             if (!m_file) {
-                amo::path p(m_filename);
+                amo::u8path p(m_filename);
                 m_file.reset(new amo::file(p));
             }
             
@@ -467,8 +467,8 @@ namespace amo {
          */
         
         Any Remove(IPCMessage::SmartType msg) {
-            amo::string strPath(msg->getArgumentList()->getString(0), true);
-            amo::path p(strPath);
+            amo::u8string strPath(msg->getArgumentList()->getString(0), true);
+            amo::u8path p(strPath);
             return p.remove();
         }
         
@@ -494,7 +494,7 @@ namespace amo {
         
         Any remove(IPCMessage::SmartType msg) {
             close(msg);
-            amo::path p(m_filename);
+            amo::u8path p(m_filename);
             return  p.remove();
         }
         
@@ -549,7 +549,7 @@ namespace amo {
     public:
     
         std::shared_ptr<amo::file> m_file;
-        amo::string m_filename;
+        amo::u8string m_filename;
         std::shared_ptr<amo::filestream> m_filestream;
         int m_mode;
     };

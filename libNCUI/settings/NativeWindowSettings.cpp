@@ -118,7 +118,7 @@ namespace amo {
         return ;
     }
     
-    amo::json NativeWindowSettings::toJson() {
+    amo::u8json NativeWindowSettings::toJson() {
         UPDATE_ARGS_SETTINGS(id);
         UPDATE_ARGS_SETTINGS(name);
         UPDATE_ARGS_SETTINGS(parent);

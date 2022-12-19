@@ -37,7 +37,7 @@ namespace amo {
         resetComposition();
     }
     
-    amo::string IMM32Manager::getString(HIMC imm_context, WPARAM lparam) {
+    amo::u8string IMM32Manager::getString(HIMC imm_context, WPARAM lparam) {
         if (!(lparam & GCS_RESULTSTR)) {
             return L"";
         }
@@ -60,12 +60,12 @@ namespace amo {
                                 GCS_RESULTSTR,
                                 (void*)lpstr,
                                 string_size);// 再调用一
-        return amo::string(lpstr);
+        return amo::u8string(lpstr);
         
     }
     
-    amo::string IMM32Manager::getResult(LPARAM lparam) {
-        amo::string ret;
+    amo::u8string IMM32Manager::getResult(LPARAM lparam) {
+        amo::u8string ret;
         HIMC imm_context = ::ImmGetContext(window_handle);
         
         if (imm_context) {

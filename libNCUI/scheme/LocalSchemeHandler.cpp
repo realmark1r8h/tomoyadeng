@@ -183,8 +183,8 @@ namespace amo {
         bool bHandled = false;
         
         amo::u8string strUrl = util::getUrlFromUtf8(request->GetURL());
-        strUrl.replace("\\", "/");
-        int nIndex = strUrl.find("local://file/");
+        strUrl.replace(amo::u8string("\\", true), amo::u8string("/", true));
+        int nIndex = strUrl.find(amo::u8string("local://file/", true));
         
         if (nIndex != -1) {
             strUrl = strUrl.substr(nIndex + 13);
@@ -195,9 +195,9 @@ namespace amo {
                                        std::string("%webDir%") + strUrl.to_utf8()), true);
         }
         
-        strUrl.replace("\\", "/");
+        strUrl.replace(amo::u8string("\\", true), amo::u8string("/", true));
         
-        nIndex = strUrl.find("@file:///");
+        nIndex = strUrl.find(amo::u8string("@file:///", true));
         
         if (nIndex != -1) {
             strUrl = strUrl.substr(nIndex + 9);

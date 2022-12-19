@@ -22,12 +22,11 @@ namespace amo {
     }
     
     void AppSettings::initDefaultCefSettings() {
-        amo::string strAppPath =
-            amo::path::getExeDir();						//!< 获取当前可执行文件目录
+        amo::u8string strAppPath(amo::u8path::getExeDir(), true);						//!< 获取当前可执行文件目录
         std::string strLogFile = (strAppPath +
                                   L"\\cef.log").to_utf8();			//!< 日志文件
-        std::string strExeFullName =  amo::string(
-                                          amo::path::getFullExeName()).to_utf8();		//!< 完整路径的程序名
+        std::string strExeFullName =  amo::u8string(
+                                          amo::u8path::getFullExeName(), true).to_utf8();		//!< 完整路径的程序名
         std::string strResourcesPath = (strAppPath + "").to_utf8();				//!< 资源目录
         std::string strLocalesPath = (strAppPath +
                                       "\\locales").to_utf8();		//!< Local目录
@@ -90,9 +89,9 @@ namespace amo {
     
     void AppSettings::initDefaultAppSettings() {
     
-        amo::path p(amo::path::getExeName());
+        amo::u8path p(amo::u8path::getExeName());
         p.remove_extension();
-        amo::string strAppName(p.c_str(), false);
+        amo::u8string strAppName(p.c_str(), true);
         
         
         DEFAULT_ARGS_SETTINGS(manifest, true);
@@ -106,8 +105,8 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(main, "main.js");  // utf8;
         
         DEFAULT_ARGS_SETTINGS(appPath,
-                              amo::string(amo::path::getFullExeName()).to_utf8());
-        DEFAULT_ARGS_SETTINGS(appDir, amo::string(amo::path::getExeDir()).to_utf8());
+                              amo::u8string(amo::u8path::getFullExeName(), true).to_utf8());
+        DEFAULT_ARGS_SETTINGS(appDir, amo::u8string(amo::u8path::getExeDir(), true).to_utf8());
         DEFAULT_ARGS_SETTINGS(appName, strAppName.to_utf8());
         
         DEFAULT_ARGS_SETTINGS(workDir, appDir);
@@ -142,41 +141,42 @@ namespace amo {
         
     }
     
-    amo::string AppSettings::getCachePath() {
-        TCHAR path[MAX_PATH];// 缓存目录
+    amo::u8string AppSettings::getCachePath() {
+        WCHAR path[MAX_PATH];// 缓存目录
         ZeroMemory(path, MAX_PATH);
-        SHGetSpecialFolderPath(NULL, path, CSIDL_LOCAL_APPDATA, FALSE);
+        SHGetSpecialFolderPathW(NULL, path, CSIDL_LOCAL_APPDATA, FALSE);
         
         if (path[lstrlen(path) - 1] != '\\') {
             _tcscat(path, _T("\\"));
         }
         
-        amo::path p(amo::path::getExeName());
+        amo::u8path p(amo::u8path::getExeName());
         p.remove_extension().append("cache");
         
-        amo::string strCacheDir = path;
-        strCacheDir += amo::string(p.c_str(), false);
-        ::CreateDirectoryA(strCacheDir.to_ansi().c_str(), NULL);
+        amo::u8string strCacheDir(path);
+        strCacheDir += p.generic_wstring();
+        
+        ::CreateDirectoryW(strCacheDir.to_wide().c_str(), NULL);
         return strCacheDir;
     }
     
-    amo::string AppSettings::getUserHomeDir() {
+    amo::u8string AppSettings::getUserHomeDir() {
     
-        amo::string strUserDir(getSpecialFolder(CSIDL_MYDOCUMENTS), true);
-        amo::path p(amo::path::getExeName());
+        amo::u8string strUserDir(getSpecialFolder(CSIDL_MYDOCUMENTS), true);
+        amo::u8path p(amo::u8path::getExeName());
         p.remove_extension();
         
-        amo::path pData(strUserDir);
+        amo::u8path pData(strUserDir);
         pData.append(p);// 设置用户数据根目录
         
         ::CreateDirectoryA(pData.c_str(), NULL);				// 创建目录
-        return amo::string(pData.c_str(), false);
+        return amo::u8string(pData.c_str(), true);
     }
     
     std::string AppSettings::getSpecialFolder(int nType) {
         char path[MAX_PATH] = { 0 };
         SHGetSpecialFolderPathA(NULL, path, nType, FALSE);
-        return amo::string(path, false).to_utf8();
+        return amo::u8string(path, false).to_utf8();
     }
     
     bool AppSettings::updateCefAppSettings() {
@@ -273,12 +273,12 @@ namespace amo {
         BOOL_ARGS_SETTING(debugMode);
         BOOL_ARGS_SETTING(clearCache);
         
-        ::SetCurrentDirectoryA(amo::string(workDir, true).to_ansi().c_str());
+        ::SetCurrentDirectoryW(amo::u8string(workDir, true).to_unicode().c_str());
         AMO_TIMER_ELAPSED();
         return BasicSettings::afterUpdateArgsSettings();
     }
     
-    amo::json AppSettings::toJson()   {
+    amo::u8json AppSettings::toJson()   {
     
         UPDATE_ARGS_SETTINGS(manifest);
         UPDATE_ARGS_SETTINGS(appID);

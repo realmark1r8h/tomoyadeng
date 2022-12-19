@@ -54,15 +54,15 @@ namespace {
         argv[2] = t3;
         bool loaded = false;
         amo::loader loader;
-        amo::path p(amo::path::getExeDir());
-        amo::path dist("cef.exe");
+        amo::u8path p(amo::u8path::getExeDir());
+        amo::u8path dist("cef.exe");
         dist = p.append_c(dist);
         
-        amo::path src(amo::path::getFullExeName());
+        amo::u8path src(amo::u8path::getFullExeName());
         src.copy_to(dist);
         
         p.append("rcedit.dll");
-        bool bOk = loader.load(p.c_str());
+        bool bOk = loader.load(p.generic_wstring());
         
         amo::shared_ptr<amo::ResourceUpdater> updater(new amo::ResourceUpdater());
         
@@ -158,7 +158,7 @@ namespace {
                 
                 loaded = true;
                 
-                if (!updater->Load(amo::string(dist.c_str()).to_unicode().c_str())) {
+                if (!updater->Load(amo::u8string(dist.c_str(), true).to_unicode().c_str())) {
                     return print_error("Unable to load file");
                 }
                 
@@ -198,22 +198,22 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
     
     
     // 如果没有输入参数，那么直接使用默认参数生成文件
-    amo::string strConfigFile(getDefaultFileSettings(msg).As<std::string>(), true);
-    amo::string strConfigAppSettings(getDefaultAppSettings(msg).As<std::string>(),
-                                     true);
-    amo::string strConfigBrowserSettinggs(getDefaultBrowserSettings(
+    amo::u8string strConfigFile(getDefaultFileSettings(msg).As<std::string>(), true);
+    amo::u8string strConfigAppSettings(getDefaultAppSettings(msg).As<std::string>(),
+                                       true);
+    amo::u8string strConfigBrowserSettinggs(getDefaultBrowserSettings(
             msg).As<std::string>(), true);
-    amo::string strConfigSplashSettinggs(getDefaultSplashSettings(
+    amo::u8string strConfigSplashSettinggs(getDefaultSplashSettings(
             msg).As<std::string>(), true);
             
             
     int argsSize = args->getArgsSize();
     
     if (argsSize == 4) {
-        strConfigFile = amo::string(args->getString(0), true);
-        strConfigAppSettings = amo::string(args->getString(1), true);
-        strConfigBrowserSettinggs = amo::string(args->getString(2), true);
-        strConfigSplashSettinggs = amo::string(args->getString(3), true);
+        strConfigFile = amo::u8string(args->getString(0), true);
+        strConfigAppSettings = amo::u8string(args->getString(1), true);
+        strConfigBrowserSettinggs = amo::u8string(args->getString(2), true);
+        strConfigSplashSettinggs = amo::u8string(args->getString(3), true);
     }
     
     if (argsSize > 0 && argsSize < 4) {
@@ -222,8 +222,8 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
     
     
     
-    amo::string strConfig = strConfigFile;
-    amo::json oConfig(strConfig.str());
+    amo::u8string strConfig = strConfigFile;
+    amo::u8json oConfig(strConfig.str());
     
     if (!oConfig.is_valid()) {
         return false;
@@ -246,17 +246,17 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
     
     // 将当前程序复制一份出来
     amo::loader loader;
-    amo::path p(amo::path::getExeDir());
+    amo::u8path p(amo::path::getExeDir());
     std::string dist_file_name = oConfig.get<std::string>("OriginalFileName");
-    amo::path dist(dist_file_name);
+    amo::u8path dist(dist_file_name);
     dist = p.append_c(dist);
-    amo::path src(amo::path::getFullExeName());
+    amo::u8path src(amo::path::getFullExeName());
     src.copy_to(dist);
-    m_pUpdater->Load(amo::string(dist.c_str()).to_unicode().c_str());
+    m_pUpdater->Load(amo::u8string(dist.c_str(), true).to_unicode().c_str());
     
     
-    amo::string strIcon(oConfig.getString("Icon"), true);
-    amo::path iconPath(strIcon);
+    amo::u8string strIcon(oConfig.getString("Icon"), true);
+    amo::u8path iconPath(strIcon);
     
     if (iconPath.exists() && iconPath.is_file()) {
         m_pUpdater->SetIcon(strIcon.to_unicode().c_str());
@@ -281,7 +281,7 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
         if (name == "FileVersion") {
             unsigned short v1, v2, v3, v4;
             
-            if (!parse_version_string(amo::string(value).to_unicode().c_str(), &v1, &v2, &v3, &v4)) {
+            if (!parse_version_string(amo::u8string(value, true).to_unicode().c_str(), &v1, &v2, &v3, &v4)) {
                 continue;
             }
             
@@ -290,15 +290,15 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
         } else if (name == "ProductVersion") {
             unsigned short v1, v2, v3, v4;
             
-            if (!parse_version_string(amo::string(value).to_unicode().c_str(), &v1, &v2, &v3, &v4)) {
+            if (!parse_version_string(amo::u8string(value, true).to_unicode().c_str(), &v1, &v2, &v3, &v4)) {
                 continue;
             }
             
             m_pUpdater->SetProductVersion(v1, v2, v3, v4);
         }
         
-        m_pUpdater->SetVersionString(amo::string(name).to_unicode().c_str(),
-                                     amo::string(value).to_unicode().c_str());
+        m_pUpdater->SetVersionString(amo::u8string(name, true).to_unicode().c_str(),
+                                     amo::u8string(value, true).to_unicode().c_str());
     }
     
     // 设置启动信息 AppSettings
@@ -321,13 +321,13 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
         return bOk;
     }
     
-    amo::json resources = oConfig.getJson("resources");
+    amo::u8json resources = oConfig.getJson("resources");
     
     if (!resources.is_array()) {
         return false;
     }
     
-    std::vector<amo::json> arr = resources.to_array();
+    std::vector<amo::u8json> arr = resources.to_array();
     BinResourceUpdater binUpdater(dist.to_string());
     
     for (auto& p : arr) {
@@ -364,18 +364,18 @@ amo::Any amo::RceditTransfer::loadDiskSettings(IPCMessage::SmartType msg) {
         return false;
     }
     
-    amo::string strPath(args->getString(0), true);
-    amo::path p(strPath);
+    amo::u8string strPath(args->getString(0), true);
+    amo::u8path p(strPath);
     
     if (p.file_exists()) {
         std::ifstream ifs(p.c_str());
         std::stringstream buffer;
         buffer << ifs.rdbuf();
         std::string strJson(buffer.str());
-        m_oSettings = amo::json(strJson);
+        m_oSettings = amo::u8json(strJson);
         
         if (!m_oSettings.is_valid()) {
-            m_oSettings = amo::json();
+            m_oSettings = amo::u8json();
             return false;
         }
     }
@@ -394,7 +394,7 @@ amo::Any amo::RceditTransfer::getDefaultFileSettings(IPCMessage::SmartType
     oVersionSet.insert("OriginalFilenName");
     oVersionSet.insert("ProductName");
     oVersionSet.insert("ProductVersion");
-    amo::json json;
+    amo::u8json json;
     json.put("CompanyName", "NCUI");
     json.put("FileDescription", "NCUI演示程序");
     json.put("FileVersion", "1.0.0.0");
@@ -404,7 +404,7 @@ amo::Any amo::RceditTransfer::getDefaultFileSettings(IPCMessage::SmartType
     json.put("ProductName", "NCUI演示程序");
     json.put("ProductVersion", "1.0.0.0");
     json.put("Icon", "");
-    amo::json fileJson = m_oSettings.get_child("fileSettings");
+    amo::u8json fileJson = m_oSettings.get_child("fileSettings");
     
     if (fileJson.is_valid()) {
         json.join(fileJson);
@@ -417,10 +417,10 @@ amo::Any amo::RceditTransfer::getDefaultAppSettings(IPCMessage::SmartType msg) {
     HINSTANCE hInst = ::GetModuleHandle(NULL);
     StringLoader strLoader(hInst);
     std::string strAppSettings = strLoader.load(IDS_APP_SETTINGS);
-    amo::json json(strAppSettings);
+    amo::u8json json(strAppSettings);
     
     if (json.is_valid()) {
-        amo::json appJson = m_oSettings.get_child("appSettings");
+        amo::u8json appJson = m_oSettings.get_child("appSettings");
         
         if (appJson.is_valid()) {
             json.join(appJson);
@@ -435,10 +435,10 @@ amo::Any amo::RceditTransfer::getDefaultBrowserSettings(
     HINSTANCE hInst = ::GetModuleHandle(NULL);
     StringLoader strLoader(hInst);
     std::string strBrowserSettings = strLoader.load(IDS_BROWSER_SETTINGS);
-    amo::json json(strBrowserSettings);
+    amo::u8json json(strBrowserSettings);
     
     if (json.is_valid()) {
-        amo::json browserWindowJson = m_oSettings.get_child("browserWindowSettings");
+        amo::u8json browserWindowJson = m_oSettings.get_child("browserWindowSettings");
         
         if (browserWindowJson.is_valid()) {
             json.join(browserWindowJson);
@@ -453,10 +453,10 @@ amo::Any amo::RceditTransfer::getDefaultSplashSettings(IPCMessage::SmartType
     HINSTANCE hInst = ::GetModuleHandle(NULL);
     StringLoader strLoader(hInst);
     std::string strsplashSettings = strLoader.load(IDS_SPLASH_SETTINGS);
-    amo::json json(strsplashSettings);
+    amo::u8json json(strsplashSettings);
     
     if (json.is_valid()) {
-        amo::json splashWindowJson = m_oSettings.get_child("splashWindowSettings");
+        amo::u8json splashWindowJson = m_oSettings.get_child("splashWindowSettings");
         
         if (splashWindowJson.is_valid()) {
             json.join(splashWindowJson);
@@ -467,11 +467,11 @@ amo::Any amo::RceditTransfer::getDefaultSplashSettings(IPCMessage::SmartType
 }
 
 amo::Any amo::RceditTransfer::getDefaultSettings(IPCMessage::SmartType msg) {
-    amo::json json;
-    json.put("fileSettings", getDefaultFileSettings(msg).As<amo::json>());
-    json.put("appSettings", getDefaultAppSettings(msg).As<amo::json>());
+    amo::u8json json;
+    json.put("fileSettings", getDefaultFileSettings(msg).As<amo::u8json>());
+    json.put("appSettings", getDefaultAppSettings(msg).As<amo::u8json>());
     json.put("browserWindowSettings",
-             getDefaultBrowserSettings(msg).As<amo::json>());
-    json.put("splashWindowSettings", getDefaultSplashSettings(msg).As<amo::json>());
+             getDefaultBrowserSettings(msg).As<amo::u8json>());
+    json.put("splashWindowSettings", getDefaultSplashSettings(msg).As<amo::u8json>());
     return json;
 }

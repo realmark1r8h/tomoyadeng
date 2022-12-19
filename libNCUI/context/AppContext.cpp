@@ -86,10 +86,11 @@ namespace amo {
     
         int argc = 3;
         
-        amo::string exeDir = amo::path::getExeDir();
+        // nodejs 使用ansi 命令行参数
+        amo::u8string exeDir(amo::u8path::getExeDir(), true);
         
         // NodeJS 文件
-        amo::string mainJs(getDefaultAppSettings()->main, true);
+        amo::u8string mainJs(getDefaultAppSettings()->main, true);
         
         char** argv = new char*[argc + 1];
         
@@ -99,7 +100,7 @@ namespace amo {
             memset(argv[i], 1000, 0);
             
             if (i == 0) {
-                strcpy(argv[i], exeDir.c_str());
+                strcpy(argv[i], exeDir.to_ansi().c_str());
             }
             
             if (i == 1) {
@@ -114,10 +115,10 @@ namespace amo {
         
         argv[argc] = nullptr;
         
-        amo::path p(amo::path::getExeDir());
+        amo::u8path p(amo::u8path::getExeDir());
         p.append("node_runner.dll");
-        amo::loader loader;
-        bool bOk = loader.load(p.c_str());
+        amo::loader loader(amo::u8string(p, true));
+        bool bOk = loader.load();
         
         if (!bOk) {
             return;
@@ -135,7 +136,7 @@ namespace amo {
             }
             
             // 设置Duilib皮肤目录
-            amo::string strSkin(m_pAppSettings->skinDir, true);
+            amo::u8string strSkin(m_pAppSettings->skinDir, true);
             CPaintManagerUI::SetResourcePath(strSkin.to_unicode().c_str());
             
             // 更新URL映射
@@ -143,10 +144,10 @@ namespace amo {
             auto pAppTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
             
             if (appSettings.contains_key("urlMappings")) {
-                amo::json mappings = appSettings.get_child("urlMappings");
+                amo::u8json mappings = appSettings.get_child("urlMappings");
                 
                 if (mappings.is_array()) {
-                    std::vector<amo::json> vec = mappings.to_array();
+                    std::vector<amo::u8json> vec = mappings.to_array();
                     
                     for (auto& p : vec) {
                         if (p.contains_key("url") && p.contains_key("path")) {
@@ -357,8 +358,8 @@ namespace amo {
     }
     
     void fooo() {
-        amo::directory dir(amo::path::getFullPathInExeDir("renderer_modules"));
-        dir.transfer([&](amo::path & p) {
+        amo::u8directory dir(amo::u8path::getFullPathInExeDir("renderer_modules"));
+        dir.transfer([&](amo::u8path & p) {
             if (p.is_directory()) {
                 return;
             }
@@ -369,7 +370,7 @@ namespace amo {
             
             
             amo::loader loader;
-            bool hu = loader.load(p.c_str());
+            bool hu = loader.load(p.generic_wstring());
             
             
         }, false);
@@ -381,6 +382,7 @@ namespace amo {
     
         // 不去掉的话打印页面的时候会触发异常处理程序，导致程序关闭
         // ::SetUnhandledExceptionFilter(OurSetUnhandledExceptionFilter);
+        amo::u8path::set_work_path_to_app_path();
         AMO_TIMER_ELAPSED();
         
         if (!amo::log::initialize()) {
@@ -528,16 +530,16 @@ namespace amo {
         
             CPaintManagerUI::SetInstance(hInstance);
             
-            amo::string strSkin(m_pAppSettings->skinDir, true);
+            amo::u8string strSkin(m_pAppSettings->skinDir, true);
             CPaintManagerUI::SetResourcePath(strSkin.to_unicode().c_str());
             
             
             // 删除缓存
             if (getDefaultAppSettings()->clearCache) {
             
-                amo::string cachePath(CefString(
-                                          getDefaultAppSettings()->cache_path.str).ToString(), true);
-                amo::path(cachePath).remove_all();
+                amo::u8string cachePath(CefString(
+                                            getDefaultAppSettings()->cache_path.str).ToString(), true);
+                amo::u8path(cachePath).remove_all();
             }
             
             HRESULT Hr = ::CoInitialize(NULL);

@@ -37,11 +37,11 @@ namespace amo {
         
         void initDefaultRequestSettings();
         virtual void afterUpdateArgsSettings() override;
-        virtual amo::json toJson() override;
+        virtual amo::u8json toJson() override;
         
         std::string makeUrlWithArgs();
         std::vector<std::pair<std::string, std::string> > getHeaderMap();
-        std::vector<amo::string> getFiles();
+        std::vector<amo::u8string> getFiles();
     public:
     
         /*! @var #String=GET type HTPP请求类型，POST 或者 GET */
@@ -51,13 +51,13 @@ namespace amo {
         std::string url;
         
         /*! @var #JsonObject data	要发送的数据. */
-        amo::json data;
+        amo::u8json data;
         
         /** @var #JsonObject header	HTTP请求的头部参数. */
-        amo::json header;
+        amo::u8json header;
         
         /** @var #Array files 	要上传的文件列表，文件以字符串表示. */
-        amo::json files;
+        amo::u8json files;
     };
 }
 

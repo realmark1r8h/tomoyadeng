@@ -136,7 +136,7 @@ namespace amo {
             std::string attrName = convertor.toString(v8Name);
             
             for (auto& p : iter->second.getAttributes()) {
-                amo::json json = p;
+                amo::u8json json = p;
                 std::string strName = json.getString("name");
                 
                 if (attrName == strName) {
@@ -212,7 +212,7 @@ namespace amo {
             
             // 生成类常量属性
             for (auto& p : iter->second.getAttributes()) {
-                amo::json json = p;
+                amo::u8json json = p;
                 std::string strName = json.getString("name");
                 tpl->SetNativeDataProperty(Nan::New(strName).ToLocalChecked(),
                                            NodeClassV8Handler::ExecuteClassAttrGetter);
@@ -282,7 +282,7 @@ namespace amo {
                         break;
                     }
                     
-                    amo::json json(str);
+                    amo::u8json json(str);
                     int64_t nID = json.get<int64_t>("id");
                     NodeV8Handler* pHandler = NodeTypeConvertor::getClassObject(nID);
                     object = dynamic_cast<NodeClassV8Handler*>(pHandler);
@@ -303,7 +303,7 @@ namespace amo {
                     launcher->setValue(IPCArgsPosInfo::TransferID, getClassObject()->getID());
                     
                     amo::Any out = launcher->syncExecute<const Nan::FunctionCallbackInfo<Value>&>(getClassObject()->getName(), args);
-                    amo::json json = amo::stringToAny<amo::json>(out.value());
+                    amo::u8json json = amo::stringToAny<amo::u8json>(out.value());
                     int64_t nID = json.get<int64_t>("id");
                     object->setID(nID);
                     NodeTypeConvertor::addClassObject(nID, object); // 管理

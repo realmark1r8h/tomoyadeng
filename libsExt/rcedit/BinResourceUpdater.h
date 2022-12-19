@@ -20,7 +20,7 @@ namespace amo {
                                int lang_id = LANG_CHINESE);
     private:
     
-        std::string m_filename;
+        std::string m_filename; // utf8
     };
 }
 

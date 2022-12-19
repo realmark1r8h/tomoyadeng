@@ -169,9 +169,9 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     protected:
-        amo::json m_oConfig;
+        amo::u8json m_oConfig;
         std::shared_ptr<ResourceUpdater> m_pUpdater;
-        amo::json m_oSettings;
+        amo::u8json m_oSettings;
     };
     
 }

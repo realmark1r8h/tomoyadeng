@@ -11,7 +11,7 @@ namespace amo {
     Any DesktopTransfer::getScreenInfo(IPCMessage::SmartType msg) {
         int nScreenWidth = GetSystemMetrics(SM_CXSCREEN);//屏幕横向分辨率
         int nScreenHeight = GetSystemMetrics(SM_CYSCREEN);//屏幕纵向分辨率
-        amo::json json;
+        amo::u8json json;
         json.put("width", nScreenWidth);
         json.put("height", nScreenHeight);
         
@@ -23,7 +23,7 @@ namespace amo {
                          &oMonitor);
                          
                          
-        amo::json jsonWork;
+        amo::u8json jsonWork;
         jsonWork.put("left", oMonitor.rcMonitor.left);
         jsonWork.put("top", oMonitor.rcWork.top);
         jsonWork.put("right", oMonitor.rcWork.right);

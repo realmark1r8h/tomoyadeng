@@ -37,7 +37,7 @@ namespace amo {
     }
     
     DuiLib::CDuiString RenderView::GetSkinFile() {
-        return amo::string(skinRenderView).to_unicode().c_str();
+        return amo::u8string(skinRenderView, true).to_unicode().c_str();
     }
     
     UINT RenderView::GetClassStyle() const {
@@ -191,12 +191,12 @@ namespace amo {
     }
     
     
-    void RenderView::setTooltip(const amo::string& str) {
+    void RenderView::setTooltip(const amo::u8string& str) {
         CHorizontalLayoutUI* pRenderLayout = static_cast<CHorizontalLayoutUI*>(
                 m_PaintManager.FindControl(_T("reanderLayout")));
                 
         if (pRenderLayout != NULL) {
-            pRenderLayout->SetToolTip(str.to_unicode().c_str());
+            pRenderLayout->SetToolTip(str.to_wide().c_str());
         }
     }
     

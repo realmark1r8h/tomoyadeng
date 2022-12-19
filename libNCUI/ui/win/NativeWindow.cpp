@@ -17,7 +17,7 @@ namespace amo {
                                pBrowserSettings)
         : LocalWindow(pBrowserSettings) {
         setNativeWindow(true);
-        m_pNativeSettings->id = amo::string::from_number(getObjectID()).to_utf8();
+        m_pNativeSettings->id = amo::u8string::from_number(getObjectID()).to_utf8();
         
         auto pWindow = ClassTransfer::getUniqueTransfer<NativeWindowTransfer>();
         int64_t nClassID = pWindow->getObjectID();
@@ -39,15 +39,15 @@ namespace amo {
         std::string skin = m_pNativeSettings->settings.getString("xml");
         
         if (!skin.empty()) {
-            return amo::string(skin, true).to_unicode().c_str();
+            return amo::u8string(skin, true).to_unicode().c_str();
         } else {
-            return amo::string(skinNativeWindow).format(
+            return amo::u8string(skinNativeWindow, true).format(
                        m_pNativeSettings->settings).to_unicode().c_str();
         }
     }
     
     LPCTSTR NativeWindow::GetWindowClassName(void) const {
-        return amo::string(m_pNativeSettings->windowClass).to_unicode().c_str();
+        return amo::u8string(m_pNativeSettings->windowClass, true).to_unicode().c_str();
     }
     
     int NativeWindow::getBrowserID() const {

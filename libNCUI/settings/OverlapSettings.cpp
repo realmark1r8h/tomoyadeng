@@ -22,7 +22,7 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(index, 6);
         DEFAULT_ARGS_SETTINGS(renderMode, 0);
         
-        amo::json regions;
+        amo::u8json regions;
         regions.set_array();
         
         settings.put("regions", regions);
@@ -45,7 +45,7 @@ namespace amo {
     }
     
     
-    amo::json OverlapSettings::toJson() {
+    amo::u8json OverlapSettings::toJson() {
     
     
         UPDATE_ARGS_SETTINGS(name);
@@ -58,25 +58,25 @@ namespace amo {
         UPDATE_ARGS_SETTINGS(renderMode);
         
         if (regions) {
-            amo::json arr;
+            amo::u8json arr;
             arr.set_array();
             
             for (auto& p : regions->m_regions) {
-                amo::json src;
+                amo::u8json src;
                 src.set_array();
                 src.push_back(p.src.left());
                 src.push_back(p.src.top());
                 src.push_back(p.src.width());
                 src.push_back(p.src.height());
                 
-                amo::json dst;
+                amo::u8json dst;
                 dst.set_array();
                 dst.push_back(p.dst.left());
                 dst.push_back(p.dst.top());
                 dst.push_back(p.dst.width());
                 dst.push_back(p.dst.height());
                 
-                amo::json item;
+                amo::u8json item;
                 item.put("src", src);
                 item.put("dst", dst);
                 item.put("index", p.index);
@@ -93,14 +93,14 @@ namespace amo {
         return BasicSettings::toJson();
     }
     
-    amo::rect getRectFromJson(amo::json& json) {
+    amo::rect getRectFromJson(amo::u8json& json) {
     
         do {
             if (!json.is_array()) {
                 break;
             }
             
-            std::vector<amo::json> vec = json.to_array();
+            std::vector<amo::u8json> vec = json.to_array();
             
             if (vec.size() != 4) {
                 break;
@@ -141,13 +141,13 @@ namespace amo {
                 break;
             }
             
-            amo::json json = settings.getJson(name);
+            amo::u8json json = settings.getJson(name);
             
             if (!json.is_array()) {
                 break;
             }
             
-            std::vector<amo::json> vec = json.to_array();
+            std::vector<amo::u8json> vec = json.to_array();
             
             for (auto& p : vec) {
                 amo::rect src = getRectFromJson(p.getJson("src"));

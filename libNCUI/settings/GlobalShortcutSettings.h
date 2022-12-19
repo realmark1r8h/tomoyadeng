@@ -26,7 +26,7 @@ namespace amo {
         
         virtual void afterUpdateArgsSettings() override;
         
-        virtual amo::json toJson() override;
+        virtual amo::u8json toJson() override;
         
         /*!
          * @fn	bool GlobalShortcutSettings::isSameGlobalShortcut(std::shared_ptr<GlobalShortcutSettings> pOther);

@@ -31,7 +31,7 @@ namespace amo {
     
     
     
-    amo::json GlobalShortcutSettings::toJson() {
+    amo::u8json GlobalShortcutSettings::toJson() {
         UPDATE_ARGS_SETTINGS(ctrl);
         UPDATE_ARGS_SETTINGS(win);
         UPDATE_ARGS_SETTINGS(alt);

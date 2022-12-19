@@ -39,7 +39,7 @@ namespace amo {
         void initDefaultNativeSettings();
         virtual void afterUpdateArgsSettings() override;
         
-        virtual amo::json toJson() override;
+        virtual amo::u8json toJson() override;
     public:
     
         /*! @var #String=0 id	窗口ID，由程序设置该值，你不应该修改该值，当通过ID {@link fromID=BrowserWindow.fromID}查找窗口时可以使用该值 {@tag const}. */

@@ -20,7 +20,7 @@ namespace amo {
         : m_pNotifyWindow(NULL)
         , m_flashTimer(0)
         , m_bBlink(false)  {
-        memset(&m_notifyCondata, 0, sizeof(NOTIFYICONDATAA));
+        memset(&m_notifyCondata, 0, sizeof(NOTIFYICONDATAW));
         WM_TRAY_MONITOR = ::RegisterWindowMessage(_T("TRAY_MONITOR_MSG"));
         
     }
@@ -74,24 +74,24 @@ namespace amo {
         HICON hIcon = NULL;
         HINSTANCE hInst = ::GetModuleHandle(NULL);
         //获取图标，第二个参数为要获取第几个图标
-        hIcon = ExtractIconA(hInst, amo::path::getFullExeName().c_str(), 0);
+        hIcon = ExtractIconW(hInst, amo::u8path::fullAppName().generic_wstring().c_str(), 0);
         setTrayIcon(hIcon);
         // 默认隐藏托盘, 调试时 显示
         show(false);
-        setToolTip(("Chromium Embedded Framework (CEF)"));
+        setToolTip((L"Chromium Embedded Framework (CEF)"));
         
     }
     
-    void Tray::setToolTip(const std::string& tipMsg) {
+    void Tray::setToolTip(const std::wstring& tipMsg) {
     
         HICON icon = getTrayIcon();
         
         m_notifyCondata.uFlags = NIF_TIP | NIF_ICON;
         m_notifyCondata.hIcon = icon;
-        StringCchCopyA(m_notifyCondata.szTip,
+        StringCchCopyW(m_notifyCondata.szTip,
                        ARRAYSIZE(m_notifyCondata.szTip),
                        tipMsg.c_str());
-        Shell_NotifyIconA(NIM_MODIFY, &m_notifyCondata);
+        Shell_NotifyIconW(NIM_MODIFY, &m_notifyCondata);
         
     }
     
@@ -226,7 +226,7 @@ namespace amo {
         return m_hTrayIcon;
     }
     
-    void Tray::setTrayIcon(const amo::string& strPath) {
+    void Tray::setTrayIcon(const amo::u8string& strPath) {
         setTrayIcon((HICON)LoadImage(NULL,
                                      strPath.to_unicode().c_str(),
                                      IMAGE_ICON,
@@ -240,11 +240,11 @@ namespace amo {
         m_hTrayIcon = val;
     }
     
-    NOTIFYICONDATAA& Tray::getNotifyCondata() {
+    NOTIFYICONDATAW& Tray::getNotifyCondata() {
         return m_notifyCondata;
     }
     
-    void Tray::setNotifyCondata(NOTIFYICONDATAA val) {
+    void Tray::setNotifyCondata(NOTIFYICONDATAW val) {
         m_notifyCondata = val;
     }
     
@@ -306,7 +306,7 @@ namespace amo {
     void Tray::updateIcon(HICON icon) {
     
         m_notifyCondata.hIcon = icon;
-        Shell_NotifyIconA(NIM_MODIFY, &m_notifyCondata);
+        Shell_NotifyIconW(NIM_MODIFY, &m_notifyCondata);
     }
     
     void Tray::show(bool bShow) {
@@ -319,16 +319,16 @@ namespace amo {
             m_notifyCondata.uCallbackMessage = WM_TRAY_MONITOR;
             
             m_notifyCondata.hIcon = m_hTrayIcon;
-            Shell_NotifyIconA(NIM_ADD, &m_notifyCondata);
+            Shell_NotifyIconW(NIM_ADD, &m_notifyCondata);
         } else {
-            Shell_NotifyIconA(NIM_DELETE, &m_notifyCondata);
+            Shell_NotifyIconW(NIM_DELETE, &m_notifyCondata);
         }
         
     }
     
     void Tray::destory() {
         ::KillTimer(m_hMessageWnd, m_flashTimer);
-        Shell_NotifyIconA(NIM_DELETE, &m_notifyCondata);
+        Shell_NotifyIconW(NIM_DELETE, &m_notifyCondata);
         
     }
     

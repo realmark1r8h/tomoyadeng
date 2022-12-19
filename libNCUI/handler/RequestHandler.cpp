@@ -277,7 +277,7 @@ namespace amo {
         CefRefPtr<CefRequest> request) {
         $clog(amo::cdevel << func_orient << amo::string(request->GetURL().ToString(),
                 true).str() << amo::endl;);
-        amo::string url(request->GetURL().ToString(), true);
+        amo::u8string url(request->GetURL().ToString(), true);
         std::string ss = url;
         
         if (ss.find("@file:///") != -1) {

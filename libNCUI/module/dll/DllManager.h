@@ -143,7 +143,7 @@ namespace amo {
         , public singleton<DllManager<PID_RENDERER> > {
     public:
         DllManager() {
-            setExtensionDir("extensions");
+            setExtensionDir(amo::u8string("extensions", true));
             setRunOnRenderThread(true);
         }
     };

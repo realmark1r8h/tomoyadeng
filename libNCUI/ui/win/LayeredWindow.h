@@ -91,8 +91,8 @@ namespace amo {
         bool isRegistered(const std::string& strKey) const;
         int32_t createHotKey();
         
-        std::function<bool(int32_t, amo::json)> getHotKeyEventCallback() const;
-        void setHotKeyEventCallback(std::function<bool(int32_t, amo::json)> val);
+        std::function<bool(int32_t, amo::u8json)> getHotKeyEventCallback() const;
+        void setHotKeyEventCallback(std::function<bool(int32_t, amo::u8json)> val);
         
         void setClosedCallback(ClosedCbType fn);
         
@@ -153,7 +153,7 @@ namespace amo {
         std::unordered_map<int32_t, std::shared_ptr<GlobalShortcutSettings> >
         m_oHotKeyMap;
         /*! @brief	全局热键回调. */
-        std::function<bool(int32_t, amo::json)> m_fnHotKeyEventCallback;
+        std::function<bool(int32_t, amo::u8json)> m_fnHotKeyEventCallback;
         
         /*! @brief	窗口阴影控件. */
         ShadowWindow m_Shadow;

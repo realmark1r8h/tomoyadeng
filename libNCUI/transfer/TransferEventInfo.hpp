@@ -15,12 +15,12 @@ namespace amo {
         TransferEventInfo() {
         
         }
-        TransferEventInfo(const amo::string& name_,
+        TransferEventInfo(const amo::u8string& name_,
                           bool suspend_ = false,
                           bool toAll_ = false,
                           int browser_ = -1,
                           int64_t frame_ = -1)
-            : name(name_)
+            : name(name_.to_utf8())
             , suspend(suspend_)
             , toAll(toAll_)
             , browser(browser_)
@@ -33,8 +33,8 @@ namespace amo {
         }
         
         // 暂时用不着
-        amo::json toJson() const {
-            amo::json json;
+        amo::u8json toJson() const {
+            amo::u8json json;
             json.put("name", name);
             json.put("suspend", suspend);
             json.put("toAll", toAll);
@@ -50,7 +50,7 @@ namespace amo {
             return toJson().to_string();
         }
         
-        static TransferEventInfo fromJson(const amo::json& json) {
+        static TransferEventInfo fromJson(const amo::u8json& json) {
             TransferEventInfo info;
             
             if (!json.is_valid()) {

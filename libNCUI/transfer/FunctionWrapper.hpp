@@ -60,7 +60,7 @@ namespace amo {
     public:
         typedef std::function<Any(IPCMessage::SmartType)> TransferFunc;
     public:
-        static FunctionWrapper fromJson(amo::json& json) {
+        static FunctionWrapper fromJson(amo::u8json& json) {
             FunctionWrapper wrapper;
             wrapper.m_strName = json.get<std::string>("function");
             wrapper.m_nExecType = json.get<int>("exec");
@@ -68,7 +68,7 @@ namespace amo {
         }
         
         static std::vector<FunctionWrapper> fromJsonArray(
-            std::vector<amo::json>& json) {
+            std::vector<amo::u8json>& json) {
             
             std::vector<FunctionWrapper> vec;
             
@@ -91,8 +91,8 @@ namespace amo {
         virtual ~FunctionWrapper() {
         
         }
-        amo::json toJson() {
-            amo::json json;
+        amo::u8json toJson() {
+            amo::u8json json;
             json.put("function", m_strName);
             json.put("exec", m_nExecType);
             return json;
@@ -207,16 +207,16 @@ namespace amo {
             return toJson().to_string();
         }
         
-        amo::json toJson() {
+        amo::u8json toJson() {
             std::vector<FunctionWrapper> vec = toVector();
-            amo::json json;
+            amo::u8json json;
             json.put("name", this->name());
             json.put("objectName", this->getObjectName());
             json.put("id", this->getObjectID());
             json.put("builtin", this->isBuiltIn());
             json.put("rendererClass", this->isRendererClass());
             json.put("transferClass", true); //表示这是一个类
-            amo::json functions;
+            amo::u8json functions;
             
             functions.set_array();
             
@@ -225,7 +225,7 @@ namespace amo {
             }
             
             json.put_child("functions", functions);
-            amo::json modules;
+            amo::u8json modules;
             modules.set_array();
             
             for (auto& p : m_vecModules) {
@@ -234,7 +234,7 @@ namespace amo {
             
             json.put_child("modules", modules);
             
-            amo::json depends;
+            amo::u8json depends;
             depends.set_array();
             
             for (auto& p : m_vecDepends) {
@@ -251,8 +251,8 @@ namespace amo {
             return json;
         }
         
-        amo::json toSimplifiedJson() {
-            amo::json json;
+        amo::u8json toSimplifiedJson() {
+            amo::u8json json;
             json.put("name", this->name());
             json.put("objectName", this->getObjectName());
             json.put("id", this->getObjectID());
@@ -262,13 +262,13 @@ namespace amo {
             return json;
         }
         
-        static FunctionWrapperMgr fromJson(amo::json& json) {
+        static FunctionWrapperMgr fromJson(amo::u8json& json) {
             FunctionWrapperMgr mgr;
             mgr.m_strName = json.get<std::string>("name");
             mgr.m_nObjectID = json.get<int64_t>("id");
             mgr.m_strObjectName = json.get<std::string>("objectName");
             mgr.m_bRendererClass = json.get<bool>("rendererClass");
-            std::vector<amo::json> functions;
+            std::vector<amo::u8json> functions;
             functions = json.get_child("functions").to_array();
             std::vector<FunctionWrapper> wrappers;
             wrappers = FunctionWrapper::fromJsonArray(functions);
@@ -277,14 +277,14 @@ namespace amo {
                 mgr.toMap().insert(std::make_pair(p.m_strName, p));
             }
             
-            std::vector<amo::json> modules;
+            std::vector<amo::u8json> modules;
             modules = json.get_child("modules").to_array();
             
             for (auto& p : modules) {
                 mgr.addModule(p.get<std::string>());
             }
             
-            std::vector<amo::json> depends;
+            std::vector<amo::u8json> depends;
             depends = json.get_child("depends").to_array();
             
             for (auto& p : depends) {
@@ -319,7 +319,7 @@ namespace amo {
         
         
         void addAttribute(const std::string& strName, Any val) {
-            amo::json json;
+            amo::u8json json;
             json.put("name", strName);
             json.put("value", val.toJson());
             m_vecAttributes.push_back(json);

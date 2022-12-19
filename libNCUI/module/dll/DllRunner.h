@@ -68,8 +68,8 @@ namespace amo {
         R runDllFuncImpl(Args... args) {
             try {
                 auto manager = DllManager<PID_RENDERER>::getInstance();
-                amo::string dllName(m_args->getString(IPCArgsPosInfo::DllName), true);
-                amo::string funcName(m_args->getString(IPCArgsPosInfo::DllFuncName), true);
+                amo::u8string dllName(m_args->getString(IPCArgsPosInfo::DllName), true);
+                amo::u8string funcName(m_args->getString(IPCArgsPosInfo::DllFuncName), true);
                 std::shared_ptr<amo::loader> pLoader = manager->get(dllName);
                 
                 if (!pLoader) {
@@ -77,7 +77,7 @@ namespace amo {
                     return R();
                 }
                 
-                auto ret = pLoader->exec<R>(funcName, args...);
+                auto ret = pLoader->exec<R>(funcName.to_ansi(), args...);
                 
                 if (!ret) {
                     m_nErrorCode = DllArgsError;

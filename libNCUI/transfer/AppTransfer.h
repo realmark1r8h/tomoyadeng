@@ -31,14 +31,14 @@ namespace amo {
         /*!
          * @ignore
          *
-         * @fn	void AppTransfer::initUrlMapping(amo::json& json);
+         * @fn	void AppTransfer::initUrlMapping(amo::u8json& json);
          *
          * @brief	将配置文件中的设置添加到MAP中.
          *
          * @param [in,out]	json	The JSON.
          */
         
-        void initUrlMapping(amo::json& json);
+        void initUrlMapping(amo::u8json& json);
         
         /*!
          * @fn	static Any AppTransfer::getConfig(IPCMessage::SmartType msg);
@@ -512,7 +512,7 @@ namespace amo {
         /*! @brief	URL到本地路径映射. */
         std::list<std::pair<std::string, std::string > > m_oUrlToNativeMap;
         /*! @brief	全局数据. */
-        amo::json m_global;
+        amo::u8json m_global;
     };
 }
 

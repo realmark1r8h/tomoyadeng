@@ -137,7 +137,7 @@ namespace amo {
     
     Any NativeWindowProxy::setWindowRect(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::json json(args->getString(0));
+        amo::u8json json(args->getString(0));
         int x = json.getInt("x");
         int y = json.getInt("y");
         int width = json.getInt("width");
@@ -150,7 +150,7 @@ namespace amo {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         RECT rect = { 0 };
         ::GetWindowRect(getNativeHWND(args), &rect);
-        amo::json json;
+        amo::u8json json;
         json.put("x", rect.left);
         json.put("y", rect.top);
         json.put("r", rect.right);
@@ -177,7 +177,7 @@ namespace amo {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         RECT rect = { 0 };
         ::GetWindowRect(getNativeHWND(args), &rect);
-        amo::json json;
+        amo::u8json json;
         json.put("width", rect.right - rect.left);
         json.put("height", rect.bottom - rect.top);
         return json;
@@ -301,18 +301,18 @@ namespace amo {
     
     Any NativeWindowProxy::setTitle(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::string str(args->getString(0), true);
+        amo::u8string str(args->getString(0), true);
         
         getNativeSettings()->title = str.to_utf8();
-        BOOL bOk = ::SetWindowTextA(getNativeHWND(args), str.c_str());
+        BOOL bOk = ::SetWindowTextW(getNativeHWND(args), str.to_wide().c_str());
         return bOk != FALSE;
     }
     
     Any NativeWindowProxy::getTitle(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        char str[256] = { 0 };
-        ::GetWindowTextA(getNativeHWND(args), str, 256);
-        return amo::string(str).to_utf8();
+        wchar_t str[256] = { 0 };
+        ::GetWindowTextW(getNativeHWND(args), str, 256);
+        return amo::u8string(str).to_utf8();
     }
     
     Any NativeWindowProxy::flashFrame(IPCMessage::SmartType msg) {
@@ -379,7 +379,7 @@ namespace amo {
     
     Any NativeWindowProxy::setIcon(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::string strPath(args->getString(0), true);
+        amo::u8string strPath(args->getString(0), true);
         HICON m_hIcon = (HICON)LoadImage(NULL,
                                          strPath.to_unicode().c_str(),
                                          IMAGE_ICON,
@@ -400,7 +400,7 @@ namespace amo {
         Any& val = args->getValue(0);
         auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
         
-        if (val.type() == AnyValueType<amo::json>::value) {
+        if (val.type() == AnyValueType<amo::u8json>::value) {
             // 更新AppSettings
             std::string strConfig = args->getString(0);
             getNativeSettings()->updateArgsSettings(strConfig);

@@ -17,7 +17,7 @@ namespace amo {
     
     Any ControlTransfer::getValue(IPCMessage::SmartType msg) {
         if (m_pControl) {
-            amo::string strValue(m_pControl->GetText().GetData());
+            amo::u8string strValue(m_pControl->GetText().GetData());
             return strValue.to_utf8();
         }
         
@@ -26,7 +26,7 @@ namespace amo {
     
     Any ControlTransfer::setValue(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        amo::string strValue(args->getString(0), true);
+        amo::u8string strValue(args->getString(0), true);
         
         if (m_pControl) {
             m_pControl->SetText(strValue.to_unicode().c_str());

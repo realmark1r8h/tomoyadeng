@@ -35,7 +35,7 @@ namespace amo {
         }
         
         virtual std::string id() {
-            return amo::string::from_number(m_nID).str();
+            return amo::u8string::from_number(m_nID).str();
         }
         
         virtual void release() {
@@ -60,7 +60,7 @@ namespace amo {
                 retval = CefV8Value::CreateBool(value);
             } else {
                 if (arguments.at(0)->IsString()) {
-                    amo::string strNum(arguments.at(0)->GetStringValue(), true);
+                    amo::u8string strNum(arguments.at(0)->GetStringValue(), true);
                     strNum = strNum.to_upper();
                     
                     if (strNum == "TRUE") {
@@ -100,7 +100,7 @@ namespace amo {
         }
         
         virtual std::string id() {
-            return amo::string::from_number(m_nID).str();
+            return amo::u8string::from_number(m_nID).str();
         }
         
         virtual void release() {
@@ -125,7 +125,7 @@ namespace amo {
                 retval = CefV8Value::CreateInt(value);
             } else {
                 if (arguments.at(0)->IsString()) {
-                    amo::string strNum(arguments.at(0)->GetStringValue(), true);
+                    amo::u8string strNum(arguments.at(0)->GetStringValue(), true);
                     item.data = strNum.to_number<value_type>();
                 } else if (arguments.at(0)->IsInt()) {
                     item.data = (value_type)arguments.at(0)->GetIntValue();
@@ -158,7 +158,7 @@ namespace amo {
         }
         
         virtual std::string id() {
-            return amo::string::from_number(m_nID).str();
+            return amo::u8string::from_number(m_nID).str();
         }
         virtual void release() {
             return;
@@ -182,7 +182,7 @@ namespace amo {
                 retval = CefV8Value::CreateDouble(value);
             } else {
                 if (arguments.at(0)->IsString()) {
-                    amo::string strNum(arguments.at(0)->GetStringValue(), true);
+                    amo::u8string strNum(arguments.at(0)->GetStringValue(), true);
                     item.data = strNum.to_number<value_type>();
                 } else if (arguments.at(0)->IsDouble()) {
                     item.data = (value_type)arguments.at(0)->GetDoubleValue();
@@ -213,7 +213,7 @@ namespace amo {
         }
         
         virtual std::string id() {
-            return amo::string::from_number(m_nID).str();
+            return amo::u8string::from_number(m_nID).str();
         }
         
         virtual void release() {
@@ -267,7 +267,7 @@ namespace amo {
         }
         
         virtual std::string id() {
-            return amo::string::from_number(m_nID).str();
+            return amo::u8string::from_number(m_nID).str();
         }
         virtual void release() {
             return;
@@ -325,7 +325,7 @@ namespace amo {
         }
         
         virtual std::string id() {
-            return amo::string::from_number(m_nID).str();
+            return amo::u8string::from_number(m_nID).str();
         }
         
         virtual void release() {
@@ -351,7 +351,7 @@ namespace amo {
                 item.data = (value_type)arguments.at(0)->GetIntValue();
             } else {
                 if (arguments.at(0)->IsString()) {
-                    amo::string strNum(arguments.at(0)->GetStringValue(), true);
+                    amo::u8string strNum(arguments.at(0)->GetStringValue(), true);
                     item.data = new real_type(strNum.to_number<real_type>());
                 } else if (arguments.at(0)->IsInt()) {
                     int value = arguments.at(0)->GetIntValue();

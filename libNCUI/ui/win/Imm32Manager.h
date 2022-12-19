@@ -20,14 +20,14 @@ namespace amo {
         void destroyImeWindow();
         void cleanupComposition();
         void resetComposition();
-        amo::string getResult(LPARAM lparam);
+        amo::u8string getResult(LPARAM lparam);
         bool getComposition(LPARAM lparam);
         void enableIME();
         void disableIME();
         void cancelIME();
         void updateImeWindow(POINT pt);
         void completeComposition(HIMC imm_context);
-        amo::string getString(HIMC imm_context, WPARAM lparam);
+        amo::u8string getString(HIMC imm_context, WPARAM lparam);
     private:
         HWND window_handle;
     };

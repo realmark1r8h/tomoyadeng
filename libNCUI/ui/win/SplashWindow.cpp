@@ -20,7 +20,7 @@ namespace amo {
     }
     
     DuiLib::CDuiString SplashWindow::GetSkinFile() {
-        return amo::string(skinSplashWindow).format(
+        return amo::u8string(skinSplashWindow, true).format(
                    getSplashSettings()->settings).to_unicode().c_str();
     }
     
@@ -58,7 +58,7 @@ namespace amo {
         RECT rc = {0};
         ::GetClientRect(m_hWnd, &rc);
         std::string imagePath = AppSettings::getInstance()->toAbsolutePath(getSplashSettings()->image);
-        amo::string file(imagePath, true);
+        amo::u8string file(imagePath, true);
         m_pPictureView->setPicture(file.to_wide());
         
     }

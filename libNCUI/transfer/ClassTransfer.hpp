@@ -591,8 +591,8 @@ namespace amo {
         virtual Any createClass(IPCMessage::SmartType msg) {
             Any val = this->onCreateClass(msg);
             
-            if (val.is<amo::json>()) {
-                amo::json json = val.As<amo::json>();
+            if (val.is<amo::u8json>()) {
+                amo::u8json json = val.As<amo::u8json>();
                 int64_t nID = json.get<int64_t>("id");
                 auto pTransfer = findTransfer(nID);
                 
@@ -1002,9 +1002,9 @@ namespace amo {
             Any& val = args->getValue(0);
             
             
-            if (val.type() == AnyValueType<amo::json>::value) {
+            if (val.type() == AnyValueType<amo::u8json>::value) {
                 // 更新AppSettings
-                amo::json json = args->getJson(0);
+                amo::u8json json = args->getJson(0);
                 
                 if (json.is_object()) {
                     userData.join(json);

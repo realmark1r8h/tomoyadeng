@@ -65,7 +65,7 @@ namespace amo {
     };
     
     
-    class GifEncoder : public amo::json_object {
+    class GifEncoder : public amo::u8json_object {
     public:
         GifEncoder() {
             m_gifRecordTimer = 0;

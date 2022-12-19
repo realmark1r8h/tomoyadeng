@@ -14,7 +14,7 @@ namespace amo {
     }
     
     void BrowserWindowSettings::initDefaultCefBrowserSettings() {
-        CefString(&this->default_encoding) = amo::string("ISO-8859-1").to_utf8();
+        CefString(&this->default_encoding) = amo::u8string("ISO-8859-1", true).to_utf8();
         plugins = STATE_ENABLED;
         remote_fonts = STATE_DEFAULT;
         javascript = STATE_ENABLED;
@@ -75,7 +75,7 @@ namespace amo {
     
     
     
-    amo::json BrowserWindowSettings::toJson() {
+    amo::u8json BrowserWindowSettings::toJson() {
         UPDATE_ARGS_SETTINGS(main);
         UPDATE_ARGS_SETTINGS(windowClass);
         UPDATE_ARGS_SETTINGS(reload);

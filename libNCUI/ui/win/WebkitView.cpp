@@ -500,7 +500,7 @@ namespace amo {
         
         if (frame->IsMain()) {
         
-            std::vector<amo::json> cssList;
+            std::vector<amo::u8json> cssList;
             
             if (m_pBrowserSettings->cssList.is_array()) {
                 cssList = m_pBrowserSettings->cssList.to_array();
@@ -521,7 +521,7 @@ namespace amo {
             }
             
             
-            std::vector<amo::json> javascriptList;
+            std::vector<amo::u8json> javascriptList;
             
             if (m_pBrowserSettings->javascriptList.is_array()) {
                 javascriptList = m_pBrowserSettings->javascriptList.to_array();
@@ -709,7 +709,7 @@ namespace amo {
         
         
         std::string strErrorCode = std::to_string(errorCode);
-        amo::string str(skin404, true);
+        amo::u8string str(skin404, true);
         std::string errorStr = "";
         
         for (size_t i = 0; i < strErrorCode.size(); ++i) {
@@ -718,7 +718,7 @@ namespace amo {
             errorStr += "</span>";
         }
         
-        amo::json json;
+        amo::u8json json;
         json.put("errorCode", errorStr);
         json.put("errorText", getErrorStringByErrorCode(errorCode));
         str = str.format(json);
@@ -730,7 +730,7 @@ namespace amo {
     
     bool WebkitView::OnProcessMessageReceived(CefRefPtr<CefBrowser> browser,
             CefProcessId source_process, CefRefPtr<CefProcessMessage> message) {
-        amo::string strMessageName(message->GetName().ToString(), true);
+        amo::u8string strMessageName(message->GetName().ToString(), true);
         //int nBrowserID = browser->GetIdentifier();
         
         /*  if (strMessageName == MSG_IPC_READY) {
@@ -834,7 +834,7 @@ namespace amo {
         std::string strClass = args->getString(0);
         // 从磁盘中加载与所给模块同名dll
         std::shared_ptr<amo::loader> pLoader;
-        pLoader = DllManager<PID_BROWSER>::getInstance()->load(strClass);
+        pLoader = DllManager<PID_BROWSER>::getInstance()->load(amo::u8string(strClass, true));
         
         if (!pLoader) {
             return Undefined();
@@ -880,7 +880,7 @@ namespace amo {
             
             vec = DllManager<PID_BROWSER>::getInstance()->exports(dllName);
             
-            amo::json jsonArr;
+            amo::u8json jsonArr;
             jsonArr.set_array();
             
             for (auto& p : vec) {
@@ -951,7 +951,7 @@ namespace amo {
         //
         //
         //auto manager = BrowserTransferMgr::getInstance();
-        //amo::json arr = manager->getTransferMap(nBrowserID).toJson();
+        //amo::u8json arr = manager->getTransferMap(nBrowserID).toJson();
         //int nPipeID = args->getInt(IPCArgsPosInfo::BrowserID);
         //
         //if (nPipeID == nBrowserID) {
@@ -992,14 +992,14 @@ namespace amo {
     Any WebkitView::addOverlap(IPCMessage::SmartType msg) {
     
     
-        amo::json settings = msg->getArgumentList()->getJson(0).to_ansi();
+        amo::u8json settings = msg->getArgumentList()->getJson(0);
         std::string name = settings.getString("name");
         
         if (name.empty()) {
             return false;
         }
         
-        std::shared_ptr<amo::file_mapping> map(new amo::file_mapping(name, true));
+        std::shared_ptr<amo::file_mapping> map(new amo::file_mapping(amo::string(name, true), true));
         std::shared_ptr<Overlap> overlap(new Overlap(settings));
         std::shared_ptr<OverlapData> overlapData(new FilemappingOverlapData(map));
         overlapData->fill(map->address(), map->size());
@@ -1013,9 +1013,9 @@ namespace amo {
     }
     
     Any WebkitView::removeOverlap(IPCMessage::SmartType msg) {
-        std::string name = amo::string(msg->getArgumentList()->getString(0),
-                                       true).str();
-                                       
+        std::string name = amo::u8string(msg->getArgumentList()->getString(0),
+                                         true).str();
+                                         
         if (name.empty()) {
             return false;
         }
@@ -1158,8 +1158,8 @@ namespace amo {
                 return;
             }
             
-            amo::json json;
-            amo::json menu;
+            amo::u8json json;
+            amo::u8json menu;
             menu.set_array();
             //model->SetAcceleratorAt(0, 'C', true, true, true);
             
@@ -1182,7 +1182,7 @@ namespace amo {
                 bool alt;
                 model->GetAcceleratorAt(i, key_code, shift, ctrl, alt);
                 $cdevel("type:{}, value:{}, keycode:{}, shift:{}, ctrl:{}, alt:{},",
-                        (int)model->GetTypeAt(i), amo::string(model->GetLabelAt(i).ToString(),
+                        (int)model->GetTypeAt(i), amo::u8string(model->GetLabelAt(i).ToString(),
                                 true).to_ansi(), key_code, shift, ctrl, alt);
                                 
                 /*MENUITEMTYPE_NONE,
@@ -1234,7 +1234,7 @@ namespace amo {
                     //
                     //label = std::regex_replace(label, reg, "");
                     
-                    amo::json item;
+                    amo::u8json item;
                     item.put("id", std::to_string(commandid));
                     item.put("text", label);
                     
@@ -1308,12 +1308,12 @@ namespace amo {
         //由用户选择目录保存文件
         if (SUCCEEDED(SHGetFolderPath(NULL, CSIDL_PERSONAL | CSIDL_FLAG_CREATE,
                                       NULL, 0, szFolderPath))) {
-            path = amo::string(szFolderPath);
-            path += std::string("\\") + amo::string(suggested_name.ToString(),
-                                                    true).to_ansi();
+            path = amo::u8string(szFolderPath);
+            path += std::string("\\") + amo::u8string(suggested_name.ToString(),
+                    true).to_utf8();
         }
         
-        callback->Continue(amo::string(path).to_utf8(), true);
+        callback->Continue(amo::u8string(path, true).to_utf8(), true);
         return;
     }
     
@@ -1352,8 +1352,8 @@ namespace amo {
                                  bool & suppress_message) {
         //接管JS 弹出框 ，显示自定义JS弹出框
         CEF_REQUIRE_UI_THREAD();
-        amo::string strMessageText(message_text.ToString(), true);
-        amo::string strOriginUrl(origin_url.ToString(), true);
+        amo::u8string strMessageText(message_text.ToString(), true);
+        amo::u8string strOriginUrl(origin_url.ToString(), true);
         
         if (m_nBrowserID != browser->GetIdentifier()) {
             return false;
@@ -1363,21 +1363,21 @@ namespace amo {
         CDuiString strPromptText = default_prompt_text.c_str();
         
         if (dialog_type == JSDIALOGTYPE_ALERT) { //alert
-            strOriginUrl = "提示";
+            strOriginUrl = amo::u8string(u8"提示", true);
             uRet = MessageWindow::Show(::GetParent(m_hBrowserWnd),
                                        strMessageText.to_unicode().c_str(),
                                        strOriginUrl.to_unicode().c_str());
             callback->Continue(uRet == 1,
-                               amo::string(strPromptText.GetData()).to_utf8());
+                               amo::u8string(strPromptText.GetData()).to_utf8());
             return true;
         } else if (dialog_type == JSDIALOGTYPE_CONFIRM) { //confirm
-            strOriginUrl = "询问";
+            strOriginUrl = amo::u8string(u8"询问", true);
             uRet = MessageWindow::Show(::GetParent(m_hBrowserWnd),
                                        strMessageText.to_unicode().c_str(),
                                        strOriginUrl.to_unicode().c_str(),
                                        MB_OKCANCEL);
             callback->Continue(uRet == 1,
-                               amo::string(strPromptText.GetData()).to_utf8());
+                               amo::u8string(strPromptText.GetData()).to_utf8());
             return true;
         } else if (dialog_type == JSDIALOGTYPE_PROMPT) { //prompt
             strOriginUrl = strMessageText;
@@ -1387,7 +1387,7 @@ namespace amo {
                                              strOriginUrl.to_unicode().c_str(),
                                              MB_OKCANCEL);
             callback->Continue(uRet == 1,
-                               amo::string(strPromptText.GetData()).to_utf8());
+                               amo::u8string(strPromptText.GetData()).to_utf8());
             return true;
         }
         
@@ -1540,11 +1540,11 @@ namespace amo {
     }
     
     bool WebkitView::OnTooltip(CefRefPtr<CefBrowser> browser, CefString& text) {
-        amo::string str(text.ToString(), true);
+        amo::u8string str(text.ToString(), true);
         //this->SetToolTip(str.to_unicode().c_str());
         
         if (m_pRenderWnd != NULL) {
-            m_pRenderWnd->setTooltip(str);
+            m_pRenderWnd->setTooltip(str.to_wide());
             return false;
         }
         

@@ -97,7 +97,7 @@ namespace amo {
         removeBrowserWindowSettings(msg);
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string url = args->getString(0);
-        amo::json settings = args->getJson(1);
+        amo::u8json settings = args->getJson(1);
         
         if (url.empty() || !settings.is_valid()) {
             return false;
@@ -106,8 +106,8 @@ namespace amo {
         url = util::getUrlFromUtf8(url);
         
         m_oBrowserWindowSettings.push_back(std::make_pair(url, settings));
-        m_oBrowserWindowSettings.sort([&](std::pair<std::string, amo::json> &a,
-        std::pair<std::string, amo::json>& b) {
+        m_oBrowserWindowSettings.sort([&](std::pair<std::string, amo::u8json> &a,
+        std::pair<std::string, amo::u8json>& b) {
             return a.first.size() > b.first.size();
         });
         return true;
@@ -123,7 +123,7 @@ namespace amo {
         }
         
         url = util::getUrlFromUtf8(url);
-        m_oBrowserWindowSettings.remove_if([&](std::pair<std::string, amo::json>& p) {
+        m_oBrowserWindowSettings.remove_if([&](std::pair<std::string, amo::u8json>& p) {
             return p.first == url;
         });
         
@@ -142,7 +142,6 @@ namespace amo {
         
         
         url = util::getUrlFromUtf8(url);
-        amo::string strUrl(url, true);
         
         for (auto& p : m_oBrowserWindowSettings) {
         
@@ -155,7 +154,7 @@ namespace amo {
             return p.second;
         }
         
-        return amo::json();
+        return amo::u8json();
     }
     
     
@@ -238,7 +237,7 @@ namespace amo {
     
     Any BrowserWindowTransfer::getAllWindows(IPCMessage::SmartType msg) {
     
-        amo::json jsonArr;
+        amo::u8json jsonArr;
         jsonArr.set_array();
         
         auto manager = BrowserWindowManager::getInstance();
@@ -326,7 +325,7 @@ namespace amo {
     
     
     Any BrowserWindowTransfer::id(IPCMessage::SmartType msg) {
-        return amo::string::from_number(getObjectID()).to_utf8();
+        return amo::u8string::from_number(getObjectID()).to_utf8();
     }
     
     

@@ -97,7 +97,7 @@ namespace amo {
         std::vector<Any>& attributes = m_oFuncMgr.getAttributes();
         
         for (auto& p : attributes) {
-            amo::json json = p;
+            amo::u8json json = p;
             std::string strName = json.getString("name");
             Any val = Any::fromJson(json.get_child("value"));
             TypeConvertor convertor;

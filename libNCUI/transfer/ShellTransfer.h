@@ -153,7 +153,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     private:
-        int StringToShowCmd(const amo::string& str);
+        int StringToShowCmd(const amo::u8string& str);
     private:
     };
 }

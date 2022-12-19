@@ -105,8 +105,8 @@ namespace amo {
     }
     
     Any SqliteTransfer::import(IPCMessage::SmartType msg) {
-        amo::string str = msg->getArgumentList()->getString(0);
-        amo::path p(str);
+        amo::u8string str(msg->getArgumentList()->getString(0), true);
+        amo::u8path p(str);
         
         if (!p.exists()) {
             return Undefined();
@@ -176,7 +176,7 @@ namespace amo {
     
     Any SqliteTransfer::update(IPCMessage::SmartType msg) {
         std::string sql = makeUpdateSql(msg);
-        amo::string ansiSql(sql, true);
+        amo::u8string ansiSql(sql, true);
         Any ret = Undefined();
         
         if (sql.empty()) {
@@ -212,9 +212,9 @@ namespace amo {
     
     Any SqliteTransfer::query(IPCMessage::SmartType msg) {
     
-        amo::json queryJson;
+        amo::u8json queryJson;
         // 获取数据
-        amo::json jsonArr;
+        amo::u8json jsonArr;
         jsonArr.set_array();
         
         if (!m_pDB) {
@@ -228,7 +228,7 @@ namespace amo {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
         // 如果第三个参数是一个JSON,那么认为是分页信息
-        if (args->getValue(2).type() == AnyValueType<amo::json>::value) {
+        if (args->getValue(2).type() == AnyValueType<amo::u8json>::value) {
             bNeedPagging = true;
             queryJson = args->getJson(2);
             queryJson = getPaggingInfo(queryJson);
@@ -304,7 +304,7 @@ namespace amo {
                 for (sqlite3pp::query::iterator iter = qry.begin();
                         iter != qry.end();
                         ++iter) {
-                    amo::json json;
+                    amo::u8json json;
                     
                     for (int j = 0; j < qry.column_count(); ++j) {
                         /* OutputDebugStringA(keys[j].c_str());
@@ -504,7 +504,7 @@ namespace amo {
     }
     
     
-    std::string SqliteTransfer::getValuesFromJson(amo::json& json,
+    std::string SqliteTransfer::getValuesFromJson(amo::u8json& json,
             const std::string& key) {
         std::stringstream stream;
         
@@ -538,10 +538,10 @@ namespace amo {
     
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string utf8TableName = args->getString(0);
-        amo::string ansiTableName(utf8TableName, true);
-        ansiTableName.trim_left(" ");
-        ansiTableName.trim_right(" ");
-        std::vector<amo::string> tables = ansiTableName.split(" ");
+        amo::u8string ansiTableName(utf8TableName, true);
+        ansiTableName.trim_left(amo::u8string(" ", true));
+        ansiTableName.trim_right(amo::u8string(" ", true));
+        std::vector<amo::u8string> tables = ansiTableName.split(amo::u8string(" ", true));
         
         // 如果拆分出来不只一项,那么认为不是一个表名
         if (tables.size() > 1) {
@@ -554,7 +554,7 @@ namespace amo {
             std::string sql;
             
             for (auto & p : arr) {
-                amo::json& utf8Json = p.As<amo::json>();
+                amo::u8json& utf8Json = p.As<amo::u8json>();
                 std::string s = makeInsertSqlFromJson(utf8TableName, utf8Json);
                 
                 if (!s.empty()) {
@@ -564,8 +564,8 @@ namespace amo {
             }
             
             return sql;
-        } else if (args->getValue(1).is<amo::json>()) {
-            amo::json utf8Json = args->getJson(1);
+        } else if (args->getValue(1).is<amo::u8json>()) {
+            amo::u8json utf8Json = args->getJson(1);
             return makeInsertSqlFromJson(utf8TableName, utf8Json);
         }
         
@@ -574,7 +574,7 @@ namespace amo {
     
     
     std::string SqliteTransfer::makeInsertSqlFromJson(const std::string&
-            utf8TableName, amo::json& utf8Json) {
+            utf8TableName, amo::u8json& utf8Json) {
         // 如果不是一个合法的JSON，返回""
         if (!utf8Json.is_valid() || utf8Json.size() <= 0) {
             return "";
@@ -616,10 +616,10 @@ namespace amo {
     std::string SqliteTransfer::makeRemoveSql(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string utf8TableName = args->getString(0);
-        amo::string ansiTableName(utf8TableName, true);
-        ansiTableName.trim_left(" ");
-        ansiTableName.trim_right(" ");
-        std::vector<amo::string> tables = ansiTableName.split(" ");
+        amo::u8string ansiTableName(utf8TableName, true);
+        ansiTableName.trim_left(amo::u8string(" ", true));
+        ansiTableName.trim_right(amo::u8string(" ", true));
+        std::vector<amo::u8string> tables = ansiTableName.split(amo::u8string(" ", true));
         
         // 如果拆分出来不只一项,那么认为不是一个表名
         if (tables.size() > 1) {
@@ -627,7 +627,7 @@ namespace amo {
             return "";
         }
         
-        amo::json utf8Json = args->getJson(1);
+        amo::u8json utf8Json = args->getJson(1);
         
         // 如果不是一个合法的JSON，返回""
         if (!utf8Json.is_valid()) {
@@ -645,18 +645,18 @@ namespace amo {
             Any val = args->getValue(2);
             
             
-            if (val.is<amo::json>()) {
+            if (val.is<amo::u8json>()) {
             
-                amo::string sqlWhere(args->getString(1), true);
-                amo::json json = val;
+                amo::u8string sqlWhere(args->getString(1), true);
+                amo::u8json json = val;
                 sqlWhere = formatArgsByU8Json(sqlWhere, json);
                 
                 if (sqlWhere.size() > 0) {
                     stream << " WHERE " << sqlWhere.to_utf8();
                 }
             } else if (val.is<std::vector<Any> >()) {
-                std::vector<amo::string> vec = anyToStringVec(val);
-                amo::string sqlWhere(args->getString(1), true);
+                std::vector<amo::u8string> vec = anyToStringVec(val);
+                amo::u8string sqlWhere(args->getString(1), true);
                 sqlWhere = formatArgsByArr(sqlWhere, vec);
                 
                 if (sqlWhere.size() > 0) {
@@ -673,10 +673,10 @@ namespace amo {
     std::string SqliteTransfer::makeUpdateSql(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         std::string utf8TableName = args->getString(0);
-        amo::string ansiTableName(utf8TableName, true);
-        ansiTableName.trim_left(" ");
-        ansiTableName.trim_right(" ");
-        std::vector<amo::string> tables = ansiTableName.split(" ");
+        amo::u8string ansiTableName(utf8TableName, true);
+        ansiTableName.trim_left(amo::u8string(" ", true));
+        ansiTableName.trim_right(amo::u8string(" ", true));
+        std::vector<amo::u8string> tables = ansiTableName.split(amo::u8string(" ", true));
         
         // 如果拆分出来不只一项,那么认为不是一个表名
         if (tables.size() > 1) {
@@ -684,7 +684,7 @@ namespace amo {
             return "";
         }
         
-        amo::json utf8Json = args->getJson(1);
+        amo::u8json utf8Json = args->getJson(1);
         
         // 如果不是一个合法的JSON，返回""
         if (!utf8Json.is_valid() || !utf8Json.is_object()) {
@@ -723,20 +723,20 @@ namespace amo {
             Any val = args->getValue(3);
             
             
-            if (val.is<amo::json>()) {
-                amo::string sqlWhere(args->getString(2), true);
-                amo::json json = val;
+            if (val.is<amo::u8json>()) {
+                amo::u8string sqlWhere(args->getString(2), true);
+                amo::u8json json = val;
                 whereStream << formatArgsByU8Json(sqlWhere, json).to_utf8();
             } else if (val.is<std::vector<Any> >()) {
-                std::vector<amo::string> vec = anyToStringVec(val);
-                amo::string sqlWhere(args->getString(2), true);
+                std::vector<amo::u8string> vec = anyToStringVec(val);
+                amo::u8string sqlWhere(args->getString(2), true);
                 whereStream << formatArgsByArr(sqlWhere, vec).to_utf8();
             } else if (!val.isValid() || val.is<Nil>()) {
                 // 如果格式化参数不存在，那么使用第二个参数
-                amo::string sqlWhere(args->getString(2), true);
-                amo::json json = args->getJson(1);
-                amo::string jsonString(json.to_string(), true);
-                json = amo::json(jsonString);
+                amo::u8string sqlWhere(args->getString(2), true);
+                amo::u8json json = args->getJson(1);
+                amo::u8string jsonString(json.to_string(), true);
+                json = amo::u8json(jsonString);
                 whereStream << sqlWhere.format(json).to_utf8();
             }
             
@@ -746,14 +746,14 @@ namespace amo {
         
         
         
-        amo::string retval(stream.str(), true);
-        retval.trim_right(" ");
-        retval.trim_right(",");
+        amo::u8string retval(stream.str(), true);
+        retval.trim_right(amo::u8string(" ", true));
+        retval.trim_right(amo::u8string(",", true));
         retval += " ";
         
         if (!whereString.empty()) {
             retval += " WHERE ";
-            retval += amo::string(whereString, true);
+            retval += amo::u8string(whereString, true);
         }
         
         return retval.to_utf8();
@@ -764,14 +764,14 @@ namespace amo {
         Any val = args->getValue(1);
         
         
-        if (val.type() == AnyValueType<amo::json>::value) {
-            amo::string sql(args->getString(0), true);
-            amo::json json = val;
+        if (val.type() == AnyValueType<amo::u8json>::value) {
+            amo::u8string sql(args->getString(0), true);
+            amo::u8json json = val;
             return formatArgsByU8Json(sql, json).to_utf8();
             
         } else if (val.type() == AnyValueType<std::vector<Any> >::value) {
-            std::vector<amo::string> vec = anyToStringVec(val);
-            amo::string sql(args->getString(0), true);
+            std::vector<amo::u8string> vec = anyToStringVec(val);
+            amo::u8string sql(args->getString(0), true);
             return formatArgsByArr(sql, vec).to_utf8();
         }
         
@@ -779,28 +779,28 @@ namespace amo {
         return args->getString(0);
     }
     
-    amo::string SqliteTransfer::formatArgsByAnsiJson(const amo::string& sql,
-            amo::json& json) {
+    amo::u8string SqliteTransfer::formatArgsByAnsiJson(const amo::u8string& sql,
+            amo::u8json& json) {
             
         return sql.format(json);
     }
     
-    amo::string SqliteTransfer::formatArgsByU8Json(const amo::string& sql,
-            amo::json& json) {
-        amo::string jsonString(json.to_string(), true);
-        amo::json ansiJson = amo::json(jsonString);
-        return  formatArgsByAnsiJson(sql, ansiJson).to_utf8();
+    amo::u8string SqliteTransfer::formatArgsByU8Json(const amo::u8string& sql,
+            amo::u8json& json) {
+        amo::u8string jsonString(json.to_string(), true);
+        amo::u8json ansiJson = amo::u8json(jsonString);
+        return  formatArgsByAnsiJson(sql, ansiJson);
     }
     
-    amo::string SqliteTransfer::formatArgsByArr(const amo::string& sql,
-            std::vector<amo::string>& vec) {
+    amo::u8string SqliteTransfer::formatArgsByArr(const amo::u8string& sql,
+            std::vector<amo::u8string>& vec) {
         std::vector<std::string> fmtArgsList;
         
         for (size_t i = 0; i < vec.size(); ++i) {
             fmtArgsList.push_back(vec[i].str());
         }
         
-        
+        std::string retval = sql.to_utf8();
         
         
         switch (fmtArgsList.size()) {
@@ -808,100 +808,110 @@ namespace amo {
             return sql;
             
         case 1:
-            return amo::format(sql.str(),
-                               fmtArgsList[0]);
-                               
+            retval = amo::format(sql.str(),
+                                 fmtArgsList[0]);
+            break;
+            
         case 2:
-            return amo::format(sql.str(),
-                               fmtArgsList[0],
-                               fmtArgsList[1]);
-                               
+            retval = amo::format(sql.str(),
+                                 fmtArgsList[0],
+                                 fmtArgsList[1]);
+            break;
+            
         case 3:
-            return amo::format(sql.str(),
-                               fmtArgsList[0],
-                               fmtArgsList[1],
-                               fmtArgsList[2]);
-                               
+            retval = amo::format(sql.str(),
+                                 fmtArgsList[0],
+                                 fmtArgsList[1],
+                                 fmtArgsList[2]);
+            break;
+            
         case 4:
-            return amo::format(sql.str(),
-                               fmtArgsList[0],
-                               fmtArgsList[1],
-                               fmtArgsList[2],
-                               fmtArgsList[3]);
-                               
+            retval = amo::format(sql.str(),
+                                 fmtArgsList[0],
+                                 fmtArgsList[1],
+                                 fmtArgsList[2],
+                                 fmtArgsList[3]);
+            break;
+            
         case 5:
-            return amo::format(sql.str(),
-                               fmtArgsList[0],
-                               fmtArgsList[1],
-                               fmtArgsList[2],
-                               fmtArgsList[3],
-                               fmtArgsList[4]);
-                               
+            retval = amo::format(sql.str(),
+                                 fmtArgsList[0],
+                                 fmtArgsList[1],
+                                 fmtArgsList[2],
+                                 fmtArgsList[3],
+                                 fmtArgsList[4]);
+            break;
+            
         case 6:
-            return amo::format(sql.str(),
-                               fmtArgsList[0],
-                               fmtArgsList[1],
-                               fmtArgsList[2],
-                               fmtArgsList[3],
-                               fmtArgsList[4],
-                               fmtArgsList[5]);
-                               
+            retval = amo::format(sql.str(),
+                                 fmtArgsList[0],
+                                 fmtArgsList[1],
+                                 fmtArgsList[2],
+                                 fmtArgsList[3],
+                                 fmtArgsList[4],
+                                 fmtArgsList[5]);
+            break;
+            
         case 7:
-            return amo::format(sql.str(),
-                               fmtArgsList[0],
-                               fmtArgsList[1],
-                               fmtArgsList[2],
-                               fmtArgsList[3],
-                               fmtArgsList[4],
-                               fmtArgsList[5],
-                               fmtArgsList[6]);
-                               
+            retval = amo::format(sql.str(),
+                                 fmtArgsList[0],
+                                 fmtArgsList[1],
+                                 fmtArgsList[2],
+                                 fmtArgsList[3],
+                                 fmtArgsList[4],
+                                 fmtArgsList[5],
+                                 fmtArgsList[6]);
+            break;
+            
         case 8:
-            return amo::format(sql.str(),
-                               fmtArgsList[0],
-                               fmtArgsList[1],
-                               fmtArgsList[2],
-                               fmtArgsList[3],
-                               fmtArgsList[4],
-                               fmtArgsList[5],
-                               fmtArgsList[6],
-                               fmtArgsList[7]);
-                               
+            retval = amo::format(sql.str(),
+                                 fmtArgsList[0],
+                                 fmtArgsList[1],
+                                 fmtArgsList[2],
+                                 fmtArgsList[3],
+                                 fmtArgsList[4],
+                                 fmtArgsList[5],
+                                 fmtArgsList[6],
+                                 fmtArgsList[7]);
+            break;
+            
         case 9:
-            return amo::format(sql.str(),
-                               fmtArgsList[0],
-                               fmtArgsList[1],
-                               fmtArgsList[2],
-                               fmtArgsList[3],
-                               fmtArgsList[4],
-                               fmtArgsList[5],
-                               fmtArgsList[6],
-                               fmtArgsList[7],
-                               fmtArgsList[8]);
-                               
+            retval = amo::format(sql.str(),
+                                 fmtArgsList[0],
+                                 fmtArgsList[1],
+                                 fmtArgsList[2],
+                                 fmtArgsList[3],
+                                 fmtArgsList[4],
+                                 fmtArgsList[5],
+                                 fmtArgsList[6],
+                                 fmtArgsList[7],
+                                 fmtArgsList[8]);
+            break;
+            
         case 10:
-            return amo::format(sql.str(),
-                               fmtArgsList[0],
-                               fmtArgsList[1],
-                               fmtArgsList[2],
-                               fmtArgsList[3],
-                               fmtArgsList[4],
-                               fmtArgsList[5],
-                               fmtArgsList[6],
-                               fmtArgsList[7],
-                               fmtArgsList[8],
-                               fmtArgsList[9]);
-                               
+            retval = amo::format(sql.str(),
+                                 fmtArgsList[0],
+                                 fmtArgsList[1],
+                                 fmtArgsList[2],
+                                 fmtArgsList[3],
+                                 fmtArgsList[4],
+                                 fmtArgsList[5],
+                                 fmtArgsList[6],
+                                 fmtArgsList[7],
+                                 fmtArgsList[8],
+                                 fmtArgsList[9]);
+            break;
+            
         default:
             break;
         }
         
-        return sql;
+        return amo::u8string(retval, true);
     }
     
-    std::string SqliteTransfer::formatPagging(amo::json& json) {
+    std::string SqliteTransfer::formatPagging(amo::u8json& json) {
     
-        amo::string sql = " limit({rows}) offset({startrow})";
+        amo::u8string sql(" limit({rows}) offset({startrow})", true);
         
         int startrow = json.getInt("rows") * (json.getInt("page") - 1);
         json.put("startrow", startrow);
@@ -909,18 +919,18 @@ namespace amo {
         
     }
     
-    std::vector<amo::string> SqliteTransfer::anyToStringVec(Any& val) {
+    std::vector<amo::u8string> SqliteTransfer::anyToStringVec(Any& val) {
         std::vector<Any> vec = val;
-        std::vector<amo::string> retval;
+        std::vector<amo::u8string> retval;
         
         for (size_t i = 0; i < vec.size(); ++i) {
-            retval.push_back(amo::string(vec[i].As<std::string>(), true));
+            retval.push_back(amo::u8string(vec[i].As<std::string>(), true));
         }
         
         return retval;
     }
     
-    bool SqliteTransfer::queryCountImpl(const std::string& str, amo::json& json) {
+    bool SqliteTransfer::queryCountImpl(const std::string& str, amo::u8json& json) {
     
         std::string str2 = json.to_string();
         
@@ -938,8 +948,8 @@ namespace amo {
                         std::regex_constants::ECMAScript | std::regex_constants::icase);
         std::smatch m;
         std::string sql;
-        amo::string myStr(str, true);
-        myStr = myStr.replace("\n", " ");
+        amo::u8string myStr(str, true);
+        myStr = myStr.replace(amo::u8string("\n", true), amo::u8string(" ", true));
         sql = myStr.to_utf8();
         bool bCountSql = false;
         
@@ -1068,9 +1078,9 @@ namespace amo {
         return -1;
     }
     
-    amo::json SqliteTransfer::getPaggingInfo(amo::json& other) {
+    amo::u8json SqliteTransfer::getPaggingInfo(amo::u8json& other) {
         std::string ss = other.to_string();
-        amo::json json;
+        amo::u8json json;
         json.put("page", 1); // 当前页码数
         json.put("rows", 10);		// 每页条数
         json.put("total", 0);		// 数据总条数
@@ -1177,7 +1187,7 @@ namespace amo {
         auto& vec = getTableFieldImpl(table);
         
         for (auto& p : vec) {
-            if (amo::string(p, true).to_upper() == amo::string(field, true).to_upper()) {
+            if (amo::u8string(p, true).to_upper() == amo::u8string(field, true).to_upper()) {
                 return true;
             }
         }
@@ -1205,10 +1215,10 @@ namespace amo {
     
         switch (nfieldStyle) {
         case FieldUpper:
-            return amo::string(str, true).to_upper().to_utf8();
+            return amo::u8string(str, true).to_upper().to_utf8();
             
         case FieldLower:
-            return amo::string(str, true).to_lower().to_utf8();
+            return amo::u8string(str, true).to_lower().to_utf8();
             
         case FieldNormal:
         default:
@@ -1219,7 +1229,7 @@ namespace amo {
     }
     
     std::string SqliteTransfer::translateFieldType(const std::string& str) {
-        amo::string val(str, true);
+        amo::u8string val(str, true);
         val.to_upper();
         
         std::unordered_map<std::string, std::string> map {

@@ -54,7 +54,7 @@ namespace amo {
         amo::astring subKey = amo::string(args->getString(0), true);
         amo::astring valueKey = amo::string(args->getString(1), true);
         amo::astring retval =  m_registry->read<std::string>(subKey, valueKey);
-        return amo::string(retval).to_utf8();
+        return amo::string(retval, false).to_utf8();
     }
     
     Any RegistryTransfer::write(IPCMessage::SmartType msg) {

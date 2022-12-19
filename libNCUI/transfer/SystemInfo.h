@@ -15,7 +15,7 @@ namespace amo {
         BOOL safeGetNativeSystem(LPSYSTEM_INFO lpSystemInfo);
         
         
-        amo::json getSystemResource();
+        amo::u8json getSystemResource();
         
         
         UINT getTotalCpuStatus();

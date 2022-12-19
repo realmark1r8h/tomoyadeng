@@ -119,21 +119,21 @@ namespace amo {
         }
         
         /*!
-        * @fn	amo::json TransferMappingMgr::toJson(cefrefptr_type pCefRefPtr)
+        * @fn	amo::u8json TransferMappingMgr::toJson(cefrefptr_type pCefRefPtr)
         *
         * @brief	将Cef类型转换为JSON.
         *
         * @param	pCefRefPtr	The cef reference pointer.
         *
-        * @return	pCefRefPtr as an amo::json.
+        * @return	pCefRefPtr as an amo::u8json.
         */
-        amo::json toJson(cefrefptr_type pCefRefPtr) {
+        amo::u8json toJson(cefrefptr_type pCefRefPtr) {
             transfer_type pTransfer = toTransfer(pCefRefPtr);
             return pTransfer->getFuncMgr().toJson();
         }
         
         /*!
-        * @fn	cefrefptr_type TransferMappingMgr::formJson(amo::json& json)
+        * @fn	cefrefptr_type TransferMappingMgr::formJson(amo::u8json& json)
         *
         * @brief	将JSON转换为Cef类型.
         *
@@ -141,7 +141,7 @@ namespace amo {
         *
         * @return	A cefrefptr_type.
         */
-        cefrefptr_type formJson(amo::json& json) {
+        cefrefptr_type formJson(amo::u8json& json) {
             int nObjectID = json.get<int64_t>("id");
             
             for (auto& p : m_oTransferMap) {
@@ -154,20 +154,20 @@ namespace amo {
         }
         
         /*!
-        * @fn	amo::json TransferMappingMgr::toSimplifiedJson(cefrefptr_type pCefRefPtr)
+        * @fn	amo::u8json TransferMappingMgr::toSimplifiedJson(cefrefptr_type pCefRefPtr)
         *
         * @brief	将Cef类型转换为一个简单的JSON对象（只有ID和Name）.
         *
         * @param	pCefRefPtr	The cef reference pointer.
         *
-        * @return	pCefRefPtr as an amo::json.
+        * @return	pCefRefPtr as an amo::u8json.
         */
-        amo::json toSimplifiedJson(cefrefptr_type pCefRefPtr) {
+        amo::u8json toSimplifiedJson(cefrefptr_type pCefRefPtr) {
             transfer_type pTransfer = toTransfer(pCefRefPtr);
             return pTransfer->getFuncMgr().toSimplifiedJson();
         }
         
-        amo::json toSimplifiedJson(transfer_type pTransfer) {
+        amo::u8json toSimplifiedJson(transfer_type pTransfer) {
             return pTransfer->getFuncMgr().toSimplifiedJson();
         }
         /*!
@@ -261,21 +261,21 @@ namespace amo {
     //    }
     //
     //    /*!
-    //     * @fn	amo::json TransferMappingMgr::toJson(cefrefptr_type pCefRefPtr)
+    //     * @fn	amo::u8json TransferMappingMgr::toJson(cefrefptr_type pCefRefPtr)
     //     *
     //     * @brief	将Cef类型转换为JSON.
     //     *
     //     * @param	pCefRefPtr	The cef reference pointer.
     //     *
-    //     * @return	pCefRefPtr as an amo::json.
+    //     * @return	pCefRefPtr as an amo::u8json.
     //     */
-    //    amo::json toJson(cefrefptr_type pCefRefPtr) {
+    //    amo::u8json toJson(cefrefptr_type pCefRefPtr) {
     //        transfer_type pTransfer = toTransfer(pCefRefPtr);
     //        return pTransfer->getFuncMgr().toJson();
     //    }
     //
     //    /*!
-    //     * @fn	cefrefptr_type TransferMappingMgr::formJson(amo::json& json)
+    //     * @fn	cefrefptr_type TransferMappingMgr::formJson(amo::u8json& json)
     //     *
     //     * @brief	将JSON转换为Cef类型.
     //     *
@@ -283,7 +283,7 @@ namespace amo {
     //     *
     //     * @return	A cefrefptr_type.
     //     */
-    //    cefrefptr_type formJson(amo::json& json) {
+    //    cefrefptr_type formJson(amo::u8json& json) {
     //        int nObjectID = json.get<int64_t>("id");
     //
     //        for (auto& p : m_oTransferMap) {
@@ -296,20 +296,20 @@ namespace amo {
     //    }
     //
     //    /*!
-    //     * @fn	amo::json TransferMappingMgr::toSimplifiedJson(cefrefptr_type pCefRefPtr)
+    //     * @fn	amo::u8json TransferMappingMgr::toSimplifiedJson(cefrefptr_type pCefRefPtr)
     //     *
     //     * @brief	将Cef类型转换为一个简单的JSON对象（只有ID和Name）.
     //     *
     //     * @param	pCefRefPtr	The cef reference pointer.
     //     *
-    //     * @return	pCefRefPtr as an amo::json.
+    //     * @return	pCefRefPtr as an amo::u8json.
     //     */
-    //    amo::json toSimplifiedJson(cefrefptr_type pCefRefPtr) {
+    //    amo::u8json toSimplifiedJson(cefrefptr_type pCefRefPtr) {
     //        transfer_type pTransfer = toTransfer(pCefRefPtr);
     //        return pTransfer->getFuncMgr().toSimplifiedJson();
     //    }
     //
-    //    amo::json toSimplifiedJson(transfer_type pTransfer) {
+    //    amo::u8json toSimplifiedJson(transfer_type pTransfer) {
     //        return pTransfer->getFuncMgr().toSimplifiedJson();
     //    }
     //

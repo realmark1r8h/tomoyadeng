@@ -47,7 +47,7 @@ public:
         r = g = b = 0;
     }
     
-    ActiveElementInfo(amo::json& json) {
+    ActiveElementInfo(amo::u8json& json) {
         m_empty = json.empty();
         
         if (m_empty) {
@@ -82,18 +82,18 @@ public:
             }
             
             if (std::regex_search(ss, m, rgb)) {
-                r = amo::string(m[0].str()).to_number<int>();
+                r = amo::u8string(m[0].str(), true).to_number<int>();
                 ss = m.suffix();
             }
             
             if (std::regex_search(ss, m, rgb)) {
-                g = amo::string(m[0].str()).to_number<int>();
+                g = amo::u8string(m[0].str(), true).to_number<int>();
                 ss = m.suffix();
                 
             }
             
             if (std::regex_search(ss, m, rgb)) {
-                b = amo::string(m[0].str()).to_number<int>();
+                b = amo::u8string(m[0].str(), true).to_number<int>();
                 ss = m.suffix();
             }
             
@@ -208,7 +208,7 @@ namespace amo {
         virtual bool OnTooltip(CefRefPtr<CefBrowser> browser, CefString& text) override;
         
         void setFocusFrame(CefRefPtr<CefFrame> ptr);
-        void setActiveElementInfo(amo::json& vec);
+        void setActiveElementInfo(amo::u8json& vec);
         
         int logicalToDevice(int value, float device_scale_factor);
         CefRect logicalToDevice(const CefRect& value, float device_scale_factor);

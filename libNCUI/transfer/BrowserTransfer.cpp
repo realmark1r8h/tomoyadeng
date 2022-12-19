@@ -71,7 +71,7 @@ namespace amo {
             return false;
         }
         
-        amo::json json = args->getJson(0);
+        amo::u8json json = args->getJson(0);
         
         if (!json.is_valid()) {
             return false;

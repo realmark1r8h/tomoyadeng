@@ -49,7 +49,7 @@ namespace amo {
         
         virtual void afterUpdateArgsSettings() override;
         
-        virtual amo::json toJson() override;
+        virtual amo::u8json toJson() override;
     public:
         /*! @var #Boolean=false main 当前窗口是否为主窗口.主窗口只能有一个，如果设置为主窗口将取消之前的主窗口设定，新的主窗口会替代原来的主窗口.
          *	你可以在程序运行过程中修改该值，但要保证任何时候都最多只能有一个浏览器窗口被标记为main */
@@ -70,10 +70,10 @@ namespace amo {
         int dragBlacklist;
         
         /** @var #JsonArray=[]	cssList 需要注入到页面的样式列表，必须是一个URL。 程序会在主页面加载完成后将里面的文件注入到页面中. */
-        amo::json cssList;
+        amo::u8json cssList;
         
         /** @var #JsonArray=[] javascriptList 需要注入到页面的Javascript列表，必须是一个URL。 程序会在主页面加载完成后将里面的文件注入到页面中. */
-        amo::json javascriptList;
+        amo::u8json javascriptList;
         
         
         

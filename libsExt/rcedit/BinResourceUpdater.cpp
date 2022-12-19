@@ -33,7 +33,7 @@ namespace amo {
             return false;
         }
         
-        std::wstring wstr = amo::string(m_filename).to_wide();
+        std::wstring wstr = amo::u8string(m_filename, true).to_wide();
         const wchar_t *wstrName = wstr.c_str();
         
         

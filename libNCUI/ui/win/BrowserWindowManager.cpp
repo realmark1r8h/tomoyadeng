@@ -73,7 +73,7 @@ namespace amo {
             auto pWindow = *m_WindowMap.rbegin();
             
             if (pWindow->getNativeSettings()->modal) {
-                amo::json json;
+                amo::u8json json;
                 json.put("modal", true);
                 info->updateArgsSettings(json);
             }
@@ -325,7 +325,7 @@ namespace amo {
             pWindow = amo::dynamic_pointer_cast<BrowserWindow>(p);
             
             if (pWindow->getBrowserSettings()->main) {
-                amo::json json;
+                amo::u8json json;
                 json.put("main", false);
                 pWindow->getBrowserSettings()->updateArgsSettings(json);
             }
@@ -436,7 +436,7 @@ namespace amo {
         msg->getArgumentList()->setValue(1, false);
         
         auto pTransfer = ClassTransfer::getUniqueTransfer<BrowserWindowTransfer>();
-        amo::json defaultSettings = pTransfer->getBrowserWindowSettings(msg);
+        amo::u8json defaultSettings = pTransfer->getBrowserWindowSettings(msg);
         pBrowserSettings->updateArgsSettings(defaultSettings.to_string());
         
         
@@ -493,7 +493,7 @@ namespace amo {
         msg->getArgumentList()->setValue(0, target_url.ToString());
         msg->getArgumentList()->setValue(1, false);
         auto pTransfer = ClassTransfer::getUniqueTransfer<BrowserWindowTransfer>();
-        amo::json defaultSettings = pTransfer->getBrowserWindowSettings(msg);
+        amo::u8json defaultSettings = pTransfer->getBrowserWindowSettings(msg);
         pBrowserSettings->updateArgsSettings(defaultSettings.to_string());
     
         std::shared_ptr<AppTransfer> pAppTransfer;

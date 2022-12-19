@@ -45,14 +45,14 @@ namespace amo {
     }
     
     Any TrayTransfer::setIcon(IPCMessage::SmartType msg) {
-        amo::string strPath(msg->getArgumentList()->getString(0), true);
+        amo::u8string strPath(msg->getArgumentList()->getString(0), true);
         getTray()->setTrayIcon(strPath);
         return Undefined();
     }
     
     Any TrayTransfer::setTooltip(IPCMessage::SmartType msg) {
-        amo::string str(msg->getArgumentList()->getString(0), true);
-        getTray()->setToolTip(str.to_ansi());
+        amo::u8string str(msg->getArgumentList()->getString(0), true);
+        getTray()->setToolTip(str.to_wide());
         return Undefined();
     }
     

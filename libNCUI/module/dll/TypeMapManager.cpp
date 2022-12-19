@@ -77,7 +77,7 @@ namespace amo {
     }
     
     amo::TypeItem& TypeMapManager::get(std::string& nID) {
-        return get(amo::string(nID).to_number<int64_t>());
+        return get(amo::u8string(nID, true).to_number<int64_t>());
     }
     
 }

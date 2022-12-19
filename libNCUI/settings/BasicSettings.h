@@ -26,12 +26,12 @@ namespace amo {
     public:
         BasicSettings();
         
-        virtual amo::json toJson()   {
+        virtual amo::u8json toJson()   {
             return settings;
         }
         
         /*!
-         * @fn	bool BasicSettings::updateArgsSettings(amo::json& config);
+         * @fn	bool BasicSettings::updateArgsSettings(amo::u8json& config);
          *
          * @brief	Updates the arguments settings described by config.
          *
@@ -40,7 +40,7 @@ namespace amo {
          * @return	true if it succeeds, false if it fails.
          */
         
-        bool updateArgsSettings(amo::json& config);
+        bool updateArgsSettings(amo::u8json& config);
         
         /*!
          * @fn	bool BasicSettings::updateArgsSettings(const std::string& json_string);
@@ -105,7 +105,7 @@ namespace amo {
         void setUpdateArgsCallback(std::function<void(BasicSettings*)> val);
     public:
         /*! @brief	Options for controlling the operation. */
-        amo::json settings;
+        amo::u8json settings;
     private:
         /*! @brief	The update arguments callback. */
         std::function<void(BasicSettings*)> m_fnUpdateArgsCallback;

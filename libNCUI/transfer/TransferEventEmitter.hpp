@@ -75,10 +75,10 @@ namespace amo {
         // status 0 正常
         // status 1 失败
         //
-        Any collectProcessEvent(const amo::string& processName, int pec,
+        Any collectProcessEvent(const amo::u8string& processName, int pec,
                                 int status = 0) {
-            TransferEventInfo info("collect.process");
-            amo::json json;
+            TransferEventInfo info(amo::u8string("collect.process", true));
+            amo::u8json json;
             json.put("name", processName.to_utf8());
             json.put("process", pec);
             json.put("status", status);
@@ -87,7 +87,7 @@ namespace amo {
         }
         
         template<typename T>
-        Any triggerEvent(const amo::string& name, const T& data) {
+        Any triggerEvent(const amo::u8string& name, const T& data) {
             TransferEventInfo info(name.to_utf8());
             info.setData(data);
             return triggerEvent(info);
@@ -96,9 +96,9 @@ namespace amo {
         
         
         template<>
-        Any triggerEvent<amo::string>(const amo::string& name,
-                                      const amo::string& data) {
-            TransferEventInfo info(name.to_utf8());
+        Any triggerEvent<amo::u8string>(const amo::u8string& name,
+                                        const amo::u8string& data) {
+            TransferEventInfo info(name);
             info.setData(data.to_utf8());
             return triggerEvent(info);
         }
@@ -106,8 +106,8 @@ namespace amo {
         
         
         template<typename ... Args>
-        Any stringEvent(const amo::string& name, Args... args) {
-            TransferEventInfo info(name.to_utf8());
+        Any stringEvent(const amo::u8string& name, Args... args) {
+            TransferEventInfo info(name);
             info.setData(catString(args...).to_utf8());
             return triggerEvent(info);
         }
@@ -115,14 +115,14 @@ namespace amo {
         
         
         template<typename ... Args>
-        amo::string catString(const amo::string& str, Args... args) {
-            amo::string ret = str;
+        amo::u8string catString(const amo::u8string& str, Args... args) {
+            amo::u8string ret = str;
             ret += catString(args...);
             return ret;
         }
         
         template<>
-        amo::string catString<>(const amo::string& str) {
+        amo::u8string catString<>(const amo::u8string& str) {
             return str;
         }
         

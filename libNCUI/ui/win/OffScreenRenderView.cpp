@@ -701,7 +701,7 @@ namespace amo {
             return false;
         }
         
-        amo::string strTips(text.ToString(), true);
+        amo::u8string strTips(text.ToString(), true);
         m_pViewRender->SetToolTip(strTips.to_unicode().c_str());
         return true;
     }
@@ -713,7 +713,7 @@ namespace amo {
         m_pFocusFrame = ptr;
     }
     
-    void OffScreenRenderView::setActiveElementInfo(amo::json& vec) {
+    void OffScreenRenderView::setActiveElementInfo(amo::u8json& vec) {
         m_oActiveElementInfo = ActiveElementInfo(vec);
         
         if (m_oActiveElementInfo.empty()) {
@@ -947,7 +947,7 @@ namespace amo {
         runner->setValue(IPCArgsPosInfo::TransferName, "ipcRenderer");
         runner->setValue(IPCArgsPosInfo::JsFuncName, "getActiveElementInfo");
         Any result = runner->syncExecute("runJSFunction");
-        amo::json json = result;
+        amo::u8json json = result;
         setFocusFrame(pFrame);
         setActiveElementInfo(json);
     }
@@ -957,7 +957,7 @@ namespace amo {
         m_pBrowser->GetFrameIdentifiers(identifiers);
         
         if (!msg->getArgumentList()->getBool(0)) {
-            amo::json json;
+            amo::u8json json;
             setFocusFrame(NULL);
             setActiveElementInfo(json);
             return;
@@ -967,9 +967,9 @@ namespace amo {
         CefRefPtr<CefFrame> pFrame = m_pBrowser->GetFrame(nFrameID);
         Any val = msg->getArgumentList()->getValue(1);
         
-        if (val.is<amo::json>()) {
+        if (val.is<amo::u8json>()) {
             setFocusFrame(pFrame);
-            setActiveElementInfo(val.As<amo::json>());
+            setActiveElementInfo(val.As<amo::u8json>());
         } else {
             getActiveElementInfo(pFrame);
         }

@@ -48,9 +48,9 @@ namespace amo {
         // 使用 className 判断
         {
             CefRefPtr<CefV8Value> className = target->GetValue("className");
-            amo::string strClassList(className->GetStringValue().ToString(), true);
+            amo::u8string strClassList(className->GetStringValue().ToString(), true);
             //$clog(amo::cdevel << strClassList.to_ansi() << amo::endl;);
-            std::vector<amo::string> vec = strClassList.split(" ");
+            std::vector<amo::u8string> vec = strClassList.split(amo::u8string(" ", true));
             
             for (auto& str : vec) {
                 if (str == noDragClassName) {

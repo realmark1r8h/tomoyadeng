@@ -27,7 +27,7 @@ namespace amo {
     public:
     
     public:
-        Overlap(amo::json& json) {
+        Overlap(amo::u8json& json) {
             m_settings.reset(new OverlapSettings());
             m_settings->updateArgsSettings(json);
         }

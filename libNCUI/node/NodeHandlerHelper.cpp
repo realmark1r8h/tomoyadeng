@@ -30,11 +30,11 @@ namespace amo {
         return TransferMappingMgr<BrowserTransfer>::getInstance()->toTransfer(pBrowser);
     }
     
-    amo::json NodeHandlerHelper::getJson(CefRefPtr<CefFrame> pFrame) {
+    amo::u8json NodeHandlerHelper::getJson(CefRefPtr<CefFrame> pFrame) {
         return getTransfer(pFrame)->getFuncMgr().toSimplifiedJson();
     }
     
-    amo::json NodeHandlerHelper::getJson(CefRefPtr<CefBrowser> pBrowser) {
+    amo::u8json NodeHandlerHelper::getJson(CefRefPtr<CefBrowser> pBrowser) {
         return getTransfer(pBrowser)->getFuncMgr().toSimplifiedJson();
     }
     

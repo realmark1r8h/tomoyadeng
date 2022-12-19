@@ -123,7 +123,7 @@ namespace amo {
         CefRefPtr<CefV8Value> retal;
         CefRefPtr<CefV8Exception> exp;
         
-        std::string js = amo::string(args->getString(0), true).to_utf8();
+        std::string js = amo::u8string(args->getString(0), true).to_utf8();
         
 #if CHROME_VERSION_BUILD >= 2840
         bool bOk = pFrame->GetV8Context()->Eval(js, CefString(), 0, retal, exp);

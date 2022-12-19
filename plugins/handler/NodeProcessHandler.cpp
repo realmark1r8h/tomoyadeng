@@ -209,8 +209,8 @@ namespace amo {
         
         $clog(amo::cdevel << ret.value() << amo::endl);
         
-        amo::json jsonArr(ret.value());
-        std::vector<amo::json> arr = jsonArr.to_array();
+        amo::u8json jsonArr(ret.value());
+        std::vector<amo::u8json> arr = jsonArr.to_array();
         
         for (auto& json : arr) {
             FunctionWrapperMgr mgr = FunctionWrapperMgr::fromJson(json);
@@ -278,7 +278,7 @@ namespace amo {
                 return;
             }
             
-            amo::json json(str);
+            amo::u8json json(str);
             std::shared_ptr<IPCMessage> anyMessage(new IPCMessage());
             *anyMessage = IPCMessage::fromJson(json);
             
@@ -315,7 +315,7 @@ namespace amo {
     }
     
     bool NodeProcessHandler::SendMessageToUI(IPCMessage::SmartType anyMessage) {
-        amo::json json = anyMessage->toJson();
+        amo::u8json json = anyMessage->toJson();
         std::string str = json.to_string();
         char cc[10000] = { 0 };
         strcpy(cc, str.c_str());

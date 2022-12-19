@@ -31,7 +31,7 @@ namespace amo {
         }
         
         amo::u8string dllPath = m_strZip;
-        dllPath.replace("\\", "/");
+        dllPath.replace(amo::u8string("\\", true), amo::u8string("/", true));
         //zipPath = "web/web.zip";
         
         std::shared_ptr<amo::loader> zf = DllFileManager::getInstance()->get(
@@ -44,7 +44,7 @@ namespace amo {
         amo::u8path p(m_strFile);
         p.remove_front_backslash();
         amo::u8string strFile(p.c_str(), false);
-        strFile.replace("\\", "/");
+        strFile.replace(amo::u8string("\\", true), amo::u8string("/", true));
         
         std::string filePath = strFile;
         char* val = NULL;

@@ -9,7 +9,7 @@ namespace amo {
 
     DllManagerBase::DllManagerBase() {
         setRunOnRenderThread(false);
-        setExtensionDir("renderer_modules");
+        setExtensionDir(amo::u8string("renderer_modules", true));
     }
     
     DllManagerBase::~DllManagerBase() {
@@ -100,7 +100,7 @@ namespace amo {
             return amo::u8string(pa.c_str(), true);
         }
         
-        return "";
+        return amo::u8string("", true);
     }
     
     std::shared_ptr<amo::loader> DllManagerBase::get(const amo::u8string& name) {
@@ -112,7 +112,7 @@ namespace amo {
     amo::u8string DllManagerBase::addSuffix(const amo::u8string& name) {
         amo::u8string str = name;
         
-        if (!str.end_with(".dll")) {
+        if (!str.end_with(amo::u8string(".dll", true))) {
             str += ".dll";
         }
         
@@ -128,10 +128,10 @@ namespace amo {
     
     DllFunctionWrapper& DllManagerBase::getDllFunctionWrapper(
         const std::string& dllName) {
-        auto iter = m_oDllArgsMap.find(dllName);
+        auto iter = m_oDllArgsMap.find(amo::u8string(dllName, true));
         
         if (iter == m_oDllArgsMap.end()) {
-            iter = m_oDllArgsMap.insert(std::make_pair(dllName,
+            iter = m_oDllArgsMap.insert(std::make_pair(amo::u8string(dllName, true),
                                         DllFunctionWrapper(dllName))).first;
         }
         
@@ -154,9 +154,9 @@ namespace amo {
         m_bRunOnRenderThread = val;
         
         if (m_bRunOnRenderThread) {
-            setExtensionDir("renderer_modules");
+            setExtensionDir(amo::u8string("renderer_modules", true));
         } else {
-            setExtensionDir("browser_modules");
+            setExtensionDir(amo::u8string("browser_modules", true));
         }
     }
     

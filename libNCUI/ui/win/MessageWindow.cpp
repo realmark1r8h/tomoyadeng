@@ -125,7 +125,7 @@ namespace amo {
     }
     
     CDuiString MessageWindow::GetSkinFile() {
-        return amo::string(skinMessageBox).to_unicode().c_str();
+        return amo::u8string(skinMessageBox, true).to_unicode().c_str();
     }
     
     CDuiString MessageWindow::GetSkinFolder() {

@@ -515,11 +515,11 @@ namespace amo {
         return _T("");
     }
     
-    std::string MenuWindow::ParseSkinFile(amo::json& menu) {
+    std::string MenuWindow::ParseSkinFile(amo::u8json& menu) {
         std::string strMenu;
         
         if (menu.is_array()) {
-            std::vector<amo::json> vec = menu.to_array();
+            std::vector<amo::u8json> vec = menu.to_array();
             
             for (auto& p : vec) {
                 std::string sb = p.to_string();
@@ -544,10 +544,10 @@ namespace amo {
                     p.put("text", text);
                 }
                 
-                amo::json json;
+                amo::u8json json;
                 
                 if (p.contains_key("menu")) {
-                    amo::json subMenu = p.get_child("menu");
+                    amo::u8json subMenu = p.get_child("menu");
                     std::string out = ParseSkinFile(subMenu);
                     p.put("children", out);
                     json.put("bkimage", "arrow.png");
@@ -616,7 +616,7 @@ namespace amo {
         
         if (m_pOwner == NULL) {
             std::string menuSettings = "";
-            amo::json menu = m_pMenuSettings->settings.get_child("menu");
+            amo::u8json menu = m_pMenuSettings->settings.get_child("menu");
             
             if (menu.is_array()) {
                 menuSettings += ParseSkinFile(menu);
@@ -635,7 +635,7 @@ namespace amo {
             
         } else {
         
-            amo::json json;
+            amo::u8json json;
             amo::u8string skinTemplate(skinMenuWindow, true);
             amo::u8string  skin = skinTemplate.format(json);
             //auto ssss = amo::string_utils::utf8_to_wide(skin.to_utf8());

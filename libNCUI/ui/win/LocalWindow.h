@@ -94,13 +94,13 @@ namespace amo {
         
         void syncBroadcastMessage(const int64_t& nID,
                                   const std::string& msg,
-                                  amo::json& data);
+                                  amo::u8json& data);
         void syncBroadcastMessage(const int64_t& nID,
                                   const std::string& msg);
                                   
         void broadcastMessage(const int64_t& nID,
                               const std::string& msg,
-                              amo::json& data);
+                              amo::u8json& data);
         void broadcastMessage(const int64_t& nID,
                               const std::string& msg);
                               

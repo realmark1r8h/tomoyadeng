@@ -43,7 +43,7 @@ namespace amo {
             CefProcessId source_process,
             CefRefPtr<CefProcessMessage> message) {
         bool bHandled = false;
-        amo::string message_name(message->GetName().ToString(), true);
+        amo::u8string message_name(message->GetName().ToString(), true);
         
         if (message_name != MSG_LOG_MESSAGE) {
         
@@ -102,7 +102,7 @@ namespace amo {
             
         } else if (message_name == MSG_LOG_MESSAGE) {
             CefRefPtr<CefListValue> args = message->GetArgumentList();
-            std::string msg = amo::string(args->GetString(0), true);
+            std::string msg = amo::u8string(args->GetString(0), true);
             
             if (msg.empty()) {
                 return true;
@@ -254,7 +254,7 @@ namespace amo {
         
         
         auto manager = BrowserTransferMgr::getInstance();
-        amo::json arr = manager->getTransferMap(nBrowserID).toJson();
+        amo::u8json arr = manager->getTransferMap(nBrowserID).toJson();
         int nPipeID = args->getInt(IPCArgsPosInfo::BrowserID);
         
         if (nPipeID == nBrowserID) {

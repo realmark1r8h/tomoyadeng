@@ -17,7 +17,7 @@ namespace amo {
     class NodeTypeConvertor {
     public:
         NodeTypeConvertor(const std::string& strName = "");
-        void ParseJsonToObject(amo::json& json, v8::Local<v8::Value>& retval);
+        void ParseJsonToObject(amo::u8json& json, v8::Local<v8::Value>& retval);
         
         // 获取V8类型
         std::string V8ValueType(v8::Local<v8::Value> object);

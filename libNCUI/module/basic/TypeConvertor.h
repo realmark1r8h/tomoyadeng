@@ -11,11 +11,12 @@
 #include "handler/CefHeader.hpp"
 #include <sstream>
 #include "ipc/Any.hpp"
+#include <amo/json.hpp>
 
 
 namespace amo {
     class Any;
-    class json;
+    
     
     
     template <class T1, class T2>
@@ -69,7 +70,7 @@ namespace amo {
         void setRendererObject(bool val);
         
         /*!
-         * @fn	CefRefPtr<CefV8Value> TypeConvertor::ParseJsonToObject(amo::json& json);
+         * @fn	CefRefPtr<CefV8Value> TypeConvertor::ParseJsonToObject(amo::u8json& json);
          *
          * @brief	Parse JSON to object.
          *
@@ -78,10 +79,10 @@ namespace amo {
          * @return	A CefRefPtr&lt;CefV8Value&gt;
          */
         
-        CefRefPtr<CefV8Value> ParseJsonToObject(amo::json& json);
+        CefRefPtr<CefV8Value> ParseJsonToObject(amo::u8json& json);
         
         /*!
-         * @fn	CefRefPtr<CefV8Value> TypeConvertor::ParseSingleJsonToObject(amo::json& json);
+         * @fn	CefRefPtr<CefV8Value> TypeConvertor::ParseSingleJsonToObject(amo::u8json& json);
          *
          * @brief	Parse single JSON to object.
          *
@@ -90,7 +91,7 @@ namespace amo {
          * @return	A CefRefPtr&lt;CefV8Value&gt;
          */
         
-        CefRefPtr<CefV8Value> ParseSingleJsonToObject(amo::json& json);
+        CefRefPtr<CefV8Value> ParseSingleJsonToObject(amo::u8json& json);
         
         /*!
          * @fn	Any TypeConvertor::ParseObjectToJson(CefRefPtr<CefV8Value> pObject);
@@ -117,7 +118,7 @@ namespace amo {
         Any ParseSingleObjectToAny(CefRefPtr<CefV8Value> pValue);
         
         /*!
-         * @fn	void TypeConvertor::AddAnyToJson(amo::json& json, const std::string& key, Any& val);
+         * @fn	void TypeConvertor::AddAnyToJson(amo::u8json& json, const std::string& key, Any& val);
          *
          * @brief	Adds any to JSON.
          *
@@ -126,10 +127,10 @@ namespace amo {
          * @param [in,out]	val 	The value.
          */
         
-        void AddAnyToJson(amo::json& json, const std::string& key, Any& val);
+        void AddAnyToJson(amo::u8json& json, const std::string& key, Any& val);
         
         /*!
-         * @fn	void TypeConvertor::AddAnyToJsonArray(amo::json& json, Any& val);
+         * @fn	void TypeConvertor::AddAnyToJsonArray(amo::u8json& json, Any& val);
          *
          * @brief	Adds any to JSON array to 'val'.
          *
@@ -137,7 +138,7 @@ namespace amo {
          * @param [in,out]	val 	The value.
          */
         
-        void AddAnyToJsonArray(amo::json& json, Any& val);
+        void AddAnyToJsonArray(amo::u8json& json, Any& val);
         
         /*!
          * @fn	std::string TypeConvertor::transferObject(CefRefPtr<CefV8Value> pValue);
@@ -163,15 +164,15 @@ namespace amo {
         static std::string V8ValueType(CefRefPtr<CefV8Value> object);
         
         /*!
-         * @fn	amo::json TypeConvertor::ObjectToJson(CefRefPtr<CefV8Value> pV8Value);
+         * @fn	amo::u8json TypeConvertor::ObjectToJson(CefRefPtr<CefV8Value> pV8Value);
          *
          * @brief	将JS Object 转换为 JSON.
          *
          * @param	pV8Value	The v 8 value.
          *
-         * @return	An amo::json.
+         * @return	An amo::u8json.
          */
-        amo::json ObjectToJson(CefRefPtr<CefV8Value> pV8Value);
+        amo::u8json ObjectToJson(CefRefPtr<CefV8Value> pV8Value);
         
         /*!
          * @fn	CefRefPtr<CefV8Value> TypeConvertor::JsonToObject(const std::string& str);
@@ -186,7 +187,7 @@ namespace amo {
         CefRefPtr<CefV8Value> JsonToObject(const std::string& str);
         
         /*!
-         * @fn	CefRefPtr<CefV8Value> TypeConvertor::JsonToObject(amo::json& json);
+         * @fn	CefRefPtr<CefV8Value> TypeConvertor::JsonToObject(amo::u8json& json);
          *
          * @brief	将普通的JSON对象转换为JS Object.
          *
@@ -194,7 +195,7 @@ namespace amo {
          *
          * @return	A CefRefPtr&lt;CefV8Value&gt;
          */
-        CefRefPtr<CefV8Value> JsonToObject(amo::json& json);
+        CefRefPtr<CefV8Value> JsonToObject(amo::u8json& json);
         
         /*!
          * @fn	CefRefPtr<CefV8Value> TypeConvertor::Int64ToObject(int64_t nVal);

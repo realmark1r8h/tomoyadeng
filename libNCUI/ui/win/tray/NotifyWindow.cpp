@@ -33,7 +33,7 @@ namespace amo {
     
     CDuiString NotifyWindow::GetSkinFile() {
         AMO_TIMER_ELAPSED();
-        return amo::string(skinNotifyWindow, false).to_unicode().c_str();
+        return amo::u8string(skinNotifyWindow, true).to_unicode().c_str();
     }
     
     LPCTSTR NotifyWindow::GetWindowClassName(void) const {

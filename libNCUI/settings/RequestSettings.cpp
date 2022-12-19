@@ -22,7 +22,7 @@ namespace amo {
         JSON_ARGS_SETTING(files);
     }
     
-    amo::json RequestSettings::toJson() {
+    amo::u8json RequestSettings::toJson() {
         UPDATE_ARGS_SETTINGS(type);
         UPDATE_ARGS_SETTINGS(url);
         UPDATE_ARGS_SETTINGS(data);
@@ -87,17 +87,17 @@ namespace amo {
         return vec;
     }
     
-    std::vector<amo::string> RequestSettings::getFiles() {
-        std::vector<amo::string> vec;
+    std::vector<amo::u8string> RequestSettings::getFiles() {
+        std::vector<amo::u8string> vec;
         
         if (!files.is_array()) {
             return vec;
         }
         
-        std::vector<amo::json> arr = files.to_array();
+        std::vector<amo::u8json> arr = files.to_array();
         
         for (auto& p : arr) {
-            vec.push_back(amo::string(p.get<std::string>(), true));
+            vec.push_back(amo::u8string(p.get<std::string>(), true));
         }
         
         return vec;

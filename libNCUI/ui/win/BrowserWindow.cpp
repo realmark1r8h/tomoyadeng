@@ -80,7 +80,7 @@ namespace amo {
         , m_pWebkit(NULL)
         , m_pBrowserSettings(pBrowserSettings) {
         AMO_TIMER_ELAPSED();
-        m_pNativeSettings->id = amo::string::from_number(getObjectID()).to_utf8();
+        m_pNativeSettings->id = amo::u8string::from_number(getObjectID()).to_utf8();
         m_pTitleBar = NULL;
         m_pBrowserLayout = NULL;
         m_gifRecordTimer = 0;
@@ -713,7 +713,7 @@ namespace amo {
             return Undefined();
         }
         
-        amo::json json = msg->getArgumentList()->getJson(0);
+        amo::u8json json = msg->getArgumentList()->getJson(0);
         
         m_gifEncoder = GifEncoder::fromJson(json);
         
@@ -833,14 +833,14 @@ namespace amo {
     
     DuiLib::CDuiString BrowserWindow::GetSkinFile() {
     
-        return amo::u8string(skinBrowserWindow).format(
+        return amo::u8string(skinBrowserWindow, true).format(
                    m_pBrowserSettings->settings).to_unicode().c_str();
     }
     
     LPCTSTR BrowserWindow::GetWindowClassName() const {
     
         return _T("BrowserWindow");
-        return amo::u8string(m_pBrowserSettings->windowClass).to_unicode().c_str();
+        return amo::u8string(m_pBrowserSettings->windowClass, true).to_unicode().c_str();
     }
     
     

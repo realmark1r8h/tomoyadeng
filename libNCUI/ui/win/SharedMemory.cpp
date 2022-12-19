@@ -11,7 +11,7 @@ namespace amo {
     }
     
     SharedMemory::SharedMemory(const std::string& name)
-        : amo::file_mapping(name) {
+        : amo::file_mapping(amo::string(name, false)) {
         incInstanceCount();
     }
     
