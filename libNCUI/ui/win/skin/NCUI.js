@@ -28,6 +28,16 @@ function browser_modules() {
     return browser_modules(arguments);
 };
 
+function addNonGlobalModule(str) {
+    native function addNonGlobalModule(str);
+    return addNonGlobalModule(str);
+};
+
+function addNonGlobalModules() {
+    native function addNonGlobalModules(arguments);
+    return addNonGlobalModules(arguments);
+};
+
 function sleep(ms) {
     native function sleep(ms);
     return sleep(ms);

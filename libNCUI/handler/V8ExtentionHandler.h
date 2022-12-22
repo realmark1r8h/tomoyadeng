@@ -213,6 +213,8 @@ namespace amo {
         
         std::set<int> m_oRegisteredSet;
         
+        std::set<std::string> m_nonGlobalModules;  // 禁止被导出为全局变量的模块
+        
     };
     
 }

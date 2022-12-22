@@ -166,6 +166,7 @@ namespace amo {
             m_nObjectID = 0;
             m_bRendererClass = false;
             m_bBuiltIn = true;
+            setNonGlobalModule(false);
         }
         
         FunctionWrapperMgr(const std::string& str) {
@@ -410,6 +411,29 @@ namespace amo {
             m_bBuiltIn = val;
         }
         
+        /*!
+         * @fn	bool FunctionWrapperMgr::isNonGlobalModule() const
+         *
+         * @brief	Query if this object is non global module.
+         *
+         * @return	true if non global module, false if not.
+         */
+        
+        bool isNonGlobalModule() const {
+            return nonGlobalModule;
+        }
+        
+        /*!
+         * @fn	void FunctionWrapperMgr::setNonGlobalModule(bool val)
+         *
+         * @brief	Sets non global module.
+         *
+         * @param	val	true to value.
+         */
+        
+        void setNonGlobalModule(bool val) {
+            nonGlobalModule = val;
+        }
     private:
         int64_t m_nObjectID;
         std::vector<std::string> m_vecModules;
@@ -424,6 +448,7 @@ namespace amo {
         bool m_bRendererClass;
         /*! @brief	是否为内置模块，默认为true. */
         bool m_bBuiltIn;
+        bool nonGlobalModule;  // 不导出为全局变量
     };
 }
 

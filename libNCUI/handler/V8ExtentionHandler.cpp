@@ -32,6 +32,55 @@ namespace amo {
                                      CefRefPtr<CefV8Value>& retval,
                                      CefString& exception) {
                                      
+        if (name == "addNonGlobalModule" || name == "addNonGlobalModules") {
+            if ((name == "addNonGlobalModule")
+                    && (arguments.size() != 1
+                        || !arguments.at(0)->IsString()
+                        || arguments.at(0)->GetStringValue().empty())) {
+                exception =
+                    L"addNonGlobalModule parameters can only be composed of strings and cannot be empty.";
+                return true;
+            }
+            
+            
+            CefV8ValueList list;
+            
+            for (size_t i = 0; i < arguments.size(); ++i) {
+                CefRefPtr<CefV8Value> args = arguments.at(i);
+                
+                if (args->IsObject()) {
+                    // includes 有多个参数将会以object的方法我传递参数
+                    std::vector<CefString> keys;
+                    args->GetKeys(keys);
+                    
+                    for (auto& p : keys) {
+                        list.push_back(args->GetValue(p));
+                    }
+                } else if (args->IsString()) {
+                    list.push_back(args);
+                } else {
+                    exception = L"the parameter must be a string.";
+                    return false;
+                }
+            }
+            
+            for (size_t i = 0; i < list.size(); ++i) {
+                CefRefPtr<CefV8Value> args = list.at(i);
+                
+                if (!args || !args->IsString() || args->GetStringValue().empty()) {
+                    exception = L"the parameter must be a string and cannot be empty.";
+                    return true;
+                }
+                
+                CefString module = args->GetStringValue();
+                
+                m_nonGlobalModules.insert(module);
+                
+            }
+            
+            return true;
+        }
+        
         if (name != "include"
                 && name != "includes"
                 && name != "renderer_modules"
@@ -138,11 +187,26 @@ namespace amo {
             
             
             
+            
             // 先检查是否已经加载
             CefRefPtr<CefV8Value> pGlobal = context->GetGlobal();
             
             if (!pGlobal) {
                 return false;
+            }
+            
+            
+            // 先看当前模块是否已经加载到全局变量
+            CefRefPtr<CefV8Value> 	pNCUI = pGlobal->GetValue("NCUI");
+            
+            if (!pNCUI || pNCUI->IsUndefined() || pNCUI->IsNull()) {
+#if CHROME_VERSION_BUILD >= 2840
+                pNCUI = CefV8Value::CreateObject(NULL, NULL);
+#else
+                pNCUI = CefV8Value::CreateObject(NULL);
+#endif
+                
+                pGlobal->SetValue("NCUI", pNCUI, V8_PROPERTY_ATTRIBUTE_NONE);
             }
             
             CefRefPtr<CefV8Value> pCache = CefV8Value::CreateUndefined();
@@ -151,7 +215,11 @@ namespace amo {
                 // 先看当前模块是否已经加载到全局变量
                 pCache = pGlobal->GetValue(module);
                 
-                if (pCache && !pCache->IsUndefined()) {
+                if (!pCache || pCache->IsUndefined() || pCache->IsNull()) {
+                    pCache = pNCUI->GetValue(name);
+                }
+                
+                if (pCache && !pCache->IsUndefined() && !pCache->IsNull()) {
                     break;
                 }
                 
@@ -203,15 +271,42 @@ namespace amo {
                 return true;
             }
             
-            // 将模块设置为全局变量
-            bool bOK = pGlobal->SetValue(module,
-                                         pCache,
-                                         V8_PROPERTY_ATTRIBUTE_NONE);
-                                         
-            if (!bOK) {
-                exception = module.ToWString() + L": failure of import module";
-                return false;
+            auto classMethodMgr = ClassMethodMgr::getInstance();
+            bool nonGlobalModule = true;
+            
+            // 将判断类管理器中是否存在的给类信息，如不存在说明是一个外部类
+            if (classMethodMgr->hasClass(module)) {
+                auto cc = classMethodMgr->getClass(module);
+                nonGlobalModule = cc.isNonGlobalModule();
             }
+            
+            {
+                bool bOK = pNCUI->SetValue(module,
+                                           pCache,
+                                           V8_PROPERTY_ATTRIBUTE_NONE);
+                                           
+                if (!bOK) {
+                    exception = module.ToWString() + L": failure of import module";
+                    return false;
+                }
+                
+            }
+            
+            // transfer 里面标志 为全局变量，且用户没有设置为非全局变量时才能导出为全局变量
+            if (!nonGlobalModule && (m_nonGlobalModules.find(module) == m_nonGlobalModules.end())) {
+                // 将模块设置为全局变量
+                bool bOK = pGlobal->SetValue(module,
+                                             pCache,
+                                             V8_PROPERTY_ATTRIBUTE_NONE);
+                                             
+                if (!bOK) {
+                    exception = module.ToWString() + L": failure of import module";
+                    return false;
+                }
+            }
+            
+            
+            
             
             retval = pCache;
             continue;
