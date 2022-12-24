@@ -501,6 +501,9 @@
     <ClCompile Include="scheme\ZipFileManger.cpp">
       <Filter>scheme</Filter>
     </ClCompile>
+    <ClCompile Include="module\AppExHandler.cpp">
+      <Filter>module</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context\AppContext.h">
@@ -1075,6 +1078,9 @@
     </ClInclude>
     <ClInclude Include="scheme\ZipFileManager.h">
       <Filter>scheme</Filter>
+    </ClInclude>
+    <ClInclude Include="module\AppExHandler.h">
+      <Filter>module</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

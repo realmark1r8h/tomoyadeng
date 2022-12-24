@@ -198,6 +198,8 @@ namespace amo {
         IMPLEMENT_REFCOUNTING(V8ExtentionHandler);
         
         
+        
+        std::set<std::string> getNonGlobalModules();
     private:
         //std::unordered_map<std::pair<std::string, int>,
         //    CefRefPtr<JsV8Handler>, pair_hash<std::string, int> > m_oClassHandler;
@@ -213,7 +215,6 @@ namespace amo {
         
         std::set<int> m_oRegisteredSet;
         
-        std::set<std::string> m_nonGlobalModules;  // 禁止被导出为全局变量的模块
         
     };
     

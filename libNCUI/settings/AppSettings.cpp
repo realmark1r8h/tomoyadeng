@@ -136,7 +136,7 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(startTime, (int64_t)amo::timer::now());
         DEFAULT_ARGS_SETTINGS(debugMode, true);
         
-        
+        nonGlobalModules.set_array();
         //DEFAULT_ARGS_SETTINGS(debugMode, false);
         
     }
@@ -273,6 +273,7 @@ namespace amo {
         BOOL_ARGS_SETTING(debugMode);
         BOOL_ARGS_SETTING(clearCache);
         
+        JSON_ARGS_SETTING(nonGlobalModules);
         ::SetCurrentDirectoryW(amo::u8string(workDir, true).to_unicode().c_str());
         AMO_TIMER_ELAPSED();
         return BasicSettings::afterUpdateArgsSettings();
@@ -314,6 +315,7 @@ namespace amo {
         UPDATE_ARGS_SETTINGS(startTime);
         UPDATE_ARGS_SETTINGS(debugMode);
         UPDATE_ARGS_SETTINGS(clearCache);
+        UPDATE_ARGS_SETTINGS(nonGlobalModules);
         return BasicSettings::toJson();
     }
     

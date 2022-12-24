@@ -202,6 +202,7 @@
     <ClCompile Include="handler\URLRequestClient.cpp" />
     <ClCompile Include="handler\UtilityV8Handler.cpp" />
     <ClCompile Include="handler\V8ExtentionHandler.cpp" />
+    <ClCompile Include="module\AppExHandler.cpp" />
     <ClCompile Include="module\basic\TypeConvertor.cpp" />
     <ClCompile Include="module\basic\V8HandlerManager.cpp" />
     <ClCompile Include="module\ConstantAttributeV8Handler.cpp" />
@@ -370,6 +371,7 @@
     <ClInclude Include="ipc\RenderMessageEmitter.hpp" />
     <ClInclude Include="ipc\UIMessageBroadcaster.hpp" />
     <ClInclude Include="ipc\UIMessageEmitter.hpp" />
+    <ClInclude Include="module\AppExHandler.h" />
     <ClInclude Include="module\basic\ClassMethodMgr.hpp" />
     <ClInclude Include="module\basic\EventFunctionManager.h" />
     <ClInclude Include="module\basic\TypeConvertor.h" />

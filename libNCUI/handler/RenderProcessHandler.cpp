@@ -30,6 +30,7 @@
 #include "ui/win/BrowserWindowSkin.h"
 #include "utility/utility.hpp"
 #include "transfer/RendererTransferMgr.h"
+#include "module/AppExHandler.h"
 
 
 
@@ -66,7 +67,7 @@ namespace amo {
                                               
             m_browserSettingsMap[browser->GetIdentifier()] = pSettings;
             return true;
-        } 
+        }
         
         
         bool handled = false;
@@ -360,6 +361,7 @@ namespace amo {
         auto manager = V8HandlerManager::getInstance();
         manager->Register(nBrowserID, new  DragWindowV8Handler());
         manager->Register(nBrowserID, new EventEmitterV8Handler());
+        manager->Register(nBrowserID, new AppExV8Handler());
         
         amo::u8json jsonArr(ret.value());
         std::vector<amo::u8json> arr = jsonArr.to_array();

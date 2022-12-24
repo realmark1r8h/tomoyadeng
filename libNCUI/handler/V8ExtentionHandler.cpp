@@ -22,6 +22,7 @@
 #include "ipc/RenderMessageEmitter.hpp"
 #include "handler/UtilityV8Handler.h"
 #include "transfer/RendererTransferMgr.h"
+#include "../settings/AppSettings.h"
 
 
 namespace amo {
@@ -32,55 +33,6 @@ namespace amo {
                                      CefRefPtr<CefV8Value>& retval,
                                      CefString& exception) {
                                      
-        if (name == "addNonGlobalModule" || name == "addNonGlobalModules") {
-            if ((name == "addNonGlobalModule")
-                    && (arguments.size() != 1
-                        || !arguments.at(0)->IsString()
-                        || arguments.at(0)->GetStringValue().empty())) {
-                exception =
-                    L"addNonGlobalModule parameters can only be composed of strings and cannot be empty.";
-                return true;
-            }
-            
-            
-            CefV8ValueList list;
-            
-            for (size_t i = 0; i < arguments.size(); ++i) {
-                CefRefPtr<CefV8Value> args = arguments.at(i);
-                
-                if (args->IsObject()) {
-                    // includes 有多个参数将会以object的方法我传递参数
-                    std::vector<CefString> keys;
-                    args->GetKeys(keys);
-                    
-                    for (auto& p : keys) {
-                        list.push_back(args->GetValue(p));
-                    }
-                } else if (args->IsString()) {
-                    list.push_back(args);
-                } else {
-                    exception = L"the parameter must be a string.";
-                    return false;
-                }
-            }
-            
-            for (size_t i = 0; i < list.size(); ++i) {
-                CefRefPtr<CefV8Value> args = list.at(i);
-                
-                if (!args || !args->IsString() || args->GetStringValue().empty()) {
-                    exception = L"the parameter must be a string and cannot be empty.";
-                    return true;
-                }
-                
-                CefString module = args->GetStringValue();
-                
-                m_nonGlobalModules.insert(module);
-                
-            }
-            
-            return true;
-        }
-        
         if (name != "include"
                 && name != "includes"
                 && name != "renderer_modules"
@@ -292,8 +244,10 @@ namespace amo {
                 
             }
             
+            auto nonGlobalModules = getNonGlobalModules();
+            
             // transfer 里面标志 为全局变量，且用户没有设置为非全局变量时才能导出为全局变量
-            if (!nonGlobalModule && (m_nonGlobalModules.find(module) == m_nonGlobalModules.end())) {
+            if (!nonGlobalModule && (nonGlobalModules.find(module) == nonGlobalModules.end())) {
                 // 将模块设置为全局变量
                 bool bOK = pGlobal->SetValue(module,
                                              pCache,
@@ -500,6 +454,29 @@ namespace amo {
         
         
         
+    }
+    
+    std::set<std::string> V8ExtentionHandler::getNonGlobalModules() {
+        std::set<std::string> retval;
+        auto settings = AppSettings::getInstance();
+        auto str = 	settings->toJson().to_string();
+        amo::u8json arr = settings->nonGlobalModules;
+        
+        if (!arr.is_array()) {
+            return retval;
+        }
+        
+        std::vector<amo::u8json> vec = arr.to_array();
+        
+        for (auto& p : vec) {
+            if (!p.is_string()) {
+                continue;
+            }
+            
+            retval.insert(p.get<std::string>());
+        }
+        
+        return retval;
     }
     
     V8ExtentionHandler::V8ExtentionHandler() {

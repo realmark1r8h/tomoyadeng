@@ -18,7 +18,7 @@ namespace amo {
     AppTransfer::AppTransfer()
         : ClassTransfer("app") {
         addModule("EventEmitter");
-        
+        addModule("AppEx");
     }
     
     void AppTransfer::initUrlMapping(amo::u8json& json) {
