@@ -135,7 +135,7 @@ namespace amo {
             }
             
             amo::u8path p(m_filename);
-            m_file.reset(new amo::file(p));
+            m_file.reset(new amo::u8file(p));
             m_filestream = m_file->get_filestream(mode);
             
             return true;
@@ -326,7 +326,7 @@ namespace amo {
                 return false;
             }
             
-            amo::filestream file(p, std::ios::in | std::ios::binary);
+            amo::u8filestream file(p, std::ios::in | std::ios::binary);
             int nTotal = 0;
             
             while (true) {
@@ -438,7 +438,7 @@ namespace amo {
         Any size(IPCMessage::SmartType msg) {
             if (!m_file) {
                 amo::u8path p(m_filename);
-                m_file.reset(new amo::file(p));
+                m_file.reset(new amo::u8file(p));
             }
             
             return (int)m_file->size();
@@ -548,9 +548,9 @@ namespace amo {
         
     public:
     
-        std::shared_ptr<amo::file> m_file;
+        std::shared_ptr<amo::u8file> m_file;
         amo::u8string m_filename;
-        std::shared_ptr<amo::filestream> m_filestream;
+        std::shared_ptr<amo::u8filestream> m_filestream;
         int m_mode;
     };
 }
