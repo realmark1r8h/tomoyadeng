@@ -35,8 +35,10 @@
 			var src = $element.find('span').html();
 			//			console.log(src);
 			var index = src.indexOf("@skip=true");
-			if(index == -1) return true;
-			index = src.indexOf('@skip');
+//			if(index == -1){
+//				return true;
+//			} 
+//			index = src.indexOf('@skip');
 			
 			var info = {
 				skip: false,
