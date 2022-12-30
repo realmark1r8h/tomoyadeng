@@ -158,18 +158,18 @@ window.open('https://www.baidu.com/more');
 ```html
 include('BrowserWindow');
 // 创建一个普通窗口
-var win = new BrowserWindow({titleBar:true, url: 'http://127.0.0.1:8020/doc/example/BrowserWindow.html'});
+var win = new BrowserWindow({titleBar:true, url: 'http://127.0.0.1:8020/example/BrowserWindow.html'});
 // 创建一个离屏窗口
 new BrowserWindow({
         titleBar:false,
-        url: 'http://127.0.0.1:8020/doc/example/FramelessWindow.html',
+        url: 'http://127.0.0.1:8020/example/FramelessWindow.html',
         offscreen: true
     });
 // 创建一个透明窗口
 new BrowserWindow({
         titleBar:false,
         hasShadow:false,
-        url: 'http://127.0.0.1:8020/doc/example/TransparentWindow.html',
+        url: 'http://127.0.0.1:8020/example/TransparentWindow.html',
         offscreen: true,
         transparent: true
     });
@@ -194,6 +194,7 @@ new BrowserWindow({
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
+//@skip
 // 窗口将被强制关闭，用户不能取消该操作
 var win = BrowserWindow.current;
 win.destroy();
@@ -826,7 +827,7 @@ console.assert(info.width == 1280);
 console.assert(info.height == 720);
 
 // 取消限制
-win..setMinimumSize(0,0);
+win.setMinimumSize(0,0);
 
 ```
 
@@ -2369,8 +2370,9 @@ win.showTitleBar(!titleBar);
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-var win = BrowserWindow.current;
-win.close();
+//@skip
+ var win = BrowserWindow.current;
+ win.close();
 
 ```
 

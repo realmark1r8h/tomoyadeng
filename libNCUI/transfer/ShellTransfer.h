@@ -71,6 +71,7 @@ namespace amo {
          * @example
          *
          ```
+				
         		 include('shell');
         		 shell.open("www.baidu.com");
         

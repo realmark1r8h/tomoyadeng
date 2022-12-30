@@ -7,7 +7,7 @@ import re
 import traceback
 import codecs
 
-_convertExt = [r'.*\.h$',r'.*\.c$',r'.*\.cpp$',r'.*\.hpp$',r'.*\.cpp$']
+_convertExt = [r'.*\.h$',r'.*\.c$',r'.*\.cpp$',r'.*\.hpp$',r'.*\.cpp$', r'.*\.tmpl$']
 
 splt = os.path.sep
 

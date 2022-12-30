@@ -15,9 +15,9 @@ namespace {
         StringLoader(HINSTANCE hInstance) {
             m_hInstance = hInstance;
         }
-        std::string load(UINT id) {
-            char str[4096] = { 0 };
-            ::LoadStringA(m_hInstance, id, str, 4096);
+        std::wstring load(UINT id) {
+            wchar_t str[4096] = { 0 };
+            ::LoadStringW(m_hInstance, id, str, 4096);
             return str;
         }
     private:
@@ -246,11 +246,11 @@ amo::Any amo::RceditTransfer::commit(IPCMessage::SmartType msg) {
     
     // 将当前程序复制一份出来
     amo::loader loader;
-    amo::u8path p(amo::path::getExeDir());
+    amo::u8path p(amo::u8path::getExeDir());
     std::string dist_file_name = oConfig.get<std::string>("OriginalFileName");
     amo::u8path dist(dist_file_name);
     dist = p.append_c(dist);
-    amo::u8path src(amo::path::getFullExeName());
+    amo::u8path src(amo::u8path::getFullExeName());
     src.copy_to(dist);
     m_pUpdater->Load(amo::u8string(dist.c_str(), true).to_unicode().c_str());
     
@@ -395,14 +395,14 @@ amo::Any amo::RceditTransfer::getDefaultFileSettings(IPCMessage::SmartType
     oVersionSet.insert("ProductName");
     oVersionSet.insert("ProductVersion");
     amo::u8json json;
-    json.put("CompanyName", "NCUI");
-    json.put("FileDescription", "NCUI演示程序");
-    json.put("FileVersion", "1.0.0.0");
-    json.put("InternalName", "NCUIDemo.exe");
-    json.put("LegalCopyright", "Copyright (C) 2017");
-    json.put("OriginalFileName", "NCUIDemo.exe");
-    json.put("ProductName", "NCUI演示程序");
-    json.put("ProductVersion", "1.0.0.0");
+    json.put("CompanyName", u8"NCUI");
+    json.put("FileDescription", u8"NCUI演示程序");
+    json.put("FileVersion", u8"1.0.0.0");
+    json.put("InternalName", u8"NCUIDemo.exe");
+    json.put("LegalCopyright", u8"Copyright (C) 2017");
+    json.put("OriginalFileName", u8"NCUIDemo.exe");
+    json.put("ProductName", u8"NCUI演示程序");
+    json.put("ProductVersion", u8"1.0.0.0");
     json.put("Icon", "");
     amo::u8json fileJson = m_oSettings.get_child("fileSettings");
     
@@ -416,8 +416,8 @@ amo::Any amo::RceditTransfer::getDefaultFileSettings(IPCMessage::SmartType
 amo::Any amo::RceditTransfer::getDefaultAppSettings(IPCMessage::SmartType msg) {
     HINSTANCE hInst = ::GetModuleHandle(NULL);
     StringLoader strLoader(hInst);
-    std::string strAppSettings = strLoader.load(IDS_APP_SETTINGS);
-    amo::u8json json(strAppSettings);
+    std::wstring strAppSettings = strLoader.load(IDS_APP_SETTINGS);
+    amo::u8json json(amo::u8string(strAppSettings).to_utf8());
     
     if (json.is_valid()) {
         amo::u8json appJson = m_oSettings.get_child("appSettings");
@@ -434,8 +434,9 @@ amo::Any amo::RceditTransfer::getDefaultBrowserSettings(
     IPCMessage::SmartType msg) {
     HINSTANCE hInst = ::GetModuleHandle(NULL);
     StringLoader strLoader(hInst);
-    std::string strBrowserSettings = strLoader.load(IDS_BROWSER_SETTINGS);
-    amo::u8json json(strBrowserSettings);
+    std::wstring strBrowserSettings = strLoader.load(IDS_BROWSER_SETTINGS);
+	amo::u8json json(amo::u8string(strBrowserSettings).to_utf8());
+ 
     
     if (json.is_valid()) {
         amo::u8json browserWindowJson = m_oSettings.get_child("browserWindowSettings");
@@ -452,8 +453,9 @@ amo::Any amo::RceditTransfer::getDefaultSplashSettings(IPCMessage::SmartType
         msg) {
     HINSTANCE hInst = ::GetModuleHandle(NULL);
     StringLoader strLoader(hInst);
-    std::string strsplashSettings = strLoader.load(IDS_SPLASH_SETTINGS);
-    amo::u8json json(strsplashSettings);
+    std::wstring strsplashSettings = strLoader.load(IDS_SPLASH_SETTINGS);
+	amo::u8json json(amo::u8string(strsplashSettings).to_utf8());
+	 
     
     if (json.is_valid()) {
         amo::u8json splashWindowJson = m_oSettings.get_child("splashWindowSettings");

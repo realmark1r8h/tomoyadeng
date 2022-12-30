@@ -2,6 +2,7 @@
 #include "transfer/AppTransfer.h"
 
 #include <amo/path.hpp>
+#include <amo/app.hpp>
 
 #include "ui/win/BrowserWindowManager.h"
 #include "ui/win/BrowserWindowManager.h"
@@ -10,8 +11,8 @@
 #include "utility/utility.hpp"
 #include "ui/win/MessageWindow.h"
 #include "handler/RunFileDialogCallback.hpp"
-#include "scheme/UrlResourceHandlerFactory.h"
-#include <amo/app.hpp>
+#include "scheme/UrlResourceHandlerFactory.h" 
+#include "scheme/ZipFileManager.h"
 
 namespace amo {
 
@@ -64,13 +65,18 @@ namespace amo {
             return std::string();
         }
         
-        int nIndex = url.find("?");
+		int nIndex = url.find("#");
         
         if (nIndex != -1) {
             url =  url.substr(0, nIndex);
         }
         
-        
+		nIndex = url.find("?");
+
+		if (nIndex != -1) {
+			url = url.substr(0, nIndex);
+		}
+
         url = util::getUrlFromUtf8(url).to_utf8();
         
         
@@ -96,17 +102,20 @@ namespace amo {
             //file.trim_left("\\/");
             amo::u8string strNativeFile(p.second, true);
             amo::u8path path2(file);
+			path2.normalize();
+			path2.remove_front_backslash();
             amo::u8path path(strNativeFile);
+			path.remove_backslash();
             path.append(path2);
-            path.canonicalize(true);
+            //path.normalize();
             
             if (!bNeedExsit) {
-                return amo::u8string(path.c_str(), true).to_utf8();
+				return  path.raw_string();
             }
             
             // 判断文件是否存在,且不能为目录
             if (!path.is_directory() && path.file_exists()) {
-                return  amo::u8string(path.c_str(), true).to_utf8();
+                return  path.raw_string();
             }
             
             return std::string();
@@ -305,7 +314,29 @@ namespace amo {
         
     }
     
-    Any AppTransfer::getConfig(IPCMessage::SmartType msg) {
+	Any AppTransfer::setZipPassword(IPCMessage::SmartType msg){
+		std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+		std::string nativeFile = args->getString(0);
+		std::string password = args->getString(1);
+		auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
+		nativeFile = UrlResourceHandlerFactory::getInstance()->getAbsolutePath(
+			nativeFile);
+		ZipFileManager::getInstance()->setPassword(amo::u8string(nativeFile, true), password);
+		return Undefined();
+	}
+
+
+	Any AppTransfer::setResPassword(IPCMessage::SmartType msg) {
+		std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+		std::string nativeFile = std::to_string(args->getInt(0));
+		nativeFile += ".res";
+		std::string password = args->getString(1); 
+		ZipFileManager::getInstance()->setPassword(amo::u8string(nativeFile, true), password);
+		return Undefined();
+		 
+	}
+
+	Any AppTransfer::getConfig(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
         Any& val = args->getValue(0);

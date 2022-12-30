@@ -205,6 +205,11 @@
 	<td>false </td>
 	<td>是否在应用程序启动时清除浏览器缓存（调试用）.  <span class="label label-const">常量</span> 
 </td>
+</tr><tr>
+	<td>JsonArray</td>
+	<td>nonGlobalModules</td>
+	<td>[] </td>
+	<td>禁止被导出到全局变量的类列表. </td>
 </tr>
 	</tbody>
 </table>

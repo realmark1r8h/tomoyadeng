@@ -44,11 +44,11 @@ namespace amo {
         amo::u8string strFile(p.c_str(), true);
         strFile.replace(amo::u8string("\\", true), amo::u8string("/", true));
         
-        std::vector<libzippp::ZipEntry>  vec = zf->getEntries();
+      /*  std::vector<libzippp::ZipEntry>  vec = zf->getEntries();
         
         for (auto& p : vec) {
             amo::cdevel << p.getName() << amo::endl;
-        }
+        }*/
         
         auto entry =  zf->getEntry(strFile.to_utf8(), false, false);
         
@@ -58,6 +58,10 @@ namespace amo {
         }
         
         m_strData = entry.readAsText();
+		if (m_strData.empty()) {
+			$cdevel("empty data.");
+			return false;
+		}
         bool bHandled = readMimeType(p.find_extension());
         
         if (bHandled) {

@@ -57,17 +57,17 @@
     "updateTime": "2017-09-09 09:26:10",
     "chapters": {
         "basic": {
-            "name": "基础",
+            "name": "鍩虹",
             "accent": "green" 
         },
         "settings": {
-            "name": "参数设置"
+            "name": "鍙傛暟璁剧疆"
         },
 		 "api": {
-            "name": "内置接口"
+            "name": "鍐呯疆鎺ュ彛"
         },
         "extend": {
-            "name": "扩展接口"
+            "name": "鎵╁睍鎺ュ彛"
         }
         
     }

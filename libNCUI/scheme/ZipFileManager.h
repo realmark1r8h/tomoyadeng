@@ -18,9 +18,15 @@ namespace amo {
         std::shared_ptr<libzippp::ZipArchive> get(const amo::u8string& u8Path);
         bool add(const amo::u8string& strPath,
                  std::shared_ptr<libzippp::ZipArchive> zf);
+
+		void setPassword(const amo::u8string& strPath, const std::string& password);
     private:
         std::unordered_map<amo::u8string, std::shared_ptr<libzippp::ZipArchive> > m_map;
+		std::unordered_map<amo::u8string, std::string > m_passwords;
     };
+
+	
+
 }
 
 

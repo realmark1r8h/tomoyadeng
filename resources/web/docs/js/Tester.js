@@ -34,20 +34,16 @@
 			var $element = $(element);
 			var src = $element.find('span').html();
 			//			console.log(src);
-			var index = src.indexOf("@skip=true");
-//			if(index == -1){
-//				return true;
-//			} 
-//			index = src.indexOf('@skip');
-			
+			var index = src.indexOf('@skip');
+
 			var info = {
 				skip: false,
 				src: src
 			}
-			if(index != -1){
+			if(index != -1) {
 				info.skip = true;
 			}
-			
+
 			console.dir(self);
 			self.arr.push(info);
 		})
@@ -62,18 +58,18 @@
 		}
 
 		var info = this.arr[0];
-		if(info.skip) {
-			Popup.show({
-				title: '是否跳过当前测试?',
-				text: '是否跳过当前测试',
-				fnBtnFirst: $.proxy(this.skip, this),
-				fnBtnSecond: $.proxy(this.runImpl, this),
-			});
-			return;
-		} else {
-			this.runImpl();
-		}
-
+		//		if(info.skip) {
+		//			Popup.show({
+		//				title: '是否跳过当前测试?',
+		//				text: '是否跳过当前测试',
+		//				fnBtnFirst: $.proxy(this.skip, this),
+		//				fnBtnSecond: $.proxy(this.runImpl, this),
+		//			});
+		//			return;
+		//		} else {
+		//			this.runImpl();
+		//		}
+		this.runImpl();
 	}
 
 	Tester.prototype.runImpl = function() {
@@ -84,14 +80,15 @@
 		}
 		var info = this.arr.shift();
 		if(info.skip) {
+			console.log('skip: --->\n' + info.src);
+		} else {
+			var src = info.src;
 
+			window.assertArr = src.match(/console.assert\(.+?\);/g);
+			if(!window.assertArr) assertArr = [];
+			var js = '(function(){' + src + '\n})();';
+			eval(js);
 		}
-		var src = info.src;
-
-		window.assertArr = src.match(/console.assert\(.+?\);/g);
-		if(!window.assertArr) assertArr = [];
-		var js = '(function(){' + src + '\n})();';
-		eval(js);
 
 		this.triggerNext();
 

@@ -102,10 +102,11 @@ namespace amo {
         * @see destroy=NativeWindowProxy.destroy setClosable=BrowserWindow.setClosable
         *
         * @example
-        * 		   ```
-        * 		   var win = BrowserWindow.current;
-        * 		   win.close();
-        * 		   ```
+         		   ```
+				   //@skip
+         		   var win = BrowserWindow.current;
+         		   win.close();
+         		   ```
         */
         Any close(IPCMessage::SmartType msg);
         
@@ -121,6 +122,7 @@ namespace amo {
          *
          * @example
          * 		   ```
+						//@skip
         				// 窗口将被强制关闭，用户不能取消该操作
         				var win = BrowserWindow.current;
         				win.destroy();
@@ -598,7 +600,7 @@ namespace amo {
         				console.assert(info.height == 720);
         
         				// 取消限制
-        				win..setMinimumSize(0,0);
+        				win.setMinimumSize(0,0);
          * 		   ```
          *
          */

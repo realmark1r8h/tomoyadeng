@@ -160,7 +160,8 @@ console.log(picturesDir);
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-app.quit();
+//@skip
+ app.quit();
 
 ```
 
@@ -180,6 +181,7 @@ app.quit();
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
+//@skip
 // 直接退出程序，不会有任何提示
 app.exit();
 
@@ -512,7 +514,7 @@ console.log('程序已运行:' + elapsed + ' ms');
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-// 5秒后重启运行当前程序
+//@skip  5秒后重启运行当前程序
 app.restart(5);
 
 ```
@@ -533,8 +535,79 @@ app.restart(5);
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-// 不要试！！！
+//@skip 不要试！！！
 app.destroy();
+
+```
+*****
+  设置ZIP文件密码，用于打开加密的ZIP文件.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String</td>
+	<td> </td>
+	<td>需要设置密码的ZIP文件路径.</td>
+</tr><tr>
+	<td>String</td>
+	<td>'' </td>
+	<td>密码.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+   无. 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+// 
+app.setZipPassword('%webDir%web1.zip', '123456');
+
+```
+*****
+  RES密码.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>String</td>
+	<td> </td>
+	<td>需要设置密码的RES文件ID.</td>
+</tr><tr>
+	<td>String</td>
+	<td>'' </td>
+	<td>密码.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+   无. 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+app.setResPassword();
 
 ```
 

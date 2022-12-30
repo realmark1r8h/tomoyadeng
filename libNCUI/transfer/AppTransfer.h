@@ -140,6 +140,7 @@ namespace amo {
          * @return	无.
          * @example
           		   ```
+				   //@skip
          		   app.quit();
           		   ```
          */
@@ -157,6 +158,7 @@ namespace amo {
          *
          * @example
         		   ```
+				   //@skip
         		   // 直接退出程序，不会有任何提示
         		   app.exit();
         		   ```
@@ -446,7 +448,7 @@ namespace amo {
          *
          * @example
         			```
-        			// 5秒后重启运行当前程序
+        			//@skip  5秒后重启运行当前程序
         			app.restart(5);
         			```
          */
@@ -465,13 +467,49 @@ namespace amo {
          * @return	无.
          * @example
         		```
-        			// 不要试！！！
+        			//@skip 不要试！！！
         			app.destroy();
         		```
          */
         
         Any destroy(IPCMessage::SmartType msg);
         
+		/**
+		* @fn	static Any AppTransfer::destroy(IPCMessage::SmartType msg);
+		*
+		* @tag static sync
+		*
+		* @brief	设置ZIP文件密码，用于打开加密的ZIP文件.
+		* @param	#String= 需要设置密码的ZIP文件路径.
+		* @param	#String='' 密码.
+		* @return	无.
+		* @example
+		```
+			// 
+			app.setZipPassword('%webDir%web1.zip', '123456');
+		```
+		*/
+
+		Any setZipPassword(IPCMessage::SmartType msg);
+
+		/**
+		* @fn	static Any AppTransfer::destroy(IPCMessage::SmartType msg);
+		*
+		* @tag static sync
+		*
+		* @brief	RES密码.
+		* @param	#String= 需要设置密码的RES文件ID.
+		* @param	#String='' 密码.
+		*
+		* @return	无.
+		* @example
+			``` 
+				app.setResPassword();
+			```
+		*/
+
+		Any setResPassword(IPCMessage::SmartType msg);
+
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(AppTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getConfig, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setConfig, TransferFuncStatic)
@@ -501,8 +539,9 @@ namespace amo {
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(restart, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(destroy, TransferFuncStatic)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(elapsed,
-                                      TransferFuncStatic | TransferExecSync)
+		AMO_CEF_MESSAGE_TRANSFER_FUNC(setZipPassword, TransferFuncStatic | TransferExecSync)
+		AMO_CEF_MESSAGE_TRANSFER_FUNC(setResPassword, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(elapsed, TransferFuncStatic | TransferExecSync)
                                       
         AMO_CEF_MESSAGE_TRANSFER_END()
         
