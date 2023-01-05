@@ -406,12 +406,15 @@
 					$runCodeBtn.on('click', function() {
 						$('#runCodeTip').removeClass('tooltip-success tooltip-warning');
 						var elementID = $runCodeBtn.attr('data-clipboard-target');
-						//						var js = ($(elementID).find('span').html());
-
+						var strFuncName = $(elementID).parents('article').find('.adoc').attr('id');
+						if(!strFuncName) strFuncName = '';
+						strFuncName = strFuncName.replace('div_', '');
 						var src = $(elementID).find('span').html();
-						//						console.log(src);
 						window.assertArr = src.match(/console.assert\(.+?\);/g);
-						if(!window.assertArr) assertArr = [];
+						window.assertFuncName = strFuncName;
+ 
+						if(!window.assertArr) window.assertArr = [];
+						if(!window.assertFuncName) window.assertFuncName = '';
 
 						var js = `(function(){` + src + `})();`;
 						eval(js);
@@ -432,6 +435,7 @@
 						});
 					});
 				}
+			
 			};
 
 			$(function() {

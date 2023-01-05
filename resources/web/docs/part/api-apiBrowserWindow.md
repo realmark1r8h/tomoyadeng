@@ -41,7 +41,8 @@
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-include('BrowserWindow');
+includes('BrowserWindow', 'app');
+app.removeUrlMapping( "http://www.baidu.com/more");
 BrowserWindow.addBrowserWindowSettings('https://www.baidu.com',{titleBar: true});
 window.open('https://www.baidu.com');
 window.open('https://www.baidu.com/more');
@@ -158,18 +159,18 @@ window.open('https://www.baidu.com/more');
 ```html
 include('BrowserWindow');
 // 创建一个普通窗口
-var win = new BrowserWindow({titleBar:true, url: 'http://127.0.0.1:8020/example/BrowserWindow.html'});
+var win = new BrowserWindow({titleBar:true, url: 'http://127.0.0.1:8030/example/BrowserWindow.html'});
 // 创建一个离屏窗口
 new BrowserWindow({
         titleBar:false,
-        url: 'http://127.0.0.1:8020/example/FramelessWindow.html',
+        url: 'http://127.0.0.1:8030/example/FramelessWindow.html',
         offscreen: true
     });
 // 创建一个透明窗口
 new BrowserWindow({
         titleBar:false,
         hasShadow:false,
-        url: 'http://127.0.0.1:8020/example/TransparentWindow.html',
+        url: 'http://127.0.0.1:8030/example/TransparentWindow.html',
         offscreen: true,
         transparent: true
     });
@@ -2427,7 +2428,7 @@ win.saveImageToFile('1.png', true);
 
 
 ## saveGifToFile &nbsp;
-  录制GIF到文件.
+  录制GIF到文件,离屏模式下(offscreen== true)有效(不建议使用).
   
 * **函数参数**
 
@@ -2469,7 +2470,7 @@ win.recordGifToFile({
 
 
 ## stopRecordGif &nbsp;
-  停止录制GIF.
+  停止录制GIF,离屏模式下(offscreen== true)有效(不建议使用).
   
 * **函数参数**  无
 

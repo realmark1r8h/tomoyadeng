@@ -39,6 +39,11 @@ globalShortcut.on('hotkeydown', function(hotkey){
 });
 
 ```
+
+
+<div class="adoc" id="div_hotkeydown"></div>
+
+
 ## registerShortcut &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   通过组合键注册快捷键.

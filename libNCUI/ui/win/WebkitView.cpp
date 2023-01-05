@@ -39,6 +39,7 @@
 
 #include "Bitmap.hpp"
 #include "ui/win/WinUserMsg.hpp"
+#include <amo/directory.hpp>
 
 
 namespace {
@@ -479,6 +480,23 @@ namespace amo {
                       (LPARAM)(MAKELPARAM(rect.right, rect.bottom)));
         auto manager = BrowserTransferMgr::getInstance();
         manager->addTransfer(browser->GetIdentifier(), this);
+        
+        
+        amo::u8directory dir(amo::u8path::getFullPathInExeDir("browser_modules"));
+        dir.transfer([&](amo::u8path & p) {
+            if (p.is_directory()) {
+                return;
+            }
+            
+            if (p.find_extension() != ".dll") {
+                return;
+            }
+            
+            
+            amo::u8string module(p.strip_path().remove_extension(), true);
+            loadExternalTransfer(module, browser);
+        }, false);
+        
         return;
     }
     
@@ -777,6 +795,8 @@ namespace amo {
         // TODO: UI线程同时加载多个外部模块
     }
     
+    
+    
     void WebkitView::triggerEventOnUIThread(IPCMessage::SmartType msg) {
         CefPostTask(TID_UI,
                     base::Bind(&WebkitView::triggerEventOnUIThreadImpl,
@@ -829,139 +849,144 @@ namespace amo {
         m_pBrowser->GetHost()->CloseDevTools();
     }
     
-    Any WebkitView::onInclude(IPCMessage::SmartType msg) {
-        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        std::string strClass = args->getString(0);
+    
+    bool WebkitView::loadExternalTransfer(const std::string& u8DllName,
+                                          CefRefPtr<CefBrowser> browser) {
+        if (!browser) {
+            return false;
+        }
+        
+        AMO_TIMER_ELAPSED();
         // 从磁盘中加载与所给模块同名dll
         std::shared_ptr<amo::loader> pLoader;
-        pLoader = DllManager<PID_BROWSER>::getInstance()->load(amo::u8string(strClass, true));
-        
+        pLoader = DllManager<PID_BROWSER>::getInstance()->load(amo::u8string(
+                      u8DllName, true));
+                      
+                      
         if (!pLoader) {
-            return Undefined();
+            return NULL;
         }
         
         // 外部模块必须提供registerTransfer函数
-        int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
-        
-        
+        int nBrowserID = browser->GetIdentifier();
         std::shared_ptr< TransferRegister> info(new TransferRegister());
         info->nBrowserID = nBrowserID;
         info->fnCallback = std::bind(&WebkitView::registerExternalTransfer,
                                      this,
                                      std::placeholders::_1,
                                      std::placeholders::_2);
-                                     
-                                     
-                                     
+        info->moduleName = u8DllName;
+        
         auto options = pLoader->exec<bool, std::shared_ptr<TransferRegister>>(
                            "registerTransfer",
                            info);
                            
-        //auto options = pLoader->exec<bool, int,
-        //     std::function<void(int, std::shared_ptr<ClassTransfer>) >> (
-        //         "registerTransfer",
-        //         nBrowserID,
-        //         std::bind(&WebkitView::registerExternalTransfer,
-        //                   this,
-        //                   std::placeholders::_1,
-        //                   std::placeholders::_2));
-        
         // 判断外部模块是否注册成功
         if (!options || !*options) {
-            amo::u8string dllName(strClass, true);
-            std::vector<amo::u8string> vec;
-            // 从dll中导出c函数为JS函数
-            std::shared_ptr<amo::loader> pLoader;
-            pLoader = DllManager<PID_BROWSER>::getInstance()->load(dllName);
-            
-            if (!pLoader) {
-                return Undefined();
-            }
-            
-            vec = DllManager<PID_BROWSER>::getInstance()->exports(dllName);
-            
-            amo::u8json jsonArr;
-            jsonArr.set_array();
-            
-            for (auto& p : vec) {
-                jsonArr.push_back(p.to_utf8());
-            }
-            
-            return jsonArr;
-            
-        } else {
-            auto mananger = BrowserTransferMgr::getInstance();
-            TransferMap& transferMap = mananger->getTransferMap(nBrowserID);
-            Transfer* pTransfer = transferMap.findTransfer(strClass);
-            FunctionWrapperMgr& mgr = pTransfer->getFuncMgr();
-            return mgr.toJson();
+            return false;
         }
+        
+        AMO_TIMER_ELAPSED();
+        return true;
+    }
+    
+    Any WebkitView::onInclude(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string strClass = args->getString(0);
+        int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+        
+        auto mananger = BrowserTransferMgr::getInstance();
+        TransferMap& transferMap = mananger->getTransferMap(nBrowserID);
+        Transfer* pTransfer = transferMap.findTransfer(strClass);
+        FunctionWrapperMgr& mgr = pTransfer->getFuncMgr();
+        return mgr.toJson();
+        //
+        //
+        //// 从磁盘中加载与所给模块同名dll
+        //std::shared_ptr<amo::loader> pLoader;
+        //pLoader = DllManager<PID_BROWSER>::getInstance()->load(amo::u8string(strClass,
+        //          true));
+        //
+        //if (!pLoader) {
+        //    return Undefined();
+        //}
+        //
+        //// 外部模块必须提供registerTransfer函数
+        //int nBrowserID = args->getInt(IPCArgsPosInfo::BrowserID);
+        //
+        //int nBrowserID = context->GetBrowser()->GetIdentifier();
+        //int64_t nFrameID = context->GetFrame()->GetIdentifier();
+        //
+        //if (m_oRegisteredSet.find(nBrowserID) == m_oRegisteredSet.end()) {
+        //    m_oRegisteredSet.insert(nBrowserID);
+        //    amo::u8directory dir(amo::u8path::getFullPathInExeDir("renderer_modules"));
+        //    dir.transfer([&](amo::u8path & p) {
+        //        if (p.is_directory()) {
+        //            return;
+        //        }
+        //
+        //        if (p.find_extension() != ".dll") {
+        //            return;
+        //        }
+        //
+        //
+        //        amo::u8string module(p.strip_path().remove_extension(), true);
+        //        loadExternalTransfer(module, pBrowser);
+        //    }, false);
+        //
+        //}
+        //
+        //
+        //std::shared_ptr< TransferRegister> info(new TransferRegister());
+        //info->nBrowserID = nBrowserID;
+        //info->fnCallback = std::bind(&WebkitView::registerExternalTransfer,
+        //                             this,
+        //                             std::placeholders::_1,
+        //                             std::placeholders::_2);
+        //
+        //
+        //
+        //auto options = pLoader->exec<bool, std::shared_ptr<TransferRegister>>(
+        //                   "registerTransfer",
+        //                   info);
+        //
+        //
+        //
+        //// 判断外部模块是否注册成功
+        //if (!options || !*options) {
+        //    amo::u8string dllName(strClass, true);
+        //    std::vector<amo::u8string> vec;
+        //    // 从dll中导出c函数为JS函数
+        //    std::shared_ptr<amo::loader> pLoader;
+        //    pLoader = DllManager<PID_BROWSER>::getInstance()->load(dllName);
+        //
+        //    if (!pLoader) {
+        //        return Undefined();
+        //    }
+        //
+        //    vec = DllManager<PID_BROWSER>::getInstance()->exports(dllName);
+        //
+        //    amo::u8json jsonArr;
+        //    jsonArr.set_array();
+        //
+        //    for (auto& p : vec) {
+        //        jsonArr.push_back(p.to_utf8());
+        //    }
+        //
+        //    return jsonArr;
+        //
+        //} else {
+        //    auto mananger = BrowserTransferMgr::getInstance();
+        //    TransferMap& transferMap = mananger->getTransferMap(nBrowserID);
+        //    Transfer* pTransfer = transferMap.findTransfer(strClass);
+        //    FunctionWrapperMgr& mgr = pTransfer->getFuncMgr();
+        //    return mgr.toJson();
+        //}
         
     }
     
     Any WebkitView::createPipeClient(IPCMessage::SmartType msg) {
         return ClientHandler::createPipeClientImpl(msg);
-        //
-        //$clog(amo::cdevel << func_orient << "95271" << amo::endl;);
-        //
-        //std::shared_ptr<amo::pipe<amo::pipe_type::server> >
-        //pBrowserPipeServer;			//消息管道主进程服务端
-        //std::shared_ptr<amo::pipe<amo::pipe_type::client> >
-        //pRenderPipeClient;			//消息管道主进程客户端
-        //
-        //std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-        //std::string strPipeClientName = RendererPipePrefix + (std::string)
-        //                                args->getString(0);
-        //$clog(amo::cdevel << func_orient << "连接管道:" << strPipeClientName <<
-        //      amo::endl;);
-        //std::string strPipeServerName = BrowserPipePrefix + (std::string)
-        //                                args->getString(0);
-        //pRenderPipeClient.reset(new amo::pipe<amo::pipe_type::client>
-        //                        (strPipeClientName));
-        //pBrowserPipeServer.reset(new amo::pipe<amo::pipe_type::server>
-        //                         (strPipeServerName, DefaultPipeSize));
-        //bool bOK = pRenderPipeClient->connect();
-        //
-        //int nBrowserID = args->getInt(1);
-        //
-        //$clog(amo::cdevel << func_orient << "管道连接" << (bOK ? "成功" :
-        //        "失败") << amo::endl;);
-        //
-        //bOK = pBrowserPipeServer->connect();
-        //$clog(amo::cdevel << func_orient << "主进程管道服务连接" <<
-        //      (bOK ? "成功" : "失败") << amo::endl;);
-        //
-        //ClientHandler::AddExchanger(nBrowserID);
-        //std::shared_ptr<ProcessExchanger>
-        //pBrowserProcessExchanger;					//消息管道数据交换类
-        //pBrowserProcessExchanger =
-        //    BrowserProcessExchangerManager::getInstance()->findExchanger(nBrowserID);
-        //assert(pBrowserProcessExchanger);
-        //
-        //
-        //
-        //pBrowserProcessExchanger->setPipeClient(pRenderPipeClient);
-        //pBrowserProcessExchanger->setPipeServer(pBrowserPipeServer);
-        //pBrowserProcessExchanger->setBrowserID(nBrowserID);
-        //
-        //
-        //BrowserTempInfo info = ClientHandler::GetBrowserInfoFromTempByID(nBrowserID);
-        //
-        //pBrowserProcessExchanger->setProcessSyncMessageCallback(info.m_fnExec);
-        //
-        //
-        //auto manager = BrowserTransferMgr::getInstance();
-        //amo::u8json arr = manager->getTransferMap(nBrowserID).toJson();
-        //int nPipeID = args->getInt(IPCArgsPosInfo::BrowserID);
-        //
-        //if (nPipeID == nBrowserID) {
-        //    ClientHandler::RegisterBrowser(info.pBrowser);
-        //    // 两个ID相同，那么说明是渲染进程的第一个Browser,没有同步调用
-        //    BrowserProcessExchangerManager::getInstance()->exchange(nPipeID, arr);
-        //    return Undefined();
-        //} else {
-        //    return arr;
-        //}
     }
     
     Any WebkitView::repaint(IPCMessage::SmartType msg) {
@@ -999,7 +1024,8 @@ namespace amo {
             return false;
         }
         
-        std::shared_ptr<amo::file_mapping> map(new amo::file_mapping(amo::string(name, true), true));
+        std::shared_ptr<amo::file_mapping> map(new amo::file_mapping(amo::string(name,
+                                               true), true));
         std::shared_ptr<Overlap> overlap(new Overlap(settings));
         std::shared_ptr<OverlapData> overlapData(new FilemappingOverlapData(map));
         overlapData->fill(map->address(), map->size());
@@ -1475,30 +1501,32 @@ namespace amo {
         
     }
     
+    
+    void WebkitView::OnResourceRedirect(CefRefPtr<CefBrowser> browser,
+                                        CefRefPtr<CefFrame> frame,
+                                        const CefString& old_url,
+                                        CefString& new_url) {
+        // 死循环
+        /* std::string url = old_url.ToString();
+         std::string retval = UrlResourceHandlerFactory::getInstance()->redirectUrl(
+        						  url);
+        
+         if (!retval.empty()) {
+        	 new_url = retval;
+         }*/
+        
+    }
+    
+    
     CefRefPtr<CefResourceHandler> WebkitView::GetResourceHandler(
         CefRefPtr<CefBrowser> browser,
         CefRefPtr<CefFrame> frame,
         CefRefPtr<CefRequest> request) {
         
         std::string url = request->GetURL();
+        
         return UrlResourceHandlerFactory::getInstance()->create(url);
         
-        /*   std::shared_ptr<AppTransfer> pTransfer ;
-           pTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
-           IPCMessage::SmartType msg(new IPCMessage());
-        
-        
-        
-           msg->getArgumentList()->setValue(0, url);
-           msg->getArgumentList()->setValue(1, true);
-           Any ret = pTransfer->urlToNativePath(msg);
-           std::string file = ret.As<std::string>();
-        
-           if (file.empty()) {
-               return NULL;
-           }
-        
-           return new NativeFileHandler(url, file);*/
         
         
     }
@@ -1573,42 +1601,7 @@ namespace amo {
                              int height) {
         CEF_REQUIRE_UI_THREAD();
         
-        //static std::shared_ptr< GifWriter> writer;
-        //
-        //if (!writer && width == 1280 && height == 720) {
-        //    writer.reset(new GifWriter());
-        //
-        //    if (!GifBegin(writer.get(), "D:/gddd.gif", width, height, 3)) {
-        //        return;
-        //    }
-        //
-        //}
-        //
-        //static int count = 0;
-        //
-        //if (width == 1280 && height == 720) {
-        //    std::vector<uint8_t> vec(width * height * 4, 0);
-        //    memcpy(vec.data(), buffer, vec.size());
-        //
-        //    // BGRA,转 RGBA
-        //    for (size_t i = 0; i < vec.size();) {
-        //        std::swap(vec[i], vec[i + 2]);
-        //        i += 4;
-        //    }
-        //
-        //    GifWriteFrame(writer.get(), (const uint8_t*)vec.data(), width, height, 3);
-        //    //WriteBmp(std::to_string(count) + ".bmp", GetDC((m_hParentWnd)));
-        //    ++count;
-        //
-        //
-        //}
-        //
-        //
-        //if (count == 30) {
-        //    GifEnd(writer.get());
-        //}
-        /*  static int count = 0;
-          WriteBmp(std::to_string(count) + ".png", GetDC((m_hParentWnd)));*/
+        
         amo::rect rc;
         rc.intersect(amo::rect());
         
@@ -1625,8 +1618,21 @@ namespace amo {
                                             PixelFormat32bppARGB,
                                             (BYTE*)buffer));
             m_pRenderWnd->updateCaretPos(image);
+            
         }
         
+        /* if (m_pBrowserSettings->transparent) {
+        	 std::shared_ptr<Gdiplus::Bitmap> image;
+        	 image.reset(new Gdiplus::Bitmap(width,
+        									 height,
+        									 width * 4,
+        									 PixelFormat32bppARGB,
+        									 (BYTE*)buffer));
+        
+        	 amo::string path(amo::date_time().format("yyyyMMdd_hh_mm_ss_ms.png"), false);
+        	 amo::SaveBitmapToFile(image.get(), path.to_unicode().c_str(), L"image/png");
+        
+         }*/
         
         std::shared_ptr<PaintResource> resource(new PaintResource());
         

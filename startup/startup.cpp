@@ -206,15 +206,18 @@ public:
         }
         
         amo::u8string strApp(appJson.to_string(), true);
-        strAppSettings = strApp.replace(amo::u8string(" ", true), amo::u8string("", true)).to_utf8();
-        
+        strAppSettings = strApp.replace(amo::u8string(" ", true), amo::u8string("",
+                                        true)).to_utf8();
+                                        
         amo::u8string strBrowser(strBrowserSettings, true);
-        strBrowserSettings = strBrowser.replace(amo::u8string(" ", true), amo::u8string("", true));
-        
+        strBrowserSettings = strBrowser.replace(amo::u8string(" ", true),
+                                                amo::u8string("", true));
+                                                
         amo::u8string strSplash(strSplashSettings, true);
-        strSplashSettings = strSplash.replace(amo::u8string(" ", true), amo::u8string("", true));
-        
-        
+        strSplashSettings = strSplash.replace(amo::u8string(" ", true),
+                                              amo::u8string("", true));
+                                              
+                                              
         bUseNode = (strAppSettings.find("\"useNode\":true") != -1);
         bNodeProcess = (strAppSettings.find("\"useNodeProcess\":true") != -1);
         bNodeDebug = (strAppSettings.find("\"debugNode\":true") != -1);
@@ -500,7 +503,7 @@ void runNodeInNodeProcess() {
 
 
 
-STARTUP_API int run(void) {
+STARTUP_API int runNCUI(void) {
 
 
     HINSTANCE hInstance = ::GetModuleHandle(NULL);

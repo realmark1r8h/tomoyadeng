@@ -731,7 +731,7 @@ namespace amo {
             
             
             virtual void Resize(float w, float h) override {
-                RECT rt = { 0, 0, w, h };
+                RECT rt = { 0, 0, (LONG)w, (LONG)h };
                 _pDCRenderTarget->BindDC(m_HDC, &rt);
                 return;
             }

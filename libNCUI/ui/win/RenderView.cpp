@@ -37,7 +37,9 @@ namespace amo {
     }
     
     DuiLib::CDuiString RenderView::GetSkinFile() {
-        return amo::u8string(skinRenderView, true).to_unicode().c_str();
+        return amo::u8string(skinRenderView, true).format(
+                   m_oBrowserSettings->settings).to_unicode().c_str();
+        //return amo::u8string(skinRenderView, true).to_unicode().c_str();
     }
     
     UINT RenderView::GetClassStyle() const {
@@ -132,6 +134,14 @@ namespace amo {
         if (m_pClientHandler) {
             m_pClientHandler->RegisterLifeSpanHandlerDelegate(this);
         }
+        
+        std::string redirectUrl = UrlResourceHandlerFactory::getInstance()->redirectUrl(
+                                      m_oBrowserSettings->url);
+                                      
+        if (!redirectUrl.empty()) {
+            m_oBrowserSettings->url = redirectUrl;
+        }
+        
         
         CefBrowserHost::CreateBrowser(windowInfo,
                                       m_pClientHandler.get(),

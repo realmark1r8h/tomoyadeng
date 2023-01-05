@@ -197,6 +197,10 @@
 	<td>Int</td>
 	<td>5 </td>
 	<td>每输入一个字符后的暂停时间.默认为5ms，输入太快有可能导致字符错乱.</td>
+</tr><tr>
+	<td>Boolean</td>
+	<td>false </td>
+	<td>,是否异步输入字符串，如果为false，那么会阻塞</td>
 </tr>
 	</tbody>
 </table>

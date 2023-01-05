@@ -95,19 +95,19 @@ namespace amo {
         		"appSettings": {
         			"urlMappings":[
         				{
-        					"url":"http://127.0.0.1:8020",
+        					"url":"http://127.0.0.1:8030",
         					"path": "%webDir%"
         				},
         				{
-        					"url":"http://127.0.0.1:8020",
+        					"url":"http://127.0.0.1:8030",
         					"path": "zip:///%webDir%web.zip"
         				},
         				{
-        					"url":"http://127.0.0.1:8020",
+        					"url":"http://127.0.0.1:8030",
         					"path": "dll:///libResource.dll"
         				},
         				{
-        					"url":"http://127.0.0.1:8020",
+        					"url":"http://127.0.0.1:8030",
         					"path": "res:///131.res"
         				}
         			]

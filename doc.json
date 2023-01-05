@@ -42,15 +42,15 @@
         "libNCUI/transfer/FrameTransfer.h",
         "libNCUI/transfer/BrowserHostTransfer.h",
 
-        "libsExt/sqlite/SqliteTransfer.h",
-        "libsExt/transfer/MD5Transfer.h",
-        "libsExt/transfer/UUIDTransfer.h",
-        "libsExt/transfer/RegistryTransfer.h",
-        "libsExt/transfer/Base64Transfer.h",
-        "libsExt/transfer/ProcessTransfer.h",
-        "libsExt/transfer/PathTransfer.h",
-		"libsExt/transfer/FileTransfer.hpp",
-        "libsExt/rcedit/RceditTransfer.h"
+        "renderer_modules/libsExt/sqlite/SqliteTransfer.h",
+        "renderer_modules/libsExt/transfer/MD5Transfer.h",
+        "renderer_modules/libsExt/transfer/UUIDTransfer.h",
+        "renderer_modules/libsExt/transfer/RegistryTransfer.h",
+        "renderer_modules/libsExt/transfer/Base64Transfer.h",
+        "renderer_modules/libsExt/transfer/ProcessTransfer.h",
+        "renderer_modules/libsExt/transfer/PathTransfer.h",
+		"renderer_modules/libsExt/transfer/FileTransfer.hpp",
+        "renderer_modules/libsExt/rcedit/RceditTransfer.h"
 		
     ],
     "version": "0.0.0.1",

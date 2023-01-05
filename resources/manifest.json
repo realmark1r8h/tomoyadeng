@@ -1,14 +1,14 @@
 {
 	"appSettings": {
-		"useNode": true,
+		"useNode": false,
 		"main": "main.js",
 		"nodeProcess": false,
 		"single_process": true
 	},
 	"browserWindowSettings":{
-		"url": "http://127.0.0.1:8020/index.html"
+		"url": "http://127.0.0.1:8030/index.html"
 	},
 	"splashWindowSettings":{
-    	"image":"%webDir%images/splash.jpg"
+    	"image":"images/splash.jpg"
 	}
 }

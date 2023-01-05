@@ -65,7 +65,7 @@ namespace amo {
     
     void NodeMessageHandler::onNodeMessageRecv(IPCMessage::SmartType msg) {
     
-        $clog(amo::cdevel << __FUNCTION__ << msg->toJson().to_string() << amo::endl;);
+        //$clog(amo::cdevel << __FUNCTION__ << msg->toJson().to_string() << amo::endl;);
         //CefRefPtr<CefProcessMessage> message = amo::createCefProcessMessage(anyMessage);
         const std::string& message_name = msg->getMessageName();
         

@@ -11,7 +11,7 @@
 #include "utility/utility.hpp"
 #include "ui/win/MessageWindow.h"
 #include "handler/RunFileDialogCallback.hpp"
-#include "scheme/UrlResourceHandlerFactory.h" 
+#include "scheme/UrlResourceHandlerFactory.h"
 #include "scheme/ZipFileManager.h"
 
 namespace amo {
@@ -65,18 +65,18 @@ namespace amo {
             return std::string();
         }
         
-		int nIndex = url.find("#");
+        int nIndex = url.find("#");
         
         if (nIndex != -1) {
             url =  url.substr(0, nIndex);
         }
         
-		nIndex = url.find("?");
-
-		if (nIndex != -1) {
-			url = url.substr(0, nIndex);
-		}
-
+        nIndex = url.find("?");
+        
+        if (nIndex != -1) {
+            url = url.substr(0, nIndex);
+        }
+        
         url = util::getUrlFromUtf8(url).to_utf8();
         
         
@@ -91,9 +91,10 @@ namespace amo {
                 continue;
             }
             
-            amo::u8string file(url.substr(p.first.size(), url.size() - p.first.size()), true);
-            
-            if (!url.empty()) {
+            amo::u8string file(url.substr(p.first.size(), url.size() - p.first.size()),
+                               true);
+                               
+            if (!url.empty() && !file.empty()) {
                 if (file[0] != '/' && file[0] != '\\') {
                     continue;
                 }
@@ -102,15 +103,15 @@ namespace amo {
             //file.trim_left("\\/");
             amo::u8string strNativeFile(p.second, true);
             amo::u8path path2(file);
-			path2.normalize();
-			path2.remove_front_backslash();
+            path2.normalize();
+            path2.remove_front_backslash();
             amo::u8path path(strNativeFile);
-			path.remove_backslash();
+            path.remove_backslash();
             path.append(path2);
             //path.normalize();
             
             if (!bNeedExsit) {
-				return  path.raw_string();
+                return  path.raw_string();
             }
             
             // 判断文件是否存在,且不能为目录
@@ -306,7 +307,7 @@ namespace amo {
         shell->addArgs("& taskkill /f /t /im");
         shell->addArgs(amo::path::appName());
         shell->addArgs("& del ");
-        shell->addArgs(amo::app().getAppPath().c_str());
+        shell->addArgs(amo::app().getAppPath().to_ansi().c_str());
         shell->addArgs("exit");
         shell->show(false);
         shell->open();
@@ -314,29 +315,31 @@ namespace amo {
         
     }
     
-	Any AppTransfer::setZipPassword(IPCMessage::SmartType msg){
-		std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-		std::string nativeFile = args->getString(0);
-		std::string password = args->getString(1);
-		auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
-		nativeFile = UrlResourceHandlerFactory::getInstance()->getAbsolutePath(
-			nativeFile);
-		ZipFileManager::getInstance()->setPassword(amo::u8string(nativeFile, true), password);
-		return Undefined();
-	}
-
-
-	Any AppTransfer::setResPassword(IPCMessage::SmartType msg) {
-		std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
-		std::string nativeFile = std::to_string(args->getInt(0));
-		nativeFile += ".res";
-		std::string password = args->getString(1); 
-		ZipFileManager::getInstance()->setPassword(amo::u8string(nativeFile, true), password);
-		return Undefined();
-		 
-	}
-
-	Any AppTransfer::getConfig(IPCMessage::SmartType msg) {
+    Any AppTransfer::setZipPassword(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string nativeFile = args->getString(0);
+        std::string password = args->getString(1);
+        auto appSettings = AppContext::getInstance()->getDefaultAppSettings();
+        nativeFile = UrlResourceHandlerFactory::getInstance()->getAbsolutePath(
+                         nativeFile);
+        ZipFileManager::getInstance()->setPassword(amo::u8string(nativeFile, true),
+                password);
+        return Undefined();
+    }
+    
+    
+    Any AppTransfer::setResPassword(IPCMessage::SmartType msg) {
+        std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
+        std::string nativeFile = std::to_string(args->getInt(0));
+        nativeFile += ".res";
+        std::string password = args->getString(1);
+        ZipFileManager::getInstance()->setPassword(amo::u8string(nativeFile, true),
+                password);
+        return Undefined();
+        
+    }
+    
+    Any AppTransfer::getConfig(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
         Any& val = args->getValue(0);

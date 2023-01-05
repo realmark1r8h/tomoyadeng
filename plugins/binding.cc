@@ -103,7 +103,7 @@ NAN_MODULE_INIT(InitAll) {
     NodeClassV8Handler<NODE_Desktop>::Init(target, "desktop");
     NodeClassV8Handler<NODE_Keyboard>::Init(target, "keyboard");
     NodeClassV8Handler<NODE_Mouse>::Init(target, "mouse");
-    
+    NodeClassV8Handler<NODE_action>::Init(target, "action");
     
     
     

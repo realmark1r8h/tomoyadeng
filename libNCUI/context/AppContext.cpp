@@ -70,10 +70,9 @@ namespace amo {
             
             // 如果不是在单独的进程中运行Node,那么创建一个线程来运行它
             if (!getDefaultAppSettings()->useNodeProcess) {
-                pNodeThread.reset(new std::thread(
-                                      std::bind(&AppContext::runNodeThread,
-                                                this)));
-                                                
+                pNodeThread.reset(new amo::looper_executor());
+                pNodeThread->execute(std::bind(&AppContext::runNodeThread,
+                                               this));
             }
             
             //开始接收NodeJS消息
@@ -117,14 +116,14 @@ namespace amo {
         
         amo::u8path p(amo::u8path::getExeDir());
         p.append("node_runner.dll");
-        amo::loader loader(amo::u8string(p, true));
-        bool bOk = loader.load();
+        nodeDll.reset(new amo::loader(amo::u8string(p, true)));
+        bool bOk = nodeDll->load();
         
         if (!bOk) {
             return;
         }
         
-        loader.exec<int>("Start", argc, argv);
+        nodeDll->exec<int>("Start", argc, argv);
         
     }
     
@@ -280,11 +279,25 @@ namespace amo {
     AppContext::~AppContext() {
         $clog(amo::cdevel << func_orient << amo::endl;);
         m_pNodeMessageHandler.reset();
-        auto ptr = ClassTransfer::getTransferMap();
+        /*  auto ptr = ClassTransfer::getTransferMap();
         
-        if (ptr) {
-            ptr->clear();
+          if (ptr) {
+        	  ptr->clear();
+          }*/
+        
+        m_pClientApp = NULL;
+        m_pClientHandler = NULL;
+        m_pNodeMessageHandler = NULL;
+        m_pSharedMemory.reset();
+        m_pAppSettings.reset();
+        m_pBrowserSettings.reset();
+        
+        if (pNodeThread) {
+            pNodeThread->kill();
         }
+        
+        pNodeThread.reset();
+        
     }
     
     std::shared_ptr<BrowserWindowSettings> AppContext::getDefaultBrowserSettings() {
@@ -420,8 +433,11 @@ namespace amo {
         startHook();
 #endif
         
-        auto manager = BrowserWindowManager::getInstance();
-        manager->init();
+        {
+            auto manager = BrowserWindowManager::getInstance();
+            manager->init();
+        }
+        
         auto pAppSettings = getDefaultAppSettings();
         ClientHandler::SingleProcessMode(pAppSettings->single_process != 0);
         
@@ -441,6 +457,7 @@ namespace amo {
             
             if (!pAppSettings->useNode) {
                 //通过窗口管理类创建主窗口并显示
+                auto manager = BrowserWindowManager::getInstance();
                 manager->createBrowserWindow(getDefaultBrowserSettings());
             } else {
                 // 运行Node
@@ -465,33 +482,20 @@ namespace amo {
         // 停止监听Node消息
         if (getNodeMessageHandler()) {
             getNodeMessageHandler()->stopNodeProcess();
+            
+            if (nodeDll) {
+                nodeDll->unload();
+            }
+            
+            nodeDll.reset();
         }
         
         
         ClassTransfer::clearTransferMap();
         ClassTransfer::getTransferMap().reset();
-        /* auto classMap = ClassTransfer::getTransferMap();
         
-         if (classMap) {
-             for (auto iter = classMap->begin(); iter != classMap->end();) {
-                 if (iter->second->transferName() != "Thread") {
-                     amo::cdevel << "清理Transfer: " << iter->first << ", " << iter->second->transferName() << amo::endl;
-                     iter->second->onBeforeRelease();
-                     iter = classMap->erase(iter);
-                 } else {
-                     ++iter;
-                 }
-             }
         
-             for (auto iter = classMap->begin(); iter != classMap->end();) {
-                 amo::cdevel << "清理Transfer: " << iter->first << ", " << iter->second->transferName() << ", " << iter->second->getObjectName() << amo::endl;
-                 iter->second->onBeforeRelease();
-                 iter = classMap->erase(iter);
-             }
-         }*/
-        
-        manager.reset();
-        
+        BrowserWindowManager::releaseInstance();
         int i = 0;
         std::cout << i << std::endl;
         

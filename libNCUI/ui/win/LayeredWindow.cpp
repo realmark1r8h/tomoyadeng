@@ -6,6 +6,7 @@
 #include "settings/NativeWindowSettings.h"
 #include "settings/GlobalShortcutSettings.h"
 #include "ui/win/Imm32Manager.h"
+#include "Bitmap.hpp"
 
 
 #define WM_DRAWWINDOW (WM_USER +9999)
@@ -17,7 +18,8 @@
 
 namespace amo {
 
-    std::function<bool(int32_t, amo::u8json)> LayeredWindow::getHotKeyEventCallback()
+    std::function<bool(int32_t, amo::u8json)>
+    LayeredWindow::getHotKeyEventCallback()
     const {
         return m_fnHotKeyEventCallback;
     }
@@ -101,10 +103,10 @@ namespace amo {
         
         pRoot->DoPaint(memDC, pRoot->GetPos(), NULL);
         
-        //amo::string str = std::to_string(amo::date_time::now());
-        //str += ".png";
-        ////SaveBitmap(hBitmap, str.to_unicode().c_str(), L"image/png");
-        //
+        /* amo::string str(std::to_string(amo::date_time::now()), false);
+         str += ".png";*/
+        //SaveBitmap(hBitmap, str.to_unicode().c_str(), L"image/png");
+        
         //SaveHBitmapToFile(hBitmap, (wchar_t*)str.to_unicode().c_str(), L"image/png");
         //SaveBitmap(hBitmap, L"C:\\123.jpeg", L"image/jpeg");
         
@@ -661,8 +663,9 @@ namespace amo {
     std::shared_ptr<GlobalShortcutSettings> LayeredWindow::createSettingByString(
         const std::string& strKey)  const {
         amo::u8string sKey(strKey, true);
-        sKey = sKey.replace(amo::u8string(" ", true), amo::u8string("", true)); // 移除所有空格
-        
+        sKey = sKey.replace(amo::u8string(" ", true), amo::u8string("",
+                            true)); // 移除所有空格
+                            
         std::vector<amo::u8string> vec = sKey.split(amo::u8string("+", true));
         
         std::shared_ptr<GlobalShortcutSettings> pSettings;

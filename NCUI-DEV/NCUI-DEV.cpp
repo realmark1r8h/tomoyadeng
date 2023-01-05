@@ -6,7 +6,7 @@
 
 int _tmain(int argc, _TCHAR* argv[]) {
 
-    run();
+    runNCUI();
     return 0;
 }
 

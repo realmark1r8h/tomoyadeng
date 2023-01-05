@@ -164,6 +164,13 @@ namespace amo {
                                                
         // RequestHandlerDelegate
         
+        
+        virtual void OnResourceRedirect(CefRefPtr<CefBrowser> browser,
+                                        CefRefPtr<CefFrame> frame,
+                                        const CefString& old_url,
+                                        CefString& new_url) override;
+                                        
+                                        
         virtual CefRefPtr<CefResourceHandler> GetResourceHandler(
             CefRefPtr<CefBrowser> browser,
             CefRefPtr<CefFrame> frame,
@@ -220,6 +227,8 @@ namespace amo {
         
         void closeDevTools();
         
+        bool loadExternalTransfer(const std::string& u8DllName,
+                                  CefRefPtr<CefBrowser> browser);
         /*!
          * @fn	Any onInclude(IPCMessage::SmartType msg);
          *

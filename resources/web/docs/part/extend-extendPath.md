@@ -195,6 +195,27 @@ console.log(p.toString());
 <div class="adoc" id="div_toString"></div>
 
 
+## normalize &nbsp;
+  标准化路径.
+  
+* **函数参数**  无
+
+* **返回值**
+  Path 当前对象. 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('Path');
+var p = new Path('./sddf/../../233/../234/../../');
+console.log(p.normalize().toString());
+
+```
+
+
+<div class="adoc" id="div_normalize"></div>
+
+
 ## isExsit &nbsp;<span class="label label-sync">同步</span> 
 
   判断当前路径是否存在.
@@ -299,7 +320,7 @@ var p = new Path('./');
 p.append('manifest.json');
 p.toAbsolute().removeFileSpec();
 console.log(p.toString());
-console.assert(p.toString() == Path.getFullAppDir().toString());
+console.assert(p.normalize().toString() == Path.getFullAppDir().normalize().toString());
 
 ```
 

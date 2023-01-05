@@ -2,7 +2,7 @@
 
 #ifndef NCUI_NO_D2D1
 
-#include "ui/win/ViewRenderer.h" 
+#include "ui/win/ViewRenderer.h"
 #include "ui/win/renderer/GdiRenderer.h"
 #include "ui/win/renderer/D2D1Utility.hpp"
 #include "ui/win/renderer/GDIPlusBitmap.hpp"
@@ -254,9 +254,9 @@ namespace amo {
     
     void ViewRenderer::DoInit() {
         if (isAccelerator()) {
-           /* renderer.reset(new D2D1RendererOld());
-            renderer->drawBackground(m_bDrawBackground);
-            renderer->initialize();*/
+            /* renderer.reset(new D2D1RendererOld());
+             renderer->drawBackground(m_bDrawBackground);
+             renderer->initialize();*/
         }
         
         return CControlUI::DoInit();
@@ -376,7 +376,17 @@ namespace amo {
         }
         
         m_dcRenderer->BeginDraw();
-        m_dcRenderer->Clear(amo::d2d1::ImFloat4(1, 1, 1, 1).ToD2DColorF());
+        
+        if (m_paintSettings->offscreen && m_paintSettings->transparent) {
+        
+            if (m_paintSettings->transparent) {
+                m_dcRenderer->Clear(amo::d2d1::ImFloat4(1, 1, 1, 0).ToD2DColorF());
+            } else {
+                m_dcRenderer->Clear(amo::d2d1::ImFloat4(1, 1, 1, 1).ToD2DColorF());
+            }
+            
+        }
+        
         std::vector<std::shared_ptr<amo::d2d1::D2D1Bitmap> >  bitmaps;
         std::vector<std::shared_ptr<amo::d2d1::D2D1Bitmap> > regions;
         
@@ -420,7 +430,13 @@ namespace amo {
         
         std::shared_ptr<Graphics> m_graphics(new Graphics(hDC));
         
-        
+        if (m_paintSettings->offscreen && !m_paintSettings->transparent) {
+            Gdiplus::SolidBrush brush(Gdiplus::Color(255, 255, 255));
+            RECT bkRt = GetPos();
+            m_graphics->FillRectangle(&brush, bkRt.left, bkRt.top, bkRt.right - bkRt.left,
+                                      bkRt.bottom - bkRt.top);
+                                      
+        }
         
         std::vector<std::shared_ptr<amo::d2d1::GdiplusBitmap> >  bitmaps;
         std::vector<std::shared_ptr<amo::d2d1::GdiplusBitmap> > regions;
@@ -458,7 +474,7 @@ namespace amo {
     
     ViewRenderer::ViewRenderer() {
         setAccelerator(false);
-		
+        
         m_bDrawBackground = true;
         m_nLastFPS = m_nCount = 0;
         m_nLastTimestamp = amo::timer::now<amo::chrono::seconds>();

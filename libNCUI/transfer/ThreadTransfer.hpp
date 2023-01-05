@@ -163,6 +163,7 @@ namespace amo {
          * @fn	Any ThreadTransfer::weakup(IPCMessage::SmartType msg)
          * @tag single
          * @brief	唤醒线程，只能在浏览器线程（UI/Renderer）上执行.
+         * @param  #Any 传递唤醒参数，该值可以做为suppend的返回值，可用于线程上的扩展与页面交换数据
          *
          * @return	无.
          */
@@ -179,7 +180,7 @@ namespace amo {
          * @brief	暂停线程，不能在浏览器线程（UI/Renderer）上执行.
          *
          *
-         * @return	无.
+         * @return	#Any weakup函数的第一个参数.
          */
         
         Any suspend(IPCMessage::SmartType msg) {
@@ -420,6 +421,11 @@ namespace amo {
         void weakupThread() {
             amo::unique_lock<amo::recursive_mutex> lock(m_mutex);
             m_isPausedThread = false;
+            
+            if (!m_pLooperExecutor) {
+                return;
+            }
+            
             // 通知其他线程
             m_condition_any.notify_all();
         }

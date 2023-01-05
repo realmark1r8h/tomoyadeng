@@ -27,6 +27,19 @@ namespace amo {
     public:
     
         KeyboardTransfer();
+        ~KeyboardTransfer();
+        
+        virtual std::string getClass() const override {
+            return "keyboard";
+        }
+        
+        virtual amo::Transfer * getInterface(const std::string& name) override {
+            if (name == getClass()) {
+                return this;
+            }
+            
+            return ClassTransfer::getInterface(name);
+        }
         
         /*!
          * @fn	Any KeyboardTransfer::sayString(IPCMessage::SmartType msg);
@@ -37,6 +50,7 @@ namespace amo {
          *
          * @param	#String 要发送的字符串.
          * @param	#Int=5 每输入一个字符后的暂停时间.默认为5ms，输入太快有可能导致字符错乱.
+         * @param	#Boolean=false ,是否异步输入字符串，如果为false，那么会阻塞
          *
          * @return	无.
          *
@@ -215,8 +229,13 @@ namespace amo {
         void SendUnicode(wchar_t data);
         void SendKeys(const amo::u8string& msg, int interval = 5);
         
+        void AsyncSendKeys(IPCMessage::SmartType msg, const std::string& eventName,
+                           int interval = 5);
+                           
         std::vector<char> getKeys(IPCMessage::SmartType msg);
     private:
+    
+        std::shared_ptr<amo::looper_executor> m_executor;
     };
 }
 

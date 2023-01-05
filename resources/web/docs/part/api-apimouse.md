@@ -5,61 +5,6 @@
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
 
-## 事件
-### **1.showCursor** 
-
-  显示鼠标.
-
-* **事件参数**  无
-
-* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
-
-```html
-includes('mouse');
-mouse.showCursor();
-
-```
-
-
-<div class="adoc" id="div_showCursor"></div>
-
-
-### **2.clientToScreen** 
-
-  将一个指定窗口坐标转换为屏幕坐标.
-
-* **事件参数**
-
-<table class="table table-hover table-bordered ">
-	<thead>
-		<tr>
-			<th class="col-xs-1">类型</th>
-			<th>说明</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-	<td>BrowserWindow </td>
-	<td>窗口对象</td>
-</tr><tr>
-	<td>Int</td>
-	<td>x坐标.</td>
-</tr><tr>
-	<td>Int</td>
-	<td>y坐标.</td>
-</tr>
-	</tbody>
-</table>
-
-* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
-
-```html
-includes('BrowserWindow', 'mouse');
-var win = BrowserWindow.current;
-var pos = mouse.clientToScreen(win, 100, 100);
-console.log(pos);
-
-```
 ## leftClick &nbsp;<span class="label label-static">静态</span> 
 
   单击左键.
@@ -91,7 +36,7 @@ console.log(pos);
    无. 
 
 * **参考** 
-<a href="#api/apimouse/15">click</a>
+<a href="#api/apimouse/14">click</a>
 
 
 
@@ -666,7 +611,7 @@ mouse.restoreMousePos();
    无. 
 
 * **参考** 
-<a href="#api/apimouse/1">leftClick</a>
+<a href="#api/apimouse/0">leftClick</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
@@ -779,7 +724,7 @@ console.log(pos);
    无. 
 
 * **参考** 
-<a href="#api/apimouse/9">moveTo</a>
+<a href="#api/apimouse/8">moveTo</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 

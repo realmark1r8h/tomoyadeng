@@ -37,6 +37,13 @@
 include('Process');
 console.log(Process.findPIDByName('NCUI.exe'));
 
+// 该函数通常需要1秒以上的执行时间，实际上应该把这个函数放到线程上支执行
+include('Thread');
+Thread.Exec(Process.findPIDByName, 'NCUI.exe');
+Process.unique('Process.findPIDByName', function(){
+    console.log(arguments);
+});
+
 ```
 
 
@@ -110,7 +117,7 @@ process.start();
 * **示例&nbsp;&nbsp;--&nbsp;&nbsp;终止程序**
 
 ```html
-// 注意，运行该示例将结束当前程序
+//@skip 注意，运行该示例将结束当前程序
 include('Process');
 
 Process.terminateProcessByName('NCUI.exe');
@@ -153,7 +160,7 @@ Process.terminateProcessByName('NCUI.exe');
 * **示例&nbsp;&nbsp;--&nbsp;&nbsp;终止程序**
 
 ```html
-// 注意，运行该示例将结束当前程序
+//@skip 注意，运行该示例将结束当前程序
 include('Process');
 
 Process.killProcessByName('NCUI.exe');
@@ -220,6 +227,9 @@ var process = new Process('NCUI.exe');
 process.start('');
 Thread.Exec(process.getResult);
 process.unique('process.result', function(){
+   console.log(arguments);
+});
+process.unique('Process.getResult', function(){
    console.log(arguments);
 });
 

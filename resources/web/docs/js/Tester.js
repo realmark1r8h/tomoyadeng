@@ -33,18 +33,19 @@
 		$('code.lang-html').each(function(index, element) {
 			var $element = $(element);
 			var src = $element.find('span').html();
-			//			console.log(src);
 			var index = src.indexOf('@skip');
-
+			var strFuncName = $element.parents('article').find('.adoc').attr('id');
+			if(!strFuncName) strFuncName = '';
+			strFuncName = strFuncName.replace('div_', '');
 			var info = {
 				skip: false,
-				src: src
+				src: src,
+				funcName: strFuncName
 			}
 			if(index != -1) {
 				info.skip = true;
 			}
 
-			console.dir(self);
 			self.arr.push(info);
 		})
 
@@ -85,7 +86,9 @@
 			var src = info.src;
 
 			window.assertArr = src.match(/console.assert\(.+?\);/g);
-			if(!window.assertArr) assertArr = [];
+			window.assertFuncName = info.funcName;
+			if(!window.assertArr) window.assertArr = [];
+			if(!window.assertFuncName) window.assertFuncName = '';
 			var js = '(function(){' + src + '\n})();';
 			eval(js);
 		}

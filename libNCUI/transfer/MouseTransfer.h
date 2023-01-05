@@ -590,42 +590,7 @@ namespace amo {
         Any showCursor(IPCMessage::SmartType msg);
         
         
-        /*!
-        * @event	Any MouseTransfer::showCursor(IPCMessage::SmartType msg);
-        *
-        * @brief	显示鼠标.
-        *
-        *
-        * @example
-        *
-        			```
-        			includes('mouse');
-        			mouse.showCursor();
-        			```
-        */
         
-        /*!
-        * @event	Any MouseTransfer::clientToScreen(IPCMessage::SmartType msg);
-        *
-        * @brief	将一个指定窗口坐标转换为屏幕坐标.
-        *
-        * @param	#BrowserWindow 窗口对象
-        * @param	#Int=0 x坐标.
-        * @param	#Int=0 y坐标.
-        *
-        * @return	#JsonObject.
-        * 			|#Int x 转换后的x坐标
-        * 			|#Int y 转换后的y坐标
-        *
-        * @example
-        *
-        ```
-        includes('BrowserWindow', 'mouse');
-        var win = BrowserWindow.current;
-        var pos = mouse.clientToScreen(win, 100, 100);
-        console.log(pos);
-        ```
-        */
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(MouseTransfer, ClassTransfer)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(leftClick, TransferFuncStatic)
@@ -644,12 +609,16 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(lockMouse, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(unlockMouse, TransferFuncStatic)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(waitClick, TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getLastClick, TransferFuncStatic | TransferExecSync)
-        
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getCursorPos, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getLastClick,
+                                      TransferFuncStatic | TransferExecSync)
+                                      
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getCursorPos,
+                                      TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setCursorPos, TransferFuncStatic)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(screenToClient, TransferFuncStatic | TransferExecSync)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(clientToScreen, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(screenToClient,
+                                      TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(clientToScreen,
+                                      TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(click, TransferFuncStatic)
         
         AMO_CEF_MESSAGE_TRANSFER_FUNC(hideCursor, TransferFuncStatic)
@@ -657,8 +626,9 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     private:
-        Any SendMouseEvent(IPCMessage::SmartType msg, uint32_t dwFlags, int mouseData = 0);
-        
+        Any SendMouseEvent(IPCMessage::SmartType msg, uint32_t dwFlags,
+                           int mouseData = 0);
+                           
         POINT pt;
     };
 }

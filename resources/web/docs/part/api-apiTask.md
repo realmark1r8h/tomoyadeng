@@ -76,7 +76,24 @@
 
   唤醒线程，只能在浏览器线程（UI/Renderer）上执行.
   
-* **函数参数**  无
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>Any </td>
+	<td></td>
+	<td>传递唤醒参数，该值可以做为suppend的返回值，可用于线程上的扩展与页面交换数据</td>
+</tr>
+	</tbody>
+</table>
 
 * **返回值**
    无. 
@@ -92,7 +109,7 @@
 * **函数参数**  无
 
 * **返回值**
-   无. 
+  Any weakup函数的第一个参数. 
 
 
 
@@ -201,5 +218,79 @@
 
 
 <div class="adoc" id="div_stop"></div>
+
+
+## Task演示 &nbsp;
+  Task演示
+  
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+includes('Task', 'TaskTest');
+var taskTest = new TaskTest();
+
+taskTest.unique('TaskTest.add', function(retval){
+    console.log(arguments);
+    console.log(retval.data);
+});
+
+taskTest.unique('TaskTest.sub', function(retval){
+    console.log(arguments);
+    console.log(retval.data);
+});
+
+// 使用Task类提供的线程
+Task.Exec(taskTest.add, 1,1);
+
+
+console.assert(Task.Sync(taskTest.add, 1,2) == 3);
+
+var thread = new Task();
+thread.exec(taskTest.add, 1,3);
+
+
+console.assert(thread.sync(taskTest.add, 1,4) == 5);
+
+ // 附加到线程
+taskTest.attach(thread);
+// 输出undefined
+console.log(taskTest.add(1,5));
+taskTest.sub(3,1);
+taskTest.detach();
+console.assert(taskTest.add(1,6) == 7);
+
+taskTest.attach(thread);
+// 在扩展中挂起线程
+taskTest.sleepForWeakup();
+// add 不能得到结果
+taskTest.add(1,8);
+setTimeout(function(){
+    // 唤醒线程后，继续执行add(1,8);
+    taskTest.weakup();
+
+    // 挂起线程
+
+    taskTest.suspend();
+    taskTest.add(1,9);
+    setTimeout(function(){
+        // 线程已经被杀死，add(1,9)不会被执行;
+        taskTest.weakup();
+    }, 5000);
+
+    taskTest.detach();
+    thread.kill(); // 杀死线程
+
+    taskTest.add(1,10);
+    console.assert(taskTest.add(1,10) == 11);
+
+}, 5000);
+
+
+
+
+```
+
+
+<div class="adoc" id="div_Task演示"></div>
 
 

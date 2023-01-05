@@ -5,7 +5,8 @@
 * **父类** 
 <a href="#api/apiObject">Object</a>&nbsp;
 
-## attach &nbsp;
+## attach &nbsp;<span class="label label-single">单线程</span> 
+
   将当前对象附加到一个线程中.
   
 * **函数参数**
@@ -50,7 +51,8 @@ console.log(demo.add(1,2));
 <div class="adoc" id="div_attach"></div>
 
 
-## detach &nbsp;
+## detach &nbsp;<span class="label label-single">单线程</span> 
+
   将当前对象从一个线程中分离.
   
 * **函数参数**  无

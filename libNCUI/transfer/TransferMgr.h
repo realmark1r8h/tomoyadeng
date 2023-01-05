@@ -38,7 +38,10 @@ namespace amo {
          * @param 	pTransfer	If non-null, the transfer.
          */
         void addTransfer(Transfer* pTransfer) {
-            pTransfer->setDefaultTriggerEventFunc(getDefaultTriggerEventFunc());
+            if (!pTransfer->getDefaultTriggerEventFunc()) {
+                pTransfer->setDefaultTriggerEventFunc(getDefaultTriggerEventFunc());
+            }
+            
             m_oTransferMap[pTransfer->transferName()] = pTransfer;
             
         }
@@ -51,7 +54,10 @@ namespace amo {
          * @param	pTransfer	The transfer.
          */
         void addTransfer(std::shared_ptr<Transfer> pTransfer) {
-            pTransfer->setDefaultTriggerEventFunc(getDefaultTriggerEventFunc());
+            if (!pTransfer->getDefaultTriggerEventFunc()) {
+                pTransfer->setDefaultTriggerEventFunc(getDefaultTriggerEventFunc());
+            }
+            
             m_oSmartMap.insert(std::make_pair(pTransfer->transferName(),
                                               pTransfer));
             m_oTransferMap[pTransfer->transferName()] = pTransfer.get();
@@ -220,6 +226,16 @@ namespace amo {
          * @param 	pTransfer	If non-null, the transfer.
          */
         void addTransfer(int nBrowserID, Transfer* pTransfer) {
+        
+            if (!pTransfer->getDefaultTriggerEventFunc()) {
+                pTransfer->setDefaultTriggerEventFunc(getDefaultTriggerEventFunc());
+            }
+            
+            if (getTransferMap(nBrowserID).getDefaultTriggerEventFunc()) {
+                getTransferMap(nBrowserID).setDefaultTriggerEventFunc(
+                    getDefaultTriggerEventFunc());
+            }
+            
             getTransferMap(nBrowserID).addTransfer(pTransfer);
         }
         
@@ -233,6 +249,15 @@ namespace amo {
          * @param	pTransfer 	The transfer.
          */
         void addTransfer(int nBrowserID, std::shared_ptr<Transfer> pTransfer) {
+            if (!pTransfer->getDefaultTriggerEventFunc()) {
+                pTransfer->setDefaultTriggerEventFunc(getDefaultTriggerEventFunc());
+            }
+            
+            if (getTransferMap(nBrowserID).getDefaultTriggerEventFunc()) {
+                getTransferMap(nBrowserID).setDefaultTriggerEventFunc(
+                    getDefaultTriggerEventFunc());
+            }
+            
             getTransferMap(nBrowserID).addTransfer(pTransfer);
         }
         

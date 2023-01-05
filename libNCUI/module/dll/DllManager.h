@@ -143,7 +143,7 @@ namespace amo {
         , public singleton<DllManager<PID_RENDERER> > {
     public:
         DllManager() {
-            setExtensionDir(amo::u8string("extensions", true));
+            setExtensionDir(amo::u8string("renderer_modules", true));
             setRunOnRenderThread(true);
         }
     };
@@ -153,6 +153,7 @@ namespace amo {
         , public singleton<DllManager<PID_BROWSER> > {
     public:
         DllManager() {
+            setExtensionDir(amo::u8string("browser_modules", true));
             setRunOnRenderThread(false);
             
         }

@@ -46,6 +46,11 @@ menu.on('select', function(){
 });
 
 ```
+
+
+<div class="adoc" id="div_select"></div>
+
+
 ## Menu &nbsp;<span class="label label-constructor">构造</span> 
 
   创建一个菜单.菜单创建的位置默认为鼠标所在位置，菜单失去焦点会自动关闭.

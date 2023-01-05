@@ -6,10 +6,9 @@
 
 #include <node.h>
 
- 
- 
-extern "C" NODE_RUNNER_API int Start(int argc, char** argv)
-{
-	return node::Start(argc, argv); 
+
+
+extern "C" NODE_RUNNER_API int Start(int argc, char** argv) {
+    return node::Start(argc, argv);
 }
- 
+

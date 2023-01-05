@@ -57,9 +57,49 @@ namespace amo {
             return new NativeFileHandler(url, u8File);
         }
         
+        if (url != u8File) {
+        
+        }
+        
         return NULL;
     }
     
+    
+    std::string UrlResourceHandlerFactory::redirectUrl(const std::string& url) {
+        IPCMessage::SmartType msg(new IPCMessage());
+        msg->getArgumentList()->setValue(0, url);
+        
+        std::shared_ptr<AppTransfer> pTransfer;
+        pTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
+        Any ret = pTransfer->urlToNativePath(msg);
+        
+        std::string u8File = ret.As<std::string>();
+        
+        if (u8File.empty()) {
+            return "";
+        }
+        
+        if (isZipPath(u8File)) {
+            return "";
+        } else if (isResPath(u8File)) {
+            return "";
+        } else if (isDBPath(u8File)) {
+            return "";
+        } else if (isDllPath(u8File)) {
+            return "";
+        } else if (url != u8File) {
+        
+            amo::u8string ansiPath(u8File, true);
+            
+            if (amo::u8path(ansiPath).file_exists()) {
+                return "";
+            } else  {
+                return u8File;
+            }
+        }
+        
+        return "";
+    }
     
     CefRefPtr<CefResourceHandler> UrlResourceHandlerFactory::getDBResourceHandler(
         const std::string& url, const std::string& u8Path) {

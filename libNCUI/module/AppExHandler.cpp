@@ -27,7 +27,7 @@ namespace amo {
         }
         
         //std::set<std::string> oSet;
-        for (int i = 0; i < args.size(); ++i) {
+        for (size_t i = 0; i < args.size(); ++i) {
             CefRefPtr<CefV8Value> val = args.at(i);
             
             if (!val || !val->IsString() || val->GetStringValue().empty()) {
@@ -43,7 +43,8 @@ namespace amo {
         AppSettings::getInstance()->nonGlobalModules = arr;
     }
     
-    void AppExV8Handler::addNonGlobalModule(CefRefPtr<CefV8Value> object, const CefV8ValueList& args, CefRefPtr<CefV8Value>& retval, CefString& except) {
+    void AppExV8Handler::addNonGlobalModule(CefRefPtr<CefV8Value> object,
+                                            const CefV8ValueList& args, CefRefPtr<CefV8Value>& retval, CefString& except) {
         return addNonGlobalModules(object, args, retval, except);
     }
     

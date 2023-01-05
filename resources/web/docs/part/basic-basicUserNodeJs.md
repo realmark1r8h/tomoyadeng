@@ -50,7 +50,7 @@ console.timeEnd = function() {}
 console.trace = function() {}
 console.assert = function() {}
 require(process.cwd() + '/ncui');
-app.addUrlMapping('http://127.0.0.1:8020/', 'web/');
+app.addUrlMapping('http://127.0.0.1:8030/', 'web/');
 tray.show(true);
 const win = new BrowserWindow({
     show: true,
@@ -62,7 +62,7 @@ const win = new BrowserWindow({
     height: 720,
     roundcorner: 5,
     sizebox: "4,4,6,6",
-    url: "http://127.0.0.1:8020/index.html",
+    url: "http://127.0.0.1:8030/index.html",
     titleBar: false
 });
 
@@ -80,7 +80,7 @@ const win = new BrowserWindow({
 ```html
 'use strict';
 require(process.cwd() + '/ncui-dev');
-app.addUrlMapping('http://127.0.0.1:8020/', 'web/');
+app.addUrlMapping('http://127.0.0.1:8030/', 'web/');
 tray.show(true);
 const win = new BrowserWindow({
     show: true,
@@ -92,7 +92,7 @@ const win = new BrowserWindow({
     height: 720,
     roundcorner: 5,
     sizebox: "4,4,6,6",
-    url: "http://127.0.0.1:8020/index.html",
+    url: "http://127.0.0.1:8030/index.html",
     titleBar: false
 });
 
@@ -134,7 +134,7 @@ if(!debugMode) {
     require(process.cwd() + '/ncui-dev');
 }
 
-app.addUrlMapping('http://127.0.0.1:8020/', 'web/');
+app.addUrlMapping('http://127.0.0.1:8030/', 'web/');
 tray.show(true);
 const win = new BrowserWindow({
     show: true,
@@ -146,7 +146,7 @@ const win = new BrowserWindow({
     height: 720,
     roundcorner: 5,
     sizebox: "4,4,6,6",
-    url: "http://127.0.0.1:8020/index.html",
+    url: "http://127.0.0.1:8030/index.html",
     titleBar: false
 });
 

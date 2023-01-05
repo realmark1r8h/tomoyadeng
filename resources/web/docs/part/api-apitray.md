@@ -161,6 +161,11 @@ tray.on('mouseleave', function(){
 });
 
 ```
+
+
+<div class="adoc" id="div_mouseleave"></div>
+
+
 ## show &nbsp;<span class="label label-static">静态</span> 
 
   显示托盘.

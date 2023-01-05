@@ -56,18 +56,18 @@ namespace amo {
          ```
         	include('BrowserWindow');
         	// 创建一个普通窗口
-        	var win = new BrowserWindow({titleBar:true, url: 'http://127.0.0.1:8020/example/BrowserWindow.html'});
+        	var win = new BrowserWindow({titleBar:true, url: 'http://127.0.0.1:8030/example/BrowserWindow.html'});
         	// 创建一个离屏窗口
         	new BrowserWindow({
         			titleBar:false,
-        			url: 'http://127.0.0.1:8020/example/FramelessWindow.html',
+        			url: 'http://127.0.0.1:8030/example/FramelessWindow.html',
         			offscreen: true
         		});
         	// 创建一个透明窗口
         	new BrowserWindow({
         			titleBar:false,
         			hasShadow:false,
-        			url: 'http://127.0.0.1:8020/example/TransparentWindow.html',
+        			url: 'http://127.0.0.1:8030/example/TransparentWindow.html',
         			offscreen: true,
         			transparent: true
         		});
@@ -216,7 +216,8 @@ namespace amo {
          * @example
          *
          ```
-        	 include('BrowserWindow');
+        	 includes('BrowserWindow', 'app');
+        	 app.removeUrlMapping( "http://www.baidu.com/more");
         	 BrowserWindow.addBrowserWindowSettings('https://www.baidu.com',{titleBar: true});
         	 window.open('https://www.baidu.com');
         	 window.open('https://www.baidu.com/more');
@@ -294,7 +295,7 @@ namespace amo {
         /*!
          * @fn	virtual Any saveGifToFile(IPCMessage::SmartType msg);
          *
-         * @brief	录制GIF到文件.
+         * @brief	录制GIF到文件,离屏模式下(offscreen== true)有效(不建议使用).
          *
          * @param	#JsonObject 录制参数.<br>
          * 						| #String filename gif文件保存目录<br>
@@ -320,7 +321,7 @@ namespace amo {
         /*!
          * @fn	virtual Any stopRecordGif(IPCMessage::SmartType msg);
          *
-         * @brief	停止录制GIF.
+         * @brief	停止录制GIF,离屏模式下(offscreen== true)有效(不建议使用).
          *
          * @return	#Undefined.
          * @example

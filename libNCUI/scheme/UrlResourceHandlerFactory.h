@@ -16,6 +16,8 @@ namespace amo {
         
         CefRefPtr<CefResourceHandler> create(const std::string& url);
         
+        std::string redirectUrl(const std::string& url);
+        
         CefRefPtr<CefResourceHandler> getDBResourceHandler(const std::string& url,
                 const std::string& u8Path);
                 
@@ -37,7 +39,6 @@ namespace amo {
         
         bool isDllPath(const std::string& u8Path);
     private:
-        std::vector<CefRefPtr<CefResourceHandler> > m_handler;
     };
 }
 

@@ -21,9 +21,13 @@
 	</thead>
 	<tbody>
 		<tr>
-	<td>String </td>
+	<td>String/Path </td>
 	<td></td>
 	<td>需要加密的字符串.</td>
+</tr><tr>
+	<td>Boolean</td>
+	<td>false </td>
+	<td>是否为文件</td>
 </tr>
 	</tbody>
 </table>
@@ -37,6 +41,9 @@
 include('md5');
 var str  = md5.encode('NCUI');
 console.log(str);
+
+var str1 = md5.encode('manifest.json', true);
+console.log(str1);
 
 ```
 

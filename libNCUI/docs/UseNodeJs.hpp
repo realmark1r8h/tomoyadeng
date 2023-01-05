@@ -8,9 +8,9 @@ namespace amo {
 
     /*!
      * @class	使用Node
-     * 			
+     *
      * @id basicUserNodeJs
-     * 	   
+     *
      * @chapter	basic
      *
      * @brief	NCUI支持使用Node.js控制程序，但目前只针对4.7.1进行过开发，更高或更低的版本可能并不支持.
@@ -77,7 +77,7 @@ namespace amo {
         	console.trace = function() {}
         	console.assert = function() {}
         	require(process.cwd() + '/ncui');
-        	app.addUrlMapping('http://127.0.0.1:8020/', 'web/');
+        	app.addUrlMapping('http://127.0.0.1:8030/', 'web/');
         	tray.show(true);
         	const win = new BrowserWindow({
         		show: true,
@@ -89,7 +89,7 @@ namespace amo {
         		height: 720,
         		roundcorner: 5,
         		sizebox: "4,4,6,6",
-        		url: "http://127.0.0.1:8020/index.html",
+        		url: "http://127.0.0.1:8030/index.html",
         		titleBar: false
         	});
          ```
@@ -114,7 +114,7 @@ namespace amo {
          ```
         	'use strict';
         	require(process.cwd() + '/ncui-dev');
-        	app.addUrlMapping('http://127.0.0.1:8020/', 'web/');
+        	app.addUrlMapping('http://127.0.0.1:8030/', 'web/');
         	tray.show(true);
         	const win = new BrowserWindow({
         		show: true,
@@ -126,7 +126,7 @@ namespace amo {
         		height: 720,
         		roundcorner: 5,
         		sizebox: "4,4,6,6",
-        		url: "http://127.0.0.1:8020/index.html",
+        		url: "http://127.0.0.1:8030/index.html",
         		titleBar: false
         	});
          ```
@@ -170,7 +170,7 @@ namespace amo {
         			require(process.cwd() + '/ncui-dev');
         		}
         
-        		app.addUrlMapping('http://127.0.0.1:8020/', 'web/');
+        		app.addUrlMapping('http://127.0.0.1:8030/', 'web/');
         		tray.show(true);
         		const win = new BrowserWindow({
         			show: true,
@@ -182,7 +182,7 @@ namespace amo {
         			height: 720,
         			roundcorner: 5,
         			sizebox: "4,4,6,6",
-        			url: "http://127.0.0.1:8020/index.html",
+        			url: "http://127.0.0.1:8030/index.html",
         			titleBar: false
         		});
          ```

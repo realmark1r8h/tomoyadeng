@@ -40,7 +40,7 @@ namespace amo {
         		 {
         			 "browserWindowSettings":{
         			 "titleBar": true,
-        			 "url": "http://127.0.0.1:8020/doc/example/ManifestWindow.html"
+        			 "url": "http://127.0.0.1:8030/example/ManifestWindow.html"
         			 }
         		 }
          ```
@@ -56,7 +56,7 @@ namespace amo {
         			},
         			"browserWindowSettings":{
         				 "titleBar": true,
-        				 "url": "http://127.0.0.1:8020/doc/example/ManifestWindow.html"
+        				 "url": "http://127.0.0.1:8030/example/ManifestWindow.html"
         			 },
         			 "splashWindowSettings":{
         				"images":"%webDir%images/splash.png"
@@ -77,14 +77,14 @@ namespace amo {
         				 "useNode":false,
         				 "urlMappings":[
         					{
-        						"url":"http://127.0.0.1:8020/doc",
+        						"url":"http://127.0.0.1:8030",
         						"path":"%webDir%"
         					}
         				 ]
         			 },
         			 "browserWindowSettings":{
         				 "titleBar": true,
-        				 "url": "http://127.0.0.1:8020/doc/example/ManifestWindow.html"
+        				 "url": "http://127.0.0.1:8030/example/ManifestWindow.html"
         			 },
         			 "splashWindowSettings":{
         				"images":"%webDir%images/splash.png"
@@ -110,24 +110,27 @@ namespace amo {
         									"useNode":false,
         									"urlMappings":[
         										{
-        											"url":"http://127.0.0.1:8020/doc",
+        											"url":"http://127.0.0.1:8030",
         											"path":"%webDir%"
         										}
         									]
         								},
         								"browserWindowSettings":{
         									 "titleBar": true,
-        									 "url": "http://127.0.0.1:8020/doc/example/ManifestWindow.html"
+        									 "url": "http://127.0.0.1:8030/example/ManifestWindow.html"
         								 },
         								 "splashWindowSettings":{
         									"images":"%webDir%images/splash.png"
         								 }
-        							}`,3);
-        			sleep(1000);
-        			keyboard.keyPress(keyboard.VK_CONTROL, 'S');
-        			keyboard.keyPress(keyboard.VK_MENU, keyboard.VK_F4);
-        			include('app');
-        			app.restart();
+        							}`,10, true);
+        			keyboard.unique('keyboard.sayString', function(){
+        				sleep(1000);
+        				keyboard.keyPress(keyboard.VK_CONTROL, 'S');
+        				keyboard.keyPress(keyboard.VK_MENU, keyboard.VK_F4);
+        				include('app');
+        				app.restart();
+        			});
+        
          ```
          */
         
@@ -149,7 +152,7 @@ namespace amo {
         	include('BrowserWindow');
         	var win = new BrowserWindow({
         					titleBar: true,
-        					url: 'http://127.0.0.1:8020/doc/example/BrowserWindow.html'
+        					url: 'http://127.0.0.1:8030/example/BrowserWindow.html'
         				});
          ```
          */
@@ -201,7 +204,7 @@ namespace amo {
          *
          ```
         	 // 导入多个个模块
-        	 browser_modules('BrowserWindow', 'Path');
+        	 browser_modules('BrowserWindow', 'TaskTest');
         
          ```
          */

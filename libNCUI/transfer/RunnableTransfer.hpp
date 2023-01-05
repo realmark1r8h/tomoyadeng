@@ -96,7 +96,7 @@ namespace amo {
         
         /**
          * @fn	Any RunnableTransfer::attach(IPCMessage::SmartType msg)
-         *
+         * @tag single
          * @brief	将当前对象附加到一个线程中.
          *
          * @param	#Object 需要附加的线程
@@ -140,7 +140,7 @@ namespace amo {
         
         /**
          * @fn	Any RunnableTransfer::detach(IPCMessage::SmartType msg)
-         *
+         * @tag single
          * @brief	将当前对象从一个线程中分离.
          *
          * @return	无.
@@ -299,8 +299,10 @@ namespace amo {
         }
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(RunnableTransfer, ClassTransfer)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(attach, TransferFuncNormal | TransferExecNormal)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(detach, TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(attach,
+                                      TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(detach,
+                                      TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(suspend, TransferFuncNormal | TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(weakup,
                                       TransferMultiDisabled | TransferFuncNormal | TransferExecNormal)

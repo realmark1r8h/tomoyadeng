@@ -51,7 +51,7 @@ Copyright (C) ShineEnergy Corporation. All rights reserved.
 		<OutputFolder Condition="!HasTrailingSlash('$(OutputFolder)')">$(OutputFolder)\</OutputFolder>
 	</PropertyGroup>
   <PropertyGroup>
-		<IncludePath>$(SDKFolder)sqlite3;$(BoostFolder);$(ProjectDir);$(ProjectDir)header;$(ProjectDir)include;$(LibraryFolder)\cef;$(THirdPartyFolder)\sqlite3;$(THirdPartyFolder)\node;$(SolutionDir)include;$(SolutionDir)header;$(SolutionDir)libsExt;$(THirdPartyFolder);$(THirdPartyFolder)\Duilib;$(THirdPartyFolder)\amo;$(THirdPartyFolder)\7z\C;$(THirdPartyFolder)\7z\CPP;$(THirdPartyFolder)\7zpp;$(SolutionDir)libNCUI;$(IncludePath)</IncludePath>
+		<IncludePath>$(SDKFolder)sqlite3;$(BoostFolder);$(ProjectDir);$(ProjectDir)header;$(ProjectDir)include;$(LibraryFolder)\cef;$(THirdPartyFolder)\sqlite3;$(THirdPartyFolder)\node;$(SolutionDir)include;$(SolutionDir)header;$(SolutionDir)renderer_modules\libsExt;$(THirdPartyFolder);$(THirdPartyFolder)\Duilib;$(THirdPartyFolder)\amo;$(THirdPartyFolder)\7z\C;$(THirdPartyFolder)\7z\CPP;$(THirdPartyFolder)\7zpp;$(SolutionDir)libNCUI;$(IncludePath)</IncludePath>
 		<LibraryPath>$(SDKFolder)sqlite3\lib;$(BoostFolder)\stage\lib;$(LibraryFolder)\cef\$(Configuration);$(LibraryFolder)\node\$(Configuration);$(LibraryFolder)\node\$(Configuration)\lib\;$(ProjectDir)binary;$(ProjectDir)library;$(SolutionDir)library;$(OutDir);$(LibraryPath)</LibraryPath>
 	</PropertyGroup>
 

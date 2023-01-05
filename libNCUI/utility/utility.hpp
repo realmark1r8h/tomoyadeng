@@ -60,6 +60,10 @@ namespace amo {
                 json.push_back(val.As<int>());
                 break;
                 
+            case  AnyValueType<int64_t>::value:
+                json.push_back(val.As<int64_t>());
+                break;
+                
             case  AnyValueType<double>::value:
                 json.push_back(val.As<double>());
                 break;

@@ -275,10 +275,12 @@ namespace amo {
         /*! @brief	与NodeJs交互Handler. */
         std::shared_ptr<NodeMessageHandler> m_pNodeMessageHandler;
         /*! @brief	Node 线程. */
-        std::shared_ptr<std::thread> pNodeThread;
+        std::shared_ptr<amo::looper_executor> pNodeThread;
         
         /*! @brief	共享内存，用于处理单例模式. */
         std::shared_ptr<SharedMemory> m_pSharedMemory;
+        
+        std::shared_ptr<  amo::loader> nodeDll;
     };
     
 }

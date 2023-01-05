@@ -11,6 +11,8 @@
 #endif
 
 
+extern "C" {
+    STARTUP_API int runNCUI(void);
+}
 
-STARTUP_API int run(void);
-STARTUP_API int runWithArgs(int argc, char** argv);
+

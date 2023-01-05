@@ -9,6 +9,15 @@ namespace amo {
     KeyboardTransfer::KeyboardTransfer()
         : ClassTransfer("keyboard") {
         addDepends("system");
+        addModule("EventEmitter");
+    }
+    
+    KeyboardTransfer::~KeyboardTransfer() {
+        if (m_executor) {
+            m_executor->kill();
+        }
+        
+        m_executor.reset();
     }
     
     Any KeyboardTransfer::sayString(IPCMessage::SmartType msg) {
@@ -20,7 +29,14 @@ namespace amo {
             interval = msg->getArgumentList()->getInt(1);
         }
         
-        SendKeys(str, interval);
+        bool asyncCall = msg->getArgumentList()->getBool(2);
+        
+        if (asyncCall) {
+            AsyncSendKeys(msg, "sayString", interval);
+        } else {
+            SendKeys(str, interval);
+        }
+        
         return Undefined();
     }
     
@@ -114,13 +130,10 @@ namespace amo {
     }
     
     
-    void KeyboardTransfer::SendKeys(const amo::u8string& msg, int interval/* = 5*/) {
-    
+    void KeyboardTransfer::SendKeys(const amo::u8string& msg,
+                                    int interval/* = 5*/) {
+                                    
         USES_CONVERSION;
-        
-        /*  SendKeys2(msg);
-          return;*/
-        
         std::wstring data = msg.to_unicode();
         int len = data.size();
         
@@ -131,6 +144,33 @@ namespace amo {
                 Sleep(interval);
             }
         }
+        
+    }
+    
+    void KeyboardTransfer::AsyncSendKeys(IPCMessage::SmartType msg,
+                                         const std::string& eventName, int interval /*= 5*/) {
+        USES_CONVERSION;
+        
+        amo::u8string str(msg->getArgumentList()->getString(0), true);
+        int nBrowserID = msg->getArgumentList()->getInt(IPCArgsPosInfo::BrowserID);
+        int64_t nFrameID = msg->getArgumentList()->getInt64(IPCArgsPosInfo::FrameID);
+        
+        if (!m_executor) {
+            m_executor.reset(new amo::looper_executor());
+        }
+        
+        m_executor->execute([ = ]() {
+            SendKeys(str, interval);
+            
+            TransferEventInfo info;
+            info.name = getClass() + "." + eventName;
+            info.toAll = false;
+            info.suspend = false;;
+            info.browser = nBrowserID;
+            info.frame = nFrameID;
+            triggerEvent(info);
+        });
+        
     }
     
     std::vector<char> KeyboardTransfer::getKeys(IPCMessage::SmartType msg) {

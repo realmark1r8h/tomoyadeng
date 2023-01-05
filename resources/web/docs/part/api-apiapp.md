@@ -361,7 +361,7 @@ window.open('http://www.baidu.com');
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-app.addUrlMapping('http://test/test.html', '%webDir%/test.html');
+app.addUrlMapping('http://test/test.html', '%webDir%/index.html');
 console.log(app.urlToNativePath('http://test/test.html', true));
 console.assert(app.urlToNativePath('http://test/test.html', true) != '');
 console.assert(app.urlToNativePath('http://test/test2.html', true) == '');
@@ -571,7 +571,7 @@ app.destroy();
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-// 
+//
 app.setZipPassword('%webDir%web1.zip', '123456');
 
 ```

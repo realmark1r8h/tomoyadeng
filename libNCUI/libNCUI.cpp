@@ -93,10 +93,13 @@ NCUI_EXPORT int run(HINSTANCE hInstance) {
     CefEnableHighDPISupport();
 #endif
     CefMainArgs main_args(hInstance);
-    amo::AppContext::getInstance()->initialize(hInstance);
-    amo::AppContext::getInstance()->executeProcess(main_args);
-    amo::AppContext::getInstance()->run(main_args);
+    {
+        amo::AppContext::getInstance()->initialize(hInstance);
+        amo::AppContext::getInstance()->executeProcess(main_args);
+        amo::AppContext::getInstance()->run(main_args);
+    }
     
+    amo::AppContext::releaseInstance();
     return 0;
     
 }

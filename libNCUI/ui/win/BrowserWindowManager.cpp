@@ -377,8 +377,8 @@ namespace amo {
     
     
     BrowserWindowManager::~BrowserWindowManager() {
-        auto context = AppContext::getInstance();
-        context->getClientHandler()->UnregisterLifeSpanHandlerDelegate(this);
+        //auto context = AppContext::getInstance();
+        //context->getClientHandler()->UnregisterLifeSpanHandlerDelegate(this);
         $clog(amo::cdevel << func_orient << amo::endl;);
     }
     
@@ -443,6 +443,8 @@ namespace amo {
         std::shared_ptr<AppTransfer> pAppTransfer;
         pAppTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
         Any ret = pAppTransfer->urlToNativePath(msg);
+        
+        
         
         std::string u8Url = target_url.ToString();
         u8Url = ret.As<std::string>();

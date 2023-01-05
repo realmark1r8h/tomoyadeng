@@ -81,8 +81,9 @@ namespace amo {
         
         NODE_Keyboard,
         
-        NODE_Mouse
+        NODE_Mouse,
         
+        NODE_action
     };
     
     
@@ -302,7 +303,8 @@ namespace amo {
                     launcher->setValue(IPCArgsPosInfo::TransferName, getClassObject()->getName());
                     launcher->setValue(IPCArgsPosInfo::TransferID, getClassObject()->getID());
                     
-                    amo::Any out = launcher->syncExecute<const Nan::FunctionCallbackInfo<Value>&>(getClassObject()->getName(), args);
+                    amo::Any out = launcher->syncExecute<const Nan::FunctionCallbackInfo<Value>&>
+                                   (getClassObject()->getName(), args);
                     amo::u8json json = amo::stringToAny<amo::u8json>(out.value());
                     int64_t nID = json.get<int64_t>("id");
                     object->setID(nID);
@@ -325,7 +327,8 @@ namespace amo {
             object->on(args);
         }
         static void OnEvent(const  Nan::FunctionCallbackInfo<Value>& args) {
-            NodeClassV8Handler* object = ObjectWrap::Unwrap<NodeClassV8Handler>(args.Holder());
+            NodeClassV8Handler* object = ObjectWrap::Unwrap<NodeClassV8Handler>
+                                         (args.Holder());
             object->on(args);
         }
         
@@ -335,7 +338,8 @@ namespace amo {
         }
         
         static void ExecuteObjectFunc(const Nan::FunctionCallbackInfo<Value>& args) {
-            NodeClassV8Handler* object = ObjectWrap::Unwrap<NodeClassV8Handler>(args.Holder());
+            NodeClassV8Handler* object = ObjectWrap::Unwrap<NodeClassV8Handler>
+                                         (args.Holder());
             object->Execute(args);
         }
         
@@ -344,8 +348,9 @@ namespace amo {
             std::string strFunc = ObjectToString(var);	//获取函数名
             
             Isolate* isolate = args.GetIsolate();
-            NodeClassV8Handler* object = ObjectWrap::Unwrap<NodeClassV8Handler>(args.Holder());
-            
+            NodeClassV8Handler* object = ObjectWrap::Unwrap<NodeClassV8Handler>
+                                         (args.Holder());
+                                         
             if (strFunc == "on") {
                 object->on(args);
             } else if (strFunc == "emit") {
@@ -356,7 +361,8 @@ namespace amo {
         
         // Object
         
-        bool GetProperty(const std::string& name, const Nan::PropertyCallbackInfo<v8::Value>& info) {
+        bool GetProperty(const std::string& name,
+                         const Nan::PropertyCallbackInfo<v8::Value>& info) {
             auto& map = NodeProcessHandler::getClassMap();											//!< The map
             auto iter = map.find(getName());
             
@@ -407,14 +413,16 @@ namespace amo {
                 if (name == p.m_strName) {
                 
                     if (p.functionType() == TransferFuncConstructor) {
-                        amo::Any  any = launcher->syncExecute<const Nan::FunctionCallbackInfo<Value>&>(name, args);
+                        amo::Any  any = launcher->syncExecute<const Nan::FunctionCallbackInfo<Value>&>
+                                        (name, args);
                         NodeTypeConvertor convertor(this->getName());
                         args.GetReturnValue().Set(convertor.toV8Value(any));
                         return true;
                     }
                     
                     if (p.execType() == TransferExecSync) {
-                        amo::Any  any = launcher->syncExecute<const Nan::FunctionCallbackInfo<Value>&>(name, args);
+                        amo::Any  any = launcher->syncExecute<const Nan::FunctionCallbackInfo<Value>&>
+                                        (name, args);
                         NodeTypeConvertor convertor(this->getName());
                         args.GetReturnValue().Set(convertor.toV8Value(any));
                         return true;

@@ -311,7 +311,6 @@ namespace amo {
         
         m_pViewRender->setPaintSettings(m_oBrowserSettings);
         
-        
         if (m_oBrowserSettings->offscreen && m_oBrowserSettings->accelerator) {
         
             if (!m_oBrowserSettings->transparent) {
@@ -349,6 +348,13 @@ namespace amo {
             m_pClientHandler->RegisterLifeSpanHandlerDelegate(this);
             m_pClientHandler->RegisterRenderHandlerDelegate(this);
             m_pClientHandler->RegisterDisplayHandlerDelegate(this);
+        }
+        
+        std::string redirectUrl = UrlResourceHandlerFactory::getInstance()->redirectUrl(
+                                      m_oBrowserSettings->url);
+                                      
+        if (!redirectUrl.empty()) {
+            m_oBrowserSettings->url = redirectUrl;
         }
         
         CefBrowserHost::CreateBrowser(windowInfo,

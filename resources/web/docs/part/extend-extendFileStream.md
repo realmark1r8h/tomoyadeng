@@ -35,7 +35,7 @@
 
 ```html
 include('FileStream');
-var filestream = new FileStream('manifest2.json');
+var filestream = new FileStream('manifest2.json', FileStream.out + FileStream.binary);
 filestream.write('33');
 // 文件被占用，无法删除
 console.assert(FileStream.Remove('manifest2.json') == false);
@@ -261,7 +261,7 @@ filestream.close();
 
 ```html
 include('FileStream');
-var filestream = new FileStream('manifest2.json');
+var filestream = new FileStream('manifest2.json', FileStream.out | FileStream.binary);
 console.assert(filestream.write('1234567890') == true);
 filestream.remove();
 
@@ -378,14 +378,16 @@ console.assert(filestream.isOpened() == false);
 
 ```html
 include('FileStream');
-var filestream = new FileStream('manifest.json');
+var filestream = new FileStream('manifest.json', FileStream.in);
 console.log(filestream.size());
 
-var filestream2 = new FileStream('manifest2.json');
-console.assert(filestream.size() == 0);
+var filestream2 = new FileStream('manifest2.json',FileStream.out);
+console.assert(filestream2.size() == 0);
 
 filestream2.write('1234567890');
-console.assert(filestream.size() == 10);
+filestream2.close();
+filestream2.open(1);
+console.assert(filestream2.size() == 10);
 
 filestream2.remove();
 
@@ -413,7 +415,7 @@ var filestream = new FileStream('manifest2.json');
 console.assert(filestream.remove() == true);
 // 以只读方式打开，如果文件不存在，则不会创建文件
 var filestream2 = new FileStream('manifest2.json', 1);
-console.assert(filestream.remove() == false);
+console.assert(filestream.remove() == true);
 
 ```
 
@@ -433,8 +435,9 @@ console.assert(filestream.remove() == false);
 
 ```html
 include('FileStream');
-var filestream = new FileStream('manifest.json');
-filestream.readAll(); // readAll不会影响内部文件指针位置
+var filestream = new FileStream('manifest.json', FileStream.in);
+//filestream.readAll(); // readAll不会影响内部文件指针位置
+console.log(filestream.eof());
 console.assert(filestream.eof() ==false);
 while(!filestream.eof()){
     console.log(filestream.readSome(100));
