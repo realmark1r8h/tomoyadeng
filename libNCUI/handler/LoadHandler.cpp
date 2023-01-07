@@ -36,7 +36,7 @@ namespace amo {
         
     }
     
-#if CHROME_VERSION_BUILD >= 2704
+#if CHROME_VERSION_BUILD >= 2743
     void LoadHandler::OnLoadStart(CefRefPtr<CefBrowser> browser,
                                   CefRefPtr<CefFrame> frame, TransitionType transition_type) {
         $clog(amo::cdevel << func_orient << amo::endl;);

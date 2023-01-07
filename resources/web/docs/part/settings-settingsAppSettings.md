@@ -24,7 +24,7 @@
 	<td>Boolean</td>
 	<td>single_process</td>
 	<td>true </td>
-	<td>是否使用单进程模式，如果程序比较复杂，应该尽量使用多进程模式 <span class="label label-const">常量</span> 
+	<td>是否使用单进程模式，如果程序比较复杂，应该尽量使用多进程模式,cef3440及以上不再支持单进程模式，该字段失效 <span class="label label-const">常量</span> 
 </td>
 </tr><tr>
 	<td>String</td>
@@ -210,6 +210,11 @@
 	<td>nonGlobalModules</td>
 	<td>[] </td>
 	<td>禁止被导出到全局变量的类列表. </td>
+</tr><tr>
+	<td>Boolean</td>
+	<td>dump</td>
+	<td>false </td>
+	<td>是否在崩溃时创建dump文件. </td>
 </tr>
 	</tbody>
 </table>

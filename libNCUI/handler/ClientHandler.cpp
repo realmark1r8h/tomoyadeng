@@ -176,10 +176,12 @@ namespace amo {
     CefRefPtr<CefJSDialogHandler> ClientHandler::GetJSDialogHandler() {
         return m_pJSDialogHandler.get();
     }
-    
+#if CEF_VERSION_REGION(0,3325)
     CefRefPtr<CefGeolocationHandler> ClientHandler::GetGeolocationHandler() {
         return m_pGeolocationHandler.get();
     }
+#endif
+    
     
     CefRefPtr<CefFocusHandler> ClientHandler::GetFocusHandler() {
         return m_pFocusHandler.get();

@@ -236,7 +236,7 @@ namespace amo {
         
         
     }
-    
+#if CEF_VERSION_REGION(0,3325)
     bool RenderProcessHandler::OnBeforeNavigation(CefRefPtr<CefBrowser> browser,
             CefRefPtr<CefFrame> frame,
             CefRefPtr<CefRequest> request,
@@ -276,7 +276,7 @@ namespace amo {
         
         return false;
     }
-    
+#endif
     CefRefPtr<CefLoadHandler> RenderProcessHandler::GetLoadHandler() {
     
         $clog(amo::cdevel << func_orient << "GetLoadHandler。" << amo::endl;);

@@ -8,7 +8,7 @@
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-// 直接在NCUI中使用Node.js
+//@skip 直接在NCUI中使用Node.js
 {
     "appSettings":{
         useNode: true,
@@ -17,7 +17,7 @@
     }
 }
 
-// 在单独的进程中使用Node.js
+//@skip 在单独的进程中使用Node.js
 {
     "appSettings":{
         "useNode": true,

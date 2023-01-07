@@ -172,12 +172,14 @@ namespace amo {
          *
          * @return	true if it succeeds, false if it fails.
          */
-        
+#if CEF_VERSION_REGION(0,3325)
         virtual bool OnBeforeNavigation(CefRefPtr<CefBrowser> browser,
                                         CefRefPtr<CefFrame> frame,
                                         CefRefPtr<CefRequest> request,
                                         NavigationType navigation_type,
                                         bool is_redirect) override;
+#endif
+                                        
                                         
         /*!
          * @fn	virtual void RenderProcessHandler::OnContextCreated(

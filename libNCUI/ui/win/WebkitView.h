@@ -144,14 +144,14 @@ namespace amo {
                                 bool& suppress_message) override;
 #endif
                                 
-        bool WebkitView::OnJSDialog2(CefRefPtr<CefBrowser> browser,
-                                     const CefString & origin_url,
-                                     CefJSDialogHandler::JSDialogType dialog_type,
-                                     const CefString & message_text,
-                                     const CefString & default_prompt_text,
-                                     CefRefPtr<CefJSDialogCallback> callback,
-                                     bool & suppress_message);
-                                     
+        bool OnJSDialog2(CefRefPtr<CefBrowser> browser,
+                         const CefString & origin_url,
+                         CefJSDialogHandler::JSDialogType dialog_type,
+                         const CefString & message_text,
+                         const CefString & default_prompt_text,
+                         CefRefPtr<CefJSDialogCallback> callback,
+                         bool & suppress_message);
+                         
         virtual bool OnBeforeUnloadDialog(CefRefPtr<CefBrowser> browser,
                                           const CefString& message_text,
                                           bool is_reload,
@@ -163,8 +163,14 @@ namespace amo {
                                                CefRequestHandler::TerminationStatus status) override;
                                                
         // RequestHandlerDelegate
-        
-        
+#if CEF_VERSION_REGION(3325, 10000)
+        virtual bool OnBeforeBrowse(CefRefPtr<CefBrowser> browser,
+                                    CefRefPtr<CefFrame> frame,
+                                    CefRefPtr<CefRequest> request,
+                                    bool is_redirect)override;
+#endif
+                                    
+                                    
         virtual void OnResourceRedirect(CefRefPtr<CefBrowser> browser,
                                         CefRefPtr<CefFrame> frame,
                                         const CefString& old_url,

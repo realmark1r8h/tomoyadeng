@@ -70,6 +70,9 @@
     <Filter Include="ui\win\renderer">
       <UniqueIdentifier>{51b80adf-8870-4077-bf8d-76e912eae446}</UniqueIdentifier>
     </Filter>
+    <Filter Include="handler\patch">
+      <UniqueIdentifier>{bf84c048-3c0b-4bdd-b22f-bb7aa069d671}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="context\AppContext.cpp">
@@ -345,18 +348,6 @@
     <ClCompile Include="transfer\BrowserWindowTransfer.cpp">
       <Filter>transfer</Filter>
     </ClCompile>
-    <ClCompile Include="cefsimple\cefsimple_win.cc">
-      <Filter>cefsimple</Filter>
-    </ClCompile>
-    <ClCompile Include="cefsimple\simple_app.cc">
-      <Filter>cefsimple</Filter>
-    </ClCompile>
-    <ClCompile Include="cefsimple\simple_handler.cc">
-      <Filter>cefsimple</Filter>
-    </ClCompile>
-    <ClCompile Include="cefsimple\simple_handler_win.cc">
-      <Filter>cefsimple</Filter>
-    </ClCompile>
     <ClCompile Include="ui\win\menu\ContextMenuWindow.cpp">
       <Filter>ui\win\menu</Filter>
     </ClCompile>
@@ -503,6 +494,18 @@
     </ClCompile>
     <ClCompile Include="module\AppExHandler.cpp">
       <Filter>module</Filter>
+    </ClCompile>
+    <ClCompile Include="cefsimple\cefsimple_win.cc">
+      <Filter>cefsimple</Filter>
+    </ClCompile>
+    <ClCompile Include="cefsimple\simple_app.cc">
+      <Filter>cefsimple</Filter>
+    </ClCompile>
+    <ClCompile Include="cefsimple\simple_handler.cc">
+      <Filter>cefsimple</Filter>
+    </ClCompile>
+    <ClCompile Include="cefsimple\simple_handler_win.cc">
+      <Filter>cefsimple</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -824,12 +827,6 @@
     <ClInclude Include="transfer\BrowserWindowTransfer.h">
       <Filter>transfer</Filter>
     </ClInclude>
-    <ClInclude Include="cefsimple\simple_app.h">
-      <Filter>cefsimple</Filter>
-    </ClInclude>
-    <ClInclude Include="cefsimple\simple_handler.h">
-      <Filter>cefsimple</Filter>
-    </ClInclude>
     <ClInclude Include="ipc\Any.hpp">
       <Filter>ipc</Filter>
     </ClInclude>
@@ -1081,6 +1078,15 @@
     </ClInclude>
     <ClInclude Include="module\AppExHandler.h">
       <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="cefsimple\simple_app.h">
+      <Filter>cefsimple</Filter>
+    </ClInclude>
+    <ClInclude Include="cefsimple\simple_handler.h">
+      <Filter>cefsimple</Filter>
+    </ClInclude>
+    <ClInclude Include="handler\patch\cef_geolocation_handler.h">
+      <Filter>handler\patch</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -36,7 +36,7 @@ namespace amo {
          * @example
          *
          ```
-        		 // 一个简单的配置文件,只包含启动窗口的参数配置段， 设置程序启时要打开的URL
+        		 //@skip 一个简单的配置文件,只包含启动窗口的参数配置段， 设置程序启时要打开的URL
         		 {
         			 "browserWindowSettings":{
         			 "titleBar": true,
@@ -48,7 +48,7 @@ namespace amo {
          * @example
          *
          ```
-        		 // 一个包含所有段的的配置文件
+        		 //@skip 一个包含所有段的的配置文件
         		{
         			"appSettings":{
         				"single_process": true,
@@ -66,6 +66,7 @@ namespace amo {
          * @example 修改manifest.json
          *
          ```
+        	 //@skip
         	 includes('Path','FileStream', 'app');
         	 var path = new Path('manifest.json');
         	 path.copyTo('manifest2.json');// 备份manifest.json，你可以再查看效果后手动恢复该文件
@@ -89,47 +90,49 @@ namespace amo {
         			 "splashWindowSettings":{
         				"images":"%webDir%images/splash.png"
         			 }
-        		}`,3);
+        		}`);
         	 filestream.close();
         	 app.restart();
          ```
          * @example 修改manifest.json
          *
          ```
-        			include('Path');
-        			var path = new Path('manifest.json');
-        			path.copyTo('manifest2.json');// 备份manifest.json，你可以再查看效果后手动恢复该文件
-        			include('shell');
-        			shell.exec('open', 'notepad', 'manifest.json');
-        			sleep(1000);
-        			include('keyboard');
-        			keyboard.keyPress(keyboard.VK_CONTROL, 'A');
-        			keyboard.sayString(`{
-        								"appSettings":{
-        									"single_process": true,
-        									"useNode":false,
-        									"urlMappings":[
-        										{
-        											"url":"http://127.0.0.1:8030",
-        											"path":"%webDir%"
-        										}
-        									]
-        								},
-        								"browserWindowSettings":{
-        									 "titleBar": true,
-        									 "url": "http://127.0.0.1:8030/example/ManifestWindow.html"
-        								 },
-        								 "splashWindowSettings":{
-        									"images":"%webDir%images/splash.png"
-        								 }
-        							}`,10, true);
-        			keyboard.unique('keyboard.sayString', function(){
-        				sleep(1000);
-        				keyboard.keyPress(keyboard.VK_CONTROL, 'S');
-        				keyboard.keyPress(keyboard.VK_MENU, keyboard.VK_F4);
-        				include('app');
-        				app.restart();
-        			});
+        	//@skip
+        	include('Path');
+        	var path = new Path('manifest.json');
+        	path.copyTo('manifest2.json');// 备份manifest.json，你可以再查看效果后手动恢复该文件
+        	include('shell');
+        	shell.exec('open', 'notepad', 'manifest.json');
+        	sleep(1000);
+        	include('keyboard');
+        	keyboard.keyPress(keyboard.VK_CONTROL, 'A');
+        	keyboard.sayString(`
+        	{
+        		"appSettings":{
+        			"single_process": true,
+        			"useNode":false,
+        			"urlMappings":[
+        				{
+        					"url":"http://127.0.0.1:8030",
+        					"path":"%webDir%"
+        				}
+        			]
+        		},
+        		"browserWindowSettings":{
+        				"titleBar": true,
+        				"url": "http://127.0.0.1:8030/example/ManifestWindow.html"
+        			},
+        			"splashWindowSettings":{
+        			"images":"%webDir%images/splash.png"
+        			}
+        	}`,10, true);
+        	keyboard.unique('keyboard.sayString', function(){
+        		sleep(1000);
+        		keyboard.keyPress(keyboard.VK_CONTROL, 'S');
+        		keyboard.keyPress(keyboard.VK_MENU, keyboard.VK_F4);
+        		include('app');
+        		app.restart();
+        	});
         
          ```
          */
@@ -205,6 +208,8 @@ namespace amo {
          ```
         	 // 导入多个个模块
         	 browser_modules('BrowserWindow', 'TaskTest');
+        	 var taskTest = new TaskTest();
+        	 console.assert(taskTest.add(1,2) == 3);
         
          ```
          */

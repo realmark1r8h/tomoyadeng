@@ -6,6 +6,7 @@
 
 #include "include/cef_version.h"
 
+
 #if CHROME_VERSION_BUILD >= 2454
 #include "include/base/cef_logging.h"
 #include "include/cef_resource_bundle.h"
@@ -67,7 +68,13 @@
 #include "include/cef_keyboard_handler.h"
 #include "include/cef_jsdialog_handler.h"
 #include "include/internal/cef_ptr.h"
+
+#if CHROME_VERSION_BUILD >= 3325
+#include "handler/patch/cef_geolocation_handler.h"
+#else
 #include "include/cef_geolocation_handler.h"
+#endif
+
 #include "include/cef_focus_handler.h"
 #include "include/wrapper/cef_message_router.h"
 #include "include/cef_client.h"
@@ -158,6 +165,23 @@ private:
 #ifndef CLOSURE_HELPER
 #define CLOSUER_HELPER(fn)\
 	base::Bind(&ClosureHelper::Execute, ClosureHelper::Create(fn))
+#endif
+
+
+#ifndef CEF_VERSION_REGION
+#define CEF_VERSION_REGION(low, high) (CHROME_VERSION_BUILD >= low  && CHROME_VERSION_BUILD < high)
+#endif
+
+#ifndef CEF_VERSION_EQ
+#define CEF_VERSION_EQ(val) (CHROME_VERSION_BUILD == val )
+#endif
+
+#ifndef CEF_VERSION_GE
+#define CEF_VERSION_GE(low) (CHROME_VERSION_BUILD >= low )
+#endif
+
+#ifndef CEF_VERSION_LT
+#define CEF_VERSION_LT(high) (CHROME_VERSION_BUILD < high)
 #endif
 
 

@@ -176,12 +176,20 @@ namespace amo {
          *
          * @return	true if it succeeds, false if it fails.
          */
-        
+#if CEF_VERSION_REGION(3359, 10000)
+        virtual bool OnBeforeBrowse(CefRefPtr<CefBrowser> browser,
+                                    CefRefPtr<CefFrame> frame,
+                                    CefRefPtr<CefRequest> request,
+                                    bool user_gesture,
+                                    bool is_redirect)override;
+                                    
+#elif CEF_VERSION_REGION(0, 3359)
         virtual bool OnBeforeBrowse(CefRefPtr<CefBrowser> browser,
                                     CefRefPtr<CefFrame> frame,
                                     CefRefPtr<CefRequest> request,
                                     bool is_redirect) override;
                                     
+#endif
                                     
 #if CHROME_VERSION_BUILD >= 2272
                                     
@@ -251,21 +259,37 @@ namespace amo {
          * @param 	new_url	URL of the new.
          */
         
-#if CHROME_VERSION_BUILD >= 2704
+#if CEF_VERSION_REGION(3071, 10000)
         virtual void OnResourceRedirect(CefRefPtr<CefBrowser> browser,
                                         CefRefPtr<CefFrame> frame,
                                         CefRefPtr<CefRequest> request,
                                         CefRefPtr<CefResponse> response,
                                         CefString& new_url) override;
-#elif CHROME_VERSION_BUILD >= 2623
+#elif CEF_VERSION_REGION( 2840, 3029)
+                                        
+                                        
+                                        
+        virtual void OnResourceRedirect(CefRefPtr<CefBrowser> browser,
+                                        CefRefPtr<CefFrame> frame,
+                                        CefRefPtr<CefRequest> request,
+                                        CefString& new_url) override;
+                                        
+#elif CEF_VERSION_REGION( 2785, 2840)
         virtual void OnResourceRedirect(CefRefPtr<CefBrowser> browser,
                                         CefRefPtr<CefFrame> frame,
                                         const CefString& old_url,
                                         CefString& new_url) override;
-#else
+                                        
+                                        
+#elif CEF_VERSION_REGION(2357,2785)
         virtual void OnResourceRedirect(CefRefPtr<CefBrowser> browser,
                                         CefRefPtr<CefFrame> frame,
                                         CefRefPtr<CefRequest> request,
+                                        CefString& new_url) override;
+#elif CEF_VERSION_REGION(0,2357)
+        virtual void OnResourceRedirect(CefRefPtr<CefBrowser> browser,
+                                        CefRefPtr<CefFrame> frame,
+                                        const CefString& old_url,
                                         CefString& new_url) override;
 #endif
                                         
@@ -390,7 +414,7 @@ namespace amo {
                                         CefRefPtr<CefAllowCertificateErrorCallback> callback) override;
 #endif
             
-#if CHROME_VERSION_BUILD >= 2526
+#if CEF_VERSION_REGION(2454, 10000)
             
             
         /*!
@@ -416,7 +440,7 @@ namespace amo {
                                          const CefString& policy_url,
                                          CefRefPtr<CefWebPluginInfo> info) override;*/
         
-#else
+#elif CEF_VERSION_REGION(0, 2454)
         virtual bool OnBeforePluginLoad(CefRefPtr<CefBrowser> browser,
                                         const CefString& url,
                                         const CefString& policy_url,

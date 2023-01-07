@@ -30,6 +30,7 @@
 
 
 
+
 namespace {
 
     // These flags must match the Chromium values.
@@ -396,11 +397,17 @@ namespace amo {
         // 不去掉的话打印页面的时候会触发异常处理程序，导致程序关闭
         // ::SetUnhandledExceptionFilter(OurSetUnhandledExceptionFilter);
         amo::u8path::set_work_path_to_app_path();
+        
+        if (getDefaultAppSettings()->dump)  {
+            amo::app::dump(true);
+        }
+        
         AMO_TIMER_ELAPSED();
         
         if (!amo::log::initialize()) {
             return;
         }
+        
         
         /*auto sink1 = std::make_shared<spdlog::sinks::msvc_sink_mt>();
         amo::log::add_sink(sink1);  */
@@ -439,6 +446,7 @@ namespace amo {
         }
         
         auto pAppSettings = getDefaultAppSettings();
+        // 单进程模式下需要在单独的线程上创建管道，否则容易引起死锁
         ClientHandler::SingleProcessMode(pAppSettings->single_process != 0);
         
         //
@@ -503,7 +511,7 @@ namespace amo {
         amo::log::finalize();
         CefShutdown();
         
-        
+        amo::app::dump(false);
     }
     
     bool AppContext::startHook() {

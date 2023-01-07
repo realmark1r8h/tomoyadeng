@@ -9,6 +9,7 @@
 #include "handler/RenderProcessHandler.h"
 #include "handler/BrowserProcessHandler.h"
 #include "../cefsimple/simple_handler.h"
+#include "settings/AppSettings.h"
 
 namespace amo {
 
@@ -56,7 +57,7 @@ namespace amo {
     
     
     ClientApp::ClientApp() {
-		$clog(amo::cdevel << func_orient << amo::endl;);
+        $clog(amo::cdevel << func_orient << amo::endl;);
         m_pBrowserProcessHandler = NULL;
         m_pRenderProcessHandler = NULL;
         m_pResourceBundleHandler = NULL;
@@ -218,14 +219,25 @@ namespace amo {
         // 此参数解决多窗口问题
         command_line->AppendSwitch("enable-gpu");
         command_line->AppendSwitch("enable-pdf-extension");
+#if CEF_VERSION_REGION(3440, 10000)
+        auto appSettings = AppSettings::getInstance();
+        
+        if (appSettings->single_process) {
+            // const char kSingleProcess[] = "single-process";
+            command_line->AppendSwitch("single-process");
+        }
+        
+#endif
+        
         // 允许调用摄像头
         command_line->AppendSwitch("enable-media-stream");
         command_line->AppendSwitch("process-per-site");
         // 使用npapi flash 插件 部分网页会导致程序无响应死掉 百度音乐
         command_line->AppendSwitch("enable-npapi");		// http://blog.csdn.net/sp_daiyq/article/details/50187737 原因是chromium从42之后就不默认支持NPAPI了（3.2357使用的chromium是43）
         
-        command_line->AppendSwitchWithValue("ppapi-flash-path", "plugins/pepflashplayer.dll");
-        
+        command_line->AppendSwitchWithValue("ppapi-flash-path",
+                                            "plugins/pepflashplayer.dll");
+                                            
         // 允许使用Flash，2704以下版本本身可以自动加载flash插件，高版本需要手动指定flash路径，但是程序启动时会弹个黑框
         /*      command_line->AppendSwitchWithValue("ppapi-flash-path",
                                                   "plugins/pepflashplayer.dll");*/
@@ -263,7 +275,7 @@ namespace amo {
     
     
     void ClientApp::OnContextInitialized() {
-        $clog(amo::cdevel << func_orient << "OnContextInitialized" << amo::endl; );
+        $clog(amo::cdevel << func_orient << "OnContextInitialized" << amo::endl;);
 #if CHROME_VERSION_BUILD >= 2357
         CefRefPtr<CefCookieManager> manager = CefCookieManager::GetGlobalManager(NULL);
 #else

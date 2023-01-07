@@ -164,6 +164,7 @@ namespace amo {
         
         }
         
+        
         /*!
         * @section	DLL调用
         * @ignore
@@ -172,6 +173,20 @@ namespace amo {
         */
         
         void foo8() {
+        
+        }
+        
+        /**
+         * @section	使用Flash
+         *
+         * @brief
+         * 你可以按照下下步骤加载ppapi类型的flash到程序中：<br> 1.找到一个可用的flash的动态库,将dll文件名为pepflashplayer.dll;<br> 2.和manifest.json文件一起放到plugins目录下即可.<br>
+         * 使用NPAPI类型的flash:直接将dll放到plugins目录下即可<br>
+         * <b>2704及以上版本不支持npapi插件，只能使用ppapi类型的flash</b>
+         */
+        
+        
+        void foo9() {
         
         }
     };

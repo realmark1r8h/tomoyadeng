@@ -30,7 +30,7 @@ namespace amo {
          * @example
          *
         	```
-        			// 直接在NCUI中使用Node.js
+        			//@skip 直接在NCUI中使用Node.js
         			{
         				"appSettings":{
         					useNode: true,
@@ -39,7 +39,7 @@ namespace amo {
         				}
         			}
         
-        			// 在单独的进程中使用Node.js
+        			//@skip 在单独的进程中使用Node.js
         			{
         				"appSettings":{
         					"useNode": true,

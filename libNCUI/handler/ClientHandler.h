@@ -111,7 +111,10 @@ namespace amo {
         virtual CefRefPtr<CefDownloadHandler> GetDownloadHandler() override;
         virtual CefRefPtr<CefDragHandler> GetDragHandler() override;
         virtual CefRefPtr<CefFocusHandler> GetFocusHandler() override;
+#if CEF_VERSION_REGION(0,3325)
         virtual CefRefPtr<CefGeolocationHandler> GetGeolocationHandler() override;
+#endif
+        
         virtual CefRefPtr<CefJSDialogHandler> GetJSDialogHandler() override;
         virtual CefRefPtr<CefKeyboardHandler> GetKeyboardHandler() override;
         virtual CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() override;

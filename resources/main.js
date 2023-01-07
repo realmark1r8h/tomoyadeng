@@ -45,6 +45,7 @@ const win = new BrowserWindow({
 	width: 1280,
 	height: 720,
 	roundcorner: 5,
+	main:true,
 	sizebox: "4,4,6,6",
 	url: "http://127.0.0.1:8020/index.html",
 	titleBar: true

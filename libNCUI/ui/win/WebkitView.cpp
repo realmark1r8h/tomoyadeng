@@ -73,7 +73,8 @@ namespace {
         MAKE_ERROR_CODE_STR(ERR_SSL_VERSION_OR_CIPHER_MISMATCH),
         MAKE_ERROR_CODE_STR(ERR_SSL_RENEGOTIATION_REQUESTED),
         MAKE_ERROR_CODE_STR(ERR_CERT_COMMON_NAME_INVALID),
-        MAKE_ERROR_CODE_STR(ERR_CERT_BEGIN),
+        
+        
         MAKE_ERROR_CODE_STR(ERR_CERT_DATE_INVALID),
         MAKE_ERROR_CODE_STR(ERR_CERT_AUTHORITY_INVALID),
         MAKE_ERROR_CODE_STR(ERR_CERT_CONTAINS_ERRORS),
@@ -81,12 +82,12 @@ namespace {
         MAKE_ERROR_CODE_STR(ERR_CERT_UNABLE_TO_CHECK_REVOCATION),
         MAKE_ERROR_CODE_STR(ERR_CERT_REVOKED),
         MAKE_ERROR_CODE_STR(ERR_CERT_INVALID),
-        MAKE_ERROR_CODE_STR(ERR_CERT_WEAK_SIGNATURE_ALGORITHM),
+        
         // -209 is available: was ERR_CERT_NOT_IN_DNS.
-        MAKE_ERROR_CODE_STR(ERR_CERT_NON_UNIQUE_NAME),
-        MAKE_ERROR_CODE_STR(ERR_CERT_WEAK_KEY),
-        MAKE_ERROR_CODE_STR(ERR_CERT_NAME_CONSTRAINT_VIOLATION),
-        MAKE_ERROR_CODE_STR(ERR_CERT_VALIDITY_TOO_LONG),
+        
+        
+        
+        
         MAKE_ERROR_CODE_STR(ERR_CERT_END),
         MAKE_ERROR_CODE_STR(ERR_INVALID_URL),
         MAKE_ERROR_CODE_STR(ERR_DISALLOWED_URL_SCHEME),
@@ -101,6 +102,17 @@ namespace {
         MAKE_ERROR_CODE_STR(ERR_EMPTY_RESPONSE),
         MAKE_ERROR_CODE_STR(ERR_RESPONSE_HEADERS_TOO_BIG),
         MAKE_ERROR_CODE_STR(ERR_CACHE_MISS),
+        
+        
+#if CEF_VERSION_GE(2526)
+        MAKE_ERROR_CODE_STR(ERR_CERT_BEGIN),
+        MAKE_ERROR_CODE_STR(ERR_CERT_NAME_CONSTRAINT_VIOLATION),
+        MAKE_ERROR_CODE_STR(ERR_CERT_NON_UNIQUE_NAME),
+        MAKE_ERROR_CODE_STR(ERR_CERT_VALIDITY_TOO_LONG),
+        MAKE_ERROR_CODE_STR(ERR_CERT_WEAK_KEY),
+        MAKE_ERROR_CODE_STR(ERR_CERT_WEAK_SIGNATURE_ALGORITHM),
+#endif
+        
         MAKE_ERROR_CODE_STR(ERR_INSECURE_RESPONSE)
     };
     
@@ -1474,10 +1486,34 @@ namespace amo {
         return;
     }
     
+    
+    
     CefRefPtr<CefBrowser> WebkitView::getBrowser() {
         return m_pBrowser;
     }
     
+#if CEF_VERSION_REGION(3325, 10000)
+    bool WebkitView::OnBeforeBrowse(CefRefPtr<CefBrowser> browser,
+                                    CefRefPtr<CefFrame> frame,
+                                    CefRefPtr<CefRequest> request,
+                                    bool is_redirect) {
+        // RenderProcessHandler::OnBeforeNavigation 无法使用后的替代方式，并不完美
+        
+        //CefRequest::TransitionType type = (int)request->GetTransitionType();
+        int type = (int)request->GetTransitionType();
+        
+        
+        if ((type & TT_RELOAD) != 0 && !m_pBrowserSettings->reload) {
+            return true;
+        }
+        
+        if ((type & TT_FORWARD_BACK_FLAG) != 0 && !m_pBrowserSettings->back_forword) {
+            return true;
+        }
+        
+        return false;
+    }
+#endif
     
     void WebkitView::OnLoadStart(CefRefPtr<CefBrowser> browser,
                                  CefRefPtr<CefFrame> frame) {

@@ -22,36 +22,44 @@ namespace amo {
     }
     
     void AppSettings::initDefaultCefSettings() {
-        amo::u8string strAppPath(amo::u8path::getExeDir(), true);						//!< 获取当前可执行文件目录
-        std::string strLogFile = (strAppPath +
-                                  L"\\cef.log").to_utf8();			//!< 日志文件
-        std::string strExeFullName =  amo::u8string(
-                                          amo::u8path::getFullExeName(), true).to_utf8();		//!< 完整路径的程序名
-        std::string strResourcesPath = (strAppPath + "").to_utf8();				//!< 资源目录
-        std::string strLocalesPath = (strAppPath +
-                                      "\\locales").to_utf8();		//!< Local目录
-                                      
-        DEFAULT_ARGS_SETTINGS(single_process,
-                              true);							//!< 禁止当进程模式 ，该版本使用单进程模式无法渲染页
-        DEFAULT_ARGS_SETTINGS(no_sandbox, true);								//!< 沙箱
-        CEFSTRING_DEFAULT_ARGS_SETTINGS(browser_subprocess_path,
-                                        strExeFullName);	//!< 子进程路径文件，默认与当前程序文件相同
-        DEFAULT_ARGS_SETTINGS(multi_threaded_message_loop,
-                              false);				//!< 禁止多线程消息循环，会出问题
-                              
-        CEFSTRING_DEFAULT_ARGS_SETTINGS(resources_dir_path,
-                                        strResourcesPath);	//!< 设置资源目录
-        CEFSTRING_DEFAULT_ARGS_SETTINGS(locales_dir_path,
-                                        strLocalesPath);		//!< local目录
-        CEFSTRING_DEFAULT_ARGS_SETTINGS(cache_path,
-                                        getCachePath().to_utf8());	//!< 默认缓存路径
-                                        
-                                        
-        CEFSTRING_DEFAULT_ARGS_SETTINGS(locale,
-                                        "zh-CN");						//!< 语言环境默认中文
-        DEFAULT_ARGS_SETTINGS(background_color,
-                              0);					//!< 页面未加载前背景色
-                              
+        //!< 获取当前可执行文件目录
+        amo::u8string strAppPath(amo::u8path::getExeDir(), true);
+        //!< 日志文件，如果日志文件所在目录不存在，那么CEF不会使用该路径写入日志文件
+        std::string strLogFile = (strAppPath + L"cef.log").to_utf8();
+        
+        /* amo::u8path logPath(strLogFile);
+         logPath.absolute();
+         logPath.parent().create_directory();*/
+        
+        //!< 完整路径的程序名
+        std::string strExeFullName = amo::u8path::getFullExeName();
+        //!< 资源目录
+        std::string strResourcesPath = (strAppPath + "").to_utf8();
+        //!< Local目录
+        std::string strLocalesPath = (strAppPath + "\\locales").to_utf8();
+        //!< 禁止当进程模式 ，该版本使用单进程模式无法渲染页
+        DEFAULT_ARGS_SETTINGS(single_process,  true);
+        //!< 禁用沙箱
+        DEFAULT_ARGS_SETTINGS(no_sandbox, true);
+        //!< 子进程路径文件，默认与当前程序文件相同
+        CEFSTRING_DEFAULT_ARGS_SETTINGS(browser_subprocess_path, strExeFullName);
+        //!< 禁止多线程消息循环，会出问题
+        DEFAULT_ARGS_SETTINGS(multi_threaded_message_loop, false);
+        //!< 设置资源目录
+        CEFSTRING_DEFAULT_ARGS_SETTINGS(resources_dir_path,  strResourcesPath);
+        //!< local目录
+        CEFSTRING_DEFAULT_ARGS_SETTINGS(locales_dir_path,  strLocalesPath);
+        //!< 默认缓存路径
+        CEFSTRING_DEFAULT_ARGS_SETTINGS(cache_path,  getCachePath().to_utf8());
+        //!< 语言环境默认中文
+        CEFSTRING_DEFAULT_ARGS_SETTINGS(locale, "zh-CN");
+        //!< 页面未加载前背景色
+        DEFAULT_ARGS_SETTINGS(background_color, 0);
+        //!< 指定CEF日志路径
+        CEFSTRING_DEFAULT_ARGS_SETTINGS(log_file, strLogFile);
+        //!< 关闭CEF日志
+        DEFAULT_ARGS_SETTINGS(log_severity, LOGSEVERITY_DISABLE);
+        
         // 下面的参数最好都不要去动
         //        DEFAULT_ARGS_SETTINGS(command_line_args_disabled,
         //                              false);				//!< 允许命令行参数
@@ -106,7 +114,8 @@ namespace amo {
         
         DEFAULT_ARGS_SETTINGS(appPath,
                               amo::u8string(amo::u8path::getFullExeName(), true).to_utf8());
-        DEFAULT_ARGS_SETTINGS(appDir, amo::u8string(amo::u8path::getExeDir(), true).to_utf8());
+        DEFAULT_ARGS_SETTINGS(appDir, amo::u8string(amo::u8path::getExeDir(),
+                              true).to_utf8());
         DEFAULT_ARGS_SETTINGS(appName, strAppName.to_utf8());
         
         DEFAULT_ARGS_SETTINGS(workDir, appDir);
@@ -135,6 +144,7 @@ namespace amo {
         
         DEFAULT_ARGS_SETTINGS(startTime, (int64_t)amo::timer::now());
         DEFAULT_ARGS_SETTINGS(debugMode, true);
+        DEFAULT_ARGS_SETTINGS(dump, false);
         
         nonGlobalModules.set_array();
         //DEFAULT_ARGS_SETTINGS(debugMode, false);
@@ -273,7 +283,11 @@ namespace amo {
         BOOL_ARGS_SETTING(debugMode);
         BOOL_ARGS_SETTING(clearCache);
         
+        BOOL_ARGS_SETTING(dump);
         JSON_ARGS_SETTING(nonGlobalModules);
+        
+        
+        
         ::SetCurrentDirectoryW(amo::u8string(workDir, true).to_unicode().c_str());
         AMO_TIMER_ELAPSED();
         return BasicSettings::afterUpdateArgsSettings();
@@ -316,6 +330,8 @@ namespace amo {
         UPDATE_ARGS_SETTINGS(debugMode);
         UPDATE_ARGS_SETTINGS(clearCache);
         UPDATE_ARGS_SETTINGS(nonGlobalModules);
+        UPDATE_ARGS_SETTINGS(dump);
+        
         return BasicSettings::toJson();
     }
     

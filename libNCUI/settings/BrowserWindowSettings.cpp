@@ -14,7 +14,8 @@ namespace amo {
     }
     
     void BrowserWindowSettings::initDefaultCefBrowserSettings() {
-        CefString(&this->default_encoding) = amo::u8string("ISO-8859-1", true).to_utf8();
+        CefString(&this->default_encoding) = amo::u8string("ISO-8859-1",
+                                             true).to_utf8();
         plugins = STATE_ENABLED;
         remote_fonts = STATE_DEFAULT;
         javascript = STATE_ENABLED;
@@ -46,7 +47,7 @@ namespace amo {
         webgl = STATE_DEFAULT;
         //accelerated_compositing = STATE_DEFAULT;
         //background_color = 0xffffffff;
-        background_color = 0xffffffff;
+        background_color = 0;
     }
     
     void BrowserWindowSettings::initDefaultBrowserSettings() {

@@ -29,7 +29,8 @@ namespace amo {
      *
      */
     
-    class AppSettings : public CefSettings, public BasicSettings, public amo::singleton<AppSettings> {
+    class AppSettings : public CefSettings, public BasicSettings,
+        public amo::singleton<AppSettings> {
     public:
         AppSettings();
         
@@ -69,7 +70,7 @@ namespace amo {
     
     
         /*! @var	#String=%appDir%locales locales  语言文件所在目录  {@tag const}*/
-        /*! @var	#Boolean=true single_process  是否使用单进程模式，如果程序比较复杂，应该尽量使用多进程模式{@tag const}*/
+        /*! @var	#Boolean=true single_process  是否使用单进程模式，如果程序比较复杂，应该尽量使用多进程模式{@tag const},cef3440及以上不再支持单进程模式，该字段失效*/
         /*! @var	#String=%appDir% resources_dir_path  资源文件所在目录{@tag const}*/
         /*! @var	#String=%APPDATA%appName/cache cache_path  CEF缓存文件所在目录{@tag const}*/
         /*! @var	#String=zh-CN locale  CEF语言环境{@tag const}*/
@@ -169,6 +170,15 @@ namespace amo {
         
         /** @var #JsonArray=[]	nonGlobalModules 禁止被导出到全局变量的类列表. */
         amo::u8json nonGlobalModules;
+        
+        /*! @var #Boolean=false dump 是否在崩溃时创建dump文件. */
+        bool dump;
+#if CEF_VERSION_REGION(3440, 10000)
+        // const char kSingleProcess[]                 = "single-process";
+        // command_line 添加命令行可以开户单进程模式
+        bool single_process;  // 3340不再支持单进程模式，补一个变量以免大量修改代码
+#endif
+        
         
     };
 }

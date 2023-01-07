@@ -90,7 +90,10 @@ namespace amo {
          * @param	frame  	The frame.
          */
         
-#if CHROME_VERSION_BUILD >= 2704
+        
+        
+        
+#if CHROME_VERSION_BUILD >= 2743
         virtual void OnLoadStart(CefRefPtr<CefBrowser> browser,
                                  CefRefPtr<CefFrame> frame,
                                  TransitionType transition_type)override;

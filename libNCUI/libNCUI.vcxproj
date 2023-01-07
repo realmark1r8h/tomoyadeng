@@ -353,6 +353,7 @@
     <ClInclude Include="handler\LoadHandler.h" />
     <ClInclude Include="handler\MessageHandlerDelegate.hpp" />
     <ClInclude Include="handler\MessageRouterBrowserSide.h" />
+    <ClInclude Include="handler\patch\cef_geolocation_handler.h" />
     <ClInclude Include="handler\RenderHandler.h" />
     <ClInclude Include="handler\RenderProcessHandler.h" />
     <ClInclude Include="handler\RequestHandler.h" />

@@ -127,12 +127,13 @@ namespace amo {
                                 0, 0, 0, 0);
                                 
         if (pSettings->show) {
+            //m_pSplashWindow->setPosition();
             m_pSplashWindow->ShowWindow(true);
         }
         
         if (pSettings->duration > 0) {
             m_splashTimer =::SetTimer(m_pSplashWindow->GetHWND(),
-                                      0x00000501,
+                                      0x00000502,
                                       pSettings->duration,
                                       (TIMERPROC)SplashWindowTimerProc);
         }

@@ -23,3 +23,5 @@ ipch/
 *.db
 coll*.*
 toutf8.log
+node_cef_urls.pyc
+downloads/

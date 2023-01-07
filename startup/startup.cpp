@@ -422,13 +422,15 @@ void runNodeInNodeProcess() {
                 strDebugParam += amo::u8string(args->m_strJsFile, true);
                 strDebugParam += amo::u8string(" --ncui-debug ", true);
                 
+                std::wstring wPath = p.generic_wstring();
+                std::wstring wParam = strDebugParam.to_wide();
                 SHELLEXECUTEINFOW ShExecInfo = { 0 };
                 ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
                 ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
                 ShExecInfo.hwnd = NULL;
                 ShExecInfo.lpVerb = L"open";//多种类别有 "explorer" "print" 等
-                ShExecInfo.lpFile = p.generic_wstring().c_str();//exe 路径
-                ShExecInfo.lpParameters = strDebugParam.to_wide().c_str();//参数
+                ShExecInfo.lpFile = wPath.c_str();//exe 路径
+                ShExecInfo.lpParameters = wParam.c_str();//参数
                 ShExecInfo.lpDirectory = NULL;
                 ShExecInfo.nShow = SW_SHOW;//
                 ShExecInfo.hInstApp = NULL;

@@ -9,11 +9,14 @@ import os.path
 from optparse import OptionParser
 import posixpath
 import string
+import time
 
 
 reload(sys)
 sys.setdefaultencoding('utf8') # 允许中文字符串
  
+ 
+
 ConfigType= "Debug"
 lenght = len(sys.argv)
 if lenght > 1:

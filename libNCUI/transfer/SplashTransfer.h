@@ -43,14 +43,58 @@ namespace amo {
          * @return	无.
          *
          * @see hide=splash.hide
-         * @example
+         * @example 简单示例
          *
          ```
+        	 // 窗口会居中显示
         	 include('splash');
         	 splash.show({
         		image: 'images/splash.jpg',
         		duration: 5000
         	 });
+         ```
+         * @example 指定位置
+         *
+         ```
+        	 include('splash');
+        	 splash.show({
+        		 image: 'images/splash.jpg',
+        		 duration: 5000,
+        		 x:100,
+        		 y:100,
+        		 width:1280,
+        		 height:720,
+        		 adjustPos:true,
+        		 center:false
+        	});
+         ```
+         * @example 指定大小
+         *
+         ```
+        	 include('splash');
+        	 splash.show({
+        		 image: 'images/splash.jpg',
+        		 duration: 5000,
+        		 x:100,
+        		 y:100,
+        		 width:640,
+        		 height:360,
+        		 adjustPos:true,
+        		 center:false
+        	 });
+         ```
+         * @example 覆盖父窗口
+         *
+         ```
+        	 includes('splash', 'BrowserWindow');
+        	 var win = BrowserWindow.current;
+        	 // 获取当前窗体在屏幕中的位置
+        	 var winInfo = win.getPosition();
+        	 winInfo.image = 'images/splash.jpg';
+        	 winInfo.center = false;
+        	 winInfo.adjustPos = true;
+        	 winInfo.duration = 5000;
+        	 splash.show(winInfo);
          ```
          */
         

@@ -60,6 +60,7 @@ NCUI_EXPORT int   runSample(HINSTANCE hInstance,
         return exit_code;
     }
     
+    
     // Specify CEF global settings here.
     CefSettings settings;
     
@@ -67,7 +68,7 @@ NCUI_EXPORT int   runSample(HINSTANCE hInstance,
     settings.no_sandbox = true;
 #endif
     settings.no_sandbox = true;
-    settings.single_process = false;
+    //settings.single_process = false;
     // SimpleApp implements application-level callbacks for the browser process.
     // It will create the first browser instance in OnContextInitialized() after
     // CEF has initialized.
