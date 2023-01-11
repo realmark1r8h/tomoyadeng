@@ -91,21 +91,21 @@ namespace amo {
     
     void NodeProcessHandler::Initialize() {
     
-        //if (amo::log::initialize()) {
+        //if (amo::log::initialize(false, true)) {
         //    auto sink1 = std::make_shared<spdlog::sinks::msvc_sink_mt>();
         //    //auto sink2 = std::make_shared<spdlog::sinks::daily_file_sink_mt>("logfile", "txt", 23, 59);
         //    //sink2->set_level(amo::log::level::trace);
         //    /* auto sink3 = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
         //    "logfile", SPDLOG_FILENAME_T("txt"), 1048576 * 5, 3);*/
         //
-        //    amo::log::add_sink(sink1);
+        //    //amo::log::add_sink(sink1);
         //    //amo::log::add_sink(sink2);
         //    //amo::log::add_sink(sink3);
         //    amo::log::set_level(amo::log::level::trace);
         //    amo::log::set_pattern("[%Y-%m-%d %H:%M:%S][%l] %v");
-        //    $clog(amo::endl amo::cinfo << "日志初始化成功" << amo::endl);
+        //    $clog(amo::cinfo << "日志初始化成功" << amo::endl);
         //}
-        //
+        
         
         
         //v8wrap::ClassDescription<Point> desc;
@@ -116,9 +116,10 @@ namespace amo {
         /*v8::Context::GetIsolate()
         	v8::Context::GetCurrent()->Global()->Set(v8::NewFromUtf8(v8::Isolate::GetCurrent(),String::New("Point"), desc.FunctionTemplate()->GetFunction());*/
         
-        std::shared_ptr<IPCNodeV8Handler> pTransfer = ClassTransfer::createTransfer<IPCNodeV8Handler>();
-        
-        
+        std::shared_ptr<IPCNodeV8Handler> pTransfer =
+            ClassTransfer::createTransfer<IPCNodeV8Handler>();
+            
+            
         NodeTransferMgr::getInstance()->addTransfer(m_nPipeID, pTransfer);
         
         DWORD id = GetCurrentProcessId();
@@ -130,22 +131,22 @@ namespace amo {
         std::stringstream sss;
         sss << segment.get_size();
         std::string ssssb = sss.str();
-        //MessageBoxA(NULL, strSharedMemoryName.c_str(), ("Initialize"), MB_OK);
-        //MessageBoxA(NULL, ssssb.c_str(), "223", MB_OK);
+        //     MessageBoxA(NULL, strSharedMemoryName.c_str(), ("Initialize"), MB_OK);
+        //     MessageBoxA(NULL, ssssb.c_str(), "223", MB_OK);
         
         std::pair<std::string*, managed_shared_memory::size_type> res;
         res = segment.find<std::string>("messageQueueName");
         
         
         if (res.first == NULL) {
-            MessageBoxA(NULL, "not found", ("Initialize"), MB_OK);
+            //     MessageBoxA(NULL, "not found", ("Initialize"), MB_OK);
             return;
         } else {
             sss.clear();
             sss << res.second;
             sss << "," << res.first->size();
             ssssb = sss.str();
-            //MessageBoxA(NULL, ssssb.c_str(), "223", MB_OK);
+            //       MessageBoxA(NULL, ssssb.c_str(), "223", MB_OK);
             ssssb = "";
             
             for (size_t i = 0; i < res.first->size(); ++i) {
@@ -155,12 +156,12 @@ namespace amo {
             ssssb.push_back('\0');
             
             
-            //MessageBoxA(NULL, res.first->c_str(), ("Initialize"), MB_OK);
+            //    MessageBoxA(NULL, res.first->c_str(), ("Initialize"), MB_OK);
         }
         
         
         setMessageQueue(*res.first);
-        ;
+        
         
         std::stringstream str;
         str << m_nPipeID << std::endl;
@@ -171,13 +172,16 @@ namespace amo {
         anyMessage->setMessageName(MSG_CREATE_PIPE_CLIENT);
         anyMessage->getArgumentList()->setValue(0, (amo::Any)str.str());
         
-        std::shared_ptr<amo::pipe<amo::pipe_type::server> >  m_pRenderPipeServer(new amo::pipe<amo::pipe_type::server>(strPipeServerName, DefaultPipeSize));
-        std::shared_ptr<amo::pipe<amo::pipe_type::client> >  m_pBrowserPipeClient(new amo::pipe<amo::pipe_type::client>(strPipeClientName));
-        
+        std::shared_ptr<amo::pipe<amo::pipe_type::server> >  m_pRenderPipeServer(
+            new amo::pipe<amo::pipe_type::server>(strPipeServerName, DefaultPipeSize));
+        std::shared_ptr<amo::pipe<amo::pipe_type::client> >  m_pBrowserPipeClient(
+            new amo::pipe<amo::pipe_type::client>(strPipeClientName));
+            
         SendMessageToUI(anyMessage);
         
-        $clog(amo::cdevel << func_orient << "create pipe service:" << strPipeServerName << amo::endl);
-        /* MessageBoxA(NULL, "3333", "223", MB_OK);*/
+        $clog(amo::cdevel << func_orient << "create pipe service:" << strPipeServerName
+              << amo::endl);
+        //  MessageBoxA(NULL, "3333", "223", MB_OK);
         //等待管道建立
         bool rec = m_pRenderPipeServer->connect();
         bool bOk = m_pBrowserPipeClient->connect();
@@ -185,11 +189,12 @@ namespace amo {
         
         if (!rec || !bOk) {
             $clog(amo::cdevel << "connect pipe fail" << amo::endl);
-            MessageBoxA(NULL, "connect pipe fail", "223", MB_OK);
+            //    MessageBoxA(NULL, "connect pipe fail", "223", MB_OK);
         }
         
         
-        amo::shared_ptr<ProcessExchanger> pRendererProcessExchanger(new ProcessExchanger());
+        amo::shared_ptr<ProcessExchanger> pRendererProcessExchanger(
+            new ProcessExchanger());
         pRendererProcessExchanger->setPipeServer(m_pRenderPipeServer);
         pRendererProcessExchanger->setPipeClient(m_pBrowserPipeClient);
         pRendererProcessExchanger->setProcessSyncMessageCallback(
@@ -198,10 +203,12 @@ namespace amo {
                       std::placeholders::_2));
                       
         pRendererProcessExchanger->setBrowserID(m_nPipeID);
-        NodeProcessExchangerManager::get_instance()->addExchanger(m_nPipeID, pRendererProcessExchanger);
-        
-        amo::Any ret = NodeProcessExchangerManager::get_instance()->exchange <amo::Any>(m_nPipeID);
-        
+        NodeProcessExchangerManager::get_instance()->addExchanger(m_nPipeID,
+                pRendererProcessExchanger);
+                
+        amo::Any ret = NodeProcessExchangerManager::get_instance()->exchange <amo::Any>
+                       (m_nPipeID);
+                       
         if (ret.type() == amo::AnyValueType<bool>::value) {
         
             return;
@@ -240,8 +247,10 @@ namespace amo {
         std::string strReaderName = m_strMessageQueueName + "1";
         std::string strWriterName = m_strMessageQueueName + "2";
         
-        m_pMessageQueueReader.reset(new message_queue(open_only, strReaderName.c_str()));
-        m_pMessageQueueWriter.reset(new message_queue(open_only, strWriterName.c_str()));
+        m_pMessageQueueReader.reset(new message_queue(open_only,
+                                    strReaderName.c_str()));
+        m_pMessageQueueWriter.reset(new message_queue(open_only,
+                                    strWriterName.c_str()));
     }
     
     void NodeProcessHandler::closeMessageQueue() {
@@ -267,22 +276,27 @@ namespace amo {
     
     void NodeProcessHandler::wait_for_a_while(uv_idle_t* handle) {
     
-        boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time() + boost::posix_time::milliseconds(200);
+        boost::posix_time::ptime pt =
+            boost::posix_time::microsec_clock::universal_time() +
+            boost::posix_time::milliseconds(200);
         char str[10000] = { 0 };
         unsigned int priority = 0;
         message_queue::size_type recvd_size = 0;
         
-        while (m_pMessageQueueReader->timed_receive(&str, 10000, recvd_size, priority, pt)) {
+        while (m_pMessageQueueReader->timed_receive(&str, 10000, recvd_size, priority,
+                pt)) {
             if (recvd_size == 0) {
                 assert(false && "invalid data");
                 return;
             }
             
+            $cdevel("recv msg from main process: {}", str);
             amo::u8json json(str);
             std::shared_ptr<IPCMessage> anyMessage(new IPCMessage());
             *anyMessage = IPCMessage::fromJson(json);
             
-            if (anyMessage->getArgumentList()->getString(IPCArgsPosInfo::FuncName) == "quit") {
+            if (anyMessage->getArgumentList()->getString(IPCArgsPosInfo::FuncName) ==
+                    "quit") {
                 //MessageBox(NULL, _T("quit"), _T(""), MB_OK);
                 uv_idle_stop(handle);
                 closeMessageQueue();
@@ -296,7 +310,8 @@ namespace amo {
     
     
     
-    bool NodeProcessHandler::ProcessSyncMessage(int nID, IPCMessage::SmartType anyMessage) {
+    bool NodeProcessHandler::ProcessSyncMessage(int nID,
+            IPCMessage::SmartType anyMessage) {
         OnNativeMessageRecv(anyMessage);
         return true;
     }
@@ -334,15 +349,17 @@ namespace amo {
         const std::string& strMessageName = anyMessage->getMessageName();
         
         
-        $clog(amo::cdevel << func_orient << anyMessage->toJson().to_string() << amo::endl);
-        
+        $clog(amo::cdevel << func_orient << anyMessage->toJson().to_string() <<
+              amo::endl);
+              
         if (strMessageName == MSG_PROCESS_SYNC_EXECUTE) {
             NodeProcessExchangerManager::get_instance()->tryProcessMessage(m_nPipeID);
         }
         
         if (strMessageName == MSG_NATIVE_EXECUTE
                 || strMessageName == MSG_NATIVE_SYNC_EXECUTE
-                || strMessageName == MSG_NATIVE_ASYNC_EXECUTE) {				//JS调用C++，此消息不向页面返回结果
+                || strMessageName ==
+                MSG_NATIVE_ASYNC_EXECUTE) {				//JS调用C++，此消息不向页面返回结果
                 
             NodeTransferMgr::getInstance()->onMessageTransfer(anyMessage);
         }
@@ -363,19 +380,24 @@ namespace amo {
     }
     
     std::shared_ptr<NodeMessageEmitter> NodeProcessHandler::getNativeRunner() {
-        std::shared_ptr<NodeMessageEmitter> pLauncher(new NodeMessageEmitter(m_nPipeID, -1));
+        std::shared_ptr<NodeMessageEmitter> pLauncher(new NodeMessageEmitter(m_nPipeID,
+                -1));
         return pLauncher;
     }
     
-    std::unordered_map<std::string, FunctionWrapperMgr >& NodeProcessHandler::getClassMap() {
+    std::unordered_map<std::string, FunctionWrapperMgr >&
+    NodeProcessHandler::getClassMap() {
         return m_oClassMap;
     }
     
     std::shared_ptr<amo::loader> NodeProcessHandler::m_loader;
-    std::unordered_map<std::string, FunctionWrapperMgr > NodeProcessHandler::m_oClassMap;
+    std::unordered_map<std::string, FunctionWrapperMgr >
+    NodeProcessHandler::m_oClassMap;
     uv_idle_t NodeProcessHandler::idler;
-    std::shared_ptr<boost::interprocess::message_queue> NodeProcessHandler::m_pMessageQueueReader;
-    std::shared_ptr<boost::interprocess::message_queue> NodeProcessHandler::m_pMessageQueueWriter;
+    std::shared_ptr<boost::interprocess::message_queue>
+    NodeProcessHandler::m_pMessageQueueReader;
+    std::shared_ptr<boost::interprocess::message_queue>
+    NodeProcessHandler::m_pMessageQueueWriter;
     std::string NodeProcessHandler::m_strMessageQueueName;
     
 }

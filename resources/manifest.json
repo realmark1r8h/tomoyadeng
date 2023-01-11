@@ -2,7 +2,7 @@
 	"appSettings": {
 		"useNode": true,
 		"main": "main.js",
-		"nodeProcess": false,
+		"useNodeProcess": false,
 		"single_process": true
 	},
 	"browserWindowSettings":{

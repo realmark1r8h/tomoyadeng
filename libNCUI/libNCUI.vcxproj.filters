@@ -1094,4 +1094,7 @@
       <Filter>资源文件</Filter>
     </ResourceCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="compatibility.manifest" />
+  </ItemGroup>
 </Project>

@@ -161,7 +161,7 @@ namespace amo {
         int64_t startTime;
         
         /*!
-         * @var #Boolean=true debugMode 是否以调试模式运行,默认true.该模式下F12可以打开调试窗口，F5可以刷新页面
+         * @var #Boolean=true debugMode 是否以调试模式运行,默认true.该模式下F12可以打开调试窗口，F5可以刷新页面，并会输出日志
          */
         bool debugMode;
         

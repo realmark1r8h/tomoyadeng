@@ -160,7 +160,7 @@ namespace amo {
     bool NodeMessageHandler::sendMessageToNode(IPCMessage::SmartType msg) {
         /*if (!m_fnSendMessageToNode) return false;
         return m_fnSendMessageToNode(msg);*/
-        $clog(amo::cdevel << func_orient << msg->toJson().to_string() << amo::endl;);
+        //$clog(amo::cdevel << func_orient << msg->toJson().to_string() << amo::endl;);
         
         try {
             if (msg->getArgumentList()->getString(IPCArgsPosInfo::FuncName) == "quit") {

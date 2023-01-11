@@ -22,7 +22,6 @@ reload(sys)
 sys.setdefaultencoding('utf8') # 允许中文字符串
 
 
-ConfigType= "Debug"
 url = '' #文件地址
 decompress = False #是否压缩文件 
 outputPath = './../NCUI-Library/'	#输出目录
@@ -38,11 +37,12 @@ version = '', #url版本号
 rebuild = False, #强制重新编译
 props = './Microsoft.Cpp.Common.user.props'	#配置文件
 sevenzip ="./resources/7z.exe"
+download_url = False
 
 try:
-	opts, args = getopt.getopt(sys.argv[1:],"hi:o:",["url=","output=","decompress","clean","cmake","vspath","build","copy", "props", "version=", "rebuild", "7z"])
+	opts, args = getopt.getopt(sys.argv[1:],"hi:o:",["url=","output=","decompress","clean","cmake","vspath","build","copy", "props", "version=", "rebuild", "7z", "download"])
 except getopt.GetoptError:
-	print 'cef.py url, output, decompress, clean, cmake, vspath, build, copy, props, version, rebuild, 7z'
+	print 'cef.py url, output, decompress, clean, cmake, vspath, build, copy, props, version, rebuild, 7z, download'
 	sys.exit(2)
 for opt, arg in opts:
 	if opt == '-h':
@@ -62,6 +62,8 @@ for opt, arg in opts:
 		copy = True
 	elif opt == ("--rebuild"):
 		rebuild = True
+	elif opt == ("--download"):
+		download_url = True
 	elif opt == ("--props"):
 		props = arg
 	elif opt == ("--version"):
@@ -87,6 +89,7 @@ print 'copy ', copy
 print 'props '+ props
 print 'version '+ version
 print 'rebuild ', rebuild
+print 'download ', download_url
 
 if props <> '':
 	props = os.path.abspath(props)
@@ -141,6 +144,7 @@ else:
 	exit()	
 print "tmpFolder: " + tmpFolder	
 
+#clean
 if clean == True:
 	print "delete tmp folder "+ tmpFolder
 	shutil.rmtree(tmpFolder)
@@ -158,13 +162,16 @@ node_cef_util.createDir(tmp)
 #download file	
 #这一段是和node.py不同的地方
 
-print "download url save path " + fullname
-if os.path.exists(fullname) == False:
-	print "download: " + url
-	urllib.urlretrieve(url, fullname)
-	print "download success"
+if download_url == True:
+	print "download url save path " + fullname
+	if os.path.exists(fullname) == False:
+		print "download: " + url
+		urllib.urlretrieve(url, fullname)
+		print "download success"
+	else:
+		print "file exists :" + fullname
 else:
-	print "file exists :" + fullname
+	print "skip download url"
 
 
 
@@ -191,9 +198,8 @@ else:
 
 
 
-
-
-
+	
+	
 	
 	
 
@@ -268,10 +274,10 @@ for /f "tokens=3 delims=:. " %%j in ("%time%") do set t3=%%j
 set COMPILE_LOGFILE=%d1%-%d2%-%d3%_%t1%-%t2%-%t3%_compile.txt
 echo log file = %COMPILE_LOGFILE%
 echo compile [cef.sln - libcef_dll_wrapper - Release Win32]
-"%IDE_DIR%devenv.exe" "%SOLUTION_DIR%cef.sln" /rebuild "Release|Win32" /project libcef_dll_wrapper /out %COMPILE_LOGFILE%
+"%IDE_DIR%devenv.exe" "%SOLUTION_DIR%cef.sln"  "Release|Win32" /project libcef_dll_wrapper /out %COMPILE_LOGFILE%
 if %errorlevel% NEQ 0 goto myexit 
 echo compile [cef.sln - libcef_dll_wrapper - Debug Win32]
-"%IDE_DIR%devenv.exe" "%SOLUTION_DIR%cef.sln" /rebuild "Debug|Win32" /project libcef_dll_wrapper /out %COMPILE_LOGFILE%
+"%IDE_DIR%devenv.exe" "%SOLUTION_DIR%cef.sln"  "Debug|Win32" /project libcef_dll_wrapper /out %COMPILE_LOGFILE%
 if %errorlevel% NEQ 0 goto myexit 
 echo ------------------ 
 exit
@@ -311,29 +317,35 @@ if build == True:
 else:
 	print "skip build cef.sln"
   
-time.sleep(3)
-
+  
 #copy
 if copy == True:
-	print "copy files"
-	
+	#先检测有没有build, 如果有那么copy，如果没有，那么检测lib目录是否已经存在，如果不存在则copy
 	srcPath = "./"
 	outputPath += "/" + filename[0:index + len(keyword)] + "/"
-
-	node_cef_util.transfer(srcPath  + "include" , outputPath + "include", '.*')
-	node_cef_util.transfer(srcPath  + "libcef_dll" , outputPath + "libcef_dll", '.cc')
-	node_cef_util.transfer(srcPath  + "libcef_dll" , outputPath + "libcef_dll", '.h')
-	node_cef_util.transfer(srcPath  + "libcef_dll/Debug" , outputPath + "libcef_dll_wrapper/Debug", '.lib')
-	node_cef_util.transfer(srcPath  + "libcef_dll/Release" , outputPath + "libcef_dll_wrapper/Release", '.lib')
-	node_cef_util.transfer(srcPath  + "libcef_dll_wrapper" , outputPath + "libcef_dll_wrapper", '.lib')
-	node_cef_util.transfer(srcPath  + "Release" , outputPath + "bin", '.dll')
-	node_cef_util.transfer(srcPath  + "Release" , outputPath + "bin", '.bin')
-	node_cef_util.transfer(srcPath  + "Release" , outputPath + "bin", '.dat') 
-	node_cef_util.transfer(srcPath  + "Release" , outputPath + "bin", 'libcef.lib') 
-	node_cef_util.transfer(srcPath  + "Resources" , outputPath + "Resources", '.*')
+ 
+	if os.path.exists(outputPath) == True:
+		print outputPath + " already exist"
+		
+	#没有编译程序且目录存在，那么不拷贝文件
+	if build == False and os.path.exists(outputPath) == True:
+		print "skip copy file"
+	else: 
+		print "copy files" 
+		node_cef_util.transfer(srcPath  + "include" , outputPath + "include", '.*')
+		node_cef_util.transfer(srcPath  + "libcef_dll" , outputPath + "libcef_dll", '.cc')
+		node_cef_util.transfer(srcPath  + "libcef_dll" , outputPath + "libcef_dll", '.h')
+		node_cef_util.transfer(srcPath  + "libcef_dll/Debug" , outputPath + "libcef_dll_wrapper/Debug", '.lib')
+		node_cef_util.transfer(srcPath  + "libcef_dll/Release" , outputPath + "libcef_dll_wrapper/Release", '.lib')
+		node_cef_util.transfer(srcPath  + "libcef_dll_wrapper" , outputPath + "libcef_dll_wrapper", '.lib')
+		node_cef_util.transfer(srcPath  + "Release" , outputPath + "bin", '.dll')
+		node_cef_util.transfer(srcPath  + "Release" , outputPath + "bin", '.bin')
+		node_cef_util.transfer(srcPath  + "Release" , outputPath + "bin", '.dat') 
+		node_cef_util.transfer(srcPath  + "Release" , outputPath + "bin", 'libcef.lib') 
+		node_cef_util.transfer(srcPath  + "Resources" , outputPath + "Resources", '.*')
 	
-	
-print "modify config"
+#修改config	
+print "modify cef config"
 config = "\t\t<LibCefFolder>$(LibraryFolder)" 
 config += filename[0:index + len(keyword)] 
 config += "/</LibCefFolder>\n"

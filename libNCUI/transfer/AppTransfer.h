@@ -448,8 +448,8 @@ namespace amo {
          *
          * @example
         			```
-        			//@skip  5秒后重启运行当前程序
-        			app.restart(5);
+        			//@skip  3秒后重启运行当前程序
+        			app.restart(3);
         			```
          */
         
@@ -475,7 +475,7 @@ namespace amo {
         Any destroy(IPCMessage::SmartType msg);
         
         /**
-        * @fn	static Any AppTransfer::destroy(IPCMessage::SmartType msg);
+        * @fn	static Any AppTransfer::setZipPassword(IPCMessage::SmartType msg);
         *
         * @tag static sync
         *
@@ -493,7 +493,7 @@ namespace amo {
         Any setZipPassword(IPCMessage::SmartType msg);
         
         /**
-        * @fn	static Any AppTransfer::destroy(IPCMessage::SmartType msg);
+        * @fn	static Any AppTransfer::setResPassword(IPCMessage::SmartType msg);
         *
         * @tag static sync
         *

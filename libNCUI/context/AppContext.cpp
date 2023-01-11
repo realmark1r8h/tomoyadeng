@@ -27,6 +27,7 @@
 #include "ui/win/SharedMemory.h"
 #include <amo/directory.hpp>
 #include <amo/path.hpp>
+#include <spdlog/sinks/null_sink.h>
 
 
 
@@ -76,6 +77,7 @@ namespace amo {
                                                this));
             }
             
+            //std::this_thread::sleep_for(std::chrono::milliseconds(30));
             //开始接收NodeJS消息
             getNodeMessageHandler()->startReadMessage();
         }
@@ -121,11 +123,24 @@ namespace amo {
         bool bOk = nodeDll->load();
         
         if (!bOk) {
+            $cdevel("load node_runner.dll failed");
             return;
         }
         
+        std::vector<amo::string> vec;
+        nodeDll->exports(vec);
+        
+        for (auto& p : vec) {
+            $cdevel("export func ：{}", p.to_locale());
+            
+        }
+        
+        
         nodeDll->exec<int>("Start", argc, argv);
         
+        if (nodeDll) {
+            $cdevel("run node::Start complete ：{}", nodeDll->get_last_error());
+        }
     }
     
     void AppContext::onUpdateAppSettings(BasicSettings* settings) {
@@ -322,22 +337,36 @@ namespace amo {
     
     int AppContext::executeProcess(CefMainArgs& main_args) {
         AMO_TIMER_ELAPSED();
-        //   spdlog 不支持XP, 如果在XP下使用需要禁用log
-        amo::app::dump();
+        //amo::app::dump(true);
         
-        if (!amo::log::initialize(false, true)) {
-            return -1;
+        if (!getDefaultAppSettings()->dump) {
+            amo::app::dump(false);
         }
         
         
-        std::stringstream stream;
-        stream << "logfile_";
-        stream << amo::app().pid();
-        /*     auto sink3 = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                              stream.str(), SPDLOG_FILENAME_T("txt"), 1048576 * 15, 3);*/
+        
+        //  官方 spdlog 不支持XP, 如果在XP下使用需要禁用log
+        //  当前使用的spdlog为修改后的版本
+        
+        if (!amo::log::initialize(false, getDefaultAppSettings()->debugMode)) {
+            return -1;
+        }
+        
+        /*
+          std::stringstream stream;
+          stream << "logfile_";
+          stream << amo::date_time().format("yyyyMMddhh*mm*ss", "*");
+          stream << ".txt";
+          auto sink3 = std::make_shared<spdlog::sinks::simple_file_sink_mt>(
+                           stream.str(), true, true);*/
+        
+        //BUG XP下无法使用msvc_log，添加一个空输出就不死了
+        if (getDefaultAppSettings()->debugMode) {
+            auto sink4 = std::make_shared<	spdlog::sinks::null_sink_mt>();
+            amo::log::add_sink(sink4);
+        }
         
         
-        //amo::log::add_sink(sink3);
         amo::log::set_level(amo::log::level::trace);
         amo::log::set_pattern("[%Y-%m-%d %H:%M:%S][%l] %v");
         
@@ -360,6 +389,8 @@ namespace amo {
                                           
         if (BrowserProcess == getProcessType()) {
             m_nProcessExitCode = exit_code;
+        } else {
+            amo::app::dump(false);
         }
         
         AMO_TIMER_ELAPSED();
@@ -371,36 +402,13 @@ namespace amo {
         return exit_code;
     }
     
-    void fooo() {
-        amo::u8directory dir(amo::u8path::getFullPathInExeDir("renderer_modules"));
-        dir.transfer([&](amo::u8path & p) {
-            if (p.is_directory()) {
-                return;
-            }
-            
-            if (p.find_extension() != ".dll") {
-                return;
-            }
-            
-            
-            amo::loader loader;
-            bool hu = loader.load(p.generic_wstring());
-            
-            
-        }, false);
-    }
-    
-    
-    
     void AppContext::run(CefMainArgs& main_args) {
     
         // 不去掉的话打印页面的时候会触发异常处理程序，导致程序关闭
         // ::SetUnhandledExceptionFilter(OurSetUnhandledExceptionFilter);
         amo::u8path::set_work_path_to_app_path();
         
-        if (getDefaultAppSettings()->dump)  {
-            amo::app::dump(true);
-        }
+        
         
         AMO_TIMER_ELAPSED();
         
@@ -478,6 +486,7 @@ namespace amo {
             CefRunMessageLoop();
         }
         
+        amo::app::dump(false);
         ::CoUninitialize();
         amo::log::finalize();
 #if CHROME_VERSION_BUILD < 2704
@@ -499,6 +508,7 @@ namespace amo {
         }
         
         
+        
         ClassTransfer::clearTransferMap();
         ClassTransfer::getTransferMap().reset();
         
@@ -511,7 +521,7 @@ namespace amo {
         amo::log::finalize();
         CefShutdown();
         
-        amo::app::dump(false);
+        
     }
     
     bool AppContext::startHook() {

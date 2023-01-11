@@ -59,6 +59,7 @@ void OnMessage(v8::Local<v8::Message> message, v8::Local<v8::Value> error) {
 
 NAN_MODULE_INIT(InitAll) {
 
+    //MessageBoxA(NULL, "1232", "23333", MB_OK);
     atexit(terminateTest);
     v8::Isolate* isolate = target->GetIsolate();
     //isolate->SetAbortOnUncaughtExceptionCallback(reportc);

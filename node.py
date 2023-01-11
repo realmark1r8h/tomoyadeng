@@ -20,9 +20,8 @@ import node_cef_util
 
 reload(sys)
 sys.setdefaultencoding('utf8') # 允许中文字符串
+	
 
-		
-ConfigType= "Debug"
 url = '' #文件地址
 decompress = False #是否压缩文件 
 outputPath = './../NCUI-Library/'	#输出目录
@@ -38,11 +37,12 @@ version = '', #url版本号
 rebuild = False, #强制重新编译
 props = './Microsoft.Cpp.Common.user.props'	#配置文件
 sevenzip ="./resources/7z.exe"
+download_url = False
 
 try:
-	opts, args = getopt.getopt(sys.argv[1:],"hi:o:",["url=","output=","decompress","clean","cmake","vspath","build","copy", "props", "version=", "rebuild", "7z"])
+	opts, args = getopt.getopt(sys.argv[1:],"hi:o:",["url=","output=","decompress","clean","cmake","vspath","build","copy", "props", "version=", "rebuild", "7z", "download"])
 except getopt.GetoptError:
-	print 'cef.py url, output, decompress, clean, cmake, vspath, build, copy, props, version, rebuild, 7z'
+	print 'cef.py url, output, decompress, clean, cmake, vspath, build, copy, props, version, rebuild, 7z, download'
 	sys.exit(2)
 for opt, arg in opts:
 	if opt == '-h':
@@ -62,6 +62,8 @@ for opt, arg in opts:
 		copy = True
 	elif opt == ("--rebuild"):
 		rebuild = True
+	elif opt == ("--download"):
+		download_url = True
 	elif opt == ("--props"):
 		props = arg
 	elif opt == ("--version"):
@@ -72,9 +74,9 @@ for opt, arg in opts:
 		url = arg
 	elif opt in ("-o", "--output"):
 		outputPath = arg
- 
+
 if version <> '':
-	url = node_cef_util.getNodeUrl(version)
+	url = node_cef_util.getCefUrl(version)
 	
 print 'url ' + url
 print 'outputPath ' + outputPath
@@ -87,6 +89,7 @@ print 'copy ', copy
 print 'props '+ props
 print 'version '+ version
 print 'rebuild ', rebuild
+print 'download ', download_url
 
 if props <> '':
 	props = os.path.abspath(props)
@@ -141,6 +144,7 @@ print tmpFolder
 
 
 
+#clean
 if clean == True:
 	print "delete tmp folder "+ tmpFolder
 	shutil.rmtree(tmpFolder)
@@ -175,27 +179,29 @@ nodefullname = downloads + filename[0:index] + ".exe"
 
 print "download url save path " + fullname
 
-if os.path.exists(fullname) == False:
-	print "download: " + url
-	urllib.urlretrieve(url, fullname)
-	print "download success"
+if download_url == True:
+	if os.path.exists(fullname) == False:
+		print "download: " + url
+		urllib.urlretrieve(url, fullname)
+		print "download success"
+	else:
+		print "file exists :" + fullname
+		 
+	if os.path.exists(headerfullname) == False:
+		print "download: " + headerurl
+		urllib.urlretrieve(headerurl, headerfullname)
+		print "download success"
+	else:
+		print "file exists :" + fullname
+		
+	if os.path.exists(nodefullname) == False:
+		print "download: " + nodeurl
+		urllib.urlretrieve(nodeurl, nodefullname)
+		print "download success"
+	else:
+		print "file exists :" + nodefullname
 else:
-	print "file exists :" + fullname
-	 
-if os.path.exists(headerfullname) == False:
-	print "download: " + headerurl
-	urllib.urlretrieve(headerurl, headerfullname)
-	print "download success"
-else:
-	print "file exists :" + fullname
-	
-if os.path.exists(nodefullname) == False:
-	print "download: " + nodeurl
-	urllib.urlretrieve(nodeurl, nodefullname)
-	print "download success"
-else:
-	print "file exists :" + nodefullname
-	
+	print "skip download url"
 	
 #decompress file	
 if decompress == True: 
@@ -218,7 +224,18 @@ node_cef_util.createDir(tmpFolder)
 #切换工作目录
 os.chdir(tmpFolder)
 
+
 #cmake 
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -299,25 +316,36 @@ if build == True:
 else:
 	print "skip build node.sln"
   
-time.sleep(3)
-
 
 
 #copy
 if copy == True:
-	print "copy files"
-	
+	#先检测有没有build, 如果有那么copy，如果没有，那么检测lib目录是否已经存在，如果不存在则copy 
 	srcPath = "./"
 	outputPath += "/" + filename[0:index] + "/"
+	 
+	if os.path.exists(outputPath) == True:
+		print outputPath + " already exist"
+		
+	#没有编译程序且目录存在，那么不拷贝文件
+	if build == False and os.path.exists(outputPath) == True:
+		print "skip copy file"
+	else: 
+		print "copy files"
+		node_cef_util.transfer(srcPath  + "include" , outputPath + "include", '.*')
+		node_cef_util.transfer(srcPath  + "Release" , outputPath + "ia32", 'node.lib')
+		node_cef_util.transfer(srcPath  + "Release" , outputPath + "ia32", 'node.dll')
+		node_cef_util.transfer(srcPath  + "Release/win-x86" , outputPath + "ia32", 'node.exe')
 
-	node_cef_util.transfer(srcPath  + "include" , outputPath + "include", '.*')
-	node_cef_util.transfer(srcPath  + "Release" , outputPath + "ia32", 'node.lib')
-	node_cef_util.transfer(srcPath  + "Release" , outputPath + "ia32", 'node.dll')
-	node_cef_util.transfer(srcPath  + "Release/win-x86" , outputPath + "ia32", 'node.exe')
+	
 
 	
 	
-print "modify config"
+	
+	
+	
+#修改config	
+print "modify node config"
 config = "\t\t<NodeGypFolder>$(LibraryFolder)" 
 config += filename[0:index] 
 config += "/</NodeGypFolder>\n"

@@ -25,7 +25,7 @@ Copyright (C) ShineEnergy Corporation. All rights reserved.
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(ProjectPrefix)' == ''">
 		<ProjectPrefix>$(ProjectDir)$(ProjectName)</ProjectPrefix>
-	</PropertyGroup>
+	</PropertyGroup> 
 	
   <ImportGroup Label="PropertySheets">
 		<!-- import project by Project / Solution / Common properties if file exists -->
@@ -42,7 +42,7 @@ Copyright (C) ShineEnergy Corporation. All rights reserved.
 		<SDKFolder >D:\SDK\</SDKFolder>
 		<BoostFolder>$(SDKFolder)boost_1_63_0\</BoostFolder>
 		<NodeGypFolder>$(LibraryFolder)node-v4.7.1/</NodeGypFolder>
-		<LibCefFolder>$(LibraryFolder)cef_binary_3.3071.1649.g98725e6_windows32_minimal/</LibCefFolder>
+		<LibCefFolder>$(LibraryFolder)cef_binary_3.2623.1401.gb90a3be_windows32/</LibCefFolder>
 		<ThirdPartyFolder>$(SolutionDir)\third_party\</ThirdPartyFolder>
 		<ObjectFolder Condition="'$(ObjectFolder)' == ''">$(SolutionDir)../$(SolutionName)-Out\VC2012.IntDir\</ObjectFolder>
 		<ObjectFolder Condition="!HasTrailingSlash('$(ObjectFolder)')">$(ObjectFolder)\</ObjectFolder>

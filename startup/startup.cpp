@@ -28,9 +28,17 @@
 #include <amo/loader.hpp>
 #include <amo/string.hpp>
 #include <amo/timer.hpp>
+#include <amo/app.hpp>
 
 #pragma comment(lib, "iphlpapi.lib")
 #pragma comment(lib, "shlwapi.lib")
+
+
+
+#ifndef DEBUG_OUT
+#define DEBUG_OUT(val) OutputDebugStringA((std::string(#val)+ "\n").c_str());
+#endif
+
 class StringLoader {
 public:
     StringLoader(HINSTANCE hInstance) {
@@ -507,19 +515,19 @@ void runNodeInNodeProcess() {
 
 STARTUP_API int runNCUI(void) {
 
-
+    // 防止单程进程下使用nodejs的退出异常
+    amo::app::dump(true);
+    amo::app::dump(false);
+    
     HINSTANCE hInstance = ::GetModuleHandle(NULL);
     amo::u8path::set_work_path_to_app_path();
-    
     args.reset(new ArgsSettings(hInstance));
     
     if (args->bUseNode && args->bNodeProcess) {
         runNodeInNodeProcess();
     } else if (args->bUseNode) {
-    
         runNodeInCefProcess();
     } else {
-    
         runCefInCefProcess();
     }
     

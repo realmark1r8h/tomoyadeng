@@ -33,6 +33,8 @@ rebuild = False #是否需要重新编译
 switch_only = False #只切换分支
 
 props = './Microsoft.Cpp.Common.user.props' #配置文件
+ncui_lib_dir = "./../NCUI-Library/" #库文件输出目录
+
 try:
 	opts, args = getopt.getopt(sys.argv[1:],"hi:o:",["cef=","node=","rebuild", "switch"])
 except getopt.GetoptError:
@@ -54,37 +56,60 @@ print "cef: " + cef_version
 print "node: " + node_version
 print "rebuild: " , rebuild
 print "switch_only: " , switch_only
-	
-cef_command = "python cef.py --version " + cef_version + " --cmake --decompress --build --copy"
-node_command = "python node.py --version " + node_version + " --decompress --build --copy"
 
-if switch_only == True:
-	cef_command = "python cef.py --version " + cef_version
-	node_command = "python node.py --version " + node_version
 
-if rebuild == True:
-	cef_command += " --rebuild"
-	node_command += " --rebuild"
+#使用内置
+if cef_version == '' and node_version == '':
+	default_command = '\"./resources/7z.exe \"' + " x ./NCUI-Library/NCUI-Library.7z " + " -aoa -o" + ncui_lib_dir
+	print default_command
+	os.system(default_command)
 	
-if cef_version <> '':
-	print "build cef with command: " + cef_command
-	os.system(cef_command) 
-else:
-	print "empty cef version skip build."
+	#修改config	
+	print "modify cef config"
+	config = "\t\t<LibCefFolder>$(LibraryFolder)" 
+	config += "cef_binary_3.2526.1373.gb660893_windows32" 
+	config += "/</LibCefFolder>\n"
+	print config
+	node_cef_util.modifyProps(props, "</LibCefFolder>", config)
+	
+	#修改config	
+	print "modify node config"
+	config = "\t\t<NodeGypFolder>$(LibraryFolder)" 
+	config += "node-v4.7.1" 
+	config += "/</NodeGypFolder>\n"
+	print config
+	node_cef_util.modifyProps(props, "</NodeGypFolder>", config)
+	
+else: 
+	cef_command = "python cef.py --version " + cef_version + " --cmake --decompress --build --copy --download "
+	node_command = "python node.py --version " + node_version + " --decompress --build --copy --download "
+ 
+	if switch_only == True:
+		cef_command = "python cef.py --copy --version " + cef_version
+		node_command = "python node.py --copy --version  " + node_version
 
-if node_version <> '':
-	print "build node with command: " + node_command
-	os.system(node_command) 
-else:
-	print "empty node version skip build."
+	if rebuild == True:
+		cef_command += " --rebuild"
+		node_command += " --rebuild"
+		
+	if cef_version <> '':
+		print "build cef with command: " + cef_command
+		os.system(cef_command) 
+	else:
+		print "empty cef version skip build."
+
+	if node_version <> '':
+		print "build node with command: " + node_command
+		os.system(node_command) 
+	else:
+		print "empty node version skip build."
 	
 
-print os.getcwd() #获取当前工作目录路径
-print os.path.abspath('.') #获取当前工作目录路径
+
 	
 	
-cefPath = "./../NCUI-Library/" +  node_cef_util.getLibCefDir(props) + "/"
-nodePath = "./../NCUI-Library/" + node_cef_util.getLibNodeDir(props) + "/"
+cefPath = ncui_lib_dir +  node_cef_util.getLibCefDir(props) + "/"
+nodePath = ncui_lib_dir + node_cef_util.getLibNodeDir(props) + "/"
 srcPath = "./"
 
 print "cefPath: "+ cefPath
@@ -94,20 +119,15 @@ dstDir = "../NCUI-Out/Binary.UR32/"
 #删除目录
 if os.path.exists(dstDir) == True:
 	shutil.rmtree(dstDir)
-node_cef_util.transfer(cefPath  + "bin" , dstDir, '.dll')
-node_cef_util.transfer(cefPath  + "bin" , dstDir, '.bin')
-node_cef_util.transfer(cefPath  + "Resources", dstDir, '.*')
-node_cef_util.transfer(nodePath +  "ia32" , dstDir, '.dll')
-node_cef_util.transfer(nodePath +  "ia32" , dstDir, '.exe')
-node_cef_util.transfer(srcPath + "resources", dstDir, '.*')
-
+node_cef_util.copyCefResouces(cefPath, dstDir)
+node_cef_util.copyNodeResources(nodePath, dstDir, True)
+node_cef_util.copyNCUIResources(srcPath + "resources", dstDir, True, True, True, True) 
+node_cef_util.copyNCUIWebZipResources(srcPath + "resources", dstDir) 
 dstDir = "../NCUI-Out/Binary.UD32/"
 #删除目录
 if os.path.exists(dstDir) == True:
 	shutil.rmtree(dstDir)
-node_cef_util.transfer(cefPath  + "bin" , dstDir, '.dll')
-node_cef_util.transfer(cefPath  + "bin" , dstDir, '.bin')
-node_cef_util.transfer(cefPath  + "Resources", dstDir, '.*')
-node_cef_util.transfer(nodePath +  "ia32" , dstDir, '.dll')
-node_cef_util.transfer(nodePath +  "ia32" , dstDir, '.exe')
-node_cef_util.transfer(srcPath + "resources", dstDir, '.*')
+node_cef_util.copyCefResouces(cefPath, dstDir)
+node_cef_util.copyNodeResources(nodePath, dstDir, True)
+node_cef_util.copyNCUIResources(srcPath + "resources", dstDir, True, True, True, True) 
+node_cef_util.copyNCUIWebZipResources(srcPath + "resources", dstDir) 

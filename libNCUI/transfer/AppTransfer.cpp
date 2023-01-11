@@ -300,15 +300,18 @@ namespace amo {
     }
     
     Any AppTransfer::destroy(IPCMessage::SmartType msg) {
-        std::shared_ptr<amo::shell> shell(new amo::shell("cmd.exe"));
-        shell->addArgs("/c ping 127.0.0.1 -n ");
-        shell->addArgs(amo::u8string::from_number(1).c_str());
-        shell->addArgs(" -w 1000 > nul ");
-        shell->addArgs("& taskkill /f /t /im");
-        shell->addArgs(amo::path::appName());
-        shell->addArgs("& del ");
-        shell->addArgs(amo::app().getAppPath().to_ansi().c_str());
-        shell->addArgs("exit");
+        std::shared_ptr<amo::shell> shell(new amo::shell(amo::u8string("cmd.exe",
+                                          true)));
+        shell->addArgs(amo::u8string("/c ping 127.0.0.1 -n ", true));
+        shell->addArgs(amo::u8string::from_number(3));
+        shell->addArgs(amo::u8string(" -w 1000 > nul ", true));
+        shell->addArgs(amo::u8string("& taskkill /f /t /im", true));
+        shell->addArgs(amo::u8string(amo::u8path::appName(), true));
+        shell->addArgs(amo::u8string("& del ", true));
+        shell->addArgs(amo::u8string(amo::u8path(amo::app().getAppPath())
+                                     .get_short_path()
+                                     .to_windows_string(), true));
+        shell->addArgs(amo::u8string(" exit", true));
         shell->show(false);
         shell->open();
         return  exit(msg);

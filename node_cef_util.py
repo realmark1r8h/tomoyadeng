@@ -21,11 +21,34 @@ import posixpath
 import string
 import getopt
 import time
+ 
 
 reload(sys)
 sys.setdefaultencoding('utf8') # 允许中文字符串
  
+
+
  
+def getNCUIVersion(filename):
+	file = open(filename, 'rb')
+	strStart = "VALUE"
+ 
+	while True: 
+		s = file.readline()
+		if not s:      #等价于if s == "":
+			break
+		 
+		start_pos = s.find(strStart)
+		if start_pos <> -1:
+			print s
+			start_pos +=len(strStart) 
+			str = s[start_pos:] 
+			print str
+			str = str.replace("\"", "")
+			return str
+	file.close()
+	return "1.0.0.10"
+	
 def getNodeUrl(version):
 	dict = {
 		'4.7.1':'https://nodejs.org/download/release/v4.7.1/node-v4.7.1.tar.gz',
@@ -65,8 +88,61 @@ def getCefUrl(version):
 	}
 	return dict.get(version, '')
 	
-
+def getLibCefDirByUrl(url):
+	if url == '':
+		print 'url is empty, exit'
+		return "" 
 	 
+	url = url.replace('\\', '/')
+	print url
+	arr = url.split('/')
+	print arr
+	if len(arr) < 2:
+		print "invalid url, exit"
+		return ""
+		
+	#最后一段为文件
+	filename = arr[len(arr)-1] 
+	
+	keyword = "windows32_minimal"
+
+	index = filename.find(keyword)
+	 
+	if index == -1:
+		print "not found minimal cef"
+		keyword = "windows32"
+		index = filename.find(keyword)
+	print index
+	if index <> -1:
+		return filename[0:index + len(keyword)]
+	else:
+		print "invalid zip folder, exit"
+		return ""
+		
+def getLibNodeDirByUrl(url): 
+	if url == '':
+		print 'url is empty, exit'
+		return ""
+	 
+	url = url.replace('\\', '/')
+	print url
+	arr = url.split('/')
+	print arr
+	if len(arr) < 2:
+		print "invalid url, exit"
+		return ""
+		
+	#最后一段为文件
+	filename = arr[len(arr)-1]
+ 
+	index = filename.find(".tar")
+	print index
+	if index <> -1:
+		return filename[0:index]
+	else:
+		print "invalid zip folder, exit"
+		return ""
+
 def getLibCefDir(filename):
 	file = open(filename, 'r')
 	strStart = "<LibCefFolder>$(LibraryFolder)"
@@ -96,7 +172,7 @@ def getLibNodeDir(filename):
 		if start_pos <> -1 and end_pos <> -1:
 			start_pos +=len(strStart) 
 			return  s[start_pos:end_pos] 
-	file.close();
+	file.close()
 	return ""
 
 def modifyFile(filename, item, newstr):
@@ -186,12 +262,74 @@ def transfer(srcDir, dstDir,  ext, currentDir = ""):
 	for file in os.listdir( currentDir): 
 		path = os.path.join( currentDir,file)
 		if os.path.isdir(path) == False: 
-			if IsValidFile(file, ext): 
-				dstFile = path.replace(srcDir, dstDir)
-				srcFile = os.path.abspath(path)
-				dstFile = os.path.abspath(dstFile)
-				CopyTo(srcFile, dstFile) 
+			arr = []
+			if type(ext) <> type([]):
+				arr.append(ext)
+			else:
+				arr = ext
+			
+			for x in arr: 
+				if IsValidFile(file, x):  
+					dstFile = path.replace(srcDir, dstDir)
+					srcFile = os.path.abspath(path)
+					dstFile = os.path.abspath(dstFile)
+					CopyTo(srcFile, dstFile)
+					break
 		else: 
 			dstSubDir = path.replace(srcDir, dstDir)
 			dstSubDir = os.path.abspath(dstSubDir ) 
 			transfer(srcDir, dstDir, ext, path)		
+			
+			
+def copyCefResouces(cefPath, dstDir):
+	transfer(cefPath  + "bin" , dstDir, '.dll')
+	transfer(cefPath  + "bin" , dstDir, '.bin')
+	transfer(cefPath  + "Resources", dstDir, '.*')
+	return
+	
+def copyNodeResources(nodePath, dstDir, example):
+	transfer(nodePath +  "ia32" , dstDir, '.dll')
+	if example == True:
+		transfer(nodePath +  "ia32" , dstDir, '.exe')
+	return
+def copyNCUIWebZipResources(recourcePath, dstDir):
+
+	compress_command = '\"./resources/7z.exe \"'
+	compress_command += ' a -tzip -r '
+	compress_command += dstDir + "web/web.zip "
+	compress_command += recourcePath + '/web' 
+	
+	print compress_command
+	os.system(compress_command)
+ 
+	return
+	
+def copyAllNCUIResources(recourcePath, dstDir):
+	transfer(recourcePath, dstDir, '.*')
+	return
+	
+def copyNCUIResources(recourcePath, dstDir, images, plugins, web, vc2015):
+	transfer(recourcePath, dstDir, ['zip.dll','zlib.dll','sqlite3.dll','main.js', 'manifest.json']) 
+	transfer(recourcePath +"/skin", dstDir + "/skin", ['.*']) 
+	if images == True:
+		transfer(recourcePath + "/images", dstDir + "/images", ".*")
+	if plugins == True:
+		transfer(recourcePath + "/plugins", dstDir + "/plugins", ".*")
+	if web == True:
+		transfer(recourcePath + "/web", dstDir + "/web", ".*")
+	if vc2015 == True:
+		transfer(recourcePath + "/vc2015", dstDir , ".*")
+	return
+	
+def copyNCUIBuildResources(buildPath, dstDir, node, example):
+	transfer(buildPath, dstDir, ['libNCUI.dll', 'DuiLib.dll', 'libExt.dll','startup.dll', 'NCUI.exe'])
+	copy_node = node
+	if example == True:
+		copy_node = True 
+	if copy_node == True:
+		transfer(buildPath, dstDir, ['ncui.node', 'node_runner.dll'])
+	if example == True:
+		copy_node = True
+		transfer(buildPath, dstDir, ['ncui-dev.node', 'libResource.dll', 'libTaskTest.dll', 'NCUI-DEV.exe'])
+	return
+	

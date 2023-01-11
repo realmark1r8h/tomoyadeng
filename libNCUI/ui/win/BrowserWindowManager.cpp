@@ -17,6 +17,8 @@
 #include "transfer/ClassTransfer.hpp"
 #include "transfer/AppTransfer.h"
 
+#include <amo/app.hpp>
+
 namespace amo {
     BrowserWindowCreator::BrowserWindowCreator() {
     }
@@ -539,6 +541,8 @@ namespace amo {
                 
             // 如果没有创建窗口，直接退出程序
             Tray::getInstance()->destory();
+            amo::app::dump(false);
+            //SharedMemoryForDump::getInstance()->disableWriteDump();
             CefQuitMessageLoop();
         }
         

@@ -146,6 +146,7 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(debugMode, true);
         DEFAULT_ARGS_SETTINGS(dump, false);
         
+        
         nonGlobalModules.set_array();
         //DEFAULT_ARGS_SETTINGS(debugMode, false);
         
