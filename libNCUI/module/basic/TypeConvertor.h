@@ -208,6 +208,23 @@ namespace amo {
          */
         
         CefRefPtr<CefV8Value> Int64ToObject(int64_t nVal);
+        
+        /*!
+         * @fn	CefRefPtr<CefV8Value> TypeConvertor::CreateBlobByString(const std::string& str, amo::u8json opt);
+         *
+         * @brief	将C++二进制数据转换为JS二进制数据.
+         *
+         * @param	str	The string.
+         * @param	opt	The option.
+         *
+         * @return	The new blob by string.
+         */
+        
+        CefRefPtr<CefV8Value> CreateBlobByString(const std::string& str,
+                CefRefPtr<CefV8Value> opt);
+                
+        CefRefPtr<CefV8Value> CreateBlobByArray(const std::vector<std::string>& vec,
+                                                CefRefPtr<CefV8Value> opt);
         /*!
          * @fn	Any TypeConvertor::toAny(CefRefPtr<CefV8Value> pValue);
          *
@@ -242,6 +259,11 @@ namespace amo {
          */
         CefRefPtr<CefV8Value> toV8Value(Any& any);
         
+        
+        int GetBlobSize(CefRefPtr<CefV8Value> pValue);
+        
+        void ReadDataFromBlob(const std::string& blobName,
+                              CefRefPtr<CefV8Value> pValue);
         /*!
          * @fn	static CefRefPtr<CefV8Value> TypeConvertor::getClassObject(int64_t nID, CefRefPtr<CefFrame> frame = NULL);
          *

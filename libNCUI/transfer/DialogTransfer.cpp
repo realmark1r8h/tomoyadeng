@@ -98,8 +98,9 @@ namespace amo {
         HWND hWnd = pLocalWindow->GetHWND();
         
         
-        
+        amo::u8json settings = pLocalWindow->getNativeSettings()->getThemeJson();
         int nRet = MessageWindow::Show(hWnd,
+                                       settings,
                                        strMsg.to_unicode().c_str());
         return nRet == 1;
     }
@@ -120,8 +121,9 @@ namespace amo {
         }
         
         HWND hWnd = pLocalWindow->GetHWND();
-        
+        amo::u8json settings = pLocalWindow->getNativeSettings()->getThemeJson();
         int nRet = MessageWindow::Show(hWnd,
+                                       settings,
                                        strMsg.to_unicode().c_str(),
                                        _T("提示"),
                                        MB_OKCANCEL);
@@ -147,9 +149,10 @@ namespace amo {
         
         HWND hWnd = pLocalWindow->GetHWND();
         
-        
+        amo::u8json settings = pLocalWindow->getNativeSettings()->getThemeJson();
         
         int nRet = MessageWindow::ShowPrompt(hWnd,
+                                             settings,
                                              strMsg.to_unicode().c_str(),
                                              &strPromptText,
                                              strMsg.to_unicode().c_str(),

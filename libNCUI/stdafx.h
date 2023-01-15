@@ -40,11 +40,9 @@
 #ifdef _DEBUG
 #pragma comment(lib, "libcef_dll_wrapper.lib")
 #pragma comment(lib, "libcef.lib")
-//#pragma comment(lib, "libuvUD32.lib")
 #else
 #pragma comment(lib, "libcef_dll_wrapper.lib")
 #pragma comment(lib, "libcef.lib")
-//#pragma comment(lib, "libuvUR32.lib")
 #endif
 using namespace DuiLib;
 

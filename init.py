@@ -121,7 +121,7 @@ if os.path.exists(dstDir) == True:
 	shutil.rmtree(dstDir)
 node_cef_util.copyCefResouces(cefPath, dstDir)
 node_cef_util.copyNodeResources(nodePath, dstDir, True)
-node_cef_util.copyNCUIResources(srcPath + "resources", dstDir, True, True, True, True) 
+node_cef_util.copyNCUIResources(srcPath + "resources", dstDir, True, True, True, True, True) 
 node_cef_util.copyNCUIWebZipResources(srcPath + "resources", dstDir) 
 dstDir = "../NCUI-Out/Binary.UD32/"
 #删除目录
@@ -129,5 +129,5 @@ if os.path.exists(dstDir) == True:
 	shutil.rmtree(dstDir)
 node_cef_util.copyCefResouces(cefPath, dstDir)
 node_cef_util.copyNodeResources(nodePath, dstDir, True)
-node_cef_util.copyNCUIResources(srcPath + "resources", dstDir, True, True, True, True) 
+node_cef_util.copyNCUIResources(srcPath + "resources", dstDir, True, True, True, True, True) 
 node_cef_util.copyNCUIWebZipResources(srcPath + "resources", dstDir) 

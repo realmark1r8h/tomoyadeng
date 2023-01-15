@@ -14,12 +14,14 @@ namespace amo {
     class MessageWindow : public LayeredWindow {
     public:
         static UINT Show(HWND pMainWnd,
+                         const amo::u8json& settings,
                          LPCTSTR lpText,
                          LPCTSTR lpCaption = _T("提示"),
                          UINT uType = MB_OK,
                          UINT uIcon = MB_ICONWARNING);
                          
         static UINT ShowPrompt(HWND pMainWnd,
+                               const amo::u8json& settings,
                                LPCTSTR lpText,
                                CDuiString* lpdefaultPrompt,
                                LPCTSTR lpCaption = _T("提示"),

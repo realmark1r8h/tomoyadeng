@@ -32,6 +32,12 @@ namespace amo {
             }*/
             
         }
+        
+        virtual void resize(int size, char val) override {
+            m_buffer.resize(size);
+            memset(m_buffer.data(), val, m_buffer.size());
+        }
+        
         virtual int size() override {
             return m_buffer.size();
         }

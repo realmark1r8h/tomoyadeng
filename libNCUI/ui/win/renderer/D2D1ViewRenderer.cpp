@@ -433,9 +433,12 @@ namespace amo {
         if (m_paintSettings->offscreen && !m_paintSettings->transparent) {
             Gdiplus::SolidBrush brush(Gdiplus::Color(255, 255, 255));
             RECT bkRt = GetPos();
-            m_graphics->FillRectangle(&brush, bkRt.left, bkRt.top, bkRt.right - bkRt.left,
-                                      bkRt.bottom - bkRt.top);
-                                      
+            amo::rect bkrect(bkRt);
+            // 会闪屏
+            /*m_graphics->FillRectangle(&brush, bkRt.left, bkRt.top, bkRt.right - bkRt.left,
+                                      bkRt.bottom - bkRt.top);*/
+            
+            
         }
         
         std::vector<std::shared_ptr<amo::d2d1::GdiplusBitmap> >  bitmaps;
@@ -446,6 +449,7 @@ namespace amo {
         
             std::shared_ptr<amo::d2d1::GdiplusBitmap> bitmap(new amo::d2d1::GdiplusBitmap(
                         m_graphics, p));
+                        
             bitmaps.push_back(bitmap);
             
             auto vec = bitmap->regions();

@@ -75,7 +75,7 @@ namespace amo {
         
         // 1. 假设所dll在当前目录
         pa.append(name.str());
-        $clog(amo::cdevel << pa.c_str() << amo::endl;);
+        $cdevel(pa.generic_ansi_string());
         
         // 如果这个dll存在，那么返回
         if (pa.file_exists()) {
@@ -85,7 +85,7 @@ namespace amo {
         pa = amo::u8path(exeDir);
         // 2. 在扩展目录下查找
         pa.append(getExtensionDir().str()).append(name.str());
-        $clog(amo::cdevel << pa.c_str() << amo::endl;);
+        $cdevel(pa.generic_ansi_string());
         
         if (pa.file_exists()) {
             return amo::u8string(pa.c_str(), true);
@@ -94,7 +94,7 @@ namespace amo {
         // 3. 到系统目录下查找
         pa = amo::u8path("C:\\windows\\system32\\");
         pa.append(name.str());
-        $clog(amo::cdevel << pa.c_str() << amo::endl;);
+        $cdevel(pa.generic_ansi_string());
         
         if (pa.file_exists()) {
             return amo::u8string(pa.c_str(), true);

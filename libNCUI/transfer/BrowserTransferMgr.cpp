@@ -36,7 +36,7 @@
 #include "transfer/UIThreadTransfer.h"
 #include "transfer/RendererThreadTransfer.h"
 #include "transfer/ActionTransfer.h"
-
+#include "transfer/ClipboardTransfer.h"
 
 namespace amo {
     void BrowserTransferMgr::returnSyncResult(int nBrowserID,
@@ -109,7 +109,8 @@ namespace amo {
         addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<ActionTransfer>());
                     
-                    
+        addTransfer(nBrowserID,
+                    ClassTransfer::getUniqueTransfer<ClipboardTransfer>());
                     
     }
     

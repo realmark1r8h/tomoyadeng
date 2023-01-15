@@ -21,7 +21,6 @@
 		<script src="docs/js/lib/vconsole/vconsole.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="docs/js/vconsole.js" type="text/javascript" charset="utf-8"></script>
 		<script src="docs/js/Tester.js" type="text/javascript" charset="utf-8"></script>
-		 
 
 		<style type="text/css">
 			html,
@@ -281,7 +280,7 @@
 		<!-- 内容目录 -->
 		<div id="grid" class="scrollbar-hover" style="position: absolute;top: 40px;bottom: 0px;left: 0px;right: 0px; overflow: scroll;">
 			<div class="container">
-				<div class="row"> 
+				<div class="row">
 					<div class="col col-md-d5 col-sm-6">
 	<div class="chapter" id="chapter-basic" data-id="basic">
 		<div class="chapter-heading fade scale show">
@@ -393,7 +392,6 @@
 		<!-- 增强文档插件 -->
 		<script async src="dist/lib/prettify/prettify.js"></script>
 
-		 
 		<script type="text/javascript">
 			var initRunnable = function() {
 				if(!$.zui.browser.isIE() || $.zui.browser.ie > 8) {
@@ -412,7 +410,7 @@
 						var src = $(elementID).find('span').html();
 						window.assertArr = src.match(/console.assert\(.+?\);/g);
 						window.assertFuncName = strFuncName;
- 
+
 						if(!window.assertArr) window.assertArr = [];
 						if(!window.assertFuncName) window.assertFuncName = '';
 
@@ -435,56 +433,40 @@
 						});
 					});
 				}
-			
+
 			};
 
-			$(function() {
-				//				alert('中方alert');
-				//				confirm("confdafs顺在");
-				//				prompt("请输入你的名字", "张三");
-				initRunnable();
-				//				$('body').addClass('view-double');
+			$(function() { 
+				initRunnable(); 
 				include('app');
-				window.vConsole = new VConsole();
-				console.log('Hello world');
-				$(document).on('click', function() {
-					//									vConsole.hide();
-					//					console.dir(arguments);
-					//					console.dir($(event.target).parents('#__vconsole'));
+				window.vConsole = new VConsole(); 
+				$(document).on('click', function() { 
 					var targetName = $(event.target).prop("tagName");
-					var len = $(event.target).parents('#__vconsole').length;
-					//										console.log(targetName);
+					var len = $(event.target).parents('#__vconsole').length; 
 					if(len == 0) {
 						if(targetName != 'INPUT' && targetName != 'BUTTON' && targetName != 'I') {
 							vConsole.hide();
 						}
-
 					}
 				});
 
 				$('.btn-run-code').on('click', function() {
-					//					vConsole.show();
-
+					//vConsole.show(); 
 				})
 
 				$(window).on('beforeunload', function() {
-					//				 	return false;
-					//					Popup.show({text:'确定退出程序？'}); 
-					return '确定退出程序?';
-
+					return '确定退出程序?'; 
 				});
 
 				$('#pageTestBtn').on('click', function() {
-					//					Popup.show({text:'确定退出程序？'}); 
-					//					return;
+
 					vConsole.show();
 					var tester = new Tester();
 					tester.run();
 				})
 			});
 		</script>
- 
-		 
+
 	</body>
 
 </html>

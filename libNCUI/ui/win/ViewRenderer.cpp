@@ -137,8 +137,9 @@ namespace amo {
         
             Gdiplus::SolidBrush brush(Gdiplus::Color(255, 255, 255));
             RECT bkRt = GetPos();
-            m_graphics->FillRectangle(&brush, bkRt.left, bkRt.top, bkRt.right - bkRt.left,
-                                      bkRt.bottom - bkRt.top);
+            // 会闪屏
+            /* m_graphics->FillRectangle(&brush, bkRt.left, bkRt.top, bkRt.right - bkRt.left,
+                                       bkRt.bottom - bkRt.top);*/
         }
         
         std::vector<std::shared_ptr<amo::d2d1::GdiplusBitmap> >  bitmaps;

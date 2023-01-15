@@ -79,7 +79,7 @@ namespace amo {
                 amo::u8path p(amo::u8string(ss, true));
                 
                 p.append(subStr.str());
-                return toAbsolutePath(amo::u8string(p.c_str(), true).to_utf8());
+                return toAbsolutePath(amo::u8string(p.raw_string(), true).to_utf8());
             }
         }
         

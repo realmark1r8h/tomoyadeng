@@ -569,7 +569,7 @@ namespace amo {
         }
         
         Any tryProcessMessage() {
-            $clog(amo::cdevel << func_orient << amo::endl;);
+            //$clog(amo::cdevel << func_orient << amo::endl;);
             
             if (!isReady()) {
                 //$clog(amo::cdevel << func_orient << "Not Ready" << amo::endl;);
@@ -786,14 +786,14 @@ namespace amo {
                     
                         $clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
                               message_id << amo::endl;);
-						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
-							message_id << amo::endl;);
-						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
-							message_id << amo::endl;);
-						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
-							message_id << amo::endl;);
-						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
-							message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+                              message_id << amo::endl;);
                         m_oDeadlockIDs.insert(std::make_pair(id, message_id));
                         
                         if (getDeadlockCallback()) {
@@ -805,16 +805,16 @@ namespace amo {
                 } else {
                     if (t.elapsed() > 5000) {
                         // 打印消息出来提示死锁
-						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
-							message_id << amo::endl;);
-						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
-							message_id << amo::endl;);
-						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
-							message_id << amo::endl;);
-						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
-							message_id << amo::endl;);
-						$clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
-							message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+                              message_id << amo::endl;);
+                        $clog(amo::cdevel << func_orient << ", " << m_nN << ", deadlock ID: " <<
+                              message_id << amo::endl;);
                               
                     }
                 }

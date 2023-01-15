@@ -506,6 +506,7 @@ namespace amo {
     
         std::string u8Url = target_url.ToString();
         u8Url = ret.As<std::string>();
+        u8Url.clear();
     
         if (u8Url.empty()) {
             u8Url = target_url.ToString();
@@ -709,6 +710,27 @@ namespace amo {
     
     void BrowserWindowManager::onAllNativeWindowClosed() {
     
+    }
+    
+    HWND BrowserWindowManager::getHWNDByBrowserID(int32_t nID) {
+    
+        HWND hWnd = NULL;
+        
+        std::shared_ptr<BrowserWindow> pWindow;
+        
+        // 先通过ID查找
+        auto pLocalWindow = this->findValidWindow(nID);
+        
+        // 不存在，使用当前焦点窗口
+        if (pLocalWindow) {
+            pWindow = pLocalWindow->toBrowserWindow();
+            
+            if (pWindow) {
+                hWnd = pWindow->GetHWND();
+            }
+        }
+        
+        return hWnd;
     }
     
     

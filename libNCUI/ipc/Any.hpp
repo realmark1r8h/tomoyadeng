@@ -14,6 +14,8 @@
 #include <amo/stdint.hpp>
 #include <amo/date_time.hpp>
 #include "ipc/IPCMessage.hpp"
+#include <amo/blob.hpp>
+#include <amo/bigstr.hpp>
 
 /*!
  * @namespace	amo
@@ -134,6 +136,12 @@ namespace amo {
     template<> static std::string anyToString<Deadlock>(const Deadlock& val) {
         return valueToString<std::string>("deadlock");
     }
+    template<> static std::string anyToString<amo::blob>(const amo::blob& val) {
+        return val.get_name();
+    }
+    template<> static std::string anyToString<amo::bigstr>(const amo::bigstr& val) {
+        return val.get_name();
+    }
     template<> static std::string anyToString<amo::u8json>(const amo::u8json& val) {
         return val.to_string();
     }
@@ -202,6 +210,12 @@ namespace amo {
     }
     template<> static Deadlock stringToAny(const std::string& val) {
         return Deadlock();
+    }
+    template<> static amo::blob stringToAny(const std::string& val) {
+        return amo::blob(val);
+    }
+    template<> static amo::bigstr stringToAny(const std::string& val) {
+        return amo::bigstr(val);
     }
     template<> static NonReturn stringToAny(const std::string& val) {
         return NonReturn();
@@ -296,6 +310,13 @@ namespace amo {
     };
     template<> struct AnyValueType <amo::date_time> {
         static const char value = 43;
+    };
+    
+    template<> struct AnyValueType <amo::blob> {
+        static const char value = 44;
+    };
+    template<> struct AnyValueType <amo::bigstr> {
+        static const char value = 45;
     };
     /*!
      * @class	AnyData

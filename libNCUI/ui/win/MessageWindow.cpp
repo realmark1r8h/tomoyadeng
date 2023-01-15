@@ -21,6 +21,7 @@ namespace amo {
     std::unordered_map<HWND, int64_t> MessageWindow::boxs;
     
     UINT MessageWindow::Show(HWND pMainWnd,
+                             const amo::u8json& settings,
                              LPCTSTR lpText,
                              LPCTSTR lpCaption,
                              UINT uType,
@@ -28,6 +29,7 @@ namespace amo {
                              
         std::shared_ptr<NativeWindowSettings> pSettings;
         pSettings.reset(new NativeWindowSettings());
+        pSettings->updateArgsSettings(settings.to_string());
         pSettings->hasShadow = true;
         MessageWindow* msgBox = new MessageWindow(pSettings);
         BOOL bVisible = IsWindowVisible(pMainWnd);
@@ -54,6 +56,7 @@ namespace amo {
     }
     
     UINT MessageWindow::ShowPrompt(HWND pMainWnd,
+                                   const amo::u8json& settings,
                                    LPCTSTR lpText,
                                    CDuiString* lpdefaultPrompt /*= _T("")*/,
                                    LPCTSTR lpCaption /*= _T("提示")*/,
@@ -61,6 +64,7 @@ namespace amo {
                                    UINT uIcon /*= MB_ICONWARNING*/) {
         std::shared_ptr<NativeWindowSettings> pSettings;
         pSettings.reset(new NativeWindowSettings());
+        pSettings->updateArgsSettings(settings.to_string());
         pSettings->hasShadow = true;
         MessageWindow* msgBox = new MessageWindow(pSettings);
         msgBox->Create(pMainWnd, lpCaption, UI_WNDSTYLE_DIALOG, WS_EX_WINDOWEDGE);
@@ -125,7 +129,9 @@ namespace amo {
     }
     
     CDuiString MessageWindow::GetSkinFile() {
-        return amo::u8string(skinMessageBox, true).to_unicode().c_str();
+    
+        return amo::u8string(skinMessageBox, true).format(
+                   m_pNativeSettings->settings).to_unicode().c_str();
     }
     
     CDuiString MessageWindow::GetSkinFolder() {
@@ -174,7 +180,8 @@ namespace amo {
         // 处理多显示器模式下屏幕居中
         MONITORINFO oMonitor = {};
         oMonitor.cbSize = sizeof(oMonitor);
-        ::GetMonitorInfo(::MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST), &oMonitor);
+        ::GetMonitorInfo(::MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST),
+                         &oMonitor);
         rcArea = oMonitor.rcWork;
         
         if (hWndCenter == NULL || IsIconic(hWndCenter)) {
@@ -210,7 +217,8 @@ namespace amo {
         }
         
         
-        ::SetWindowPos(m_hWnd, NULL, xLeft, yTop, -1, -1, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
+        ::SetWindowPos(m_hWnd, NULL, xLeft, yTop, -1, -1,
+                       SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
     }
     
     LRESULT MessageWindow::ResponseDefaultKeyEvent(WPARAM wParam) {
@@ -238,20 +246,28 @@ namespace amo {
         ASSERT(m_pEditPrompt != NULL);
         ASSERT(m_pLabelCaption != NULL);
         
+        
+        CDuiString hotbkcolor(amo::u8string(m_pNativeSettings->primaryColor,
+                                            true).to_wide().c_str());
+                                            
         m_pButtonOK->SetText(DuiLib::CDuiString(L"确定"));
-        m_pButtonOK->SetHotBkColor(0xff0A67FB);
+        m_pButtonOK->SetAttribute(_T("hotbkcolor"),
+                                  hotbkcolor.GetData());
+        uint32_t color = m_pButtonOK->GetHotBkColor();
+        //color &= 0x77ff00ff;
+        m_pButtonOK->SetHotBkColor(color);
+        //m_pButtonOK->SetHotBkColor(0xff0A67FB);
+        
         m_pButtonCancel->SetText(DuiLib::CDuiString(L"取消"));
-        
-        m_pButtonCancel->SetHotBkColor(0xff3280fc);
+        m_pButtonCancel->SetAttribute(_T("hotbkcolor"),
+                                      hotbkcolor.GetData());
+        m_pButtonCancel->SetAttribute(_T("pushedtextcolor"), hotbkcolor.GetData());
         m_pButtonCancel->SetHotTextColor(0xffffffff);
-        m_pButtonCancel->SetPushedTextColor(0xff3280fc);
         
-        /*    m_pLabelCaption->SetText(_T("dddddddddddddd"));
-            m_pLabelCaption->SetTextColor(0xffffffff);
-            m_pLabelCaption->SetAttribute(_T("height"), _T("40"));
-            m_pLabelCaption->SetBorderSize(2);
-            m_pLabelCaption->SetBorderColor(0xff339931);
-            */
+        /*m_pButtonCancel->SetHotBkColor(m_pNativeSettings->primaryColor);
+        m_pButtonCancel->SetPushedTextColor(m_pNativeSettings->primaryColor);*/
+        
+        
         int nCorner = m_pNativeSettings->roundcorner;
         RECT rcHoleOffset = { nCorner, nCorner, nCorner, nCorner };
         

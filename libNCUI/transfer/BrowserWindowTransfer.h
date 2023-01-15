@@ -335,6 +335,9 @@ namespace amo {
         
         virtual Any stopRecordGif(IPCMessage::SmartType msg);
         
+        
+        //virtual Any dropFiles(IPCMessage::SmartType msg);
+        
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(BrowserWindowTransfer, ClassTransfer)
         
         // 测试用
@@ -455,6 +458,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(saveImageToFile, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(recordGifToFile, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(stopRecordGif, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(setTheme, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         

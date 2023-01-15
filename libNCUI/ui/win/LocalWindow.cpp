@@ -524,6 +524,27 @@ namespace amo {
         return m_pNativeSettings->compute_cursor;
     }
     
+    Any LocalWindow::setTheme(IPCMessage::SmartType msg) {
+        amo::u8json json = msg->getArgumentList()->getJson(0);
+        m_pNativeSettings->updateArgsSettings(json);
+        
+        CControlUI*  pTitleBar = static_cast<CControlUI*>(m_PaintManager.FindControl(
+                                     _T("titleLayout")));
+        CDuiString bkcolor(amo::u8string(m_pNativeSettings->primaryColor,
+                                         true).to_wide().c_str());
+                                         
+        CDuiString bkcolor2(amo::u8string(m_pNativeSettings->primaryColor2,
+                                          true).to_wide().c_str());
+                                          
+        if (pTitleBar != NULL) {
+            pTitleBar->SetAttribute(_T("bkcolor"), bkcolor.GetData());
+            pTitleBar->SetAttribute(_T("bkcolor2"), bkcolor2.GetData());
+        }
+        
+        return Undefined();
+        
+    }
+    
     bool LocalWindow::isFocusedWindow() {
         HWND hWnd = m_hWnd;
         HWND hFocusWnd = ::GetFocus();

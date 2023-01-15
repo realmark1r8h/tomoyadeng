@@ -58,6 +58,9 @@ namespace amo {
         DEFAULT_ARGS_SETTINGS(back_forword, false);
         DEFAULT_ARGS_SETTINGS(disable_ime, false);
         DEFAULT_ARGS_SETTINGS(compute_cursor, false);
+        DEFAULT_ARGS_SETTINGS(primaryColor, "#ff3280fc");
+        DEFAULT_ARGS_SETTINGS(primaryColor2, "");
+        
     }
     
     
@@ -109,10 +112,18 @@ namespace amo {
         BOOL_ARGS_SETTING(disable_ime);
         BOOL_ARGS_SETTING(compute_cursor);
         
+        
+        
+        if (settings.getString("primaryColor2").empty()) {
+            settings.put("primaryColor2", settings.getString("primaryColor"));
+        }
+        
+        STRING_ARGS_SETTING(primaryColor);
+        STRING_ARGS_SETTING(primaryColor2);
+        
         // 如果不能改变窗口大小，那么maximizable=true;
         if (!resizable) {
             DEFAULT_ARGS_SETTINGS(maximizable, true);
-            
         }
         
         return ;
@@ -165,8 +176,19 @@ namespace amo {
         UPDATE_ARGS_SETTINGS(back_forword);
         UPDATE_ARGS_SETTINGS(disable_ime);
         UPDATE_ARGS_SETTINGS(compute_cursor);
+        
+        UPDATE_ARGS_SETTINGS(primaryColor);
+        UPDATE_ARGS_SETTINGS(primaryColor2);
+        
         return BasicSettings::toJson();
         
+    }
+    
+    amo::u8json NativeWindowSettings::getThemeJson() {
+        amo::u8json json;
+        json.put("primaryColor", primaryColor);
+        json.put("primaryColor2", primaryColor2);
+        return json;
     }
     
 }

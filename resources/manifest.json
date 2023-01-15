@@ -1,6 +1,6 @@
 {
 	"appSettings": {
-		"useNode": true,
+		"useNode": false,
 		"main": "main.js",
 		"useNodeProcess": false,
 		"single_process": true

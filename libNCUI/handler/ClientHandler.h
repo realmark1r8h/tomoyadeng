@@ -105,6 +105,9 @@ namespace amo {
         
         static  Any createPipeClientImpl(IPCMessage::SmartType msg);
         
+        
+        void BrowserThreadActivityDetector();
+        
         virtual CefRefPtr<CefContextMenuHandler> GetContextMenuHandler() override;
         virtual CefRefPtr<CefDialogHandler> GetDialogHandler() override;
         virtual CefRefPtr<CefDisplayHandler> GetDisplayHandler() override;

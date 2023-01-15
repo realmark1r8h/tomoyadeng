@@ -121,7 +121,7 @@ namespace amo {
                                    const CefV8ValueList& arguments,
                                    CefRefPtr<CefV8Value>& retval,
                                    CefString& exception) {
-                                   
+        FUNC_CALL_TIME();
         CefRefPtr<CefV8Context> pContext = CefV8Context::GetCurrentContext();
         
         auto iter = m_oFuncMgr.toMap().find(name.ToString());

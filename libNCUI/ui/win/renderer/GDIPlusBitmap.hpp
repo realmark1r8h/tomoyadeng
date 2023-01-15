@@ -104,6 +104,7 @@ namespace amo {
                     return false;
                 }
                 
+                
                 //m_rect->renderMode = 1;
                 
                 if (m_rect->renderMode == 1) {

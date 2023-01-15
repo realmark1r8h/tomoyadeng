@@ -10,6 +10,7 @@
 #include "transfer/ClassTransfer.hpp"
 
 #include "transfer/RendererThreadTransfer.h"
+#include "module/transfer/BigStringTransfer.h"
 
 
 namespace amo {
@@ -35,6 +36,8 @@ namespace amo {
     void RendererTransferMgr::registerClass(int nBrowserID) {
         addTransfer(nBrowserID,
                     ClassTransfer::getUniqueTransfer<RendererThreadTransfer>());
+        addTransfer(nBrowserID,
+                    ClassTransfer::getUniqueTransfer<BigStringTransfer>());
     }
     
 }

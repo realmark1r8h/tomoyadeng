@@ -190,7 +190,7 @@ new BrowserWindow({
    无. 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/73">close</a>, <a href="#api/apiBrowserWindow/37">setClosable</a>
+<a href="#api/apiBrowserWindow/74">close</a>, <a href="#api/apiBrowserWindow/37">setClosable</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
@@ -2074,6 +2074,47 @@ console.assert(win.isComputeCursor() == true);
 <div class="adoc" id="div_isComputeCursor"></div>
 
 
+## setTheme &nbsp;
+  设置窗口主题.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>JsonObject </td>
+	<td></td>
+	<td>JSON对象.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+   无. 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('BrowserWindow');
+BrowserWindow.current.setTheme({
+    primaryColor: '#ff8666b8',
+    primaryColor2: '#ff8666b8'
+});
+
+
+```
+
+
+<div class="adoc" id="div_setTheme"></div>
+
+
 ## getName &nbsp;<span class="label label-sync">同步</span> 
 
   获取窗口名.
@@ -2084,7 +2125,7 @@ console.assert(win.isComputeCursor() == true);
   String . 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/71">setName</a>
+<a href="#api/apiBrowserWindow/72">setName</a>
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
@@ -2108,7 +2149,7 @@ console.log(win.getName());
   BrowserWindow 如果不存在，返回Undefined. 
 
 * **参考** 
-<a href="#api/apiBrowserWindow/64">current</a>
+<a href="#api/apiBrowserWindow/65">current</a>
 
 
 

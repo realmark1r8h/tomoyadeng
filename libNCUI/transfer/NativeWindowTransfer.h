@@ -80,6 +80,7 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(toggleVisible, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(showModal, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setIcon, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(setTheme, TransferExecNormal)
         
         AMO_CEF_MESSAGE_TRANSFER_END()
         

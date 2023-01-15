@@ -776,6 +776,19 @@ namespace amo {
                 || strMessageName == MSG_NATIVE_SYNC_EXECUTE
                 || strMessageName == MSG_NATIVE_ASYNC_EXECUTE) {
             IPCMessage::SmartType ipcMessage = createAnyProcessMessage(message);
+            //将bigstr转换为string
+            auto args = ipcMessage->getArgumentList();
+            int len = args->getArgsSize();
+            
+            for (int i = 0; i < len; ++i) {
+                if (!args->getValue(i).is<amo::bigstr>()) {
+                    continue;
+                }
+                
+                amo::bigstr bigstr = args->getValue(i).As<amo::bigstr>();
+                args->setValue(i, bigstr.read());
+            }
+            
             auto manager = BrowserTransferMgr::getInstance();
             
             if (manager->onMessageTransfer(ipcMessage).isValid()) {
@@ -1355,6 +1368,21 @@ namespace amo {
         return;
     }
     
+    
+    bool WebkitView::OnFileDialog(CefRefPtr<CefBrowser> browser,
+                                  CefDialogHandler::FileDialogMode mode,
+                                  const CefString& title,
+                                  const CefString& default_file_path,
+                                  const std::vector<CefString>& accept_filters,
+                                  int selected_accept_filter,
+                                  CefRefPtr<CefFileDialogCallback> callback) {
+        return false;
+        std::vector<CefString> vec;
+        vec.push_back("D:\\2222.jpg");
+        callback->Continue(selected_accept_filter, vec);
+        return true;
+    }
+    
 #if CHROME_VERSION_BUILD >= 2704
     bool WebkitView::OnJSDialog(CefRefPtr<CefBrowser> browser,
                                 const CefString & origin_url,
@@ -1380,6 +1408,11 @@ namespace amo {
         return OnJSDialog2(browser, origin_url, dialog_type, message_text,
                            default_prompt_text, callback, suppress_message);
     }
+    
+    
+    
+    
+    
 #endif
     bool WebkitView::OnJSDialog2(CefRefPtr<CefBrowser> browser,
                                  const CefString & origin_url,
@@ -1399,10 +1432,12 @@ namespace amo {
         
         UINT uRet = 0;
         CDuiString strPromptText = default_prompt_text.c_str();
+        amo::u8json settings = m_pBrowserSettings->getThemeJson();
         
         if (dialog_type == JSDIALOGTYPE_ALERT) { //alert
             strOriginUrl = amo::u8string(u8"提示", true);
             uRet = MessageWindow::Show(::GetParent(m_hBrowserWnd),
+                                       settings,
                                        strMessageText.to_unicode().c_str(),
                                        strOriginUrl.to_unicode().c_str());
             callback->Continue(uRet == 1,
@@ -1411,6 +1446,7 @@ namespace amo {
         } else if (dialog_type == JSDIALOGTYPE_CONFIRM) { //confirm
             strOriginUrl = amo::u8string(u8"询问", true);
             uRet = MessageWindow::Show(::GetParent(m_hBrowserWnd),
+                                       settings,
                                        strMessageText.to_unicode().c_str(),
                                        strOriginUrl.to_unicode().c_str(),
                                        MB_OKCANCEL);
@@ -1420,6 +1456,7 @@ namespace amo {
         } else if (dialog_type == JSDIALOGTYPE_PROMPT) { //prompt
             strOriginUrl = strMessageText;
             uRet = MessageWindow::ShowPrompt(::GetParent(m_hBrowserWnd),
+                                             settings,
                                              strMessageText.to_unicode().c_str(),
                                              &strPromptText,
                                              strOriginUrl.to_unicode().c_str(),
@@ -1436,6 +1473,8 @@ namespace amo {
                                           const CefString & message_text,
                                           bool is_reload,
                                           CefRefPtr<CefJSDialogCallback> callback) {
+                                          
+                                          
         // 如果页面回返了true of false,那么直接向cef返回结果
         if (message_text == "true"
                 || message_text == "True"
@@ -1457,7 +1496,10 @@ namespace amo {
         
         CDuiString strCaption = _T("询问");
         
+        amo::u8json settings = m_pBrowserSettings->getThemeJson();
+        
         UINT uRet = MessageWindow::Show(::GetParent(m_hBrowserWnd),
+                                        settings,
                                         message_text.c_str(),
                                         strCaption.GetData(),
                                         MB_OKCANCEL);
@@ -1479,7 +1521,8 @@ namespace amo {
         }
         
         if (status == TS_PROCESS_CRASHED) {
-            MessageWindow::Show(m_hBrowserWnd, _T("the page crashed."));
+            amo::u8json settings = m_pBrowserSettings->getThemeJson();
+            MessageWindow::Show(m_hBrowserWnd,  settings, _T("the page crashed."));
             
         }
         

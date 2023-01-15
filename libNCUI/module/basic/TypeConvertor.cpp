@@ -7,6 +7,7 @@
 #include <utility>
 #include "module/basic/ClassMethodMgr.hpp"
 #include "utility/utility.hpp"
+#include "../../ipc/BlobManager.hpp"
 
 
 
@@ -115,7 +116,8 @@ namespace amo {
         
     }
     
-    CefRefPtr<CefV8Value> TypeConvertor::ParseSingleJsonToObject(amo::u8json& json) {
+    CefRefPtr<CefV8Value> TypeConvertor::ParseSingleJsonToObject(
+        amo::u8json& json) {
         std::string sb = json.to_string();
         
         if (!json.is_valid()) {
@@ -287,6 +289,12 @@ namespace amo {
             if (!transferJson.empty()) {
                 amo::u8json transfer(transferJson);
                 amo::u8string id = amo::u8string::from_number<int64_t>(transfer.getInt64("id"));
+                auto bigstr = BigStrManager<PID_RENDERER>::getInstance()->find(id.str());
+                
+                if (bigstr) {
+                    return *bigstr;
+                }
+                
                 return id.to_utf8();
             }
         }
@@ -522,9 +530,25 @@ namespace amo {
             retval = CefV8Value::CreateString(any.As<std::string>());
             break;
             
+        case AnyValueType<amo::blob>::value: {
+            amo::blob blob = any.As<amo::blob>();
+            blob.read_header();
+            amo::u8json opt;
+            opt.put("mime", blob.mime());
             
-            
-            
+            CefRefPtr<CefV8Value> ptrOpt = 	JsonToObject(opt);
+            std::string data = blob.read();
+            retval = CreateBlobByString(data, ptrOpt);
+            break;
+        }
+        
+        case AnyValueType<amo::bigstr>::value: {
+            amo::bigstr blob = any.As<amo::bigstr>();
+            retval = CefV8Value::CreateString(blob.read());
+            break;
+        }
+        
+        
         case  AnyValueType<amo::u8json>::value: {
     
             // 返回一个JS Object
@@ -602,6 +626,49 @@ namespace amo {
         Any& any = args->getValue(index);
         return toV8Value(any);
         
+    }
+    
+    int TypeConvertor::GetBlobSize(CefRefPtr<CefV8Value> pValue) {
+    
+        CefRefPtr<CefV8Value> objectIsBlob;
+        objectIsBlob = pContext->GetGlobal()->GetValue("objectIsBlob");
+        
+        if (!objectIsBlob) {
+            return  0;
+        }
+        
+        CefV8ValueList list;
+        list.push_back(pValue);
+        CefRefPtr<CefV8Value> retval = objectIsBlob->ExecuteFunction(objectIsBlob,
+                                       list);
+                                       
+        if (!retval) {
+            return 0;
+        }
+        
+        if (!retval->IsInt()) {
+            return 0;
+        }
+        
+        return retval->GetIntValue();
+    }
+    
+    void TypeConvertor::ReadDataFromBlob(const std::string& blobName,
+                                         CefRefPtr<CefV8Value> pValue) {
+        CefRefPtr<CefV8Value> readDataFromBlob;
+        readDataFromBlob = pContext->GetGlobal()->GetValue("readDataFromBlob");
+        
+        if (!readDataFromBlob) {
+            return ;
+        }
+        
+        CefV8ValueList list;
+        list.push_back(CefV8Value::CreateString(blobName));
+        list.push_back(pValue);
+        CefRefPtr<CefV8Value> retval = readDataFromBlob->ExecuteFunction(
+                                           readDataFromBlob,
+                                           list);
+        return;
     }
     
     CefRefPtr<CefV8Value> TypeConvertor::getClassObject(int64_t nID,
@@ -758,6 +825,44 @@ namespace amo {
         return int64ToObject->ExecuteFunction(int64ToObject, list);
     }
     
+    
+    CefRefPtr<CefV8Value> TypeConvertor::CreateBlobByString(const std::string& str,
+            CefRefPtr<CefV8Value> opt) {
+        CefRefPtr<CefV8Value> createBlobByString;
+        createBlobByString = pContext->GetGlobal()->GetValue("createBlobByString");
+        
+        if (!createBlobByString) {
+            return CefV8Value::CreateUndefined();
+        }
+        
+        CefV8ValueList list;
+        list.push_back(CefV8Value::CreateString(str));
+        list.push_back(opt);
+        return createBlobByString->ExecuteFunction(createBlobByString, list);
+    }
+    
+    CefRefPtr<CefV8Value> TypeConvertor::CreateBlobByArray(const
+            std::vector<std::string>& vec,
+            CefRefPtr<CefV8Value> opt) {
+        CefRefPtr<CefV8Value> createBlobByArray;
+        createBlobByArray = pContext->GetGlobal()->GetValue("createBlobByArray");
+        
+        if (!createBlobByArray) {
+            return CefV8Value::CreateUndefined();
+        }
+        
+        CefRefPtr<CefV8Value> arr = 	CefV8Value::CreateArray(vec.size());
+        
+        for (size_t i = 0; i < vec.size(); ++i) {
+            arr->SetValue(i, CefV8Value::CreateString(vec[i]));
+        }
+        
+        CefV8ValueList list;
+        list.push_back(arr);
+        list.push_back(opt);
+        return createBlobByArray->ExecuteFunction(createBlobByArray, list);
+    }
+    
     Any TypeConvertor::toAny(CefRefPtr<CefV8Value> pValue) {
         if (!pValue || pValue->IsUndefined()) {
             return Undefined();
@@ -779,7 +884,20 @@ namespace amo {
             }
             
             return vec;
-        } else if (pValue->IsObject()) {
+        } else   {
+            int blobsize = GetBlobSize(pValue);
+            
+            if (blobsize > 0) {
+                auto mgr = BlobManager<PID_RENDERER>::getInstance();
+                auto blob = mgr->create(blobsize);
+                blob->write_header();
+                ReadDataFromBlob(blob->get_name(), pValue);
+                return *blob;
+            }
+        }
+        
+        
+        if (pValue->IsObject()) {
             return ParseObjectToJson(pValue);
         }
         

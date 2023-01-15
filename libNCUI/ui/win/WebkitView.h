@@ -125,6 +125,14 @@ namespace amo {
                                       CefRefPtr<CefDownloadItem> download_item,
                                       const CefString& suggested_name,
                                       CefRefPtr<CefBeforeDownloadCallback> callback) override;
+                                      
+        virtual bool OnFileDialog(CefRefPtr<CefBrowser> browser,
+                                  CefDialogHandler::FileDialogMode mode,
+                                  const CefString& title,
+                                  const CefString& default_file_path,
+                                  const std::vector<CefString>& accept_filters,
+                                  int selected_accept_filter,
+                                  CefRefPtr<CefFileDialogCallback> callback) override;
 #if CHROME_VERSION_BUILD >= 2704
         virtual bool OnJSDialog(CefRefPtr<CefBrowser> browser,
                                 const CefString& origin_url,

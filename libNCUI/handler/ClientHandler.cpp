@@ -31,6 +31,7 @@
 #include "handler/MessageHandlerDelegate.hpp"
 #include "ipc/ProcessExchanger.hpp"
 #include "handler/CefProcessExchanger.hpp"
+#include "ipc/BlobManager.hpp"
 
 namespace amo {
 
@@ -42,6 +43,7 @@ namespace amo {
     bool ClientHandler::OnProcessMessageReceived(CefRefPtr<CefBrowser> browser,
             CefProcessId source_process,
             CefRefPtr<CefProcessMessage> message) {
+        FUNC_CALL_TIME();
         bool bHandled = false;
         amo::u8string message_name(message->GetName().ToString(), true);
         
@@ -270,6 +272,25 @@ namespace amo {
         }
     }
     
+    void ClientHandler::BrowserThreadActivityDetector() {
+        return;
+        
+        // 移除无效的数据
+        BigStrManager<PID_BROWSER>::getInstance()->removeInvalidObject();
+        BlobManager<PID_BROWSER>::getInstance()->removeInvalidObject();
+        
+#if CHROME_VERSION_BUILD >=2704
+        CefPostDelayedTask(TID_UI,
+                           base::Bind(&ClientHandler::BrowserThreadActivityDetector, this),
+                           5000);
+#else
+        CefPostDelayedTask(TID_UI,
+                           NewCefRunnableMethod(this,
+                                                &ClientHandler::BrowserThreadActivityDetector),
+                           5000);
+#endif
+    }
+    
     CefRefPtr<CefContextMenuHandler> ClientHandler::GetContextMenuHandler() {
         return m_pContextMenuHandler.get();
     }
@@ -350,6 +371,8 @@ namespace amo {
         }
         
         m_pLifeSpanHandler->RegisterDelegate(this);
+        
+        BrowserThreadActivityDetector();
     }
     
     CefRefPtr<MessageRouterBrowserSide>

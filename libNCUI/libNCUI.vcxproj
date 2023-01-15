@@ -218,6 +218,7 @@
     <ClCompile Include="module\JsClassObjectV8Handler.cpp" />
     <ClCompile Include="module\JsClassV8Handler.cpp" />
     <ClCompile Include="module\JSV8Handler.cpp" />
+    <ClCompile Include="module\transfer\BigStringTransfer.cpp" />
     <ClCompile Include="node\CefCallbackHandler.cpp" />
     <ClCompile Include="node\NodeContextMenuHandler.cpp" />
     <ClCompile Include="node\NodeDialogHandler.cpp" />
@@ -264,6 +265,7 @@
     <ClCompile Include="transfer\BrowserTransfer.cpp" />
     <ClCompile Include="transfer\BrowserTransferMgr.cpp" />
     <ClCompile Include="transfer\BrowserWindowTransfer.cpp" />
+    <ClCompile Include="transfer\ClipboardTransfer.cpp" />
     <ClCompile Include="transfer\CommandLineTransfer.cpp" />
     <ClCompile Include="transfer\ControlTransfer.cpp" />
     <ClCompile Include="transfer\DesktopTransfer.cpp" />
@@ -296,6 +298,8 @@
     <ClCompile Include="ui\win\BrowserWindowSkin.cpp" />
     <ClCompile Include="ui\win\BytesWriteHandler.cpp" />
     <ClCompile Include="ui\win\clipboard\Clipboard.cpp" />
+    <ClCompile Include="ui\win\clipboard\ClipboardMonitor.cpp" />
+    <ClCompile Include="ui\win\clipboard\ClipWatcher.cpp" />
     <ClCompile Include="ui\win\Imm32Manager.cpp" />
     <ClCompile Include="ui\win\LayeredWindow.cpp" />
     <ClCompile Include="ui\win\LocalWindow.cpp" />
@@ -363,8 +367,10 @@
     <ClInclude Include="handler\URLRequestClient.h" />
     <ClInclude Include="handler\UtilityV8Handler.h" />
     <ClInclude Include="handler\V8ExtentionHandler.h" />
+    <ClInclude Include="include\version.h" />
     <ClInclude Include="ipc\Any.hpp" />
     <ClInclude Include="ipc\AsyncFunctionManager.hpp" />
+    <ClInclude Include="ipc\BlobManager.hpp" />
     <ClInclude Include="ipc\IPCMessage.hpp" />
     <ClInclude Include="ipc\MessageLauncher.hpp" />
     <ClInclude Include="ipc\ProcessExchanger.hpp" />
@@ -391,6 +397,7 @@
     <ClInclude Include="module\JsClassObjectV8Handler.h" />
     <ClInclude Include="module\JsClassV8Handler.h" />
     <ClInclude Include="module\JSV8Handler.h" />
+    <ClInclude Include="module\transfer\BigStringTransfer.h" />
     <ClInclude Include="node\CefCallbackHandler.h" />
     <ClInclude Include="node\NodeContextMenuHandler.h" />
     <ClInclude Include="node\NodeDialogHandler.h" />
@@ -426,6 +433,7 @@
     <ClInclude Include="settings\OverlapSettings.h" />
     <ClInclude Include="settings\RequestSettings.h" />
     <ClInclude Include="settings\SplashWindowSettings.h" />
+    <ClInclude Include="settings\ThemeSettings.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="transfer\ActionTransfer.h" />
@@ -435,6 +443,7 @@
     <ClInclude Include="transfer\BrowserTransferMgr.h" />
     <ClInclude Include="transfer\BrowserWindowTransfer.h" />
     <ClInclude Include="transfer\ClassTransfer.hpp" />
+    <ClInclude Include="transfer\ClipboardTransfer.h" />
     <ClInclude Include="transfer\CommandLineTransfer.h" />
     <ClInclude Include="transfer\ControlTransfer.h" />
     <ClInclude Include="transfer\DesktopTransfer.h" />
@@ -477,6 +486,8 @@
     <ClInclude Include="ui\win\BrowserWindowSkin.h" />
     <ClInclude Include="ui\win\BytesWriteHandler.h" />
     <ClInclude Include="ui\win\clipboard\Clipboard.h" />
+    <ClInclude Include="ui\win\clipboard\ClipboardMonitor.h" />
+    <ClInclude Include="ui\win\clipboard\ClipWatcher.h" />
     <ClInclude Include="ui\win\GifEncoder.hpp" />
     <ClInclude Include="ui\win\Imm32Manager.h" />
     <ClInclude Include="ui\win\LayeredWindow.h" />

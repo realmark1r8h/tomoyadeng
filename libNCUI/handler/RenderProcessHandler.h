@@ -350,6 +350,8 @@ namespace amo {
          */
         
         void RenderThreadActivityDetector();
+        
+        
     public:
         /*! @brief	The message router. */
         CefRefPtr<CefMessageRouterRendererSide> m_pMessageRouter;

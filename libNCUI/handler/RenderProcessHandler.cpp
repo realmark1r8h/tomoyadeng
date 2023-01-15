@@ -31,6 +31,7 @@
 #include "utility/utility.hpp"
 #include "transfer/RendererTransferMgr.h"
 #include "module/AppExHandler.h"
+#include "ipc/BlobManager.hpp"
 
 
 
@@ -390,6 +391,7 @@ namespace amo {
         pTransfer->setWorkOnRenderer(true);
         amo::RendererTransferMgr::getInstance()->addTransfer(browser->GetIdentifier(),
                 pTransfer);
+                
         // 这个IPCRendererV8Handler也应该加进去的。
         RendererTransferMgr::getInstance()->registerClass(nBrowserID);
         
@@ -416,6 +418,12 @@ namespace amo {
     
     void RenderProcessHandler::RenderThreadActivityDetector() {
         //$clog(amo::cdevel << func_orient << "渲染进程活着" << amo::endl;);
+        
+        
+        // 移除无效的数据
+        BigStrManager<PID_RENDERER>::getInstance()->removeInvalidObject();
+        BlobManager<PID_RENDERER>::getInstance()->removeInvalidObject();
+        
 #if CHROME_VERSION_BUILD >=2704
         CefPostDelayedTask(TID_RENDERER,
                            base::Bind(&RenderProcessHandler::RenderThreadActivityDetector, this),
@@ -427,7 +435,9 @@ namespace amo {
                            5000);
 #endif
                            
+                           
     }
+    
     
     void RenderProcessHandler::OnBrowserCreated(CefRefPtr<CefBrowser> browser) {
     
@@ -613,6 +623,8 @@ namespace amo {
     
     RenderProcessHandler::RenderProcessHandler() {
         m_pV8ExtensionHander = new V8ExtentionHandler();
+        
+        
         
     }
     

@@ -31,7 +31,7 @@ sys.setdefaultencoding('utf8') # 允许中文字符串
  
 def getNCUIVersion(filename):
 	file = open(filename, 'rb')
-	strStart = "VALUE"
+	strStart = "#define NCUI_VERSION"
  
 	while True: 
 		s = file.readline()
@@ -45,9 +45,13 @@ def getNCUIVersion(filename):
 			str = s[start_pos:] 
 			print str
 			str = str.replace("\"", "")
+			str = str.replace(" ", "")
+			str = str.replace("\t", "")
+			str = str.replace("\r", "")
+			str = str.replace("\n", "")
 			return str
 	file.close()
-	return "1.0.0.10"
+	return "1.0.0.0"
 	
 def getNodeUrl(version):
 	dict = {
@@ -297,7 +301,7 @@ def copyNCUIWebZipResources(recourcePath, dstDir):
 	compress_command = '\"./resources/7z.exe \"'
 	compress_command += ' a -tzip -r '
 	compress_command += dstDir + "web/web.zip "
-	compress_command += recourcePath + '/web' 
+	compress_command += recourcePath + '/web/*' 
 	
 	print compress_command
 	os.system(compress_command)
@@ -308,13 +312,15 @@ def copyAllNCUIResources(recourcePath, dstDir):
 	transfer(recourcePath, dstDir, '.*')
 	return
 	
-def copyNCUIResources(recourcePath, dstDir, images, plugins, web, vc2015):
+def copyNCUIResources(recourcePath, dstDir, images, ppapi, npapi, web, vc2015):
 	transfer(recourcePath, dstDir, ['zip.dll','zlib.dll','sqlite3.dll','main.js', 'manifest.json']) 
 	transfer(recourcePath +"/skin", dstDir + "/skin", ['.*']) 
 	if images == True:
 		transfer(recourcePath + "/images", dstDir + "/images", ".*")
-	if plugins == True:
-		transfer(recourcePath + "/plugins", dstDir + "/plugins", ".*")
+	if ppapi == True:
+		transfer(recourcePath + "/plugins", dstDir + "/plugins", ["pepflashplayer.dll","manifest.json"])
+	if npapi == True:
+		transfer(recourcePath + "/plugins", dstDir + "/plugins", "NPSWF32_19_0_0_226.dll")
 	if web == True:
 		transfer(recourcePath + "/web", dstDir + "/web", ".*")
 	if vc2015 == True:

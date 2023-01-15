@@ -16,12 +16,17 @@ namespace amo {
             return OverlapDefault;
         }
         virtual void fill(const char* buffer, int size) = 0;
+        
         virtual int size() = 0;
+        
         virtual const char* data() const = 0;
         
         virtual void set_locked(bool locked) {
         }
         
+        virtual void resize(int size, char val)  {
+        
+        }
     };
 }
 

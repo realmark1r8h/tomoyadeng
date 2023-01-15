@@ -103,7 +103,7 @@ namespace amo {
         *
         * @example
          		   ```
-				   //@skip
+        		   //@skip
          		   var win = BrowserWindow.current;
          		   win.close();
          		   ```
@@ -122,7 +122,7 @@ namespace amo {
          *
          * @example
          * 		   ```
-						//@skip
+        				//@skip
         				// 窗口将被强制关闭，用户不能取消该操作
         				var win = BrowserWindow.current;
         				win.destroy();
@@ -1458,6 +1458,28 @@ namespace amo {
         
         virtual Any isComputeCursor(IPCMessage::SmartType msg);
         
+        /**
+         * @fn	virtual Any NativeWindowProxy::setTheme(IPCMessage::SmartType msg);
+         *
+         * @brief	设置窗口主题.
+         *
+         * @param	#JsonObject JSON对象.
+         *
+         * @return	无.
+         *
+         * @example
+         *
+         ```
+        	include('BrowserWindow');
+        	BrowserWindow.current.setTheme({
+        		primaryColor: '#ff8666b8',
+        		primaryColor2: '#ff8666b8'
+        	});
+        
+         ```
+         */
+        
+        virtual Any setTheme(IPCMessage::SmartType msg);
     public:
         /*!
          * @fn	HWND NativeWindowProxy::getNativeHWND(std::shared_ptr<AnyArgsList> args);

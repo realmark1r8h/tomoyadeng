@@ -169,9 +169,20 @@
 	<td>是否以全屏的方式启动窗口. </td>
 </tr><tr>
 	<td>Boolean</td>
+	<td>alwaysOnTop</td>
+	<td>false </td>
+	<td>是否保持窗口前端显示. </td>
+</tr><tr>
+	<td>Boolean</td>
 	<td>offscreen</td>
 	<td>false </td>
 	<td>是否使用离屏模式创建窗口. <span class="label label-const">常量</span> 
+</td>
+</tr><tr>
+	<td>Boolean</td>
+	<td>accelerator</td>
+	<td>false </td>
+	<td>是否使用GPU渲染窗口，offscreen=true是有效，需要Drect2D支持. <span class="label label-const">常量</span> 
 </td>
 </tr><tr>
 	<td>Boolean</td>
@@ -179,6 +190,11 @@
 	<td>false </td>
 	<td>是否使用透明窗口，offscreen=true时有效. <span class="label label-const">常量</span> 
 </td>
+</tr><tr>
+	<td>Int</td>
+	<td>windowColor</td>
+	<td>0xffffffff </td>
+	<td>浏览器控件背景颜色. </td>
 </tr><tr>
 	<td>Boolean</td>
 	<td>hasShadow</td>
@@ -210,6 +226,16 @@
 	<td>compute_cursor</td>
 	<td>false </td>
 	<td>计算光标位置，offscreen=true时有效. </td>
+</tr><tr>
+	<td>String</td>
+	<td>primaryColor</td>
+	<td>#ff3280fc </td>
+	<td>窗口主要颜色（一般为标题栏背景颜色）. </td>
+</tr><tr>
+	<td>String</td>
+	<td>primaryColor2</td>
+	<td>#ff3280fc </td>
+	<td>窗口主要颜色（一般为标题栏背景颜色2，与bkcolr配合可实现标题栏渐变色）. </td>
 </tr><tr>
 	<td>Boolean</td>
 	<td>main</td>

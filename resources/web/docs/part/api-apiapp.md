@@ -514,8 +514,8 @@ console.log('程序已运行:' + elapsed + ' ms');
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-//@skip  5秒后重启运行当前程序
-app.restart(5);
+//@skip  3秒后重启运行当前程序
+app.restart(3);
 
 ```
 
@@ -539,7 +539,13 @@ app.restart(5);
 app.destroy();
 
 ```
-*****
+
+
+<div class="adoc" id="div_destroy"></div>
+
+
+## setZipPassword &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+
   设置ZIP文件密码，用于打开加密的ZIP文件.
   
 * **函数参数**
@@ -575,7 +581,13 @@ app.destroy();
 app.setZipPassword('%webDir%web1.zip', '123456');
 
 ```
-*****
+
+
+<div class="adoc" id="div_setZipPassword"></div>
+
+
+## setResPassword &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+
   RES密码.
   
 * **函数参数**
@@ -612,6 +624,6 @@ app.setResPassword();
 ```
 
 
-<div class="adoc" id="div_destroy"></div>
+<div class="adoc" id="div_setResPassword"></div>
 
 

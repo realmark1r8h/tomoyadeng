@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Window size="{width},{height}" mininfo="{minWidth},{minHeight}" maxinfo="{maxWidth},{maxHeight}" sizebox="4,4,4,4" roundcorner="{roundcorner},{roundcorner}" >
     <VerticalLayout bkcolor="{windowColor}"  dragable="true" borderround="{roundcorner},{roundcorner}"  >
-        <VerticalLayout height="33" name="titleLayout" bkcolor="#ff3280fc"  bkcolor2="#ff3280fc"  >
+        <VerticalLayout height="33" name="titleLayout" bkcolor="{primaryColor}"  bkcolor2="{primaryColor2}"  >
            <VerticalLayout height="40"  >  
                 <HorizontalLayout height="40" >
                     <HorizontalLayout />

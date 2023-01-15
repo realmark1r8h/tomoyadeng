@@ -39,19 +39,20 @@ switch_only = False #只切换分支
 
 props = './Microsoft.Cpp.Common.user.props' #配置文件
 ncui_lib_dir = "./../NCUI-Library/" #库文件输出目录
-ncui_version_file = "./libNCUI/libNCUI.rc" 
+ncui_version_file = "./libNCUI/include/version.h" 
 
 node = False 		#默认不使用nodejs
-flash = False 		#默认不使用Falsh
+ppapi = False 		#默认不使用PPAPI Falsh
+npapi = False		#默认不使用NPNPI Falsh
 version = ""			#当前版本号
 example = False 		#是否拷贝Demo
 vc2015 = False			#是否拷贝vc2015运行库
 web = False  			#是否拷贝web目录 
 devtools = False		#是否拷贝devtools_resources.pak
 try:
-	opts, args = getopt.getopt(sys.argv[1:],"hi:o:",["node","flash", "vc2015", "version", "example", "web", "devtools"])
+	opts, args = getopt.getopt(sys.argv[1:],"hi:o:",["node","ppapi","npapi", "vc2015", "version", "example", "web", "devtools"])
 except getopt.GetoptError:
-	print 'node, flash, vc2015, version, example, web'
+	print 'node, flash, vc2015, version, example, web, devtools'
 	sys.exit(2)
 for opt, arg in opts:
 	if opt == '-h':
@@ -59,8 +60,10 @@ for opt, arg in opts:
 		sys.exit()
 	elif opt == ("--node"):
 		node = True
-	elif opt == ("--flash"):
-		flash = True
+	elif opt == ("--ppapi"):
+		ppapi = True
+	elif opt == ("--npapi"):
+		npapi = True
 	elif opt == ("--example"):
 		example = True
 	elif opt == ("--vc2015"):
@@ -72,12 +75,18 @@ for opt, arg in opts:
 	elif opt == ("--version"):
 		version = arg
 		
-print "node: " , node		
-print "flash: ", flash
 
 if version == '':
 	version = node_cef_util.getNCUIVersion(ncui_version_file)
-	print version
+	
+print "version" + version
+print "node: " , node		
+print "ppapi: ", ppapi
+print "npapi: ", npapi
+print "vc2015: ", vc2015
+print "web: ", web
+print "devtools: ", devtools
+print "example: ", example
   
 cefPath = ncui_lib_dir +  node_cef_util.getLibCefDir(props) + "/"
 nodePath = ncui_lib_dir + node_cef_util.getLibNodeDir(props) + "/"
@@ -117,7 +126,7 @@ if node:
 	node_cef_util.copyNodeResources(nodePath, outFileTempDir, example)
 	
 node_cef_util.copyCefResouces(cefPath, outFileTempDir)
-node_cef_util.copyNCUIResources(srcPath + "resources/", outFileTempDir, True, flash,  web, vc2015)  
+node_cef_util.copyNCUIResources(srcPath + "resources/", outFileTempDir, True, ppapi, npapi,  web, vc2015)  
 node_cef_util.copyNCUIWebZipResources(srcPath + "resources/", outFileTempDir)
 node_cef_util.copyNCUIBuildResources(buildPath, outFileTempDir, node, example)
 

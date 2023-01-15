@@ -128,6 +128,8 @@ namespace amo {
         std::shared_ptr<LocalWindow> getFocusedWindow();
         std::shared_ptr<LocalWindow> getMainWindow();
         
+        HWND getHWNDByBrowserID(int32_t nID);
+        
         void init();
         
         void quit();

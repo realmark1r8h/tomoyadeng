@@ -59,9 +59,59 @@ namespace amo {
         
         Any getScreenInfo(IPCMessage::SmartType msg);
         
+        /*!
+         * @fn	Any DesktopTransfer::screenshot(IPCMessage::SmartType msg);
+         *
+         * @tag static sync
+         *
+         * @brief	截屏.
+         *
+         * @return	#String base64编码的图片数据（JPG格式）.
+         * @example
+         *
+         ```
+        	include('desktop');
+        	var img = desktop.screenshot();
+        	console.log(img.length);
+        	$('#ncuiImg2').attr("src", img);
+        
+         ```
+         */
+        
+        /*!
+        * @fn	Any DesktopTransfer::screenshot(IPCMessage::SmartType msg);
+        *
+        * @tag static sync
+        *
+        * @brief	截屏.
+        *
+        * @param	#Array 指定截屏区域Int类型 [left,top, width, height].
+        *
+        *
+        * @return	#String base64编码的图片数据（JPG格式）.
+        * @html <div id="example" class="example code" contenteditable="true"><img id="ncuiImg2" src=""></img> </div>
+        * @example
+        *
+        ```
+        	includes('desktop', 'BrowserWindow');
+        	var win = BrowserWindow.current;
+        	var winInfo = win.getWindowRect();
+        	console.log(winInfo);
+        	var img = desktop.screenshot([winInfo.x, winInfo.y, winInfo.width, winInfo.height]);
+        	$('#ncuiImg2').attr("src", img);
+        
+        
+         ```
+        */
+        
+        Any screenshot(IPCMessage::SmartType msg);
+        
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(DesktopTransfer, ClassTransfer)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(getScreenInfo, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getScreenInfo,
+                                      TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(screenshot,
+                                      TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         
     private:

@@ -135,6 +135,48 @@ namespace amo {
         	});
         
          ```
+         * @example 修改manifest.json
+         *
+         ```
+        	 //@skip
+        	 include('Path');
+        	 var path = new Path('manifest.json');
+        	 path.copyTo('manifest2.json');// 备份manifest.json，你可以再查看效果后手动恢复该文件
+        	 include('shell');
+        	 shell.exec('open', 'notepad', 'manifest.json');
+        	 sleep(1000);
+        	 includes('keyboard', 'clipboard');
+        	 keyboard.keyPress(keyboard.VK_CONTROL, 'A');
+        	 clipboard.writeText(`
+        	 {
+        		 "appSettings":{
+        		 "single_process": true,
+        		 "useNode":false,
+        		 "urlMappings":[
+        				{
+        					 "url":"http://127.0.0.1:8030",
+        					 "path":"%webDir%"
+        				}
+        			 ]
+        		 },
+        		 "browserWindowSettings":{
+        			"titleBar": true,
+        			"url": "http://127.0.0.1:8030/example/ManifestWindow.html"
+        		 },
+        		 "splashWindowSettings":{
+        			"images":"%webDir%images/splash.png"
+        		 }
+        	 }`);
+        
+           	 keyboard.keyPress(keyboard.VK_CONTROL, 'V');
+        	 sleep(1000);
+        	 keyboard.keyPress(keyboard.VK_CONTROL, 'S');
+        	 keyboard.keyPress(keyboard.VK_MENU, keyboard.VK_F4);
+        	 include('app');
+        	 app.restart();
+        
+        
+         ```
          */
         
         void foo() {

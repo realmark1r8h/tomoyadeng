@@ -60,6 +60,8 @@ namespace amo {
         virtual Any enableIME(IPCMessage::SmartType msg) override;
         virtual Any computeCursor(IPCMessage::SmartType msg) override;
         virtual Any isComputeCursor(IPCMessage::SmartType msg) override;
+        virtual Any setTheme(IPCMessage::SmartType msg) override;
+        
         virtual HWND getNativeHWND() override;
         virtual std::shared_ptr<NativeWindowSettings> getNativeSettings() override;
         

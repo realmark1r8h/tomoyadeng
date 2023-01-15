@@ -38,6 +38,11 @@ function usleep(us) {
     return usleep(us);
 };
 
+function updateBlobData(blobName, blobMime, blobData) {
+    native function updateBlobData(blobName, blobMime, blobData);
+    return updateBlobData(blobName, blobMime, blobData);
+};
+
 function ncuiTriggerCustomEvent(name, val){
 	document.dispatchEvent(new CustomEvent(name, {detail: val}));
 }
@@ -48,6 +53,41 @@ function objectToString(json) {
 
 function stringToObject(str) {
     return JSON.parse(str);
+};
+
+function createBlobByString(str, opt) {
+	var arr =[];
+	arr.push(str);
+    return new Blob(arr, opt);
+};
+
+function objectIsBlob(ptr){
+	if(!ptr) return 0;
+	if(!ptr.constructor) return 0;
+	if( ptr.constructor != Blob) return 0; 
+	return ptr.size;
+}
+
+function createBlobByArray(arr, opt) { 
+    return new Blob(arr, opt);
+};
+
+function readDataFromBlob(blobName, blob){
+	var reader = new FileReader();
+	reader.readAsBinaryString(blob);
+
+	//  当读取操作成功完成时调用.
+	reader.onload = function(evt) {
+		if(evt.target.readyState == FileReader.DONE) {
+			console.dir(evt);
+			var blobData = evt.target.result;
+			console.log(blobName);
+			console.log(blob.type);
+			updateBlobData(blobName, blob.type, blobData);
+		 
+		}
+
+	}
 };
 
 function getWebkitAppRegion(obj){

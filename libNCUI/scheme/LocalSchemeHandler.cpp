@@ -157,51 +157,34 @@ namespace amo {
         
         response_length = m_strData.length();
     }
-    
     bool LocalSchemeHandler::ProcessRequest(CefRefPtr<CefRequest> request,
                                             CefRefPtr<CefCallback> callback) {
                                             
         CEF_REQUIRE_IO_THREAD();
-        /*	CefRefPtr<CefPostData> pPostData = request->GetPostData();
-        	CefPostData::ElementVector vec;
         
-        	pPostData->GetElements(vec);
-        	for (CefRefPtr<CefPostDataElement>& p : vec){
-        	auto tp = p->GetType();
-        	int nCount = p->GetBytesCount();
-        	char* p1 = new char[nCount];
-        	memset(p1, 0, nCount);
-        	p->GetBytes(nCount, p1);
-        
-        	for (int i = 0; i < nCount; ++i){
-        	char d = *(p1+i);
-        	$clog(amo::cdevel << d << amo::endl;);
-        	}
-        	int c = 32;
-        	}
-        	int nCount = pPostData->GetElementCount();*/
         bool bHandled = false;
         
-        amo::u8string strUrl = util::getUrlFromUtf8(request->GetURL());
-        strUrl.replace(amo::u8string("\\", true), amo::u8string("/", true));
-        int nIndex = strUrl.find(amo::u8string("local://file/", true));
-        
-        if (nIndex != -1) {
-            strUrl = strUrl.substr(nIndex + 13);
-        }
-        
-        if (!amo::u8path(strUrl).is_absolute()) {
-            strUrl = amo::u8string(AppSettings::getInstance()->toAbsolutePath(
-                                       std::string("%webDir%") + strUrl.to_utf8()), true);
-        }
-        
+        amo::u8string strUrl(request->GetURL(), true);
         strUrl.replace(amo::u8string("\\", true), amo::u8string("/", true));
         
-        nIndex = strUrl.find(amo::u8string("@file:///", true));
+        
+        int nIndex = strUrl.find(amo::u8string("@file:///", true));
         
         if (nIndex != -1) {
             strUrl = strUrl.substr(nIndex + 9);
+        } else {
+            nIndex = strUrl.find(amo::u8string("local://file/", true));
+            
+            if (nIndex != -1) {
+                strUrl = strUrl.substr(nIndex + 13);
+            }
         }
+        
+        amo::u8string tmp(AppSettings::getInstance()->toAbsolutePath(
+                              strUrl.to_utf8()), true);
+                              
+        strUrl = util::getUrlFromUtf8(tmp);
+        
         
         if (!amo::u8path(strUrl).is_absolute()) {
             strUrl = amo::u8string(AppSettings::getInstance()->toAbsolutePath(
@@ -211,6 +194,46 @@ namespace amo {
         return ReadNativeFile(strUrl, callback);
         
     }
+    /* bool LocalSchemeHandler::ProcessRequest(CefRefPtr<CefRequest> request,
+                                             CefRefPtr<CefCallback> callback) {
+    
+         CEF_REQUIRE_IO_THREAD();
+    
+         bool bHandled = false;
+    
+         std::string url = request->GetURL();
+         url = AppSettings::getInstance()->toAbsolutePath(url);
+    
+         amo::u8string strUrl = util::getUrlFromUtf8(request->GetURL());
+         strUrl.replace(amo::u8string("\\", true), amo::u8string("/", true));
+         int nIndex = strUrl.find(amo::u8string("local://file/", true));
+    
+         if (nIndex != -1) {
+             strUrl = strUrl.substr(nIndex + 13);
+         }
+    
+         if (!amo::u8path(strUrl).is_absolute()) {
+             std::string nativePath = AppSettings::getInstance()->toAbsolutePath(
+                                          std::string("%webDir%") + strUrl.to_utf8());
+             strUrl = amo::u8string(nativePath, true);
+         }
+    
+         strUrl.replace(amo::u8string("\\", true), amo::u8string("/", true));
+    
+         nIndex = strUrl.find(amo::u8string("@file:///", true));
+    
+         if (nIndex != -1) {
+             strUrl = strUrl.substr(nIndex + 9);
+         }
+    
+         if (!amo::u8path(strUrl).is_absolute()) {
+             strUrl = amo::u8string(AppSettings::getInstance()->toAbsolutePath(
+                                        std::string("%webDir%") + strUrl.to_utf8()), true);
+         }
+    
+         return ReadNativeFile(strUrl, callback);
+    
+     }*/
     
     
     bool LocalSchemeHandler::ReadNativeFile(const amo::u8string& strPath,

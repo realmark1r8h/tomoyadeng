@@ -40,6 +40,8 @@ namespace amo {
         virtual void afterUpdateArgsSettings() override;
         
         virtual amo::u8json toJson() override;
+        
+        virtual amo::u8json getThemeJson();
     public:
     
         /*! @var #String=0 id	窗口ID，由程序设置该值，你不应该修改该值，当通过ID {@link fromID=BrowserWindow.fromID}查找窗口时可以使用该值 {@tag const}. */
@@ -132,19 +134,19 @@ namespace amo {
         // @var #Boolean=false skipTaskbar	没什么用.
         bool skipTaskbar;
         
-        /*! @brief #Boolean=false alwaysOnTop	是否保持窗口前端显示. */
+        /*! @var #Boolean=false alwaysOnTop	是否保持窗口前端显示. */
         bool alwaysOnTop;
         
         /*! @var #Boolean=false offscreen	是否使用离屏模式创建窗口{@tag const}. */
         bool offscreen;
         
-        /*! @brief #Boolean=false accelerator 是否使用GPU渲染窗口，offscreen=true是有效，需要Drect2D支持{@tag const}. */
+        /*! @var #Boolean=false accelerator 是否使用GPU渲染窗口，offscreen=true是有效，需要Drect2D支持{@tag const}. */
         bool accelerator;
         
         /*! @var #Boolean=false transparent 是否使用透明窗口，offscreen=true时有效{@tag const}. */
         bool transparent;
         
-        /*! @brief	The window color. */
+        /*! @var #Int=0xffffffff windowColor 浏览器控件背景颜色. */
         uint32_t windowColor;
         
         /*! @var #Boolean=false hasShadow	是否显示窗口阴影. */
@@ -164,6 +166,12 @@ namespace amo {
         
         /*! @var #Boolean=false compute_cursor 计算光标位置，offscreen=true时有效. */
         bool compute_cursor;
+        
+        /** @var #String=#ff3280fc primaryColor 窗口主要颜色（一般为标题栏背景颜色）. */
+        std::string primaryColor;
+        
+        /** @var #String=#ff3280fc primaryColor2 窗口主要颜色（一般为标题栏背景颜色2，与bkcolr配合可实现标题栏渐变色）. */
+        std::string primaryColor2;
     };
 }
 

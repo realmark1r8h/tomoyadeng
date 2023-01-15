@@ -37,7 +37,8 @@
         "libNCUI/transfer/NetTransfer.h",
         "libNCUI/transfer/RunnableTransfer.hpp",
         "libNCUI/transfer/ActionTransfer.h",
-        
+        "libNCUI/transfer/ClipboardTransfer.h",
+		 
         "libNCUI/transfer/BrowserTransfer.h",
         "libNCUI/transfer/FrameTransfer.h",
         "libNCUI/transfer/BrowserHostTransfer.h",
