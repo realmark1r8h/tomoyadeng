@@ -22,6 +22,62 @@ namespace amo {
         ClipboardTransfer();
         
         /**
+         * @fn	Any ClipboardTransfer::startWatch(IPCMessage::SmartType msg);
+         * @tag static sync
+         *
+         * @brief	¼àÌý¼ôÌù°åÊÂ¼þ.
+         *
+         * @return	#Boolean.
+         * @example
+         *
+         ```
+        	include('clipboard');
+        	console.assert(clipboard.startWatch() == true);
+         ```
+         */
+        
+        Any startWatch(IPCMessage::SmartType msg);
+        
+        /**
+         * @fn	Any ClipboardTransfer::stopWatch(IPCMessage::SmartType msg);
+         *
+         * @tag static sync
+         *
+         * @brief	Í£Ö¹¼àÌý¼ôÌù°åÊÂ¼þ.
+         *
+         * @return	#Boolean.
+         * @example
+         *
+         ```
+        	include('clipboard');
+        	console.assert(clipboard.stopWatch() == true);
+         ```
+         */
+        
+        Any stopWatch(IPCMessage::SmartType msg);
+        
+        /**
+         * @fn	Any ClipboardTransfer::isWatching(IPCMessage::SmartType msg);
+         *
+         * @tag sync static
+         *
+         * @brief	ÊÇ·ñÕýÔÚ¼àÌý¼ôÌù°åÊÂ¼þ.
+         *
+         * @return	#Boolean.
+         * @example
+         *
+         ```
+        	include('clipboard');
+        	clipboard.startWatch();
+        	console.assert(clipboard.isWatching() == true);
+        	clipboard.stopWatch();
+        	console.assert(clipboard.isWatching() == false);
+        	clipboard.startWatch();
+         ```
+         */
+        
+        Any isWatching(IPCMessage::SmartType msg);
+        /**
         * @fn	Any ClipboardTransfer::writeText(IPCMessage::SmartType msg);
         * @tag static sync
         * @brief	Ïò¼ôÌù°åÖÐÐ´Èë×Ö·û´®.
@@ -515,6 +571,10 @@ namespace amo {
         */
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(ClipboardTransfer, ClassTransfer)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(startWatch, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(stopWatch, TransferFuncStatic | TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(isWatching, TransferFuncStatic | TransferExecSync)
+        
         AMO_CEF_MESSAGE_TRANSFER_FUNC(writeText, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(writeImage, TransferFuncStatic | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(writeImageFromFile,

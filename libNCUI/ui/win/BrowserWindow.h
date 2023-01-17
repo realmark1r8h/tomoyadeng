@@ -18,6 +18,7 @@
 #include "transfer/BrowserWindowTransfer.h"
 #include "handler/LoadHandler.h"
 #include "handler/DisplayHandler.h"
+#include "handler/DialogHandler.h"
 #include "ui/win/LayeredWindow.h"
 #include "ui/win/LocalWindow.h"
 
@@ -26,6 +27,7 @@
 
 
 #include "ui/win/GifEncoder.hpp"
+
 
 namespace amo {
 
@@ -42,18 +44,12 @@ namespace amo {
         , public DisplayHandlerDelegate
         , public BrowserProcessHandlerDelegate
         , public DragHandlerDelegate
-        , public LoadHandlerDelegate {
+        , public LoadHandlerDelegate
+        , public DialogHandlerDelegate {
         
     public:
         BrowserWindow(std::shared_ptr<BrowserWindowSettings> pBrowserSettings);
         ~BrowserWindow();
-        void test();
-        
-        
-        
-        
-        
-        
         
         
     public:
@@ -126,6 +122,16 @@ namespace amo {
         virtual void OnLoadEnd(CefRefPtr<CefBrowser> browser,
                                CefRefPtr<CefFrame> frame,
                                int httpStatusCode);
+                               
+        // DialogHandlerDelegate
+        
+        virtual bool OnFileDialog(CefRefPtr<CefBrowser> browser,
+                                  CefDialogHandler::FileDialogMode mode,
+                                  const CefString& title,
+                                  const CefString& default_file_path,
+                                  const std::vector<CefString>& accept_filters,
+                                  int selected_accept_filter,
+                                  CefRefPtr<CefFileDialogCallback> callback);
 #if CHROME_VERSION_BUILD >= 2704
         virtual void OnDraggableRegionsChanged(CefRefPtr<CefBrowser> browser,
                                                const std::vector<CefDraggableRegion>& regions) override;
@@ -149,6 +155,10 @@ namespace amo {
         virtual Any getDragBlackList(IPCMessage::SmartType msg) override;
         virtual Any showTitleBar(IPCMessage::SmartType msg) override;
         
+        virtual Any setNextDialogFiles(IPCMessage::SmartType msg) override;
+        virtual Any getNextDialogFiles(IPCMessage::SmartType msg) override;
+        
+        virtual Any dropFiles(IPCMessage::SmartType msg) override;
         
         //使用GDI+保存BITMAP到文件
         //CLSID encoderClsid
@@ -269,6 +279,8 @@ namespace amo {
         
         UINT_PTR m_gifRecordTimer;
         std::shared_ptr< GifEncoder> m_gifEncoder;
+        
+        std::vector<CefString> m_dropFiles;
         
     };
 }

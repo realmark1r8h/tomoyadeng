@@ -272,7 +272,7 @@ Frame.current.LoadURL('http://www.baidu.com');
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
-// vConsole转换存在问题，程序中可以正常使用
+//@skip vConsole转换存在问题，程序中可以正常使用
 include('Frame');
 Frame.current.LoadString(`
     <!DOCTYPE html>

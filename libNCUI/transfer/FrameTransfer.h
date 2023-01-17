@@ -229,7 +229,7 @@ namespace amo {
          * @example
          *
          ```
-        	// vConsole转换存在问题，程序中可以正常使用
+        	//@skip vConsole转换存在问题，程序中可以正常使用
         	include('Frame');
         	Frame.current.LoadString(`
         		<!DOCTYPE html>

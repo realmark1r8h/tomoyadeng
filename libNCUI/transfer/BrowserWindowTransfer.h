@@ -335,6 +335,99 @@ namespace amo {
         
         virtual Any stopRecordGif(IPCMessage::SmartType msg);
         
+        /**
+         * @fn	virtual Any setNextDialogFiles(IPCMessage::SmartType msg);
+         *
+         * @brief	设置下一次用户点击文件选择对话框时自动选择的文件.
+         * 			如果文件列表存在，那么不会弹出文件选择对话框，已是直接返回当前列表给页面.
+         *
+         * @param	#Array 文件列表（也可以是单独的String）.
+         *
+         * @return	#Undefined.
+         *
+         * @example
+         *
+         ```
+        	includes('BrowserWindow', 'app');
+        	// 可以
+        	BrowserWindow.current.setNextDialogFiles('%appDir%manifest.json');
+        	var splashPath = app.toAbsolutePath('%appDir%images/splash.jpg');
+        	console.log(splashPath);
+        	BrowserWindow.current.setNextDialogFiles([splashPath, '%appDir%manifest.json']);
+         ```
+         */
+        
+        virtual Any setNextDialogFiles(IPCMessage::SmartType msg) ;
+        
+        /**
+         * @fn	virtual Any getNextDialogFiles(IPCMessage::SmartType msg);
+         * @tag sync
+         *
+         * @brief	获取{@link setNextDialogFiles=BrowserWindow.setNextDialogFiles}中设置的数据.
+         *
+         * @return	#Array.
+         *  @html <div id="" class="example code" contenteditable="true"><input id="ncui_getNextDialogFiles" type="file"  style="background:#f9f;"/></div>
+         *
+         * @example
+         *
+         ```
+        	includes('BrowserWindow', 'BrowserHost');
+        	BrowserWindow.current.setNextDialogFiles('%appDir%manifest.json');
+        	var arr = BrowserWindow.current.getNextDialogFiles();
+        	console.log(arr);
+        	console.assert(arr.length == 1);
+        	var x = $('#ncui_getNextDialogFiles').offset().left;
+        	var y = $('#ncui_getNextDialogFiles').offset().top;
+        	// 可以自己模拟一个点击事件
+        	BrowserHost.current.click(x + 10, y + 10);
+        
+         ```
+         */
+        
+        virtual Any getNextDialogFiles(IPCMessage::SmartType msg);
+        
+        /**
+         * @fn	virtual Any dropFiles(IPCMessage::SmartType msg);
+         * @tag
+         * @brief	在所给位置依次触发 dragenter dragover drop 事件(offscreen == true)是有效.
+         *
+         * @param	#Array 需要送入的文件列表，也可以是一个单独String.
+         * @param	#Int x坐标
+         * @param	#Int y坐标
+         *
+         * @return	#Undefined.
+         * @html <div id="ncui_divDropFiles" class="example code" contenteditable="true" draggable="true" ><img id="ncui_dropFiles" src=""></img> </div>
+         * @example
+         *
+         ```
+        	// 需要保证$('#ncui_divDropFiles') 在可视区域内
+        	window.readBlobAsDataURL = function(blob, callback) {
+        		var reader = new FileReader();
+        		reader.onload = function(e) {
+        			callback(e.target.result);
+        		};
+        		reader.readAsDataURL(blob);
+        	}
+        	window.ncui_divDropFiles = document.querySelector('#ncui_divDropFiles');
+        	window.ncui_divDropFiles.addEventListener("dragenter", function(e) {  e.preventDefault(); e.stopPropagation(); console.log('dragenter'); }, false);
+        	window.ncui_divDropFiles.addEventListener("dragover", function(e) { e.preventDefault(); e.stopPropagation(); console.log('dragover'); }, false);
+        	window.ncui_divDropFiles.addEventListener("drop", function(e) {
+        		e.preventDefault(); e.stopPropagation();console.log('drop');
+        		var item = e.dataTransfer.items[0];
+        		var file = item.getAsFile();
+        		window.readBlobAsDataURL(file, function(dataurl) {
+        			$('#ncui_dropFiles').attr('src', dataurl);
+        		});
+        	}, false);
+        
+        	include('BrowserWindow');
+        	var x = $('#ncui_divDropFiles').offset().left + 10;
+        	var y = $('#ncui_divDropFiles').offset().top + 10;
+        	BrowserWindow.current.dropFiles(['%appDir%images/splash.jpg'], x, y);
+         ```
+         */
+        
+        virtual Any dropFiles(IPCMessage::SmartType msg);
         
         //virtual Any dropFiles(IPCMessage::SmartType msg);
         
@@ -459,6 +552,10 @@ namespace amo {
         AMO_CEF_MESSAGE_TRANSFER_FUNC(recordGifToFile, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(stopRecordGif, TransferExecNormal)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(setTheme, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(setNextDialogFiles, TransferExecNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(getNextDialogFiles, TransferExecSync)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(dropFiles, TransferExecSync)
+        
         AMO_CEF_MESSAGE_TRANSFER_END()
         
         

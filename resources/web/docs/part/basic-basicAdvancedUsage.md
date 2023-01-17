@@ -65,7 +65,7 @@ new BrowserWindow({
 * **示例&nbsp;&nbsp;--&nbsp;&nbsp;修改manifest.json**
 
 ```html
-//通过修改manifest.json映射文件
+//@skip 通过修改manifest.json映射文件
 {
     "appSettings": {
         "urlMappings":[
@@ -96,7 +96,7 @@ new BrowserWindow({
 
 
 ## 源代码管理 &nbsp;
-  NCUI支持读取本地文件、ZIP格式压缩文件、DLL动态库中的HTML源代码，你可以通过这些方式为NCUI提供源代码.<br>1. **从本地目录中读取HTML:** 直接指定文件路径或文件夹路径，如D:/web<br>2. **从ZIP文件中读取HTML:** 以zip:///开头<br>3. **从DLL中读取HTML:** 以dll:///开头<br>4. **从程序的资源文件中读取HTML:**以res:///开头<br>NCUI不直接提供源代码加密功能，但支持读取加密的ZIP文件、加密的SQLITE数据库，你可以通过修改源代码的方式提供对应的加密文件密码供程序使用.
+  NCUI支持读取本地文件、ZIP格式压缩文件、DLL动态库中的HTML源代码，你可以通过这些方式为NCUI提供源代码.<br>1. **从本地目录中读取HTML:** 直接指定文件路径或文件夹路径，如D:/web<br>2. **从ZIP文件中读取HTML:** 以zip:///开头<br>3. **从DLL中读取HTML:** 以dll:///开头<br>4. **从程序的资源文件中读取HTML:**以res:///开头<br>NCUI不直接提供源代码加密功能，但支持读取加密的ZIP文件、RES，你可以在使用这些加密文件前通过<a href="#api/apiapp/15">app.setResPassword</a> 或<a href="#api/apiapp/14">app.setZipPassword</a>设置文件密码.
   
 
 
@@ -104,7 +104,7 @@ new BrowserWindow({
 
 
 ## C++扩展 &nbsp;
-  NCUI提供更加简单的扩展编写方式，只需要将扩展项目生成的动态库文件放到renderer_modules或者browser_modules目录即可在页面中调用.<br>如果你是C++程序员，请参考libDemo项目的源代码.
+  NCUI提供更加简单的扩展编写方式，只需要将扩展项目生成的动态库文件放到renderer_modules或者browser_modules目录即可在页面中调用.<br>如果你是C++程序员，请参考libExt/libTaskTest项目的源代码.
   
 
 

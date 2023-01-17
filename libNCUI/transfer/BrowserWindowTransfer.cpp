@@ -178,6 +178,21 @@ namespace amo {
     
     
     
+    Any BrowserWindowTransfer::setNextDialogFiles(IPCMessage::SmartType msg) {
+        // 由BrowserWindow重载实现
+        return Undefined();
+    }
+    
+    Any BrowserWindowTransfer::getNextDialogFiles(IPCMessage::SmartType msg) {
+        // 由BrowserWindow重载实现
+        return Undefined();
+    }
+    
+    Any BrowserWindowTransfer::dropFiles(IPCMessage::SmartType msg) {
+        // 由BrowserWindow重载实现
+        return Undefined();
+    }
+    
     Any BrowserWindowTransfer::isMainWindow(IPCMessage::SmartType msg) {
         // 由BrowserWindow重载实现
         return Undefined();

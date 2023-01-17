@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "transfer/DesktopTransfer.h"
 #include "ui/win/Bitmap.hpp"
+#include "ipc/BlobManager.hpp"
 
 namespace amo {
 
@@ -96,9 +97,16 @@ namespace amo {
         
         std::string encoded = "data:image/jpeg;base64,";
         encoded += amo::base64::encode(vec.data(), vec.size());
-        
         DeleteObject(hBitmap);
-        return encoded;
+        //return encoded;
+        
+        auto blob = BigStrManager<PID_BROWSER>::getInstance()->create(encoded.size(),
+                    10000);
+        blob->mime("image/jpeg");
+        blob->write(encoded);
+        return *blob;
+        
+        
         
     }
     

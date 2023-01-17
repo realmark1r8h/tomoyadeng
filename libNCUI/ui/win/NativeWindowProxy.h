@@ -1476,6 +1476,10 @@ namespace amo {
         		primaryColor2: '#ff8666b8'
         	});
         
+        	include('Frame');
+        	var frame = Frame.current;
+        	frame.injectCSS('@file:///example/css/zui-theme.css');
+        
          ```
          */
         

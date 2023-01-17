@@ -427,12 +427,12 @@ namespace amo {
 #if CHROME_VERSION_BUILD >=2704
         CefPostDelayedTask(TID_RENDERER,
                            base::Bind(&RenderProcessHandler::RenderThreadActivityDetector, this),
-                           5000);
+                           10000);
 #else
         CefPostDelayedTask(TID_RENDERER,
                            NewCefRunnableMethod(this,
                                                 &RenderProcessHandler::RenderThreadActivityDetector),
-                           5000);
+                           10000);
 #endif
                            
                            

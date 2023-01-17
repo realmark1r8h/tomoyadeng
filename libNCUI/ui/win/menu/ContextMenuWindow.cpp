@@ -19,7 +19,8 @@ namespace amo {
 
 
 
-    ContextMenuWindow::ContextMenuWindow(std::shared_ptr<MenuWindowSettings> pBrowserSettings)
+    ContextMenuWindow::ContextMenuWindow(std::shared_ptr<MenuWindowSettings>
+                                         pBrowserSettings)
         : MenuWindow(pBrowserSettings)
         , m_nBrowserID(0)
         , m_nFrameID(0) {
@@ -36,10 +37,13 @@ namespace amo {
         
         if (m_pOwner != NULL) {
             for (int i = 0; i < m_pOwner->GetCount(); i++) {
-                if (static_cast<MenuElementUI*>(m_pOwner->GetItemAt(i)->GetInterface(kMenuElementUIInterfaceName)) != NULL) {
-                    (static_cast<MenuElementUI*>(m_pOwner->GetItemAt(i)))->SetOwner(m_pOwner->GetParent());
+                if (static_cast<MenuElementUI*>(m_pOwner->GetItemAt(i)->GetInterface(
+                                                    kMenuElementUIInterfaceName)) != NULL) {
+                    (static_cast<MenuElementUI*>(m_pOwner->GetItemAt(i)))->SetOwner(
+                        m_pOwner->GetParent());
                     (static_cast<MenuElementUI*>(m_pOwner->GetItemAt(i)))->SetVisible(false);
-                    (static_cast<MenuElementUI*>(m_pOwner->GetItemAt(i)->GetInterface(kMenuElementUIInterfaceName)))->SetInternVisible(false);
+                    (static_cast<MenuElementUI*>(m_pOwner->GetItemAt(i)->GetInterface(
+                                                     kMenuElementUIInterfaceName)))->SetInternVisible(false);
                 }
             }
             
@@ -107,92 +111,6 @@ namespace amo {
     
         ActionPreprocessor processor(m_nBrowserID, m_nFrameID);
         return processor.process(action);
-        
-        
-        //if (action.empty()) {
-        //    return false;
-        //}
-        //
-        //// 如果所给FrameID小于0，查找当前所获得焦点的窗口
-        //auto manager = BrowserWindowManager::getInstance();
-        //std::shared_ptr<BrowserWindow> pWindow;
-        //
-        //if (m_nBrowserID <= 0) {
-        //    pWindow = manager->getFocusedBrowserWindow();
-        //}
-        //
-        //pWindow = manager->FindBrowserWindow(m_nBrowserID);
-        //
-        //if (!pWindow) {
-        //    return false;
-        //}
-        //
-        //CefRefPtr<CefBrowser> pBrowser = pWindow->GetWebkitView()->GetBrowser();
-        //
-        //if (!pBrowser) {
-        //    return false;
-        //}
-        //
-        //CefRefPtr<CefFrame> pFrame = pBrowser->GetFrame(m_nFrameID);
-        //
-        //if (!pFrame) {
-        //    pFrame = pBrowser->GetMainFrame();
-        //}
-        //
-        //
-        //IPCMessage::SmartType msg(new IPCMessage());
-        //
-        //// 对已有Action的直接执行操作
-        //
-        //if (action == "undo") {
-        //    pFrame->Undo();
-        //} else if (action == "redo") {
-        //    pFrame->Redo();
-        //} else if (action == "cut") {
-        //    pFrame->Cut();
-        //} else if (action == "copy") {
-        //    pFrame->Copy();
-        //} else if (action == "paste") {
-        //    pFrame->Paste();
-        //} else if (action == "selectall") {
-        //    pFrame->SelectAll();
-        //} else if (action == "delete") {
-        //    pFrame->Delete();
-        //}
-        //// 窗口操作
-        //else if (action == "minimize") {
-        //    pWindow->minimize(msg);
-        //} else if (action == "maximize") {
-        //    pWindow->maximize(msg);
-        //} else if (action == "close") {
-        //    pWindow->close(msg);
-        //} else if (action == "quit") {
-        //    std::shared_ptr<AppTransfer> pTransfer;
-        //    pTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
-        //    pTransfer->quit(msg);
-        //} else if (action == "exit") {
-        //    std::shared_ptr<AppTransfer> pTransfer;
-        //    pTransfer = ClassTransfer::getUniqueTransfer<AppTransfer>();
-        //    pTransfer->exit(msg);
-        //} else if (action == "reload") {
-        //    // reload - 正常重新加载当前窗口
-        //    pBrowser->Reload();
-        //} else if (action == "forcereload") {
-        //    // 忽略缓存并重新加载当前窗口
-        //    pBrowser->ReloadIgnoreCache();
-        //} else if (action == "showdevtools") {
-        //    pWindow->showDevTools(msg);
-        //} else if (action == "closedevtools") {
-        //    pWindow->closeDevTools(msg);
-        //} else if (action == "fullscreen") {
-        //    pWindow->setFullscreen(true);
-        //} else if (action == "nonfullscreen") {
-        //    pWindow->setFullscreen(false);
-        //} else {
-        //    return false;
-        //}
-        //
-        //return true;
     }
     
     int ContextMenuWindow::getBrowserID() const {

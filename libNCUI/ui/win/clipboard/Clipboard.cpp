@@ -494,10 +494,11 @@ namespace amo {
     }
     
     bool Clipboard::writeImageFromFile(const std::wstring& str) {
-        Gdiplus::Bitmap bmp(str.c_str());
+        // 无法透明图片
+        Gdiplus::Bitmap bitmap(str.c_str());
         Gdiplus::Color clr(0, 0, 0, 0);
         HBITMAP hBitmap = NULL;
-        bmp.GetHBITMAP(clr, &hBitmap);
+        bitmap.GetHBITMAP(clr, &hBitmap);
         
         if (hBitmap == NULL) {
             return false;

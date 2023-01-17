@@ -43,80 +43,9 @@ namespace amo {
     bool ClientHandler::OnProcessMessageReceived(CefRefPtr<CefBrowser> browser,
             CefProcessId source_process,
             CefRefPtr<CefProcessMessage> message) {
-        FUNC_CALL_TIME();
+            
         bool bHandled = false;
         amo::u8string message_name(message->GetName().ToString(), true);
-        
-        if (message_name != MSG_LOG_MESSAGE) {
-        
-            /* $clog(
-            
-                 amo::cdevel << func_orient << message_name << "\n" << log_separator;
-            
-             for (size_t i = 0; i < message->GetArgumentList()->GetSize(); ++i) {
-             CefValueType value_type = message->GetArgumentList()->GetType(i);
-            
-                 switch (value_type) {
-                 case 	VTYPE_NULL:
-                     amo::cdevel << i << ".\t VTYPE_NULL\t\t ( " << "NULL" << " )\n";
-                     break;
-            
-                 case 	VTYPE_BOOL:
-                     amo::cdevel << i << ".\t VTYPE_BOOL\t\t ( " << message->GetArgumentList()->GetBool(i) << " )\n";
-                     break;
-            
-                 case 	VTYPE_INT:
-                     amo::cdevel << i << ".\t VTYPE_INT\t\t ( " << message->GetArgumentList()->GetInt(i) << " )\n";
-                     break;
-            
-                 case 	VTYPE_DOUBLE:
-                     amo::cdevel << i << ".\t VTYPE_DOUBLE\t ( " << message->GetArgumentList()->GetDouble(i) << " )\n";
-                     break;
-            
-                 case 	VTYPE_STRING:
-                     amo::cdevel << i << ".\t VTYPE_STRING\t ( " << amo::string(message->GetArgumentList()->GetString(i).ToString(), true).str() << " )\n";
-                     break;
-            
-                 case 	VTYPE_BINARY:
-                     amo::cdevel << i << ".\t VTYPE_BINARY\t ( " << "NO VIEW " << " )\n";
-                     break;
-            
-                 case 	VTYPE_DICTIONARY: {
-                     CefRefPtr<CefDictionaryValue> value = message->GetArgumentList()->GetDictionary(i);
-                     amo::cdevel << i << ".\t VTYPE_DICTIONARY\t ( " << "NO VIEW " << " )\n";
-                     break;
-                 }
-            
-                 case 	VTYPE_LIST:
-                     amo::cdevel << i << ".\t VTYPE_LIST\t\t ( " << " NO VIEW" << " )\n";
-                     break;
-            
-                 case	VTYPE_INVALID:
-                 default:
-                     amo::cdevel << i << ".\t VTYPE_INVALID\t ( " << " NO VIEW" << " )\n";
-                     break;
-            
-                 }
-             }
-            
-             amo::cdevel << log_separator << amo::endl;
-             );*/
-            
-        } else if (message_name == MSG_LOG_MESSAGE) {
-            CefRefPtr<CefListValue> args = message->GetArgumentList();
-            std::string msg = amo::u8string(args->GetString(0), true);
-            
-            if (msg.empty()) {
-                return true;
-            }
-            
-            *msg.rbegin() = ' ';
-            std::stringstream stream;
-            stream << "[RenderProcess ID " << browser->GetIdentifier() << "]\n";
-            msg += stream.str();
-            amo::log::write(msg);
-            return true;
-        }
         
         if (message_name == MSG_PROCESS_SYNC_EXECUTE) {
             BrowserProcessExchangerManager::getInstance()->tryProcessMessage(
@@ -273,22 +202,28 @@ namespace amo {
     }
     
     void ClientHandler::BrowserThreadActivityDetector() {
-        return;
-        
+    
+    
         // 移除无效的数据
         BigStrManager<PID_BROWSER>::getInstance()->removeInvalidObject();
         BlobManager<PID_BROWSER>::getInstance()->removeInvalidObject();
-        
-#if CHROME_VERSION_BUILD >=2704
         CefPostDelayedTask(TID_UI,
                            base::Bind(&ClientHandler::BrowserThreadActivityDetector, this),
-                           5000);
-#else
+                           10000);
+        /*
+        #if CHROME_VERSION_BUILD >=2704
         CefPostDelayedTask(TID_UI,
-                           NewCefRunnableMethod(this,
-                                                &ClientHandler::BrowserThreadActivityDetector),
-                           5000);
-#endif
+        				   base::Bind(&ClientHandler::BrowserThreadActivityDetector, this),
+        				   10000);
+        #else
+        CefPostDelayedTask(TID_UI,
+        				   base::Bind(&ClientHandler::BrowserThreadActivityDetector, this),
+        				   10000);
+        CefPostDelayedTask(TID_UI,
+        	NewCefRunnableMethod(this,
+        		&ClientHandler::BrowserThreadActivityDetector),
+        	10000);
+        #endif*/
     }
     
     CefRefPtr<CefContextMenuHandler> ClientHandler::GetContextMenuHandler() {

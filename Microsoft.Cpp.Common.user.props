@@ -39,10 +39,10 @@ Copyright (C) ShineEnergy Corporation. All rights reserved.
 <PropertyGroup>
 		<SingleFolder Condition="'$(SingleFolder)' == ''">false</SingleFolder>
 		<LibraryFolder >$(SolutionDir)../$(SolutionName)-Library\</LibraryFolder>
-		<SDKFolder >D:\SDK\</SDKFolder>
+		<SDKFolder>D:\SDK\</SDKFolder>
 		<BoostFolder>$(SDKFolder)boost_1_63_0\</BoostFolder>
 		<NodeGypFolder>$(LibraryFolder)node-v4.7.1/</NodeGypFolder>
-		<LibCefFolder>$(LibraryFolder)cef_binary_3.2526.1373.gb660893_windows32/</LibCefFolder>
+		<LibCefFolder>$(LibraryFolder)cef_binary_3.3440.1806.g65046b7_windows32_minimal/</LibCefFolder>
 		<ThirdPartyFolder>$(SolutionDir)\third_party\</ThirdPartyFolder>
 		<ObjectFolder Condition="'$(ObjectFolder)' == ''">$(SolutionDir)../$(SolutionName)-Out\VC2012.IntDir\</ObjectFolder>
 		<ObjectFolder Condition="!HasTrailingSlash('$(ObjectFolder)')">$(ObjectFolder)\</ObjectFolder>
@@ -51,8 +51,8 @@ Copyright (C) ShineEnergy Corporation. All rights reserved.
 		<OutputFolder Condition="!HasTrailingSlash('$(OutputFolder)')">$(OutputFolder)\</OutputFolder>
 	</PropertyGroup>
   <PropertyGroup>
-		<IncludePath>$(SDKFolder)sqlite3;$(BoostFolder);$(ProjectDir);$(ProjectDir)header;$(ProjectDir)include;$(LibCefFolder);$(THirdPartyFolder)\sqlite3;$(NodeGypFolder)\include\node;$(NodeGypFolder)src;$(NodeGypFolder)deps\uv\include;$(NodeGypFolder)deps\v8\include$(SolutionDir)include;$(SolutionDir)header;$(SolutionDir)renderer_modules\libsExt;$(THirdPartyFolder);$(THirdPartyFolder)\Duilib;$(THirdPartyFolder)\amo;$(THirdPartyFolder)\7z\C;$(THirdPartyFolder)\7z\CPP;$(THirdPartyFolder)\7zpp;$(SolutionDir)libNCUI;$(IncludePath)</IncludePath>
-		<LibraryPath>$(SDKFolder)sqlite3\lib;$(BoostFolder)\stage\lib;$(LibCefFolder)\bin;$(LibCefFolder)\libcef_dll_wrapper\$(Configuration);$(NodeGypFolder)\ia32;$(ProjectDir)binary;$(ProjectDir)library;$(SolutionDir)library;$(OutDir);$(LibraryPath)</LibraryPath>
+		<IncludePath>$(BoostFolder);$(ProjectDir);$(ProjectDir)header;$(ProjectDir)include;$(LibCefFolder);$(THirdPartyFolder)\sqlite3;$(NodeGypFolder)\include\node;$(NodeGypFolder)src;$(NodeGypFolder)deps\uv\include;$(NodeGypFolder)deps\v8\include$(SolutionDir)include;$(SolutionDir)header;$(SolutionDir)renderer_modules\libsExt;$(THirdPartyFolder);$(THirdPartyFolder)\Duilib;$(THirdPartyFolder)\amo;$(SolutionDir)libNCUI;$(IncludePath)</IncludePath>
+		<LibraryPath>$(BoostFolder)\stage\lib;$(LibCefFolder)\bin;$(LibCefFolder)\libcef_dll_wrapper\$(Configuration);$(NodeGypFolder)\ia32;$(ProjectDir)binary;$(ProjectDir)library;$(SolutionDir)library;$(OutDir);$(LibraryPath)</LibraryPath>
 	</PropertyGroup>
 
   

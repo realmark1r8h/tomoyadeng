@@ -342,31 +342,3 @@ keyboard.keyUp('2');
 <div class="adoc" id="div_keyUp"></div>
 
 
-## waitKey &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
-
-  等待按任意键.
-  
-* **函数参数**  无
-
-* **返回值**
-   无. 
-
-
-
-<div class="adoc" id="div_waitKey"></div>
-
-
-## getLastKey &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
-
-  检测上次按键.
-  
-* **函数参数**  无
-
-* **返回值**
-  String . 
-
-
-
-<div class="adoc" id="div_getLastKey"></div>
-
-

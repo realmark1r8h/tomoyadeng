@@ -10,7 +10,8 @@ namespace amo {
 
 
 
-    SplashWindow::SplashWindow(std::shared_ptr<SplashWindowSettings> pSplashSettings)
+    SplashWindow::SplashWindow(std::shared_ptr<SplashWindowSettings>
+                               pSplashSettings)
         : NativeWindow(pSplashSettings) {
         setSplashSettings(pSplashSettings);
     }
@@ -40,8 +41,9 @@ namespace amo {
     void foo() {
     
     }
-    LRESULT SplashWindow::OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
-    
+    LRESULT SplashWindow::OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam,
+                                  BOOL& bHandled) {
+                                  
         LRESULT lRes = NativeWindow::OnPaint(uMsg, wParam, lParam, bHandled);
         runOnUIThread(std::bind(&SplashWindow::showPictureView, this));
         
@@ -57,10 +59,11 @@ namespace amo {
         m_pPictureView->SetVisible(false);
         RECT rc = {0};
         ::GetClientRect(m_hWnd, &rc);
-        std::string imagePath = AppSettings::getInstance()->toAbsolutePath(getSplashSettings()->image);
+        std::string imagePath = AppSettings::getInstance()->toAbsolutePath(
+                                    getSplashSettings()->image);
         amo::u8string file(imagePath, true);
         m_pPictureView->setPicture(file.to_wide());
-        
+        setTopmost(true);
     }
     
     
@@ -78,11 +81,13 @@ namespace amo {
         delete this;
     }
     
-    std::shared_ptr<amo::SplashWindowSettings> SplashWindow::getSplashSettings() const {
+    std::shared_ptr<amo::SplashWindowSettings> SplashWindow::getSplashSettings()
+    const {
         return m_pSplashSettings;
     }
     
-    void SplashWindow::setSplashSettings(std::shared_ptr<amo::SplashWindowSettings> val) {
+    void SplashWindow::setSplashSettings(std::shared_ptr<amo::SplashWindowSettings>
+                                         val) {
         m_pSplashSettings = val;
     }
     

@@ -1,7 +1,0 @@
-下载nodejs https://codeload.github.com/nodejs/node/zip/v4.7.3
-你也可以下截其他版本的JS,但是我没试过，Node 6.0以上的版本V8较新，应该不支持
-不能使用vcbuild.bat直接编译，
-1.需要生成解决方案， 运行命令 vcbuild.bat nobuild
-2.再设置项目字符集UNICODE，
-3.编译exe,复制exe备用
-4.重新编译为dll，复制dll. node.lib 供解放方案使用

@@ -101,81 +101,22 @@ namespace amo {
         amo::cdevel << func_orient << amo::endl;
     }
     
-    void  BrowserWindow::test() {
-        Clipboard clipboard;
-        //clipboard.writeText("sdfsdfs");
-        clipboard.getClipboardFiles();
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     LRESULT BrowserWindow::OnLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                          BOOL& bHandled) {
-        /* if (wParam == HTCAPTION) {
-             m_pt.reset(new POINT());
-             POINT pt;
-             ::GetCursorPos(&pt);
-             m_pt->x = pt.x;
-             m_pt->y = pt.y;
-        
-             bHandled = true;
-             return TRUE;
-         }*/
-        
+                                         
         return LocalWindow::OnLButtonDown(uMsg, wParam, lParam, bHandled);
     }
     
     LRESULT BrowserWindow::OnLButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                        BOOL& bHandled) {
-        /* m_pt.reset();
-        
-         if (wParam == HTCAPTION) {
-             bHandled = true;
-             return TRUE;
-         }
-         */
+                                       
         return LocalWindow::OnLButtonUp(uMsg, wParam, lParam, bHandled);
     }
     
     LRESULT BrowserWindow::OnMouseMove(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                        BOOL& bHandled) {
-        /* if (m_pt && wParam == HTCAPTION) {
-             POINT curPt;
-             ::GetCursorPos(&curPt);
-             int offset_x = curPt.x - m_pt->x;
-             int offset_y = curPt.y - m_pt->y;
-             RECT rect = { 0 };
-             ::GetWindowRect(m_hWnd, &rect);
-             bool bFullScreen = isFullScreen(IPCMessage::Empty());
-        
-             if (IsLButtonDown() && !bFullScreen && ::PtInRect(&rect, curPt)) {
-                 rect.left += offset_x;
-                 rect.right += offset_x;
-                 rect.top += offset_y;
-                 rect.bottom += offset_y;
-        
-                 ::SetWindowPos(m_hWnd, NULL, rect.left, rect.top, rect.right - rect.left,
-                                rect.bottom - rect.top, NULL);
-                 m_pt->x = curPt.x;
-                 m_pt->y = curPt.y;
-             }
-        
-         }
-        
-         if (wParam == HTCAPTION) {
-             bHandled = true;
-             return TRUE;
-         }*/
-        
+                                       
         return LocalWindow::OnMouseMove(uMsg, wParam, lParam, bHandled);
     }
     
@@ -271,6 +212,7 @@ namespace amo {
         m_pWebkit->getClientHandler()->RegisterDragHandlerDelegate(this);
         m_pWebkit->getClientHandler()->RegisterDisplayHandlerDelegate(this);
         m_pWebkit->getClientHandler()->RegisterLoadHandlerDelegate(this);
+        m_pWebkit->getClientHandler()->RegisterDialogHandlerDelegate(this);
         m_pWebkit->SetBkColor(m_pBrowserSettings->windowColor);
         
         if (!isLayered()) {
@@ -475,6 +417,90 @@ namespace amo {
             m_pTitleBar->SetVisible(false);
         }
         
+        return Undefined();
+    }
+    
+    Any BrowserWindow::setNextDialogFiles(IPCMessage::SmartType msg) {
+        auto args = msg->getArgumentList();
+        Any& val = args->getValue(0);
+        m_dropFiles.clear();
+        std::vector<Any> vec;
+        
+        if (val.is<std::string>()) {
+            vec.push_back(val);
+        } else if (val.is<std::vector<Any> >()) {
+            vec = val.As<std::vector<Any> >();
+        }
+        
+        for (auto& p : vec) {
+            if (p.is<std::string>()) {
+                amo::u8string str(p.As<std::string>(), true);
+                auto appSettings = AppSettings::getInstance();
+                str = amo::u8string(appSettings->toAbsolutePath(str), true);
+                m_dropFiles.push_back(str.to_wide());
+            }
+        }
+        
+        return Undefined();
+    }
+    
+    Any BrowserWindow::getNextDialogFiles(IPCMessage::SmartType msg) {
+        std::vector<Any> retval;
+        
+        for (auto& p : m_dropFiles) {
+            retval.push_back(amo::u8string(p.ToWString()).str());
+        }
+        
+        return retval;
+    }
+    
+    Any BrowserWindow::dropFiles(IPCMessage::SmartType msg) {
+        auto args = msg->getArgumentList();
+        std::vector<Any> files;
+        Any& val = args->getValue(0);
+        
+        if (val.is<std::string>()) {
+            files.push_back(val);
+        } else if (val.is<std::vector<Any> >()) {
+            files = val.As<std::vector<Any> >();
+        }
+        
+        CefRefPtr<CefDragData> drag_data = CefDragData::Create();
+        auto appSettings = AppSettings::getInstance();
+        
+        for (auto& p : files) {
+            if (!p.is<std::string>()) {
+                continue;
+            }
+            
+            amo::u8string str(p.As<std::string>(), true);
+            str = amo::u8string(appSettings->toAbsolutePath(str), true);
+            amo::u8path path(str);
+            
+            if (!path.exists()) {
+                continue;
+            }
+            
+            drag_data->AddFile(str.to_wide(), path.filename().generic_wstring());
+        }
+        
+        CefMouseEvent ev;
+        ev.x = args->getInt(1);
+        ev.y = args->getInt(2);
+        ev.modifiers = 272;
+        
+        CefBrowserHost::DragOperationsMask effect = CefBrowserHost::DragOperationsMask(
+                    DRAG_OPERATION_COPY |
+                    DRAG_OPERATION_LINK | DRAG_OPERATION_MOVE | DRAG_OPERATION_EVERY);
+                    
+        auto host = this->GetWebkitView()->getBrowser()->GetHost();
+        host->DragTargetDragEnter(drag_data, ev, effect);
+        //std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        effect = DRAG_OPERATION_MOVE;
+        host->DragTargetDragOver(ev, effect);
+        //std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        effect = DRAG_OPERATION_COPY;
+        host->DragTargetDrop(ev);
         return Undefined();
     }
     
@@ -683,7 +709,6 @@ namespace amo {
                                            
         HBITMAP hBitmap = ::CreateCompatibleBitmap(hDC, wndSize.cx, wndSize.cy);
         
-        //HBITMAP hBitmap = ::CreateDIBSection(hDC, &bitmapinfo, 0, NULL, 0, 0);
         HBITMAP hOldBitmap = (HBITMAP)::SelectObject(memDC, hBitmap);
         
         
@@ -840,7 +865,8 @@ namespace amo {
     LPCTSTR BrowserWindow::GetWindowClassName() const {
     
         return _T("BrowserWindow");
-        return amo::u8string(m_pBrowserSettings->windowClass, true).to_unicode().c_str();
+        return amo::u8string(m_pBrowserSettings->windowClass,
+                             true).to_unicode().c_str();
     }
     
     
@@ -1000,6 +1026,23 @@ namespace amo {
                                   
     }
     
+    bool BrowserWindow::OnFileDialog(CefRefPtr<CefBrowser> browser,
+                                     CefDialogHandler::FileDialogMode mode,
+                                     const CefString& title,
+                                     const CefString& default_file_path,
+                                     const std::vector<CefString>& accept_filters,
+                                     int selected_accept_filter,
+                                     CefRefPtr<CefFileDialogCallback> callback) {
+                                     
+        if (m_dropFiles.empty()) {
+            return false;
+        }
+        
+        callback->Continue(selected_accept_filter, m_dropFiles);
+        m_dropFiles.clear();
+        return true;
+    }
+    
     bool BrowserWindow::preTranslateMessage(CefEventHandle os_event) {
     
         if (m_pWebkit == NULL || m_pWebkit->getBrowser().get() == NULL) {
@@ -1023,29 +1066,6 @@ namespace amo {
                 return false;
             }
         }
-        
-        //while (hWnd != NULL) {
-        //    if (hWnd == m_pWebkit->getBrowser()->GetHost()->GetWindowHandle()
-        //            || hWnd == m_pWebkit->GetNativeWindow()
-        //            || hWnd == m_hWnd) {
-        //        break;
-        //    }
-        //
-        //    hWnd = ::GetParent(hWnd);
-        //    // 干什么用的？
-        //    //DWORD dwExStyle = ::GetWindowLong(hWnd, GWL_EXSTYLE);
-        //    //if ( (dwExStyle &WS_CHILD) == 0) {
-        //    //	hWnd = NULL;
-        //    //	break;
-        //    //}					//!< 修改窗口的扩展风格为透明
-        //}
-        //
-        //if (hWnd == NULL) {
-        //    return false;
-        //}
-        //if (os_event->message == WM_LBUTTONDOWN) {
-        //    int c = 3;
-        //}
         
         POINT point;
         ::GetCursorPos(&point);
@@ -1275,15 +1295,7 @@ namespace amo {
     
     LRESULT BrowserWindow::OnNcLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                            BOOL & bHandled) {
-        /* if (!m_pBrowserSettings->resizeable) {
-             fWinArrange.reset(new BOOL(FALSE));
-             fSnapSizing.reset(new BOOL(FALSE));
-             SystemParametersInfo(SPI_GETWINARRANGING, 0, (LPVOID)&*fWinArrange, 0);
-             SystemParametersInfo(SPI_GETSNAPSIZING, 0, (LPVOID)&*fSnapSizing, 0);
-             SystemParametersInfo(SPI_SETWINARRANGING, 0, (LPVOID)TRUE, 0);
-             SystemParametersInfo(SPI_SETSNAPSIZING, 0, (LPVOID)TRUE, 0);
-         }
-         */
+                                           
         UINT nHitTest = wParam;
         POINT pt;
         POINTSTOPOINT(pt, lParam);
@@ -1324,17 +1336,7 @@ namespace amo {
     
     LRESULT BrowserWindow::OnNcLButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam,
                                          BOOL & bHandled) {
-        /*if (!m_pBrowserSettings->resizeable) {
-            if (fWinArrange && fSnapSizing) {
-        
-                SystemParametersInfo(SPI_SETWINARRANGING, 0, (LPVOID)*fWinArrange, 0);
-                SystemParametersInfo(SPI_SETSNAPSIZING, 0, (LPVOID)*fSnapSizing, 0);
-            }
-        
-            fWinArrange.reset();
-            fSnapSizing.reset();
-        }
-        */
+                                         
         LRESULT lRes = 0;
         
         bHandled = true;

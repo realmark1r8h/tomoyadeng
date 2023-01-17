@@ -89,31 +89,18 @@ namespace amo {
                                            * bitmapinfo.bmiHeader.biBitCount / 8;
                                            
         HBITMAP hBitmap = ::CreateCompatibleBitmap(hDC, wndSize.cx, wndSize.cy);
-        
-        //HBITMAP hBitmap = ::CreateDIBSection(hDC, &bitmapinfo, 0, NULL, 0, 0);
         HBITMAP hOldBitmap = (HBITMAP)::SelectObject(memDC, hBitmap);
-        
         CControlUI* pRoot = m_PaintManager.GetRoot();
-        
-        //pRoot = m_PaintManager.FindControl(_T("Webkit"));
         
         if (pRoot == NULL) {
             return;
         }
         
         pRoot->DoPaint(memDC, pRoot->GetPos(), NULL);
-        
-        /* amo::string str(std::to_string(amo::date_time::now()), false);
-         str += ".png";*/
-        //SaveBitmap(hBitmap, str.to_unicode().c_str(), L"image/png");
-        
-        //SaveHBitmapToFile(hBitmap, (wchar_t*)str.to_unicode().c_str(), L"image/png");
-        //SaveBitmap(hBitmap, L"C:\\123.jpeg", L"image/jpeg");
-        
         POINT ptSrc = { 0, 0 };
         SIZE sz = { nWidth, nHeight };
         POINT ptDest = { rcClient.left, rcClient.top };
-        //POINT ptSrc = { 0, 0 };
+        
         SIZE szLayered = { rcClient.right - rcClient.left, rcClient.bottom - rcClient.top };
         
         BOOL bOK = ::UpdateLayeredWindow(m_hWnd,
@@ -124,17 +111,13 @@ namespace amo {
                                          &ptSrc,					// 内存DC中图像的左上角点，可以为NULL
                                          0,						//
                                          &m_Blend,
-                                         ULW_ALPHA
-                                        );
-                                        
-                                        
+                                         ULW_ALPHA);
+                                         
         DWORD wd = GetLastError();
         ::SelectObject(memDC, hOldBitmap);
         DeleteObject(hBitmap);
         
-        
         ::ReleaseDC(m_hWnd, memDC);
-        
         ::ReleaseDC(m_hWnd, hDC);
         ::EndPaint(m_hWnd, &ps);
         

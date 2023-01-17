@@ -13,6 +13,13 @@ namespace amo {
     public:
         ClipboardMonitor();
         
+        
+        bool startWatch();
+        
+        bool stopWatch();
+        
+        bool isWatching();
+        
         virtual LRESULT HandleMessage(HWND hWnd, UINT uMsg, WPARAM wParam,
                                       LPARAM lParam);
                                       
@@ -23,6 +30,7 @@ namespace amo {
                                         
     private:
         HWND m_hNextClipboard;
+        bool m_bWatching;
     };
 }
 

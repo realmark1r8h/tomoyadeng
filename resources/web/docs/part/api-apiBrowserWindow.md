@@ -2108,6 +2108,10 @@ BrowserWindow.current.setTheme({
     primaryColor2: '#ff8666b8'
 });
 
+include('Frame');
+var frame = Frame.current;
+frame.injectCSS('@file:///example/css/zui-theme.css');
+
 
 ```
 
@@ -2529,5 +2533,142 @@ win.stopRecordGif();
 
 
 <div class="adoc" id="div_stopRecordGif"></div>
+
+
+## setNextDialogFiles &nbsp;
+  设置下一次用户点击文件选择对话框时自动选择的文件.如果文件列表存在，那么不会弹出文件选择对话框，已是直接返回当前列表给页面.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>Array </td>
+	<td></td>
+	<td>文件列表（也可以是单独的String）.</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+  Undefined . 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+includes('BrowserWindow', 'app');
+// 可以
+BrowserWindow.current.setNextDialogFiles('%appDir%manifest.json');
+var splashPath = app.toAbsolutePath('%appDir%images/splash.jpg');
+console.log(splashPath);
+BrowserWindow.current.setNextDialogFiles([splashPath, '%appDir%manifest.json']);
+
+```
+
+
+<div class="adoc" id="div_setNextDialogFiles"></div>
+
+
+## getNextDialogFiles &nbsp;<span class="label label-sync">同步</span> 
+
+  获取<a href="#api/apiBrowserWindow/78">setNextDialogFiles</a>中设置的数据.
+  
+* **函数参数**  无
+
+* **返回值**
+  Array . 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+includes('BrowserWindow', 'BrowserHost');
+BrowserWindow.current.setNextDialogFiles('%appDir%manifest.json');
+var arr = BrowserWindow.current.getNextDialogFiles();
+console.log(arr);
+console.assert(arr.length == 1);
+var x = $('#ncui_getNextDialogFiles').offset().left;
+var y = $('#ncui_getNextDialogFiles').offset().top;
+// 可以自己模拟一个点击事件
+BrowserHost.current.click(x + 10, y + 10);
+
+
+```
+
+
+<div class="adoc" id="div_getNextDialogFiles"><div id="" class="example code" contenteditable="true"><input id="ncui_getNextDialogFiles" type="file"  style="background:#f9f;"/></div></div>
+
+
+## dropFiles &nbsp;
+  在所给位置依次触发 dragenter dragover drop 事件(offscreen == true)是有效.
+  
+* **函数参数**
+
+<table class="table table-hover table-bordered ">
+	<thead>
+		<tr>
+			<th class="col-xs-1">类型</th>
+			<th class="col-xs-1">默认值</th>
+			<th>说明</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	<td>Array </td>
+	<td></td>
+	<td>需要送入的文件列表，也可以是一个单独String.</td>
+</tr><tr>
+	<td>Int </td>
+	<td></td>
+	<td>x坐标</td>
+</tr><tr>
+	<td>Int </td>
+	<td></td>
+	<td>y坐标</td>
+</tr>
+	</tbody>
+</table>
+
+* **返回值**
+  Undefined . 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+// 需要保证$('#ncui_divDropFiles') 在可视区域内
+window.readBlobAsDataURL = function(blob, callback) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        callback(e.target.result);
+    };
+    reader.readAsDataURL(blob);
+}
+window.ncui_divDropFiles = document.querySelector('#ncui_divDropFiles');
+window.ncui_divDropFiles.addEventListener("dragenter", function(e) {  e.preventDefault(); e.stopPropagation(); console.log('dragenter'); }, false);
+window.ncui_divDropFiles.addEventListener("dragover", function(e) { e.preventDefault(); e.stopPropagation(); console.log('dragover'); }, false);
+window.ncui_divDropFiles.addEventListener("drop", function(e) {
+    e.preventDefault(); e.stopPropagation();console.log('drop');
+    var item = e.dataTransfer.items[0];
+    var file = item.getAsFile();
+    window.readBlobAsDataURL(file, function(dataurl) {
+        $('#ncui_dropFiles').attr('src', dataurl);
+    });
+}, false);
+
+include('BrowserWindow');
+var x = $('#ncui_divDropFiles').offset().left + 10;
+var y = $('#ncui_divDropFiles').offset().top + 10;
+BrowserWindow.current.dropFiles(['%appDir%images/splash.jpg'], x, y);
+
+```
+
+
+<div class="adoc" id="div_dropFiles"><div id="ncui_divDropFiles" class="example code" contenteditable="true" draggable="true" ><img id="ncui_dropFiles" src=""></img> </div></div>
 
 

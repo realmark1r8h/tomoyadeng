@@ -69,6 +69,9 @@ namespace amo {
         hrc_ = NULL;
         painting_popup_ = (false);
         device_scale_factor_ = GetDeviceScaleFactor();
+        m_candidatePos.x = 0;
+        m_candidatePos.y = 0;
+        
     }
     
     OffScreenRenderView::~OffScreenRenderView() {
@@ -1043,6 +1046,30 @@ namespace amo {
         
         bool bFind = false;
         
+        /*	if (m_candidatePos.y != 0) {
+        		int x = m_candidatePos.x;
+        		for ()
+        		{
+        		}
+        		const int CUR_LINE = ((y)* stride);
+        		const int CUR_POS = (y * w + x);
+        		BYTE r = imageData[CUR_LINE + x * bytesPerPixel + srcR];
+        		BYTE g = imageData[CUR_LINE + x * bytesPerPixel + srcG];
+        		BYTE b = imageData[CUR_LINE + x * bytesPerPixel + srcB];
+        		BYTE a = imageData[CUR_LINE + x * bytesPerPixel + srcA];
+        
+        		if (b == m_oActiveElementInfo.b
+        			&& r == m_oActiveElementInfo.r
+        			&& g == m_oActiveElementInfo.g) {
+        			++nCount;
+        		}
+        		else {
+        			nCount = 0;
+        		}
+        
+        	}*/
+        
+        
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
                 const int CUR_LINE = ((y) * stride);
@@ -1059,6 +1086,7 @@ namespace amo {
                 } else {
                     nCount = 0;
                 }
+                
                 
                 if (nCount >= m_oActiveElementInfo.fontSize) {
                     $clog(amo::cdevel << "found:" << x << ", " << y << amo::endl;);

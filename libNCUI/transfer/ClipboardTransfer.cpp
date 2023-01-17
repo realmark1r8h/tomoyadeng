@@ -3,6 +3,7 @@
 #include <amo/filestream.hpp>
 #include "ui/win/Bitmap.hpp"
 #include "ipc/BlobManager.hpp"
+#include "ui/win/clipboard/ClipboardMonitor.h"
 
 
 namespace amo {
@@ -11,6 +12,18 @@ namespace amo {
         addModule("EventEmitter");
     }
     
+    
+    Any ClipboardTransfer::startWatch(IPCMessage::SmartType msg) {
+        return ClipboardMonitor::getInstance()->startWatch();
+    }
+    
+    Any ClipboardTransfer::stopWatch(IPCMessage::SmartType msg) {
+        return ClipboardMonitor::getInstance()->stopWatch();
+    }
+    
+    Any ClipboardTransfer::isWatching(IPCMessage::SmartType msg) {
+        return ClipboardMonitor::getInstance()->isWatching();
+    }
     
     Any ClipboardTransfer::readText(IPCMessage::SmartType msg) {
         try {
@@ -367,8 +380,36 @@ namespace amo {
     }
     
     Any ClipboardTransfer::test(IPCMessage::SmartType msg) {
+    
+        auto args = msg->getArgumentList();
+        std::vector<Any> files;
+        Any& val = args->getValue(0);
+        
+        if (val.is<std::string>()) {
+            files.push_back(val);
+        } else if (val.is<std::vector<Any> >()) {
+            files = val.As<std::vector<Any> >();
+        }
+        
         CefRefPtr<CefDragData> drag_data = CefDragData::Create();
-        drag_data->AddFile(L"D:\\2222.jpg", L"2222.jpg");
+        auto appSettings = AppSettings::getInstance();
+        
+        for (auto& p : files) {
+            if (!p.is<std::string>()) {
+                continue;
+            }
+            
+            amo::u8string str(p.As<std::string>(), true);
+            str = amo::u8string(appSettings->toAbsolutePath(str), true);
+            amo::u8path path(str);
+            
+            if (!path.exists()) {
+                continue;
+            }
+            
+            drag_data->AddFile(str.to_wide(), path.filename().generic_wstring());
+        }
+        
         
         auto manager = BrowserWindowManager::getInstance();
         int nBrowserID = msg->getArgumentList()->getInt(IPCArgsPosInfo::BrowserID);

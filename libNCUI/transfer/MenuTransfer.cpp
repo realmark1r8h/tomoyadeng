@@ -11,26 +11,36 @@ namespace amo {
         addModule("EventEmitter");
     }
     
+    MenuTransfer::~MenuTransfer() {
+    
+    }
+    
     Any MenuTransfer::onCreateClass(IPCMessage::SmartType msg) {
         std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
         
         std::shared_ptr<MenuWindowSettings> pSettings(new MenuWindowSettings());
         pSettings->updateArgsSettings(args->getString(0));
         std::string ss = pSettings->getArgsSettings();
-        std::shared_ptr<ContextMenuWindow> menu(new ContextMenuWindow(pSettings));
-        int64_t id = menu->getObjectID();
-        int64_t id2 = getObjectID();
-        menu->setFrameID(args->getInt64(IPCArgsPosInfo::FrameID));
-        menu->setBrowserID(args->getInt(IPCArgsPosInfo::BrowserID));
+        
+        std::shared_ptr<ContextMenuWindow> pTransfer(new ContextMenuWindow(pSettings));
+        
+        pTransfer->setFrameID(args->getInt64(IPCArgsPosInfo::FrameID));
+        pTransfer->setBrowserID(args->getInt(IPCArgsPosInfo::BrowserID));
+        
         POINT point;
         ::GetCursorPos(&point);
-        menu->Init(NULL, point);
-        addTransfer(menu);
-        menu->setClosedCallback(std::bind(&MenuTransfer::onMenuClosed,
-                                          this,
-                                          std::placeholders::_1));
-                                          
-        return menu->getFuncMgr().toSimplifiedJson();
+        
+        pTransfer->Init(NULL, point);
+        pTransfer->registerFunction();
+        addTransfer(pTransfer);
+        pTransfer->setTriggerEventFunc(getTriggerEventFunc());
+        
+        
+        pTransfer->setClosedCallback(std::bind(&MenuTransfer::onMenuClosed,
+                                               this,
+                                               std::placeholders::_1));
+                                               
+        return pTransfer->getFuncMgr().toSimplifiedJson();
     }
     
     Any MenuTransfer::close(IPCMessage::SmartType msg) {
@@ -41,6 +51,10 @@ namespace amo {
             return Undefined();
         }
         
+        /*  ::PostMessage(dynamic_cast<ContextMenuWindow*>(this)->GetHWND(),
+                        WM_KILLFOCUS,
+                        0,
+                        0L);*/
         ::PostMessage(dynamic_cast<ContextMenuWindow*>(this)->GetHWND(),
                       WM_CLOSE,
                       0,

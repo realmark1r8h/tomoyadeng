@@ -63,6 +63,73 @@ clipboard.unique('empty', function(){
 <div class="adoc" id="div_empty"></div>
 
 
+## startWatch &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+
+  监听剪贴板事件.
+  
+* **函数参数**  无
+
+* **返回值**
+  Boolean . 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('clipboard');
+console.assert(clipboard.startWatch() == true);
+
+```
+
+
+<div class="adoc" id="div_startWatch"></div>
+
+
+## stopWatch &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+
+  停止监听剪贴板事件.
+  
+* **函数参数**  无
+
+* **返回值**
+  Boolean . 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('clipboard');
+console.assert(clipboard.stopWatch() == true);
+
+```
+
+
+<div class="adoc" id="div_stopWatch"></div>
+
+
+## isWatching &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
+
+  是否正在监听剪贴板事件.
+  
+* **函数参数**  无
+
+* **返回值**
+  Boolean . 
+
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+include('clipboard');
+clipboard.startWatch();
+console.assert(clipboard.isWatching() == true);
+clipboard.stopWatch();
+console.assert(clipboard.isWatching() == false);
+clipboard.startWatch();
+
+```
+
+
+<div class="adoc" id="div_isWatching"></div>
+
+
 ## writeText &nbsp;<span class="label label-static">静态</span> <span class="label label-sync">同步</span> 
 
   向剪贴板中写入字符串.

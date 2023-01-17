@@ -38,11 +38,11 @@ ncui_lib_dir = "./../NCUI-Library/" #库文件输出目录
 try:
 	opts, args = getopt.getopt(sys.argv[1:],"hi:o:",["cef=","node=","rebuild", "switch"])
 except getopt.GetoptError:
-	print 'cef, node, rebuild'
+	print 'cef, node, rebuild, switch'
 	sys.exit(2)
 for opt, arg in opts:
 	if opt == '-h':
-		print 'cef, node, rebuild'
+		print 'cef, node, rebuild, switch'
 		sys.exit()
 	elif opt == ("--cef"):
 		cef_version = arg

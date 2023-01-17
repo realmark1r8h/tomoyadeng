@@ -131,15 +131,27 @@ namespace amo {
         }
         
         
-        std::shared_ptr<Graphics> m_graphics(new Graphics(hDC));
+        amo::rect rect(GetPos());
+        
+        HDC memDC = ::CreateCompatibleDC(hDC);	//创建兼容内存DC
+        HBITMAP hBitmap = NULL;
+        HBITMAP hOldBitmap = NULL;
+        
+        
+        hBitmap = ::CreateCompatibleBitmap(hDC, rect.width(), rect.height());
+        hOldBitmap = (HBITMAP)::SelectObject(memDC, hBitmap); //载入该位图
+        
+        std::shared_ptr<Graphics> m_graphics(new Graphics(memDC));
+        
         
         if (m_paintSettings->offscreen && !m_paintSettings->transparent) {
         
             Gdiplus::SolidBrush brush(Gdiplus::Color(255, 255, 255));
-            RECT bkRt = GetPos();
-            // 会闪屏
-            /* m_graphics->FillRectangle(&brush, bkRt.left, bkRt.top, bkRt.right - bkRt.left,
-                                       bkRt.bottom - bkRt.top);*/
+            m_graphics->FillRectangle(&brush,
+                                      rect.left(),
+                                      rect.top(),
+                                      rect.width(),
+                                      rect.height());
         }
         
         std::vector<std::shared_ptr<amo::d2d1::GdiplusBitmap> >  bitmaps;
@@ -151,7 +163,6 @@ namespace amo {
             std::shared_ptr<amo::d2d1::GdiplusBitmap> bitmap(new amo::d2d1::GdiplusBitmap(
                         m_graphics, p));
             bitmaps.push_back(bitmap);
-            
             auto vec = bitmap->regions();
             regions.insert(regions.end(), vec.begin(), vec.end());
         }
@@ -167,13 +178,15 @@ namespace amo {
             p->drawBitmap();
         }
         
-        m_graphics->ReleaseHDC(hDC);
-        /*
-        
-        GdiRenderer gdiRenderer;
-        RECT srcRect = GetPos();
-        gdiRenderer.setRect(amo::rect(srcRect));
-        gdiRenderer.Render(hDC, m_resource);*/
+        ::BitBlt(hDC, rect.left(), rect.top(), rect.width(), rect.height(),
+                 memDC, rect.left(), rect.top(), SRCCOPY);
+                 
+        m_graphics->ReleaseHDC(memDC);
+        ::SelectObject(memDC, hOldBitmap);
+        //::DeleteObject(hOldBitmap);
+        ::DeleteObject(hBitmap);
+        //::ReleaseDC(NULL, memDC);
+        ::DeleteDC(memDC);
     }
     
     ViewRenderer::ViewRenderer() {

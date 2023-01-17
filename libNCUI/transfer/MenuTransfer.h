@@ -216,6 +216,8 @@ namespace amo {
         
         MenuTransfer();
         
+        ~MenuTransfer();
+        
         virtual Any onCreateClass(IPCMessage::SmartType msg) override;
         
         /*!
@@ -287,7 +289,7 @@ namespace amo {
         */
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(MenuTransfer, ClassTransfer)
-        AMO_CEF_MESSAGE_TRANSFER_FUNC(close, TransferFuncNormal)
+        AMO_CEF_MESSAGE_TRANSFER_FUNC(close, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
     private:
         void onMenuClosed(LayeredWindow* window);

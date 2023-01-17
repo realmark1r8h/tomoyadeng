@@ -238,14 +238,15 @@ namespace amo {
         HGLRC hrc_;
         bool painting_popup_;
         float device_scale_factor_;
-        CefRefPtr<CefBrowser> browser_;																//!< 浏览器指针
-        POINT m_point;																				//!< 光标位置
-        CefRefPtr<CefFrame> m_pFocusFrame;															//!< 当前焦点iframe
-        ActiveElementInfo m_oActiveElementInfo;														//!< 焦点控件信息
-        WebkitView* m_pWebkit;																		//!< 浏览器控件
-        std::shared_ptr<IMM32Manager> imm32_manager_;												//!< 输入法管理器
-        //OpenGLRenderer renderer_;																	//!< OPENGL渲染器
-        ViewRenderer* m_pViewRender;																	//!< GDI+渲染器
+        CefRefPtr<CefBrowser> browser_;											//!< 浏览器指针
+        POINT m_point;															//!< 光标位置
+        CefRefPtr<CefFrame> m_pFocusFrame;										//!< 当前焦点iframe
+        ActiveElementInfo m_oActiveElementInfo;									//!< 焦点控件信息
+        WebkitView* m_pWebkit;													//!< 浏览器控件
+        std::shared_ptr<IMM32Manager> imm32_manager_;							//!< 输入法管理器
+        //OpenGLRenderer renderer_;												//!< OPENGL渲染器
+        ViewRenderer* m_pViewRender;											//!< GDI+渲染器
+        POINT m_candidatePos;													// 光标候选位置，通过光标闪烁来定位光标,不划算
     };
 }
 #endif // AMO_OFFSCREENRENDERVIEW_H__

@@ -136,7 +136,7 @@ namespace amo {
         
         /*!
          * @fn	Any KeyboardTransfer::waitKey(IPCMessage::SmartType msg);
-         *
+         * @ignore
          * @tag sync static
          *
          * @brief	等待按任意键.
@@ -148,7 +148,7 @@ namespace amo {
         
         /*!
          * @fn	Any KeyboardTransfer::getLastKey(IPCMessage::SmartType msg);
-         *
+         * @ignore
          * @tag sync static
          *
          * @brief	检测上次按键.

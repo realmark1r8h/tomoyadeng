@@ -52,7 +52,7 @@ devtools = False		#是否拷贝devtools_resources.pak
 try:
 	opts, args = getopt.getopt(sys.argv[1:],"hi:o:",["node","ppapi","npapi", "vc2015", "version", "example", "web", "devtools"])
 except getopt.GetoptError:
-	print 'node, flash, vc2015, version, example, web, devtools'
+	print 'node, ppapi, apapi, vc2015, version, example, web, devtools'
 	sys.exit(2)
 for opt, arg in opts:
 	if opt == '-h':

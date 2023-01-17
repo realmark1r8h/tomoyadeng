@@ -8,6 +8,15 @@
 namespace amo {
 
     ClipboardMonitor::ClipboardMonitor() {
+        m_hNextClipboard = NULL;
+        m_bWatching = false;
+    }
+    
+    bool ClipboardMonitor::startWatch() {
+        if (m_bWatching) {
+            return true;
+        }
+        
         NotifyWindow* window = Tray::getInstance()->getNotifyWindow();
         window->setClipMsgCallback(std::bind(&ClipboardMonitor::HandleMessage,
                                              this,
@@ -16,6 +25,26 @@ namespace amo {
                                              std::placeholders::_3,
                                              std::placeholders::_4));
         m_hNextClipboard = ::SetClipboardViewer(window->GetHWND());
+        //GetLastError();
+        m_bWatching = true;
+        return m_bWatching;
+    }
+    
+    bool ClipboardMonitor::stopWatch() {
+        if (!m_bWatching) {
+            return true;
+        }
+        
+        NotifyWindow* window = Tray::getInstance()->getNotifyWindow();
+        
+        ChangeClipboardChain(window->GetHWND(), m_hNextClipboard);
+        m_hNextClipboard = NULL;
+        m_bWatching = false;
+        return true;
+    }
+    
+    bool ClipboardMonitor::isWatching() {
+        return m_bWatching;
     }
     
     LRESULT ClipboardMonitor::HandleMessage(HWND hWnd, UINT uMsg, WPARAM wParam,
@@ -30,7 +59,9 @@ namespace amo {
             break;
             
         case WM_DESTROY:
+            //stopWatch();
             ChangeClipboardChain(hWnd, m_hNextClipboard);
+            m_bWatching = false;
             break;
             
         default:
@@ -64,13 +95,13 @@ namespace amo {
         int32_t effect =  clipboard.dropEffect();
         
         
-#define	DROPEFFECT_NONE	( 0 )
-        
-#define	DROPEFFECT_COPY	( 1 )
-        
-#define	DROPEFFECT_MOVE	( 2 )
-        
-#define	DROPEFFECT_LINK	( 4 )
+        //#define	DROPEFFECT_NONE	( 0 )
+        //
+        //#define	DROPEFFECT_COPY	( 1 )
+        //
+        //#define	DROPEFFECT_MOVE	( 2 )
+        //
+        //#define	DROPEFFECT_LINK	( 4 )
         
         std::string eventName = "copy";
         

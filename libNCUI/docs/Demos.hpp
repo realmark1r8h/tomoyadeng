@@ -6,14 +6,8 @@
 
 namespace amo {
 
-    /*!
-     * @class	演示程序
-     * @desc	演示程序
-     * @id basicDemos
-     * @chapter basic
-     * @brief	一些Demo方便了解NCUI.
-     */
-    
+
+
     class Demos {
     
         /*!
