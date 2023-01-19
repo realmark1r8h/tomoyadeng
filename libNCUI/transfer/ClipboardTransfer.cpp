@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "transfer/ClipboardTransfer.h"
 #include <amo/filestream.hpp>
 #include "ui/win/Bitmap.hpp"
@@ -343,8 +343,8 @@ namespace amo {
         auto args = msg->getArgumentList();
         Any& val = args->getValue(0);
         
-        int nScreenWidth = GetSystemMetrics(SM_CXSCREEN);//ÆÁÄ»ºáÏò·Ö±æÂÊ
-        int nScreenHeight = GetSystemMetrics(SM_CYSCREEN);//ÆÁÄ»×İÏò·Ö±æÂÊ
+        int nScreenWidth = GetSystemMetrics(SM_CXSCREEN);//å±å¹•æ¨ªå‘åˆ†è¾¨ç‡
+        int nScreenHeight = GetSystemMetrics(SM_CYSCREEN);//å±å¹•çºµå‘åˆ†è¾¨ç‡
         amo::rect rect = { 0, 0, nScreenWidth, nScreenHeight };
         
         if (val.is<std::vector<Any> >()) {
@@ -448,9 +448,9 @@ namespace amo {
     Any ClipboardTransfer::writeText(IPCMessage::SmartType msg) {
         try {
         
-            // ±ØĞëÍ¬²½Ö´ĞĞ£¬²»È»readTextÊ±»á³ö´í£¬Ò²²»ÖªµÀÎªÉ¶
+            // å¿…é¡»åŒæ­¥æ‰§è¡Œï¼Œä¸ç„¶readTextæ—¶ä¼šå‡ºé”™ï¼Œä¹Ÿä¸çŸ¥é“ä¸ºå•¥
             int nBrowserID = msg->getArgumentList()->getInt(IPCArgsPosInfo::BrowserID);
-            // Èç¹ûËù¸øFrameIDĞ¡ÓÚ0£¬²éÕÒµ±Ç°Ëù»ñµÃ½¹µãµÄ´°¿Ú
+            // å¦‚æœæ‰€ç»™FrameIDå°äº0ï¼ŒæŸ¥æ‰¾å½“å‰æ‰€è·å¾—ç„¦ç‚¹çš„çª—å£
             auto manager = BrowserWindowManager::getInstance();
             HWND hWnd = manager->getHWNDByBrowserID(nBrowserID);
             
@@ -488,7 +488,7 @@ namespace amo {
             //        int state = blob.state();
             //
             //        if (amo::timer::now() < blob.create_timestamp() + blob.delay_destroy()) {
-            //            // µ±Ç°Êı¾İÒÑ³¬¹ıÆä´æ»îÊ±¼ä£¬¶ªÆú²»Òª
+            //            // å½“å‰æ•°æ®å·²è¶…è¿‡å…¶å­˜æ´»æ—¶é—´ï¼Œä¸¢å¼ƒä¸è¦
             //            return false;
             //        }
             //

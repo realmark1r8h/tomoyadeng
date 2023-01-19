@@ -1,4 +1,4 @@
-// Created by amoylel on 14/11/2018.
+ï»¿// Created by amoylel on 14/11/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBNCUI_CLIPBOARDTRANSFER_7CB74BAD_E5C1_4CE6_B3D2_E9CA9C435548_H__
@@ -13,7 +13,7 @@ namespace amo {
     /*!
     * @class	clipboard
     *
-    * @brief	¼ôÌù°å.
+    * @brief	å‰ªè´´æ¿.
     */
     class ClipboardTransfer
         : public ClassTransfer
@@ -25,7 +25,7 @@ namespace amo {
          * @fn	Any ClipboardTransfer::startWatch(IPCMessage::SmartType msg);
          * @tag static sync
          *
-         * @brief	¼àÌı¼ôÌù°åÊÂ¼ş.
+         * @brief	ç›‘å¬å‰ªè´´æ¿äº‹ä»¶.
          *
          * @return	#Boolean.
          * @example
@@ -43,7 +43,7 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	Í£Ö¹¼àÌı¼ôÌù°åÊÂ¼ş.
+         * @brief	åœæ­¢ç›‘å¬å‰ªè´´æ¿äº‹ä»¶.
          *
          * @return	#Boolean.
          * @example
@@ -61,7 +61,7 @@ namespace amo {
          *
          * @tag sync static
          *
-         * @brief	ÊÇ·ñÕıÔÚ¼àÌı¼ôÌù°åÊÂ¼ş.
+         * @brief	æ˜¯å¦æ­£åœ¨ç›‘å¬å‰ªè´´æ¿äº‹ä»¶.
          *
          * @return	#Boolean.
          * @example
@@ -80,16 +80,16 @@ namespace amo {
         /**
         * @fn	Any ClipboardTransfer::writeText(IPCMessage::SmartType msg);
         * @tag static sync
-        * @brief	Ïò¼ôÌù°åÖĞĞ´Èë×Ö·û´®.
+        * @brief	å‘å‰ªè´´æ¿ä¸­å†™å…¥å­—ç¬¦ä¸².
         *
-        * @param	#String ÒªĞ´ÈëµÄ×Ö·û´®.
+        * @param	#String è¦å†™å…¥çš„å­—ç¬¦ä¸².
         *
         * @return	#Undefined.
         *
         * @example
         ```
         	include('clipboard');
-        	console.assert(clipboard.writeText('NCUI Clipboard Text ÖĞÎÄ') == true);
+        	console.assert(clipboard.writeText('NCUI Clipboard Text ä¸­æ–‡') == true);
         ```
         *
         */
@@ -100,9 +100,9 @@ namespace amo {
          * @fn	Any ClipboardTransfer::writeImage(IPCMessage::SmartType msg);
          * @tag static sync
          *
-         * @brief	Ğ´ÈëÍ¼Æ¬µ½¼ôÌù°å.
+         * @brief	å†™å…¥å›¾ç‰‡åˆ°å‰ªè´´æ¿.
          *
-         * @param	#String Í¼Æ¬Êı¾İ base64±àÂëµÄÍ¼Æ¬.
+         * @param	#String å›¾ç‰‡æ•°æ® base64ç¼–ç çš„å›¾ç‰‡.
          *
          * @return	#Boolean.
          */
@@ -111,9 +111,9 @@ namespace amo {
         * @fn	Any ClipboardTransfer::writeImage(IPCMessage::SmartType msg);
         * @tag static sync
         *
-        * @brief	Ğ´ÈëÍ¼Æ¬µ½¼ôÌù°å.
+        * @brief	å†™å…¥å›¾ç‰‡åˆ°å‰ªè´´æ¿.
         *
-        * @param	#String Í¼Æ¬Â·¾¶£¨±¾µØÎÄ¼şÂ·¾¶£©,(Ò²¿ÉÒÔÊÇÒ»¸öBigStr·â×°µÄ¶ÔÏó£¬Èç¹ûÍ¼Æ¬Ì«´ó£¬×îºÃÊ¹ÓÃBigStr·â×°£¬½ø³Ì¼äÍ¨ĞÅµÄ¹ÜµÀÖ»ÓĞ2M£¬³¬¹ıÕâ¸ö´óĞ¡µÄÊı¾İ²»ÄÜ±»ÕıÈ·ËÍ´ï).
+        * @param	#String å›¾ç‰‡è·¯å¾„ï¼ˆæœ¬åœ°æ–‡ä»¶è·¯å¾„ï¼‰,(ä¹Ÿå¯ä»¥æ˜¯ä¸€ä¸ªBigStrå°è£…çš„å¯¹è±¡ï¼Œå¦‚æœå›¾ç‰‡å¤ªå¤§ï¼Œæœ€å¥½ä½¿ç”¨BigStrå°è£…ï¼Œè¿›ç¨‹é—´é€šä¿¡çš„ç®¡é“åªæœ‰2Mï¼Œè¶…è¿‡è¿™ä¸ªå¤§å°çš„æ•°æ®ä¸èƒ½è¢«æ­£ç¡®é€è¾¾).
         *
         * @return	#Boolean.
         * @html <div id="example" class="example code" contenteditable="true"><img id="ncuiImg_writeImage" src="@file:///%appDir%images/splash.jpg"></img> </div>
@@ -122,30 +122,30 @@ namespace amo {
         ```
         	include('clipboard');
         	clipboard.writeImage('');
-        	//½«Í¼Æ¬×ª»¯³Ébase64
+        	//å°†å›¾ç‰‡è½¬åŒ–æˆbase64
         	function convertImgToBase64(url, callback, outputFormat) {
         		var canvas = document.createElement('CANVAS'),
-        	¡¡  ctx = canvas.getContext('2d'),
-        	  ¡¡img = new Image;¡¡¡¡
-        		img.crossOrigin = 'Anonymous';¡¡¡¡
-        		img.onload = function() {¡¡¡¡
-        			canvas.height = img.height;¡¡¡¡
-        			canvas.width = img.width;¡¡¡¡
-        			ctx.drawImage(img, 0, 0);¡¡¡¡
-        			var dataURL = canvas.toDataURL(outputFormat || 'image/jpeg');¡¡¡¡
-        			callback.call(this, dataURL);¡¡¡¡
+        	ã€€  ctx = canvas.getContext('2d'),
+        	  ã€€img = new Image;ã€€ã€€
+        		img.crossOrigin = 'Anonymous';ã€€ã€€
+        		img.onload = function() {ã€€ã€€
+        			canvas.height = img.height;ã€€ã€€
+        			canvas.width = img.width;ã€€ã€€
+        			ctx.drawImage(img, 0, 0);ã€€ã€€
+        			var dataURL = canvas.toDataURL(outputFormat || 'image/jpeg');ã€€ã€€
+        			callback.call(this, dataURL);ã€€ã€€
         			canvas = null;
         		};
         		img.src = url;
         	}
         
-        	var url = "@file:///%appDir%images/splash.jpg"; //ÕâÊÇÕ¾ÄÚµÄÒ»ÕÅÍ¼Æ¬×ÊÔ´£¬²ÉÓÃµÄÏà¶ÔÂ·¾¶
+        	var url = "@file:///%appDir%images/splash.jpg"; //è¿™æ˜¯ç«™å†…çš„ä¸€å¼ å›¾ç‰‡èµ„æºï¼Œé‡‡ç”¨çš„ç›¸å¯¹è·¯å¾„
         	convertImgToBase64(url, function(base64Img) {
-        		//×ª»¯ºóµÄbase64
+        		//è½¬åŒ–åçš„base64
         		clipboard.writeImage(base64Img);
         
         		include('BigStr');
-        		// Ò²¿ÉÒÔÊ¹ÓÃBigStr´«µİÊı¾İ
+        		// ä¹Ÿå¯ä»¥ä½¿ç”¨BigSträ¼ é€’æ•°æ®
         		clipboard.writeImage(new BigStr(base64Img));
         	});
         
@@ -158,9 +158,9 @@ namespace amo {
         /*!
          * @fn	Any ClipboardTransfer::writeImageFromFile(IPCMessage::SmartType msg);
          * @tag static sync
-         * @brief	½«Ò»¸ö±¾µØÍ¼Æ¬ÎÄ¼şÄÚÈİĞ´Èëµ½¼ôÌù°å.
+         * @brief	å°†ä¸€ä¸ªæœ¬åœ°å›¾ç‰‡æ–‡ä»¶å†…å®¹å†™å…¥åˆ°å‰ªè´´æ¿.
          *
-         * @param	#String ÎÄ¼şÂ·¾¶.
+         * @param	#String æ–‡ä»¶è·¯å¾„.
          *
          * @return	#Boolean.
          * @example
@@ -177,9 +177,9 @@ namespace amo {
         * @fn	Any ClipboardTransfer::writeFiles(IPCMessage::SmartType msg);
         * @tag static sync
         *
-        * @brief	Ğ´ÈëÎÄ¼şµ½¼ôÌù°å.
+        * @brief	å†™å…¥æ–‡ä»¶åˆ°å‰ªè´´æ¿.
         *
-        * @param	#String ÎÄ¼şÂ·¾¶.
+        * @param	#String æ–‡ä»¶è·¯å¾„.
         *
         * @return	#Boolean.
         *
@@ -196,9 +196,9 @@ namespace amo {
          * @fn	Any ClipboardTransfer::writeFiles(IPCMessage::SmartType msg);
          * @tag static sync
          *
-         * @brief	Ğ´ÈëÎÄ¼şµ½¼ôÌù°å.
+         * @brief	å†™å…¥æ–‡ä»¶åˆ°å‰ªè´´æ¿.
          *
-         * @param	#Array ÎÄ¼şÂ·¾¶.
+         * @param	#Array æ–‡ä»¶è·¯å¾„.
          *
          * @return	#Boolean.
          * @example
@@ -215,17 +215,17 @@ namespace amo {
          * @fn	Any ClipboardTransfer::readText(IPCMessage::SmartType msg);
          * @tag static sync
          *
-         * @brief	¶ÁÈ¡¼ôÌù°åÖĞµÄ×Ö·û´®.
+         * @brief	è¯»å–å‰ªè´´æ¿ä¸­çš„å­—ç¬¦ä¸².
          *
          * @return	#String.
          *
          * @example
          ```
         	include('clipboard');
-        	console.assert(clipboard.writeText('NCUI Clipboard Text ÖĞÎÄ') == true);
+        	console.assert(clipboard.writeText('NCUI Clipboard Text ä¸­æ–‡') == true);
         	var str = clipboard.readText();
         	console.log(str);
-        	console.assert(str == 'NCUI Clipboard Text ÖĞÎÄ');
+        	console.assert(str == 'NCUI Clipboard Text ä¸­æ–‡');
          ```
          *
          */
@@ -235,11 +235,11 @@ namespace amo {
         /**
          * @fn	Any ClipboardTransfer::readImage(IPCMessage::SmartType msg);
          * @tag static sync
-         * @brief	¶ÁÈ¡Í¼Æ¬,¶ÁÈ¡µ½µÄÍ¼Æ¬ÒÔBase64±àÂë·µ»Ø
+         * @brief	è¯»å–å›¾ç‰‡,è¯»å–åˆ°çš„å›¾ç‰‡ä»¥Base64ç¼–ç è¿”å›
          *
-         * @param	#String="jpeg" Í¼Æ¬¸ñÊ½.
+         * @param	#String="jpeg" å›¾ç‰‡æ ¼å¼.
          *
-         * @return	#String Í¼Æ¬Êı¾İ.
+         * @return	#String å›¾ç‰‡æ•°æ®.
          * @html <div id="example" class="example code" contenteditable="true"><img id="ncuiImg" src="http:://127.0.0.1:8030/@file:///%skinDir%logo.ico"></img> </div>
          * @example
          *
@@ -256,11 +256,11 @@ namespace amo {
         /**
          * @fn	Any ClipboardTransfer::readFiles(IPCMessage::SmartType msg);
          * @tag static sync
-         * @brief	¶ÁÈ¡ÎÄ¼ş.
+         * @brief	è¯»å–æ–‡ä»¶.
          *
-         * @param	#Boolean=false ÊÇ·ñ°üº¬Ä¿Â¼.
+         * @param	#Boolean=false æ˜¯å¦åŒ…å«ç›®å½•.
          *
-         * @return	#Array ·µ»ØÒ»¸ö°üº¬ÎÄ¼şÂ·¾¶µÄ×Ö·û´®.
+         * @return	#Array è¿”å›ä¸€ä¸ªåŒ…å«æ–‡ä»¶è·¯å¾„çš„å­—ç¬¦ä¸².
          * @example
          *
          ```
@@ -276,16 +276,16 @@ namespace amo {
         /*!
          * @fn	Any ClipboardTransfer::saveText(IPCMessage::SmartType msg);
          *
-         * @brief	±£´æ¼ôÌù°åÖĞµÄÎÄ±¾Êı¾İµ½´ÅÅÌ.
+         * @brief	ä¿å­˜å‰ªè´´æ¿ä¸­çš„æ–‡æœ¬æ•°æ®åˆ°ç£ç›˜.
          *
-         * @param	#String ÎÄ¼şÂ·¾¶.
+         * @param	#String æ–‡ä»¶è·¯å¾„.
          *
          * @return	#Boolean.
          * @example
          *
          ```
         	include('clipboard');
-        	clipboard.writeText('1111111111111111111111ÖĞÎÄ');
+        	clipboard.writeText('1111111111111111111111ä¸­æ–‡');
         	console.assert(clipboard.saveText('test3.json') == true);
         	include('Path');
         	console.assert(Path.Remove('test3.json') == true);
@@ -297,9 +297,9 @@ namespace amo {
         /*!
          * @fn	Any ClipboardTransfer::saveImage(IPCMessage::SmartType msg);
          *
-         * @brief	±£´æ¼ôÌù°åÖĞµÄÎÄ±¾Êı¾İµ½´ÅÅÌ.
+         * @brief	ä¿å­˜å‰ªè´´æ¿ä¸­çš„æ–‡æœ¬æ•°æ®åˆ°ç£ç›˜.
          *
-         * @param	#String ÎÄ¼şÂ·¾¶.
+         * @param	#String æ–‡ä»¶è·¯å¾„.
          *
          * @return	#Boolean.
          * @html <div id="example" class="example code" contenteditable="true"><img id="ncuiImg4" src=""></img> </div>
@@ -322,9 +322,9 @@ namespace amo {
         /*!
         * @fn	Any ClipboardTransfer::saveFiles(IPCMessage::SmartType msg);
         *
-        * @brief	±£´æ¼ôÌù°åÖĞµÄÎÄ¼şÊı¾İµ½´ÅÅÌ£¨µ¥¸öÎÄ¼ş£©.
+        * @brief	ä¿å­˜å‰ªè´´æ¿ä¸­çš„æ–‡ä»¶æ•°æ®åˆ°ç£ç›˜ï¼ˆå•ä¸ªæ–‡ä»¶ï¼‰.
         *
-        * @param	#String ÎÄ¼şÂ·¾¶.
+        * @param	#String æ–‡ä»¶è·¯å¾„.
         *
         * @return	#Boolean.
         * @example
@@ -343,9 +343,9 @@ namespace amo {
         /*!
          * @fn	Any ClipboardTransfer::saveFiles(IPCMessage::SmartType msg);
          *
-         * @brief	±£´æ¼ôÌù°åÖĞµÄÎÄ±¾Êı¾İµ½´ÅÅÌ.
+         * @brief	ä¿å­˜å‰ªè´´æ¿ä¸­çš„æ–‡æœ¬æ•°æ®åˆ°ç£ç›˜.
          *
-         * @param	#JsonArray ÎÄ¼şÂ·¾¶.
+         * @param	#JsonArray æ–‡ä»¶è·¯å¾„.
          *
          * @return	#Boolean.
          * @example
@@ -373,9 +373,9 @@ namespace amo {
          *
          * @tag static sync
          *
-         * @brief	²é¿´¼ôÌù°åÖĞÊÇ·ñ´æÔÚÖ¸¶¨¸ñÊ½µÄÊı¾İ.
+         * @brief	æŸ¥çœ‹å‰ªè´´æ¿ä¸­æ˜¯å¦å­˜åœ¨æŒ‡å®šæ ¼å¼çš„æ•°æ®.
          *
-         * @param	#Int ĞèÒªÅĞ¶ÏµÄ¸ñÊ½.
+         * @param	#Int éœ€è¦åˆ¤æ–­çš„æ ¼å¼.
          *
          * @return	#Boolean.
          * @example
@@ -391,7 +391,7 @@ namespace amo {
         /**
          * @fn	Any ClipboardTransfer::empty(IPCMessage::SmartType msg)
          * @tag static sync
-         * @brief	Çå¿Õ¼ôÌù°å.
+         * @brief	æ¸…ç©ºå‰ªè´´æ¿.
          *
          *
          * @return	#Boolean.
@@ -411,7 +411,7 @@ namespace amo {
         /**
          * @fn	Any ClipboardTransfer::isEmpty(IPCMessage::SmartType msg)
          * @tag static sync
-         * @brief	ÅĞ¶Ï¼ôÌù°åÊÇ·ñÎª¿Õ.
+         * @brief	åˆ¤æ–­å‰ªè´´æ¿æ˜¯å¦ä¸ºç©º.
          *
          *
          * @return	#Boolean.
@@ -431,7 +431,7 @@ namespace amo {
          * @fn	Any ClipboardTransfer::getFormats(IPCMessage::SmartType msg);
          * @tag static sync
          *
-         * @brief	»ñÈ¡¼ôÌù°åÖĞËùÓĞµÄÊı¾İ¸ñÊ½.
+         * @brief	è·å–å‰ªè´´æ¿ä¸­æ‰€æœ‰çš„æ•°æ®æ ¼å¼.
          *
          * @return	#Array.
          *
@@ -458,9 +458,9 @@ namespace amo {
          * @fn	Any ClipboardTransfer::effect(IPCMessage::SmartType msg);
          * @tag static sync
          *
-         * @brief	ÅĞ¶Ï¼ôÌù°åÖĞµÄÊı¾İÊÇ¸´ÖÆµÄ»¹ÊÇÕ³ÌùµÄ(Ö»¶Ô×ÊÔ´¹ÜÀíÆ÷ÖĞµÄÎÄ¼ş²Ù×÷ÓĞĞ§).
+         * @brief	åˆ¤æ–­å‰ªè´´æ¿ä¸­çš„æ•°æ®æ˜¯å¤åˆ¶çš„è¿˜æ˜¯ç²˜è´´çš„(åªå¯¹èµ„æºç®¡ç†å™¨ä¸­çš„æ–‡ä»¶æ“ä½œæœ‰æ•ˆ).
          *
-         * @return	#Int Î´Öª(0) ¸´ÖÆ(1) ¼ôÇĞ(2) Á¬½Ó(4).
+         * @return	#Int æœªçŸ¥(0) å¤åˆ¶(1) å‰ªåˆ‡(2) è¿æ¥(4).
          *
          * @example
          *
@@ -482,7 +482,7 @@ namespace amo {
         *
         * @tag static sync
         *
-        * @brief	½ØÆÁ,½«Êı¾İ±£´æµ½¼ôÌù°åÖĞ£¨JPG¸ñÊ½£©.
+        * @brief	æˆªå±,å°†æ•°æ®ä¿å­˜åˆ°å‰ªè´´æ¿ä¸­ï¼ˆJPGæ ¼å¼ï¼‰.
         *
         * @return	#Boolean
         * @example
@@ -501,9 +501,9 @@ namespace amo {
         *
         * @tag static sync
         *
-        * @brief	½ØÆÁ,½«Êı¾İ±£´æµ½¼ôÌù°åÖĞ£¨JPG¸ñÊ½£©.
+        * @brief	æˆªå±,å°†æ•°æ®ä¿å­˜åˆ°å‰ªè´´æ¿ä¸­ï¼ˆJPGæ ¼å¼ï¼‰.
         *
-        * @param	#Array Ö¸¶¨½ØÆÁÇøÓòIntÀàĞÍ [left,top, width, height].
+        * @param	#Array æŒ‡å®šæˆªå±åŒºåŸŸIntç±»å‹ [left,top, width, height].
         *
         *
         * @return	#Boolean.
@@ -530,7 +530,7 @@ namespace amo {
         /**
         * @event	Any ClipboardTransfer::copy(IPCMessage::SmartType msg);
         *
-        * @brief	¼àÌıµ½¸´ÖÆÊÂ¼şÊ±´¥·¢ .
+        * @brief	ç›‘å¬åˆ°å¤åˆ¶äº‹ä»¶æ—¶è§¦å‘ .
         *
         * @example
         *
@@ -545,7 +545,7 @@ namespace amo {
         /**
         * @event	Any ClipboardTransfer::cut(IPCMessage::SmartType msg);
         *
-        * @brief	¼àÌıµ½¼ôÇĞÊÂ¼şÊ±´¥·¢£¨Ö»ÔÚÎÄ¼ş¼ôÇĞÊ±´¥·¢£© .
+        * @brief	ç›‘å¬åˆ°å‰ªåˆ‡äº‹ä»¶æ—¶è§¦å‘ï¼ˆåªåœ¨æ–‡ä»¶å‰ªåˆ‡æ—¶è§¦å‘ï¼‰ .
         * @example
         *
         ```
@@ -559,7 +559,7 @@ namespace amo {
         /**
         * @event	Any ClipboardTransfer::empty(IPCMessage::SmartType msg);
         *
-        * @brief	Çå¿Õ¼ôÌù°åÊ±´¥·¢ .
+        * @brief	æ¸…ç©ºå‰ªè´´æ¿æ—¶è§¦å‘ .
         * @example
         *
         ```

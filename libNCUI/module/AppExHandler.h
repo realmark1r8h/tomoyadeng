@@ -1,4 +1,4 @@
-// Created by amoylel on 10/09/2018.
+О╩©// Created by amoylel on 10/09/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef AMO_APPEXHANDLER_70854450_CF4C_4BE7_B9C2_D51F73E3ED11_H__
@@ -12,7 +12,7 @@ namespace amo {
     /*!
     * @class	AppExV8Handler
     *
-    * @brief	╢╟©змов╖.
+    * @brief	Г╙≈Е▐ёФ▀√Ф▀╫.
     */
     
     class AppExV8Handler : public JsClassObjectV8Handler {

@@ -1,4 +1,4 @@
-// Created by amoylel on 11/03/2018.
+Ôªø// Created by amoylel on 11/03/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef AMO_TASKTESTTRANSFER_0FF9EB2B_35C9_426A_8D71_7AA12E10C0F5_HPP__
@@ -83,7 +83,7 @@ namespace amo {
         AMO_CONFIG_GETTER_SETTER(constStaticTestID)
         AMO_CONFIG_GETTER_SETTER(memberTestID)
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(TaskTestTransfer, RunnableTransfer)
-        // ≥…‘±∫Ø ˝
+        // ÊàêÂëòÂáΩÊï∞
         AMO_CEF_MESSAGE_TRANSFER_FUNC(add, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(sub, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_FUNC(mul, TransferFuncNormal | TransferExecSync)

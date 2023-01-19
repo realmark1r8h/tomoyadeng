@@ -1,4 +1,4 @@
-// Created by amoylel on 11/18/2018.
+ï»¿// Created by amoylel on 11/18/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef AMO_BIGSTRING_175D0A11_ABEA_4E40_AF06_FF55E69E1329_H__
@@ -18,8 +18,8 @@ namespace amo {
     *
     * @extend Object
     *
-    * @brief	ÓÃÓÚ»ñÈ¡×ÀÃæµÄ»ù±¾ĞÅÏ¢.<br>
-    * 			¹¤×÷Ïß³Ì:**UIÏß³Ì**.
+    * @brief	ç”¨äºè·å–æ¡Œé¢çš„åŸºæœ¬ä¿¡æ¯.<br>
+    * 			å·¥ä½œçº¿ç¨‹:**UIçº¿ç¨‹**.
     */
     
     class BigStringTransfer
@@ -35,7 +35,7 @@ namespace amo {
         Any getData(IPCMessage::SmartType msg);
         
         AMO_CEF_MESSAGE_TRANSFER_BEGIN(BigStringTransfer, ClassTransfer)
-        // ³ÉÔ±º¯Êı
+        // æˆå‘˜å‡½æ•°
         AMO_CEF_MESSAGE_TRANSFER_FUNC(getData, TransferFuncNormal | TransferExecSync)
         AMO_CEF_MESSAGE_TRANSFER_END()
         

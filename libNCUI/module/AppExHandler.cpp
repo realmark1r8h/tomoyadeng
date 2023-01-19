@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "module/AppExHandler.h"
 
 namespace amo {

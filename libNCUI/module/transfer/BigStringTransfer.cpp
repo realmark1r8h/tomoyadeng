@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "module/transfer/BigStringTransfer.h"
 #include "ipc/BlobManager.hpp"
 

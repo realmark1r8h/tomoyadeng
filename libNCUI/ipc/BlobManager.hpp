@@ -1,4 +1,4 @@
-// Created by amoylel on 11/17/2018.
+﻿// Created by amoylel on 11/17/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef AMO_BLOBMANAGER_9C392578_192C_4690_8ED7_013527092A89_HPP__

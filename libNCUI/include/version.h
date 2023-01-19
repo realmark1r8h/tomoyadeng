@@ -1,4 +1,4 @@
-// Created by amoylel on 13/11/2018.
+﻿// Created by amoylel on 13/11/2018.
 // Copyright (c) 2018 amoylel All rights reserved.
 
 #ifndef LIBNCUI_VERSION_5554806C_D4AB_49C1_A851_137577F20448_H__
