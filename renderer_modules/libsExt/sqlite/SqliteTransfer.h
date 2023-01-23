@@ -73,6 +73,18 @@ namespace amo {
         * @example
         *
         	```
+        		include('FileStream');
+        		var ofs = new FileStream('test.sql', 2);
+        		ofs.write(`
+        				PRAGMA foreign_keys = OFF;
+        				DROP TABLE IF EXISTS "main"."table1";
+        				CREATE TABLE "table1" (
+        					"name"  TEXT,
+        					"age"  INTEGER,
+        					"score"  INTEGER,
+        					"remark"  TEXT
+        				);`);
+        		ofs.close();
         		console.assert(db.import('test.sql') == 0);
         
         	```
@@ -108,7 +120,7 @@ namespace amo {
         *
         * @param	#JsonObject 要插入的数据.
         *
-        * @return	#Int/Undefined 如果成为返回受影响的行数，否则返回Undefined.
+        * @return	#Int/Undefined 如果成为返回id{@link getLastInsertRowID=Sqlite.getLastInsertRowID}，否则返回Undefined.
         * @example
         *
         		```
@@ -119,7 +131,7 @@ namespace amo {
         				remark:'测试数据'
         			};
         			console.assert(db.insert('table1', val) ==1);
-        			console.assert(db.insert('table1', {name:'李四'}) ==1);
+        			console.assert(db.insert('table1', {name:'李四'}) ==2);
         
         		```
         */
@@ -165,6 +177,11 @@ namespace amo {
          * @param	#String 备份文件路径.
          *
          * @return	#Boolean true成功/false失败.
+         * @example
+         *
+         ```
+        	console.assert(db.backup('test2.db') == true);
+         ```
          */
         
         virtual Any backup(IPCMessage::SmartType msg);
@@ -194,6 +211,18 @@ namespace amo {
          * 						 |#Int startrow 开始行，分页查询时返回.
          * 						 |#Boolean refresh 是否重新计算分页，分页查询时返回.
          * 						 |#JsonArray data 查询到的数据.
+         * @example
+         *
+         ```
+        	var result = db.query('SELECT * FROM table1 WHERE name = "张三"');
+        	console.log(result);
+        	var result2 = db.query('SELECT * FROM table1 WHERE name = "{0}"', ['张三']);
+        	console.log(result2);
+        	var result3 = db.query('SELECT * FROM table1 WHERE name = "{name}" and age = "{age}" ', {name:'张三', age:'18'});
+        	console.log(result3);
+        	var result4 = db.query('SELECT * FROM table1 WHERE name = "{name}" and age = "{age}" ', {name:'张三', age:'18'}, {rows:10});
+        	console.log(result4);
+         ```
          */
         
         
@@ -212,6 +241,16 @@ namespace amo {
          * @param	#JsonObject={}  条件参数，可以不填.
          *
          * @return	#Int/Undefined 如果成为返回受影响的行数，否则返回Undefined.
+         * @example
+         *
+         ```
+        	console.assert(db.remove('table1', 'name={0}', ['李四']) == 1);
+        	console.assert(db.insert('table1', {name:'李四'}) == 3);
+        	console.assert(db.remove('table1', 'name={name}', {name:'李四'}) == 1);
+        	console.assert(db.insert('table1', {name:'李四'}) == 4);
+        	console.assert(db.remove('table1', 'name="李四"') == 1);
+        
+         ```
          */
         
         virtual Any remove(IPCMessage::SmartType msg);
@@ -226,6 +265,13 @@ namespace amo {
          * @param	#JsonObject={} 条件参数.
          *
          * @return	#Int 成功返回数据条数，失败返回-1.
+         * @example
+         *
+         ```
+        	console.assert(db.remove('table1', 'name={0}', ['李四']) == 1);
+        	console.assert(db.queryCount('table1', 'name={0}', ['李四']) == 0);
+        
+         ```
          */
         
         virtual Any queryCount(IPCMessage::SmartType msg);

@@ -68,6 +68,18 @@ window.db = new Sqlite('test.db');
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
 ```html
+include('FileStream');
+var ofs = new FileStream('test.sql', 2);
+ofs.write(`
+        PRAGMA foreign_keys = OFF;
+        DROP TABLE IF EXISTS "main"."table1";
+        CREATE TABLE "table1" (
+            "name"  TEXT,
+            "age"  INTEGER,
+            "score"  INTEGER,
+            "remark"  TEXT
+        );`);
+ofs.close();
 console.assert(db.import('test.sql') == 0);
 
 
@@ -140,7 +152,7 @@ console.assert(db.execute('SELECT count(1) FROM table1') == 0);
 </table>
 
 * **返回值**
-  Int /Undefined 如果成为返回受影响的行数，否则返回Undefined. 
+  Int/Undefined 如果成为返回id，否则返回Undefined. 
 
 * **示例&nbsp;&nbsp;&nbsp;&nbsp;**
 
@@ -152,7 +164,7 @@ var val = {
     remark:'测试数据'
 };
 console.assert(db.insert('table1', val) ==1);
-console.assert(db.insert('table1', {name:'李四'}) ==1);
+console.assert(db.insert('table1', {name:'李四'}) ==2);
 
 
 ```
@@ -242,6 +254,12 @@ console.log(retval);
 * **返回值**
   Boolean true成功/false失败. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+console.assert(db.backup('test2.db') == true);
+
+```
 
 
 <div class="adoc" id="div_backup"></div>
@@ -288,6 +306,19 @@ console.log(retval);
 	* **JsonArray** data  查询到的数据.
  
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+var result = db.query('SELECT * FROM table1 WHERE name = "张三"');
+console.log(result);
+var result2 = db.query('SELECT * FROM table1 WHERE name = "{}"', ['张三']);
+console.log(result2);
+var result3 = db.query('SELECT * FROM table1 WHERE name = "" and age = "" ', {name:'张三', age:'18'});
+console.log(result3);
+var result4 = db.query('SELECT * FROM table1 WHERE name = "" and age = "" ', {name:'张三', age:'18'}, {rows:10});
+console.log(result4);
+
+```
 
 
 <div class="adoc" id="div_query"></div>
@@ -326,6 +357,17 @@ console.log(retval);
 * **返回值**
   Int /Undefined 如果成为返回受影响的行数，否则返回Undefined. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+console.assert(db.remove('table1', 'name=', ['李四']) == 1);
+console.assert(db.insert('table1', {name:'李四'}) == 3);
+console.assert(db.remove('table1', 'name=', {name:'李四'}) == 1);
+console.assert(db.insert('table1', {name:'李四'}) == 4);
+console.assert(db.remove('table1', 'name="李四"') == 1);
+
+
+```
 
 
 <div class="adoc" id="div_remove"></div>
@@ -360,6 +402,14 @@ console.log(retval);
 * **返回值**
   Int 成功返回数据条数，失败返回-1. 
 
+* **示例&nbsp;&nbsp;&nbsp;&nbsp;**
+
+```html
+console.assert(db.remove('table1', 'name=', ['李四']) == 1);
+console.assert(db.queryCount('table1', 'name=', ['李四']) == 0);
+
+
+```
 
 
 <div class="adoc" id="div_queryCount"></div>

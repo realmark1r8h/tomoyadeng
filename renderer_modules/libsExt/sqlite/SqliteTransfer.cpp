@@ -112,11 +112,11 @@ namespace amo {
             return Undefined();
         }
         
-        
         amo::filestream ifs(p.c_str());
         std::string sql = ifs.read_all();
-        msg->getArgumentList()->setValue(0, sql);
-        return execute(msg);
+        auto cloneMsg = msg->clone();
+        cloneMsg->getArgumentList()->setValue(0, sql);
+        return execute(cloneMsg);
         
     }
     
@@ -435,14 +435,17 @@ namespace amo {
         std::string tableName = msg->getArgumentList()->getString(0);
         
         // 这个变量有毒， 不能直接设置到msg里面去，Clone一下就好了，为啥？
+        // 因为Debug 模式下，MTD初始libNCUI释放了sql变量，该值设置为Any后只能在libExt里面释放
+        // 其他地方也是一样
+        //
         std::string sql =
             "select count(1) from sqlite_master where type='table' and name='" + tableName +
             "';";
             
-        auto sqlMsg = msg->clone();
+        auto cloneMsg = msg->clone();
         
-        sqlMsg->getArgumentList()->setValue(0, sql);
-        int nCount = queryCount(sqlMsg);
+        cloneMsg->getArgumentList()->setValue(0, sql);
+        int nCount = queryCount(cloneMsg);
         
         if (nCount == 0) {
             return false;
@@ -537,8 +540,9 @@ namespace amo {
         amo::u8string ansiTableName(utf8TableName, true);
         ansiTableName.trim_left(amo::u8string(" ", true));
         ansiTableName.trim_right(amo::u8string(" ", true));
-        std::vector<amo::u8string> tables = ansiTableName.split(amo::u8string(" ", true));
-        
+        std::vector<amo::u8string> tables = ansiTableName.split(amo::u8string(" ",
+                                            true));
+                                            
         // 如果拆分出来不只一项,那么认为不是一个表名
         if (tables.size() > 1) {
         
@@ -615,8 +619,9 @@ namespace amo {
         amo::u8string ansiTableName(utf8TableName, true);
         ansiTableName.trim_left(amo::u8string(" ", true));
         ansiTableName.trim_right(amo::u8string(" ", true));
-        std::vector<amo::u8string> tables = ansiTableName.split(amo::u8string(" ", true));
-        
+        std::vector<amo::u8string> tables = ansiTableName.split(amo::u8string(" ",
+                                            true));
+                                            
         // 如果拆分出来不只一项,那么认为不是一个表名
         if (tables.size() > 1) {
         
@@ -672,8 +677,9 @@ namespace amo {
         amo::u8string ansiTableName(utf8TableName, true);
         ansiTableName.trim_left(amo::u8string(" ", true));
         ansiTableName.trim_right(amo::u8string(" ", true));
-        std::vector<amo::u8string> tables = ansiTableName.split(amo::u8string(" ", true));
-        
+        std::vector<amo::u8string> tables = ansiTableName.split(amo::u8string(" ",
+                                            true));
+                                            
         // 如果拆分出来不只一项,那么认为不是一个表名
         if (tables.size() > 1) {
         
@@ -1183,7 +1189,8 @@ namespace amo {
         auto& vec = getTableFieldImpl(table);
         
         for (auto& p : vec) {
-            if (amo::u8string(p, true).to_upper() == amo::u8string(field, true).to_upper()) {
+            if (amo::u8string(p, true).to_upper() == amo::u8string(field,
+                    true).to_upper()) {
                 return true;
             }
         }
