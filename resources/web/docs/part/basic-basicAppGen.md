@@ -5,10 +5,10 @@
   可以通过该模块生成自定义程序.
   
 ## 配置文件 &nbsp;
-  编辑程序配置文件，右键编辑框可以生成程序，详细内容可参考.
+  编辑程序配置文件，右键编辑框可以生成程序，详细内容可参考<a href="#extend/extendrcedit">rcedit</a>.
   
 * **参考** 
-
+<a href="#extend/extendrcedit">rcedit</a>
 
 
 

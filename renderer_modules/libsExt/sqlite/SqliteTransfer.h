@@ -63,7 +63,7 @@ namespace amo {
         
         /*!
         * @fn	virtual Any SqliteTransfer::import(IPCMessage::SmartType msg);
-        *
+        * @tag sync
         * @brief	从文件中执行SQL语句.
         *
         * @param	#String 文件路径.
@@ -95,7 +95,7 @@ namespace amo {
         
         /*!
          * @fn	virtual Any SqliteTransfer::execute(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	执行原生sql.
          *
          * @param	#String 需要执行的SQL语句.
@@ -113,7 +113,7 @@ namespace amo {
         
         /*!
         * @fn	virtual Any SqliteTransfer::insert(IPCMessage::SmartType msg);
-        *
+        * @tag sync
         * @brief	插入数据.
         *
         * @param	#String 数据库表名.
@@ -140,7 +140,7 @@ namespace amo {
         
         /*!
          * @fn	virtual Any SqliteTransfer::update(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	更新数据.
          *
          * @param	#String 数据库表名.
@@ -171,7 +171,7 @@ namespace amo {
         
         /*!
          * @fn	virtual Any SqliteTransfer::backup(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	备份数据库.
          *
          * @param	#String 备份文件路径.
@@ -188,7 +188,7 @@ namespace amo {
         
         /*!
          * @fn	virtual Any SqliteTransfer::query(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	查询数据.
          *
          * @param	#String SQL语句.
@@ -231,24 +231,24 @@ namespace amo {
         
         /*!
          * @fn	virtual Any SqliteTransfer::remove(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	删除数据.
          *
          * @param	#String 表名.
          *
          * @param	#String 条件语句.
          *
-         * @param	#JsonObject={}  条件参数，可以不填.
+         * @param	#JsonObject={}  条件参数，可以不填, 也可以是一个Array.
          *
          * @return	#Int/Undefined 如果成为返回受影响的行数，否则返回Undefined.
          * @example
          *
          ```
-        	console.assert(db.remove('table1', 'name={0}', ['李四']) == 1);
-        	console.assert(db.insert('table1', {name:'李四'}) == 3);
-        	console.assert(db.remove('table1', 'name={name}', {name:'李四'}) == 1);
-        	console.assert(db.insert('table1', {name:'李四'}) == 4);
-        	console.assert(db.remove('table1', 'name="李四"') == 1);
+        	console.assert(db.remove('table1', '  name="{0}"', ['李四']) == 1);
+        	db.insert('table1', {name:'李四'});
+        	console.assert(db.remove('table1', '  name="{name}"', {name:'李四'}) == 1);
+        	db.insert('table1', {name:'李四'});
+        	console.assert(db.remove('table1', ' name="李四"') == 1);
         
          ```
          */
@@ -257,7 +257,7 @@ namespace amo {
         
         /*!
          * @fn	virtual Any SqliteTransfer::queryCount(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	查询数据条数.
          *
          * @param	#String SQL语句.
@@ -268,8 +268,9 @@ namespace amo {
          * @example
          *
          ```
-        	console.assert(db.remove('table1', 'name={0}', ['李四']) == 1);
-        	console.assert(db.queryCount('table1', 'name={0}', ['李四']) == 0);
+        	db.insert('table1', {name:'李四'});
+        	console.assert(db.remove('table1', 'name="{0}"', ['李四']) == 1);
+        	console.assert(db.queryCount('SELECT COUNT(1) FROM table1 WHERE  name="{0}"', ['李四']) == 0);
         
          ```
          */
@@ -278,47 +279,70 @@ namespace amo {
         
         /*!
          * @fn	virtual Any SqliteTransfer::getLastInsertRowID(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	返回最近一次SQL语句所影响的行数，如插入、删除、更新等操作后可以调用该函数获取数据.
          *
          * @return	#Int/Undefined 如果成为返回受影响的行数，否则返回Undefined.
+         * @example
+         *
+         ```
+        	var id  = db.insert('table1', {name:'李四'});
+        	console.assert(db.getLastInsertRowID() == id);
+         ```
          */
         
         virtual Any getLastInsertRowID(IPCMessage::SmartType msg);
         
         /*!
          * @fn	virtual Any SqliteTransfer::containsTable(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	数据库中是否存在指定的表.
          *
          * @param	#String 表名.
          *
          * @return	#Boolean true存在/false失败或不存在.
+         * @example
+         *
+         ```
+        	console.assert(db.containsTable('table1') == true);
+        	console.assert(db.containsTable('table2') == false);
+         ```
          */
         
         virtual Any containsTable(IPCMessage::SmartType msg);
         
         /*!
          * @fn	virtual Any SqliteTransfer::containsField(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	指定表中是否包含某字段.
          *
          * @param	#String		表名.
          * @param	#String	字段名.
          *
          * @return	#Boolean. true存在/false失败或不存在.
+         * @example
+         *
+         ```
+        	console.assert(db.containsField('table1', 'name') == true);
+        	console.assert(db.containsField('table1', 'name2') == false);
+         ```
          */
         
         virtual Any containsField(IPCMessage::SmartType msg);
         
         /*!
          * @fn	virtual Any SqliteTransfer::getTableFields(IPCMessage::SmartType msg);
-         *
+         * @tag sync
          * @brief	获取指定表中的所有字段.
          *
          * @param	#String 表名.
          *
          * @return	#Array 包含所有字段名的数组.
+         * @example
+         *
+         ```
+        	console.log(db.getTableFields('table1'));
+         ```
          */
         
         virtual Any getTableFields(IPCMessage::SmartType msg);

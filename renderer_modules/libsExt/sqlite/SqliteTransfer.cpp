@@ -201,7 +201,7 @@ namespace amo {
         try {
             std::string args = msg->getArgumentList()->getString(0);
             pDB.reset(new sqlite3pp::database(args.c_str()));
-            return m_pDB->backup(*pDB.get());
+            return m_pDB->backup(*pDB.get()) != 0;
         } catch (std::exception& e) {
             m_strLastError = e.what();
             pDB.reset();
@@ -457,7 +457,7 @@ namespace amo {
     Any SqliteTransfer::containsField(IPCMessage::SmartType msg) {
         auto args = msg->getArgumentList();
         std::string tableName = args->getString(0);
-        std::string fieldName = args->getString(0);
+        std::string fieldName = args->getString(1);
         
         if (tableName.empty() || fieldName.empty()) {
             return false;
@@ -628,14 +628,14 @@ namespace amo {
             return "";
         }
         
-        amo::u8json utf8Json = args->getJson(1);
+        std::string utf8WhereString = args->getString(1);
         
         // 如果不是一个合法的JSON，返回""
-        if (!utf8Json.is_valid()) {
+        if (utf8WhereString.empty()) {
             return "";
         }
         
-        std::vector<std::string> keys = utf8Json.keys();
+        //std::vector<std::string> keys = utf8Json.keys();
         std::stringstream stream;
         std::string sql = " DELETE FROM " + utf8TableName;
         stream << sql;
@@ -644,25 +644,26 @@ namespace amo {
         if (args->isValid(1)) {
             std::shared_ptr<AnyArgsList> args = msg->getArgumentList();
             Any val = args->getValue(2);
-            
+            amo::u8string sqlWhere(args->getString(1), true);
             
             if (val.is<amo::u8json>()) {
-            
-                amo::u8string sqlWhere(args->getString(1), true);
                 amo::u8json json = val;
                 sqlWhere = formatArgsByU8Json(sqlWhere, json);
                 
-                if (sqlWhere.size() > 0) {
-                    stream << " WHERE " << sqlWhere.to_utf8();
-                }
             } else if (val.is<std::vector<Any> >()) {
                 std::vector<amo::u8string> vec = anyToStringVec(val);
-                amo::u8string sqlWhere(args->getString(1), true);
                 sqlWhere = formatArgsByArr(sqlWhere, vec);
+            }
+            
+            
+            if (sqlWhere.size() > 0) {
+                amo::u8string tmp = sqlWhere;
                 
-                if (sqlWhere.size() > 0) {
-                    stream << " WHERE " << sqlWhere.to_utf8();
+                if (tmp.to_upper().find("WHERE") == -1) {
+                    stream << " WHERE ";
                 }
+                
+                stream   << sqlWhere.to_utf8();
             }
             
         }
